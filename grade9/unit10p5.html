@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will the Oceans Live or Die?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --deep: #0a1628;
+    --ocean: #0d3b6e;
+    --mid: #1a6fa8;
+    --light: #3ab5d8;
+    --foam: #a8dff0;
+    --sand: #f5efe6;
+    --coral: #e07a5f;
+    --gold: #f2cc6b;
+    --text: #1a1a2e;
+    --muted: #4a5568;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--deep);
+    color: var(--text);
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── OCEAN HEADER ── */
+  .page-header {
+    background: linear-gradient(160deg, #0a1628 0%, #0d3b6e 50%, #1a6fa8 100%);
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 60px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0,30 C200,60 400,0 600,30 C800,60 1000,0 1200,30 L1200,60 L0,60 Z' fill='%23f5efe6'/%3E%3C/svg%3E");
+    background-size: cover;
+  }
+  .bubbles span {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    animation: rise 6s infinite;
+  }
+  .bubbles span:nth-child(1) { left:10%; animation-delay:0s; width:6px; height:6px; }
+  .bubbles span:nth-child(2) { left:25%; animation-delay:1.5s; width:10px; height:10px; }
+  .bubbles span:nth-child(3) { left:50%; animation-delay:3s; }
+  .bubbles span:nth-child(4) { left:70%; animation-delay:0.8s; width:5px; height:5px; }
+  .bubbles span:nth-child(5) { left:85%; animation-delay:2s; width:12px; height:12px; }
+  @keyframes rise {
+    0% { bottom: -20px; opacity: 0; }
+    20% { opacity: 0.6; }
+    100% { bottom: 110%; opacity: 0; }
+  }
+  .unit-label {
+    font-family: 'Tajawal', sans-serif;
+    color: var(--foam);
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: clamp(28px, 5vw, 46px);
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    margin-bottom: 8px;
+  }
+  .page-title span { color: var(--gold); }
+  .grade-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: var(--foam);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  /* ── TABS ── */
+  .tabs-wrapper {
+    background: var(--sand);
+    padding-top: 16px;
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 16px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 22px;
+    border-radius: 10px 10px 0 0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: rgba(13,59,110,0.12);
+    color: var(--ocean);
+    border: 2px solid transparent;
+    border-bottom: none;
+  }
+  .tab-btn.active {
+    background: var(--white);
+    color: var(--ocean);
+    border-color: var(--mid);
+    border-bottom-color: var(--white);
+    position: relative;
+    z-index: 2;
+  }
+  .tab-btn:hover:not(.active) { background: rgba(13,59,110,0.2); }
+
+  .tab-content {
+    display: none;
+    background: var(--white);
+    border-top: 3px solid var(--mid);
+    padding: 30px 20px 50px;
+    animation: fadeIn 0.3s ease;
+    overflow: auto;
+    flex: 1;
+  }
+  .tab-content.active { display: flex; flex-direction: column; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+
+  .container { max-width: 820px; margin: 0 auto; width: 100%; }
+
+  /* ══ TAB 1: READING ══ */
+  .reading-header {
+    text-align: center;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--foam);
+  }
+  .reading-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--coral);
+    margin-bottom: 6px;
+  }
+  .coral-bar {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--coral), var(--light));
+    border-radius: 2px;
+    margin: 0 auto;
+  }
+
+  .passage-body { line-height: 1.95; font-size: 15.5px; color: #2a2a3e; overflow: visible; }
+  .para-block {
+    position: relative;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    overflow: visible;
+  }
+  .para-num {
+    position: absolute;
+    left: 0; top: 0;
+    width: 30px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding-top: 4px;
+    font-style: italic;
+  }
+  .para-text {
+    padding: 14px 16px 14px 36px;
+    background: #fafcff;
+    border-left: 3px solid var(--foam);
+    overflow: visible;
+  }
+
+  /* Tooltip vocabulary */
+  .vocab {
+    border-bottom: 2px dotted var(--mid);
+    color: var(--ocean);
+    cursor: help;
+    position: relative;
+    font-weight: 600;
+    overflow: visible;
+  }
+  .vocab .tip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ocean);
+    color: white;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Tajawal', sans-serif;
+    white-space: nowrap;
+    z-index: 9999;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+    pointer-events: none;
+    isolation: isolate;
+  }
+  .vocab .tip::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--ocean);
+  }
+  .vocab:hover .tip { display: block; }
+
+  /* Dropdown questions under each paragraph */
+  .para-drop {
+    background: #f0f8ff;
+    border: 1px solid var(--foam);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+  }
+  .para-drop-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 9px 16px 9px 36px;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    color: var(--mid);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .para-drop-btn:hover { color: var(--ocean); }
+  .para-drop-btn .arrow { transition: transform 0.25s; font-size: 10px; }
+  .para-drop-btn.open .arrow { transform: rotate(180deg); }
+  .para-qs {
+    display: none;
+    padding: 4px 16px 14px 36px;
+  }
+  .para-qs.show { display: block; }
+  .para-qs ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .para-qs ul li {
+    font-size: 14px;
+    color: var(--text);
+    padding: 8px 12px;
+    background: white;
+    border-radius: 7px;
+    border-left: 3px solid var(--coral);
+    line-height: 1.5;
+  }
+  .para-qs ul li::before {
+    content: '🐠 ';
+  }
+
+  /* ══ TAB 2: TRUE/FALSE ══ */
+  .tf-intro {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    padding: 12px 16px;
+    background: #eaf6fb;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .tf-list { display: flex; flex-direction: column; gap: 14px; }
+  .tf-item {
+    background: #fafcff;
+    border: 2px solid var(--foam);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .tf-item.correct { border-color: #48bb78; background: #f0fff4; }
+  .tf-item.wrong   { border-color: var(--coral); background: #fff5f5; }
+  .tf-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--foam);
+    min-width: 28px;
+  }
+  .tf-stmt {
+    flex: 1;
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .tf-btns { display: flex; gap: 8px; }
+  .tf-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 2px solid;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.2s;
+    background: white;
+  }
+  .tf-btn.true-btn  { border-color: #48bb78; color: #48bb78; }
+  .tf-btn.false-btn { border-color: var(--coral); color: var(--coral); }
+  .tf-btn.selected-t { background: #48bb78; color: white; }
+  .tf-btn.selected-f { background: var(--coral); color: white; }
+  .tf-feedback {
+    width: 100%;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    padding: 7px 12px;
+    border-radius: 7px;
+    display: none;
+    margin-top: 4px;
+  }
+  .tf-feedback.show { display: block; }
+  .tf-feedback.ok { background: #c6f6d5; color: #276749; }
+  .tf-feedback.no { background: #fed7d7; color: #9b2c2c; }
+  .tf-score-bar {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--ocean), var(--mid));
+    border-radius: 12px;
+    color: white;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 16px;
+    text-align: center;
+    display: none;
+  }
+  .tf-score-bar.show { display: block; }
+  #tf-check-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 32px;
+    background: var(--ocean);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+  #tf-check-btn:hover { background: var(--mid); }
+
+  /* ══ TAB 3: COMPREHENSION TASKS ══ */
+  .task-section { margin-bottom: 36px; }
+  .task-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ocean);
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: #eaf6fb;
+    border-radius: 8px;
+    border-left: 4px solid var(--mid);
+  }
+  .comp-card {
+    background: #fafcff;
+    border: 1.5px solid var(--foam);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .comp-card .line-ref {
+    font-size: 12px;
+    font-family: 'Tajawal', sans-serif;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .comp-card .stmt {
+    font-size: 15px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .comp-card .stmt em { text-decoration: underline; color: var(--ocean); font-style: normal; font-weight: 600; }
+  .reveal-btn {
+    padding: 7px 18px;
+    background: var(--ocean);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reveal-btn:hover { background: var(--mid); }
+  .answer-box {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #e6f4ea;
+    border-radius: 7px;
+    font-size: 14px;
+    color: #276749;
+    font-family: 'Tajawal', sans-serif;
+    display: none;
+    line-height: 1.6;
+  }
+  .answer-box.show { display: block; }
+  .pronoun-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--deep);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-right: 4px;
+  }
+
+  /* ══ TAB 4: QUIZ ══ */
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .quiz-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--ocean);
+  }
+  .quiz-header p {
+    font-family: 'Tajawal', sans-serif;
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .quiz-progress {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .q-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--foam);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-family: 'Tajawal', sans-serif;
+    color: var(--ocean);
+    font-weight: 700;
+    transition: background 0.3s;
+  }
+  .q-dot.done { background: #48bb78; color: white; }
+  .q-dot.wrong-dot { background: var(--coral); color: white; }
+  .q-dot.current { background: var(--ocean); color: white; box-shadow: 0 0 0 3px var(--foam); }
+
+  .q-card {
+    background: #fafcff;
+    border: 2px solid var(--foam);
+    border-radius: 14px;
+    padding: 24px 22px;
+    margin-bottom: 16px;
+  }
+  .q-num-tag {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .q-text {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+    color: var(--text);
+  }
+  .q-options { display: flex; flex-direction: column; gap: 10px; }
+  .q-opt {
+    padding: 11px 16px;
+    border: 2px solid var(--foam);
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 14.5px;
+    transition: all 0.2s;
+    background: white;
+    text-align: left;
+  }
+  .q-opt:hover:not(.answered) { border-color: var(--mid); background: #eaf6fb; }
+  .q-opt.correct-ans { border-color: #48bb78; background: #f0fff4; color: #276749; font-weight: 600; }
+  .q-opt.wrong-ans   { border-color: var(--coral); background: #fff5f5; color: #c53030; }
+  .q-explain {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: #fffbea;
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    font-size: 13.5px;
+    font-family: 'Tajawal', sans-serif;
+    color: #744210;
+    display: none;
+    line-height: 1.6;
+  }
+  .q-explain.show { display: block; }
+  .quiz-result {
+    text-align: center;
+    padding: 32px 20px;
+    background: linear-gradient(135deg, var(--deep), var(--ocean));
+    border-radius: 16px;
+    color: white;
+    display: none;
+  }
+  .quiz-result.show { display: block; }
+  .result-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .result-msg {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 18px;
+    opacity: 0.9;
+  }
+  .retry-btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .retry-btn:hover { transform: scale(1.05); }
+
+  .nav-quiz { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .nav-btn {
+    padding: 10px 22px;
+    background: var(--ocean);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: var(--mid); }
+  .nav-btn:disabled { background: var(--foam); color: var(--muted); cursor: not-allowed; }
+
+  /* Footer */
+  .page-footer {
+    background: var(--deep);
+    text-align: center;
+    padding: 16px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    .tf-item { flex-direction: column; align-items: flex-start; }
+    .tab-btn { font-size: 12px; padding: 8px 14px; }
+  }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <header class="page-header">
+   <div class="bubbles">
+    <span></span><span></span><span></span><span></span><span></span>
+   </div>
+   <div class="unit-label">
+    Unit 10 · Grade 9 · English for Palestine
+   </div>
+   <h1 class="page-title">Will the <span>Oceans</span><br>
+     Live or Die?</h1>
+   <div class="grade-tag">
+    🌊 Reading &amp; Comprehension / Designed by T. Wad Refae 🌊
+   </div>
+  </header>
+  <div class="tabs-wrapper">
+   <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="showTab(0, this)">🎯 Goals</button> <button class="tab-btn" onclick="showTab(1, this)">📖 Reading</button> <button class="tab-btn" onclick="showTab(2, this)">✅ True / False</button> <button class="tab-btn" onclick="showTab(3, this)">🔍 Comprehension</button> <button class="tab-btn" onclick="showTab(4, this)">🎲 Quiz</button>
+   </nav><!-- ═══════════════ TAB 0 – GOALS ═══════════════ -->
+   <div class="tab-content active" id="tab0">
+    <div class="container">
+     <div style="text-align: center; margin-bottom: 32px;">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: var(--ocean); margin-bottom: 8px;">Learning Goals</h2>
+      <div style="width: 60px; height: 4px; background: linear-gradient(90deg, var(--coral), var(--light)); border-radius: 2px; margin: 0 auto;"></div>
+     </div>
+     <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+      <div style="background: linear-gradient(135deg, rgba(13,59,110,0.08), rgba(26,111,168,0.08)); border-left: 4px solid var(--ocean); padding: 20px 22px; border-radius: 10px;">
+       <div style="font-family: 'Tajawal', sans-serif; font-size: 18px; font-weight: 700; color: var(--ocean); margin-bottom: 8px;">
+        📖 Reading Comprehension
+       </div>
+       <ul style="list-style: none; margin: 0; padding: 0;">
+        <li style="font-size: 15px; color: var(--text); margin-bottom: 6px; line-height: 1.5;">✓ Understand the main problems affecting ocean life</li>
+        <li style="font-size: 15px; color: var(--text); margin-bottom: 6px; line-height: 1.5;">✓ Identify key vocabulary about environmental issues</li>
+        <li style="font-size: 15px; color: var(--text); line-height: 1.5;">✓ Explore solutions to save ocean ecosystems</li>
+       </ul>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(58,181,216,0.08), rgba(168,223,240,0.08)); border-left: 4px solid var(--light); padding: 20px 22px; border-radius: 10px;">
+       <div style="font-family: 'Tajawal', sans-serif; font-size: 18px; font-weight: 700; color: var(--mid); margin-bottom: 8px;">
+        💬 Language Skills
+       </div>
+       <ul style="list-style: none; margin: 0; padding: 0;">
+        <li style="font-size: 15px; color: var(--text); margin-bottom: 6px; line-height: 1.5;">✓ Master passive voice structures (was/were + being + verb)</li>
+        <li style="font-size: 15px; color: var(--text); margin-bottom: 6px; line-height: 1.5;">✓ Identify pronoun references in complex sentences</li>
+        <li style="font-size: 15px; color: var(--text); line-height: 1.5;">✓ Expand vocabulary related to environmental topics</li>
+       </ul>
+      </div>
+      <div style="background: linear-gradient(135deg, rgba(224,122,95,0.08), rgba(242,204,107,0.08)); border-left: 4px solid var(--coral); padding: 20px 22px; border-radius: 10px;">
+       <div style="font-family: 'Tajawal', sans-serif; font-size: 18px; font-weight: 700; color: var(--coral); margin-bottom: 8px;">
+        🧠 Critical Thinking
+       </div>
+       <ul style="list-style: none; margin: 0; padding: 0;">
+        <li style="font-size: 15px; color: var(--text); margin-bottom: 6px; line-height: 1.5;">✓ Analyse cause-and-effect relationships in the text</li>
+        <li style="font-size: 15px; color: var(--text); margin-bottom: 6px; line-height: 1.5;">✓ Distinguish between facts and opinions</li>
+        <li style="font-size: 15px; color: var(--text); line-height: 1.5;">✓ Evaluate different solutions to environmental problems</li>
+       </ul>
+      </div>
+     </div>
+     <div style="margin-top: 28px; padding: 18px 20px; background: #fffbea; border-radius: 10px; border-left: 3px solid var(--gold); text-align: center;">
+      <p style="font-family: 'Tajawal', sans-serif; font-size: 14px; color: #744210; margin: 0; line-height: 1.6;">💡 <strong>How to use this lesson:</strong> Start with the <strong>Reading</strong> tab to understand the passage, then work through <strong>True/False</strong> and <strong>Comprehension</strong> tasks. Finally, test your knowledge with the <strong>Quiz</strong>!</p>
+     </div>
+    </div>
+   </div><!-- ═══════════════ TAB 1 – READING ═══════════════ -->
+   <div class="tab-content" id="tab1">
+    <div class="container">
+     <div class="reading-header">
+      <h2 class="reading-title">Will the Oceans Live or Die?</h2>
+      <div class="coral-bar"></div>
+      <p style="margin-top:10px;font-family:'Tajawal',sans-serif;font-size:13px;color:var(--muted);">مرّر الفأرة فوق الكلمات المسطّرة لترى معناها بالعربي</p>
+     </div>
+     <div class="passage-body">
+      <!-- Para 1 -->
+      <div class="para-block">
+       <span class="para-num">1</span>
+       <div class="para-text">
+        Fish and many other kinds of life, like <span class="vocab">coral<span class="tip">المرجان – كائنات بحرية تشكّل الشعاب</span></span>, are <span class="vocab">disappearing<span class="tip">تختفي – تصبح نادرة أو تنتهي</span></span> from the oceans fast. There are sad changes everywhere. Near the coast, they are often caused by <span class="vocab">pollution<span class="tip">التلوّث – تلوّث الماء بمواد ضارة</span></span>. Farther out, the cause is often <span class="vocab">over-fishing<span class="tip">الصيد الجائر – الصيد أكثر مما تحتمله الطبيعة</span></span>. Fishing boats with huge <span class="vocab">nets<span class="tip">الشباك – أدوات الصيد الكبيرة</span></span> catch and kill everything. We risk a terrible <span class="vocab">man-made disaster<span class="tip">كارثة من صنع الإنسان – أزمة بيئية بسبب الإنسان</span></span> — the death of the oceans.
+       </div>
+       <div class="para-drop">
+        <button class="para-drop-btn" onclick="toggleDrop(this)"> <span class="arrow">▼</span> أسئلة على هذه الفقرة </button>
+        <div class="para-qs">
+         <ul>
+          <li>What are the two main causes of damage to sea life mentioned in paragraph 1?</li>
+          <li>What does "man-made disaster" mean? Give an example from the text.</li>
+          <li>Why are fishing boats described as dangerous? Use evidence from the text.</li>
+          <li>What does the word "disappearing" suggest about the speed of change?</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Para 2 -->
+      <div class="para-block">
+       <span class="para-num">5</span>
+       <div class="para-text">
+        But could our recent action to save the <span class="vocab">whales<span class="tip">الحيتان – أكبر الثدييات البحرية</span></span> give us hope? Two centuries ago, whales were already being caught for their <span class="vocab">oil<span class="tip">الزيت – كان يُستخرج من الحيتان للإضاءة والصناعة</span></span> and meat. By the 1940s, the job was being made easier by modern <span class="vocab">technology<span class="tip">التكنولوجيا – الأدوات والآلات الحديثة</span></span>. From the 1950s to the 1980s, they were being caught everywhere and numbers were <span class="vocab">collapsing<span class="tip">تنهار – تنخفض بشكل حاد ومتسارع</span></span>. Whole <span class="vocab">species<span class="tip">أنواع – مجموعات حيوانات من نفس النوع</span></span> of whales were quickly being <span class="vocab">destroyed<span class="tip">تُباد – تُمحى بالكامل من الوجود</span></span>, and they were not being <span class="vocab">protected<span class="tip">مُحمية – مصونة بقوانين أو اتفاقيات</span></span> anywhere.
+       </div>
+       <div class="para-drop">
+        <button class="para-drop-btn" onclick="toggleDrop(this)"> <span class="arrow">▼</span> أسئلة على هذه الفقرة </button>
+        <div class="para-qs">
+         <ul>
+          <li>Why were whales being hunted two centuries ago? Mention TWO reasons.</li>
+          <li>How did modern technology change whale hunting by the 1940s?</li>
+          <li>What does "numbers were collapsing" mean? Why is this phrase effective?</li>
+          <li>What grammar tense is used throughout this paragraph? Why?</li>
+          <li>Find a phrase that means whales had no protection at all.</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Para 3 -->
+      <div class="para-block">
+       <span class="para-num">10</span>
+       <div class="para-text">
+        Finally, the world took action. In 1985, <span class="vocab">almost every country<span class="tip">تقريباً كل دولة – الغالبية العظمى من دول العالم</span></span> agreed to stop catching whales. This means that whale <span class="vocab">populations<span class="tip">أعداد السكان / التعداد – عدد الأفراد في مجموعة</span></span> are slowly <span class="vocab">rising<span class="tip">ترتفع – تزداد وتتحسّن</span></span> again.
+       </div>
+       <div class="para-drop">
+        <button class="para-drop-btn" onclick="toggleDrop(this)"> <span class="arrow">▼</span> أسئلة على هذه الفقرة </button>
+        <div class="para-qs">
+         <ul>
+          <li>What action did the world take in 1985?</li>
+          <li>Why does the writer use the word "finally"? What does it imply?</li>
+          <li>How is this paragraph different in tone from paragraph 2?</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Para 4 -->
+      <div class="para-block">
+       <span class="para-num">12</span>
+       <div class="para-text">
+        Could the same thing happen with fish and fishing? Sadly, <span class="vocab">almost certainly not<span class="tip">على الأرجح لا – الكاتب غير متفائل بشأن الأسماك</span></span>. In Europe, people are required to catch <span class="vocab">smaller quantities<span class="tip">كميات أقل – تقليل الصيد بشكل إلزامي</span></span> now, but almost everywhere else they go on fishing freely — though it is getting harder. They cannot stop: too many <span class="vocab">hungry people<span class="tip">أناس جائعون – يعتمدون على الأسماك غذاءً رئيسياً</span></span> need to eat.
+       </div>
+       <div class="para-drop">
+        <button class="para-drop-btn" onclick="toggleDrop(this)"> <span class="arrow">▼</span> أسئلة على هذه الفقرة </button>
+        <div class="para-qs">
+         <ul>
+          <li>Why does the writer believe fish cannot be saved like whales?</li>
+          <li>What is different about fishing rules in Europe compared to the rest of the world?</li>
+          <li>What does "almost certainly not" tell us about the writer's opinion?</li>
+          <li>Is the writer hopeful or pessimistic in this paragraph? Justify your answer.</li>
+         </ul>
+        </div>
+       </div>
+      </div><!-- Para 5 -->
+      <div class="para-block">
+       <span class="para-num">15</span>
+       <div class="para-text">
+        Perhaps the only way to save the oceans is the one that our <span class="vocab">ancestors<span class="tip">الأجداد – الناس الذين عاشوا قبلنا بقرون</span></span> discovered long ago: <span class="vocab">farming<span class="tip">الزراعة / الاستزراع – تربية الأسماك في مزارع بحرية</span></span>. There are already many <span class="vocab">fish farms<span class="tip">مزارع الأسماك – أماكن لتربية الأسماك بشكل مصطنع</span></span>, and perhaps there will soon be many more along the world's <span class="vocab">coasts<span class="tip">السواحل – المناطق المجاورة للبحر</span></span>. People say the fish do not taste as good as <span class="vocab">wild fish<span class="tip">السمك البري – السمك المعيش بشكل طبيعي في البحر</span></span>. However, that is still much better than losing all the fish in the world.
+       </div>
+       <div class="para-drop">
+        <button class="para-drop-btn" onclick="toggleDrop(this)"> <span class="arrow">▼</span> أسئلة على هذه الفقرة </button>
+        <div class="para-qs">
+         <ul>
+          <li>What solution does the writer suggest for saving the oceans?</li>
+          <li>Why does the writer call farming an "ancestors' discovery"?</li>
+          <li>What objection do people have to fish farms? How does the writer respond?</li>
+          <li>Do you agree with the writer's conclusion? Give your own opinion.</li>
+         </ul>
+        </div>
+       </div>
+      </div>
+     </div><!-- end passage-body -->
+    </div>
+   </div><!-- ═══════════════ TAB 2 – TRUE / FALSE ═══════════════ -->
+   <div class="tab-content" id="tab2">
+    <div class="container">
+     <div class="tf-intro">
+      ✏️ Read each statement carefully. Choose <strong>True (✔)</strong> or <strong>False (✘)</strong>, then check your answers.
+     </div>
+     <div class="tf-list" id="tf-list">
+      <!-- filled by JS -->
+     </div><button id="tf-check-btn" onclick="checkTF()">Check Answers ✔</button>
+     <div class="tf-score-bar" id="tf-score"></div>
+    </div>
+   </div><!-- ═══════════════ TAB 3 – COMPREHENSION ═══════════════ -->
+   <div class="tab-content" id="tab3">
+    <div class="container">
+     <!-- Task 1: Pronouns -->
+     <div class="task-section">
+      <div class="task-title">
+       📌 Task 1 – Say what the underlined words refer to
+      </div>
+      <div class="comp-card">
+       <div class="line-ref">
+        Line 2
+       </div>
+       <div class="stmt">
+        Near the coast, <em>they</em> are often caused by pollution.
+       </div><button class="reveal-btn" onclick="toggleAns(this)">Show Answer</button>
+       <div class="answer-box"><span class="pronoun-tag">they</span> يعود على / refers to <strong>"sad changes"</strong> — التغيّرات المؤسفة التي حدثت للحياة البحرية المذكورة قبلها. / The sad changes to sea life mentioned in the previous sentence.
+       </div>
+      </div>
+      <div class="comp-card">
+       <div class="line-ref">
+        Line 2
+       </div>
+       <div class="stmt"><em>Farther out</em>, the cause …
+       </div><button class="reveal-btn" onclick="toggleAns(this)">Show Answer</button>
+       <div class="answer-box"><span class="pronoun-tag">Farther out</span> = أبعد عن الساحل / <strong>away from the coast</strong> — في أعماق المحيط بعيداً عن الشاطئ. / In the deeper parts of the ocean, further from the shore.
+       </div>
+      </div>
+      <div class="comp-card">
+       <div class="line-ref">
+        Line 6
+       </div>
+       <div class="stmt">
+        … <em>the job</em> was being made easier …
+       </div><button class="reveal-btn" onclick="toggleAns(this)">Show Answer</button>
+       <div class="answer-box"><span class="pronoun-tag">the job</span> يعود على / refers to <strong>catching whales</strong> — مهمة اصطياد الحيتان التي أصبحت أسهل بفضل التكنولوجيا الحديثة في الأربعينيات. / The work of hunting whales, which became easier with modern technology in the 1940s.
+       </div>
+      </div>
+      <div class="comp-card">
+       <div class="line-ref">
+        Line 12
+       </div>
+       <div class="stmt">
+        Sadly, <em>almost certainly not</em>.
+       </div><button class="reveal-btn" onclick="toggleAns(this)">Show Answer</button>
+       <div class="answer-box"><span class="pronoun-tag">almost certainly not</span> = على الأرجح لا / <strong>fish and fishing cannot be helped in the same way</strong> — الكاتب لا يعتقد أن ما نجح مع الحيتان يمكن تطبيقه على الأسماك لأن الكثير من الناس يعتمدون عليها غذاءً. / The writer does not believe that a global ban can work for fish, because too many people depend on them for food.
+       </div>
+      </div>
+     </div><!-- Task 2: Meanings -->
+     <div class="task-section">
+      <div class="task-title">
+       📌 Task 2 – Say what the underlined phrases mean
+      </div>
+      <div class="comp-card">
+       <div class="line-ref">
+        Line 3
+       </div>
+       <div class="stmt">
+        …, the cause is often <em>over-fishing</em>.
+       </div><button class="reveal-btn" onclick="toggleAns(this)">Show Answer</button>
+       <div class="answer-box"><strong>Over-fishing</strong> means <strong>taking too many fish from the sea</strong> — catching fish faster than they can reproduce, so numbers keep falling and species may disappear.الصيد الجائر يعني أخذ كميات كبيرة جدًا من الأسماك من البحر - صيد الأسماك بمعدل أسرع من قدرتها على التكاثر، لذلك تستمر أعدادها في الانخفاض وقد تختفي الأنواع
+       </div>
+      </div>
+      <div class="comp-card">
+       <div class="line-ref">
+        Line 4
+       </div>
+       <div class="stmt">
+        We risk <em>the death of the oceans</em>.
+       </div><button class="reveal-btn" onclick="toggleAns(this)">Show Answer</button>
+       <div class="answer-box"><strong>The death of the oceans</strong> means <strong>the complete destruction of all ocean life</strong> — a future where fish, coral, and all sea creatures have disappeared because of human damage and pollution. التدمير الكامل للحياة البحرية بأكملها - مستقبل تختفي فيه الأسماك والشعاب المرجانية وجميع الكائنات البحرية بسبب الأضرار البشرية والتلوث
+       </div>
+      </div>
+      <div class="comp-card">
+       <div class="line-ref">
+        Line 8
+       </div>
+       <div class="stmt">
+        … and numbers <em>were collapsing</em>.
+       </div><button class="reveal-btn" onclick="toggleAns(this)">Show Answer</button>
+       <div class="answer-box"><strong>Were collapsing</strong> means <strong>were falling very fast and dangerously</strong> — whale populations were dropping so sharply that whole species were close to extinction.كانت أعداد الحيتان تتناقص بسرعة كبيرة وبشكل خطير - فقد انخفضت أعدادها بشكل حاد لدرجة أن أنواعًا كاملة كانت على وشك الانقراض.
+       </div>
+      </div>
+      <div class="comp-card">
+       <div class="line-ref">
+        Line 10
+       </div>
+       <div class="stmt">
+        Finally, <em>the world took action</em>.
+       </div><button class="reveal-btn" onclick="toggleAns(this)">Show Answer</button>
+       <div class="answer-box"><strong>The world took action</strong> means <strong>countries around the world did something to solve the problem</strong> — in 1985, almost every country agreed to stop catching whales to save them from extinction.قامت دول العالم بجهود لحل المشكلة - ففي عام 1985، وافقت جميع الدول تقريباً على التوقف عن صيد الحيتان لإنقاذها من الانقراض.
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- ═══════════════ TAB 4 – QUIZ ═══════════════ -->
+   <div class="tab-content" id="tab4">
+    <div class="container">
+     <div class="quiz-header">
+      <h2>🎯 Comprehensive Quiz</h2>
+      <p>Reading comprehension + grammar + pronouns</p>
+     </div>
+     <div class="quiz-progress" id="quiz-dots"></div>
+     <div id="quiz-area"></div>
+     <div class="quiz-result" id="quiz-result">
+      <div class="result-score" id="result-score"></div>
+      <div class="result-msg" id="result-msg"></div><br><button class="retry-btn" onclick="initQuiz()">🔄 Try Again</button>
+     </div>
+    </div>
+   </div>
+  </div><!-- tabs-wrapper -->
+  <footer class="page-footer">
+   Grade 9 · Unit 10 · Will the Oceans Live or Die?
+  </footer>
+  <script>
+// ─── TABS ───
+function showTab(idx, btn) {
+  document.querySelectorAll('.tab-content').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── PARA DROPDOWNS ───
+function toggleDrop(btn) {
+  const qs = btn.nextElementSibling;
+  qs.classList.toggle('show');
+  btn.classList.toggle('open');
+}
+
+// ─── TAB 3 REVEAL ───
+function toggleAns(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('show');
+  btn.textContent = box.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+}
+
+// ─── TRUE / FALSE ───
+const tfData = [
+  { stmt: "Many forms of life in the oceans are in danger.", ans: true },
+  { stmt: "Fishing is the only cause of the problem.",       ans: false },
+  { stmt: "Only a few countries agreed to stop catching whales.", ans: false },
+  { stmt: "Whale numbers are now rising, but quantities of fish are still falling.", ans: true },
+  { stmt: "The writer thinks that fish farms will soon cover the land near the coasts.", ans: false }
+];
+
+const tfFeedback = [
+  { ok: "Correct! ✔ — The text says fish and coral are disappearing fast.", no: "Not quite. ✘ — The passage clearly states many ocean species are disappearing." },
+  { ok: "Correct! ✔ — Both pollution AND over-fishing are mentioned as causes.", no: "Read again. ✘ — The text mentions pollution near the coast AND over-fishing farther out." },
+  { ok: "Correct! ✔ — The text says 'almost every country agreed'.", no: "Check again. ✘ — The text says 'almost every country', not just a few." },
+  { ok: "Correct! ✔ — Whale populations are rising; fishing restrictions elsewhere are weak.", no: "Reconsider. ✘ — Re-read paragraphs 3 and 4 about whales and fish separately." },
+  { ok: "Correct! ✔ — Fish farms are expected along coasts, not covering land.", no: "Almost! ✘ — Fish farms are expected along coasts, not covering land." }
+];
+
+function buildTF() {
+  const list = document.getElementById('tf-list');
+  list.innerHTML = '';
+  tfData.forEach((item, i) => {
+    list.innerHTML += `
+    <div class="tf-item" id="tfi${i}">
+      <span class="tf-num">${i+1}</span>
+      <span class="tf-stmt">${item.stmt}</span>
+      <div class="tf-btns">
+        <button class="tf-btn true-btn"  onclick="selectTF(${i}, true,  this)">✔ True</button>
+        <button class="tf-btn false-btn" onclick="selectTF(${i}, false, this)">✘ False</button>
+      </div>
+      <div class="tf-feedback" id="tff${i}"></div>
+    </div>`;
+  });
+}
+const tfSelected = {};
+function selectTF(i, val, btn) {
+  tfSelected[i] = val;
+  const item = document.getElementById('tfi'+i);
+  item.querySelectorAll('.tf-btn').forEach(b => { b.classList.remove('selected-t','selected-f'); });
+  btn.classList.add(val ? 'selected-t' : 'selected-f');
+}
+function checkTF() {
+  let score = 0;
+  tfData.forEach((item, i) => {
+    const fb = document.getElementById('tff'+i);
+    const tfi = document.getElementById('tfi'+i);
+    if (tfSelected[i] === undefined) { fb.textContent = '⚠️ يرجى الإجابة'; fb.className = 'tf-feedback show no'; return; }
+    const correct = tfSelected[i] === item.ans;
+    if (correct) score++;
+    tfi.classList.toggle('correct', correct);
+    tfi.classList.toggle('wrong', !correct);
+    fb.textContent = correct ? tfFeedback[i].ok : tfFeedback[i].no;
+    fb.className = 'tf-feedback show ' + (correct ? 'ok' : 'no');
+  });
+  const sc = document.getElementById('tf-score');
+  sc.textContent = `Your score: ${score} / ${tfData.length}  ${score===5?'🌊 Excellent!':score>=3?'👍 Good job!':'📚 Review the passage.'}`;
+  sc.classList.add('show');
+}
+buildTF();
+
+// ─── QUIZ ───
+const quizData = [
+  {
+    q: "According to paragraph 1, what is the main cause of damage FAR from the coast?",
+    opts: ["Pollution", "Over-fishing", "Fish farms", "Climate change"],
+    ans: 1,
+    exp: "The text says: 'Farther out, the cause is often over-fishing.' الصيد الجائر هو السبب بعيداً عن الساحل."
+  },
+  {
+    q: "The sentence 'Fishing boats with huge nets catch and kill everything' suggests that —",
+    opts: ["Boats only catch large fish","Nets are very selective","All sea creatures are harmed, not just target fish","Fishermen are careful about the environment"],
+    ans: 2,
+    exp: "الشباك الضخمة لا تفرّق بين الأنواع — تصطاد وتقتل كل شيء في طريقها."
+  },
+  {
+    q: "In the sentence 'they were not being protected anywhere,' what does the word THEY refer to?",
+    opts: ["Fishing boats","Coral reefs","Whales","Fish farms"],
+    ans: 2,
+    exp: "الضمير they يعود على الحيتان whales المذكورة في الفقرة."
+  },
+  {
+    q: "How many countries agreed to stop catching whales in 1985?",
+    opts: ["A few countries","Only European countries","Almost every country","No countries at all"],
+    ans: 2,
+    exp: "النص يقول: 'almost every country agreed to stop catching whales.' — تقريباً كل دول العالم."
+  },
+  {
+    q: "The phrase 'almost certainly not' (line 12) expresses the writer's —",
+    opts: ["Hope that fish can be saved","Uncertainty about the future","Pessimism that fish cannot be saved the same way","Surprise at the whale recovery"],
+    ans: 2,
+    exp: "'Almost certainly not' تعبّر عن تشاؤم الكاتب — فهو يرى أن الأمر بالنسبة للأسماك مختلف ولن تجدي نفس الحلول."
+  },
+  {
+    q: "According to paragraph 4, why can fishing NOT simply be stopped?",
+    opts: ["Fish farms are already sufficient","Too many people rely on fish for food","Governments have already banned it","The ocean has enough fish"],
+    ans: 1,
+    exp: "النص يقول: 'too many hungry people need to eat' — ملايين الناس يعتمدون على السمك كغذاء رئيسي."
+  },
+  {
+    q: "In paragraph 2, 'the job was being made easier by modern technology.' What grammar form is this?",
+    opts: ["Present Continuous Passive","Past Continuous Passive","Present Perfect Passive","Past Simple Active"],
+    ans: 1,
+    exp: "'was being made' = Past Continuous Passive. صيغة المضارع المستمر المبني للمجهول في الزمن الماضي."
+  },
+  {
+    q: "The writer says fish farms might save the oceans, BUT people complain that —",
+    opts: ["Fish farms are too expensive","Farm fish taste worse than wild fish","Fish farms pollute the sea","Fish farms are illegal"],
+    ans: 1,
+    exp: "الناس يقولون: 'the fish do not taste as good as wild fish' — السمك المزروع أقل طعماً من البري."
+  },
+  {
+    q: "In 'they are often caused by pollution' (line 2), what does THEY refer to?",
+    opts: ["Fish","Sad changes near the coast","Fishing boats","Coral reefs"],
+    ans: 1,
+    exp: "الضمير they يعود على 'sad changes' — التغيّرات الحزينة المذكورة في الجملة السابقة."
+  },
+  {
+    q: "Which title BEST summarises the whole passage?",
+    opts: ["The History of Whale Hunting","How Fish Farms Work","Dangers to Ocean Life and Possible Solutions","Why Europe Controls Fishing"],
+    ans: 2,
+    exp: "النص يتحدث عن مخاطر تهدد المحيطات (التلوث، الصيد الجائر) ويقترح حلولاً (محظور الحيتان، مزارع الأسماك)."
+  }
+];
+
+let currentQ = 0, quizScore = 0, answered = [];
+function initQuiz() {
+  currentQ = 0; quizScore = 0; answered = Array(quizData.length).fill(null);
+  document.getElementById('quiz-result').classList.remove('show');
+  buildDots();
+  renderQ();
+}
+function buildDots() {
+  const d = document.getElementById('quiz-dots');
+  d.innerHTML = quizData.map((_,i) => `<div class="q-dot" id="dot${i}">${i+1}</div>`).join('');
+}
+function updateDots() {
+  quizData.forEach((_,i) => {
+    const dot = document.getElementById('dot'+i);
+    dot.className = 'q-dot';
+    if (i === currentQ) dot.classList.add('current');
+    else if (answered[i] === true) dot.classList.add('done');
+    else if (answered[i] === false) dot.classList.add('wrong-dot');
+  });
+}
+function renderQ() {
+  updateDots();
+  const q = quizData[currentQ];
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = `
+    <div class="q-card" id="qcard">
+      <div class="q-num-tag">Question ${currentQ+1} of ${quizData.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,i) => `<button class="q-opt" id="qopt${i}" onclick="answerQ(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
+      </div>
+      <div class="q-explain" id="q-explain">${q.exp}</div>
+    </div>
+    <div class="nav-quiz">
+      <button class="nav-btn" onclick="prevQ()" ${currentQ===0?'disabled':''}>◀ Previous</button>
+      <span style="font-family:'Tajawal',sans-serif;font-size:13px;color:var(--muted);">${currentQ+1} / ${quizData.length}</span>
+      <button class="nav-btn" id="next-btn" onclick="nextQ()" ${currentQ===quizData.length-1?'disabled':''}>Next ▶</button>
+    </div>`;
+}
+function answerQ(chosen) {
+  const q = quizData[currentQ];
+  if (answered[currentQ] !== null) return;
+  const correct = chosen === q.ans;
+  answered[currentQ] = correct;
+  if (correct) quizScore++;
+  document.querySelectorAll('.q-opt').forEach((btn,i) => {
+    btn.classList.add('answered');
+    if (i === q.ans) btn.classList.add('correct-ans');
+    else if (i === chosen && !correct) btn.classList.add('wrong-ans');
+  });
+  document.getElementById('q-explain').classList.add('show');
+  updateDots();
+  if (answered.every(a => a !== null)) {
+    setTimeout(showResult, 1200);
+  }
+}
+function nextQ() { if (currentQ < quizData.length-1) { currentQ++; renderQ(); } }
+function prevQ() { if (currentQ > 0) { currentQ--; renderQ(); } }
+function showResult() {
+  document.getElementById('quiz-area').innerHTML = '';
+  const res = document.getElementById('quiz-result');
+  res.classList.add('show');
+  document.getElementById('result-score').textContent = `${quizScore} / ${quizData.length}`;
+  const pct = quizScore/quizData.length;
+  document.getElementById('result-msg').textContent =
+    pct === 1 ? '🏆 Perfect Score! Outstanding work!' :
+    pct >= 0.8 ? '🌊 Excellent! You know your oceans!' :
+    pct >= 0.6 ? '👍 Good job! Review a few answers.' :
+    '📚 Keep studying — you\'ll improve!';
+}
+initQuiz();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fbb61afc358e224',t:'MTc3ODc3NzIxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
