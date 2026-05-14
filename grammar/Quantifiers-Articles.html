@@ -1,369 +1,919 @@
 <!doctype html>
-<html lang="ar" dir="ltr" class="h-full">
+<html lang="en">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quantifiers / Articles</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Cairo:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <title>Grammar Skills — Some, Any, Much, Many &amp; Articles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet">
   <style>
-    * { font-family: 'Nunito', 'Cairo', sans-serif; }
-    .slide { display: none; animation: fadeIn 0.5s ease; }
-    .slide.active { display: flex; }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    .bounce { animation: bounce 2s infinite; }
-    
-    .progress-dot {
-      transition: all 0.3s;
-    }
-    .progress-dot.active {
-      transform: scale(1.3);
-    }
-    
-    .example-box {
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      border-right: 4px solid #0ea5e9;
-    }
-    
-    .rule-box {
-      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-      border-right: 4px solid #f59e0b;
-    }
-  </style>
+:root {
+  --green:#059669; --green-light:#ecfdf5; --green-mid:#a7f3d0;
+  --blue:#2563eb;  --blue-light:#eff6ff;  --blue-mid:#bfdbfe;
+  --amber:#d97706; --amber-light:#fffbeb; --amber-mid:#fde68a;
+  --rose:#e11d48;  --rose-light:#fff1f2;  --rose-mid:#fecdd3;
+  --dark:#0f172a; --text:#334155; --muted:#64748b; --border:#e2e8f0; --gray:#f8fafc;
+  --correct:#16a34a; --wrong:#dc2626;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Nunito',sans-serif;background:#f1f5f9;color:var(--dark);}
+body{min-height:100%;}
+
+/* NAV TABS */
+header{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:white;text-align:center;padding:2.5rem 1rem 0;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.05);top:-120px;right:-60px;}
+.hbadge{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);padding:4px 14px;border-radius:99px;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:.8rem;}
+header h1{font-size:2rem;font-weight:900;}
+header h1 span{display:block;font-family:'Tajawal',sans-serif;font-size:.95rem;opacity:.75;font-weight:500;margin-top:4px;}
+.tabs{display:flex;justify-content:center;gap:4px;margin-top:1.8rem;flex-wrap:wrap;padding:0 1rem;}
+.tab{padding:10px 22px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-bottom:none;border-radius:10px 10px 0 0;font-size:.88rem;font-weight:800;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.75);}
+.tab:hover{background:rgba(255,255,255,0.2);}
+.tab.active{background:white;color:var(--blue);border-color:white;}
+
+/* PAGES */
+.page{display:none;max-width:960px;margin:0 auto;padding:2rem 1rem 4rem;}
+.page.active{display:block;}
+
+/* CARDS */
+.card{background:white;border-radius:20px;box-shadow:0 2px 16px rgba(0,0,0,0.06);overflow:hidden;margin-bottom:1.8rem;}
+.ch{display:flex;align-items:center;gap:.9rem;padding:1.2rem 1.6rem;}
+.ch.green {background:linear-gradient(135deg,#047857,#059669);}
+.ch.blue  {background:linear-gradient(135deg,#1d4ed8,#2563eb);}
+.ch.amber {background:linear-gradient(135deg,#b45309,#d97706);}
+.ch.rose  {background:linear-gradient(135deg,#be123c,#e11d48);}
+.cnum{width:38px;height:38px;background:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:white;font-size:1rem;flex-shrink:0;}
+.ctitle{color:white;}
+.ctitle h2{font-size:1.1rem;font-weight:800;}
+.ctitle p{font-size:.78rem;opacity:.8;font-family:'Tajawal',sans-serif;margin-top:2px;}
+.cbody{padding:1.6rem;}
+
+/* EXPLAIN BOX */
+.explain{border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:1.4rem;display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start;}
+.explain.green {background:var(--green-light);border:1.5px solid var(--green-mid);}
+.explain.blue  {background:var(--blue-light); border:1.5px solid var(--blue-mid);}
+.explain.amber {background:var(--amber-light);border:1.5px solid var(--amber-mid);}
+.eicon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.explain.green .eicon{background:var(--green-mid);}
+.explain.blue  .eicon{background:var(--blue-mid);}
+.explain.amber .eicon{background:var(--amber-mid);}
+.explain h3{font-size:.95rem;font-weight:800;margin-bottom:.5rem;}
+.explain.green h3{color:var(--green);}
+.explain.blue  h3{color:var(--blue);}
+.explain.amber h3{color:var(--amber);}
+.rule{display:flex;align-items:flex-start;gap:.5rem;font-size:.88rem;color:var(--text);line-height:1.55;margin-bottom:.35rem;}
+.rnum{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:white;flex-shrink:0;margin-top:2px;}
+.bg-green{background:var(--green);}
+.bg-blue {background:var(--blue);}
+.bg-amber{background:var(--amber);}
+.ar{font-family:'Tajawal',sans-serif;font-size:.8rem;color:var(--muted);display:block;}
+
+/* TABLE */
+.gtable{width:100%;border-collapse:collapse;font-size:.88rem;margin:1rem 0;}
+.gtable th{background:var(--gray);padding:8px 12px;text-align:left;font-weight:800;border:1px solid var(--border);}
+.gtable td{padding:8px 12px;border:1px solid var(--border);color:var(--text);}
+.gtable tr:nth-child(even) td{background:#fafbff;}
+.tag{display:inline-block;padding:2px 9px;border-radius:99px;font-size:.75rem;font-weight:800;}
+.tag-green{background:var(--green-mid);color:#065f46;}
+.tag-rose {background:var(--rose-mid); color:#9f1239;}
+.tag-blue {background:var(--blue-mid); color:#1e3a8a;}
+.tag-amber{background:var(--amber-mid);color:#78350f;}
+
+/* EXAMPLE BOX */
+.eg-box{background:var(--gray);border-radius:10px;padding:.9rem 1.1rem;font-size:.88rem;margin:.8rem 0;border-right:3px solid;}
+.eg-box.green{border-color:var(--green);}
+.eg-box.blue {border-color:var(--blue);}
+.eg-box.amber{border-color:var(--amber);}
+.eg-box b{font-weight:800;}
+
+/* SECTION LABEL */
+.slabel{display:flex;align-items:center;gap:7px;font-size:.9rem;font-weight:800;margin-bottom:1rem;}
+.slabel::after{content:'';flex:1;height:1.5px;background:var(--border);}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* FILL IN THE BLANK */
+.blanks{display:flex;flex-direction:column;gap:10px;}
+.blank-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--gray);border-radius:10px;padding:10px 14px;font-size:.9rem;}
+.bnum{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:white;flex-shrink:0;}
+.btext{flex:1;line-height:1.7;}
+.blank{display:inline-block;border-bottom:2px solid var(--border);min-width:70px;padding:0 4px;}
+.bi{border:2px solid var(--border);border-radius:6px;padding:4px 8px;font-size:.85rem;font-family:'Nunito';outline:none;transition:border .2s;width:80px;text-align:center;}
+.bi:focus{border-color:var(--blue);}
+.bi.ok {border-color:var(--correct);background:#f0fdf4;}
+.bi.no {border-color:var(--wrong);  background:#fef2f2;}
+.fb{font-size:.75rem;font-weight:700;}
+.fb.ok{color:var(--correct);}
+.fb.no{color:var(--wrong);}
+.btn{padding:7px 16px;border:none;border-radius:8px;font-size:.82rem;font-weight:800;font-family:'Nunito';cursor:pointer;transition:all .18s;}
+.btn:hover{opacity:.88;transform:scale(1.02);}
+.btn-green {background:var(--green); color:white;}
+.btn-blue  {background:var(--blue);  color:white;}
+.btn-amber {background:var(--amber); color:white;}
+.btn-ghost {background:var(--border);color:var(--text);}
+
+/* CHOOSE */
+.mcq-rows{display:flex;flex-direction:column;gap:10px;}
+.mcq-row{background:var(--gray);border-radius:10px;padding:10px 14px;}
+.mcq-q{font-size:.88rem;margin-bottom:6px;line-height:1.5;}
+.mcq-opts{display:flex;gap:6px;flex-wrap:wrap;}
+.opt{padding:5px 14px;border:2px solid var(--border);border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;background:white;transition:all .2s;}
+.opt:hover{border-color:var(--blue);background:var(--blue-light);}
+.opt.correct{border-color:var(--correct);background:#dcfce7;color:#14532d;}
+.opt.wrong  {border-color:var(--wrong);  background:#fee2e2;color:#7f1d1d;}
+
+/* DIALOGUE */
+.dialogue{display:flex;flex-direction:column;gap:8px;margin:.8rem 0;}
+.d-row{display:flex;gap:8px;align-items:flex-start;}
+.d-sp{font-weight:800;font-size:.82rem;flex-shrink:0;width:22px;}
+.d-sp.a{color:var(--blue);}
+.d-sp.b{color:var(--green);}
+.d-text{font-size:.88rem;line-height:1.6;color:var(--text);}
+.d-text .bi{width:90px;}
+
+/* QUIZ */
+.quiz-wrap{display:flex;flex-direction:column;gap:1rem;}
+.qcard{background:white;border:2px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;}
+.qnum{font-size:.75rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;}
+.qtext{font-size:.95rem;font-weight:700;margin-bottom:.8rem;line-height:1.5;}
+.qopts{display:flex;flex-direction:column;gap:6px;}
+.qopt{padding:9px 14px;border:2px solid var(--border);border-radius:9px;font-size:.88rem;font-weight:600;cursor:pointer;background:white;transition:all .2s;display:flex;align-items:center;gap:8px;}
+.qopt:hover{border-color:var(--blue);background:var(--blue-light);}
+.qopt.correct{border-color:var(--correct);background:#dcfce7;color:#14532d;}
+.qopt.wrong  {border-color:var(--wrong);  background:#fee2e2;color:#7f1d1d;}
+.qopt.reveal {border-color:var(--correct);background:#dcfce7;color:#14532d;opacity:.6;}
+.qopt-icon{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;}
+.qopt.correct .qopt-icon{border-color:var(--correct);background:var(--correct);color:white;}
+.qopt.wrong   .qopt-icon{border-color:var(--wrong);  background:var(--wrong);  color:white;}
+.qfb{font-size:.82rem;font-weight:700;margin-top:.6rem;padding:.5rem .8rem;border-radius:7px;display:none;}
+.qfb.ok{background:#f0fdf4;color:var(--correct);display:block;}
+.qfb.no{background:#fef2f2;color:var(--wrong);  display:block;}
+.qfb .ar{font-family:'Tajawal';font-size:.85rem;color:inherit;display:inline;}
+
+/* SCORE CARD */
+.score-card{background:linear-gradient(135deg,#1d4ed8,#2563eb);color:white;border-radius:18px;padding:2rem;text-align:center;display:none;margin-top:1.5rem;}
+.score-card.show{display:block;}
+.score-big{font-size:3.5rem;font-weight:900;line-height:1;}
+.score-sub{font-size:1rem;opacity:.85;margin-top:.3rem;font-family:'Tajawal',sans-serif;}
+.score-bar-wrap{background:rgba(255,255,255,.2);border-radius:99px;height:10px;margin:1rem auto;max-width:300px;}
+.score-bar-fill{background:white;height:10px;border-radius:99px;transition:width .8s;}
+.score-msg{font-size:.95rem;font-weight:700;margin-top:.8rem;}
+
+@media(max-width:600px){
+  header h1{font-size:1.5rem;}
+  .tab{padding:8px 14px;font-size:.8rem;}
+  .cbody{padding:1.1rem;}
+}
+</style>
   <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 overflow-auto">
-  <div class="h-full w-full flex flex-col">
-   <!-- Slides Container -->
-   <div class="flex-1 flex items-center justify-center px-4 pb-4 overflow-auto">
-    <div class="w-full max-w-4xl" id="slidesContainer">
-     <!-- Slide 1: Title -->
-     <div class="slide active flex-col items-center justify-center text-center p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="0">
-      <div class="text-6xl mb-6 bounce">
-       📚
+ <body>
+  <header>
+   <div class="hbadge">
+    ✏️ Grammar Lesson
+   </div>
+   <h1>Some, Any, Much, Many &amp; Articles <span>بعض / أي / كثير / كثير / أدوات التعريف والتنكير</span></h1>
+   <div class="tabs">
+    <div class="tab active" onclick="openTab('learn')">
+     📖 Learn
+    </div>
+    <div class="tab" onclick="openTab('practice')">
+     ✏️ Practice
+    </div>
+    <div class="tab" onclick="openTab('quiz')">
+     🎯 Quiz
+    </div>
+   </div>
+  </header><!-- ════════════════ LEARN ════════════════ -->
+  <div class="page active" id="tab-learn"><!-- SOME / ANY -->
+   <div class="card">
+    <div class="ch green">
+     <div class="cnum">
+      1
+     </div>
+     <div class="ctitle">
+      <h2>Some &amp; Any</h2>
+      <p>متى نستخدم some و any؟</p>
+     </div>
+    </div>
+    <div class="cbody">
+     <div class="explain green">
+      <div class="eicon">
+       🧺
       </div>
-      <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-600 mb-4" id="mainTitle">Quantifiers / Articles</h1>
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6">Some, Any, Much, Many والأدوات</h2>
-      <p class="text-lg text-gray-500 mb-8">شرح مبسط لقواعد الكميات والأدوات في اللغة الإنجليزية</p><button onclick="nextSlide()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105">ابدأ الآن 🚀</button>
-     </div><!-- Slide 2: SOME -->
-     <div class="slide flex-col p-6 md:p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="1">
-      <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">SOME 🟠</h2>
-      <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6 mb-6 border-r-4 border-orange-500">
-       <h3 class="text-xl font-bold text-orange-800 mb-3">القاعدة:</h3>
-       <p class="text-lg text-gray-700 leading-relaxed">نستخدم <span class="bg-orange-200 px-3 py-1 rounded-lg font-bold">SOME</span> في الجمل الإيجابية (نعم) مع الأسماء المعدودة (الجمع) والأسماء غير المعدودة</p>
-      </div>
-      <div class="example-box rounded-2xl p-6 bg-blue-50 border-r-4 border-blue-500">
-       <h3 class="text-xl font-bold text-blue-800 mb-4">مثال:</h3>
-       <div class="bg-white rounded-lg p-4 mb-3 border-r-2 border-green-500">
-        <p class="text-lg"><span class="font-bold text-green-600">✓</span> There are <span class="bg-green-200 px-2 py-1 rounded font-bold">some</span> apples</p>
-        <p class="text-sm text-gray-500 mt-1">هناك بعض التفاح</p>
-       </div>
-       <div class="bg-white rounded-lg p-4 border-r-2 border-green-500">
-        <p class="text-lg"><span class="font-bold text-green-600">✓</span> There is <span class="bg-green-200 px-2 py-1 rounded font-bold">some</span> milk</p>
-        <p class="text-sm text-gray-500 mt-1">هناك بعض الحليب</p>
-       </div>
-      </div>
-      <div class="flex justify-between mt-auto pt-4">
-       <button onclick="prevSlide()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">السابق ⬅️</button> <button onclick="nextSlide()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-all">التالي ➡️</button>
-      </div>
-     </div><!-- Slide 3: ANY -->
-     <div class="slide flex-col p-6 md:p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="2">
-      <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">ANY 🟣</h2>
-      <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border-r-4 border-purple-500">
-       <h3 class="text-xl font-bold text-purple-800 mb-3">القاعدة:</h3>
-       <p class="text-lg text-gray-700 leading-relaxed">نستخدم <span class="bg-purple-200 px-3 py-1 rounded-lg font-bold">ANY</span> في:</p>
-       <ul class="mt-3 space-y-2">
-        <li class="text-gray-700">✗ الجمل السالبة (لا)</li>
-        <li class="text-gray-700">❓ الأسئلة (استفسار)</li>
-       </ul>
-      </div>
-      <div class="example-box rounded-2xl p-6 bg-blue-50 border-r-4 border-blue-500">
-       <h3 class="text-xl font-bold text-blue-800 mb-4">مثال:</h3>
-       <div class="bg-white rounded-lg p-4 mb-3 border-r-2 border-red-500">
-        <p class="text-lg"><span class="font-bold text-red-600">✗</span> There aren't <span class="bg-red-200 px-2 py-1 rounded font-bold">any</span> eggs</p>
-        <p class="text-sm text-gray-500 mt-1">لا توجد بيضات</p>
-       </div>
-       <div class="bg-white rounded-lg p-4 border-r-2 border-amber-500">
-        <p class="text-lg"><span class="font-bold text-amber-600">❓</span> Are there <span class="bg-amber-200 px-2 py-1 rounded font-bold">any</span> tomatoes?</p>
-        <p class="text-sm text-gray-500 mt-1">هل هناك طماطم؟</p>
-       </div>
-      </div>
-      <div class="flex justify-between mt-auto pt-4">
-       <button onclick="prevSlide()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">السابق ⬅️</button> <button onclick="nextSlide()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-all">التالي ➡️</button>
-      </div>
-     </div><!-- Slide 4: MANY -->
-     <div class="slide flex-col p-6 md:p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="3">
-      <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">MANY 🟢</h2>
-      <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 mb-6 border-r-4 border-green-500">
-       <h3 class="text-xl font-bold text-green-800 mb-3">القاعدة:</h3>
-       <p class="text-lg text-gray-700 leading-relaxed">نستخدم <span class="bg-green-200 px-3 py-1 rounded-lg font-bold">MANY</span> مع الأسماء <b>المعدودة</b> (يمكن عدها)</p>
-      </div>
-      <div class="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-4 mb-6 border-r-4 border-teal-500">
-       <p class="text-center text-lg">🍎 🥕 🥚 🍌 📚 🎁</p>
-       <p class="text-center text-sm text-gray-600 font-bold mt-2">أشياء يمكن عدها (Countable)</p>
-      </div>
-      <div class="example-box rounded-2xl p-6 bg-blue-50 border-r-4 border-blue-500">
-       <h3 class="text-xl font-bold text-blue-800 mb-4">مثال:</h3>
-       <div class="bg-white rounded-lg p-4">
-        <p class="text-lg">How <span class="bg-green-200 px-2 py-1 rounded font-bold">many</span> apples do you have?</p>
-        <p class="text-sm text-gray-500 mt-1">كم تفاحة عندك؟</p>
-        <p class="text-lg mt-3">I have <span class="bg-green-200 px-2 py-1 rounded font-bold">many</span> apples</p>
-        <p class="text-sm text-gray-500 mt-1">عندي الكثير من التفاح</p>
-       </div>
-      </div>
-      <div class="flex justify-between mt-auto pt-4">
-       <button onclick="prevSlide()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">السابق ⬅️</button> <button onclick="nextSlide()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-all">التالي ➡️</button>
-      </div>
-     </div><!-- Slide 5: MUCH -->
-     <div class="slide flex-col p-6 md:p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="4">
-      <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">MUCH 🔴</h2>
-      <div class="bg-gradient-to-r from-red-50 to-rose-50 rounded-2xl p-6 mb-6 border-r-4 border-red-500">
-       <h3 class="text-xl font-bold text-red-800 mb-3">القاعدة:</h3>
-       <p class="text-lg text-gray-700 leading-relaxed">نستخدم <span class="bg-red-200 px-3 py-1 rounded-lg font-bold">MUCH</span> مع الأسماء <b>غير المعدودة</b> (لا يمكن عدها)</p>
-      </div>
-      <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-4 mb-6 border-r-4 border-orange-500">
-       <p class="text-center text-lg">💧 🍞 🧈 ☕ 🥛 🌊</p>
-       <p class="text-center text-sm text-gray-600 font-bold mt-2">أشياء لا يمكن عدها (Uncountable)</p>
-      </div>
-      <div class="example-box rounded-2xl p-6 bg-blue-50 border-r-4 border-blue-500">
-       <h3 class="text-xl font-bold text-blue-800 mb-4">مثال:</h3>
-       <div class="bg-white rounded-lg p-4">
-        <p class="text-lg">How <span class="bg-red-200 px-2 py-1 rounded font-bold">much</span> water do you drink?</p>
-        <p class="text-sm text-gray-500 mt-1">كم كمية ماء تشرب؟</p>
-        <p class="text-lg mt-3">I drink <span class="bg-red-200 px-2 py-1 rounded font-bold">much</span> water</p>
-        <p class="text-sm text-gray-500 mt-1">أشرب الكثير من الماء</p>
-       </div>
-      </div>
-      <div class="flex justify-between mt-auto pt-4">
-       <button onclick="prevSlide()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">السابق ⬅️</button> <button onclick="nextSlide()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-all">التالي ➡️</button>
-      </div>
-     </div><!-- Slide 6: A/AN -->
-     <div class="slide flex-col p-6 md:p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="5">
-      <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">A / AN 🔵</h2>
-      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 mb-6 border-r-4 border-blue-500">
-       <h3 class="text-xl font-bold text-blue-800 mb-3">القاعدة:</h3>
-       <p class="text-lg text-gray-700 leading-relaxed">نستخدم <span class="bg-blue-200 px-3 py-1 rounded-lg font-bold">A</span> أو <span class="bg-blue-200 px-3 py-1 rounded-lg font-bold">AN</span> مع الأسماء المفردة المعدودة عندما نتحدث عن شيء <b>جديد</b></p>
-      </div>
-      <div class="bg-gradient-to-r from-indigo-50 to-violet-50 rounded-2xl p-4 mb-6 border-r-4 border-indigo-500">
-       <p class="font-bold text-indigo-700 text-lg mb-2">📌 قاعدة النطق:</p>
-       <p class="text-gray-700"><b>AN</b> قبل الحروف الصوتية (a, e, i, o, u)</p>
-       <p class="text-gray-700"><b>A</b> قبل الحروف الساكنة</p>
-      </div>
-      <div class="example-box rounded-2xl p-6 bg-blue-50 border-r-4 border-blue-500">
-       <h3 class="text-xl font-bold text-blue-800 mb-4">مثال:</h3>
-       <div class="bg-white rounded-lg p-4 mb-3 border-r-2 border-blue-500">
-        <p class="text-lg"><span class="bg-blue-200 px-2 py-1 rounded font-bold">A</span> car (سيارة)</p>
-       </div>
-       <div class="bg-white rounded-lg p-4 border-r-2 border-blue-500">
-        <p class="text-lg"><span class="bg-blue-200 px-2 py-1 rounded font-bold">AN</span> apple (تفاحة)</p>
-       </div>
-      </div>
-      <div class="flex justify-between mt-auto pt-4">
-       <button onclick="prevSlide()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">السابق ⬅️</button> <button onclick="nextSlide()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-all">التالي ➡️</button>
-      </div>
-     </div><!-- Slide 7: THE -->
-     <div class="slide flex-col p-6 md:p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="6">
-      <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">THE 🟡</h2>
-      <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-6 mb-6 border-r-4 border-amber-500">
-       <h3 class="text-xl font-bold text-amber-800 mb-3">القاعدة:</h3>
-       <p class="text-lg text-gray-700 leading-relaxed">نستخدم <span class="bg-amber-200 px-3 py-1 rounded-lg font-bold">THE</span> عندما نتحدث عن شيء <b>معروف</b> أو <b>محدد</b> يعرفه المستمع</p>
-      </div>
-      <div class="bg-gradient-to-r from-yellow-50 to-lime-50 rounded-2xl p-4 mb-6 border-r-4 border-yellow-500">
-       <p class="font-bold text-yellow-700 text-lg mb-2">📌 الفرق:</p>
-       <div class="space-y-2">
-        <p class="text-gray-700">جديد: <b>I have a dog</b> (كلب ما)</p>
-        <p class="text-gray-700">معروف: <b>The dog is cute</b> (الكلب المحدد)</p>
-       </div>
-      </div>
-      <div class="example-box rounded-2xl p-6 bg-blue-50 border-r-4 border-blue-500">
-       <h3 class="text-xl font-bold text-blue-800 mb-4">مثال:</h3>
-       <div class="bg-white rounded-lg p-4">
-        <p class="text-lg"><span class="bg-amber-200 px-2 py-1 rounded font-bold">The</span> moon is bright</p>
-        <p class="text-sm text-gray-500 mt-1">القمر (الوحيد والمعروف) مضيء</p>
-       </div>
-      </div>
-      <div class="flex justify-between mt-auto pt-4">
-       <button onclick="prevSlide()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">السابق ⬅️</button> <button onclick="nextSlide()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-all">التالي ➡️</button>
-      </div>
-     </div><!-- Slide 8: No Article -->
-     <div class="slide flex-col p-6 md:p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="7">
-      <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">بلا أداة (No Article) ⚪</h2>
-      <div class="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6 mb-6 border-r-4 border-gray-500">
-       <h3 class="text-xl font-bold text-gray-800 mb-3">القاعدة:</h3>
-       <p class="text-lg text-gray-700 leading-relaxed">لا نستخدم أي أداة عندما نتحدث عن <b>الأشياء بشكل عام</b> أو <b>جميع الأشياء من نوع معين</b></p>
-      </div>
-      <div class="example-box rounded-2xl p-6 bg-blue-50 border-r-4 border-blue-500">
-       <h3 class="text-xl font-bold text-blue-800 mb-4">مثال:</h3>
-       <div class="bg-white rounded-lg p-4 mb-3 border-r-2 border-gray-500">
-        <p class="text-lg">I like cats (بشكل عام)</p>
-        <p class="text-sm text-gray-500 mt-1">أنا أحب القطط (جميع القطط)</p>
-       </div>
-       <div class="bg-white rounded-lg p-4 border-r-2 border-gray-500">
-        <p class="text-lg">Dogs are loyal animals</p>
-        <p class="text-sm text-gray-500 mt-1">الكلاب حيوانات وفية (الكلاب بشكل عام)</p>
-       </div>
-      </div>
-      <div class="flex justify-between mt-auto pt-4">
-       <button onclick="prevSlide()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">السابق ⬅️</button> <button onclick="nextSlide()" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-all">التالي ➡️</button>
-      </div>
-     </div><!-- Slide 9: Summary -->
-     <div class="slide flex-col p-6 md:p-8 bg-white/95 rounded-3xl shadow-2xl" data-slide="8">
-      <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center">ملخص القواعس 📋</h2>
-      <div class="grid gap-4 mb-6">
-       <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-4 border-r-4 border-orange-500">
-        <div class="flex items-center gap-2 mb-2">
-         <span class="text-2xl">🟠</span>
-         <h3 class="font-bold text-orange-700 text-lg">SOME</h3>
+      <div>
+       <h3>The Rules</h3>
+       <div class="rule">
+        <div class="rnum bg-green">
+         1
         </div>
-        <p class="text-sm text-gray-700">✅ جمل إيجابية مع معدود وغير معدود</p>
-       </div>
-       <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 border-r-4 border-purple-500">
-        <div class="flex items-center gap-2 mb-2">
-         <span class="text-2xl">🟣</span>
-         <h3 class="font-bold text-purple-700 text-lg">ANY</h3>
+        <div>
+         Use <b>some</b> in <b>affirmative (Yes)</b> sentences — with uncountable nouns &amp; plural countable nouns.<span class="ar">استخدم some في الجمل المثبتة — مع الأسماء غير المعدودة والجمع</span>
         </div>
-        <p class="text-sm text-gray-700">❌ جمل سالبة و ❓ أسئلة</p>
        </div>
-       <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border-r-4 border-green-500">
-        <div class="flex items-center gap-2 mb-2">
-         <span class="text-2xl">🟢</span>
-         <h3 class="font-bold text-green-700 text-lg">MANY</h3>
+       <div class="rule">
+        <div class="rnum bg-green">
+         2
         </div>
-        <p class="text-sm text-gray-700">مع الأسماء المعدودة (يمكن عدها)</p>
+        <div>
+         Use <b>any</b> in <b>negative (No)</b> sentences — same noun types.<span class="ar">استخدم any في الجمل المنفية</span>
+        </div>
        </div>
-       <div class="bg-gradient-to-r from-red-50 to-rose-50 rounded-xl p-4 border-r-4 border-red-500">
-        <div class="flex items-center gap-2 mb-2">
-         <span class="text-2xl">🔴</span>
-         <h3 class="font-bold text-red-700 text-lg">MUCH</h3>
+       <div class="rule">
+        <div class="rnum bg-green">
+         3
         </div>
-        <p class="text-sm text-gray-700">مع الأسماء غير المعدودة (لا يمكن عدها)</p>
+        <div>
+         Use <b>any</b> in <b>Yes/No questions</b> — same noun types.<span class="ar">استخدم any في الأسئلة</span>
+        </div>
        </div>
-       <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border-r-4 border-blue-500">
-        <div class="flex items-center gap-2 mb-2">
-         <span class="text-2xl">🔵</span>
-         <h3 class="font-bold text-blue-700 text-lg">A / AN / THE</h3>
+       <div class="rule">
+        <div class="rnum bg-green">
+         4
         </div>
-        <p class="text-sm text-gray-700">A/AN = جديد | THE = معروف | بلا = عام</p>
+        <div>
+         With <b>singular countable</b> nouns, use <b>a / an</b> instead.<span class="ar">مع الأسماء المعدودة المفردة استخدم a / an</span>
+        </div>
        </div>
       </div>
-      <div class="text-center">
-       <p class="text-5xl mb-4">🎉</p>
-       <p class="text-2xl font-bold text-indigo-700">أحسنت! أكملت الدرس</p>
+     </div>
+     <table class="gtable">
+      <tbody>
+       <tr>
+        <th>Type</th>
+        <th>Word</th>
+        <th>Example</th>
+       </tr>
+       <tr>
+        <td><span class="tag tag-green">✅ Affirmative</span></td>
+        <td><b>some</b></td>
+        <td>There are <b>some</b> tomatoes. / There is <b>some</b> tomato paste.</td>
+       </tr>
+       <tr>
+        <td><span class="tag tag-rose">❌ Negative</span></td>
+        <td><b>any</b></td>
+        <td>There are <b>not any</b> tomatoes. / There is <b>not any</b> tomato paste.</td>
+       </tr>
+       <tr>
+        <td><span class="tag tag-blue">❓ Question</span></td>
+        <td><b>any</b></td>
+        <td>Are there <b>any</b> tomatoes? / Is there <b>any</b> tomato paste?</td>
+       </tr>
+      </tbody>
+     </table>
+     <div class="eg-box green"><b>A:</b> Are there any burgers? &nbsp;→&nbsp; <b>B:</b> No, there aren't any burgers, but there are <b>some</b> kebabs.
+     </div>
+    </div>
+   </div><!-- MUCH / MANY -->
+   <div class="card">
+    <div class="ch blue">
+     <div class="cnum">
+      2
+     </div>
+     <div class="ctitle">
+      <h2>Much &amp; Many</h2>
+      <p>متى نستخدم much و many؟</p>
+     </div>
+    </div>
+    <div class="cbody">
+     <div class="explain blue">
+      <div class="eicon">
+       ⚖️
       </div>
-      <div class="flex justify-between mt-auto pt-4">
-       <button onclick="prevSlide()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-300 transition-all">السابق ⬅️</button> <button onclick="goToSlide(0)" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition-all">من البداية 🔄</button>
+      <div>
+       <h3>The Rules</h3>
+       <div class="rule">
+        <div class="rnum bg-blue">
+         1
+        </div>
+        <div>
+         Use <b>many</b> with <b>countable</b> nouns (things you can count).<span class="ar">many مع الأسماء المعدودة</span>
+        </div>
+       </div>
+       <div class="rule">
+        <div class="rnum bg-blue">
+         2
+        </div>
+        <div>
+         Use <b>much</b> with <b>uncountable</b> nouns (things you can't count).<span class="ar">much مع الأسماء غير المعدودة</span>
+        </div>
+       </div>
+       <div class="rule">
+        <div class="rnum bg-blue">
+         3
+        </div>
+        <div>
+         Ask: <b>How many</b> … are there? &nbsp;/&nbsp; <b>How much</b> … is there?<span class="ar">للسؤال عن الكمية</span>
+        </div>
+       </div>
+       <div class="rule">
+        <div class="rnum bg-blue">
+         4
+        </div>
+        <div>
+         Often used in <b>negative</b> statements: There aren't many / There isn't much.<span class="ar">كثيراً ما تُستخدم في النفي</span>
+        </div>
+       </div>
+      </div>
+     </div>
+     <table class="gtable">
+      <tbody>
+       <tr>
+        <th>Word</th>
+        <th>Noun Type</th>
+        <th>Example</th>
+       </tr>
+       <tr>
+        <td><b>many</b></td>
+        <td><span class="tag tag-green">Countable ✔</span></td>
+        <td>How <b>many</b> olives are there? — There aren't <b>many</b>.</td>
+       </tr>
+       <tr>
+        <td><b>much</b></td>
+        <td><span class="tag tag-amber">Uncountable ✗</span></td>
+        <td>How <b>much</b> olive oil is there? — There isn't <b>much</b>.</td>
+       </tr>
+      </tbody>
+     </table>
+     <div class="eg-box blue"><b>Shopping list example:</b> We haven't got <b>many</b> kebabs, and we haven't got <b>much</b> ground meat.
+     </div>
+    </div>
+   </div><!-- ARTICLES -->
+   <div class="card">
+    <div class="ch amber">
+     <div class="cnum">
+      3
+     </div>
+     <div class="ctitle">
+      <h2>Articles: a / an / the</h2>
+      <p>أدوات التعريف والتنكير</p>
+     </div>
+    </div>
+    <div class="cbody">
+     <div class="explain amber">
+      <div class="eicon">
+       📌
+      </div>
+      <div>
+       <h3>The Rules</h3>
+       <div class="rule">
+        <div class="rnum bg-amber">
+         1
+        </div>
+        <div>
+         Use <b>a / an</b> when you <b>first mention</b> something new — the listener doesn't know it yet.<span class="ar">a / an عند ذكر الشيء لأول مرة</span>
+        </div>
+       </div>
+       <div class="rule">
+        <div class="rnum bg-amber">
+         2
+        </div>
+        <div>
+         Use <b>the</b> when <b>both speaker &amp; listener know</b> which specific thing you mean.<span class="ar">the عندما يعرف المتحدث والمستمع ما يُقصد</span>
+        </div>
+       </div>
+       <div class="rule">
+        <div class="rnum bg-amber">
+         3
+        </div>
+        <div>
+         Use <b>no article (Ø)</b> when talking about <b>all things of a type</b> (general meaning).<span class="ar">بدون أداة عند الحديث عن أشياء بشكل عام</span>
+        </div>
+       </div>
+      </div>
+     </div>
+     <table class="gtable">
+      <tbody>
+       <tr>
+        <th>Article</th>
+        <th>When to use</th>
+        <th>Example</th>
+       </tr>
+       <tr>
+        <td><b>a / an</b></td>
+        <td>First mention (new info)</td>
+        <td>Kuwait is <b>a</b> desert country. / Perhaps you had <b>some</b> bread.</td>
+       </tr>
+       <tr>
+        <td><b>the</b></td>
+        <td>Known / specific reference</td>
+        <td><b>The</b> climate there is hot. / <b>The</b> wheat was probably American.</td>
+       </tr>
+       <tr>
+        <td><b>Ø (nothing)</b></td>
+        <td>General / all of a type</td>
+        <td><b>Ø</b> Olive trees grow slowly. / People use <b>Ø</b> wheat to make bread.</td>
+       </tr>
+      </tbody>
+     </table>
+     <div class="eg-box amber"><b>Story flow:</b> Kuwait is <b>a</b> desert country. <b>The</b> climate there is hot and dry. <b>The</b> climate is bad for <b>Ø</b> olive trees.
+     </div>
+    </div>
+   </div>
+  </div><!-- ════════════════ PRACTICE ════════════════ -->
+  <div class="page" id="tab-practice"><!-- Exercise 1: some/any fill blanks -->
+   <div class="card">
+    <div class="ch green">
+     <div class="cnum">
+      A
+     </div>
+     <div class="ctitle">
+      <h2>Fill in: some or any</h2>
+      <p>أكمل بـ some أو any</p>
+     </div>
+    </div>
+    <div class="cbody">
+     <div class="slabel">
+      <div class="sdot" style="background:var(--green)"></div>Choose the correct word for each sentence
+     </div>
+     <div class="blanks" id="ex1">
+      <div class="blank-row">
+       <div class="bnum bg-green">
+        1
+       </div>
+       <div class="btext">
+        Are there <input class="bi" id="e1_1" placeholder="?"> tomatoes in the kitchen?
+       </div><button class="btn btn-green" onclick="checkBlank('e1_1','any')">✓</button> <span class="fb" id="f1_1"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-green">
+        2
+       </div>
+       <div class="btext">
+        Yes, there are <input class="bi" id="e1_2" placeholder="?"> tomatoes.
+       </div><button class="btn btn-green" onclick="checkBlank('e1_2','some')">✓</button> <span class="fb" id="f1_2"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-green">
+        3
+       </div>
+       <div class="btext">
+        No, there are not <input class="bi" id="e1_3" placeholder="?"> tomatoes.
+       </div><button class="btn btn-green" onclick="checkBlank('e1_3','any')">✓</button> <span class="fb" id="f1_3"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-green">
+        4
+       </div>
+       <div class="btext">
+        We have <input class="bi" id="e1_4" placeholder="?"> orange juice in the fridge.
+       </div><button class="btn btn-green" onclick="checkBlank('e1_4','some')">✓</button> <span class="fb" id="f1_4"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-green">
+        5
+       </div>
+       <div class="btext">
+        Is there <input class="bi" id="e1_5" placeholder="?"> tomato paste?
+       </div><button class="btn btn-green" onclick="checkBlank('e1_5','any')">✓</button> <span class="fb" id="f1_5"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-green">
+        6
+       </div>
+       <div class="btext">
+        There isn't <input class="bi" id="e1_6" placeholder="?"> vegetable oil left.
+       </div><button class="btn btn-green" onclick="checkBlank('e1_6','any')">✓</button> <span class="fb" id="f1_6"></span>
+      </div>
+     </div><button class="btn btn-ghost" style="margin-top:12px" onclick="resetEx('e1_1','e1_2','e1_3','e1_4','e1_5','e1_6')">🔄 Reset</button>
+    </div>
+   </div><!-- Exercise 2: much / many -->
+   <div class="card">
+    <div class="ch blue">
+     <div class="cnum">
+      B
+     </div>
+     <div class="ctitle">
+      <h2>Fill in: much or many</h2>
+      <p>أكمل بـ much أو many</p>
+     </div>
+    </div>
+    <div class="cbody">
+     <div class="slabel">
+      <div class="sdot" style="background:var(--blue)"></div>Complete with <i>much</i> or <i>many</i>
+     </div>
+     <div class="blanks">
+      <div class="blank-row">
+       <div class="bnum bg-blue">
+        1
+       </div>
+       <div class="btext">
+        How <input class="bi" id="e2_1" placeholder="?"> apples does she need?
+       </div><button class="btn btn-blue" onclick="checkBlank('e2_1','many')">✓</button> <span class="fb" id="f2_1"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-blue">
+        2
+       </div>
+       <div class="btext">
+        How <input class="bi" id="e2_2" placeholder="?"> apple juice does she want?
+       </div><button class="btn btn-blue" onclick="checkBlank('e2_2','much')">✓</button> <span class="fb" id="f2_2"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-blue">
+        3
+       </div>
+       <div class="btext">
+        There aren't <input class="bi" id="e2_3" placeholder="?"> olives on the table.
+       </div><button class="btn btn-blue" onclick="checkBlank('e2_3','many')">✓</button> <span class="fb" id="f2_3"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-blue">
+        4
+       </div>
+       <div class="btext">
+        There isn't <input class="bi" id="e2_4" placeholder="?"> olive oil left.
+       </div><button class="btn btn-blue" onclick="checkBlank('e2_4','much')">✓</button> <span class="fb" id="f2_4"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-blue">
+        5
+       </div>
+       <div class="btext">
+        We haven't got <input class="bi" id="e2_5" placeholder="?"> kebabs.
+       </div><button class="btn btn-blue" onclick="checkBlank('e2_5','many')">✓</button> <span class="fb" id="f2_5"></span>
+      </div>
+      <div class="blank-row">
+       <div class="bnum bg-blue">
+        6
+       </div>
+       <div class="btext">
+        We haven't got <input class="bi" id="e2_6" placeholder="?"> ground meat.
+       </div><button class="btn btn-blue" onclick="checkBlank('e2_6','much')">✓</button> <span class="fb" id="f2_6"></span>
+      </div>
+     </div><button class="btn btn-ghost" style="margin-top:12px" onclick="resetEx('e2_1','e2_2','e2_3','e2_4','e2_5','e2_6')">🔄 Reset</button>
+    </div>
+   </div><!-- Exercise 3: Articles choose -->
+   <div class="card">
+    <div class="ch amber">
+     <div class="cnum">
+      C
+     </div>
+     <div class="ctitle">
+      <h2>Choose: a / an / the / Ø</h2>
+      <p>اختر الأداة الصحيحة</p>
+     </div>
+    </div>
+    <div class="cbody">
+     <div class="slabel">
+      <div class="sdot" style="background:var(--amber)"></div>Click the correct article for each sentence
+     </div>
+     <div class="mcq-rows">
+      <div class="mcq-row">
+       <div class="mcq-q">
+        1. Kuwait is ___ desert country. <span style="color:var(--muted);font-size:.8rem">(first mention)</span>
+       </div>
+       <div class="mcq-opts">
+        <div class="opt" onclick="pickOpt(this,'a','a')">
+         a
+        </div>
+        <div class="opt" onclick="pickOpt(this,'an','a')">
+         an
+        </div>
+        <div class="opt" onclick="pickOpt(this,'the','a')">
+         the
+        </div>
+        <div class="opt" onclick="pickOpt(this,'Ø','a')">
+         Ø
+        </div>
+       </div>
+      </div>
+      <div class="mcq-row">
+       <div class="mcq-q">
+        2. ___ climate there is hot and dry. <span style="color:var(--muted);font-size:.8rem">(we already know which climate)</span>
+       </div>
+       <div class="mcq-opts">
+        <div class="opt" onclick="pickOpt(this,'a','the')">
+         a
+        </div>
+        <div class="opt" onclick="pickOpt(this,'an','the')">
+         an
+        </div>
+        <div class="opt" onclick="pickOpt(this,'the','the')">
+         the
+        </div>
+        <div class="opt" onclick="pickOpt(this,'Ø','the')">
+         Ø
+        </div>
+       </div>
+      </div>
+      <div class="mcq-row">
+       <div class="mcq-q">
+        3. ___ olive trees grow slowly. <span style="color:var(--muted);font-size:.8rem">(general — all olive trees)</span>
+       </div>
+       <div class="mcq-opts">
+        <div class="opt" onclick="pickOpt(this,'a','Ø')">
+         a
+        </div>
+        <div class="opt" onclick="pickOpt(this,'an','Ø')">
+         an
+        </div>
+        <div class="opt" onclick="pickOpt(this,'the','Ø')">
+         the
+        </div>
+        <div class="opt" onclick="pickOpt(this,'Ø','Ø')">
+         Ø (nothing)
+        </div>
+       </div>
+      </div>
+      <div class="mcq-row">
+       <div class="mcq-q">
+        4. Perhaps you had ___ bread. <span style="color:var(--muted);font-size:.8rem">(some bread — first mention)</span>
+       </div>
+       <div class="mcq-opts">
+        <div class="opt" onclick="pickOpt(this,'a','some')">
+         a
+        </div>
+        <div class="opt" onclick="pickOpt(this,'some','some')">
+         some
+        </div>
+        <div class="opt" onclick="pickOpt(this,'the','some')">
+         the
+        </div>
+        <div class="opt" onclick="pickOpt(this,'Ø','some')">
+         Ø
+        </div>
+       </div>
+      </div>
+      <div class="mcq-row">
+       <div class="mcq-q">
+        5. ___ wheat was probably American. <span style="color:var(--muted);font-size:.8rem">(the specific wheat in the bread)</span>
+       </div>
+       <div class="mcq-opts">
+        <div class="opt" onclick="pickOpt(this,'a','the')">
+         a
+        </div>
+        <div class="opt" onclick="pickOpt(this,'an','the')">
+         an
+        </div>
+        <div class="opt" onclick="pickOpt(this,'the','the')">
+         the
+        </div>
+        <div class="opt" onclick="pickOpt(this,'Ø','the')">
+         Ø
+        </div>
+       </div>
+      </div>
+      <div class="mcq-row">
+       <div class="mcq-q">
+        6. People use ___ wheat to make bread. <span style="color:var(--muted);font-size:.8rem">(general use)</span>
+       </div>
+       <div class="mcq-opts">
+        <div class="opt" onclick="pickOpt(this,'a','Ø')">
+         a
+        </div>
+        <div class="opt" onclick="pickOpt(this,'the','Ø')">
+         the
+        </div>
+        <div class="opt" onclick="pickOpt(this,'Ø','Ø')">
+         Ø (nothing)
+        </div>
+       </div>
       </div>
      </div>
     </div>
-   </div><!-- Progress Bar and Navigation -->
-   <div class="fixed bottom-8 left-4 right-4 flex flex-col items-center gap-4 pointer-events-none">
-    <div class="flex gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 pointer-events-auto" id="progressDots"></div>
-    <div class="flex justify-between w-full pointer-events-auto">
-     <button id="prevBtn" onclick="prevSlide()" class="bg-white/10 backdrop-blur-md w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl font-bold text-white hover:bg-white/20 hover:scale-110 transition-all">⬅️</button> <button id="nextBtn" onclick="nextSlide()" class="bg-white/10 backdrop-blur-md w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl font-bold text-white hover:bg-white/20 hover:scale-110 transition-all">➡️</button>
+   </div><!-- Exercise 4: Dialogue completion -->
+   <div class="card">
+    <div class="ch rose" style="background:linear-gradient(135deg,#be123c,#e11d48)">
+     <div class="cnum">
+      D
+     </div>
+     <div class="ctitle">
+      <h2>Complete the Dialogue</h2>
+      <p>أكمل الحوار بالكلمة المناسبة</p>
+     </div>
+    </div>
+    <div class="cbody">
+     <div style="font-size:.85rem;color:var(--muted);margin-bottom:1rem;font-family:'Tajawal',sans-serif;">
+      🛒 Mariam is talking about her shopping list. Fill in the blanks.
+     </div>
+     <div class="dialogue">
+      <div class="d-row">
+       <div class="d-sp a">
+        A
+       </div>
+       <div class="d-text">
+        How <input class="bi" id="d1" placeholder="?"> apples does she want?
+       </div>
+      </div>
+      <div class="d-row">
+       <div class="d-sp b">
+        B
+       </div>
+       <div class="d-text">
+        She doesn't want <input class="bi" id="d2" placeholder="?">. She just needs a kilo.
+       </div>
+      </div>
+      <div class="d-row">
+       <div class="d-sp a">
+        A
+       </div>
+       <div class="d-text">
+        How <input class="bi" id="d3" placeholder="?"> apple juice does she want?
+       </div>
+      </div>
+      <div class="d-row">
+       <div class="d-sp b">
+        B
+       </div>
+       <div class="d-text">
+        She doesn't want <input class="bi" id="d4" placeholder="?">. She just needs a carton.
+       </div>
+      </div>
+      <div class="d-row">
+       <div class="d-sp a">
+        A
+       </div>
+       <div class="d-text">
+        Are there <input class="bi" id="d5" placeholder="?"> lemons on the list?
+       </div>
+      </div>
+      <div class="d-row">
+       <div class="d-sp b">
+        B
+       </div>
+       <div class="d-text">
+        Yes, she needs <input class="bi" id="d6" placeholder="?"> lemons — half a kilo.
+       </div>
+      </div>
+     </div><button class="btn btn-ghost" style="margin-top:12px" onclick="checkDialogue()">✓ Check All</button> <button class="btn btn-ghost" style="margin-top:12px;margin-right:6px" onclick="resetDialogue()">🔄 Reset</button>
+     <div id="dialogueFb" style="margin-top:.8rem;font-weight:700;font-size:.9rem;"></div>
+    </div>
+   </div>
+  </div><!-- ════════════════ QUIZ ════════════════ -->
+  <div class="page" id="tab-quiz">
+   <div style="background:white;border-radius:20px;box-shadow:0 2px 16px rgba(0,0,0,0.06);overflow:hidden;margin-bottom:1.5rem;">
+    <div style="background:linear-gradient(135deg,#1d4ed8,#2563eb);padding:1.3rem 1.6rem;display:flex;align-items:center;gap:.9rem;">
+     <div style="width:38px;height:38px;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">
+      🎯
+     </div>
+     <div style="color:white;">
+      <div style="font-size:1.1rem;font-weight:800;">
+       Final Quiz — 10 Questions
+      </div>
+      <div style="font-size:.78rem;opacity:.8;font-family:'Tajawal',sans-serif;">
+       اختبر معلوماتك — 10 أسئلة شاملة
+      </div>
+     </div>
+    </div>
+    <div style="padding:1.6rem;">
+     <div class="quiz-wrap" id="quizWrap"></div>
+     <div style="display:flex;gap:10px;margin-top:1.4rem;flex-wrap:wrap;"><button class="btn btn-blue" onclick="submitQuiz()">📊 Show My Score</button> <button class="btn btn-ghost" onclick="resetQuiz()">🔄 Try Again</button>
+     </div>
+     <div class="score-card" id="scoreCard">
+      <div class="score-big" id="scoreNum">
+       0/10
+      </div>
+      <div class="score-sub" id="scoreSub"></div>
+      <div class="score-bar-wrap">
+       <div class="score-bar-fill" id="scoreBarFill" style="width:0%"></div>
+      </div>
+      <div class="score-msg" id="scoreMsg"></div>
+     </div>
     </div>
    </div>
   </div>
   <script>
-    const defaultConfig = { main_title: 'Quantifiers / Articles' };
-    let currentSlide = 0;
-    const totalSlides = 9;
-    
-    function initProgressDots() {
-      const dotsContainer = document.getElementById('progressDots');
-      dotsContainer.innerHTML = '';
-      for (let i = 0; i < totalSlides; i++) {
-        const dot = document.createElement('div');
-        dot.className = `progress-dot w-3 h-3 rounded-full cursor-pointer transition-all ${i === currentSlide ? 'bg-white active' : 'bg-white/50'}`;
-        dot.onclick = () => goToSlide(i);
-        dotsContainer.appendChild(dot);
-      }
-    }
-    
-    function updateProgressDots() {
-      const dots = document.querySelectorAll('.progress-dot');
-      dots.forEach((dot, index) => {
-        dot.className = `progress-dot w-3 h-3 rounded-full cursor-pointer transition-all ${index === currentSlide ? 'bg-white active' : 'bg-white/50'}`;
-      });
-    }
-    
-    function showSlide(index) {
-      const slides = document.querySelectorAll('.slide');
-      slides.forEach((slide, i) => {
-        slide.classList.remove('active');
-        if (i === index) {
-          slide.classList.add('active');
-        }
-      });
-      updateProgressDots();
-      updateNavButtons();
-    }
-    
-    function nextSlide() {
-      if (currentSlide < totalSlides - 1) {
-        currentSlide++;
-        showSlide(currentSlide);
-      }
-    }
-    
-    function prevSlide() {
-      if (currentSlide > 0) {
-        currentSlide--;
-        showSlide(currentSlide);
-      }
-    }
-    
-    function goToSlide(index) {
-      currentSlide = index;
-      showSlide(currentSlide);
-    }
-    
-    function updateNavButtons() {
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      prevBtn.style.opacity = currentSlide === 0 ? '0.3' : '1';
-      nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.3' : '1';
-    }
-    
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        nextSlide();
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        prevSlide();
-      }
-    });
-    
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig: defaultConfig,
-        onConfigChange: async function(config) {
-          const titleEl = document.getElementById('mainTitle');
-          if (titleEl) {
-            titleEl.textContent = config.main_title || defaultConfig.main_title;
-          }
-        },
-        mapToCapabilities: function(config) {
-          return { recolorables: [], borderables: [], fontEditable: undefined, fontSizeable: undefined };
-        },
-        mapToEditPanelValues: function(config) {
-          return new Map([['main_title', config.main_title || defaultConfig.main_title]]);
-        }
-      });
-    }
-    
-    initProgressDots();
-    updateNavButtons();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fbb3b652769e15d',t:'MTc3ODc3NTY0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+// ── TABS ──
+function openTab(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── FILL BLANKS ──
+function checkBlank(id, answer) {
+  const inp = document.getElementById(id);
+  const fbId = 'f' + id.slice(1);
+  const fb = document.getElementById(fbId);
+  if (!fb) return;
+  const val = inp.value.trim().toLowerCase();
+  if (val === answer.toLowerCase()) {
+    inp.className='bi ok'; fb.className='fb ok'; fb.textContent='✅ Correct!';
+  } else if (val === '') {
+    fb.className='fb no'; fb.textContent='Please type an answer.';
+  } else {
+    inp.className='bi no'; fb.className='fb no'; fb.textContent='✗ Try: '+answer;
+  }
+}
+
+function resetEx(...ids) {
+  ids.forEach(id => {
+    const inp = document.getElementById(id);
+    if (inp) { inp.value=''; inp.className='bi'; }
+    const fbId = 'f' + id.slice(1);
+    const fb = document.getElementById(fbId);
+    if (fb) { fb.textContent=''; fb.className='fb'; }
+  });
+}
+
+// ── MCQ ──
+function pickOpt(el, chosen, correct) {
+  const row = el.closest('.mcq-row');
+  row.querySelectorAll('.opt').forEach(o=>o.classList.remove('correct','wrong'));
+  if (chosen === correct) {
+    el.classList.add('correct');
+  } else {
+    el.classList.add('wrong');
+    row.querySelectorAll('.opt').forEach(o=>{ if(o.textContent.trim()===correct) o.classList.add('correct'); });
+  }
+}
+
+// ── DIALOGUE ──
+const dAnswers = { d1:'many', d2:'many', d3:'much', d4:'much', d5:'any', d6:'some' };
+function checkDialogue() {
+  let score = 0;
+  Object.entries(dAnswers).forEach(([id,ans])=>{
+    const inp = document.getElementById(id);
+    if (inp.value.trim().toLowerCase() === ans) { inp.className='bi ok'; score++; }
+    else { inp.className='bi no'; }
+  });
+  const fb = document.getElementById('dialogueFb');
+  fb.innerHTML = score===6 ? '<span style="color:var(--correct)">🎉 Perfect! All 6 correct!</span>' : `<span style="color:var(--wrong)">You got ${score}/6. Check the highlighted boxes.</span>`;
+}
+function resetDialogue() {
+  Object.keys(dAnswers).forEach(id=>{ const i=document.getElementById(id); i.value=''; i.className='bi'; });
+  document.getElementById('dialogueFb').innerHTML='';
+}
+
+// ── QUIZ ──
+const questions = [
+  { q:"Are there ___ burgers?", opts:["some","any","much","many"], ans:"any", hint:"Questions use 'any' — الأسئلة تستخدم any" },
+  { q:"Yes, there are ___ kebabs.", opts:["any","much","some","many"], ans:"some", hint:"Affirmative sentences use 'some' — الجمل المثبتة تستخدم some" },
+  { q:"How ___ olive oil is there?", opts:["many","some","much","any"], ans:"much", hint:"'Much' with uncountable nouns — much مع غير المعدود" },
+  { q:"How ___ lemons do we need?", opts:["much","some","any","many"], ans:"many", hint:"'Many' with countable nouns — many مع المعدود" },
+  { q:"Kuwait is ___ desert country.", opts:["a","an","the","Ø"], ans:"a", hint:"First mention of a singular noun → a/an — أول ذكر للاسم" },
+  { q:"___ climate there is very hot.", opts:["A","An","The","Ø"], ans:"The", hint:"We know which climate → the — نعرف ما يُقصد" },
+  { q:"People use ___ wheat to make bread.", opts:["a","the","some","Ø"], ans:"Ø", hint:"General meaning → no article — معنى عام = بدون أداة" },
+  { q:"There isn't ___ tomato paste.", opts:["some","many","any","much"], ans:"any", hint:"Negative sentence → any — الجمل المنفية تستخدم any" },
+  { q:"We haven't got ___ kebabs.", opts:["much","some","many","any"], ans:"many", hint:"Kebabs = countable → many — المعدود = many" },
+  { q:"___ wheat was probably American.", opts:["A","An","The","Ø"], ans:"The", hint:"Specific wheat we already know → the — الشيء المعروف = the" },
+];
+
+let answered = new Array(10).fill(false);
+
+function buildQuiz() {
+  const wrap = document.getElementById('quizWrap');
+  wrap.innerHTML = '';
+  questions.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'qcard';
+    div.innerHTML = `
+      <div class="qnum">Question ${i+1} of ${questions.length}</div>
+      <div class="qtext">${q.q}</div>
+      <div class="qopts" id="qopts${i}">
+        ${q.opts.map(o=>`<div class="qopt" onclick="pickQ(${i},'${o}',this)"><div class="qopt-icon"></div>${o}</div>`).join('')}
+      </div>
+      <div class="qfb" id="qfb${i}"></div>`;
+    wrap.appendChild(div);
+  });
+  answered = new Array(10).fill(false);
+  document.getElementById('scoreCard').classList.remove('show');
+}
+
+function pickQ(i, chosen, el) {
+  if (answered[i]) return;
+  answered[i] = true;
+  const q = questions[i];
+  const opts = document.querySelectorAll(`#qopts${i} .qopt`);
+  opts.forEach(o => {
+    if (o.textContent.trim() === q.ans) o.classList.add('reveal');
+  });
+  const fb = document.getElementById('qfb'+i);
+  if (chosen === q.ans) {
+    el.classList.add('correct');
+    fb.className='qfb ok'; fb.textContent='✅ Correct! ' + q.hint;
+  } else {
+    el.classList.add('wrong');
+    fb.className='qfb no'; fb.innerHTML=`✗ The answer is <b>${q.ans}</b>. ${q.hint}`;
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  questions.forEach((q,i) => {
+    const opts = document.querySelectorAll(`#qopts${i} .qopt`);
+    opts.forEach(o=>{ if(o.classList.contains('correct')) score++; });
+  });
+  const pct = Math.round(score/questions.length*100);
+  const card = document.getElementById('scoreCard');
+  document.getElementById('scoreNum').textContent = `${score}/${questions.length}`;
+  document.getElementById('scoreSub').textContent = `${pct}% — ${pct>=90?'Excellent! ممتاز':pct>=70?'Good job! أحسنت':pct>=50?'Keep practising! واصل':' Review the lesson! راجع الدرس'}`;
+  document.getElementById('scoreBarFill').style.width = pct+'%';
+  const msgs = ['⭐⭐⭐ Outstanding! You mastered the lesson!','⭐⭐ Well done! Almost perfect.','⭐ Good effort — review and try again!','📖 Go back to Learn tab and try again.'];
+  document.getElementById('scoreMsg').textContent = pct>=90?msgs[0]:pct>=70?msgs[1]:pct>=50?msgs[2]:msgs[3];
+  card.classList.add('show');
+  card.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function resetQuiz() {
+  buildQuiz();
+  window.scrollTo({top:document.getElementById('tab-quiz').offsetTop-80,behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fbb550451bde224',t:'MTc3ODc3NjY5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
