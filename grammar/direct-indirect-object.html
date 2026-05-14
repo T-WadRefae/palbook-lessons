@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direct vs Indirect Objects</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+    
+    .font-main { font-family: 'Nunito', sans-serif; }
+    .font-arabic { font-family: 'Tajawal', sans-serif; }
+    
+    /* Prezi-style zoom and pan transitions */
+    .slide-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.3) rotate(-10deg);
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+    
+    .slide-container.active {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      pointer-events: auto;
+    }
+    
+    .slide-container.exit-left {
+      opacity: 0;
+      transform: scale(0.5) translateX(-100%) rotate(10deg);
+    }
+    
+    .slide-container.exit-right {
+      opacity: 0;
+      transform: scale(0.5) translateX(100%) rotate(-10deg);
+    }
+    
+    /* Floating animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float { animation: float 3s ease-in-out infinite; }
+    .float-delay { animation: float 3s ease-in-out infinite 0.5s; }
+    .float-delay-2 { animation: float 3s ease-in-out infinite 1s; }
+    
+    /* Pulse animation */
+    @keyframes pulse-soft {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+    
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Card styles */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Progress bar */
+    .progress-fill {
+      transition: width 0.5s ease-out;
+    }
+    
+    /* Navigation dots */
+    .nav-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      transform: scale(1.3);
+    }
+    
+    /* Highlight animations */
+    @keyframes highlight-bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .highlight-direct {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      animation: highlight-bounce 2s ease-in-out infinite;
+    }
+    
+    .highlight-indirect {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      animation: highlight-bounce 2s ease-in-out infinite 0.3s;
+    }
+    
+    .highlight-verb {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      color: #1a1a2e;
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    
+    /* Stagger animations */
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .slide-up {
+      animation: slideUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    
+    /* Emoji bounce */
+    @keyframes emoji-bounce {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.2) rotate(-10deg); }
+      75% { transform: scale(1.2) rotate(10deg); }
+    }
+    
+    .emoji-animate:hover {
+      animation: emoji-bounce 0.5s ease;
+    }
+    
+    /* Button hover effect */
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    }
+    
+    .btn-nav {
+      transition: all 0.3s ease;
+    }
+    
+    .btn-nav:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Arrow animation */
+    @keyframes arrow-move {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(5px); }
+    }
+    
+    .arrow-animate {
+      animation: arrow-move 1s ease-in-out infinite;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-main overflow-hidden"><!-- Main Background -->
+  <div class="fixed inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800"><!-- Decorative circles -->
+   <div class="absolute top-10 left-10 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 float"></div>
+   <div class="absolute top-1/2 right-10 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 float-delay"></div>
+   <div class="absolute bottom-10 left-1/3 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-25 float-delay-2"></div>
+  </div><!-- Progress Bar -->
+  <div class="fixed top-0 left-0 right-0 z-50 h-1 bg-white/20">
+   <div id="progress-bar" class="progress-fill h-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500" style="width: 0%"></div>
+  </div><!-- Navigation Dots -->
+  <div class="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col gap-3" id="nav-dots"></div><!-- Navigation Arrows --> <button id="prev-btn" class="fixed left-4 top-1/2 transform -translate-y-1/2 z-50 btn-nav bg-white/20 hover:bg-white/30 text-white w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-sm opacity-0 transition-opacity" style="display: none;">
+   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+   </svg></button> <button id="next-btn" class="fixed right-20 top-1/2 transform -translate-y-1/2 z-50 btn-nav bg-white/20 hover:bg-white/30 text-white w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-sm opacity-0 transition-opacity" style="display: none;">
+   <svg class="w-6 h-6 arrow-animate" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+   </svg></button> <!-- Slides Container -->
+  <div id="slides-wrapper" class="relative w-full h-full"><!-- Slide 0: Welcome -->
+   <div class="slide-container active" data-slide="0">
+    <div class="text-center px-6 max-w-4xl">
+     <div class="text-8xl mb-8 emoji-animate cursor-pointer">
+      📚
+     </div>
+     <h1 id="main-title" class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">Direct vs Indirect<br><span class="gradient-text bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300">Objects</span></h1>
+     <p class="text-xl md:text-2xl text-white/80 mb-4 font-arabic">المفعول به المباشر وغير المباشر</p>
+     <p class="text-lg text-white/60 mb-10">A visual journey to understand sentence structure</p><button id="start-btn" class="btn-primary text-white text-xl font-bold px-10 py-4 rounded-full pulse-soft"> Let's Start! 🚀 </button>
+    </div>
+   </div><!-- Slide 1: What is an Object? -->
+   <div class="slide-container" data-slide="1">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-8"><span class="text-5xl">🤔</span>
+      <h2 class="text-3xl md:text-4xl font-bold gradient-text">What is an Object?</h2>
+     </div>
+     <div class="space-y-6">
+      <div class="slide-up stagger-1">
+       <p class="text-xl md:text-2xl text-gray-700 leading-relaxed">An <strong>object</strong> is a noun or pronoun that receives the action of a verb.</p>
+      </div>
+      <div class="slide-up stagger-2 bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-2xl border-l-4 border-purple-500">
+       <p class="text-lg text-gray-600 font-arabic text-right leading-relaxed">المفعول به هو الاسم أو الضمير الذي يقع عليه فعل الفاعل</p>
+      </div>
+      <div class="slide-up stagger-3 mt-8">
+       <div class="bg-gray-900 rounded-2xl p-6 text-center">
+        <p class="text-2xl md:text-3xl text-white">She <span class="highlight-verb">reads</span> <span class="highlight-direct">a book</span></p>
+        <p class="text-white/60 mt-3 text-lg">↑ "a book" receives the action of reading</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 2: Direct Object -->
+   <div class="slide-container" data-slide="2">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-8"><span class="text-5xl">🎯</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-pink-600">Direct Object</h2>
+     </div>
+     <div class="space-y-6">
+      <div class="slide-up stagger-1">
+       <p class="text-xl text-gray-700">The <strong>direct object</strong> answers: <span class="text-pink-600 font-bold text-2xl">"What?"</span> or <span class="text-pink-600 font-bold text-2xl">"Whom?"</span></p>
+      </div>
+      <div class="slide-up stagger-2 bg-pink-50 p-5 rounded-xl border-l-4 border-pink-500">
+       <p class="text-lg text-gray-600 font-arabic text-right">المفعول به المباشر يجيب على سؤال: ماذا؟ أو مَن؟</p>
+      </div>
+      <div class="slide-up stagger-3 grid gap-4 mt-6">
+       <div class="bg-gray-900 rounded-xl p-5">
+        <p class="text-xl md:text-2xl text-white text-center">I <span class="highlight-verb">bought</span> <span class="highlight-direct">a car</span> 🚗</p>
+        <p class="text-white/60 text-center mt-2">What did I buy? → <strong class="text-pink-400">a car</strong></p>
+       </div>
+       <div class="bg-gray-900 rounded-xl p-5">
+        <p class="text-xl md:text-2xl text-white text-center">She <span class="highlight-verb">called</span> <span class="highlight-direct">her friend</span> 👩</p>
+        <p class="text-white/60 text-center mt-2">Whom did she call? → <strong class="text-pink-400">her friend</strong></p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 3: Indirect Object -->
+   <div class="slide-container" data-slide="3">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-8"><span class="text-5xl">🎁</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-cyan-600">Indirect Object</h2>
+     </div>
+     <div class="space-y-6">
+      <div class="slide-up stagger-1">
+       <p class="text-xl text-gray-700">The <strong>indirect object</strong> answers: <span class="text-cyan-600 font-bold text-2xl">"To whom?"</span> or <span class="text-cyan-600 font-bold text-2xl">"For whom?"</span></p>
+      </div>
+      <div class="slide-up stagger-2 bg-cyan-50 p-5 rounded-xl border-l-4 border-cyan-500">
+       <p class="text-lg text-gray-600 font-arabic text-right">المفعول به غير المباشر يجيب على سؤال: لِمَن؟ أو من أجل مَن؟</p>
+      </div>
+      <div class="slide-up stagger-3 grid gap-4 mt-6">
+       <div class="bg-gray-900 rounded-xl p-5">
+        <p class="text-xl md:text-2xl text-white text-center">I <span class="highlight-verb">gave</span> <span class="highlight-indirect">my mom</span> <span class="highlight-direct">flowers</span> 💐</p>
+        <p class="text-white/60 text-center mt-2">To whom? → <strong class="text-cyan-400">my mom</strong> | What? → <strong class="text-pink-400">flowers</strong></p>
+       </div>
+       <div class="bg-gray-900 rounded-xl p-5">
+        <p class="text-xl md:text-2xl text-white text-center">He <span class="highlight-verb">sent</span> <span class="highlight-indirect">me</span> <span class="highlight-direct">a message</span> 📩</p>
+        <p class="text-white/60 text-center mt-2">To whom? → <strong class="text-cyan-400">me</strong> | What? → <strong class="text-pink-400">a message</strong></p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 4: The Difference -->
+   <div class="slide-container" data-slide="4">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-5xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-8"><span class="text-5xl">⚖️</span>
+      <h2 class="text-3xl md:text-4xl font-bold gradient-text">The Key Difference</h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6">
+      <div class="slide-up stagger-1 bg-gradient-to-br from-pink-100 to-pink-50 p-6 rounded-2xl border-2 border-pink-300">
+       <h3 class="text-2xl font-bold text-pink-600 mb-4 flex items-center gap-2"><span>🎯</span> Direct Object</h3>
+       <ul class="space-y-3 text-gray-700">
+        <li class="flex items-start gap-2"><span class="text-pink-500">✓</span> <span>Receives the action <strong>directly</strong></span></li>
+        <li class="flex items-start gap-2"><span class="text-pink-500">✓</span> <span>Answers: What? Whom?</span></li>
+        <li class="flex items-start gap-2"><span class="text-pink-500">✓</span> <span>Comes <strong>after</strong> the verb</span></li>
+       </ul>
+       <p class="mt-4 text-gray-500 font-arabic text-right text-sm">يستقبل الفعل مباشرة</p>
+      </div>
+      <div class="slide-up stagger-2 bg-gradient-to-br from-cyan-100 to-cyan-50 p-6 rounded-2xl border-2 border-cyan-300">
+       <h3 class="text-2xl font-bold text-cyan-600 mb-4 flex items-center gap-2"><span>🎁</span> Indirect Object</h3>
+       <ul class="space-y-3 text-gray-700">
+        <li class="flex items-start gap-2"><span class="text-cyan-500">✓</span> <span>Receives the direct object</span></li>
+        <li class="flex items-start gap-2"><span class="text-cyan-500">✓</span> <span>Answers: To whom? For whom?</span></li>
+        <li class="flex items-start gap-2"><span class="text-cyan-500">✓</span> <span>Comes <strong>between</strong> verb &amp; D.O.</span></li>
+       </ul>
+       <p class="mt-4 text-gray-500 font-arabic text-right text-sm">يستقبل المفعول به المباشر</p>
+      </div>
+     </div>
+     <div class="slide-up stagger-3 mt-8 bg-gray-900 rounded-2xl p-6 text-center">
+      <p class="text-lg text-white/70 mb-2">Word Order:</p>
+      <p class="text-xl md:text-2xl text-white">Subject + Verb + <span class="highlight-indirect">I.O.</span> + <span class="highlight-direct">D.O.</span></p>
+     </div>
+    </div>
+   </div><!-- Slide 5: TO and FOR -->
+   <div class="slide-container" data-slide="5">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-8"><span class="text-5xl">🔄</span>
+      <h2 class="text-3xl md:text-4xl font-bold gradient-text">Using TO &amp; FOR</h2>
+     </div>
+     <div class="space-y-6">
+      <div class="slide-up stagger-1 bg-purple-50 p-5 rounded-xl">
+       <p class="text-lg text-gray-700">The indirect object can come <strong>after</strong> the direct object using <span class="bg-purple-600 text-white px-3 py-1 rounded-full font-bold">TO</span> or <span class="bg-indigo-600 text-white px-3 py-1 rounded-full font-bold">FOR</span></p>
+       <p class="text-gray-500 font-arabic text-right mt-2">يمكن وضع المفعول غير المباشر بعد المباشر باستخدام to أو for</p>
+      </div>
+      <div class="slide-up stagger-2 grid gap-4">
+       <div class="bg-gray-900 rounded-xl p-5">
+        <p class="text-white/60 mb-2 text-sm">Standard order:</p>
+        <p class="text-xl text-white text-center">I gave <span class="highlight-indirect">her</span> <span class="highlight-direct">a gift</span></p>
+        <p class="text-white/60 my-3 text-center">↓ Same meaning ↓</p>
+        <p class="text-xl text-white text-center">I gave <span class="highlight-direct">a gift</span> <span class="bg-purple-600 px-2 py-1 rounded">to</span> <span class="highlight-indirect">her</span></p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 6: When to use TO -->
+   <div class="slide-container" data-slide="6">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-6"><span class="text-5xl">📤</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-purple-600">When to use TO</h2>
+     </div>
+     <div class="slide-up stagger-1 bg-purple-50 p-4 rounded-xl mb-6 border-l-4 border-purple-500">
+      <p class="text-lg text-gray-700">Use <strong class="text-purple-600">TO</strong> with verbs that show <span class="underline">transfer or direction</span></p>
+      <p class="text-gray-500 font-arabic text-right mt-1">استخدم TO مع أفعال النقل والتوجيه</p>
+     </div>
+     <div class="grid gap-3">
+      <div class="slide-up stagger-2 bg-white rounded-xl p-4 shadow-md flex items-center gap-4"><span class="text-3xl">✉️</span>
+       <div>
+        <p class="font-bold text-gray-800">give, send, show, tell, teach, offer, lend, pass, write</p>
+       </div>
+      </div>
+      <div class="slide-up stagger-3 bg-gray-900 rounded-xl p-4">
+       <p class="text-lg text-white text-center">She <span class="highlight-verb">sent</span> <span class="highlight-direct">a letter</span> <span class="bg-purple-600 px-2 py-1 rounded">to</span> <span class="highlight-indirect">her grandma</span></p>
+      </div>
+      <div class="slide-up stagger-4 bg-gray-900 rounded-xl p-4">
+       <p class="text-lg text-white text-center">He <span class="highlight-verb">taught</span> <span class="highlight-direct">grammar</span> <span class="bg-purple-600 px-2 py-1 rounded">to</span> <span class="highlight-indirect">the students</span></p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 7: When to use FOR -->
+   <div class="slide-container" data-slide="7">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-6"><span class="text-5xl">🎀</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-indigo-600">When to use FOR</h2>
+     </div>
+     <div class="slide-up stagger-1 bg-indigo-50 p-4 rounded-xl mb-6 border-l-4 border-indigo-500">
+      <p class="text-lg text-gray-700">Use <strong class="text-indigo-600">FOR</strong> with verbs that show <span class="underline">benefit or creation</span></p>
+      <p class="text-gray-500 font-arabic text-right mt-1">استخدم FOR مع أفعال الفائدة والصنع</p>
+     </div>
+     <div class="grid gap-3">
+      <div class="slide-up stagger-2 bg-white rounded-xl p-4 shadow-md flex items-center gap-4"><span class="text-3xl">🛠️</span>
+       <div>
+        <p class="font-bold text-gray-800">buy, make, get, find, cook, build, save, order</p>
+       </div>
+      </div>
+      <div class="slide-up stagger-3 bg-gray-900 rounded-xl p-4">
+       <p class="text-lg text-white text-center">Mom <span class="highlight-verb">made</span> <span class="highlight-direct">a cake</span> <span class="bg-indigo-600 px-2 py-1 rounded">for</span> <span class="highlight-indirect">us</span> 🎂</p>
+      </div>
+      <div class="slide-up stagger-4 bg-gray-900 rounded-xl p-4">
+       <p class="text-lg text-white text-center">I <span class="highlight-verb">bought</span> <span class="highlight-direct">flowers</span> <span class="bg-indigo-600 px-2 py-1 rounded">for</span> <span class="highlight-indirect">my wife</span> 💐</p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 8: Quick Comparison TO vs FOR -->
+   <div class="slide-container" data-slide="8">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-5xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-8"><span class="text-5xl">⚡</span>
+      <h2 class="text-3xl md:text-4xl font-bold gradient-text">TO vs FOR: Quick Guide</h2>
+     </div>
+     <div class="grid md:grid-cols-2 gap-6">
+      <div class="slide-up stagger-1 bg-gradient-to-br from-purple-100 to-purple-50 p-6 rounded-2xl border-2 border-purple-300">
+       <h3 class="text-2xl font-bold text-purple-600 mb-4 text-center">TO 📤</h3>
+       <p class="text-center text-gray-600 mb-4 font-arabic">نقل شيء لشخص</p>
+       <p class="text-center text-gray-700 font-semibold">Something moves TO someone</p>
+       <div class="mt-4 bg-white/80 rounded-xl p-3">
+        <p class="text-center text-gray-800">give <span class="text-purple-600">to</span>, send <span class="text-purple-600">to</span>, show <span class="text-purple-600">to</span></p>
+       </div>
+      </div>
+      <div class="slide-up stagger-2 bg-gradient-to-br from-indigo-100 to-indigo-50 p-6 rounded-2xl border-2 border-indigo-300">
+       <h3 class="text-2xl font-bold text-indigo-600 mb-4 text-center">FOR 🎀</h3>
+       <p class="text-center text-gray-600 mb-4 font-arabic">عمل شيء لأجل شخص</p>
+       <p class="text-center text-gray-700 font-semibold">Something done FOR someone's benefit</p>
+       <div class="mt-4 bg-white/80 rounded-xl p-3">
+        <p class="text-center text-gray-800">buy <span class="text-indigo-600">for</span>, make <span class="text-indigo-600">for</span>, cook <span class="text-indigo-600">for</span></p>
+       </div>
+      </div>
+     </div>
+     <div class="slide-up stagger-3 mt-6 bg-yellow-50 rounded-xl p-4 border-l-4 border-yellow-400">
+      <p class="text-center text-gray-700">💡 <strong>Tip:</strong> If you can rephrase with "in order to help," use <span class="text-indigo-600 font-bold">FOR</span></p>
+      <p class="text-center text-gray-500 font-arabic mt-1">إذا أمكن إعادة الصياغة بـ "لمساعدة" استخدم FOR</p>
+     </div>
+    </div>
+   </div><!-- Slide 9: Practice Examples -->
+   <div class="slide-container" data-slide="9">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-8"><span class="text-5xl">✍️</span>
+      <h2 class="text-3xl md:text-4xl font-bold gradient-text">Practice Examples</h2>
+     </div>
+     <div class="space-y-4">
+      <div class="slide-up stagger-1 bg-gray-900 rounded-xl p-5">
+       <p class="text-lg text-white text-center mb-2">The teacher <span class="highlight-verb">showed</span> <span class="highlight-indirect">the class</span> <span class="highlight-direct">a video</span></p>
+       <p class="text-white/50 text-center text-sm">= showed <span class="text-pink-400">a video</span> <span class="text-purple-400">to</span> <span class="text-cyan-400">the class</span></p>
+      </div>
+      <div class="slide-up stagger-2 bg-gray-900 rounded-xl p-5">
+       <p class="text-lg text-white text-center mb-2">Dad <span class="highlight-verb">built</span> <span class="highlight-indirect">us</span> <span class="highlight-direct">a treehouse</span> 🏡</p>
+       <p class="text-white/50 text-center text-sm">= built <span class="text-pink-400">a treehouse</span> <span class="text-indigo-400">for</span> <span class="text-cyan-400">us</span></p>
+      </div>
+      <div class="slide-up stagger-3 bg-gray-900 rounded-xl p-5">
+       <p class="text-lg text-white text-center mb-2">She <span class="highlight-verb">read</span> <span class="highlight-indirect">the children</span> <span class="highlight-direct">a story</span> 📖</p>
+       <p class="text-white/50 text-center text-sm">= read <span class="text-pink-400">a story</span> <span class="text-purple-400">to</span> <span class="text-cyan-400">the children</span></p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 10: Summary -->
+   <div class="slide-container" data-slide="10">
+    <div class="glass-card rounded-3xl p-8 md:p-12 max-w-4xl mx-6 shadow-2xl">
+     <div class="flex items-center gap-4 mb-8"><span class="text-5xl">🎓</span>
+      <h2 class="text-3xl md:text-4xl font-bold gradient-text">Summary | الخلاصة</h2>
+     </div>
+     <div class="space-y-4">
+      <div class="slide-up stagger-1 flex items-center gap-4 bg-pink-50 p-4 rounded-xl"><span class="text-3xl">🎯</span>
+       <div>
+        <p class="font-bold text-gray-800">Direct Object = What? Whom?</p>
+        <p class="text-gray-500 font-arabic">المفعول المباشر = ماذا؟ مَن؟</p>
+       </div>
+      </div>
+      <div class="slide-up stagger-2 flex items-center gap-4 bg-cyan-50 p-4 rounded-xl"><span class="text-3xl">🎁</span>
+       <div>
+        <p class="font-bold text-gray-800">Indirect Object = To whom? For whom?</p>
+        <p class="text-gray-500 font-arabic">المفعول غير المباشر = لِمَن؟ من أجل مَن؟</p>
+       </div>
+      </div>
+      <div class="slide-up stagger-3 flex items-center gap-4 bg-purple-50 p-4 rounded-xl"><span class="text-3xl">📤</span>
+       <div>
+        <p class="font-bold text-gray-800">TO = transfer verbs (give, send, show...)</p>
+        <p class="text-gray-500 font-arabic">TO = أفعال النقل</p>
+       </div>
+      </div>
+      <div class="slide-up stagger-4 flex items-center gap-4 bg-indigo-50 p-4 rounded-xl"><span class="text-3xl">🎀</span>
+       <div>
+        <p class="font-bold text-gray-800">FOR = benefit verbs (buy, make, cook...)</p>
+        <p class="text-gray-500 font-arabic">FOR = أفعال الفائدة</p>
+       </div>
+      </div>
+     </div>
+     <div class="slide-up stagger-4 mt-8 text-center">
+      <p class="text-2xl">🎉 Great job! You got this! 🎉</p>
+      <p class="text-gray-500 font-arabic mt-2">أحسنت! لقد أتقنت الدرس!</p>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: 'Direct vs Indirect Objects',
+      start_button: "Let's Start! 🚀",
+      background_color: '#1e1b4b',
+      surface_color: '#ffffff',
+      text_color: '#1f2937',
+      primary_color: '#667eea',
+      accent_color: '#f5576c'
+    };
+    
+    let currentSlide = 0;
+    const totalSlides = 11;
+    
+    function updateProgress() {
+      const progress = (currentSlide / (totalSlides - 1)) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+    }
+    
+    function createNavDots() {
+      const container = document.getElementById('nav-dots');
+      container.innerHTML = '';
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `nav-dot w-3 h-3 rounded-full transition-all ${i === currentSlide ? 'bg-white active' : 'bg-white/40 hover:bg-white/60'}`;
+        dot.onclick = () => goToSlide(i);
+        container.appendChild(dot);
+      }
+    }
+    
+    function updateNavDots() {
+      const dots = document.querySelectorAll('.nav-dot');
+      dots.forEach((dot, i) => {
+        dot.className = `nav-dot w-3 h-3 rounded-full transition-all ${i === currentSlide ? 'bg-white active' : 'bg-white/40 hover:bg-white/60'}`;
+      });
+    }
+    
+    function showNavButtons(show) {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      prevBtn.style.display = show ? 'flex' : 'none';
+      nextBtn.style.display = show ? 'flex' : 'none';
+      prevBtn.style.opacity = show && currentSlide > 0 ? '1' : '0';
+      nextBtn.style.opacity = show && currentSlide < totalSlides - 1 ? '1' : '0';
+    }
+    
+    function goToSlide(index, direction = 'next') {
+      if (index < 0 || index >= totalSlides || index === currentSlide) return;
+      
+      const slides = document.querySelectorAll('.slide-container');
+      const currentSlideEl = slides[currentSlide];
+      const nextSlideEl = slides[index];
+      
+      // Exit animation
+      currentSlideEl.classList.remove('active');
+      currentSlideEl.classList.add(direction === 'next' ? 'exit-left' : 'exit-right');
+      
+      // Enter animation
+      setTimeout(() => {
+        currentSlideEl.classList.remove('exit-left', 'exit-right');
+        nextSlideEl.classList.add('active');
+        
+        // Trigger slide-up animations
+        nextSlideEl.querySelectorAll('.slide-up').forEach(el => {
+          el.style.animation = 'none';
+          el.offsetHeight;
+          el.style.animation = null;
+        });
+      }, 100);
+      
+      currentSlide = index;
+      updateProgress();
+      updateNavDots();
+      showNavButtons(currentSlide > 0);
+    }
+    
+    function nextSlide() {
+      goToSlide(currentSlide + 1, 'next');
+    }
+    
+    function prevSlide() {
+      goToSlide(currentSlide - 1, 'prev');
+    }
+    
+    // Initialize
+    createNavDots();
+    updateProgress();
+    
+    // Event listeners
+    document.getElementById('start-btn').addEventListener('click', () => {
+      goToSlide(1, 'next');
+    });
+    
+    document.getElementById('next-btn').addEventListener('click', nextSlide);
+    document.getElementById('prev-btn').addEventListener('click', prevSlide);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+    
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+    
+    function handleSwipe() {
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) nextSlide();
+        else prevSlide();
+      }
+    }
+    
+    // Element SDK
+    async function onConfigChange(config) {
+      const mainTitle = document.getElementById('main-title');
+      if (mainTitle) {
+        const title = config.main_title || defaultConfig.main_title;
+        const parts = title.split(' ');
+        if (parts.length > 2) {
+          mainTitle.innerHTML = `${parts.slice(0, -1).join(' ')}<br><span class="gradient-text bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300">${parts[parts.length - 1]}</span>`;
+        } else {
+          mainTitle.textContent = title;
+        }
+      }
+      
+      const startBtn = document.getElementById('start-btn');
+      if (startBtn) {
+        startBtn.textContent = config.start_button || defaultConfig.start_button;
+      }
+    }
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => { config.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['start_button', config.start_button || defaultConfig.start_button]
+        ])
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fbb4690f46fe224',t:'MTc3ODc3NjEwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
