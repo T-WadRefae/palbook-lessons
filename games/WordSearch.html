@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Search</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+html, body { height: 100%; margin: 0; }
+* { box-sizing: border-box; }
+.cell {
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Nunito', sans-serif; font-weight: 800;
+  cursor: pointer; user-select: none; transition: all 0.15s;
+  border-radius: 6px; text-transform: uppercase;
+}
+.cell:hover { transform: scale(1.1); }
+.cell.selected { animation: pop 0.2s ease; }
+.cell.found { opacity: 0.5; }
+.word-item { transition: all 0.3s; }
+.word-item.found-word { text-decoration: line-through; opacity: 0.4; }
+@keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.2)} 100%{transform:scale(1)} }
+@keyframes celebrate { 0%{transform:scale(0) rotate(0)} 50%{transform:scale(1.3) rotate(180deg)} 100%{transform:scale(1) rotate(360deg)} }
+.celebrate { animation: celebrate 0.6s ease; }
+@keyframes confetti-fall {
+  0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100%) rotate(720deg); opacity: 0; }
+}
+.confetti-piece {
+  position: absolute; width: 8px; height: 8px; border-radius: 2px;
+  animation: confetti-fall 2s ease-out forwards;
+}
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <style>
+    /* Sound toggle button styling */
+    .sound-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 100;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      transition: all 0.3s;
+    }
+    .sound-toggle:hover {
+      transform: scale(1.1);
+    }
+  </style>
+ </head>
+ <body class="h-full">
+  <div id="app" class="h-full w-full overflow-auto" style="background: #0f172a; font-family: 'Nunito', sans-serif;">
+   <!-- Sound Toggle Button --> <button id="sound-toggle" class="sound-toggle" style="background:#1e293b; color:#f0abfc;" title="Toggle Sound" onclick="toggleSound()">🔊</button> <!-- Home Screen -->
+   <div id="home-screen" class="flex flex-col items-center justify-center h-full p-6 overflow-y-auto">
+    <h1 id="home-title" style="font-family:'Righteous',cursive; color:#f0abfc; font-size:2.5rem;" class="mb-4 text-center">Word Search</h1>
+    <p id="teacher-label" style="color:#94a3b8; font-size:0.95rem;" class="mb-8 text-center">By: T. Wad Refae</p>
+    <div style="background:#1e293b; border-radius:12px; padding:24px; max-width:500px; margin-bottom:8px;">
+     <h2 style="color:#f0abfc; font-family:'Righteous',cursive; font-size:1.5rem; margin-bottom:12px;">📖 How to Play</h2>
+     <ul style="color:#cbd5e1; line-height:1.8; space-y:3;">
+      <li style="margin-bottom:12px;"><strong style="color:#34d399;">🎯 Find Words:</strong> Look for the words in the list hidden in the grid</li>
+      <li style="margin-bottom:12px;"><strong style="color:#fbbf24;">👆 Select:</strong> Click and drag (or tap and swipe) to select letters</li>
+      <li style="margin-bottom:12px;"><strong style="color:#f87171;">➡️ Directions:</strong> Words can go right or down</li>
+      <li style="margin-bottom:12px;"><strong style="color:#60a5fa;">✅ Complete:</strong> Find all words to win and see your time!</li>
+      <li style="margin-bottom:0;"><strong style="color:#a78bfa;">⏱️ Speed Run:</strong> Try to find all words as fast as you can</li>
+     </ul>
+    </div><button onclick="startFromHome()" class="mt-8 py-4 px-8 rounded-xl text-lg font-bold transition-all hover:scale-105 hover:shadow-lg" style="background:linear-gradient(135deg,#f0abfc,#ec4899); color:#0f172a; font-family:'Righteous',cursive;"> <span class="flex items-center justify-center gap-2">🚀 START GAME</span> </button>
+   </div><!-- Level Select Screen -->
+   <div id="level-screen" class="hidden flex flex-col items-center justify-center h-full p-6 overflow-y-auto">
+    <h1 id="main-title" style="font-family:'Righteous',cursive; color:#f0abfc; font-size:2.8rem;" class="mb-2 text-center">Word Search</h1>
+    <p style="color:#94a3b8;" class="mb-6 text-lg">Choose a Category &amp; Difficulty</p><!-- Categories Grid -->
+    <div id="categories-grid" class="grid grid-cols-2 gap-3 w-full max-w-sm mb-8"></div><!-- Difficulty Buttons -->
+    <div class="w-full max-w-sm">
+     <p style="color:#94a3b8;" class="mb-3 text-center text-sm font-bold">DIFFICULTY:</p>
+     <div class="flex flex-col gap-3">
+      <button onclick="startGameWithCategory(0)" class="py-3 px-6 rounded-xl text-lg font-bold transition-all hover:scale-105 hover:shadow-lg" style="background:linear-gradient(135deg,#34d399,#059669); color:#022c22;"> <span class="flex items-center justify-center gap-2"><i data-lucide="smile" style="width:20px;height:20px;"></i> Easy · 6×6</span> </button> <button onclick="startGameWithCategory(1)" class="py-3 px-6 rounded-xl text-lg font-bold transition-all hover:scale-105 hover:shadow-lg" style="background:linear-gradient(135deg,#fbbf24,#d97706); color:#451a03;"> <span class="flex items-center justify-center gap-2"><i data-lucide="flame" style="width:20px;height:20px;"></i> Medium · 10×10</span> </button> <button onclick="startGameWithCategory(2)" class="py-3 px-6 rounded-xl text-lg font-bold transition-all hover:scale-105 hover:shadow-lg" style="background:linear-gradient(135deg,#f87171,#dc2626); color:#450a0a;"> <span class="flex items-center justify-center gap-2"><i data-lucide="zap" style="width:20px;height:20px;"></i> Hard · 14×14</span> </button>
+     </div>
+    </div>
+   </div><!-- Game Screen -->
+   <div id="game-screen" class="hidden flex flex-col h-full p-4">
+    <header class="flex items-center justify-between mb-3 flex-shrink-0">
+     <button onclick="backToLevels()" class="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-bold" style="color:#f0abfc; background:#1e293b;"> <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back </button>
+     <div id="timer" class="text-lg font-bold" style="color:#94a3b8;">
+      0:00
+     </div>
+     <div id="found-count" class="text-sm font-bold px-3 py-2 rounded-lg" style="color:#34d399; background:#1e293b;">
+      0/0
+     </div>
+    </header>
+    <div id="grid-container" class="flex justify-center mb-3 flex-shrink-0"></div>
+    <div id="word-list" class="flex flex-wrap justify-center gap-2 px-2 flex-shrink-0"></div><!-- Win overlay -->
+    <div id="win-overlay" class="hidden fixed inset-0 flex items-center justify-center z-50" style="background:rgba(15,23,42,0.9);">
+     <div id="confetti-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+     <div class="text-center z-10">
+      <div class="celebrate text-6xl mb-4">
+       🎉
+      </div>
+      <h2 style="font-family:'Righteous',cursive; color:#f0abfc; font-size:2rem;" class="mb-2">You Won!</h2>
+      <p id="win-time" style="color:#94a3b8;" class="mb-6 text-lg"></p>
+      <div class="flex gap-3 justify-center">
+       <button onclick="startGame(currentLevel)" class="px-5 py-3 rounded-xl font-bold hover:scale-105 transition-all" style="background:#f0abfc; color:#0f172a;">Play Again</button> <button onclick="backToLevels()" class="px-5 py-3 rounded-xl font-bold hover:scale-105 transition-all" style="background:#1e293b; color:#f0abfc;">Levels</button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+const LEVELS = [
+  { size: 6, label: 'Easy', dirs: [[0,1],[1,0]] },
+  { size: 10, label: 'Medium', dirs: [[0,1],[1,0]] },
+  { size: 14, label: 'Hard', dirs: [[0,1],[1,0]] }
+];
+
+const CATEGORIES = [
+  { name: '🐾 Animals', icon: 'paw-print', words: {easy:['CAT','DOG','BIRD','FISH'], medium:['CAT','DOG','BIRD','FISH','LION','TIGER'], hard:['CAT','DOG','BIRD','FISH','LION','TIGER','ZEBRA','ELEPHANT']} },
+  { name: '🍎 Fruits', icon: 'apple', words: {easy:['APPLE','BANANA','ORANGE','GRAPE'], medium:['APPLE','BANANA','ORANGE','GRAPE','MELON','MANGO'], hard:['APPLE','BANANA','ORANGE','GRAPE','MELON','MANGO','LEMON','PEACH']} },
+  { name: '🎨 Colors', icon: 'palette', words: {easy:['RED','BLUE','GREEN','YELLOW'], medium:['RED','BLUE','GREEN','YELLOW','PINK','PURPLE'], hard:['RED','BLUE','GREEN','YELLOW','PINK','PURPLE','ORANGE','BROWN']} },
+  { name: '🌍 Countries', icon: 'globe', words: {easy:['EGYPT','JAPAN','FRANCE','BRAZIL'], medium:['EGYPT','JAPAN','FRANCE','BRAZIL','SPAIN','GREECE'], hard:['EGYPT','JAPAN','FRANCE','BRAZIL','SPAIN','GREECE','CANADA','MEXICO']} },
+  { name: '⚽ Sports', icon: 'activity', words: {easy:['FOOTBALL','TENNIS','HOCKEY','CRICKET'], medium:['FOOTBALL','TENNIS','HOCKEY','CRICKET','BOXING','GOLF'], hard:['FOOTBALL','TENNIS','HOCKEY','CRICKET','BOXING','GOLF','SKIING','SWIMMING']} },
+  { name: '🌳 Nature', icon: 'leaf', words: {easy:['FOREST','MOUNTAIN','RIVER','OCEAN'], medium:['FOREST','MOUNTAIN','RIVER','OCEAN','VALLEY','DESERT'], hard:['FOREST','MOUNTAIN','RIVER','OCEAN','VALLEY','DESERT','GLACIER','VOLCANO']} }
+];
+
+let currentLevel = 0, currentCategory = 0, grid = [], placedWords = [], foundWords = new Set();
+let selecting = false, selectedCells = [], selStart = null, selDir = null;
+let timerInterval = null, seconds = 0;
+
+const COLORS = ['#f0abfc','#34d399','#fbbf24','#f87171','#60a5fa','#fb923c','#a78bfa','#2dd4bf'];
+
+// Sound system
+let soundEnabled = true;
+
+function createAudioContext() {
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  return audioContext;
+}
+
+let audioCtx = null;
+
+function playSound(frequency, duration, type = 'sine') {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) audioCtx = createAudioContext();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.frequency.value = frequency;
+    osc.type = type;
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + duration);
+  } catch (e) {}
+}
+
+function playClickSound() {
+  playSound(400, 0.1);
+}
+
+function playSuccessSound() {
+  playSound(800, 0.15, 'sine');
+  setTimeout(() => playSound(1000, 0.15), 100);
+  setTimeout(() => playSound(1200, 0.2), 200);
+}
+
+function playWinSound() {
+  const notes = [523.25, 659.25, 783.99, 1046.50];
+  notes.forEach((freq, i) => {
+    setTimeout(() => playSound(freq, 0.3), i * 150);
+  });
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  const btn = document.getElementById('sound-toggle');
+  btn.textContent = soundEnabled ? '🔊' : '🔇';
+}
+
+function startGame(level) {
+  currentLevel = level;
+  const cfg = LEVELS[level];
+  const cat = CATEGORIES[currentCategory];
+  const levelKey = level === 0 ? 'easy' : level === 1 ? 'medium' : 'hard';
+  const words = cat.words[levelKey];
+  foundWords.clear(); selectedCells = []; seconds = 0;
+  clearInterval(timerInterval);
+
+  grid = buildGrid(cfg.size, words, cfg.dirs);
+  renderGrid(cfg.size);
+  renderWordList();
+  updateFoundCount();
+
+  document.getElementById('level-screen').classList.add('hidden');
+  document.getElementById('game-screen').classList.remove('hidden');
+  document.getElementById('win-overlay').classList.add('hidden');
+  document.getElementById('timer').textContent = '0:00';
+
+  timerInterval = setInterval(() => {
+    seconds++;
+    const m = Math.floor(seconds/60), s = seconds%60;
+    document.getElementById('timer').textContent = `${m}:${s<10?'0':''}${s}`;
+  }, 1000);
+
+  lucide.createIcons();
+}
+
+function startGameWithCategory(level) {
+  startGame(level);
+}
+
+function showLevels() {
+  clearInterval(timerInterval);
+  renderCategoriesGrid();
+  document.getElementById('level-screen').classList.remove('hidden');
+  document.getElementById('game-screen').classList.add('hidden');
+  lucide.createIcons();
+}
+
+function renderCategoriesGrid() {
+  const container = document.getElementById('categories-grid');
+  container.innerHTML = CATEGORIES.map((cat, idx) => `
+    <button onclick="selectCategory(${idx})" class="py-4 px-3 rounded-lg text-center transition-all hover:scale-105 font-bold text-sm" style="background:${idx === currentCategory ? '#f0abfc' : '#1e293b'}; color:${idx === currentCategory ? '#0f172a' : '#e2e8f0'}; border:2px solid ${idx === currentCategory ? '#f0abfc' : '#334155'};">
+      ${cat.name}
+    </button>
+  `).join('');
+}
+
+function selectCategory(idx) {
+  currentCategory = idx;
+  renderCategoriesGrid();
+}
+
+function startFromHome() {
+  document.getElementById('home-screen').classList.add('hidden');
+  currentCategory = 0;
+  renderCategoriesGrid();
+  document.getElementById('level-screen').classList.remove('hidden');
+  lucide.createIcons();
+}
+
+function backToLevels() {
+  clearInterval(timerInterval);
+  document.getElementById('game-screen').classList.add('hidden');
+  document.getElementById('level-screen').classList.remove('hidden');
+  lucide.createIcons();
+}
+
+function buildGrid(size, words, dirs) {
+  let g, placed;
+  for (let attempt = 0; attempt < 50; attempt++) {
+    g = Array.from({length:size}, () => Array(size).fill(''));
+    placed = []; let ok = true;
+    for (const word of words) {
+      if (!placeWord(g, word, size, dirs)) { ok = false; break; }
+      placed.push(word);
+    }
+    if (ok) break;
+  }
+  placedWords = placed;
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (let r=0;r<size;r++) for(let c=0;c<size;c++) if(!g[r][c]) g[r][c]=letters[Math.floor(Math.random()*26)];
+  return g;
+}
+
+function placeWord(g, word, size, dirs) {
+  const shuffled = [...dirs].sort(()=>Math.random()-0.5);
+  for (let t=0;t<80;t++) {
+    const d = shuffled[t%shuffled.length];
+    const r = Math.floor(Math.random()*size), c = Math.floor(Math.random()*size);
+    let ok = true;
+    for (let i=0;i<word.length;i++) {
+      const nr=r+d[0]*i, nc=c+d[1]*i;
+      if(nr<0||nr>=size||nc<0||nc>=size) {ok=false;break;}
+      if(g[nr][nc]&&g[nr][nc]!==word[i]) {ok=false;break;}
+    }
+    if(ok) {
+      for(let i=0;i<word.length;i++) g[r+d[0]*i][c+d[1]*i]=word[i];
+      return true;
+    }
+  }
+  return false;
+}
+
+function renderGrid(size) {
+  const container = document.getElementById('grid-container');
+  const maxW = Math.min(window.innerWidth - 32, 500);
+  const cellSize = Math.floor(maxW / size) - 2;
+  const fontSize = Math.max(10, cellSize * 0.5);
+
+  let html = `<div style="display:grid; grid-template-columns:repeat(${size},${cellSize}px); gap:2px;">`;
+  for(let r=0;r<size;r++) for(let c=0;c<size;c++) {
+    html += `<div class="cell" data-r="${r}" data-c="${c}" style="width:${cellSize}px;height:${cellSize}px;font-size:${fontSize}px;color:#e2e8f0;background:#1e293b;">${grid[r][c]}</div>`;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+
+  // Touch & mouse events
+  container.addEventListener('mousedown', e => onStart(e));
+  container.addEventListener('mousemove', e => onMove(e));
+  document.addEventListener('mouseup', () => onEnd());
+  container.addEventListener('touchstart', e => { e.preventDefault(); onStart(e.touches[0]); }, {passive:false});
+  container.addEventListener('touchmove', e => { e.preventDefault(); onMove(e.touches[0]); }, {passive:false});
+  document.addEventListener('touchend', () => onEnd());
+}
+
+function getCellFromPoint(x, y) {
+  const el = document.elementFromPoint(x, y);
+  return el && el.classList.contains('cell') ? el : null;
+}
+
+function onStart(e) {
+  const cell = getCellFromPoint(e.clientX, e.clientY);
+  if (!cell) return;
+  playClickSound();
+  selecting = true; selDir = null;
+  selStart = { r: +cell.dataset.r, c: +cell.dataset.c };
+  clearSelection();
+  highlightCell(cell);
+  selectedCells = [cell];
+}
+
+function onMove(e) {
+  if (!selecting) return;
+  const cell = getCellFromPoint(e.clientX, e.clientY);
+  if (!cell) return;
+  const r = +cell.dataset.r, c = +cell.dataset.c;
+  const dr = Math.sign(r - selStart.r), dc = Math.sign(c - selStart.c);
+  if (dr===0 && dc===0) { clearSelection(); highlightCell(cell); selectedCells=[cell]; return; }
+
+  const newDir = `${dr},${dc}`;
+  // Must be straight line
+  const dist = Math.max(Math.abs(r-selStart.r), Math.abs(c-selStart.c));
+  if (r !== selStart.r + dr*dist || c !== selStart.c + dc*dist) return;
+
+  clearSelection();
+  selectedCells = [];
+  for (let i=0;i<=dist;i++) {
+    const cr=selStart.r+dr*i, cc=selStart.c+dc*i;
+    const el = document.querySelector(`.cell[data-r="${cr}"][data-c="${cc}"]`);
+    if(el) { highlightCell(el); selectedCells.push(el); }
+  }
+  selDir = newDir;
+}
+
+function onEnd() {
+  if (!selecting) return;
+  selecting = false;
+  const word = selectedCells.map(c => c.textContent).join('');
+  if (placedWords.includes(word) && !foundWords.has(word)) {
+    playSuccessSound();
+    foundWords.add(word);
+    const ci = placedWords.indexOf(word) % COLORS.length;
+    selectedCells.forEach(c => { c.style.background = COLORS[ci]; c.style.color = '#0f172a'; c.classList.add('found'); });
+    const wEl = document.getElementById('w-'+word);
+    if(wEl) { wEl.classList.add('found-word'); wEl.style.borderColor = COLORS[ci]; }
+    updateFoundCount();
+    if (foundWords.size === placedWords.length) winGame();
+  } else {
+    clearSelection();
+  }
+  selectedCells = [];
+}
+
+function highlightCell(cell) {
+  if (!cell.classList.contains('found')) {
+    cell.style.background = '#334155'; cell.classList.add('selected');
+  }
+}
+
+function clearSelection() {
+  document.querySelectorAll('.cell.selected:not(.found)').forEach(c => {
+    c.style.background = '#1e293b'; c.classList.remove('selected');
+  });
+}
+
+function renderWordList() {
+  const container = document.getElementById('word-list');
+  container.innerHTML = placedWords.map(w =>
+    `<span id="w-${w}" class="word-item px-3 py-1 rounded-full text-sm font-bold" style="border:2px solid #334155; color:#e2e8f0;">${w}</span>`
+  ).join('');
+}
+
+function updateFoundCount() {
+  document.getElementById('found-count').textContent = `${foundWords.size}/${placedWords.length}`;
+}
+
+function winGame() {
+  clearInterval(timerInterval);
+  playWinSound();
+  const m=Math.floor(seconds/60), s=seconds%60;
+  document.getElementById('win-time').textContent = `Time: ${m}:${s<10?'0':''}${s}`;
+  document.getElementById('win-overlay').classList.remove('hidden');
+  spawnConfetti();
+}
+
+function spawnConfetti() {
+  const container = document.getElementById('confetti-container');
+  container.innerHTML = '';
+  for(let i=0;i<60;i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random()*100+'%';
+    p.style.background = COLORS[Math.floor(Math.random()*COLORS.length)];
+    p.style.animationDelay = Math.random()*0.8+'s';
+    p.style.animationDuration = (1.5+Math.random())+'s';
+    container.appendChild(p);
+  }
+}
+
+// Element SDK
+const defaultConfig = {
+  game_title: 'Word Search',
+  teacher_name: 'T. Wad Refae',
+  background_color: '#0f172a',
+  surface_color: '#1e293b',
+  text_color: '#e2e8f0',
+  accent_color: '#f0abfc',
+  success_color: '#34d399',
+  font_family: 'Nunito',
+  font_size: 16
+};
+
+function applyConfig(config) {
+  const bg = config.background_color || defaultConfig.background_color;
+  const sf = config.surface_color || defaultConfig.surface_color;
+  const tx = config.text_color || defaultConfig.text_color;
+  const ac = config.accent_color || defaultConfig.accent_color;
+  const sc = config.success_color || defaultConfig.success_color;
+  const ff = config.font_family || defaultConfig.font_family;
+  const fs = config.font_size || defaultConfig.font_size;
+  const title = config.game_title || defaultConfig.game_title;
+  const teacher = config.teacher_name || defaultConfig.teacher_name;
+
+  document.getElementById('app').style.background = bg;
+  document.getElementById('app').style.fontFamily = `${ff}, sans-serif`;
+  document.getElementById('home-title').textContent = title;
+  document.getElementById('home-title').style.color = ac;
+  document.getElementById('main-title').textContent = title;
+  document.getElementById('main-title').style.color = ac;
+  document.getElementById('teacher-label').textContent = `By: ${teacher}`;
+
+  document.querySelectorAll('.cell:not(.found)').forEach(c => { c.style.background = sf; c.style.color = tx; });
+  document.getElementById('found-count').style.color = sc;
+}
+
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (config) => applyConfig(config),
+  mapToCapabilities: (config) => ({
+    recolorables: [
+      { get:()=>config.background_color||defaultConfig.background_color, set:v=>{config.background_color=v;window.elementSdk.setConfig({background_color:v})} },
+      { get:()=>config.surface_color||defaultConfig.surface_color, set:v=>{config.surface_color=v;window.elementSdk.setConfig({surface_color:v})} },
+      { get:()=>config.text_color||defaultConfig.text_color, set:v=>{config.text_color=v;window.elementSdk.setConfig({text_color:v})} },
+      { get:()=>config.accent_color||defaultConfig.accent_color, set:v=>{config.accent_color=v;window.elementSdk.setConfig({accent_color:v})} },
+      { get:()=>config.success_color||defaultConfig.success_color, set:v=>{config.success_color=v;window.elementSdk.setConfig({success_color:v})} }
+    ],
+    borderables: [],
+    fontEditable: { get:()=>config.font_family||defaultConfig.font_family, set:v=>{config.font_family=v;window.elementSdk.setConfig({font_family:v})} },
+    fontSizeable: { get:()=>config.font_size||defaultConfig.font_size, set:v=>{config.font_size=v;window.elementSdk.setConfig({font_size:v})} }
+  }),
+  mapToEditPanelValues: (config) => new Map([
+    ['game_title', config.game_title || defaultConfig.game_title],
+    ['teacher_name', config.teacher_name || defaultConfig.teacher_name]
+  ])
+});
+
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc59b54d2fee163',t:'MTc3ODg4NDQzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
