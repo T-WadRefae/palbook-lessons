@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 12 – Period 4 | English for Palestine Grade 9</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&amp;family=Nunito:wght@400;600;700;800&amp;family=Tajawal:wght@400;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --teal: #0f8a7a;
+    --teal-light: #14b8a6;
+    --teal-pale: #ccfbf1;
+    --amber: #f59e0b;
+    --amber-light: #fef3c7;
+    --coral: #ef4444;
+    --coral-light: #fee2e2;
+    --indigo: #4f46e5;
+    --indigo-light: #e0e7ff;
+    --bg: #f0fdf8;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --radius: 16px;
+    --font-size: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    font-size: var(--font-size);
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── Font Size Control ── */
+  #font-ctrl {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,255,255,.18);
+    padding: 3px 8px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,.3);
+    position: relative;
+    z-index: 10;
+  }
+  #font-ctrl button {
+    width: 22px; height: 22px;
+    border: none; cursor: pointer;
+    border-radius: 50%;
+    font-size: .75rem; font-weight: 800;
+    background: rgba(255,255,255,.25); color: white;
+    transition: background .15s, transform .15s;
+    line-height: 1;
+  }
+  #font-ctrl button:hover { background: rgba(255,255,255,.45); transform: scale(1.12); }
+  #font-ctrl span { font-weight: 700; font-size: .72rem; color: rgba(255,255,255,.85); min-width: 28px; text-align: center; }
+
+  /* ── Floating Emojis ── */
+  .floating-emoji {
+    position: fixed;
+    font-size: 1.6rem;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatUp linear infinite;
+    opacity: .18;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity:.18; }
+    100% { transform: translateY(-120px) rotate(360deg); opacity:0; }
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--teal) 0%, #065f52 100%);
+    color: white;
+    padding: 20px 20px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 10;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,.08) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,.06) 0%, transparent 50%);
+  }
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    letter-spacing: 1px;
+    position: relative;
+  }
+  header p {
+    margin-top: 6px;
+    opacity: .85;
+    font-size: .95rem;
+    position: relative;
+  }
+  header .badge {
+    display: inline-block;
+    background: var(--amber);
+    color: #1e293b;
+    padding: 4px 14px;
+    border-radius: 50px;
+    font-size: .8rem;
+    font-weight: 800;
+    margin-top: 10px;
+    position: relative;
+  }
+
+  /* ── Tabs ── */
+  .tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  }
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 14px 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: .88rem;
+    font-weight: 700;
+    color: var(--muted);
+    border-bottom: 3px solid transparent;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+  }
+  .tab-btn:hover:not(.active) { color: var(--text); background: #f8fafc; }
+
+  /* ── Content ── */
+  .content {
+    max-width: 900px;
+    margin: 24px auto;
+    padding: 0 16px 80px;
+  }
+  .tab-pane { display: none; animation: fadeIn .35s ease; }
+  .tab-pane.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    color: var(--teal);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── Tab 1 – Objectives ── */
+  .obj-list { list-style: none; }
+  .obj-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed #e2e8f0;
+    font-size: .97rem;
+    line-height: 1.6;
+  }
+  .obj-list li:last-child { border: none; }
+  .obj-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .obj-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 50px;
+    font-size: .75rem;
+    font-weight: 800;
+    margin-left: 8px;
+  }
+  .tag-vocab { background: var(--teal-pale); color: var(--teal); }
+  .tag-listen { background: var(--indigo-light); color: var(--indigo); }
+  .tag-speak { background: var(--amber-light); color: #92400e; }
+
+  /* ── Tab 2 – Flashcards ── */
+  #audio-btn-vocab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 14px rgba(15,138,122,.35);
+    transition: transform .15s, box-shadow .15s;
+  }
+  #audio-btn-vocab:hover { transform: scale(1.04); box-shadow: 0 6px 20px rgba(15,138,122,.45); }
+  #audio-btn-vocab .pulse { width: 10px; height: 10px; background: white; border-radius: 50%; animation: pulse 1.2s ease infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.5);opacity:.5} }
+
+  .flashcards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .flashcard {
+    perspective: 700px;
+    height: 130px;
+    cursor: pointer;
+  }
+  .flashcard-inner {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .5s ease;
+    border-radius: 14px;
+  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 10px;
+    backface-visibility: hidden;
+    text-align: center;
+  }
+  .flashcard-front {
+    background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+    color: white;
+  }
+  .flashcard-front .word { font-family: 'Fredoka One', cursive; font-size: 1.2rem; }
+  .flashcard-front .hint { font-size: .7rem; opacity: .75; margin-top: 6px; }
+  .flashcard-back {
+    background: linear-gradient(135deg, #fff9ed 0%, #fef3c7 100%);
+    color: var(--text);
+    transform: rotateY(180deg);
+    border: 2px solid var(--amber);
+  }
+  .flashcard-back .arabic { font-family: 'Tajawal', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--teal); }
+  .flashcard-back .syn { font-size: .72rem; color: var(--muted); margin-top: 5px; }
+  .flashcard-back .ant { font-size: .72rem; color: var(--coral); margin-top: 3px; }
+
+  /* ── Tab 3 – Exercise 2 ── */
+  #audio-btn-ex2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--indigo), #7c3aed);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 14px rgba(79,70,229,.35);
+    transition: transform .15s;
+  }
+  #audio-btn-ex2:hover { transform: scale(1.04); }
+
+  .ex2-item {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    border-left: 4px solid var(--teal-light);
+  }
+  .ex2-label { font-weight: 800; color: var(--teal); margin-bottom: 8px; }
+  .ex2-line {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 6px 0;
+    flex-wrap: wrap;
+    line-height: 1.7;
+  }
+  .ex2-speaker { font-weight: 800; color: var(--indigo); min-width: 18px; }
+  .blank {
+    display: inline-block;
+    min-width: 120px;
+    border-bottom: 2px dashed var(--teal);
+    background: white;
+    padding: 2px 8px;
+    border-radius: 6px 6px 0 0;
+    font-size: .9rem;
+    color: var(--text);
+    outline: none;
+    font-family: 'Nunito', sans-serif;
+  }
+  .blank:focus { border-bottom-color: var(--indigo); background: var(--indigo-light); }
+
+  #show-answers-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--amber), #d97706);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 4px 14px rgba(245,158,11,.35);
+    transition: transform .15s;
+  }
+  #show-answers-btn:hover { transform: scale(1.04); }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 500;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; animation: fadeIn .25s ease; }
+  .modal-box {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .modal-box h3 { font-family: 'Fredoka One', cursive; color: var(--teal); font-size: 1.4rem; margin-bottom: 16px; }
+  .modal-close {
+    position: absolute; top: 14px; right: 16px;
+    background: var(--coral-light); border: none; border-radius: 50%;
+    width: 32px; height: 32px; cursor: pointer;
+    font-size: 1.1rem; color: var(--coral); font-weight: 800;
+  }
+  .answer-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: .93rem;
+  }
+  .answer-row:last-child { border: none; }
+  .ans-num { font-weight: 800; color: var(--teal); min-width: 28px; }
+  .ans-speaker { font-weight: 700; color: var(--indigo); min-width: 22px; }
+  .ans-word { font-weight: 700; color: var(--coral); }
+
+  /* ── Tab 4 – Notes ── */
+  .center-img {
+    display: block;
+    max-width: 340px;
+    width: 90%;
+    margin: 0 auto 24px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.12);
+  }
+  .notes-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .93rem;
+  }
+  .notes-table th {
+    background: var(--teal);
+    color: white;
+    padding: 12px 14px;
+    text-align: left;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+  }
+  .notes-table tr:nth-child(even) td { background: #f0fdf8; }
+  .notes-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+  .notes-table td:first-child { font-weight: 800; color: var(--teal); width: 35%; }
+  .note-blank {
+    display: inline-block;
+    min-width: 130px;
+    border-bottom: 2px dashed var(--teal);
+    background: #f0fdf8;
+    padding: 2px 8px;
+    border-radius: 6px 6px 0 0;
+    font-size: .88rem;
+    outline: none;
+    font-family: 'Nunito', sans-serif;
+  }
+  .note-blank:focus { border-bottom-color: var(--indigo); background: var(--indigo-light); }
+  #show-notes-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--coral), #dc2626);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 4px 14px rgba(239,68,68,.35);
+    transition: transform .15s;
+  }
+  #show-notes-btn:hover { transform: scale(1.04); }
+
+  /* ── Tab 5 – Quiz ── */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .quiz-score-badge {
+    background: var(--teal-pale);
+    color: var(--teal);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: .95rem;
+  }
+  .quiz-question {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    border-left: 4px solid var(--indigo);
+    transition: border-color .2s;
+  }
+  .quiz-question.correct { border-color: var(--teal); background: #f0fdf8; }
+  .quiz-question.wrong { border-color: var(--coral); background: #fff5f5; }
+  .q-text { font-weight: 700; margin-bottom: 12px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+    font-size: .93rem;
+  }
+  .q-opt:hover:not(.disabled) { background: var(--indigo-light); transform: translateX(4px); }
+  .q-opt input[type=radio] { accent-color: var(--teal); width: 16px; height: 16px; flex-shrink: 0; }
+  .q-opt.selected-correct { background: #dcfce7; }
+  .q-opt.selected-wrong { background: #fee2e2; }
+  .q-opt.show-correct { background: #dcfce7; }
+  .q-feedback { margin-top: 8px; font-size: .85rem; font-weight: 700; }
+  .q-feedback.ok { color: #16a34a; }
+  .q-feedback.no { color: var(--coral); }
+
+  #quiz-submit-btn, #quiz-reset-btn {
+    padding: 12px 28px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+    transition: transform .15s, box-shadow .15s;
+  }
+  #quiz-submit-btn {
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    color: white;
+    box-shadow: 0 4px 14px rgba(15,138,122,.3);
+  }
+  #quiz-submit-btn:hover { transform: scale(1.04); }
+  #quiz-reset-btn {
+    background: #f1f5f9;
+    color: var(--muted);
+  }
+  #quiz-reset-btn:hover { background: var(--amber-light); color: #92400e; }
+
+  .result-banner {
+    display: none;
+    margin-top: 20px;
+    padding: 18px 22px;
+    border-radius: 14px;
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    animation: fadeIn .4s ease;
+  }
+  .result-banner.show { display: block; }
+  .result-banner.excellent { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; }
+  .result-banner.good { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; }
+  .result-banner.try { background: linear-gradient(135deg, #fee2e2, #fecaca); color: #991b1b; }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body><!-- Font Size Control --> <!-- Floating Emojis -->
+  <div id="emojis-container"></div><!-- Header -->
+  <header>
+   <div class="header-top">
+    <div id="font-ctrl"><button onclick="changeFont(-1)" title="Smaller">A−</button> <span id="font-label">16px</span> <button onclick="changeFont(1)" title="Larger">A+</button>
+    </div>
+   </div>
+   <h1>📗 Unit 12 · Period 4</h1>
+   <p>English for Palestine – Grade 9</p><span class="badge">Feelings &amp; Emotions 😢😠😟</span>
+  </header><!-- Tabs -->
+  <div class="tabs-wrapper">
+   <div class="tabs"><button class="tab-btn active" onclick="switchTab('objectives',this)">🎯 Objectives</button> <button class="tab-btn" onclick="switchTab('vocab',this)">📚 Vocabulary</button> <button class="tab-btn" onclick="switchTab('exercise2',this)">✏️ Exercise 2</button> <button class="tab-btn" onclick="switchTab('notes',this)">📋 Notes</button> <button class="tab-btn" onclick="switchTab('quiz',this)">🎮 Quiz</button>
+   </div>
+  </div>
+  <div class="content"><!-- ──────── TAB 1: OBJECTIVES ──────── -->
+   <div id="tab-objectives" class="tab-pane active">
+    <div class="card">
+     <div class="card-title">
+      🎯 Lesson Objectives
+     </div>
+     <ul class="obj-list">
+      <li><span class="obj-icon">🔊</span> <span>Listen to and repeat key vocabulary words related to <strong>feelings and personality</strong>. <span class="obj-tag tag-vocab">Vocabulary</span></span></li>
+      <li><span class="obj-icon">📝</span> <span>Use new vocabulary words to complete <strong>short dialogues</strong>, making any necessary word-form changes. <span class="obj-tag tag-vocab">Vocabulary</span></span></li>
+      <li><span class="obj-icon">🎧</span> <span>Listen to a conversation between Rami and Tom and <strong>check dialogue answers</strong>. <span class="obj-tag tag-listen">Listening</span></span></li>
+      <li><span class="obj-icon">🗣️</span> <span>Practise the dialogues <strong>in pairs</strong> with correct pronunciation and expression. <span class="obj-tag tag-speak">Speaking</span></span></li>
+      <li><span class="obj-icon">📋</span> <span>Listen to Rami's conversation with Tom and <strong>complete notes</strong> about Tom's home situation, problem, feelings, and Rami's suggestion. <span class="obj-tag tag-listen">Listening</span></span></li>
+      <li><span class="obj-icon">💡</span> <span>Understand <strong>word formation</strong>: <em>upset</em> can be used as both an <strong>adjective</strong> and a <strong>verb</strong>. <span class="obj-tag tag-vocab">Word Formation</span></span></li>
+     </ul>
+    </div>
+   </div><!-- ──────── TAB 2: VOCABULARY FLASHCARDS ──────── -->
+   <div id="tab-vocab" class="tab-pane">
+    <div class="card">
+     <div class="card-title">
+      🔊 Activity 1 – Listen &amp; Repeat
+     </div><button id="audio-btn-vocab" onclick="playAudio('vocab')"> <span class="pulse"></span> 🎧 Play Vocabulary Audio (CD 4 – Audio 4) </button>
+     <p style="color:var(--muted);font-size:.85rem;margin-bottom:18px;">👆 Tap any card to reveal its Arabic meaning, synonym &amp; antonym!</p>
+     <div class="flashcards-grid" id="flashcards-grid"></div>
+    </div>
+   </div><!-- ──────── TAB 3: EXERCISE 2 ──────── -->
+   <div id="tab-exercise2" class="tab-pane">
+    <div class="card">
+     <div class="card-title">
+      ✏️ Activity 2 – Complete the Dialogues
+     </div><button id="audio-btn-ex2" onclick="playAudio('ex2')"> 🎧 Play Audio (CD 4 – Audio 5) </button>
+     <p style="color:var(--muted);font-size:.85rem;margin-bottom:18px;">Fill in each blank using a word from Activity 1. Make any changes needed.</p>
+     <div class="ex2-item">
+      <div class="ex2-label">
+       Dialogue 1
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">A</span> That was a <input class="blank" placeholder="…"> end to the film, wasn't it?
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">B</span> Yes, it was very exciting! In fact I almost <input class="blank" placeholder="…"> several times.
+      </div>
+     </div>
+     <div class="ex2-item">
+      <div class="ex2-label">
+       Dialogue 2
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">A</span> Fuad talks a lot because he likes to be the centre of <input class="blank" placeholder="…">.
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">B</span> And he really only thinks about himself. He's very <input class="blank" placeholder="…">.
+      </div>
+     </div>
+     <div class="ex2-item">
+      <div class="ex2-label">
+       Dialogue 3
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">A</span> What was that loud noise? Something <input class="blank" placeholder="…">.
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">B</span> Oh, <input class="blank" placeholder="…"> it. It was just the people at work in the quarry over there.
+      </div>
+     </div>
+     <div class="ex2-item">
+      <div class="ex2-label">
+       Dialogue 4
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">A</span> Are you <input class="blank" placeholder="…"> going to your cousin's party?
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">B</span> Yes, I'm sure now. It'll <input class="blank" placeholder="…"> her if I don't, so I really have to.
+      </div>
+     </div>
+     <div class="ex2-item">
+      <div class="ex2-label">
+       Dialogue 5
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">A</span> Why is Susie so <input class="blank" placeholder="…">? She doesn't want to do anything we suggest.
+      </div>
+      <div class="ex2-line">
+       <span class="ex2-speaker">B</span> And it's strange because she used to be the complete opposite. She used to be very <input class="blank" placeholder="…"> about everything.
+      </div>
+     </div><button id="show-answers-btn" onclick="openModal()"> ✅ Show Model Answers </button>
+    </div>
+   </div><!-- ──────── TAB 4: NOTES ──────── -->
+   <div id="tab-notes" class="tab-pane">
+    <div class="card">
+     <div class="card-title">
+      📋 Activity 4 – Complete the Notes
+     </div><button id="audio-btn-notes" onclick="playAudio('notes')" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#0f8a7a,#14b8a6);color:white;border:none;padding:12px 22px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;margin-bottom:20px;box-shadow:0 4px 14px rgba(15,138,122,.35);transition:transform .15s;"> 🎧 Play Audio (CD 4 – Audio 6) </button> <img class="center-img" src="https://i.ibb.co/7J66ZHzc/. .png" alt="Tom and Rami conversation" loading="lazy">
+     <p style="color:var(--muted);font-size:.85rem;margin-bottom:18px;text-align:center;">Listen and fill in each blank, then check your answers below.</p>
+     <table class="notes-table">
+      <tbody>
+       <tr>
+        <th>Category</th>
+        <th>Notes</th>
+       </tr>
+       <tr>
+        <td>Tom's home situation</td>
+        <td>He's the <input class="note-blank" placeholder="…"> of <input class="note-blank" placeholder="…"> brothers and sisters.</td>
+       </tr>
+       <tr>
+        <td>Problem</td>
+        <td>He feels his parents <input class="note-blank" placeholder="…"> him.</td>
+       </tr>
+       <tr>
+        <td>Cause</td>
+        <td>They give all their <input class="note-blank" placeholder="…"> to the <input class="note-blank" placeholder="…">.</td>
+       </tr>
+       <tr>
+        <td>What Tom does</td>
+        <td>He goes <input class="note-blank" placeholder="…">.</td>
+       </tr>
+       <tr>
+        <td>His feelings</td>
+        <td>He sometimes wants to <input class="note-blank" placeholder="…">.</td>
+       </tr>
+       <tr>
+        <td>Rami's suggestion</td>
+        <td>Ask other people for their <input class="note-blank" placeholder="…">. Contact the problems page in a <input class="note-blank" placeholder="…"> called <em>Your World</em>.</td>
+       </tr>
+      </tbody>
+     </table><button id="show-notes-btn" onclick="openNotesModal()"> ✅ Show Model Answers </button>
+    </div>
+   </div><!-- ──────── TAB 5: QUIZ ──────── -->
+   <div id="tab-quiz" class="tab-pane">
+    <div class="card">
+     <div class="card-title">
+      🎮 Vocabulary Quiz – 8 Points
+     </div>
+     <div class="quiz-header">
+      <p style="color:var(--muted);font-size:.9rem;">Choose the correct word for each sentence.</p><span class="quiz-score-badge" id="quiz-score-display">Score: 0 / 8</span>
+     </div>
+     <div id="quiz-container"></div>
+     <div><button id="quiz-submit-btn" onclick="submitQuiz()">✔ Submit Quiz</button> <button id="quiz-reset-btn" onclick="resetQuiz()">🔄 Try Again</button>
+     </div>
+     <div class="result-banner" id="result-banner"></div>
+    </div>
+   </div>
+  </div><!-- /content --> <!-- ── Modal: Exercise 2 Answers ── -->
+  <div class="modal-overlay" id="answers-modal" onclick="closeModalOutside(event)">
+   <div class="modal-box"><button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>✅ Model Answers – Activity 2</h3>
+    <div class="answer-row">
+     <span class="ans-num">1</span><span class="ans-speaker">A</span> <span class="ans-word">dramatic</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num"></span><span class="ans-speaker">B</span> <span class="ans-word">screamed</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num">2</span><span class="ans-speaker">A</span> <span class="ans-word">attention</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num"></span><span class="ans-speaker">B</span> <span class="ans-word">selfish</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num">3</span><span class="ans-speaker">A</span> <span class="ans-word">exploded</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num"></span><span class="ans-speaker">B</span> <span class="ans-word">ignore</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num">4</span><span class="ans-speaker">A</span> <span class="ans-word">definitely</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num"></span><span class="ans-speaker">B</span> <span class="ans-word">upset</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num">5</span><span class="ans-speaker">A</span> <span class="ans-word">negative</span>
+    </div>
+    <div class="answer-row">
+     <span class="ans-num"></span><span class="ans-speaker">B</span> <span class="ans-word">positive</span>
+    </div>
+   </div>
+  </div><!-- ── Modal: Notes Answers ── -->
+  <div class="modal-overlay" id="notes-modal" onclick="closeNotesModalOutside(event)">
+   <div class="modal-box"><button class="modal-close" onclick="closeNotesModal()">✕</button>
+    <h3>✅ Model Answers – Activity 4</h3>
+    <div class="answer-row">
+     <span class="ans-num" style="min-width:160px;color:var(--teal)">Home situation</span> He's the <span class="ans-word" style="margin:0 4px">oldest</span> of <span class="ans-word" style="margin:0 4px">four</span> brothers and sisters.
+    </div>
+    <div class="answer-row">
+     <span class="ans-num" style="min-width:160px;color:var(--teal)">Problem</span> ignore
+    </div>
+    <div class="answer-row">
+     <span class="ans-num" style="min-width:160px;color:var(--teal)">Cause</span> attention → younger ones
+    </div>
+    <div class="answer-row">
+     <span class="ans-num" style="min-width:160px;color:var(--teal)">What Tom does</span> to his room quietly
+    </div>
+    <div class="answer-row">
+     <span class="ans-num" style="min-width:160px;color:var(--teal)">His feelings</span> scream
+    </div>
+    <div class="answer-row">
+     <span class="ans-num" style="min-width:160px;color:var(--teal)">Rami's suggestion</span> advice → magazine
+    </div>
+   </div>
+  </div>
+  <script>
+// ── Floating Emojis ──
+const EMOJIS = ['😢','🙁','😠','😟','📙','📘','📗','📕','📒','📓','🗒️'];
+function spawnEmoji() {
+  const el = document.createElement('div');
+  el.className = 'floating-emoji';
+  el.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+  el.style.left = Math.random() * 100 + 'vw';
+  el.style.animationDuration = (8 + Math.random() * 12) + 's';
+  el.style.animationDelay = '0s';
+  el.style.fontSize = (.9 + Math.random() * 1.2) + 'rem';
+  document.getElementById('emojis-container').appendChild(el);
+  setTimeout(() => el.remove(), 22000);
+}
+setInterval(spawnEmoji, 1200);
+for (let i = 0; i < 6; i++) setTimeout(spawnEmoji, i * 300);
+
+// ── Font Control ──
+let fontSize = 16;
+function changeFont(delta) {
+  fontSize = Math.min(24, Math.max(12, fontSize + delta));
+  document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+  document.getElementById('font-label').textContent = fontSize + 'px';
+}
+
+// ── Tabs ──
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Audio ──
+const AUDIO_LINKS = {
+  vocab: 'https://drive.google.com/file/d/0B7oTcXqoniztbUl1LXNyQlBveE0/view?usp=drivesdk&resourcekey=0-qVqlfxp-Ey6bI7vcwE-CXw',
+  ex2:   'https://drive.google.com/file/d/0B7oTcXqoniztWVRpSXRPYmNYcjA/view?usp=drivesdk&resourcekey=0-92zGyHzdiP9i_YomhLsDhg',
+  notes: 'https://drive.google.com/file/d/0B7oTcXqoniztbEYwaUdfQWZvTUE/view?usp=drivesdk&resourcekey=0-zzQ3sQMi0DytZJMOYFF1iA'
+};
+function playAudio(key) { window.open(AUDIO_LINKS[key], '_blank'); }
+
+// ── Flashcards Data ──
+const VOCAB = [
+  { word: 'attention',    arabic: 'انتباه / اهتمام',    syn: 'focus, notice',     ant: 'neglect, ignore' },
+  { word: 'definite(ly)',arabic: 'قطعاً / بالتأكيد',    syn: 'certainly, surely', ant: 'possibly, maybe' },
+  { word: 'dramatic',    arabic: 'مثير / دراماتيكي',   syn: 'exciting, striking', ant: 'dull, boring' },
+  { word: 'explode',     arabic: 'ينفجر',               syn: 'burst, blow up',    ant: 'implode' },
+  { word: 'ignore',      arabic: 'يتجاهل',              syn: 'overlook, neglect', ant: 'notice, attend' },
+  { word: 'negative',    arabic: 'سلبي',                syn: 'pessimistic',       ant: 'positive' },
+  { word: 'positive',    arabic: 'إيجابي',              syn: 'optimistic',        ant: 'negative' },
+  { word: 'scream',      arabic: 'يصرخ',                syn: 'yell, shout',       ant: 'whisper, murmur' },
+  { word: 'selfish',     arabic: 'أناني',               syn: 'self-centred',      ant: 'generous, selfless' },
+  { word: 'upset (adj)', arabic: 'منزعج / حزين',        syn: 'distressed, sad',   ant: 'happy, pleased' },
+  { word: 'upset (v)',   arabic: 'يزعج / يُحزن',        syn: 'disturb, distress', ant: 'please, comfort' },
+];
+
+function buildFlashcards() {
+  const grid = document.getElementById('flashcards-grid');
+  VOCAB.forEach((v, i) => {
+    const card = document.createElement('div');
+    card.className = 'flashcard';
+    card.innerHTML = `
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <span class="word">${v.word}</span>
+          <span class="hint">tap to reveal</span>
+        </div>
+        <div class="flashcard-back">
+          <span class="arabic">${v.arabic}</span>
+          ${v.syn ? `<span class="syn">≈ ${v.syn}</span>` : ''}
+          ${v.ant ? `<span class="ant">↔ ${v.ant}</span>` : ''}
+        </div>
+      </div>`;
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+    grid.appendChild(card);
+  });
+}
+buildFlashcards();
+
+// ── Modal: Exercise 2 ──
+function openModal() { document.getElementById('answers-modal').classList.add('open'); }
+function closeModal() { document.getElementById('answers-modal').classList.remove('open'); }
+function closeModalOutside(e) { if (e.target.id === 'answers-modal') closeModal(); }
+
+// ── Modal: Notes ──
+function openNotesModal() { document.getElementById('notes-modal').classList.add('open'); }
+function closeNotesModal() { document.getElementById('notes-modal').classList.remove('open'); }
+function closeNotesModalOutside(e) { if (e.target.id === 'notes-modal') closeNotesModal(); }
+
+// ── Quiz ──
+const QUIZ_DATA = [
+  { q: 'That was a ______ end to the film — very exciting!', options: ['selfish','dramatic','negative','positive'], correct: 1 },
+  { q: 'Fuad always talks about himself. He is very ______.', options: ['upset','ignore','selfish','definite'], correct: 2 },
+  { q: 'She doesn\'t want to do anything we suggest. Why is she so ______?', options: ['scream','negative','attention','explode'], correct: 1 },
+  { q: 'They give all their ______ to the younger children.', options: ['attention','scream','dramatic','selfish'], correct: 0 },
+  { q: 'It will ______ her if you don\'t come to her party.', options: ['ignore','scream','upset','explode'], correct: 2 },
+  { q: 'Something ______ in the quarry — that\'s why it was so loud!', options: ['screamed','exploded','ignored','upset'], correct: 1 },
+  { q: 'She used to be very ______ about everything, always happy and cheerful.', options: ['selfish','dramatic','positive','negative'], correct: 2 },
+  { q: 'Oh, just ______ it — it was nothing serious.', options: ['ignore','scream','upset','explode'], correct: 0 },
+];
+
+let quizAnswers = new Array(QUIZ_DATA.length).fill(null);
+let quizSubmitted = false;
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  quizAnswers = new Array(QUIZ_DATA.length).fill(null);
+  quizSubmitted = false;
+  document.getElementById('quiz-score-display').textContent = 'Score: 0 / 8';
+  document.getElementById('result-banner').className = 'result-banner';
+
+  QUIZ_DATA.forEach((q, qi) => {
+    const box = document.createElement('div');
+    box.className = 'quiz-question';
+    box.id = 'q' + qi;
+    let optsHtml = q.options.map((opt, oi) => `
+      <label class="q-opt" id="opt${qi}_${oi}">
+        <input type="radio" name="q${qi}" value="${oi}" onchange="selectAnswer(${qi},${oi})">
+        ${opt}
+      </label>`).join('');
+    box.innerHTML = `
+      <div class="q-text">Q${qi+1}. ${q.q}</div>
+      <div class="q-options">${optsHtml}</div>
+      <div class="q-feedback" id="fb${qi}"></div>`;
+    container.appendChild(box);
+  });
+}
+
+function selectAnswer(qi, oi) {
+  if (quizSubmitted) return;
+  quizAnswers[qi] = oi;
+}
+
+function submitQuiz() {
+  quizSubmitted = true;
+  let score = 0;
+  QUIZ_DATA.forEach((q, qi) => {
+    const box = document.getElementById('q' + qi);
+    const fb  = document.getElementById('fb' + qi);
+    const chosen = quizAnswers[qi];
+    if (chosen === q.correct) {
+      score++;
+      box.classList.add('correct');
+      if (chosen !== null) document.getElementById(`opt${qi}_${chosen}`).classList.add('selected-correct');
+      fb.textContent = '✅ Correct!'; fb.className = 'q-feedback ok';
+    } else {
+      box.classList.add('wrong');
+      if (chosen !== null) document.getElementById(`opt${qi}_${chosen}`).classList.add('selected-wrong');
+      document.getElementById(`opt${qi}_${q.correct}`).classList.add('show-correct');
+      fb.textContent = `❌ Answer: ${q.options[q.correct]}`; fb.className = 'q-feedback no';
+    }
+    document.querySelectorAll(`[name="q${qi}"]`).forEach(r => r.disabled = true);
+  });
+  document.getElementById('quiz-score-display').textContent = `Score: ${score} / 8`;
+  const banner = document.getElementById('result-banner');
+  if (score >= 7) { banner.textContent = `🎉 Excellent! ${score}/8 – Amazing work!`; banner.className = 'result-banner excellent show'; }
+  else if (score >= 5) { banner.textContent = `👍 Good job! ${score}/8 – Keep it up!`; banner.className = 'result-banner good show'; }
+  else { banner.textContent = `😟 ${score}/8 – Don't give up, try again!`; banner.className = 'result-banner try show'; }
+}
+
+function resetQuiz() { buildQuiz(); }
+buildQuiz();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc4c708e666e163',t:'MTc3ODg3NTczNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
