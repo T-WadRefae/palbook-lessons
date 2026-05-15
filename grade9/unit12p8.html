@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 12 – Period 8 | Connectors</title>
+  <style>
+html { font-size: clamp(18px, 2vw, 28px); }
+:root {
+  --blue:    #6b94c8;
+  --blue-dk: #4a72a8;
+  --tl:      #7ec8c0;
+  --td:      #2e8b7a;
+  --pink:    #f06292;
+  --pink-dk: #c0325a;
+  --bg:      #f0f4f8;
+  --bg2:     #e0eaf3;
+  --white:   #ffffff;
+  --text:    #1e2a38;
+  --textlt:  #4a5568;
+  --shd:     rgba(60,90,130,.13);
+  --purp:    #9b72cf;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html, body { height: 100%; }
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);height:100%;overflow-x:hidden;position:relative;}
+
+/* BG */
+.pbg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 10% 15%,rgba(107,148,200,.13) 0%,transparent 55%),
+    radial-gradient(ellipse at 90% 85%,rgba(240,98,146,.10) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 10%,rgba(126,200,192,.10) 0%,transparent 50%),
+    radial-gradient(ellipse at 20% 90%,rgba(46,139,122,.09) 0%,transparent 50%);}
+
+/* Floating puzzle pieces */
+.fp{position:fixed;opacity:.07;z-index:0;pointer-events:none;animation:fpf ease-in-out infinite;}
+@keyframes fpf{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-14px) rotate(6deg);}}
+
+/* WRAPPER */
+.wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:16px 13px 50px;height:100%;overflow-auto;}
+
+/* HEADER */
+header{text-align:center;margin-bottom:20px;}
+.chips{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;}
+.chip{padding:4px 15px;border-radius:20px;font-size:.73rem;font-weight:800;letter-spacing:.5px;color:#fff;}
+.cp-bl{background:var(--blue);}
+.cp-pk{background:var(--pink);}
+.cp-td{background:var(--td);}
+
+/* 4-piece logo */
+.logo{display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:10px;filter:drop-shadow(0 4px 16px rgba(107,148,200,.3));}
+.lp{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:900;color:#fff;}
+h1{font-size:1.9rem;font-weight:900;color:var(--text);letter-spacing:-1px;line-height:1.15;}
+h1 em{font-style:normal;color:var(--blue);}
+.hsub{font-size:.86rem;color:var(--textlt);margin-top:4px;}
+.ttag{display:inline-block;margin-top:8px;background:linear-gradient(135deg,var(--pink) 0%,var(--blue) 100%);color:#fff;border-radius:20px;padding:4px 18px;font-size:.77rem;font-weight:700;letter-spacing:.4px;box-shadow:0 2px 10px rgba(107,148,200,.28);}
+
+/* TABS */
+.tabs-nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;background:var(--white);border-radius:16px;padding:7px;box-shadow:0 2px 12px var(--shd);margin-bottom:16px;}
+.tb{display:flex;align-items:center;gap:5px;padding:8px 15px;border-radius:10px;border:none;background:transparent;color:var(--textlt);font-size:.79rem;font-weight:600;cursor:pointer;transition:all .22s;font-family:inherit;}
+.tb:hover{background:var(--bg2);color:var(--text);}
+.t-bl{background:var(--blue)!important;color:#fff!important;box-shadow:0 2px 8px rgba(107,148,200,.4);}
+.t-pk{background:var(--pink)!important;color:#fff!important;box-shadow:0 2px 8px rgba(240,98,146,.4);}
+.t-tl{background:var(--tl)!important;color:#fff!important;box-shadow:0 2px 8px rgba(126,200,192,.4);}
+.t-td{background:var(--td)!important;color:#fff!important;box-shadow:0 2px 8px rgba(46,139,122,.4);}
+.t-pp{background:var(--purp)!important;color:#fff!important;box-shadow:0 2px 8px rgba(155,114,207,.4);}
+.t-gd{background:#e6a817!important;color:#fff!important;box-shadow:0 2px 8px rgba(230,168,23,.4);}
+
+/* PANEL */
+.panel{display:none;animation:fup .32s ease;}
+.panel.active{display:block;}
+@keyframes fup{from{opacity:0;transform:translateY(9px);}to{opacity:1;transform:translateY(0);}}
+
+/* CARD */
+.card{background:var(--white);border-radius:18px;padding:20px 22px;margin-bottom:15px;box-shadow:0 4px 20px var(--shd);}
+.ctitle{font-size:1rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px;border-bottom:2.5px solid var(--bg2);padding-bottom:10px;margin-bottom:14px;}
+
+/* OBJECTIVES */
+.olist{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.oi{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border-radius:11px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.oi:nth-child(1){background:rgba(240,98,146,.08);border-left:4px solid var(--pink);}
+.oi:nth-child(2){background:rgba(107,148,200,.08);border-left:4px solid var(--blue);}
+.oi:nth-child(3){background:rgba(126,200,192,.08);border-left:4px solid var(--tl);}
+.oi:nth-child(4){background:rgba(46,139,122,.08);border-left:4px solid var(--td);}
+.oi:nth-child(5){background:rgba(155,114,207,.08);border-left:4px solid var(--purp);}
+.onum{min-width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;margin-top:1px;}
+.oi:nth-child(1) .onum{background:var(--pink);}
+.oi:nth-child(2) .onum{background:var(--blue);}
+.oi:nth-child(3) .onum{background:var(--tl);}
+.oi:nth-child(4) .onum{background:var(--td);}
+.oi:nth-child(5) .onum{background:var(--purp);}
+.oar{font-size:.78rem;color:var(--textlt);font-style:italic;margin-top:3px;direction:rtl;text-align:right;}
+
+/* chain banner */
+.cbanner{background:linear-gradient(135deg,var(--blue) 0%,var(--tl) 45%,var(--pink) 100%);border-radius:15px;padding:16px;text-align:center;color:#fff;margin-top:4px;}
+.cbanner-t{font-size:.74rem;opacity:.8;margin-bottom:9px;font-weight:600;letter-spacing:.5px;}
+.crow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;}
+.cpill{background:rgba(255,255,255,.22);border:1.5px solid rgba(255,255,255,.4);border-radius:20px;padding:5px 13px;font-size:.81rem;font-weight:700;font-style:italic;color:#fff;}
+.csep{font-size:1rem;opacity:.6;}
+
+/* ─────────── GRAMMAR PUZZLE CARDS ─────────── */
+.gnote{background:var(--bg);border-radius:10px;padding:10px 14px;font-size:.82rem;color:var(--textlt);direction:rtl;text-align:right;margin-bottom:14px;line-height:1.6;border-right:4px solid var(--blue);}
+
+.pzcard{border-radius:15px;margin-bottom:13px;overflow:hidden;box-shadow:0 3px 14px var(--shd);}
+.pzhead{display:flex;align-items:center;gap:11px;padding:11px 17px;}
+.pzword{font-size:1.2rem;font-weight:900;font-style:italic;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.2);}
+.pzar{font-size:.79rem;color:rgba(255,255,255,.85);font-style:italic;margin-left:auto;direction:rtl;text-align:right;}
+
+.pz-pk .pzhead{background:var(--pink);}
+.pz-bl .pzhead{background:var(--blue);}
+.pz-tl .pzhead{background:var(--tl);}
+.pz-td .pzhead{background:var(--td);}
+.pz-pp .pzhead{background:var(--purp);}
+
+.pzbody{background:var(--white);padding:13px 17px;display:flex;flex-direction:column;gap:9px;}
+
+/* tags */
+.tag{display:inline-block;border-radius:11px;padding:2px 9px;font-size:.69rem;font-weight:700;margin-right:3px;color:#fff;}
+.tc{background:var(--pink);}
+.tr{background:var(--td);}
+.tn{background:var(--purp);}
+
+/* ORDER DIAGRAM */
+.odwrap{display:flex;flex-direction:column;gap:7px;}
+.odlabel{font-size:.71rem;color:var(--textlt);font-weight:600;margin-bottom:2px;}
+.od{display:flex;align-items:center;gap:0;flex-wrap:wrap;gap:4px;}
+.odb{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:9px;padding:7px 11px;font-size:.76rem;font-weight:700;color:#fff;min-width:74px;text-align:center;line-height:1.3;}
+.odb small{font-size:.63rem;font-weight:400;opacity:.85;margin-top:1px;}
+.odarr{font-size:1.1rem;color:var(--textlt);flex-shrink:0;}
+.odc{display:flex;align-items:center;justify-content:center;border-radius:9px;padding:7px 13px;font-size:.8rem;font-weight:900;font-style:italic;color:#fff;min-width:80px;}
+
+.odb-res{background:var(--td);}
+.odb-cau{background:var(--pink-dk);}
+.odc-pk{background:var(--pink);}
+.odc-bl{background:var(--blue);}
+.odc-tl{background:var(--tl);color:var(--text)!important;}
+.odc-td{background:var(--td);}
+.odc-pp{background:var(--purp);}
+
+.pzrule{font-size:.82rem;color:var(--text);line-height:1.6;}
+.pzex{background:var(--bg);border-radius:8px;padding:7px 11px;font-size:.81rem;font-style:italic;color:var(--textlt);border-left:3px solid;line-height:1.55;}
+.pz-pk .pzex{border-color:var(--pink);}
+.pz-bl .pzex{border-color:var(--blue);}
+.pz-tl .pzex{border-color:var(--tl);}
+.pz-td .pzex{border-color:var(--td);}
+.pz-pp .pzex{border-color:var(--purp);}
+
+/* summary table */
+.stable{width:100%;border-collapse:collapse;font-size:.81rem;border-radius:11px;overflow:hidden;}
+.stable th{padding:9px 11px;text-align:left;color:#fff;font-weight:700;background:var(--blue);}
+.stable td{padding:9px 11px;border-bottom:1px solid var(--bg2);color:var(--text);}
+.stable tr:last-child td{border-bottom:none;}
+.stable tr:hover td{background:var(--bg);}
+.td-pk{color:var(--pink);font-weight:700;font-style:italic;}
+.td-bl{color:var(--blue-dk);font-weight:700;font-style:italic;}
+.td-tl{color:var(--tl);font-weight:700;font-style:italic;}
+.td-td{color:var(--td);font-weight:700;font-style:italic;}
+.td-pp{color:var(--purp);font-weight:700;font-style:italic;}
+
+.divline{display:flex;align-items:center;gap:7px;margin:14px 0;opacity:.35;}
+.divline hr{flex:1;border:none;border-top:1.5px dashed #b0c4de;}
+
+/* ─────────── EXERCISES ─────────── */
+.exnote{background:var(--bg);border-radius:10px;padding:10px 14px;font-size:.82rem;color:var(--textlt);margin-bottom:13px;direction:rtl;text-align:right;border-right:4px solid var(--td);line-height:1.6;}
+.exitem{display:flex;align-items:flex-start;gap:9px;margin-bottom:11px;font-size:.89rem;color:var(--text);line-height:1.65;}
+.enum{min-width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.69rem;font-weight:800;color:#fff;flex-shrink:0;margin-top:2px;}
+.en-pk{background:var(--pink);}
+.en-bl{background:var(--blue);}
+.en-tl{background:var(--tl);}
+.en-td{background:var(--td);}
+.en-pp{background:var(--purp);}
+.en-gd{background:#e6a817;}
+
+select{background:var(--white);border:2px solid #c8d8ec;border-radius:20px;padding:3px 11px;font-size:.83rem;color:var(--text);cursor:pointer;font-family:inherit;outline:none;transition:border-color .18s;}
+select:hover{border-color:var(--blue);}
+select.correct{border-color:var(--td);background:#edfaf7;color:#1a5a4e;}
+select.wrong  {border-color:var(--pink);background:#fff0f4;color:var(--pink-dk);}
+
+textarea{width:100%;border:2px solid #c8d8ec;border-radius:10px;padding:8px 12px;font-family:inherit;font-size:.87rem;color:var(--text);resize:vertical;outline:none;min-height:52px;margin-top:4px;transition:border-color .18s;}
+textarea:focus{border-color:var(--blue);}
+
+.btn-chk{background:linear-gradient(135deg,var(--blue) 0%,var(--tl) 100%);color:#fff;border:none;padding:10px 26px;border-radius:30px;font-size:.87rem;cursor:pointer;font-family:inherit;font-weight:700;margin-top:13px;transition:all .2s;display:inline-flex;align-items:center;gap:6px;box-shadow:0 3px 12px rgba(107,148,200,.32);}
+.btn-chk:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(107,148,200,.38);}
+.btn-key{background:linear-gradient(135deg,#e6a817 0%,var(--pink) 100%);color:#fff;border:none;padding:10px 26px;border-radius:30px;font-size:.87rem;cursor:pointer;font-family:inherit;font-weight:700;margin-top:13px;transition:all .2s;display:inline-flex;align-items:center;gap:6px;box-shadow:0 3px 12px rgba(230,168,23,.32);}
+.btn-key:hover{transform:translateY(-1px);}
+.btn-rst{background:transparent;color:var(--blue);border:2px solid var(--blue);padding:8px 19px;border-radius:20px;font-size:.79rem;cursor:pointer;font-family:inherit;margin-top:13px;margin-left:7px;transition:all .2s;}
+.btn-rst:hover{background:var(--blue);color:#fff;}
+
+.fbmsg{margin-top:11px;padding:10px 15px;border-radius:10px;font-size:.85rem;display:none;}
+.fbmsg.show{display:block;}
+.fbmsg.ok{background:#edfaf7;color:#1a5a4e;border:1.5px solid var(--td);}
+.fbmsg.err{background:#fff0f4;color:var(--pink-dk);border:1.5px solid var(--pink);}
+
+.keybox{background:rgba(230,168,23,.1);border:1.5px dashed #e6a817;border-radius:11px;padding:11px 15px;font-size:.82rem;color:var(--text);margin-top:11px;display:none;line-height:1.7;}
+.keybox.show{display:block;}
+.keytitle{font-weight:800;margin-bottom:5px;color:var(--td);}
+
+.egsent{font-style:italic;color:var(--td);font-size:.8rem;margin:3px 0 6px 33px;border-left:3px solid var(--tl);padding-left:8px;}
+
+/* ─────────── QUIZ ─────────── */
+.qbox{background:var(--white);border-radius:13px;padding:15px 17px;margin-bottom:11px;border:2px solid var(--bg2);box-shadow:0 2px 10px rgba(60,90,130,.07);}
+.qtxt{font-size:.89rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:flex-start;gap:9px;}
+.qnum{min-width:25px;height:25px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;}
+.qopts{display:flex;flex-direction:column;gap:6px;padding-left:34px;}
+.qopt{display:flex;align-items:center;gap:8px;cursor:pointer;padding:7px 13px;border-radius:9px;border:1.5px solid #d4e0ef;background:#fafcff;font-size:.85rem;color:var(--text);transition:all .17s;}
+.qopt:hover{border-color:var(--blue);background:rgba(107,148,200,.06);}
+.qopt input{display:none;}
+.qopt.sel{border-color:var(--blue);background:rgba(107,148,200,.1);color:var(--blue-dk);font-weight:700;}
+.qopt.ca{border-color:var(--td)!important;background:#edfaf7!important;color:#1a5a4e!important;font-weight:700;}
+.qopt.wa{border-color:var(--pink)!important;background:#fff0f4!important;color:var(--pink-dk)!important;}
+
+.btn-quiz{background:linear-gradient(135deg,var(--pink) 0%,var(--purp) 100%);color:#fff;border:none;padding:12px 34px;border-radius:30px;font-size:.91rem;cursor:pointer;font-family:inherit;font-weight:700;margin-top:15px;transition:all .2s;box-shadow:0 4px 14px rgba(240,98,146,.32);}
+.btn-quiz:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,98,146,.38);}
+
+.scorebox{border-radius:17px;padding:26px;text-align:center;margin-top:15px;display:none;background:linear-gradient(135deg,var(--blue) 0%,var(--tl) 50%,var(--pink) 100%);color:#fff;animation:fup .4s;}
+.scorebox.show{display:block;}
+.snum{font-size:3rem;font-weight:900;line-height:1;}
+.sout{font-size:.87rem;opacity:.8;margin-top:2px;}
+.sstars{font-size:2.1rem;margin-top:9px;letter-spacing:4px;}
+.smsg{font-size:.93rem;margin-top:7px;opacity:.9;font-style:italic;}
+
+.cp{position:fixed;border-radius:3px;animation:cfall 1.6s ease-out forwards;z-index:9999;pointer-events:none;}
+@keyframes cfall{0%{opacity:1;transform:translateY(-10px) rotate(0deg);}100%{opacity:0;transform:translateY(100vh) rotate(600deg);}}
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="pbg"></div><!-- floating connector chain symbols -->
+  <svg class="fp" style="top:-18px;left:-18px;width:125px;animation-duration:8s;" viewbox="0 0 120 120">
+   <circle cx="20" cy="20" r="12" fill="#6b94c8" opacity="0.6" /> <line x1="35" y1="20" x2="85" y2="20" stroke="#6b94c8" stroke-width="3" opacity="0.4" /> <circle cx="100" cy="20" r="12" fill="#6b94c8" opacity="0.6" /> <text x="60" y="65" font-size="32" text-anchor="middle" fill="#f06292" opacity="0.3">
+    →
+   </text>
+  </svg>
+  <svg class="fp" style="bottom:-18px;right:-18px;width:115px;animation-duration:10s;animation-delay:3s;" viewbox="0 0 120 120">
+   <circle cx="20" cy="60" r="12" fill="#f06292" opacity="0.6" /> <line x1="35" y1="60" x2="85" y2="60" stroke="#f06292" stroke-width="3" opacity="0.4" /> <circle cx="100" cy="60" r="12" fill="#f06292" opacity="0.6" /> <text x="60" y="30" font-size="28" text-anchor="middle" fill="#7ec8c0" opacity="0.3">
+    ⛓
+   </text>
+  </svg>
+  <svg class="fp" style="top:38%;right:-13px;width:82px;animation-duration:12s;animation-delay:5s;" viewbox="0 0 120 120">
+   <circle cx="20" cy="30" r="10" fill="#7ec8c0" opacity="0.6" /> <line x1="32" y1="30" x2="78" y2="30" stroke="#7ec8c0" stroke-width="2.5" opacity="0.4" /> <circle cx="90" cy="30" r="10" fill="#7ec8c0" opacity="0.6" />
+  </svg>
+  <svg class="fp" style="top:57%;left:-13px;width:78px;animation-duration:9s;animation-delay:1.5s;" viewbox="0 0 120 120">
+   <circle cx="15" cy="50" r="11" fill="#2e8b7a" opacity="0.6" /> <line x1="28" y1="50" x2="75" y2="50" stroke="#2e8b7a" stroke-width="2.8" opacity="0.4" /> <circle cx="88" cy="50" r="11" fill="#2e8b7a" opacity="0.6" /> <text x="60" y="85" font-size="24" text-anchor="middle" fill="#9b72cf" opacity="0.3">
+    •
+   </text>
+  </svg>
+  <div class="wrap">
+   <!-- HEADER -->
+   <header>
+    <div class="chips">
+     <span class="chip cp-bl">Grade 9</span> <span class="chip cp-pk">Unit 12</span> <span class="chip cp-td">Period 8</span>
+    </div>
+    <div style="text-align:center;font-size:1.3rem;letter-spacing:-2px;margin-bottom:14px;overflow:hidden;"><span style="background:linear-gradient(90deg,#6b94c8 0%,#f06292 25%,#7ec8c0 50%,#2e8b7a 75%,#9b72cf 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:block;filter:drop-shadow(0 2px 6px rgba(107,148,200,.2));">⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️⛓️</span>
+    </div>
+    <h1>Connectors of <em>Cause</em> &amp; Result</h1>
+    <p class="hsub">because · since · as · so · because of that</p>
+    <div class="ttag">
+     ✦ T. Wad Refae
+    </div>
+   </header><!-- TABS -->
+   <nav class="tabs-nav">
+    <button class="tb t-bl" id="tb0" onclick="ot(0,this,'t-bl')">🎯 Objectives</button> <button class="tb" id="tb1" onclick="ot(1,this,'t-pk')">🧩 Grammar</button> <button class="tb" id="tb2" onclick="ot(2,this,'t-tl')">📖 Activity 1</button> <button class="tb" id="tb3" onclick="ot(3,this,'t-td')">✏️ Activity 2</button> <button class="tb" id="tb4" onclick="ot(4,this,'t-pp')">🔄 Activity 3</button> <button class="tb" id="tb5" onclick="ot(5,this,'t-gd')">⭐ Quiz</button>
+   </nav><!-- ════════ P0 OBJECTIVES ════════ -->
+   <div id="p0" class="panel active">
+    <div class="card">
+     <div class="ctitle">
+      🎯 Learning Objectives · أهداف الدرس
+     </div>
+     <ul class="olist">
+      <li class="oi"><span class="onum">1</span>
+       <div>
+        Identify and use connectors of cause: <strong>because, since, as</strong>
+        <div class="oar">
+         أتعرّف على أدوات ربط السبب وأستخدمها بشكل صحيح
+        </div>
+       </div></li>
+      <li class="oi"><span class="onum">2</span>
+       <div>
+        Use the connector of result: <strong>so</strong>
+        <div class="oar">
+         أستخدم "so" للتعبير عن النتيجة
+        </div>
+       </div></li>
+      <li class="oi"><span class="onum">3</span>
+       <div>
+        Use <strong>because of that</strong> to refer back to a previous cause 
+        <div class="oar">
+         أستخدم "because of that" للإشارة لسبب ذُكر سابقاً
+        </div>
+       </div></li>
+      <li class="oi"><span class="onum">4</span>
+       <div>
+        Understand the position of cause &amp; result in a sentence 
+        <div class="oar">
+         أفهم ترتيب السبب والنتيجة داخل الجملة
+        </div>
+       </div></li>
+      <li class="oi"><span class="onum">5</span>
+       <div>
+        Rewrite sentences using <strong>Because of that</strong>
+        <div class="oar">
+         أعيد كتابة الجمل باستخدام "Because of that"
+        </div>
+       </div></li>
+     </ul>
+    </div>
+    <div class="cbanner">
+     <div class="cbanner-t">
+      🧩 TODAY'S CONNECTORS — أدوات الربط
+     </div>
+     <div class="crow">
+      <div class="cpill">
+       because
+      </div>
+      <div class="csep">
+       ⛓
+      </div>
+      <div class="cpill">
+       since
+      </div>
+      <div class="csep">
+       ⛓
+      </div>
+      <div class="cpill">
+       as
+      </div>
+      <div class="csep">
+       ⛓
+      </div>
+      <div class="cpill">
+       so
+      </div>
+      <div class="csep">
+       ⛓
+      </div>
+      <div class="cpill">
+       because of that
+      </div>
+     </div>
+     <div style="font-size:.74rem;opacity:.68;margin-top:9px;font-style:italic;">
+      They connect ideas just like puzzle pieces fit together!
+     </div>
+    </div>
+   </div><!-- ════════ P1 GRAMMAR ════════ -->
+   <div id="p1" class="panel">
+    <div class="card">
+     <div class="ctitle">
+      🧩 How Each Connector Works · كيف تعمل كل أداة
+     </div>
+     <div class="gnote">
+      كل أداة ربط لها ترتيب خاص في الجملة — السبب (Cause) والنتيجة (Result) يمكن أن تتبادلا الأماكن حسب الأداة المستخدمة 🔀
+     </div><!-- BECAUSE -->
+     <div class="pzcard pz-pk">
+      <div class="pzhead">
+       <div class="pzword">
+        because
+       </div>
+       <div class="pzar">
+        لأن
+       </div>
+      </div>
+      <div class="pzbody">
+       <div><span class="tag tc">CAUSE connector</span><span class="tag tn">most common</span>
+       </div>
+       <div class="pzrule"><strong>because</strong> يُقدّم السبب — يأتي بعده السبب مباشرةً.<br>
+         يمكن وضعه في المنتصف أو في البداية.
+       </div>
+       <div class="odwrap">
+        <div>
+         <div class="odlabel">
+          📌 Pattern A — النتيجة أولاً (الأكثر شيوعاً)
+         </div>
+         <div class="od">
+          <div class="odb odb-res">
+           <div>
+            Result
+           </div><small>النتيجة</small>
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odc odc-pk">
+           because
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odb odb-cau">
+           <div>
+            Cause
+           </div><small>السبب</small>
+          </div>
+         </div>
+        </div>
+        <div>
+         <div class="odlabel">
+          📌 Pattern B — السبب أولاً
+         </div>
+         <div class="od">
+          <div class="odc odc-pk">
+           Because
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odb odb-cau">
+           <div>
+            Cause
+           </div><small>السبب</small>
+          </div>
+          <div class="odarr">
+           ,
+          </div>
+          <div class="odb odb-res">
+           <div>
+            Result
+           </div><small>النتيجة</small>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="pzex">
+        "I stayed home <strong>because</strong> it was raining." (A)<br>
+         "<strong>Because</strong> it was raining, I stayed home." (B)
+       </div>
+      </div>
+     </div><!-- SINCE -->
+     <div class="pzcard pz-bl">
+      <div class="pzhead">
+       <div class="pzword">
+        since
+       </div>
+       <div class="pzar">
+        بما أن · لأن
+       </div>
+      </div>
+      <div class="pzbody">
+       <div><span class="tag tc">CAUSE connector</span><span class="tag" style="background:var(--blue);">known reason</span>
+       </div>
+       <div class="pzrule"><strong>since</strong> يُستخدم عندما السبب <em>معروف مسبقاً</em> للمستمع — يأتي <strong>في البداية</strong> غالباً.
+       </div>
+       <div class="odwrap">
+        <div>
+         <div class="odlabel">
+          📌 Usual Pattern — السبب أولاً دائماً تقريباً
+         </div>
+         <div class="od">
+          <div class="odc odc-bl">
+           Since
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odb odb-cau">
+           <div>
+            Cause
+           </div><small>السبب</small>
+          </div>
+          <div class="odarr">
+           ,
+          </div>
+          <div class="odb odb-res">
+           <div>
+            Result
+           </div><small>النتيجة</small>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="pzex">
+        "<strong>Since</strong> you're the oldest, your parents think you can look after yourself."<br>
+         "I really understand your feelings <strong>since</strong> I've got six siblings."
+       </div>
+      </div>
+     </div><!-- AS -->
+     <div class="pzcard pz-tl">
+      <div class="pzhead">
+       <div class="pzword">
+        as
+       </div>
+       <div class="pzar">
+        بما أن · إذ
+       </div>
+      </div>
+      <div class="pzbody">
+       <div><span class="tag tc">CAUSE connector</span><span class="tag" style="background:var(--tl);color:var(--text);">formal</span>
+       </div>
+       <div class="pzrule"><strong>as</strong> مشابه لـ since — غالباً في <strong>البداية</strong>، طابع رسمي أكثر. السبب أولاً ثم النتيجة.
+       </div>
+       <div class="odwrap">
+        <div>
+         <div class="odlabel">
+          📌 Usual Pattern — السبب أولاً
+         </div>
+         <div class="od">
+          <div class="odc odc-tl">
+           As
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odb odb-cau">
+           <div>
+            Cause
+           </div><small>السبب</small>
+          </div>
+          <div class="odarr">
+           ,
+          </div>
+          <div class="odb odb-res">
+           <div>
+            Result
+           </div><small>النتيجة</small>
+          </div>
+         </div>
+        </div>
+        <div>
+         <div class="odlabel">
+          📌 Pattern B — في المنتصف أيضاً
+         </div>
+         <div class="od">
+          <div class="odb odb-res">
+           <div>
+            Result
+           </div><small>النتيجة</small>
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odc odc-tl">
+           as
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odb odb-cau">
+           <div>
+            Cause
+           </div><small>السبب</small>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="pzex">
+        "<strong>As</strong> you're the oldest, your parents think you can look after yourself."<br>
+         "Please don't explode <strong>as</strong> that would just upset everyone."
+       </div>
+      </div>
+     </div><!-- SO -->
+     <div class="pzcard pz-td">
+      <div class="pzhead">
+       <div class="pzword">
+        so
+       </div>
+       <div class="pzar">
+        لذلك · إذن — النتيجة
+       </div>
+      </div>
+      <div class="pzbody">
+       <div><span class="tag tr">RESULT connector</span><span class="tag" style="background:var(--pink-dk);">≠ because</span>
+       </div>
+       <div class="pzrule"><strong>so</strong> هو عكس because/since/as — يُقدّم <em>النتيجة</em> لا السبب.<br>
+         الترتيب ثابت: السبب ← <strong>so</strong> ← النتيجة. لا يأتي في بداية الجملة.
+       </div>
+       <div class="odwrap">
+        <div>
+         <div class="odlabel">
+          📌 Fixed Pattern — ترتيب ثابت لا يتغير
+         </div>
+         <div class="od">
+          <div class="odb odb-cau">
+           <div>
+            Cause
+           </div><small>السبب</small>
+          </div>
+          <div class="odarr">
+           ,
+          </div>
+          <div class="odc odc-td">
+           so
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odb odb-res">
+           <div>
+            Result
+           </div><small>النتيجة</small>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="pzex">
+        "I love them, <strong>so</strong> I don't say anything."<br>
+         "It was getting late, <strong>so</strong> we went home."
+       </div>
+      </div>
+     </div><!-- BECAUSE OF THAT -->
+     <div class="pzcard pz-pp">
+      <div class="pzhead">
+       <div class="pzword">
+        because of that
+       </div>
+       <div class="pzar">
+        بسبب ذلك
+       </div>
+      </div>
+      <div class="pzbody">
+       <div><span class="tag" style="background:var(--purp);">TWO sentences</span><span class="tag" style="background:#6b3fa0;">refers back</span>
+       </div>
+       <div class="pzrule"><strong>because of that</strong> يُشير إلى سبب ذُكر في <em>جملة سابقة</em>.<br>
+         يمكن أن يأتي في بداية الجملة الثانية أو في نهايتها.
+       </div>
+       <div class="odwrap">
+        <div>
+         <div class="odlabel">
+          📌 Pattern A — في البداية (مثال 6 في الكتاب)
+         </div>
+         <div class="od" style="flex-wrap:wrap;">
+          <div class="odb odb-cau" style="min-width:95px;">
+           <div>
+            Sentence 1
+           </div><small>السبب</small>
+          </div>
+          <div class="odarr">
+           .
+          </div>
+          <div class="odc odc-pp" style="min-width:130px;font-size:.73rem;">
+           Because of that,
+          </div>
+          <div class="odarr">
+           →
+          </div>
+          <div class="odb odb-res" style="min-width:95px;">
+           <div>
+            Sentence 2
+           </div><small>النتيجة</small>
+          </div>
+         </div>
+        </div>
+        <div>
+         <div class="odlabel">
+          📌 Pattern B — في النهاية (مثال 5 في الكتاب)
+         </div>
+         <div class="od" style="flex-wrap:wrap;">
+          <div class="odb odb-cau" style="min-width:95px;">
+           <div>
+            Sentence 1
+           </div><small>السبب</small>
+          </div>
+          <div class="odarr">
+           .
+          </div>
+          <div class="odb odb-res" style="min-width:95px;">
+           <div>
+            Sentence 2
+           </div><small>النتيجة</small>
+          </div>
+          <div class="odc odc-pp" style="min-width:130px;font-size:.73rem;">
+           because of that
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="pzex">
+        "They just ignore me. I'm feeling very down <strong>because of that</strong>." (B — مثال 5)<br>
+         "You'll do a lot together. <strong>Because of that</strong>, they'll stop ignoring you!" (A — مثال 6)
+       </div>
+      </div>
+     </div><!-- SUMMARY TABLE -->
+     <div class="divline">
+      <hr>📊 
+      <hr>
+     </div>
+     <div class="ctitle" style="margin-top:0;">
+      📊 Summary Table · جدول الملخص
+     </div>
+     <div style="overflow-x:auto;border-radius:11px;box-shadow:0 2px 10px var(--shd);">
+      <table class="stable">
+       <thead>
+        <tr>
+         <th>Connector</th>
+         <th>Type · النوع</th>
+         <th>Order · الترتيب</th>
+         <th>Arabic · معنى</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td class="td-pk">because</td>
+         <td>Cause</td>
+         <td>Result → <em>because</em> → Cause<br><small>OR: Because + Cause , Result</small></td>
+         <td>لأن</td>
+        </tr>
+        <tr>
+         <td class="td-bl">since</td>
+         <td>Cause</td>
+         <td><em>Since</em> + Cause , Result</td>
+         <td>بما أن</td>
+        </tr>
+        <tr>
+         <td class="td-tl">as</td>
+         <td>Cause</td>
+         <td><em>As</em> + Cause , Result<br><small>OR: Result + as + Cause</small></td>
+         <td>إذ / بما أن</td>
+        </tr>
+        <tr>
+         <td class="td-td">so ✦</td>
+         <td><strong>Result</strong></td>
+         <td>Cause , <em>so</em> + Result</td>
+         <td>لذلك</td>
+        </tr>
+        <tr>
+         <td class="td-pp">because of that</td>
+         <td>Links 2 sentences</td>
+         <td>S1. <em>Because of that,</em> S2</td>
+         <td>بسبب ذلك</td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <div style="background:rgba(240,98,146,.08);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:.79rem;color:var(--pink-dk);border-right:3px solid var(--pink);direction:rtl;text-align:right;">
+      💡 <strong>so</strong> هو الوحيد الذي يقدّم النتيجة — الباقون (because/since/as) يقدّمون السبب
+     </div>
+    </div>
+   </div><!-- ════════ P2 ACTIVITY 1 ════════ -->
+   <div id="p2" class="panel">
+    <div class="card">
+     <div class="ctitle">
+      📖 Activity 1 · Read the Examples
+     </div>
+     <div class="exnote">
+      اقرأ الجمل الثمانية في الكتاب ثم أكمل العبارات باختيار الإجابة الصحيحة 👇
+     </div>
+     <div class="exitem">
+      <span class="enum en-pk">1</span>
+      <div>
+       We often use&nbsp; <select id="a1s1a" onchange="ms(this,'as')"><option value="">--</option><option>as</option><option>since</option><option>so</option><option>because of that</option></select> &nbsp;or&nbsp; <select id="a1s1b" onchange="ms(this,'since')"><option value="">--</option><option>as</option><option>since</option><option>so</option><option>because of that</option></select> &nbsp;instead of <em>because</em> to introduce the cause.
+      </div>
+     </div>
+     <div class="exitem">
+      <span class="enum en-bl">2</span>
+      <div>
+       In examples&nbsp; <select id="a1s2a" onchange="ms(this,'1')"><option value="">--</option><option>1</option><option>2</option><option>3</option><option>4</option></select>,&nbsp; <select id="a1s2b" onchange="ms(this,'2')"><option value="">--</option><option>1</option><option>2</option><option>3</option><option>4</option></select> &nbsp;and&nbsp; <select id="a1s2c" onchange="ms(this,'3')"><option value="">--</option><option>1</option><option>2</option><option>3</option><option>4</option></select> &nbsp;the cause comes <strong>second</strong>. In example&nbsp; <select id="a1s2d" onchange="ms(this,'4')"><option value="">--</option><option>1</option><option>2</option><option>3</option><option>4</option></select> &nbsp;the cause comes <strong>first</strong>.
+      </div>
+     </div>
+     <div class="exitem">
+      <span class="enum en-tl">3</span>
+      <div>
+       The cause may come in the sentence before. We refer back with:&nbsp; <select id="a1s3" onchange="ms(this,'because of that')"><option value="">--</option><option>so</option><option>because of that</option><option>since</option><option>as</option></select>
+      </div>
+     </div>
+     <div class="exitem">
+      <span class="enum en-td">4</span>
+      <div>
+       In example&nbsp; <select id="a1s4a" onchange="ms(this,'5')"><option value="">--</option><option>5</option><option>6</option><option>7</option><option>8</option></select> &nbsp;this phrase comes <strong>second</strong>. In example&nbsp; <select id="a1s4b" onchange="ms(this,'6')"><option value="">--</option><option>5</option><option>6</option><option>7</option><option>8</option></select> &nbsp;it comes <strong>first</strong>.
+      </div>
+     </div>
+     <div class="exitem">
+      <span class="enum en-pp">5</span>
+      <div>
+       The connector&nbsp; <select id="a1s5a" onchange="ms(this,'so')"><option value="">--</option><option>so</option><option>since</option><option>as</option><option>because</option></select> &nbsp;is the opposite of <em>because/since/as</em>. It introduces the <strong>result</strong>, not the&nbsp; <select id="a1s5b" onchange="ms(this,'cause')"><option value="">--</option><option>cause</option><option>result</option><option>sentence</option></select>.
+      </div>
+     </div><button class="btn-key" onclick="showEl('key1')">🔑 Show Answers</button>
+     <div class="keybox" id="key1">
+      <div class="keytitle">
+       ✅ Answers · الإجابات
+      </div><strong>1</strong> → as, since &nbsp;|&nbsp; <strong>2</strong> → 1, 2, 3 / 4 &nbsp;|&nbsp; <strong>3</strong> → because of that &nbsp;|&nbsp; <strong>4</strong> → 5, 6 &nbsp;|&nbsp; <strong>5</strong> → so / cause
+     </div>
+    </div>
+   </div><!-- ════════ P3 ACTIVITY 2 ════════ -->
+   <div id="p3" class="panel">
+    <div class="card">
+     <div class="ctitle">
+      ✏️ Activity 2 · Choose the Connector
+     </div>
+     <div class="exnote">
+      اختر الأداة الصحيحة: <strong>because / as / since / so</strong><br>
+       تذكّر 🧩 because/as/since = سبب · so = نتيجة
+     </div>
+     <div id="a2wrap"></div>
+     <div style="display:flex;flex-wrap:wrap;gap:7px;align-items:center;">
+      <button class="btn-chk" onclick="chkA2()">✅ Check Answers</button> <button class="btn-rst" onclick="rstA2()">↺ Reset</button>
+     </div>
+     <div class="fbmsg" id="fb2"></div>
+     <div class="keybox" id="key2">
+      <div class="keytitle">
+       ✅ Answers · الإجابات
+      </div><strong>1</strong> so &nbsp;|&nbsp; <strong>2</strong> because/as/since &nbsp;|&nbsp; <strong>3</strong> so &nbsp;|&nbsp; <strong>4</strong> because/as/since &nbsp;|&nbsp; <strong>5</strong> because/as/since &nbsp;|&nbsp; <strong>6</strong> so
+     </div>
+    </div>
+   </div><!-- ════════ P4 ACTIVITY 3 ════════ -->
+   <div id="p4" class="panel">
+    <div class="card">
+     <div class="ctitle">
+      🔄 Activity 3 · Use <em>Because of that</em>
+     </div>
+     <div class="exnote">
+      غيّر الجملة الثانية باستخدام "Because of that" — ادمج الفكرتين بجملتين مترابطتين 🔗
+     </div>
+     <div class="exitem">
+      <span class="enum en-tl">1</span>
+      <div style="width:100%;">
+       I could see dark rain clouds. As the weather was looking bad, I took my umbrella. 
+       <div class="egsent">
+        ✦ I could see dark rain clouds. Because of that, I took my umbrella.
+       </div><em style="font-size:.74rem;color:#aaa;">(Example – already done)</em>
+      </div>
+     </div>
+     <div class="divline">
+      <hr>🧩 
+      <hr>
+     </div>
+     <div class="exitem">
+      <span class="enum en-pk">2</span>
+      <div style="width:100%;">
+       I worked hard to get ready for the test. I got good marks since I had prepared well. <textarea id="ta2" placeholder="Rewrite using 'Because of that'…"></textarea>
+      </div>
+     </div>
+     <div class="exitem">
+      <span class="enum en-bl">3</span>
+      <div style="width:100%;">
+       The trip takes four hours. Because it's a long way, we're taking a picnic lunch. <textarea id="ta3" placeholder="Rewrite using 'Because of that'…"></textarea>
+      </div>
+     </div>
+     <div class="exitem">
+      <span class="enum en-td">4</span>
+      <div style="width:100%;">
+       My sister is using our computer. I can't go online as she's using it. <textarea id="ta4" placeholder="Rewrite using 'Because of that'…"></textarea>
+      </div>
+     </div>
+     <div style="display:flex;flex-wrap:wrap;gap:7px;align-items:center;">
+      <button class="btn-key" onclick="showEl('key3')">🔑 Model Answers</button> <button class="btn-rst" onclick="rstA3()">↺ Reset</button>
+     </div>
+     <div class="keybox" id="key3">
+      <div class="keytitle">
+       ✅ Model Answers · إجابات نموذجية
+      </div>
+      <p><strong>2.</strong> I worked hard to get ready for the test. Because of that, I got good marks.</p>
+      <p style="margin-top:5px;"><strong>3.</strong> The trip takes four hours. Because of that, we're taking a picnic lunch.</p>
+      <p style="margin-top:5px;"><strong>4.</strong> My sister is using our computer. Because of that, I can't go online.</p>
+     </div>
+    </div>
+   </div><!-- ════════ P5 QUIZ ════════ -->
+   <div id="p5" class="panel">
+    <div class="card">
+     <div class="ctitle">
+      ⭐ Mini Quiz · 5 Points
+     </div>
+     <div class="exnote">
+      اختر الإجابة الصحيحة — الدرجة الكاملة 5 نقاط 🏆
+     </div>
+     <div id="qwrap"></div>
+     <div style="display:flex;flex-wrap:wrap;gap:7px;align-items:center;">
+      <button class="btn-quiz" onclick="subQ()">📊 Get My Score</button> <button class="btn-rst" onclick="rstQ()">↺ Try Again</button>
+     </div>
+     <div class="scorebox" id="scbox">
+      <div class="snum" id="snum">
+       0/5
+      </div>
+      <div class="sout">
+       Your Score
+      </div>
+      <div class="sstars" id="sstars"></div>
+      <div class="smsg" id="smsg"></div>
+     </div>
+    </div>
+   </div>
+  </div><!-- /wrap -->
+  <script>
+/* TABS */
+const allTC=['t-bl','t-pk','t-tl','t-td','t-pp','t-gd'];
+function ot(idx,btn,cls){
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  document.querySelectorAll('.tb').forEach((b,i)=>{b.classList.remove(...allTC);if(i===idx)b.classList.add(cls);});
+}
+
+/* ACT1 selects */
+function ms(el,correct){
+  if(!el.value){el.classList.remove('correct','wrong');return;}
+  el.classList.toggle('correct',el.value===correct);
+  el.classList.toggle('wrong',  el.value!==correct);
+}
+function showEl(id){document.getElementById(id).classList.add('show');}
+
+/* ACT2 */
+const a2data=[
+  {s:"I didn't understand the sentence, _____ I read it again.",ans:['so']},
+  {s:"Everyone went indoors _____ it was getting too cold outside.",ans:['because','as','since']},
+  {s:"Carrie loved the ice cream, _____ she asked for some more.",ans:['so']},
+  {s:"We're going home now _____ it's getting late.",ans:['because','as','since']},
+  {s:"I liked Tariq _____ he was very honest.",ans:['because','as','since']},
+  {s:"Mum was using the phone in the kitchen, _____ I used my mobile instead.",ans:['so']}
+];
+const ecls=['en-pk','en-bl','en-tl','en-td','en-pp','en-gd'];
+function bldA2(){
+  const w=document.getElementById('a2wrap');w.innerHTML='';
+  a2data.forEach((d,i)=>{
+    const pt=d.s.split('_____');
+    const r=document.createElement('div');r.className='exitem';
+    r.innerHTML=`<span class="enum ${ecls[i]}">${i+1}</span><div>${pt[0]}<select id="q2_${i}"><option value="">--</option><option>because</option><option>since</option><option>as</option><option>so</option></select>${pt[1]||''}</div>`;
+    w.appendChild(r);
+  });
+}
+function chkA2(){
+  let ok=0;
+  a2data.forEach((d,i)=>{
+    const s=document.getElementById(`q2_${i}`);
+    const g=d.ans.includes(s.value);
+    s.classList.toggle('correct',g);
+    s.classList.toggle('wrong',!g&&s.value!=='');
+    if(g)ok++;
+  });
+  const fb=document.getElementById('fb2');
+  fb.className=`fbmsg show ${ok===a2data.length?'ok':'err'}`;
+  fb.textContent=ok===a2data.length?`🎉 Perfect! All ${ok} correct! ممتاز!`:`You got ${ok} out of ${a2data.length}. Try again! حاول مجدداً`;
+  document.getElementById('key2').classList.add('show');
+}
+function rstA2(){bldA2();document.getElementById('fb2').classList.remove('show');document.getElementById('key2').classList.remove('show');}
+
+/* ACT3 */
+function rstA3(){['ta2','ta3','ta4'].forEach(id=>document.getElementById(id).value='');document.getElementById('key3').classList.remove('show');}
+
+/* QUIZ */
+const qd=[
+  {q:"Choose the correct connector: 'She was tired, _____ she went to bed early.'",opts:['because','since','so','as'],ans:2},
+  {q:"_____ it was raining, we cancelled the trip.",opts:['So','Because of that','Since','Because of'],ans:2},
+  {q:"Which connector introduces the RESULT, not the cause?",opts:['because','as','since','so'],ans:3},
+  {q:"Complete: 'My phone broke. _____ I bought a new one.'",opts:['Since','So','Because of that','As'],ans:2},
+  {q:"Which sentence correctly uses 'because of that'?",opts:["I was late because of that the bus.","It was cold. Because of that, I wore a jacket.","Because of that cold, I wore a jacket.","I wore a jacket because of that cold."],ans:1}
+];
+let qsel={};
+function bldQ(){
+  const w=document.getElementById('qwrap');w.innerHTML='';qsel={};
+  qd.forEach((q,qi)=>{
+    const b=document.createElement('div');b.className='qbox';
+    const nc=ecls[qi%ecls.length];
+    const opts=q.opts.map((o,oi)=>`<label class="qopt" id="qo_${qi}_${oi}" onclick="selQ(${qi},${oi})"><input type="radio" name="q${qi}"><span>${String.fromCharCode(65+oi)}. ${o}</span></label>`).join('');
+    b.innerHTML=`<div class="qtxt"><span class="qnum ${nc}">${qi+1}</span>${q.q}</div><div class="qopts">${opts}</div>`;
+    w.appendChild(b);
+  });
+  document.getElementById('scbox').classList.remove('show');
+}
+function selQ(qi,oi){
+  for(let i=0;i<qd[qi].opts.length;i++){const e=document.getElementById(`qo_${qi}_${i}`);if(e)e.classList.remove('sel');}
+  const e=document.getElementById(`qo_${qi}_${oi}`);if(e)e.classList.add('sel');
+  qsel[qi]=oi;
+}
+function subQ(){
+  let sc=0;
+  qd.forEach((q,qi)=>{
+    for(let i=0;i<q.opts.length;i++){
+      const e=document.getElementById(`qo_${qi}_${i}`);if(!e)continue;
+      e.classList.remove('ca','wa','sel');
+      if(i===q.ans)e.classList.add('ca');
+      else if(i===qsel[qi]&&qsel[qi]!==q.ans)e.classList.add('wa');
+    }
+    if(qsel[qi]===q.ans)sc++;
+  });
+  document.getElementById('snum').textContent=`${sc}/5`;
+  document.getElementById('sstars').textContent='⭐'.repeat(sc)||'💪';
+  const msgs=['Keep trying! حاول مجدداً 💪','Almost! قريب جداً 😊','Good job! عمل جيد 👏','Well done! أحسنت 🌟','Excellent! ممتاز 🏆'];
+  document.getElementById('smsg').textContent=msgs[sc]||msgs[4];
+  document.getElementById('scbox').classList.add('show');
+  if(sc>=4)confetti();
+}
+function rstQ(){bldQ();}
+
+/* CONFETTI */
+function confetti(){
+  const cols=['#6b94c8','#f06292','#7ec8c0','#2e8b7a','#9b72cf','#fff','#e6a817'];
+  for(let i=0;i<70;i++){
+    const p=document.createElement('div');p.className='cp';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-10px;width:${7+Math.random()*9}px;height:${7+Math.random()*9}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'3px'};animation-duration:${1.2+Math.random()*1.2}s;animation-delay:${Math.random()*.9}s;`;
+    document.body.appendChild(p);setTimeout(()=>p.remove(),2800);
+  }
+}
+
+bldA2();bldQ();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc49d04a47793a1',t:'MTc3ODg3NDAxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
