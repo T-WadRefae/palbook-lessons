@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade 7 – Period 2 | PalBook Live</title>
+  <style>
+  :root {
+    --green-dark: #2d6a4f;
+    --green-mid:  #52b788;
+    --green-light:#95d5b2;
+    --yellow:     #f4c430;
+    --sky:        #d8f3dc;
+    --earth:      #b7791f;
+    --white:      #fefdf9;
+    --text:       #1b3a2d;
+  }
+  html { font-size: clamp(18px, 2vw, 28px); height: 100%; }
+  html { font-size: clamp(18px, 2vw, 28px); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', serif;
+    background: var(--sky);
+    color: var(--text);
+    height: 100%;
+    overflow-x: hidden;
+  }
+  body::before {
+    content:'';
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 60% 30% at 50% 100%, #7dc07d55 0%, transparent 70%),
+      linear-gradient(180deg, #b7e4c7 0%, #d8f3dc 40%, #95d5b2 100%);
+  }
+  .blossom {
+    position: fixed;
+    font-size: clamp(14px, 2vw, 22px);
+    opacity: 0.5;
+    animation: fall linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-60px) rotate(0deg); opacity:.6; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity:0; }
+  }
+  header {
+    position: relative; z-index: 10;
+    background: linear-gradient(135deg, var(--green-dark) 0%, #1b5e38 100%);
+    padding: 22px 24px 14px;
+    text-align: center;
+    box-shadow: 0 4px 20px #0004;
+  }
+  header .unit-label {
+    font-size: clamp(11px, 2vw, 14px);
+    color: var(--green-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  header h1 {
+    font-size: clamp(22px, 5vw, 44px);
+    color: var(--yellow);
+    text-shadow: 0 2px 8px #0006;
+    line-height: 1.15;
+  }
+  header .period-badge {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--yellow);
+    color: var(--green-dark);
+    font-weight: bold;
+    font-size: clamp(12px, 2vw, 15px);
+    padding: 4px 18px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+  header .teacher {
+    margin-top: 8px;
+    font-size: clamp(10px, 1.8vw, 13px);
+    color: #b7e4c7cc;
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+  .tabs-wrapper {
+    position: relative; z-index: 10;
+    max-width: 1000px;
+    margin: 18px auto 0;
+    padding: 0 12px 40px;
+  }
+  .tab-bar {
+    display: flex;
+    overflow-x: auto;
+    gap: 4px;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    background: #ffffff88;
+    border: 2px solid var(--green-mid);
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    padding: 10px 18px;
+    font-size: clamp(11px, 1.8vw, 15px);
+    font-weight: bold;
+    color: var(--green-dark);
+    cursor: pointer;
+    transition: background .2s, color .2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover  { background: #ffffffcc; }
+  .tab-btn.active { background: var(--white); color: var(--earth); border-color: var(--green-dark); }
+  .tab-panel {
+    display: none;
+    background: var(--white);
+    border: 2px solid var(--green-dark);
+    border-radius: 0 12px 12px 12px;
+    padding: clamp(16px, 4vw, 34px);
+    animation: fadeIn .35s ease;
+    box-shadow: 0 8px 32px #0002;
+  }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  .sec-title {
+    font-size: clamp(16px, 3vw, 22px);
+    font-weight: bold;
+    color: var(--green-dark);
+    margin-bottom: 16px;
+    border-bottom: 3px solid var(--green-light);
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sec-title .num {
+    background: var(--green-dark);
+    color: #fff;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .obj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .obj-card {
+    background: linear-gradient(135deg, #d8f3dc, #b7e4c7);
+    border-left: 5px solid var(--green-dark);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: clamp(13px, 1.8vw, 15px);
+    line-height: 1.6;
+  }
+  .obj-card .icon { font-size: 24px; margin-bottom: 6px; }
+  .obj-card strong { color: var(--green-dark); display: block; margin-bottom: 4px; }
+  .audio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--green-dark), #1a4d30);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-size: clamp(13px, 2vw, 16px);
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 14px #0003;
+    transition: transform .2s, box-shadow .2s;
+    margin: 10px 4px;
+  }
+  .audio-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px #0003; }
+  .audio-btn svg { width:22px; height:22px; fill:#fff; }
+  .word-box {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 2px solid var(--green-mid);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .word-chip {
+    background: var(--green-dark);
+    color: #fff;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: clamp(13px, 2vw, 16px);
+    font-weight: bold;
+  }
+  .listen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .listen-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f0fdf4;
+    border: 2px solid var(--green-light);
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    font-size: clamp(13px, 2vw, 15px);
+    font-weight: bold;
+    user-select: none;
+  }
+  .listen-item .chk {
+    width: 22px; height: 22px;
+    border: 2px solid var(--green-mid);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    transition: background .2s;
+  }
+  .listen-item.heard .chk { background: var(--green-mid); border-color: var(--green-dark); }
+  .listen-item.heard .chk::after { content: '✓'; color: #fff; font-weight: bold; }
+  .listen-item.not-heard { background: #fff1f1; border-color: #f4a5a5; text-decoration: line-through; color: #999; }
+  .check-btn {
+    background: var(--yellow);
+    color: var(--green-dark);
+    border: none;
+    border-radius: 20px;
+    padding: 10px 26px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 12px;
+    box-shadow: 0 3px 10px #0002;
+    transition: transform .2s;
+  }
+  .check-btn:hover { transform: scale(1.05); }
+  .show-ans-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--earth), #d4901a);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 26px;
+    font-size: clamp(13px, 2vw, 15px);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 12px;
+    box-shadow: 0 4px 14px #0003;
+    transition: transform .2s;
+  }
+  .show-ans-btn:hover { transform: scale(1.04); }
+  .feedback-box {
+    margin-top: 12px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    display: none;
+    line-height: 1.6;
+  }
+  .feedback-box.show    { display: block; }
+  .feedback-box.correct   { background: #d1fae5; border-left: 4px solid #059669; color: #065f46; }
+  .feedback-box.incorrect { background: #fee2e2; border-left: 4px solid #dc2626; color: #7f1d1d; }
+  .circle-activity { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+  .circle-row {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: clamp(13px, 2vw, 15px);
+    line-height: 2;
+  }
+  .circle-row .q-num { color: var(--green-dark); font-weight: bold; margin-right: 6px; }
+  .option-btn {
+    display: inline-block;
+    background: #e5e7eb;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    padding: 3px 14px;
+    margin: 2px 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: clamp(13px,2vw,15px);
+    transition: background .15s, border-color .15s;
+  }
+  .option-btn:hover    { background: #d1d5db; }
+  .option-btn.correct  { background: #bbf7d0 !important; border-color: #16a34a !important; color: #14532d !important; }
+  .option-btn.wrong    { background: #fee2e2 !important; border-color: #dc2626 !important; color: #7f1d1d !important; text-decoration: line-through; }
+  .row-badge {
+    display: none;
+    margin-left: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 2px 12px;
+    border-radius: 14px;
+    vertical-align: middle;
+  }
+  .row-badge.ok  { display: inline-block; background: #bbf7d0; color: #14532d; }
+  .row-badge.err { display: inline-block; background: #fee2e2; color: #7f1d1d; }
+  .bank-box {
+    background: #fffbeb;
+    border: 2px solid var(--yellow);
+    border-radius: 12px;
+    padding: 12px 18px;
+    margin: 14px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  .bank-box strong { color: var(--earth); font-size: 14px; margin-right: 4px; }
+  .bank-word {
+    background: var(--yellow);
+    color: var(--green-dark);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: clamp(13px, 2vw, 15px);
+    font-weight: bold;
+  }
+  .fill-activity { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+  .fill-row {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: clamp(13px, 2vw, 15px);
+    line-height: 2.2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .fill-row .q-num { color: var(--green-dark); font-weight: bold; flex-shrink: 0; margin-right:2px; }
+  .word-select {
+    border: 2px solid var(--green-mid);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: clamp(13px, 2vw, 15px);
+    background: #fff;
+    color: var(--green-dark);
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    transition: border-color .2s;
+    font-family: inherit;
+  }
+  .word-select:focus { border-color: var(--green-dark); }
+  .word-select.correct { background: #d1fae5; border-color: #16a34a; color: #14532d; }
+  .word-select.wrong   { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .pic-label-txt { font-size: 12px; color: #777; white-space: nowrap; }
+  .pic-select-inline {
+    border: 2px solid var(--green-mid);
+    border-radius: 14px;
+    padding: 4px 8px;
+    font-size: clamp(12px, 1.8vw, 14px);
+    background: #f0fdf4;
+    color: var(--green-dark);
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+    transition: border-color .2s;
+  }
+  .pic-select-inline.correct{ background: #d1fae5; border-color: #16a34a; color: #14532d; }
+  .pic-select-inline.wrong  { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+  .pic-label-txt { font-size: 12px; color: #777; white-space: nowrap; }
+  .pic-real {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 14px;
+    border: 3px solid var(--green-light);
+    box-shadow: 0 6px 24px #0002;
+    display: block;
+    margin: 20px auto 0;
+  }
+  .answers-panel {
+    margin-top: 14px;
+    background: #fffbeb;
+    border: 2px solid var(--yellow);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: none;
+  }
+  .answers-panel.show { display: block; }
+  .ans-row { margin: 6px 0; font-size: clamp(13px, 2vw, 15px); }
+  .ans-row strong { color: var(--earth); }
+  .yt-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 13px 26px;
+    font-size: clamp(14px, 2.2vw, 17px);
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 5px 18px #c0392b44;
+    transition: transform .2s;
+    margin: 12px 0;
+  }
+  .yt-btn:hover { transform: translateY(-2px); }
+  .yt-btn svg   { width:26px; height:26px; fill:#fff; }
+  .comp-activity { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
+  .comp-q {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .comp-q .q-text { font-size: clamp(13px,2vw,16px); font-weight:bold; color:var(--green-dark); margin-bottom:8px; }
+  .comp-q textarea {
+    width:100%; border:2px solid var(--green-light); border-radius:8px;
+    padding:8px 12px; font-size:14px; font-family:inherit;
+    resize:none; outline:none; background:#fff;
+    transition:border-color .2s; min-height:56px;
+  }
+  .comp-q textarea:focus { border-color:var(--green-dark); }
+  footer {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: var(--green-dark);
+    opacity: .75;
+  }
+  @media (max-width: 600px) {
+    .tab-btn { padding: 8px 10px; font-size: 11px; }
+    .tab-panel { padding: 14px; }
+  }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <script>
+(function(){
+  const e=['🌸','🌼','🍃','🌿','🌺','🌻','🍀'];
+  for(let i=0;i<16;i++){
+    const d=document.createElement('div');
+    d.className='blossom';
+    d.textContent=e[Math.floor(Math.random()*e.length)];
+    d.style.left=Math.random()*100+'vw';
+    d.style.top=-60+Math.random()*-200+'px';
+    d.style.animationDuration=(9+Math.random()*12)+'s';
+    d.style.animationDelay=(Math.random()*10)+'s';
+    document.body.appendChild(d);
+  }
+})();
+</script>
+  <header>
+   <div class="unit-label">
+    🌿 English for Palestine • Grade 7
+   </div>
+   <h1>🧺 Let's Have a Picnic!</h1>
+   <div class="period-badge">
+    📖 Period 2 — Page 57
+   </div>
+   <div class="teacher">
+    ✏️ T. Wad Refae
+   </div>
+  </header>
+  <div class="tabs-wrapper">
+   <div class="tab-bar">
+    <button class="tab-btn active" onclick="openTab(event,'objectives')">🎯 Objectives</button> <button class="tab-btn" onclick="openTab(event,'act1')">🎧 Activity 1</button> <button class="tab-btn" onclick="openTab(event,'act2')">📖 Activity 2</button> <button class="tab-btn" onclick="openTab(event,'act3')">✏️ Activity 3</button> <button class="tab-btn" onclick="openTab(event,'act4')">🔊 Activity 4</button> <button class="tab-btn" onclick="openTab(event,'act5')">💬 Activity 5</button>
+   </div><!-- OBJECTIVES -->
+   <div class="tab-panel active" id="objectives">
+    <div class="sec-title"><span class="num">🎯</span> Lesson Objectives
+    </div>
+    <div class="obj-grid">
+     <div class="obj-card">
+      <div class="icon">
+       👂
+      </div><strong>Listening</strong>Listen and identify vocabulary words from an audio recording.
+     </div>
+     <div class="obj-card">
+      <div class="icon">
+       📚
+      </div><strong>Vocabulary</strong>Use key words: carry, catch, decide, forget, same, sandwich, suggestion, weekend in context.
+     </div>
+     <div class="obj-card">
+      <div class="icon">
+       ✍️
+      </div><strong>Writing</strong>Complete sentences using the correct vocabulary word from a word bank.
+     </div>
+     <div class="obj-card">
+      <div class="icon">
+       🖼️
+      </div><strong>Matching</strong>Match completed sentences to the correct picture (a–e).
+     </div>
+     <div class="obj-card">
+      <div class="icon">
+       💬
+      </div><strong>Reading &amp; Speaking</strong>Re-read the conversation and answer comprehension questions.
+     </div>
+     <div class="obj-card">
+      <div class="icon">
+       🌿
+      </div><strong>Life Skills</strong>Talk about weekend plans, food, and outdoor activities.
+     </div>
+    </div>
+   </div><!-- ACTIVITY 1 -->
+   <div class="tab-panel" id="act1">
+    <div class="sec-title"><span class="num">1</span> Listen and Circle the Words You Hear 🎧
+    </div>
+    <p style="margin-bottom:14px;font-size:15px;color:#555;">Click the words you hear in the recording, then check your answers!</p><a class="audio-btn" href="https://drive.google.com/file/d/1Gq8f32bbBoMulfIVGhPewd846p_F1Osb/view?usp=drivesdk" target="_blank">
+     <svg viewbox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+     </svg> 🎵 Audio 79 — Listen Now </a>
+    <div class="word-box">
+     <span class="word-chip">carry</span><span class="word-chip">catch</span><span class="word-chip">decide</span> <span class="word-chip">forget</span><span class="word-chip">same</span><span class="word-chip">sandwich</span> <span class="word-chip">suggestion</span><span class="word-chip">weekend</span>
+    </div>
+    <p style="font-size:14px;color:#666;margin-bottom:10px;">Select the words you heard:</p>
+    <div class="listen-grid" id="listenGrid"></div><br><button class="check-btn" onclick="checkActivity1()">✅ Check My Answers</button>
+    <div class="feedback-box" id="act1Feedback"></div>
+    <div style="margin-top:18px;padding:13px 17px;background:#f0fdf4;border-radius:10px;border-left:4px solid var(--green-mid);">
+     <strong style="color:var(--green-dark);">❓ Which words didn't you hear?</strong><br><span style="font-size:14px;color:#555;">Think before you look — then check your answers above!</span>
+    </div>
+   </div><!-- ACTIVITY 2 -->
+   <div class="tab-panel" id="act2">
+    <div class="sec-title"><span class="num">2</span> Read and Circle the Correct Words 📖
+    </div>
+    <p style="margin-bottom:14px;font-size:14px;color:#555;">Click a word — you get instant feedback right away! ✅ ❌</p>
+    <div class="circle-activity" id="circleActivity"></div>
+    <div class="feedback-box" id="act2Feedback" style="margin-top:18px;"></div>
+   </div><!-- ACTIVITY 3 -->
+   <div class="tab-panel" id="act3">
+    <div class="sec-title"><span class="num">3</span> Complete the Sentences &amp; Match the Pictures ✏️
+    </div>
+    <p style="margin-bottom:10px;font-size:14px;color:#555;">Choose a word from the word bank to complete each sentence, then pick the matching picture letter.</p>
+    <div class="bank-box">
+     <strong>📦 Word Bank:</strong> <span class="bank-word">carry</span> <span class="bank-word">catch</span> <span class="bank-word">decide</span> <span class="bank-word">sandwiches</span> <span class="bank-word">suggestion</span>
+    </div>
+    <div class="fill-activity" id="fillActivity"></div><img src="https://i.ibb.co/Xrkk9rpc/file-00000000287c71f4b17626cd8f104560.png" alt="Activity 3 Pictures a-e" class="pic-real" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#e5e7eb'; this.alt='Image unavailable';">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+     <button class="check-btn" onclick="checkActivity3()">✅ Check Answers</button> <button class="show-ans-btn" onclick="toggleAns3()">📋 Model Answers</button>
+    </div>
+    <div class="answers-panel" id="ans3Panel">
+     <strong style="font-size:16px;color:var(--earth);">✅ Answers — Activity 3</strong>
+     <div class="ans-row"><strong>1 →</strong> sandwiches &nbsp;|&nbsp; Picture: <strong>d</strong>
+     </div>
+     <div class="ans-row"><strong>2 →</strong> suggestion &nbsp;|&nbsp; Picture: <strong>e</strong>
+     </div>
+     <div class="ans-row"><strong>3 →</strong> decide &nbsp;|&nbsp; Picture: <strong>b</strong>
+     </div>
+     <div class="ans-row"><strong>4 →</strong> catch &nbsp;|&nbsp; Picture: <strong>a</strong>
+     </div>
+     <div class="ans-row"><strong>5 →</strong> carry &nbsp;|&nbsp; Picture: <strong>c</strong>
+     </div>
+    </div>
+   </div><!-- ACTIVITY 4 -->
+   <div class="tab-panel" id="act4">
+    <div class="sec-title"><span class="num">4</span> Listen and Check Your Sentences 🔊
+    </div>
+    <p style="margin-bottom:16px;font-size:15px;color:#555;">Listen to the recording and check your answers from Activity 3.</p><a class="audio-btn" href="https://drive.google.com/file/d/1I4QWReDyuXIzMCOKYLuZbBmaG8uNOHHv/view?usp=drivesdk" target="_blank">
+     <svg viewbox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+     </svg> 🎵 Audio 80 — Listen &amp; Check </a>
+    <div style="margin-top:20px;background:#f0fdf4;border:2px solid var(--green-light);border-radius:12px;padding:18px 22px;">
+     <strong style="color:var(--green-dark);font-size:16px;">📝 Audio 80 — Full Sentences:</strong>
+     <ol style="margin-top:12px;padding-left:22px;line-height:2.2;font-size:clamp(13px,2vw,15px);">
+      <li>We have lots of bread so I will make some <strong>sandwiches</strong>.</li>
+      <li>What do you want to do next lesson – who has a <strong>suggestion</strong>?</li>
+      <li>I can't <strong>decide</strong> what I want to do this weekend.</li>
+      <li>It's a long distance to walk – we can go by taxi or <strong>catch</strong> a bus.</li>
+      <li>This picnic bag is full of food and drink so it's very heavy – I can't <strong>carry</strong> it.</li>
+     </ol>
+    </div>
+    <div style="margin-top:18px;background:#fffbeb;border:2px solid var(--yellow);border-radius:12px;padding:16px 20px;">
+     <strong style="color:var(--earth);">🖼️ Picture Matching Answers:</strong>
+     <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;">
+      <span style="background:var(--green-dark);color:#fff;padding:6px 16px;border-radius:20px;font-weight:bold;">1 → d</span> <span style="background:var(--green-dark);color:#fff;padding:6px 16px;border-radius:20px;font-weight:bold;">2 → e</span> <span style="background:var(--green-dark);color:#fff;padding:6px 16px;border-radius:20px;font-weight:bold;">3 → b</span> <span style="background:var(--green-dark);color:#fff;padding:6px 16px;border-radius:20px;font-weight:bold;">4 → a</span> <span style="background:var(--green-dark);color:#fff;padding:6px 16px;border-radius:20px;font-weight:bold;">5 → c</span>
+     </div>
+    </div>
+   </div><!-- ACTIVITY 5 -->
+   <div class="tab-panel" id="act5">
+    <div class="sec-title"><span class="num">5</span> Read the Conversation &amp; Answer the Questions 💬
+    </div>
+    <p style="margin-bottom:14px;font-size:14px;color:#555;">Read the conversation on page 56 again, then answer these questions.</p><a class="yt-btn" href="https://www.youtube.com/watch?v=8AzcvawN7Ec" target="_blank">
+     <svg viewbox="0 0 24 24"><path d="M21.58 7.19a2.51 2.51 0 0 0-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42A2.51 2.51 0 0 0 2.42 7.19 26.26 26.26 0 0 0 2 12a26.26 26.26 0 0 0 .42 4.81 2.51 2.51 0 0 0 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42a2.51 2.51 0 0 0 1.77-1.77A26.26 26.26 0 0 0 22 12a26.26 26.26 0 0 0-.42-4.81zM10 15V9l5.2 3z" />
+     </svg> ▶ Watch: The Conversation Video </a>
+    <div class="comp-activity" id="compActivity"></div><button class="show-ans-btn" onclick="toggleAns5()">📋 Show Model Answers</button>
+    <div class="answers-panel" id="ans5Panel">
+     <strong style="font-size:16px;color:var(--earth);">✅ Model Answers — Activity 5</strong>
+     <div class="ans-row"><strong>1.</strong> Sam suggests they share the food / make sandwiches.
+     </div>
+     <div class="ans-row"><strong>2.</strong> Majed will take hummus and salad.
+     </div>
+     <div class="ans-row"><strong>3.</strong> Sam will take the orange juice.
+     </div>
+     <div class="ans-row"><strong>4.</strong> Majed knows a good place for a picnic.
+     </div>
+     <div class="ans-row"><strong>5.</strong> <em>(Open answer — students' own response.)</em>
+     </div>
+    </div>
+   </div>
+  </div>
+  <footer>
+   🌿 PalBook Live &nbsp;|&nbsp; ✏️ T. Wad Refae
+  </footer>
+  <script>
+// TABS
+function openTab(e, id) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+
+// ACTIVITY 1
+const allWords = ['carry','catch','decide','forget','same','sandwich','suggestion','weekend'];
+const heardWords = new Set(['suggestion','decide','weekend','forget','sandwich','carry']);
+(function(){
+  const grid = document.getElementById('listenGrid');
+  allWords.forEach(w => {
+    const div = document.createElement('div');
+    div.className = 'listen-item';
+    div.dataset.word = w;
+    div.innerHTML = '<div class="chk"></div><span>'+w+'</span>';
+    div.addEventListener('click', ()=>div.classList.toggle('heard'));
+    grid.appendChild(div);
+  });
+})();
+function checkActivity1() {
+  const selected = new Set([...document.querySelectorAll('.listen-item.heard')].map(d=>d.dataset.word));
+  const notHeard = allWords.filter(w=>!heardWords.has(w));
+  let correct = true;
+  document.querySelectorAll('.listen-item').forEach(d=>{
+    d.classList.remove('not-heard');
+    const w = d.dataset.word;
+    if (heardWords.has(w) && !selected.has(w)) correct=false;
+    if (!heardWords.has(w) && selected.has(w)) { correct=false; d.classList.add('not-heard'); }
+  });
+  const fb = document.getElementById('act1Feedback');
+  fb.className = 'feedback-box show '+(correct?'correct':'incorrect');
+  fb.innerHTML = correct
+    ? '&#9989; <strong>Well done!</strong> Words NOT heard: <strong>'+notHeard.join(', ')+'</strong>'
+    : '&#10060; Not quite. Words NOT heard: <strong>'+notHeard.join(', ')+'</strong>. Words heard: <strong>'+[...heardWords].join(', ')+'</strong>';
+}
+
+// ACTIVITY 2 — instant per-sentence feedback
+const act2Data = [
+  { before:'We usually make a', opts:['sandwich','salad'], correct:'sandwich', after:'with bread.' },
+  { before:"We call the days of the week when we don't go to school or work the", opts:['weekdays','weekend'], correct:'weekend', after:'.' },
+  { before:'Can you give me a', opts:['something','suggestion'], correct:'suggestion', after:'for what we can do?' },
+  { before:"Majed's family always go to the", opts:['same','different'], correct:'same', after:'picnic place.' },
+  { before:"Please don't", opts:['remember','forget'], correct:'forget', after:'your homework tomorrow.' },
+];
+(function(){
+  const cont = document.getElementById('circleActivity');
+  act2Data.forEach((q,i) => {
+    const div = document.createElement('div');
+    div.className = 'circle-row';
+    const optHtml = q.opts.map(o =>
+      '<span class="option-btn" data-q="'+i+'" data-val="'+o+'" onclick="selectOpt(this,'+i+')">'+o+'</span>'
+    ).join(' / ');
+    div.innerHTML = '<span class="q-num">'+(i+1)+'.</span> '+q.before+' '+optHtml+' '+q.after+' <span class="row-badge" id="badge'+i+'"></span>';
+    cont.appendChild(div);
+  });
+})();
+function selectOpt(el, qi) {
+  document.querySelectorAll('.option-btn[data-q="'+qi+'"]').forEach(b=>{
+    b.classList.remove('correct','wrong');
+  });
+  const q = act2Data[qi];
+  const badge = document.getElementById('badge'+qi);
+  if (el.dataset.val === q.correct) {
+    el.classList.add('correct');
+    badge.textContent = '✅ Correct!';
+    badge.className = 'row-badge ok';
+  } else {
+    el.classList.add('wrong');
+    badge.textContent = '❌ Try again!';
+    badge.className = 'row-badge err';
+  }
+  let score = 0;
+  act2Data.forEach((_,i)=>{ if(document.querySelector('.option-btn[data-q="'+i+'"].correct')) score++; });
+  const fb = document.getElementById('act2Feedback');
+  fb.className = 'feedback-box show '+(score===act2Data.length?'correct':'incorrect');
+  fb.innerHTML = score===act2Data.length
+    ? '🌟 <strong>Perfect! '+score+'/'+act2Data.length+'</strong> — All correct! Great work!'
+    : '📊 Score so far: <strong>'+score+'/'+act2Data.length+'</strong>';
+}
+
+// ACTIVITY 3 — word bank dropdowns
+const fillData = [
+  { before:'We have lots of bread so I will make some', after:'.', answer:'sandwiches', pic:'d' },
+  { before:"What do you want to do next lesson – who has a", after:'?', answer:'suggestion', pic:'e' },
+  { before:"I can't", after:'what I want to do this weekend.', answer:'decide', pic:'b' },
+  { before:"It's a long distance to walk – we can go by taxi or", after:'a bus.', answer:'catch', pic:'a' },
+  { before:"This picnic bag is full of food and drink so it's very heavy – I can't", after:'it.', answer:'carry', pic:'c' },
+];
+const bankWords = ['—','carry','catch','decide','sandwiches','suggestion'];
+const picLetters = ['—','a','b','c','d','e'];
+(function(){
+  const cont = document.getElementById('fillActivity');
+  fillData.forEach((q,i)=>{
+    const div = document.createElement('div');
+    div.className = 'fill-row';
+    const wordOpts = bankWords.map(w=>'<option value="'+w+'">'+w+'</option>').join('');
+    const picOpts  = picLetters.map(l=>'<option value="'+l+'">'+(l==='—'?'— pic':'Pic '+l.toUpperCase())+'</option>').join('');
+    div.innerHTML =
+      '<span class="q-num">'+(i+1)+'.</span>'+
+      '<span>'+q.before+'</span>'+
+      '<select class="word-select" id="wsel'+i+'">'+wordOpts+'</select>'+
+      '<span>'+q.after+'</span>'+
+      '<span style="margin-left:auto;display:flex;align-items:center;gap:5px;flex-shrink:0;">'+
+        '<span class="pic-label-txt">📷</span>'+
+        '<select class="pic-select-inline" id="psel'+i+'">'+picOpts+'</select>'+
+      '</span>';
+    cont.appendChild(div);
+  });
+})();
+function checkActivity3() {
+  fillData.forEach((q,i)=>{
+    const ws = document.getElementById('wsel'+i);
+    const ps = document.getElementById('psel'+i);
+    ws.classList.remove('correct','wrong');
+    ps.classList.remove('correct','wrong');
+    if (ws.value===q.answer)        ws.classList.add('correct');
+    else if (ws.value!=='—')        ws.classList.add('wrong');
+    if (ps.value===q.pic)           ps.classList.add('correct');
+    else if (ps.value!=='—')        ps.classList.add('wrong');
+  });
+}
+function toggleAns3() { document.getElementById('ans3Panel').classList.toggle('show'); }
+
+// ACTIVITY 5
+const compData = [
+  'What does Sam suggest they do with the food they take?',
+  'What food will Majed take?',
+  'Who will take the orange juice?',
+  'Who knows a good place for a picnic?',
+  'What do you like to eat at a picnic?',
+];
+(function(){
+  const cont = document.getElementById('compActivity');
+  compData.forEach((q,i)=>{
+    const div = document.createElement('div');
+    div.className = 'comp-q';
+    div.innerHTML = '<div class="q-text">'+(i+1)+'. '+q+'</div><textarea id="compAns'+i+'" placeholder="Write your answer here..." rows="2"></textarea>';
+    cont.appendChild(div);
+  });
+})();
+function toggleAns5(){ document.getElementById('ans5Panel').classList.toggle('show'); }
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc4832f5718e209',t:'MTc3ODg3Mjk1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
