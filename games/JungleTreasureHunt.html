@@ -1,421 +1,769 @@
-<!doctype html>
-<html lang="en" class="h-full">
- <head>
+
+html_content = '''<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&amp;family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Jungle Treasure Hunt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-html,body{margin:0;padding:0;height:100%;overflow:hidden}
-*{box-sizing:border-box}
-.app-wrapper{height:100%;width:100%;overflow:hidden;position:relative}
-.slide{display:none;height:100%;width:100%;position:absolute;top:0;left:0}
-.slide.active{display:flex}
-.jungle-bg{background:linear-gradient(160deg,#1a3a1a 0%,#2d5a27 30%,#1f4420 60%,#162e10 100%)}
-.board-bg{background:linear-gradient(135deg,#2d5a27 0%,#3a6b34 40%,#2a5020 100%)}
-.path-step{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:16px;cursor:pointer;transition:all .2s;border:3px solid rgba(255,255,255,.3);position:relative}
-.path-step:hover{transform:scale(1.2);z-index:10}
-.path-step.blue{background:#2563eb;color:#fff;box-shadow:0 0 12px rgba(37,99,235,.5)}
-.path-step.green{background:#16a34a;color:#fff;box-shadow:0 0 12px rgba(22,163,74,.5)}
-.path-step.yellow{background:#eab308;color:#1a1a00;box-shadow:0 0 12px rgba(234,179,8,.5)}
-.path-step.red{background:#dc2626;color:#fff;box-shadow:0 0 12px rgba(220,38,38,.5)}
-.path-step.start{background:#f59e0b;color:#1a1a00;border-color:#fbbf24;width:64px;height:64px;font-size:13px}
-.path-step.finish{background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a1a00;border-color:#fbbf24;width:64px;height:64px;font-size:13px}
-.option-btn{transition:all .2s;cursor:pointer}
-.option-btn:hover{transform:translateY(-2px)}
-.option-btn.correct{background:#16a34a!important;color:#fff!important;border-color:#16a34a!important}
-.option-btn.wrong{background:#dc2626!important;color:#fff!important;border-color:#dc2626!important}
-.feedback{opacity:0;transition:opacity .3s}
-.feedback.show{opacity:1}
-.nav-btn{cursor:pointer;transition:all .15s}
-.nav-btn:hover{transform:scale(1.05)}
-.card-surface{background:rgba(255,255,255,.95);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.3)}
-.timer-ring{transition:stroke-dashoffset 1s linear}
-.leaf{position:absolute;opacity:.15;font-size:40px;pointer-events:none}
-@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(5deg)}}
-.float-anim{animation:float 3s ease-in-out infinite}
-@keyframes pulse-glow{0%,100%{filter:drop-shadow(0 0 6px rgba(251,191,36,.4))}50%{filter:drop-shadow(0 0 16px rgba(251,191,36,.8))}}
-.treasure-glow{animation:pulse-glow 2s ease-in-out infinite}
-.slide-num{position:absolute;bottom:12px;right:20px;font-family:'Fredoka',sans-serif;font-size:14px;color:rgba(255,255,255,.4)}
-</style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full">
-  <div class="app-wrapper" id="app"></div>
-  <script>
-const defaultConfig = {
-  game_title: "Jungle Treasure Hunt",
-  teacher_name: "T. Wad Refae",
-  background_color: "#1a3a1a",
-  surface_color: "#fffbeb",
-  text_color: "#1a2e05",
-  primary_action_color: "#f59e0b",
-  secondary_action_color: "#16a34a",
-  font_family: "Fredoka",
-  font_size: 18
-};
-
-// Questions data
-const vocabQs = [
-  {q:"What does 'enormous' mean?", opts:["Very small","Very big","Very fast"], ans:1},
-  {q:"Which word means 'a group of trees'?", opts:["Desert","Forest","Ocean"], ans:1},
-  {q:"What is a 'compass' used for?", opts:["Cooking","Finding direction","Writing"], ans:1},
-  {q:"'Brave' means...", opts:["Scared","Courageous","Lazy"], ans:1},
-  {q:"What does 'discover' mean?", opts:["To lose","To find","To hide"], ans:1},
-  {q:"A 'trail' is a type of...", opts:["Food","Path","Animal"], ans:1},
-  {q:"'Ancient' means very...", opts:["New","Old","Tall"], ans:1},
-  {q:"What is a 'riddle'?", opts:["A puzzle question","A type of boat","A jungle animal"], ans:0},
-  {q:"'Expedition' means a...", opts:["Short nap","Long journey","Quick meal"], ans:1}
-];
-
-const grammarQs = [
-  {q:"Choose the correct sentence:", opts:["She go to school.","She goes to school.","She going to school."], ans:1},
-  {q:"Which is correct?", opts:["They was happy.","They were happy.","They is happy."], ans:1},
-  {q:"Fix the mistake: 'He don't like snakes.'", opts:["He doesn't like snakes.","He not like snakes.","He don't likes snakes."], ans:0},
-  {q:"Choose the correct form:", opts:["I have went there.","I have gone there.","I have go there."], ans:1},
-  {q:"Which sentence is correct?", opts:["The children plays outside.","The children play outside.","The children playing outside."], ans:1},
-  {q:"Fix: 'She can sings well.'", opts:["She can sing well.","She can sang well.","She cans sing well."], ans:0},
-  {q:"Choose correctly:", opts:["There is many animals.","There are many animals.","There be many animals."], ans:1},
-  {q:"Which is right?", opts:["He readed the map.","He read the map.","He reeds the map."], ans:1}
-];
-
-const speakingQs = [
-  {p:"Describe your favorite animal in 15 seconds!", time:15},
-  {p:"Tell us about a place you want to visit. You have 20 seconds!", time:20},
-  {p:"What would you bring on a jungle adventure? 15 seconds!", time:15},
-  {p:"Describe what you see in a jungle. 20 seconds!", time:20},
-  {p:"Tell a short story about finding treasure! 20 seconds!", time:20},
-  {p:"What makes a good explorer? 15 seconds!", time:15}
-];
-
-const challengeQs = [
-  {q:"Rearrange: 'jungle / the / explored / they / carefully'", opts:["They explored the jungle carefully.","They jungle explored the carefully.","Carefully they the jungle explored."], ans:0},
-  {q:"Find TWO errors: 'She don't has no map.'", opts:["She doesn't have a map.","She don't have no map.","She doesn't has a map."], ans:0},
-  {q:"Which uses the past perfect correctly?", opts:["He had found the treasure before sunset.","He has found the treasure before sunset.","He finding the treasure before sunset."], ans:0},
-  {q:"Make it passive: 'The explorer found the gold.'", opts:["The gold was found by the explorer.","The gold found by the explorer.","The explorer was found the gold."], ans:0},
-  {q:"Choose the correct conditional:", opts:["If I will see a snake, I run.","If I saw a snake, I would run.","If I see a snake, I would ran."], ans:1},
-  {q:"Fix: 'Neither the map nor the compass were working.'", opts:["Neither the map nor the compass was working.","Neither the map nor the compass are working.","Neither the map nor compass were work."], ans:0}
-];
-
-// Board path steps (30 steps)
-const steps = [
-  {type:'start',label:'🏕️'},{type:'blue',n:1},{type:'green',n:2},{type:'yellow',n:3},{type:'blue',n:4},{type:'red',n:5},
-  {type:'green',n:6},{type:'blue',n:7},{type:'yellow',n:8},{type:'green',n:9},{type:'red',n:10},
-  {type:'blue',n:11},{type:'yellow',n:12},{type:'green',n:13},{type:'blue',n:14},{type:'red',n:15},
-  {type:'green',n:16},{type:'blue',n:17},{type:'yellow',n:18},{type:'red',n:19},{type:'green',n:20},
-  {type:'blue',n:21},{type:'yellow',n:22},{type:'green',n:23},{type:'red',n:24},{type:'blue',n:25},
-  {type:'green',n:26},{type:'yellow',n:27},{type:'red',n:28},{type:'blue',n:29},{type:'finish',label:'💎'}
-];
-
-// Map step numbers to slides
-function getSlideForStep(step) {
-  if (step.type === 'start' || step.type === 'finish') return null;
-  const n = step.n;
-  if (step.type === 'blue') {
-    const blueSteps = [1,4,7,11,14,17,21,25,29];
-    const idx = blueSteps.indexOf(n);
-    return idx >= 0 && idx < vocabQs.length ? {cat:'vocab', idx} : null;
-  }
-  if (step.type === 'green') {
-    const greenSteps = [2,6,9,13,16,20,23,26];
-    const idx = greenSteps.indexOf(n);
-    return idx >= 0 && idx < grammarQs.length ? {cat:'grammar', idx} : null;
-  }
-  if (step.type === 'yellow') {
-    const yellowSteps = [3,8,12,18,22,27];
-    const idx = yellowSteps.indexOf(n);
-    return idx >= 0 && idx < speakingQs.length ? {cat:'speaking', idx} : null;
-  }
-  if (step.type === 'red') {
-    const redSteps = [5,10,15,19,24,28];
-    const idx = redSteps.indexOf(n);
-    return idx >= 0 && idx < challengeQs.length ? {cat:'challenge', idx} : null;
-  }
-  return null;
-}
-
-let currentSlide = 0;
-let totalSlides = 0;
-let timerInterval = null;
-
-function buildApp(config) {
-  const app = document.getElementById('app');
-  const c = {...defaultConfig, ...config};
-  const ff = `${c.font_family}, Fredoka, sans-serif`;
-  const bs = c.font_size;
-
-  let slides = [];
-  let html = '';
-
-  // Slide 0: Board Game
-  html += `<div class="slide active board-bg" id="slide-0" style="flex-direction:column;align-items:center;justify-content:center;padding:16px;position:relative;overflow:hidden">
-    <div class="leaf" style="top:5%;left:3%">🌿</div><div class="leaf" style="top:15%;right:5%">🌴</div>
-    <div class="leaf" style="bottom:10%;left:8%">🍃</div><div class="leaf" style="bottom:5%;right:3%">🌿</div>
-    <div class="leaf" style="top:50%;left:1%">🦜</div><div class="leaf" style="top:30%;right:2%">🐒</div>
-    <div style="text-align:center;margin-bottom:8px">
-      <h1 id="boardTitle" class="treasure-glow" style="font-family:'Bungee Shade',${ff};font-size:${bs*2}px;color:#fbbf24;margin:0;text-shadow:2px 2px 8px rgba(0,0,0,.5)">${c.game_title}</h1>
-      <p id="boardTeacher" style="font-family:${ff};font-size:${bs*.8}px;color:rgba(255,255,255,.7);margin:4px 0 0">by ${c.teacher_name}</p>
-    </div>
-    <div style="display:flex;gap:16px;margin-bottom:10px;flex-wrap:wrap;justify-content:center">
-      <span style="font-family:${ff};font-size:${bs*.7}px;color:#fff;background:#2563eb;padding:3px 10px;border-radius:20px">🔵 Vocabulary</span>
-      <span style="font-family:${ff};font-size:${bs*.7}px;color:#fff;background:#16a34a;padding:3px 10px;border-radius:20px">🟢 Grammar</span>
-      <span style="font-family:${ff};font-size:${bs*.7}px;color:#1a1a00;background:#eab308;padding:3px 10px;border-radius:20px">🟡 Speaking</span>
-      <span style="font-family:${ff};font-size:${bs*.7}px;color:#fff;background:#dc2626;padding:3px 10px;border-radius:20px">🔴 Challenge</span>
-    </div>
-    <div id="boardGrid" style="display:flex;flex-wrap:wrap;gap:6px;max-width:680px;justify-content:center;align-items:center"></div>
-    <p style="font-family:${ff};font-size:${bs*.65}px;color:rgba(255,255,255,.5);margin-top:10px">👆 Tap any space to jump to its question!</p>
-    <div style="margin-top:20px;display:flex;flex-direction:column;align-items:center;gap:12px">
-      <div class="card-surface" style="padding:20px;text-align:center">
-        <p style="font-family:${ff};font-size:${bs*.9}px;color:${c.text_color};margin:0 0 14px;font-weight:600">🎲 Roll the dice!</p>
-        <button id="diceBtn" onclick="rollDice()" style="font-family:${ff};font-size:${bs*1.3}px;padding:14px 32px;border-radius:16px;border:none;background:${c.primary_action_color};color:#fff;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 12px rgba(245,158,11,.3)" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">ROLL!</button>
-        <p id="diceResult" style="font-family:${ff};font-size:${bs*2}px;margin:12px 0 0;color:${c.primary_action_color};font-weight:700;min-height:${bs*2.2}px"></p>
-      </div>
-    </div>
-    <div class="slide-num">Board</div>
-  </div>`;
-  slides.push('board');
-
-  // Helper for MC slides
-  function mcSlide(idx, cat, emoji, catLabel, color, q, opts, ans) {
-    const slideId = slides.length;
-    html += `<div class="slide jungle-bg" id="slide-${slideId}" style="flex-direction:column;align-items:center;justify-content:center;padding:24px;position:relative">
-      <div style="position:absolute;top:16px;left:20px">
-        <span style="font-family:${ff};font-size:${bs*.7}px;color:#fff;background:${color};padding:4px 14px;border-radius:20px">${emoji} ${catLabel}</span>
-      </div>
-      <div class="card-surface" style="max-width:700px;width:100%;padding:36px 32px;text-align:center">
-        <p style="font-family:${ff};font-size:${bs*1.6}px;font-weight:700;color:${c.text_color};margin:0 0 28px;line-height:1.3">${q}</p>
-        <div style="display:flex;flex-direction:column;gap:14px" id="opts-${slideId}">
-          ${opts.map((o,i) => `<button class="option-btn" data-slide="${slideId}" data-idx="${i}" data-ans="${ans}" style="font-family:${ff};font-size:${bs*1.1}px;padding:14px 20px;border-radius:14px;border:3px solid ${c.primary_action_color};background:${c.surface_color};color:${c.text_color};font-weight:600">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}
-        </div>
-        <div class="feedback" id="fb-${slideId}" style="margin-top:18px;font-family:${ff};font-size:${bs}px;font-weight:700"></div>
-      </div>
-      ${navButtons(slideId, ff, bs, c)}
-      <div class="slide-num">${slideId} / TOTAL</div>
-    </div>`;
-    slides.push(cat);
-  }
-
-  function navButtons(id, ff, bs, c) {
-    return `<div style="position:absolute;bottom:20px;left:0;right:0;display:flex;justify-content:center;gap:16px">
-      <button class="nav-btn" onclick="goSlide(0)" style="font-family:${ff};font-size:${bs*.8}px;padding:8px 18px;border-radius:12px;border:2px solid ${c.primary_action_color};background:transparent;color:${c.primary_action_color};font-weight:600">🗺️ Board</button>
-      <button class="nav-btn" onclick="prevSlide()" style="font-family:${ff};font-size:${bs*.8}px;padding:8px 18px;border-radius:12px;border:2px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-weight:600">◀ Prev</button>
-      <button class="nav-btn" onclick="nextSlide()" style="font-family:${ff};font-size:${bs*.8}px;padding:8px 18px;border-radius:12px;border:2px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-weight:600">Next ▶</button>
-    </div>`;
-  }
-
-  // Build vocab slides (2-10)
-  vocabQs.forEach((q,i) => mcSlide(i,'vocab','🔵','Vocabulary','#2563eb',q.q,q.opts,q.ans));
-  // Grammar slides (11-18)
-  grammarQs.forEach((q,i) => mcSlide(i,'grammar','🟢','Grammar','#16a34a',q.q,q.opts,q.ans));
-
-  // Speaking slides (19-24)
-  speakingQs.forEach((sq,i) => {
-    const slideId = slides.length;
-    html += `<div class="slide jungle-bg" id="slide-${slideId}" style="flex-direction:column;align-items:center;justify-content:center;padding:24px;position:relative">
-      <div style="position:absolute;top:16px;left:20px">
-        <span style="font-family:${ff};font-size:${bs*.7}px;color:#1a1a00;background:#eab308;padding:4px 14px;border-radius:20px">🟡 Speaking</span>
-      </div>
-      <div class="card-surface" style="max-width:600px;width:100%;padding:40px 32px;text-align:center">
-        <p style="font-size:48px;margin:0 0 16px">🎤</p>
-        <p style="font-family:${ff};font-size:${bs*1.5}px;font-weight:700;color:${c.text_color};margin:0 0 24px;line-height:1.3">${sq.p}</p>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
-          <svg width="100" height="100" id="timer-svg-${slideId}">
-            <circle cx="50" cy="50" r="42" fill="none" stroke="#e5e7eb" stroke-width="6"/>
-            <circle cx="50" cy="50" r="42" fill="none" stroke="${c.primary_action_color}" stroke-width="6" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="0" class="timer-ring" id="timer-circle-${slideId}" transform="rotate(-90 50 50)"/>
-            <text x="50" y="56" text-anchor="middle" style="font-family:${ff};font-size:24px;font-weight:700;fill:${c.text_color}" id="timer-text-${slideId}">${sq.time}</text>
-          </svg>
-          <button class="nav-btn" id="timer-btn-${slideId}" onclick="startTimer(${slideId},${sq.time})" style="font-family:${ff};font-size:${bs}px;padding:10px 28px;border-radius:14px;border:none;background:${c.primary_action_color};color:#fff;font-weight:700">▶ Start Timer</button>
-        </div>
-      </div>
-      ${navButtons(slideId, ff, bs, c)}
-      <div class="slide-num">${slideId} / TOTAL</div>
-    </div>`;
-    slides.push('speaking');
-  });
-
-  // Challenge slides (25-30)
-  challengeQs.forEach((q,i) => mcSlide(i,'challenge','🔴','Challenge','#dc2626',q.q,q.opts,q.ans));
-
-  totalSlides = slides.length;
-  html = html.replace(/TOTAL/g, totalSlides - 1);
-  app.innerHTML = html;
-
-  // Build board grid
-  const grid = document.getElementById('boardGrid');
-  grid.innerHTML = '';
-  steps.forEach((s,i) => {
-    const div = document.createElement('div');
-    div.className = `path-step ${s.type}`;
-    if (s.type === 'start') div.innerHTML = s.label + '<br><span style="font-size:9px">START</span>';
-    else if (s.type === 'finish') div.innerHTML = s.label + '<br><span style="font-size:9px">FINISH</span>';
-    else div.textContent = s.n;
-    div.onclick = () => {
-      const target = getSlideForStep(s);
-      if (!target) return;
-      // Find the slide index
-      let catOrder, offset;
-      if (target.cat === 'vocab') offset = 1;
-      else if (target.cat === 'grammar') offset = 1 + vocabQs.length;
-      else if (target.cat === 'speaking') offset = 1 + vocabQs.length + grammarQs.length;
-      else if (target.cat === 'challenge') offset = 1 + vocabQs.length + grammarQs.length + speakingQs.length;
-      goSlide(offset + target.idx);
-    };
-    grid.appendChild(div);
-  });
-
-  // Wire up option buttons
-  document.querySelectorAll('.option-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const sid = this.dataset.slide;
-      const idx = parseInt(this.dataset.idx);
-      const ans = parseInt(this.dataset.ans);
-      const siblings = document.querySelectorAll(`#opts-${sid} .option-btn`);
-      siblings.forEach(s => s.style.pointerEvents = 'none');
-      const fb = document.getElementById(`fb-${sid}`);
-      if (idx === ans) {
-        this.classList.add('correct');
-        fb.textContent = '✅ Correct! Great job, explorer!';
-        fb.style.color = '#16a34a';
-      } else {
-        this.classList.add('wrong');
-        siblings[ans].classList.add('correct');
-        fb.textContent = '❌ Not quite! The correct answer is highlighted.';
-        fb.style.color = '#dc2626';
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Fredoka', sans-serif;
+      background: #1a3a1a;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    
+    .app-wrapper {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .slide {
+      display: none;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .slide.active { display: flex; }
+    
+    .jungle-bg {
+      background: linear-gradient(160deg, #1a3a1a 0%, #2d5a27 30%, #1f4420 60%, #162e10 100%);
+    }
+    
+    .board-bg {
+      background: linear-gradient(135deg, #2d5a27 0%, #3a6b34 40%, #2a5020 100%);
+    }
+    
+    .card-surface {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 700px;
+      padding: 24px;
+      margin: 0 auto;
+    }
+    
+    /* Board Styles */
+    .board-header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    
+    .board-title {
+      font-family: 'Bungee Shade', 'Fredoka', sans-serif;
+      font-size: clamp(24px, 6vw, 48px);
+      color: #fbbf24;
+      margin: 0;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      animation: pulse-glow 2s ease-in-out infinite;
+      line-height: 1.2;
+    }
+    
+    .board-teacher {
+      font-size: clamp(12px, 3vw, 16px);
+      color: rgba(255, 255, 255, 0.7);
+      margin: 4px 0 0;
+    }
+    
+    .legend {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .legend-item {
+      font-size: clamp(10px, 2.5vw, 13px);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    
+    .board-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-width: 680px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .path-step {
+      width: clamp(36px, 9vw, 52px);
+      height: clamp(36px, 9vw, 52px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: clamp(12px, 3vw, 16px);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+      flex-shrink: 0;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    .path-step:hover, .path-step:active {
+      transform: scale(1.15);
+      z-index: 10;
+    }
+    
+    .path-step.blue { background: #2563eb; color: #fff; box-shadow: 0 0 12px rgba(37, 99, 235, 0.5); }
+    .path-step.green { background: #16a34a; color: #fff; box-shadow: 0 0 12px rgba(22, 163, 74, 0.5); }
+    .path-step.yellow { background: #eab308; color: #1a1a00; box-shadow: 0 0 12px rgba(234, 179, 8, 0.5); }
+    .path-step.red { background: #dc2626; color: #fff; box-shadow: 0 0 12px rgba(220, 38, 38, 0.5); }
+    .path-step.start { 
+      background: #f59e0b; 
+      color: #1a1a00; 
+      border-color: #fbbf24; 
+      width: clamp(48px, 12vw, 64px); 
+      height: clamp(48px, 12vw, 64px); 
+      font-size: clamp(10px, 2.5vw, 13px);
+    }
+    .path-step.finish { 
+      background: linear-gradient(135deg, #f59e0b, #d97706); 
+      color: #1a1a00; 
+      border-color: #fbbf24; 
+      width: clamp(48px, 12vw, 64px); 
+      height: clamp(48px, 12vw, 64px); 
+      font-size: clamp(10px, 2.5vw, 13px);
+    }
+    
+    .dice-section {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .dice-btn {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(18px, 5vw, 28px);
+      padding: 14px 32px;
+      border-radius: 16px;
+      border: none;
+      background: #f59e0b;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      width: 100%;
+      max-width: 200px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .dice-btn:hover, .dice-btn:active {
+      transform: scale(1.05);
+    }
+    
+    .dice-btn:disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    
+    .dice-result {
+      font-size: clamp(32px, 8vw, 48px);
+      margin: 8px 0 0;
+      color: #f59e0b;
+      font-weight: 700;
+      min-height: 1.2em;
+    }
+    
+    .tap-hint {
+      font-size: clamp(11px, 2.5vw, 14px);
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 8px;
+      text-align: center;
+    }
+    
+    /* Question Slides */
+    .slide-badge {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-size: clamp(11px, 2.5vw, 14px);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      z-index: 5;
+    }
+    
+    .question-text {
+      font-size: clamp(18px, 5vw, 28px);
+      font-weight: 700;
+      color: #1a2e05;
+      margin: 0 0 20px;
+      line-height: 1.3;
+    }
+    
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .option-btn {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(14px, 4vw, 20px);
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 3px solid #f59e0b;
+      background: #fffbeb;
+      color: #1a2e05;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    
+    .option-btn:hover, .option-btn:active {
+      transform: translateY(-2px);
+    }
+    
+    .option-btn.correct {
+      background: #16a34a !important;
+      color: #fff !important;
+      border-color: #16a34a !important;
+    }
+    
+    .option-btn.wrong {
+      background: #dc2626 !important;
+      color: #fff !important;
+      border-color: #dc2626 !important;
+    }
+    
+    .feedback {
+      opacity: 0;
+      transition: opacity 0.3s;
+      margin-top: 16px;
+      font-size: clamp(14px, 4vw, 18px);
+      font-weight: 700;
+      text-align: center;
+      min-height: 1.5em;
+    }
+    
+    .feedback.show { opacity: 1; }
+    
+    /* Speaking Timer */
+    .timer-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .timer-svg {
+      width: clamp(80px, 25vw, 120px);
+      height: clamp(80px, 25vw, 120px);
+    }
+    
+    .timer-btn {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(14px, 4vw, 18px);
+      padding: 10px 24px;
+      border-radius: 14px;
+      border: none;
+      background: #f59e0b;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Navigation */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    
+    .nav-btn {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(12px, 3vw, 15px);
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: transparent;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+    
+    .nav-btn:hover, .nav-btn:active {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-btn.board-btn {
+      border-color: #f59e0b;
+      color: #f59e0b;
+    }
+    
+    /* Slide Number */
+    .slide-num {
+      position: absolute;
+      bottom: 60px;
+      right: 16px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Animations */
+    @keyframes pulse-glow {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4)); }
+      50% { filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.8)); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(5deg); }
+    }
+    
+    .leaf {
+      position: absolute;
+      opacity: 0.15;
+      font-size: clamp(24px, 6vw, 40px);
+      pointer-events: none;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Mobile Optimizations */
+    @media (max-width: 480px) {
+      .card-surface {
+        padding: 16px;
+        border-radius: 16px;
       }
-      fb.classList.add('show');
-    });
-  });
-
-  if (currentSlide > 0) goSlide(currentSlide);
-}
-
-window.goSlide = function(n) {
-  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-  const all = document.querySelectorAll('.slide');
-  all.forEach(s => s.classList.remove('active'));
-  currentSlide = Math.max(0, Math.min(n, all.length - 1));
-  all[currentSlide].classList.add('active');
-};
-
-window.rollDice = function() {
-  const resultEl = document.getElementById('diceResult');
-  const btn = document.getElementById('diceBtn');
-  btn.style.pointerEvents = 'none';
-  btn.style.opacity = '.6';
-  resultEl.textContent = '🎲';
-  
-  // Animate rolling through 1-30
-  let count = 0;
-  const rollAnim = setInterval(() => {
-    resultEl.textContent = Math.floor(Math.random() * 30) + 1;
-    count++;
-    if (count > 20) {
-      clearInterval(rollAnim);
-      const finalRoll = Math.floor(Math.random() * 30) + 1;
-      resultEl.textContent = finalRoll;
-      btn.style.pointerEvents = 'auto';
-      btn.style.opacity = '1';
       
-      // Auto-jump to that step's question
-      const target = steps[finalRoll];
-      if (target) {
-        setTimeout(() => {
-          const slide = getSlideForStep(target);
-          if (slide) {
-            let offset;
-            if (slide.cat === 'vocab') offset = 1;
-            else if (slide.cat === 'grammar') offset = 1 + vocabQs.length;
-            else if (slide.cat === 'speaking') offset = 1 + vocabQs.length + grammarQs.length;
-            else if (slide.cat === 'challenge') offset = 1 + vocabQs.length + grammarQs.length + speakingQs.length;
-            goSlide(offset + slide.idx);
-          }
-        }, 500);
+      .board-grid {
+        gap: 4px;
+      }
+      
+      .path-step {
+        border-width: 2px;
+      }
+      
+      .nav-bar {
+        padding: 8px 12px;
+        gap: 6px;
+      }
+      
+      .nav-btn {
+        padding: 6px 10px;
+        font-size: 12px;
       }
     }
-  }, 40);
-};
-
-window.nextSlide = function() { goSlide(currentSlide + 1); };
-window.prevSlide = function() { goSlide(currentSlide - 1); };
-
-window.startTimer = function(slideId, duration) {
-  if (timerInterval) clearInterval(timerInterval);
-  const circle = document.getElementById(`timer-circle-${slideId}`);
-  const text = document.getElementById(`timer-text-${slideId}`);
-  const btn = document.getElementById(`timer-btn-${slideId}`);
-  let remaining = duration;
-  const total = 264;
-  btn.textContent = '⏱️ Running...';
-  btn.style.opacity = '.6';
-  btn.style.pointerEvents = 'none';
-  text.textContent = remaining;
-  circle.style.strokeDashoffset = '0';
-
-  timerInterval = setInterval(() => {
-    remaining--;
-    text.textContent = remaining;
-    circle.style.strokeDashoffset = total * (1 - remaining / duration);
-    if (remaining <= 0) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      text.textContent = '⏰';
-      btn.textContent = '🔄 Restart';
-      btn.style.opacity = '1';
-      btn.style.pointerEvents = 'auto';
-      btn.onclick = () => startTimer(slideId, duration);
+    
+    @media (max-height: 600px) {
+      .board-title {
+        font-size: clamp(20px, 5vw, 32px);
+      }
+      
+      .dice-section {
+        margin-top: 8px;
+      }
+      
+      .card-surface {
+        padding: 16px;
+      }
     }
-  }, 1000);
-};
+    
+    /* Safe area for notched phones */
+    @supports (padding: max(0px)) {
+      .nav-bar {
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+      }
+      
+      .slide {
+        padding-top: max(16px, env(safe-area-inset-top));
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper" id="app"></div>
 
-// Element SDK
-window.elementSdk.init({
-  defaultConfig,
-  onConfigChange: async (config) => {
-    const c = {...defaultConfig, ...config};
-    const ff = `${c.font_family}, Fredoka, sans-serif`;
-    const titleEl = document.getElementById('boardTitle');
-    const teacherEl = document.getElementById('boardTeacher');
-    if (titleEl) {
-      titleEl.textContent = c.game_title;
-      titleEl.style.fontFamily = `'Bungee Shade', ${ff}`;
-      titleEl.style.fontSize = `${c.font_size * 2}px`;
-      titleEl.style.color = c.primary_action_color;
-    }
-    if (teacherEl) {
-      teacherEl.textContent = `by ${c.teacher_name}`;
-      teacherEl.style.fontFamily = ff;
-    }
-    // For full re-render on deep changes, rebuild
-    buildApp(config);
-  },
-  mapToCapabilities: (config) => {
-    const c = {...defaultConfig, ...config};
-    return {
-      recolorables: [
-        {get:()=>c.background_color||defaultConfig.background_color, set:v=>{c.background_color=v;window.elementSdk.setConfig({background_color:v})}},
-        {get:()=>c.surface_color||defaultConfig.surface_color, set:v=>{c.surface_color=v;window.elementSdk.setConfig({surface_color:v})}},
-        {get:()=>c.text_color||defaultConfig.text_color, set:v=>{c.text_color=v;window.elementSdk.setConfig({text_color:v})}},
-        {get:()=>c.primary_action_color||defaultConfig.primary_action_color, set:v=>{c.primary_action_color=v;window.elementSdk.setConfig({primary_action_color:v})}},
-        {get:()=>c.secondary_action_color||defaultConfig.secondary_action_color, set:v=>{c.secondary_action_color=v;window.elementSdk.setConfig({secondary_action_color:v})}}
-      ],
-      borderables: [],
-      fontEditable: {get:()=>c.font_family||defaultConfig.font_family, set:v=>{c.font_family=v;window.elementSdk.setConfig({font_family:v})}},
-      fontSizeable: {get:()=>c.font_size||defaultConfig.font_size, set:v=>{c.font_size=v;window.elementSdk.setConfig({font_size:v})}}
+  <script>
+    const defaultConfig = {
+      game_title: "Jungle Treasure Hunt",
+      teacher_name: "T. Wad Refae",
+      background_color: "#1a3a1a",
+      surface_color: "#fffbeb",
+      text_color: "#1a2e05",
+      primary_action_color: "#f59e0b",
+      secondary_action_color: "#16a34a",
+      font_family: "Fredoka",
+      font_size: 18
     };
-  },
-  mapToEditPanelValues: (config) => {
-    const c = {...defaultConfig, ...config};
-    return new Map([
-      ["game_title", c.game_title || defaultConfig.game_title],
-      ["teacher_name", c.teacher_name || defaultConfig.teacher_name]
-    ]);
-  }
-});
 
-buildApp(defaultConfig);
-</script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc59630e7d3e163',t:'MTc3ODg4NDIyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+    // Questions data
+    const vocabQs = [
+      {q:"What does 'enormous' mean?", opts:["Very small","Very big","Very fast"], ans:1},
+      {q:"Which word means 'a group of trees'?", opts:["Desert","Forest","Ocean"], ans:1},
+      {q:"What is a 'compass' used for?", opts:["Cooking","Finding direction","Writing"], ans:1},
+      {q:"'Brave' means...", opts:["Scared","Courageous","Lazy"], ans:1},
+      {q:"What does 'discover' mean?", opts:["To lose","To find","To hide"], ans:1},
+      {q:"A 'trail' is a type of...", opts:["Food","Path","Animal"], ans:1},
+      {q:"'Ancient' means very...", opts:["New","Old","Tall"], ans:1},
+      {q:"What is a 'riddle'?", opts:["A puzzle question","A type of boat","A jungle animal"], ans:0},
+      {q:"'Expedition' means a...", opts:["Short nap","Long journey","Quick meal"], ans:1}
+    ];
+
+    const grammarQs = [
+      {q:"Choose the correct sentence:", opts:["She go to school.","She goes to school.","She going to school."], ans:1},
+      {q:"Which is correct?", opts:["They was happy.","They were happy.","They is happy."], ans:1},
+      {q:"Fix the mistake: 'He don't like snakes.'", opts:["He doesn't like snakes.","He not like snakes.","He don't likes snakes."], ans:0},
+      {q:"Choose the correct form:", opts:["I have went there.","I have gone there.","I have go there."], ans:1},
+      {q:"Which sentence is correct?", opts:["The children plays outside.","The children play outside.","The children playing outside."], ans:1},
+      {q:"Fix: 'She can sings well.'", opts:["She can sing well.","She can sang well.","She cans sing well."], ans:0},
+      {q:"Choose correctly:", opts:["There is many animals.","There are many animals.","There be many animals."], ans:1},
+      {q:"Which is right?", opts:["He readed the map.","He read the map.","He reeds the map."], ans:1}
+    ];
+
+    const speakingQs = [
+      {p:"Describe your favorite animal in 15 seconds!", time:15},
+      {p:"Tell us about a place you want to visit. You have 20 seconds!", time:20},
+      {p:"What would you bring on a jungle adventure? 15 seconds!", time:15},
+      {p:"Describe what you see in a jungle. 20 seconds!", time:20},
+      {p:"Tell a short story about finding treasure! 20 seconds!", time:20},
+      {p:"What makes a good explorer? 15 seconds!", time:15}
+    ];
+
+    const challengeQs = [
+      {q:"Rearrange: 'jungle / the / explored / they / carefully'", opts:["They explored the jungle carefully.","They jungle explored the carefully.","Carefully they the jungle explored."], ans:0},
+      {q:"Find TWO errors: 'She don't has no map.'", opts:["She doesn't have a map.","She don't have no map.","She doesn't has a map."], ans:0},
+      {q:"Which uses the past perfect correctly?", opts:["He had found the treasure before sunset.","He has found the treasure before sunset.","He finding the treasure before sunset."], ans:0},
+      {q:"Make it passive: 'The explorer found the gold.'", opts:["The gold was found by the explorer.","The gold found by the explorer.","The explorer was found the gold."], ans:0},
+      {q:"Choose the correct conditional:", opts:["If I will see a snake, I run.","If I saw a snake, I would run.","If I see a snake, I would ran."], ans:1},
+      {q:"Fix: 'Neither the map nor the compass were working.'", opts:["Neither the map nor the compass was working.","Neither the map nor the compass are working.","Neither the map nor compass were work."], ans:0}
+    ];
+
+    // Board path steps (30 steps)
+    const steps = [
+      {type:'start',label:'🏕️'},{type:'blue',n:1},{type:'green',n:2},{type:'yellow',n:3},{type:'blue',n:4},{type:'red',n:5},
+      {type:'green',n:6},{type:'blue',n:7},{type:'yellow',n:8},{type:'green',n:9},{type:'red',n:10},
+      {type:'blue',n:11},{type:'yellow',n:12},{type:'green',n:13},{type:'blue',n:14},{type:'red',n:15},
+      {type:'green',n:16},{type:'blue',n:17},{type:'yellow',n:18},{type:'red',n:19},{type:'green',n:20},
+      {type:'blue',n:21},{type:'yellow',n:22},{type:'green',n:23},{type:'red',n:24},{type:'blue',n:25},
+      {type:'green',n:26},{type:'yellow',n:27},{type:'red',n:28},{type:'blue',n:29},{type:'finish',label:'💎'}
+    ];
+
+    let currentSlide = 0;
+    let totalSlides = 0;
+    let timerInterval = null;
+
+    function getSlideForStep(step) {
+      if (step.type === 'start' || step.type === 'finish') return null;
+      const n = step.n;
+      if (step.type === 'blue') {
+        const blueSteps = [1,4,7,11,14,17,21,25,29];
+        const idx = blueSteps.indexOf(n);
+        return idx >= 0 && idx < vocabQs.length ? {cat:'vocab', idx} : null;
+      }
+      if (step.type === 'green') {
+        const greenSteps = [2,6,9,13,16,20,23,26];
+        const idx = greenSteps.indexOf(n);
+        return idx >= 0 && idx < grammarQs.length ? {cat:'grammar', idx} : null;
+      }
+      if (step.type === 'yellow') {
+        const yellowSteps = [3,8,12,18,22,27];
+        const idx = yellowSteps.indexOf(n);
+        return idx >= 0 && idx < speakingQs.length ? {cat:'speaking', idx} : null;
+      }
+      if (step.type === 'red') {
+        const redSteps = [5,10,15,19,24,28];
+        const idx = redSteps.indexOf(n);
+        return idx >= 0 && idx < challengeQs.length ? {cat:'challenge', idx} : null;
+      }
+      return null;
+    }
+
+    function buildApp(config) {
+      const app = document.getElementById('app');
+      const c = {...defaultConfig, ...config};
+      const ff = `${c.font_family}, Fredoka, sans-serif`;
+
+      let slides = [];
+      let html = '';
+
+      // Slide 0: Board Game
+      html += `<div class="slide active board-bg" id="slide-0">
+        <div class="leaf" style="top:5%;left:3%">🌿</div>
+        <div class="leaf" style="top:15%;right:5%">🌴</div>
+        <div class="leaf" style="bottom:10%;left:8%">🍃</div>
+        <div class="leaf" style="bottom:5%;right:3%">🌿</div>
+        <div class="leaf" style="top:50%;left:1%">🦜</div>
+        <div class="leaf" style="top:30%;right:2%">🐒</div>
+        
+        <div class="board-header">
+          <h1 id="boardTitle" class="board-title">${c.game_title}</h1>
+          <p id="boardTeacher" class="board-teacher">by ${c.teacher_name}</p>
+        </div>
+        
+        <div class="legend">
+          <span class="legend-item" style="background:#2563eb">🔵 Vocabulary</span>
+          <span class="legend-item" style="background:#16a34a">🟢 Grammar</span>
+          <span class="legend-item" style="background:#eab308;color:#1a1a00">🟡 Speaking</span>
+          <span class="legend-item" style="background:#dc2626">🔴 Challenge</span>
+        </div>
+        
+        <div id="boardGrid" class="board-grid"></div>
+        
+        <p class="tap-hint">👆 Tap any space to jump to its question!</p>
+        
+        <div class="dice-section">
+          <div class="card-surface" style="padding:20px;text-align:center;width:100%">
+            <p style="font-size:clamp(14px,4vw,18px);color:${c.text_color};margin:0 0 14px;font-weight:600">🎲 Roll the dice!</p>
+            <button id="diceBtn" class="dice-btn" onclick="rollDice()">ROLL!</button>
+            <p id="diceResult" class="dice-result"></p>
+          </div>
+        </div>
+        
+        <div class="slide-num">Board</div>
+      </div>`;
+      slides.push('board');
+
+      // Helper for MC slides
+      function mcSlide(idx, cat, emoji, catLabel, color, q, opts, ans) {
+        const slideId = slides.length;
+        html += `<div class="slide jungle-bg" id="slide-${slideId}">
+          <div class="slide-badge" style="background:${color}">${emoji} ${catLabel}</div>
+          <div class="card-surface">
+            <p class="question-text">${q}</p>
+            <div class="options-container" id="opts-${slideId}">
+              ${opts.map((o,i) => `<button class="option-btn" data-slide="${slideId}" data-idx="${i}" data-ans="${ans}">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}
+            </div>
+            <div class="feedback" id="fb-${slideId}"></div>
+          </div>
+          ${navButtons(slideId)}
+          <div class="slide-num">${slideId} / TOTAL</div>
+        </div>`;
+        slides.push(cat);
+      }
+
+      function navButtons(id) {
+        return `<div class="nav-bar">
+          <button class="nav-btn board-btn" onclick="goSlide(0)">🗺️ Board</button>
+          <button class="nav-btn" onclick="prevSlide()">◀ Prev</button>
+          <button class="nav-btn" onclick="nextSlide()">Next ▶</button>
+        </div>`;
+      }
+
+      // Build vocab slides
+      vocabQs.forEach((q,i) => mcSlide(i,'vocab','🔵','Vocabulary','#2563eb',q.q,q.opts,q.ans));
+      // Grammar slides
+      grammarQs.forEach((q,i) => mcSlide(i,'grammar','🟢','Grammar','#16a34a',q.q,q.opts,q.ans));
+
+      // Speaking slides
+      speakingQs.forEach((sq,i) => {
+        const slideId = slides.length;
+        html += `<div class="slide jungle-bg" id="slide-${slideId}">
+          <div class="slide-badge" style="background:#eab308;color:#1a1a00">🟡 Speaking</div>
+          <div class="card-surface" style="max-width:600px">
+            <p style="font-size:clamp(32px,8vw,48px);margin:0 0 16px;text-align:center">🎤</p>
+            <p class="question-text" style="text-align:center">${sq.p}</p>
+            <div class="timer-container">
+              <svg class="timer-svg" viewBox="0 0 100 100" id="timer-svg-${slideId}">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="#e5e7eb" stroke-width="6"/>
+                <circle cx="50" cy="50" r="42" fill="none" stroke="${c.primary_action_color}" stroke-width="6" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="0" class="timer-ring" id="timer-circle-${slideId}" transform="rotate(-90 50 50)"/>
+                <text x="50" y="56" text-anchor="middle" style="font-size:24px;font-weight:700;fill:${c.text_color}" id="timer-text-${slideId}">${sq.time}</text>
+              </svg>
+              <button class="timer-btn" id="timer-btn-${slideId}" onclick="startTimer(${slideId},${sq.time})">▶ Start Timer</button>
+            </div>
+          </div>
+          ${navButtons(slideId)}
+          <div class="slide-num">${slideId} / TOTAL</div>
+        </div>`;
+        slides.push('speaking');
+      });
+
+      // Challenge slides
+      challengeQs.forEach((q,i) => mcSlide(i,'challenge','🔴','Challenge','#dc2626',q.q,q.opts,q.ans));
+
+      totalSlides = slides.length;
+      html = html.replace(/TOTAL/g, totalSlides - 1);
+      app.innerHTML = html;
+
+      // Build board grid
+      const grid = document.getElementById('boardGrid');
+      grid.innerHTML = '';
+      steps.forEach((s,i) => {
+        const div = document.createElement('div');
+        div.className = `path-step ${s.type}`;
+        if (s.type === 'start') div.innerHTML = s.label + '<br><span style="font-size:9px">START</span>';
+        else if (s.type === 'finish') div.innerHTML = s.label + '<br><span style="font-size:9px">FINISH</span>';
+        else div.textContent = s.n;
+        
+        div.addEventListener('click', () => {
+          const target = getSlideForStep(s);
+          if (!target) return;
+          let offset;
+          if (target.cat === 'vocab') offset = 1;
+          else if (target.cat === 'grammar') offset = 1 + vocabQs.length;
+          else if (target.cat === 'speaking') offset = 1 + vocabQs.length + grammarQs.length;
+          else if (target.cat === 'challenge') offset = 1 + vocabQs.length + grammarQs.length + speakingQs.length;
+          goSlide(offset + target.idx);
+        });
+        
+        // Touch feedback
+        div.addEventListener('touchstart', () => div.style.transform = 'scale(1.15)');
+        div.addEventListener('touchend', () => setTimeout(() => div.style.transform = '', 150));
+        
+        grid.appendChild(div);
+      });
+
+      // Wire up option buttons
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const sid = this.dataset.slide;
+          const idx = parseInt(this.dataset.idx);
+          const ans = parseInt(this.dataset.ans);
+          const siblings = document.querySelectorAll(`#opts-${sid} .option-btn`);
+          siblings.forEach(s => {
+            s.style.pointerEvents = 'none';
+            s.disabled = true;
+          });
+          const fb = document.getElementById(`fb-${sid}`);
+          if (idx === ans) {
+            this.classList.add('correct');
+            fb.textContent = '✅ Correct! Great job, explorer!';
+            fb.style.color = '#16a34a';
+          } else {
+            this.classList.add('wrong');
+            siblings[ans].classList.add('correct');
+            fb.textContent = '❌ Not quite! The correct answer is highlighted.';
+            fb.style.color = '#dc2626';
+          }
+          fb.classList.add('show');
+        });
+      });
+
+      if (currentSlide > 0) goSlide(currentSlide);
+    }
+
+    window.goSlide = function(n) {
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      const all = document.querySelectorAll('.slide');
+      all.forEach(s => s.classList.remove('active'));
+      currentSlide = Math.max(0, Math.min(n, all.length - 1));
+      all[currentSlide].classList.add('active');
+      // Scroll to top
+      all[currentSlide].scrollTop = 0;
+    };
+
+    window.rollDice = function() {
+      const resultEl = document.getElementById('diceResult');
+      const btn = document.getElementById('diceBtn');
+      btn.disabled = true;
+      resultEl.textContent = '🎲';
+      
+      let count = 0;
+      const rollAnim = setInterval(() => {
+        resultEl.textContent = Math.floor(Math.random() * 30) + 1;
+        count++;
+        if (count > 20) {
+          clearInterval(rollAnim);
+          const finalRoll = Math.floor(Math.random() * 30) + 1;
+          resultEl.textContent = finalRoll;
+          btn.disabled = false;
+          
+          const target = steps[finalRoll];
+          if (target) {
+            setTimeout(() => {
+              const slide = getSlideForStep(target);
+              if (slide) {
+                let offset;
+                if (slide.cat === 'vocab') offset = 1;
+                else if (slide.cat === 'grammar') offset = 1 + vocabQs.length;
+                else if (slide.cat === 'speaking') offset = 1 + vocabQs.length + grammarQs.length;
+                else if (slide.cat === 'challenge') offset = 1 + vocabQs.length + grammarQs.length + speakingQs.length;
+                goSlide(offset + slide.idx);
+              }
+            }, 500);
+          }
+        }
+      }, 40);
+    };
+
+    window.nextSlide = function() { goSlide(currentSlide + 1); };
+    window.prevSlide = function() { goSlide(currentSlide - 1); };
+
+    window.startTimer = function(slideId, duration) {
+      if (timerInterval) clearInterval(timerInterval);
+      const circle = document.getElementById(`timer-circle-${slideId}`);
+      const text = document.getElementById(`timer-text-${slideId}`);
+      const btn = document.getElementById(`timer-btn-${slideId}`);
+      let remaining = duration;
+      const total = 264;
+      btn.textContent = '⏱️ Running...';
+      btn.disabled = true;
+      text.textContent = remaining;
+      circle.style.strokeDashoffset = '0';
+
+      timerInterval = setInterval(() => {
+        remaining--;
+        text.textContent = remaining;
+        circle.style.strokeDashoffset = total * (1 - remaining / duration);
+        if (remaining <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          text.textContent = '⏰';
+          btn.textContent = '🔄 Restart';
+          btn.disabled = false;
+          btn.onclick = () => startTimer(slideId, duration);
+        }
+      }, 1000);
+    };
+
+    // Initialize
+    buildApp(defaultConfig);
+  </script>
+</body>
+</html>'''
+
+with open('/mnt/agents/output/index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("File saved successfully!")
+print(f"File size: {len(html_content)} characters")
