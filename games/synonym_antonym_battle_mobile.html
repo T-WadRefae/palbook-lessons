@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Synonym & Antonym Battle ⚔️</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    background: #0a0e27;
+    color: #fff;
+    height: 100dvh;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  /* ===== ENTRY SCREEN ===== */
+  .entry-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f4d 50%, #0a0e27 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+    gap: 14px;
+    overflow-y: auto;
+  }
+  .entry-screen.hidden { display: none; }
+
+  .game-title {
+    font-size: clamp(1.5rem, 7vw, 3rem);
+    font-weight: 900;
+    text-align: center;
+    background: linear-gradient(135deg, #ffd700, #ff6b35, #c41e3a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+  .game-subtitle { font-size: 1rem; color: #ffd700; text-align: center; }
+  .teacher-name { font-size: 0.85rem; color: #8a92c8; font-style: italic; }
+
+  .players-input {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .player-card {
+    background: rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .player-card.p1 { border: 2px solid #00d4ff; }
+  .player-card.p2 { border: 2px solid #ff3d7f; }
+
+  .player-card h3 { font-size: 1rem; white-space: nowrap; }
+  .player-card.p1 h3 { color: #00d4ff; }
+  .player-card.p2 h3 { color: #ff3d7f; }
+
+  .player-card input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 1rem;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: #fff;
+    outline: none;
+    text-align: center;
+  }
+  .player-card input:focus { border-color: #ffd700; }
+
+  .rounds-selector {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .rounds-selector label { font-size: 0.95rem; color: #8a92c8; }
+  .round-btn {
+    padding: 7px 18px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .round-btn.active {
+    background: #ffd700;
+    color: #0a0e27;
+    border-color: #ffd700;
+    font-weight: 700;
+  }
+
+  .start-btn {
+    padding: 14px 40px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffd700, #ff6b35);
+    color: #0a0e27;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+    transition: all 0.3s;
+  }
+  .start-btn:active { transform: scale(0.97); }
+  .start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ===== GAME SCREEN ===== */
+  .game-screen {
+    display: none;
+    height: 100dvh;
+    flex-direction: column;
+  }
+  .game-screen.active { display: flex; }
+
+  /* Header */
+  .game-header {
+    background: #050818;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(255,215,0,0.3);
+    flex-shrink: 0;
+  }
+  .round-info {
+    font-size: 0.85rem;
+    color: #ffd700;
+    background: rgba(255,215,0,0.15);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,215,0,0.4);
+  }
+  .timer-display {
+    font-size: 1.6rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ff6b35);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  /* Question bar */
+  .question-bar {
+    background: linear-gradient(180deg, #1a1f4d, #0a0e27);
+    padding: 10px 14px;
+    text-align: center;
+    border-bottom: 3px solid;
+    border-image: linear-gradient(90deg, #00d4ff, #ffd700, #ff3d7f) 1;
+    flex-shrink: 0;
+  }
+  .challenge-type {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .challenge-type.synonym { background: linear-gradient(135deg, #00ff88, #00d4ff); color: #0a0e27; }
+  .challenge-type.antonym { background: linear-gradient(135deg, #ff3d7f, #ff6b35); color: #fff; }
+
+  .target-word {
+    font-size: clamp(1.8rem, 8vw, 3rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(255,215,0,0.5);
+  }
+  .word-meaning {
+    font-size: 0.9rem;
+    color: #8a92c8;
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  /* Arena — stacked vertically on mobile */
+  .arena {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .vs-divider {
+    flex-shrink: 0;
+    height: 36px;
+    background: linear-gradient(90deg, rgba(0,212,255,0.2), #ffd700, rgba(255,61,127,0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 900;
+    color: #0a0e27;
+    letter-spacing: 3px;
+    box-shadow: 0 0 20px rgba(255,215,0,0.4);
+    z-index: 5;
+  }
+
+  .player-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px;
+    transition: background 0.3s;
+    overflow: hidden;
+  }
+  .player-side.p1 { background: linear-gradient(180deg, rgba(0,212,255,0.12), rgba(0,50,100,0.06)); }
+  .player-side.p2 { background: linear-gradient(180deg, rgba(255,61,127,0.12), rgba(100,0,50,0.06)); }
+
+  .player-side.correct { background: rgba(0,255,136,0.25) !important; animation: correctFlash 0.5s; }
+  .player-side.wrong   { background: rgba(255,50,50,0.25) !important; animation: shake 0.4s; }
+
+  @keyframes correctFlash { 0%,100%{transform:scale(1)} 50%{transform:scale(1.01)} }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+  .player-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .player-name { font-size: 1.1rem; font-weight: 800; }
+  .player-side.p1 .player-name { color: #00d4ff; }
+  .player-side.p2 .player-name { color: #ff3d7f; }
+
+  .player-score {
+    font-size: 1.4rem;
+    font-weight: 900;
+    padding: 3px 14px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.4);
+    min-width: 50px;
+    text-align: center;
+  }
+  .player-side.p1 .player-score { color: #00d4ff; border: 2px solid #00d4ff; }
+  .player-side.p2 .player-score { color: #ff3d7f; border: 2px solid #ff3d7f; }
+
+  .answer-options {
+    flex: 1;
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .answer-btn {
+    flex: 1;
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+    font-weight: 800;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 8px 6px;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .player-side.p1 .answer-btn:active:not(:disabled) {
+    background: rgba(0,212,255,0.3);
+    border-color: #00d4ff;
+    transform: scale(0.97);
+  }
+  .player-side.p2 .answer-btn:active:not(:disabled) {
+    background: rgba(255,61,127,0.3);
+    border-color: #ff3d7f;
+    transform: scale(0.97);
+  }
+
+  .answer-btn.selected-correct {
+    background: linear-gradient(135deg, #00ff88, #00d4aa) !important;
+    border-color: #00ff88 !important;
+    color: #0a0e27 !important;
+    box-shadow: 0 0 20px rgba(0,255,136,0.5) !important;
+  }
+  .answer-btn.selected-wrong {
+    background: linear-gradient(135deg, #ff3838, #c41e3a) !important;
+    border-color: #ff3838 !important;
+    box-shadow: 0 0 15px rgba(255,56,56,0.4) !important;
+  }
+  .answer-btn:disabled { cursor: not-allowed; opacity: 0.65; }
+
+  .player-status {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #ffd700;
+    font-weight: 700;
+    min-height: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ===== RESULT SCREEN ===== */
+  .result-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,14,39,0.97);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(20px);
+    padding: 20px;
+  }
+  .result-screen.active { display: flex; }
+
+  .result-content {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    animation: zoomIn 0.5s;
+  }
+  @keyframes zoomIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+
+  .winner-trophy { font-size: 4.5rem; margin-bottom: 12px; animation: bounce 1s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+
+  .winner-text {
+    font-size: 2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ff6b35);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+  .winner-name { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 20px; }
+
+  .final-scores {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .final-score-card {
+    background: rgba(255,255,255,0.08);
+    padding: 16px 24px;
+    border-radius: 14px;
+    flex: 1;
+    max-width: 140px;
+  }
+  .final-score-card.p1 { border: 2px solid #00d4ff; }
+  .final-score-card.p2 { border: 2px solid #ff3d7f; }
+
+  .play-again-btn {
+    padding: 14px 40px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffd700, #ff6b35);
+    color: #0a0e27;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+  }
+  .play-again-btn:active { transform: scale(0.97); }
+
+  /* Confetti */
+  .confetti { position:fixed; width:10px; height:10px; pointer-events:none; z-index:999; }
+</style>
+</head>
+<body>
+
+<!-- ENTRY SCREEN -->
+<div class="entry-screen" id="entryScreen">
+  <h1 class="game-title">⚔️ Synonym & Antonym Battle ⚔️</h1>
+  <p class="game-subtitle">معركة المرادفات والأضداد</p>
+  <p class="teacher-name">✨ T. Wad Refae ✨</p>
+
+  <div class="players-input">
+    <div class="player-card p1">
+      <h3>🔵 P1</h3>
+      <input type="text" id="player1Name" placeholder="Player 1 name..." maxlength="12">
+    </div>
+    <div class="player-card p2">
+      <h3>🔴 P2</h3>
+      <input type="text" id="player2Name" placeholder="Player 2 name..." maxlength="12">
+    </div>
+  </div>
+
+  <div class="rounds-selector">
+    <label>Rounds:</label>
+    <button class="round-btn" data-rounds="5">5</button>
+    <button class="round-btn active" data-rounds="10">10</button>
+    <button class="round-btn" data-rounds="15">15</button>
+  </div>
+
+  <button class="start-btn" id="startBtn" disabled>START BATTLE ⚡</button>
+</div>
+
+<!-- GAME SCREEN -->
+<div class="game-screen" id="gameScreen">
+  <div class="game-header">
+    <span class="round-info">Round <span id="currentRound">1</span>/<span id="totalRounds">10</span></span>
+    <div class="timer-display" id="timer">10</div>
+    <span style="font-size:0.75rem;color:#8a92c8;">T. Wad</span>
+  </div>
+
+  <div class="question-bar">
+    <span class="challenge-type" id="challengeType">SYNONYM</span>
+    <div class="target-word" id="targetWord">HAPPY</div>
+    <div class="word-meaning" id="wordMeaning">سعيد</div>
+  </div>
+
+  <div class="arena">
+    <!-- Player 1 on top -->
+    <div class="player-side p1" id="side1">
+      <div class="player-info">
+        <span class="player-name" id="name1">Player 1</span>
+        <span class="player-score" id="score1">0</span>
+      </div>
+      <div class="answer-options">
+        <button class="answer-btn" data-player="1" data-option="0"></button>
+        <button class="answer-btn" data-player="1" data-option="1"></button>
+      </div>
+      <div class="player-status" id="status1"></div>
+    </div>
+
+    <div class="vs-divider">— VS —</div>
+
+    <!-- Player 2 on bottom -->
+    <div class="player-side p2" id="side2">
+      <div class="player-info">
+        <span class="player-name" id="name2">Player 2</span>
+        <span class="player-score" id="score2">0</span>
+      </div>
+      <div class="answer-options">
+        <button class="answer-btn" data-player="2" data-option="0"></button>
+        <button class="answer-btn" data-player="2" data-option="1"></button>
+      </div>
+      <div class="player-status" id="status2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="result-screen" id="resultScreen">
+  <div class="result-content">
+    <div class="winner-trophy" id="trophyIcon">🏆</div>
+    <div class="winner-text" id="winnerText">WINNER!</div>
+    <div class="winner-name" id="winnerName">Player 1</div>
+    <div class="final-scores">
+      <div class="final-score-card p1">
+        <div style="color:#00d4ff;font-size:0.9rem;margin-bottom:4px;" id="finalName1">P1</div>
+        <div style="font-size:2.2rem;font-weight:900;" id="finalScore1">0</div>
+      </div>
+      <div class="final-score-card p2">
+        <div style="color:#ff3d7f;font-size:0.9rem;margin-bottom:4px;" id="finalName2">P2</div>
+        <div style="font-size:2.2rem;font-weight:900;" id="finalScore2">0</div>
+      </div>
+    </div>
+    <button class="play-again-btn" onclick="resetGame()">PLAY AGAIN 🔄</button>
+  </div>
+</div>
+
+<script>
+const wordBank = [
+  { word:"HAPPY", meaning:"سعيد", correct:"JOYFUL", wrong:"SAD", type:"synonym" },
+  { word:"BIG", meaning:"كبير", correct:"LARGE", wrong:"TINY", type:"synonym" },
+  { word:"FAST", meaning:"سريع", correct:"QUICK", wrong:"SLOW", type:"synonym" },
+  { word:"SMART", meaning:"ذكي", correct:"CLEVER", wrong:"FOOLISH", type:"synonym" },
+  { word:"BEAUTIFUL", meaning:"جميل", correct:"PRETTY", wrong:"UGLY", type:"synonym" },
+  { word:"BRAVE", meaning:"شجاع", correct:"COURAGEOUS", wrong:"FEARFUL", type:"synonym" },
+  { word:"RICH", meaning:"غني", correct:"WEALTHY", wrong:"POOR", type:"synonym" },
+  { word:"ANGRY", meaning:"غاضب", correct:"FURIOUS", wrong:"CALM", type:"synonym" },
+  { word:"BEGIN", meaning:"يبدأ", correct:"START", wrong:"END", type:"synonym" },
+  { word:"EASY", meaning:"سهل", correct:"SIMPLE", wrong:"HARD", type:"synonym" },
+  { word:"AFRAID", meaning:"خائف", correct:"SCARED", wrong:"BRAVE", type:"synonym" },
+  { word:"COLD", meaning:"بارد", correct:"CHILLY", wrong:"HOT", type:"synonym" },
+  { word:"TIRED", meaning:"متعب", correct:"EXHAUSTED", wrong:"ENERGETIC", type:"synonym" },
+  { word:"STRONG", meaning:"قوي", correct:"POWERFUL", wrong:"WEAK", type:"synonym" },
+  { word:"KIND", meaning:"لطيف", correct:"GENTLE", wrong:"CRUEL", type:"synonym" },
+  { word:"HOT", meaning:"حار", correct:"COLD", wrong:"WARM", type:"antonym" },
+  { word:"DAY", meaning:"نهار", correct:"NIGHT", wrong:"MORNING", type:"antonym" },
+  { word:"RICH", meaning:"غني", correct:"POOR", wrong:"WEALTHY", type:"antonym" },
+  { word:"TALL", meaning:"طويل", correct:"SHORT", wrong:"HIGH", type:"antonym" },
+  { word:"OPEN", meaning:"مفتوح", correct:"CLOSE", wrong:"START", type:"antonym" },
+  { word:"EMPTY", meaning:"فارغ", correct:"FULL", wrong:"VACANT", type:"antonym" },
+  { word:"LOVE", meaning:"حب", correct:"HATE", wrong:"ADORE", type:"antonym" },
+  { word:"WIN", meaning:"يفوز", correct:"LOSE", wrong:"GAIN", type:"antonym" },
+  { word:"BUY", meaning:"يشتري", correct:"SELL", wrong:"PURCHASE", type:"antonym" },
+  { word:"REMEMBER", meaning:"يتذكر", correct:"FORGET", wrong:"RECALL", type:"antonym" },
+  { word:"ALWAYS", meaning:"دائماً", correct:"NEVER", wrong:"OFTEN", type:"antonym" },
+  { word:"ARRIVE", meaning:"يصل", correct:"DEPART", wrong:"REACH", type:"antonym" },
+  { word:"SUCCESS", meaning:"نجاح", correct:"FAILURE", wrong:"VICTORY", type:"antonym" },
+  { word:"PEACE", meaning:"سلام", correct:"WAR", wrong:"QUIET", type:"antonym" },
+  { word:"TRUTH", meaning:"حقيقة", correct:"LIE", wrong:"FACT", type:"antonym" },
+  { word:"FRIEND", meaning:"صديق", correct:"ENEMY", wrong:"BUDDY", type:"antonym" },
+  { word:"POLITE", meaning:"مهذب", correct:"RUDE", wrong:"KIND", type:"antonym" },
+  { word:"BRIGHT", meaning:"مضيء", correct:"DARK", wrong:"SHINY", type:"antonym" },
+  { word:"SAFE", meaning:"آمن", correct:"DANGEROUS", wrong:"SECURE", type:"antonym" },
+  { word:"ALLOW", meaning:"يسمح", correct:"FORBID", wrong:"PERMIT", type:"antonym" },
+];
+
+let gs = {
+  p1Name:"", p2Name:"",
+  p1Score:0, p2Score:0,
+  round:0, totalRounds:10,
+  question:null, roundEnded:false,
+  questionPool:[], timer:null, timeLeft:10
+};
+
+// Audio
+let audioCtx = null;
+function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }
+function playTone(freq, dur, type='sine') {
+  if (!audioCtx) return;
+  const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+  o.type = type; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + dur);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start(); o.stop(audioCtx.currentTime + dur);
+}
+function correctSound() { [523,659,784].forEach((f,i)=>setTimeout(()=>playTone(f,0.15),i*100)); }
+function wrongSound()   { playTone(200,0.3,'sawtooth'); }
+function tickSound()    { playTone(800,0.05); }
+function winSound()     { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,0.2),i*150)); }
+
+// Entry
+const p1In = document.getElementById('player1Name');
+const p2In = document.getElementById('player2Name');
+const startBtn = document.getElementById('startBtn');
+const checkInputs = () => startBtn.disabled = !(p1In.value.trim() && p2In.value.trim());
+p1In.addEventListener('input', checkInputs);
+p2In.addEventListener('input', checkInputs);
+
+document.querySelectorAll('.round-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.round-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    gs.totalRounds = parseInt(btn.dataset.rounds);
+  });
+});
+
+startBtn.addEventListener('click', () => {
+  initAudio();
+  gs.p1Name = p1In.value.trim();
+  gs.p2Name = p2In.value.trim();
+  document.getElementById('name1').textContent = gs.p1Name;
+  document.getElementById('name2').textContent = gs.p2Name;
+  document.getElementById('totalRounds').textContent = gs.totalRounds;
+  gs.questionPool = [...wordBank].sort(()=>Math.random()-0.5).slice(0, gs.totalRounds);
+  document.getElementById('entryScreen').classList.add('hidden');
+  document.getElementById('gameScreen').classList.add('active');
+  nextRound();
+});
+
+function nextRound() {
+  if (gs.round >= gs.totalRounds) { endGame(); return; }
+  gs.round++;
+  gs.roundEnded = false;
+  gs.timeLeft = 10;
+
+  const q = gs.questionPool[gs.round - 1];
+  gs.question = q;
+
+  document.getElementById('currentRound').textContent = gs.round;
+  document.getElementById('targetWord').textContent = q.word;
+  document.getElementById('wordMeaning').textContent = q.meaning;
+
+  const typeEl = document.getElementById('challengeType');
+  if (q.type === 'synonym') {
+    typeEl.textContent = '🟢 المرادف – نفس المعنى';
+    typeEl.className = 'challenge-type synonym';
+  } else {
+    typeEl.textContent = '🔴 الضد – المعنى المعاكس';
+    typeEl.className = 'challenge-type antonym';
+  }
+
+  const correctIdx = Math.random() < 0.5 ? 0 : 1;
+  const opts = ['', ''];
+  opts[correctIdx] = q.correct;
+  opts[1 - correctIdx] = q.wrong;
+
+  document.querySelectorAll('.answer-btn').forEach(btn => {
+    const opt = parseInt(btn.dataset.option);
+    btn.textContent = opts[opt];
+    btn.disabled = false;
+    btn.className = 'answer-btn';
+    btn.dataset.correct = (opt === correctIdx) ? "true" : "false";
+  });
+
+  document.getElementById('side1').className = 'player-side p1';
+  document.getElementById('side2').className = 'player-side p2';
+  document.getElementById('status1').textContent = '';
+  document.getElementById('status2').textContent = '';
+
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(gs.timer);
+  document.getElementById('timer').textContent = gs.timeLeft;
+  gs.timer = setInterval(() => {
+    gs.timeLeft--;
+    document.getElementById('timer').textContent = gs.timeLeft;
+    if (gs.timeLeft <= 3 && gs.timeLeft > 0) tickSound();
+    if (gs.timeLeft <= 0) { clearInterval(gs.timer); timeUp(); }
+  }, 1000);
+}
+
+function timeUp() {
+  if (gs.roundEnded) return;
+  document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
+  ['status1','status2'].forEach(id => {
+    if (!document.getElementById(id).textContent) {
+      document.getElementById(id).textContent = "⏰ Time's up!";
+      document.getElementById(id).style.color = '#ff6b6b';
+    }
+  });
+  endRound();
+}
+
+document.querySelectorAll('.answer-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (gs.roundEnded) return;
+    const player = btn.dataset.player;
+    const isCorrect = btn.dataset.correct === "true";
+    const sideId = player === "1" ? 'side1' : 'side2';
+    const statusId = player === "1" ? 'status1' : 'status2';
+    const scoreId = player === "1" ? 'score1' : 'score2';
+
+    if (isCorrect) {
+      if (player === "1") gs.p1Score++; else gs.p2Score++;
+      document.getElementById(scoreId).textContent = player === "1" ? gs.p1Score : gs.p2Score;
+      btn.classList.add('selected-correct');
+      document.getElementById(sideId).classList.add('correct');
+      document.getElementById(statusId).textContent = '✅ Correct! +1';
+      document.getElementById(statusId).style.color = '#00ff88';
+      correctSound();
+    } else {
+      btn.classList.add('selected-wrong');
+      document.getElementById(sideId).classList.add('wrong');
+      document.getElementById(statusId).textContent = '❌ Wrong!';
+      document.getElementById(statusId).style.color = '#ff6b6b';
+      wrongSound();
+    }
+    endRound();
+  });
+});
+
+function endRound() {
+  gs.roundEnded = true;
+  clearInterval(gs.timer);
+  document.querySelectorAll('.answer-btn').forEach(b => {
+    b.disabled = true;
+    if (b.dataset.correct === "true" && !b.classList.contains('selected-correct'))
+      b.classList.add('selected-correct');
+  });
+  setTimeout(nextRound, 1500);
+}
+
+function endGame() {
+  clearInterval(gs.timer);
+  document.getElementById('gameScreen').classList.remove('active');
+  document.getElementById('resultScreen').classList.add('active');
+
+  document.getElementById('finalName1').textContent = gs.p1Name;
+  document.getElementById('finalName2').textContent = gs.p2Name;
+  document.getElementById('finalScore1').textContent = gs.p1Score;
+  document.getElementById('finalScore2').textContent = gs.p2Score;
+
+  const trophy = document.getElementById('trophyIcon');
+  const winnerText = document.getElementById('winnerText');
+  const winnerName = document.getElementById('winnerName');
+
+  if (gs.p1Score > gs.p2Score) {
+    trophy.textContent = '🏆'; winnerText.textContent = '🎉 WINNER! 🎉';
+    winnerName.textContent = gs.p1Name; winnerName.style.color = '#00d4ff';
+    launchConfetti(); winSound();
+  } else if (gs.p2Score > gs.p1Score) {
+    trophy.textContent = '🏆'; winnerText.textContent = '🎉 WINNER! 🎉';
+    winnerName.textContent = gs.p2Name; winnerName.style.color = '#ff3d7f';
+    launchConfetti(); winSound();
+  } else {
+    trophy.textContent = '🤝'; winnerText.textContent = "IT'S A TIE!";
+    winnerName.textContent = `${gs.p1Name} & ${gs.p2Name}`;
+    winnerName.style.color = '#ffd700';
+  }
+}
+
+function launchConfetti() {
+  const colors = ['#ffd700','#ff6b35','#00d4ff','#ff3d7f','#00ff88'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.cssText = `left:${Math.random()*100}vw;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};transform:rotate(${Math.random()*360}deg);border-radius:${Math.random()>.5?'50%':'0'}`;
+      document.body.appendChild(c);
+      c.animate([
+        {transform:`translateY(0) translateX(0) rotate(0deg)`,opacity:1},
+        {transform:`translateY(110vh) translateX(${(Math.random()-.5)*150}px) rotate(720deg)`,opacity:0}
+      ],{duration:2000+Math.random()*1500,easing:'ease-out'});
+      setTimeout(()=>c.remove(), 3500);
+    }, i*25);
+  }
+}
+
+function resetGame() {
+  gs.p1Score = 0; gs.p2Score = 0; gs.round = 0;
+  document.getElementById('score1').textContent = '0';
+  document.getElementById('score2').textContent = '0';
+  document.getElementById('resultScreen').classList.remove('active');
+  document.getElementById('entryScreen').classList.remove('hidden');
+  p1In.value = ''; p2In.value = ''; checkInputs();
+}
+</script>
+</body>
+</html>
