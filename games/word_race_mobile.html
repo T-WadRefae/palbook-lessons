@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Word Race ⚡</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --p1:#FF6B35;--p1d:#C7411A;
+  --p2:#1FB8CD;--p2d:#0E7A8A;
+  --gold:#F4C430;--ink:#0A0E1F;--cream:#FFF8E7;
+  --bg:#0F1226;
+}
+html,body{height:100%;overflow:hidden;touch-action:manipulation;}
+body{
+  font-family:'Trebuchet MS',sans-serif;
+  background:radial-gradient(ellipse at top,#1A1F40 0%,#0F1226 60%,#07091A 100%);
+  color:#fff;user-select:none;
+}
+
+/* ====== SCREENS ====== */
+.screen{position:fixed;inset:0;display:none;z-index:5;overflow-y:auto;}
+.screen.active{display:flex;}
+
+/* ====== START ====== */
+#startScreen{
+  flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:20px 16px 30px;gap:14px;
+}
+.teacher-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#F4C430,#E89B0A);
+  color:#0A0E1F;padding:6px 18px;border-radius:50px;
+  font-weight:bold;font-size:14px;letter-spacing:.5px;
+  box-shadow:0 4px 14px rgba(244,196,48,.4);
+}
+.title{
+  font-size:clamp(52px,16vw,80px);font-weight:900;letter-spacing:-2px;line-height:.9;
+  background:linear-gradient(90deg,#FF6B35 0%,#F4C430 50%,#1FB8CD 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  text-align:center;
+}
+.subtitle{font-size:13px;color:var(--gold);letter-spacing:3px;font-weight:bold;text-align:center;}
+
+.players-col{display:flex;flex-direction:column;gap:12px;width:100%;max-width:400px;}
+.player-card{
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(10px);
+  border:2px solid;border-radius:16px;
+  padding:14px 18px;
+  display:flex;align-items:center;gap:14px;
+}
+.player-card.p1{border-color:var(--p1);box-shadow:0 6px 20px rgba(255,107,53,.2);}
+.player-card.p2{border-color:var(--p2);box-shadow:0 6px 20px rgba(31,184,205,.2);}
+.p-num{font-size:36px;font-weight:900;line-height:1;min-width:38px;}
+.player-card.p1 .p-num{color:var(--p1);}
+.player-card.p2 .p-num{color:var(--p2);}
+.p-right{flex:1;display:flex;flex-direction:column;gap:3px;}
+.p-label{font-size:11px;letter-spacing:2px;opacity:.6;}
+.player-card.p1 .p-label{color:var(--p1);}
+.player-card.p2 .p-label{color:var(--p2);}
+.player-card input{
+  width:100%;padding:10px 14px;font-size:18px;font-weight:bold;
+  background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);
+  border-radius:10px;color:#fff;outline:none;font-family:inherit;
+  transition:all .2s;
+}
+.player-card.p1 input:focus{border-color:var(--p1);background:rgba(255,107,53,.15);}
+.player-card.p2 input:focus{border-color:var(--p2);background:rgba(31,184,205,.15);}
+.player-card input::placeholder{color:rgba(255,255,255,.35);}
+
+details.how{
+  width:100%;max-width:400px;
+  background:rgba(244,196,48,.07);
+  border:1px dashed rgba(244,196,48,.35);
+  border-radius:14px;overflow:hidden;
+}
+details.how summary{
+  padding:12px 18px;cursor:pointer;list-style:none;
+  display:flex;align-items:center;justify-content:space-between;
+  color:var(--gold);font-size:15px;font-weight:bold;letter-spacing:1px;
+}
+details.how summary::-webkit-details-marker{display:none;}
+details.how summary .arr{font-size:12px;transition:transform .3s;}
+details.how[open] summary .arr{transform:rotate(180deg);}
+details.how .dcontent{padding:4px 18px 14px;}
+details.how li{font-size:13px;line-height:1.6;padding-left:20px;position:relative;margin-bottom:4px;}
+details.how li::before{content:"⚡";position:absolute;left:0;color:var(--gold);}
+
+.error-msg{color:#FF4757;font-size:14px;min-height:18px;font-weight:bold;text-align:center;}
+.start-btn{
+  width:100%;max-width:400px;
+  background:linear-gradient(135deg,var(--p1) 0%,var(--gold) 50%,var(--p2) 100%);
+  border:none;color:#fff;font-size:22px;font-weight:900;
+  padding:16px;border-radius:50px;cursor:pointer;
+  letter-spacing:3px;font-family:inherit;
+  box-shadow:0 10px 30px rgba(255,107,53,.4);
+  transition:all .2s;text-shadow:1px 1px 2px rgba(0,0,0,.3);
+}
+.start-btn:active{transform:scale(.97);}
+.start-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ====== GAME SCREEN ====== */
+#gameScreen{flex-direction:column;overflow:hidden;}
+
+.game-header{
+  height:50px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;background:rgba(0,0,0,.5);
+  border-bottom:2px solid rgba(244,196,48,.3);
+  flex-shrink:0;
+}
+.round-label{font-size:14px;letter-spacing:2px;color:var(--gold);font-weight:bold;}
+.round-label .rn{font-size:22px;color:#fff;margin:0 4px;}
+.timer{
+  background:var(--gold);color:var(--ink);
+  padding:4px 14px;border-radius:24px;
+  font-weight:900;font-size:15px;font-family:'Courier New',monospace;
+}
+
+/* Two-player stacked layout */
+.battlefield{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+.divider-h{
+  height:3px;flex-shrink:0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  box-shadow:0 0 12px rgba(244,196,48,.5);
+  position:relative;
+}
+.vs-badge{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  background:var(--gold);color:var(--ink);
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:900;
+  box-shadow:0 0 16px rgba(244,196,48,.8);
+  z-index:6;
+}
+
+.side{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  padding:8px 12px 6px;overflow:hidden;
+  transition:background .3s;
+  min-height:0;
+}
+.side.p1{background:linear-gradient(180deg,rgba(255,107,53,.18),rgba(255,107,53,.06));}
+.side.p2{background:linear-gradient(180deg,rgba(31,184,205,.18),rgba(31,184,205,.06));}
+.side.win{animation:winFlash .7s;}
+@keyframes winFlash{0%,100%{filter:brightness(1);}50%{filter:brightness(1.7);}}
+
+.side-top{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;margin-bottom:4px;
+}
+.side-name{font-size:18px;font-weight:900;letter-spacing:.5px;}
+.side.p1 .side-name{color:var(--p1);}
+.side.p2 .side-name{color:var(--p2);}
+.side-score{font-size:13px;opacity:.85;}
+.side-score .sn{font-size:20px;font-weight:900;color:var(--gold);}
+
+.hint-box{
+  background:rgba(255,255,255,.07);
+  border-radius:10px;padding:5px 14px;
+  font-size:14px;text-align:center;
+  border:1px solid rgba(255,255,255,.12);
+  width:100%;margin-bottom:6px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.hint-box .meaning{color:var(--gold);font-weight:bold;font-size:16px;}
+
+/* Slots */
+.slots{
+  display:flex;gap:5px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:6px;min-height:52px;align-items:center;
+}
+.slot{
+  width:44px;height:52px;
+  background:rgba(0,0,0,.3);
+  border:2px dashed rgba(255,255,255,.3);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;text-transform:uppercase;
+  cursor:pointer;transition:all .15s;
+}
+.slot.filled{border-style:solid;}
+.side.p1 .slot.filled{background:var(--p1);border-color:var(--p1d);}
+.side.p2 .slot.filled{background:var(--p2);border-color:var(--p2d);}
+.slot.correct{background:#22C55E!important;border-color:#15803D!important;animation:pop .4s;}
+.slot.wrong{background:#EF4444!important;border-color:#991B1B!important;animation:shake .4s;}
+@keyframes pop{0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+
+/* Pool */
+.pool{
+  display:flex;gap:6px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:4px;
+}
+.letter{
+  width:44px;height:52px;border:none;border-radius:8px;
+  font-size:24px;font-weight:900;text-transform:uppercase;
+  cursor:pointer;font-family:inherit;color:#fff;
+  box-shadow:0 3px 0 rgba(0,0,0,.3);
+  transition:all .12s;
+  -webkit-tap-highlight-color:transparent;
+}
+.side.p1 .letter{background:linear-gradient(180deg,#FF8B5A,var(--p1));}
+.side.p2 .letter{background:linear-gradient(180deg,#4DD4E5,var(--p2));}
+.letter:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.3);}
+.letter:disabled{opacity:.25;cursor:not-allowed;}
+
+.action-row{display:flex;gap:8px;margin-top:2px;}
+.action-btn{
+  padding:7px 14px;border:none;border-radius:8px;
+  font-family:inherit;font-weight:bold;font-size:13px;
+  cursor:pointer;background:rgba(255,255,255,.12);color:#fff;
+  transition:background .2s;
+}
+.action-btn:active{background:rgba(255,255,255,.25);}
+
+.status-msg{
+  min-height:22px;font-size:16px;font-weight:bold;text-align:center;margin-top:3px;
+}
+.status-msg.win{color:#22C55E;animation:pop .5s;}
+
+/* ====== END SCREEN ====== */
+#endScreen{
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;padding:30px 20px;overflow-y:auto;
+}
+.trophy{font-size:90px;animation:trophyB 1s ease-in-out infinite;}
+@keyframes trophyB{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-12px) rotate(5deg);}}
+.winner-text{
+  font-size:clamp(28px,8vw,56px);font-weight:900;
+  background:linear-gradient(90deg,var(--gold),#FFE680,var(--gold));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  text-align:center;letter-spacing:1px;
+}
+.final-scores{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;width:100%;}
+.final-card{
+  flex:1;min-width:130px;max-width:180px;
+  padding:16px 12px;border-radius:14px;border:2px solid;text-align:center;
+}
+.final-card.p1{border-color:var(--p1);background:rgba(255,107,53,.15);}
+.final-card.p2{border-color:var(--p2);background:rgba(31,184,205,.15);}
+.final-card .fname{font-size:18px;font-weight:bold;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.final-card .fscore{font-size:48px;font-weight:900;color:var(--gold);}
+.final-card.p1 .fname{color:var(--p1);}
+.final-card.p2 .fname{color:var(--p2);}
+.again-btn{
+  width:100%;max-width:360px;
+  background:var(--gold);color:var(--ink);
+  border:none;padding:14px;border-radius:50px;
+  font-size:20px;font-weight:900;cursor:pointer;
+  font-family:inherit;letter-spacing:2px;
+  box-shadow:0 8px 24px rgba(244,196,48,.4);
+}
+.again-btn:active{transform:scale(.97);}
+
+/* Confetti */
+.confetti{
+  position:fixed;top:-10px;width:9px;height:12px;
+  pointer-events:none;z-index:100;
+  animation:fall linear forwards;
+}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);}}
+</style>
+</head>
+<body>
+
+<!-- START -->
+<div class="screen active" id="startScreen">
+  <div class="teacher-badge">✦ T. Wad Refae ✦</div>
+  <div class="title">WORD<br>RACE</div>
+  <div class="subtitle">⚡ SCRAMBLE BATTLE ⚡</div>
+
+  <div class="players-col">
+    <div class="player-card p1">
+      <div class="p-num">01</div>
+      <div class="p-right">
+        <div class="p-label">PLAYER ONE</div>
+        <input type="text" id="name1" placeholder="Enter name…" maxlength="14" autocomplete="off">
+      </div>
+    </div>
+    <div class="player-card p2">
+      <div class="p-num">02</div>
+      <div class="p-right">
+        <div class="p-label">PLAYER TWO</div>
+        <input type="text" id="name2" placeholder="Enter name…" maxlength="14" autocomplete="off">
+      </div>
+    </div>
+  </div>
+
+  <details class="how">
+    <summary><span>📖 HOW TO PLAY · كيف نلعب</span><span class="arr">▼</span></summary>
+    <div class="dcontent">
+      <ul>
+        <li>Same scrambled word for both players.</li>
+        <li>Tap letters in the correct order to build the word.</li>
+        <li>اضغط الحروف بالترتيب الصحيح.</li>
+        <li>First to finish the word wins the round! 🏆</li>
+        <li>5 rounds total · أكثر نقاط يفوز</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="error-msg" id="errorMsg"></div>
+  <button class="start-btn" id="startBtn">START ⚡</button>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="gameScreen">
+  <div class="game-header">
+    <div style="font-size:11px;opacity:.55;">T. Wad Refae</div>
+    <div class="round-label">ROUND <span class="rn" id="roundNum">1</span>/5</div>
+    <div class="timer" id="timer">30s</div>
+  </div>
+
+  <div class="battlefield">
+    <!-- P1 top -->
+    <div class="side p1" id="side1">
+      <div class="side-top">
+        <div class="side-name" id="display1">Player 1</div>
+        <div class="side-score">Score: <span class="sn" id="score1">0</span></div>
+      </div>
+      <div class="hint-box">Meaning: <span class="meaning" id="hint1">—</span></div>
+      <div class="slots" id="slots1"></div>
+      <div class="pool" id="pool1"></div>
+      <div class="action-row">
+        <button class="action-btn" data-side="1" data-act="undo">⟲ Undo</button>
+        <button class="action-btn" data-side="1" data-act="clear">✕ Clear</button>
+      </div>
+      <div class="status-msg" id="status1"></div>
+    </div>
+
+    <div class="divider-h">
+      <div class="vs-badge">VS</div>
+    </div>
+
+    <!-- P2 bottom -->
+    <div class="side p2" id="side2">
+      <div class="side-top">
+        <div class="side-name" id="display2">Player 2</div>
+        <div class="side-score">Score: <span class="sn" id="score2">0</span></div>
+      </div>
+      <div class="hint-box">Meaning: <span class="meaning" id="hint2">—</span></div>
+      <div class="slots" id="slots2"></div>
+      <div class="pool" id="pool2"></div>
+      <div class="action-row">
+        <button class="action-btn" data-side="2" data-act="undo">⟲ Undo</button>
+        <button class="action-btn" data-side="2" data-act="clear">✕ Clear</button>
+      </div>
+      <div class="status-msg" id="status2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- END -->
+<div class="screen" id="endScreen">
+  <div class="trophy">🏆</div>
+  <div class="winner-text" id="winnerText">Winner!</div>
+  <div class="final-scores">
+    <div class="final-card p1">
+      <div class="fname" id="final1">Player 1</div>
+      <div class="fscore" id="finalScore1">0</div>
+    </div>
+    <div class="final-card p2">
+      <div class="fname" id="final2">Player 2</div>
+      <div class="fscore" id="finalScore2">0</div>
+    </div>
+  </div>
+  <button class="again-btn" id="againBtn">PLAY AGAIN ↺</button>
+  <div style="opacity:.5;font-size:13px;">— T. Wad Refae —</div>
+</div>
+
+<script>
+const WORDS=[
+  {word:"APPLE",meaning:"تفاحة"},{word:"BREAD",meaning:"خبز"},{word:"WATER",meaning:"ماء"},
+  {word:"ORANGE",meaning:"برتقال"},{word:"CHEESE",meaning:"جبنة"},{word:"SUGAR",meaning:"سكر"},
+  {word:"COFFEE",meaning:"قهوة"},{word:"OLIVE",meaning:"زيتون"},{word:"GRAPE",meaning:"عنب"},
+  {word:"LEMON",meaning:"ليمون"},{word:"HONEY",meaning:"عسل"},{word:"SALT",meaning:"ملح"},
+  {word:"HOUSE",meaning:"بيت"},{word:"FAMILY",meaning:"عائلة"},{word:"MOTHER",meaning:"أم"},
+  {word:"FATHER",meaning:"أب"},{word:"SISTER",meaning:"أخت"},{word:"BROTHER",meaning:"أخ"},
+  {word:"FRIEND",meaning:"صديق"},{word:"KITCHEN",meaning:"مطبخ"},{word:"WINDOW",meaning:"نافذة"},
+  {word:"TABLE",meaning:"طاولة"},{word:"CHAIR",meaning:"كرسي"},{word:"SCHOOL",meaning:"مدرسة"},
+  {word:"TEACHER",meaning:"معلم"},{word:"STUDENT",meaning:"طالب"},{word:"BOOK",meaning:"كتاب"},
+  {word:"PENCIL",meaning:"قلم رصاص"},{word:"LESSON",meaning:"درس"},{word:"HOMEWORK",meaning:"واجب"},
+  {word:"FLOWER",meaning:"زهرة"},{word:"TREE",meaning:"شجرة"},{word:"GARDEN",meaning:"حديقة"},
+  {word:"SUMMER",meaning:"صيف"},{word:"WINTER",meaning:"شتاء"},{word:"SPRING",meaning:"ربيع"},
+  {word:"AUTUMN",meaning:"خريف"},{word:"CLOUD",meaning:"غيمة"},{word:"RAIN",meaning:"مطر"},
+  {word:"SNOW",meaning:"ثلج"},{word:"MOON",meaning:"قمر"},{word:"STAR",meaning:"نجمة"},
+  {word:"MOUNTAIN",meaning:"جبل"},{word:"RIVER",meaning:"نهر"},{word:"BIRD",meaning:"طائر"},
+  {word:"HORSE",meaning:"حصان"},{word:"SHEEP",meaning:"خروف"},{word:"CAMEL",meaning:"جمل"},
+  {word:"RABBIT",meaning:"أرنب"},{word:"LION",meaning:"أسد"},{word:"HEART",meaning:"قلب"},
+  {word:"SMILE",meaning:"ابتسامة"},{word:"DOCTOR",meaning:"طبيب"},{word:"HAPPY",meaning:"سعيد"},
+  {word:"BRAVE",meaning:"شجاع"},{word:"CLEVER",meaning:"ذكي"},{word:"BEAUTIFUL",meaning:"جميل"},
+  {word:"STRONG",meaning:"قوي"},{word:"FUNNY",meaning:"مضحك"},{word:"WHITE",meaning:"أبيض"},
+  {word:"GREEN",meaning:"أخضر"},{word:"BLUE",meaning:"أزرق"},{word:"YELLOW",meaning:"أصفر"},
+  {word:"MUSIC",meaning:"موسيقى"},{word:"DANCE",meaning:"رقص"},{word:"GAME",meaning:"لعبة"},
+  {word:"SPORT",meaning:"رياضة"},{word:"COOK",meaning:"يطبخ"},{word:"TRAVEL",meaning:"يسافر"},
+  {word:"CITY",meaning:"مدينة"},{word:"VILLAGE",meaning:"قرية"},{word:"MARKET",meaning:"سوق"},
+  {word:"MOSQUE",meaning:"مسجد"},{word:"STREET",morning:"شارع",meaning:"شارع"},
+  {word:"MORNING",meaning:"صباح"},{word:"NIGHT",meaning:"ليل"},{word:"WEEK",meaning:"أسبوع"},
+  {word:"MONTH",meaning:"شهر"},{word:"YEAR",meaning:"سنة"}
+];
+
+let p1Name="",p2Name="",scores=[0,0],round=0,totalRounds=5;
+let roundWords=[],roundWinner=null,typed=[[],[]],letterArr=[[],[]];
+
+let audioCtx=null;
+function beep(f=600,d=120,t="sine",v=.14){
+  try{
+    if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.type=t;o.frequency.value=f;g.gain.value=v;
+    o.connect(g);g.connect(audioCtx.destination);o.start();
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+d/1000);
+    o.stop(audioCtx.currentTime+d/1000);
+  }catch(e){}
+}
+function playWin(){beep(523,120);setTimeout(()=>beep(659,120),130);setTimeout(()=>beep(784,200),260);}
+function playClick(){beep(700,40,"square",.05);}
+function playWrong(){beep(180,200,"sawtooth",.1);}
+
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');}
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function pickWords(){
+  const pool=[...WORDS],picks=[];
+  while(picks.length<totalRounds&&pool.length){
+    const i=Math.floor(Math.random()*pool.length);
+    picks.push(pool.splice(i,1)[0]);
+  }
+  return picks;
+}
+function scrambleSure(w){
+  let s=shuffle(w.split(""));let t=0;
+  while(s.join("")===w&&t++<10)s=shuffle(w.split(""));
+  return s;
+}
+
+$('startBtn').addEventListener('click',()=>{
+  const a=$('name1').value.trim(),b=$('name2').value.trim();
+  if(!a||!b){$('errorMsg').textContent="أدخل اسم اللاعبين · Enter both names";return;}
+  if(a.toLowerCase()===b.toLowerCase()){$('errorMsg').textContent="الأسماء لازم تكون مختلفة";return;}
+  $('errorMsg').textContent="";
+  p1Name=a;p2Name=b;scores=[0,0];round=0;
+  roundWords=pickWords();
+  $('display1').textContent=p1Name;$('display2').textContent=p2Name;
+  $('score1').textContent=0;$('score2').textContent=0;
+  show('gameScreen');startRound();
+});
+['name1','name2'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')$('startBtn').click();}));
+
+let timerInterval=null,timeLeft=0;
+
+function startRound(){
+  round++;
+  if(round>totalRounds){endGame();return;}
+  $('roundNum').textContent=round;
+  roundWinner=null;typed=[[],[]];
+  const wObj=roundWords[round-1],word=wObj.word,meaning=wObj.meaning;
+  letterArr[0]=scrambleSure(word);letterArr[1]=scrambleSure(word);
+
+  for(let p=0;p<2;p++){
+    const s=p+1;
+    $('hint'+s).textContent=meaning;
+    $('status'+s).textContent="";$('status'+s).classList.remove('win');
+    $('side'+s).classList.remove('win');
+    // slots
+    const sEl=$('slots'+s);sEl.innerHTML="";
+    for(let i=0;i<word.length;i++){
+      const sl=document.createElement('div');sl.className='slot';
+      sl.dataset.idx=i;sl.dataset.side=s;
+      sl.addEventListener('click',onSlotClick);sEl.appendChild(sl);
+    }
+    // pool
+    const pEl=$('pool'+s);pEl.innerHTML="";
+    letterArr[p].forEach((ch,i)=>{
+      const btn=document.createElement('button');btn.className='letter';
+      btn.textContent=ch;btn.dataset.idx=i;btn.dataset.side=s;btn.dataset.target=word;
+      btn.addEventListener('click',onLetterClick);pEl.appendChild(btn);
+    });
+  }
+
+  timeLeft=30;$('timer').textContent=timeLeft+"s";
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    timeLeft--;$('timer').textContent=timeLeft+"s";
+    if(timeLeft<=0){
+      clearInterval(timerInterval);
+      if(!roundWinner){
+        $('status1').textContent="Time's up!";$('status2').textContent="Time's up!";
+        setTimeout(startRound,1500);
+      }
+    }
+  },1000);
+}
+
+function onLetterClick(e){
+  const btn=e.currentTarget;
+  if(btn.disabled||roundWinner)return;
+  const side=+btn.dataset.side,p=side-1,target=btn.dataset.target,idx=+btn.dataset.idx;
+  const nextIdx=typed[p].length;if(nextIdx>=target.length)return;
+  typed[p].push({letterIdx:idx,char:btn.textContent});btn.disabled=true;
+  const slot=document.querySelector(`#slots${side} .slot[data-idx="${nextIdx}"]`);
+  slot.textContent=btn.textContent;slot.classList.add('filled');
+  playClick();
+  if(typed[p].length===target.length){
+    const built=typed[p].map(t=>t.char).join("");
+    if(built===target){
+      roundWinner=side;scores[p]++;$('score'+side).textContent=scores[p];
+      $('side'+side).classList.add('win');
+      $('status'+side).textContent="✓ CORRECT!";$('status'+side).classList.add('win');
+      document.querySelectorAll(`#slots${side} .slot`).forEach(s=>s.classList.add('correct'));
+      const other=side===1?2:1;
+      $('status'+other).textContent="Too late! ⏱";
+      document.querySelectorAll(`#pool${other} .letter`).forEach(b=>b.disabled=true);
+      playWin();burstConfetti();clearInterval(timerInterval);
+      setTimeout(startRound,2200);
+    } else {
+      document.querySelectorAll(`#slots${side} .slot`).forEach(s=>s.classList.add('wrong'));
+      $('status'+side).textContent="Try again!";playWrong();
+      setTimeout(()=>clearSide(side),700);
+    }
+  }
+}
+
+function onSlotClick(e){
+  const slot=e.currentTarget,side=+slot.dataset.side,p=side-1;
+  if(!slot.classList.contains('filled')||roundWinner)return;
+  if(+slot.dataset.idx!==typed[p].length-1)return;
+  undoSide(side);
+}
+function undoSide(side){
+  const p=side-1;if(!typed[p].length||roundWinner)return;
+  const last=typed[p].pop();
+  const btn=document.querySelector(`#pool${side} .letter[data-idx="${last.letterIdx}"]`);
+  if(btn)btn.disabled=false;
+  const slot=document.querySelector(`#slots${side} .slot[data-idx="${typed[p].length}"]`);
+  if(slot){slot.textContent="";slot.classList.remove('filled');}
+  playClick();
+}
+function clearSide(side){
+  const p=side-1;if(roundWinner)return;typed[p]=[];
+  document.querySelectorAll(`#pool${side} .letter`).forEach(b=>b.disabled=false);
+  document.querySelectorAll(`#slots${side} .slot`).forEach(s=>{s.textContent="";s.classList.remove('filled','wrong','correct');});
+  $('status'+side).textContent="";
+}
+document.querySelectorAll('.action-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const side=+b.dataset.side;
+    if(b.dataset.act==='undo')undoSide(side);else clearSide(side);
+  });
+});
+
+function endGame(){
+  clearInterval(timerInterval);
+  $('final1').textContent=p1Name;$('final2').textContent=p2Name;
+  $('finalScore1').textContent=scores[0];$('finalScore2').textContent=scores[1];
+  let msg=scores[0]>scores[1]?`${p1Name} WINS! 🏆`:scores[1]>scores[0]?`${p2Name} WINS! 🏆`:"IT'S A TIE! 🤝";
+  $('winnerText').textContent=msg;
+  show('endScreen');playWin();
+  for(let i=0;i<50;i++)setTimeout(burstConfetti,i*60);
+}
+$('againBtn').addEventListener('click',()=>{document.querySelectorAll('.confetti').forEach(c=>c.remove());show('startScreen');});
+
+const CC=['#FF6B35','#1FB8CD','#F4C430','#22C55E','#E879F9','#FFF8E7'];
+function burstConfetti(){
+  for(let i=0;i<8;i++){
+    const c=document.createElement('div');c.className='confetti';
+    c.style.background=CC[Math.floor(Math.random()*CC.length)];
+    c.style.left=Math.random()*100+'vw';
+    c.style.animationDuration=(1.5+Math.random()*1.5)+'s';
+    c.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),3200);
+  }
+}
+</script>
+</body>
+</html>
