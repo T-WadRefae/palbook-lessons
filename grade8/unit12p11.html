@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade 8 - Period 11 - Formal Letter</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+*{margin:0;padding:0;box-sizing:border-box}
+html, body {
+  height: 100%;
+}
+body {
+  font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+  background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 50%,#f0f9ff 100%);
+  height: 100%;
+  color:#0f172a;
+  padding:clamp(8px,2vw,20px);
+  font-size:clamp(20.16px,3.168vw,23.04px);
+  line-height:1.6;
+  overflow-y: auto;
+}
+.app-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.wrap{max-width:1100px;margin:0 auto}
+.head{
+background:linear-gradient(135deg,#1e40af,#3b82f6);
+color:#fff;padding:clamp(18px,4vw,32px);border-radius:20px;
+text-align:center;box-shadow:0 10px 30px rgba(30,64,175,.12);margin-bottom:18px;
+position:relative;overflow:hidden
+}
+.head::before{
+content:"✉";position:absolute;font-size:clamp(80px,18vw,160px);
+opacity:.08;right:-10px;top:-20px;transform:rotate(-15deg)
+}
+.head h1{font-size:clamp(24px,5.4vw,38.4px);margin-bottom:6px;position:relative}
+.head .sub{font-size:clamp(15.6px,3.12vw,19.2px);opacity:.95;position:relative}
+.teach{
+display:inline-block;margin-top:10px;background:rgba(255,255,255,.2);
+padding:6px 16px;border-radius:30px;font-size:clamp(14.4px,2.88vw,16.8px);
+border:1.5px solid rgba(255,255,255,.4);position:relative;
+backdrop-filter:blur(6px)
+}
+.tabs{
+display:flex;gap:6px;background:#fff;padding:8px;border-radius:14px;
+box-shadow:0 10px 30px rgba(30,64,175,.12);margin-bottom:16px;overflow-x:auto;
+scrollbar-width:thin
+}
+.tabs::-webkit-scrollbar{height:4px}
+.tabs::-webkit-scrollbar-thumb{background:#60a5fa;border-radius:4px}
+.tab{
+flex:1;min-width:max-content;padding:10px 14px;border:none;
+background:transparent;border-radius:10px;cursor:pointer;
+font-size:clamp(14.4px,2.76vw,16.8px);font-weight:700;color:#475569;
+transition:.25s;white-space:nowrap;font-family:inherit
+}
+.tab:hover{background:#dbeafe;color:#1e40af}
+.tab.on{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;box-shadow:0 4px 12px rgba(30,64,175,.3)}
+.panel{display:none;animation:fade .4s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{
+background:#ffffff;padding:clamp(16px,3.5vw,26px);
+border-radius:16px;box-shadow:0 10px 30px rgba(30,64,175,.12);margin-bottom:14px
+}
+.card h2{
+color:#1e40af;font-size:clamp(20.4px,4.08vw,26.4px);margin-bottom:14px;
+padding-bottom:10px;border-bottom:3px solid #60a5fa;
+display:flex;align-items:center;gap:10px;flex-wrap:wrap
+}
+.card h3{color:#3b82f6;font-size:clamp(18px,3.6vw,21.6px);margin:14px 0 8px}
+.qbox{
+background:linear-gradient(135deg,#eff6ff,#dbeafe);
+border-right:5px solid #f59e0b;border-radius:12px;
+padding:14px 18px;margin:10px 0
+}
+.qbox p{margin:6px 0;font-size:clamp(15.6px,3.12vw,18px)}
+.ar{
+direction:rtl;text-align:right;font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+color:#475569;font-size:clamp(14.4px,2.88vw,16.8px);
+background:#fef3c7;padding:8px 12px;border-radius:8px;
+border-right:3px solid #f59e0b;margin-top:6px
+}
+.btn{
+display:inline-flex;align-items:center;gap:8px;
+padding:10px 20px;border:none;border-radius:10px;cursor:pointer;
+font-weight:700;font-size:clamp(15.6px,3.12vw,18px);font-family:inherit;
+transition:.25s;margin:5px 4px
+}
+.btn-pri{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff}
+.btn-pri:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(30,64,175,.4)}
+.btn-gold{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#fff}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(245,158,11,.4)}
+.btn-ok{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff}
+.btn-ok:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(22,163,74,.4)}
+.ans{
+display:none;background:#dcfce7;border:2px solid #16a34a;
+border-radius:10px;padding:14px;margin-top:10px;
+font-size:clamp(15.6px,3.12vw,18px);color:#14532d;
+animation:fade .3s ease
+}
+.ans.show{display:block}
+.ans strong{color:#15803d}
+.goals{list-style:none;padding:0}
+.goals li{
+background:linear-gradient(135deg,#eff6ff,#dbeafe);
+margin:10px 0;padding:14px 18px;border-radius:12px;
+border-right:4px solid #3b82f6;display:flex;align-items:flex-start;gap:12px;
+font-size:clamp(15.6px,3.12vw,18px);transition:.25s
+}
+.goals li:hover{transform:translateX(-4px);box-shadow:0 4px 12px rgba(59,130,246,.2)}
+.goals .ico{
+flex-shrink:0;width:36px;height:36px;border-radius:50%;
+background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;
+display:flex;align-items:center;justify-content:center;font-size:18px
+}
+.elements{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0}
+.el{
+background:#fff;border:2px solid #60a5fa;border-radius:12px;
+padding:14px;transition:.25s;cursor:default
+}
+.el:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(59,130,246,.25);border-color:#1e40af}
+.el .num{
+display:inline-block;background:#1e40af;color:#fff;
+width:26px;height:26px;border-radius:50%;text-align:center;
+line-height:26px;font-weight:700;margin-bottom:8px
+}
+.el h4{color:#1e40af;font-size:clamp(16.8px,3.24vw,19.2px);margin-bottom:6px}
+.el p{font-size:clamp(14.4px,2.76vw,16.8px);color:#475569}
+.el .arx{
+margin-top:6px;font-size:clamp(13.2px,2.64vw,15.6px);color:#92400e;
+direction:rtl;text-align:right
+}
+.letter{
+background:linear-gradient(135deg,#fffbeb,#fef3c7);
+border:2px dashed #f59e0b;border-radius:14px;
+padding:clamp(14px,3vw,22px);margin:14px 0;
+font-family:'Courier New',monospace;font-size:clamp(15.6px,3vw,18px);
+position:relative
+}
+.letter::before{
+content:"";position:absolute;top:0;right:0;width:0;height:0;
+border-style:solid;border-width:0 30px 30px 0;
+border-color:transparent #f59e0b transparent transparent;border-radius:0 14px 0 0
+}
+.l-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0}
+.l-r{text-align:right;direction:ltr}
+.l-l{text-align:left}
+.note-paper{
+background:repeating-linear-gradient(transparent,transparent 24px,#cbd5e1 24px,#cbd5e1 25px);
+background-color:#fef9c3;
+padding:18px 18px 18px 30px;
+border-radius:8px;border-left:6px solid #fbbf24;
+font-family:'Segoe UI',cursive;font-size:clamp(13px,2.5vw,15px);
+margin:10px 0;line-height:25px;position:relative
+}
+.note-paper::before{
+content:"";position:absolute;left:14px;top:0;bottom:0;width:1.5px;background:#ef4444
+}
+.note-paper b{display:block;margin:6px 0 4px;text-decoration:underline;color:#7c2d12}
+.note-paper li{margin-left:16px;list-style:disc}
+.fin{margin-top:16px;padding-top:12px;border-top:2px dashed #92400e}
+.fin .l-row{font-style:italic}
+.fld{
+display:inline-block;min-width:60%;border-bottom:1.5px dashed #92400e;
+padding:2px 6px;color:#0f172a;font-family:inherit;
+background:rgba(255,255,255,.5);border-radius:4px
+}
+.fld.lg{display:block;min-height:24px;margin:4px 0}
+.filled .fld{background:#dcfce7;border-bottom:2px solid #16a34a}
+.audio-btn{
+display:flex;align-items:center;gap:12px;
+background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;
+padding:14px 22px;border-radius:14px;text-decoration:none;
+font-weight:700;font-size:clamp(13px,2.6vw,15px);
+box-shadow:0 6px 16px rgba(124,58,237,.3);transition:.25s;
+margin:10px 4px;border:none;cursor:pointer
+}
+.audio-btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(124,58,237,.5)}
+.audio-btn .ic{
+width:40px;height:40px;background:rgba(255,255,255,.25);
+border-radius:50%;display:flex;align-items:center;justify-content:center;
+font-size:20px
+}
+details{
+background:#fff;border:2px solid #60a5fa;border-radius:10px;
+margin:10px 0;padding:0;overflow:hidden;transition:.25s
+}
+details[open]{border-color:#1e40af;box-shadow:0 4px 12px rgba(30,64,175,.15)}
+summary{
+padding:12px 16px;cursor:pointer;font-weight:700;color:#1e40af;
+background:linear-gradient(135deg,#eff6ff,#dbeafe);
+list-style:none;display:flex;align-items:center;gap:10px;
+font-size:clamp(13px,2.6vw,15px)
+}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▶";font-size:11px;transition:.25s;color:#3b82f6}
+details[open] summary::before{transform:rotate(90deg)}
+.det-body{padding:14px 18px;background:#f8fafc;font-size:clamp(13px,2.5vw,15px);line-height:1.7}
+.det-body strong{color:#1e40af}
+.q-num{
+display:inline-block;background:#1e40af;color:#fff;
+width:28px;height:28px;border-radius:50%;text-align:center;
+line-height:28px;font-weight:700;margin-left:8px;flex-shrink:0
+}
+.foot{
+text-align:center;padding:18px;color:#475569;
+font-size:clamp(11px,2.2vw,13px);margin-top:10px
+}
+.foot b{color:#1e40af}
+@media(max-width:600px){
+.tabs{gap:4px;padding:6px}
+.tab{padding:8px 10px}
+.elements{grid-template-columns:1fr}
+.l-row{flex-direction:column}
+.l-l{text-align:right}
+}
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper">
+   <div class="wrap">
+    <div class="head">
+     <h1>📬 Unit 12 · Period 11</h1>
+     <div class="sub">
+      Writing a Formal Letter — Grade 8
+     </div>
+     <div class="teach">
+      👩‍🏫 T. Wad Refae
+     </div>
+    </div>
+    <div class="tabs" id="tabs"><button class="tab on" data-t="t1">🎯 Goals</button> <button class="tab" data-t="t2">🎧 Activity 1</button> <button class="tab" data-t="t3">📝 Letter Format</button> <button class="tab" data-t="t4">❓ Activities 2 &amp; 3</button> <button class="tab" data-t="t5">✉️ Activity 4</button>
+    </div><!-- TAB 1 GOALS -->
+    <div class="panel on" id="t1">
+     <div class="card">
+      <h2>🎯 Lesson Objectives</h2>
+      <p style="color:#475569;margin-bottom:12px">By the end of this period, pupils will be able to:</p>
+      <ul class="goals">
+       <li><span class="ico">👂</span>
+        <div>
+         <b>Listen</b> carefully to spoken sentences and write them down accurately. 
+         <div class="ar">
+          الاستماع لجمل وكتابتها بدقة.
+         </div>
+        </div></li>
+       <li><span class="ico">📖</span>
+        <div>
+         <b>Read</b> the start and the finish of a formal letter and answer comprehension questions. 
+         <div class="ar">
+          قراءة بداية ونهاية رسالة رسمية والإجابة على أسئلة الفهم.
+         </div>
+        </div></li>
+       <li><span class="ico">🔍</span>
+        <div>
+         <b>Identify</b> the main parts of a formal letter and their correct order. 
+         <div class="ar">
+          التعرف على أجزاء الرسالة الرسمية وترتيبها الصحيح.
+         </div>
+        </div></li>
+       <li><span class="ico">📍</span>
+        <div>
+         <b>Place</b> the addresses and date in their right places on a formal letter. 
+         <div class="ar">
+          وضع العناوين والتاريخ في أماكنها الصحيحة.
+         </div>
+        </div></li>
+       <li><span class="ico">✍️</span>
+        <div>
+         <b>Complete</b> a formal letter using notes from a manager (Dr Cook's note). 
+         <div class="ar">
+          إكمال رسالة رسمية باستخدام الملاحظات.
+         </div>
+        </div></li>
+       <li><span class="ico">🆚</span>
+        <div>
+         <b>Compare</b> a formal letter with an informal letter to a pen friend. 
+         <div class="ar">
+          المقارنة بين الرسالة الرسمية والرسالة غير الرسمية.
+         </div>
+        </div></li>
+      </ul>
+     </div>
+    </div><!-- TAB 2 ACTIVITY 1 -->
+    <div class="panel" id="t2">
+     <div class="card">
+      <h2>🎧 Activity 1 — Listen and Write</h2>
+      <p><b>Listen</b> carefully and <b>write down</b> what you hear. You will hear three sentences.</p>
+      <div class="ar">
+       استمع بتركيز واكتب ما تسمعه. ستسمع ثلاث جمل.
+      </div><a class="audio-btn" href="https://drive.google.com/file/d/0B7oTcXqoniztSmJDSWNoVENNLWM/view?usp=drivesdk&amp;resourcekey=0-yQuXRJUzYNuGLJyeJK552A" target="_blank" rel="noopener"> <span class="ic">▶</span> <span>Play Audio · CD4 Track 12</span> </a> <button class="btn btn-gold" onclick="tg('a1')">💡 Show Model Answer</button>
+      <div class="ans" id="a1"><strong>📝 Answers (CD4 Audio 12):</strong>
+       <ol style="margin-top:10px;padding-right:20px;line-height:1.9">
+        <li>Rose Hill is the new school counsellor, and she calls one evening in order to check Yasmeen's personal details.</li>
+        <li>On today's radio programme, they are discussing people's names, and students are asking questions for Dr Romano to answer.</li>
+        <li>One listener asks how our ancestors got their family names, and another wants to know how parents choose given names.</li>
+       </ol>
+      </div>
+     </div>
+    </div><!-- TAB 3 LETTER FORMAT -->
+    <div class="panel" id="t3">
+     <div class="card">
+      <h2>📝 How to Write a Formal Letter</h2>
+      <p>A <b>formal letter</b> follows a fixed structure. Every part has its own place.</p>
+      <div class="ar">
+       الرسالة الرسمية لها ترتيب ثابت لا يتغير، وكل جزء له مكان محدد.
+      </div>
+      <h3>📋 The 7 Parts of a Formal Letter — In Order</h3>
+      <div class="elements">
+       <div class="el"><span class="num">1</span>
+        <h4>Sender's Address</h4>
+        <p>Top right of the letter.</p>
+        <div class="arx">
+         عنوان المُرسِل (أعلى اليمين)
+        </div>
+       </div>
+       <div class="el"><span class="num">2</span>
+        <h4>Date</h4>
+        <p>Below the sender's address.</p>
+        <div class="arx">
+         التاريخ تحت العنوان
+        </div>
+       </div>
+       <div class="el"><span class="num">3</span>
+        <h4>Receiver's Address</h4>
+        <p>On the left side, below the date.</p>
+        <div class="arx">
+         عنوان المُستقبِل على اليسار
+        </div>
+       </div>
+       <div class="el"><span class="num">4</span>
+        <h4>Greeting</h4>
+        <p>"Dear Mr / Mrs / Dr ..."</p>
+        <div class="arx">
+         التحية الرسمية
+        </div>
+       </div>
+       <div class="el"><span class="num">5</span>
+        <h4>Subject Line</h4>
+        <p>Short title in <b>bold</b>.</p>
+        <div class="arx">
+         عنوان الموضوع بالخط العريض
+        </div>
+       </div>
+       <div class="el"><span class="num">6</span>
+        <h4>Body</h4>
+        <p>The main message in clear paragraphs.</p>
+        <div class="arx">
+         نص الرسالة في فقرات
+        </div>
+       </div>
+       <div class="el"><span class="num">7</span>
+        <h4>Ending + Name + Job</h4>
+        <p>"Yours truly," + signature + position.</p>
+        <div class="arx">
+         الخاتمة والاسم والوظيفة
+        </div>
+       </div>
+      </div>
+      <h3>⚖️ Formal vs. Informal Letter</h3>
+      <div class="qbox">
+       <p><b>📩 Formal letter</b> → "Dear Mr Jarrett, ... Yours truly, S Green"</p>
+       <p><b>💌 Informal letter</b> → "Hi Sami, ... Best wishes, Ali"</p>
+       <div class="ar">
+        الرسمية: تحية بالاسم الكامل وخاتمة "Yours truly". غير الرسمية: تحية ودودة وخاتمة "Best wishes".
+       </div>
+      </div>
+      <h3>💡 Important Rules</h3>
+      <ul style="padding-right:20px;line-height:2">
+       <li>✅ Use <b>polite</b> and <b>professional</b> language.</li>
+       <li>✅ Do <b>not</b> use slang or short forms (don't, can't).</li>
+       <li>✅ Always <b>sign</b> your full name and write your <b>job title</b>.</li>
+       <li>✅ Keep paragraphs <b>short</b> and <b>clear</b>.</li>
+      </ul>
+      <div class="ar">
+       استخدم لغة مهذبة ومهنية، وتجنب الاختصارات والعامية، ووقّع باسمك الكامل ووظيفتك.
+      </div>
+     </div>
+    </div><!-- TAB 4 ACTIVITIES 2 & 3 -->
+    <div class="panel" id="t4">
+     <div class="card">
+      <h2>❓ Activity 2 — Comprehension Questions</h2>
+      <p><b>Read</b> the start and the finish of the formal letter, then answer:</p>
+      <div class="ar">
+       اقرأ بداية ونهاية الرسالة الرسمية ثم أجب عن الأسئلة.
+      </div>
+      <details><summary><span class="q-num">1</span> Who is the letter to and who is it from?</summary>
+       <div class="det-body"><strong>✅ Model Answer:</strong> It's to <b>Mr and Mrs Jarrett</b>, from <b>Sally Green</b>. 
+        <div class="ar">
+         الرسالة موجهة إلى السيد والسيدة جاريت، ومن سالي جرين.
+        </div>
+       </div>
+      </details>
+      <details><summary><span class="q-num">2</span> How are the start and end different from your Unit 1 letter to a pen friend?</summary>
+       <div class="det-body"><strong>✅ Model Answer:</strong> It starts with <b>"Dear"</b> and it ends with <b>"Yours truly"</b>. 
+        <div class="ar">
+         تبدأ بـ Dear وتنتهي بـ Yours truly، أما رسالة الصديق فتبدأ بـ Hi وتنتهي بـ Best wishes.
+        </div>
+       </div>
+      </details>
+      <details><summary><span class="q-num">3</span> What has happened since Mr Jarrett's phone call (in period 10)?</summary>
+       <div class="det-body"><strong>✅ Model Answer:</strong> <b>Allen has been accepted</b> at the school. 
+        <div class="ar">
+         تم قبول ألن في المدرسة.
+        </div>
+       </div>
+      </details>
+     </div>
+     <div class="card">
+      <h2>📍 Activity 3 — Place the Addresses</h2>
+      <p><b>Add</b> the addresses to the right places, then add today's date.</p>
+      <div class="ar">
+       ضع العناوين في أماكنها الصحيحة وأضف تاريخ اليوم.
+      </div>
+      <details><summary>📌 Address 1 — Sender's Address (Top Right)</summary>
+       <div class="det-body"><strong>Fairfax High School</strong><br>
+         792 Barton Street<br>
+         Fairfax<br>
+         CA 93781 
+        <div class="ar">
+         عنوان المُرسِل في أعلى يمين الرسالة.
+        </div>
+       </div>
+      </details>
+      <details><summary>📅 Date — Below Sender's Address</summary>
+       <div class="det-body"><strong>1st May 2014</strong> <em>(example)</em>
+        <div class="ar">
+         يكتب التاريخ تحت عنوان المُرسِل.
+        </div>
+       </div>
+      </details>
+      <details><summary>📌 Address 2 — Receiver's Address (Left Side)</summary>
+       <div class="det-body"><strong>Mr and Mrs P Jarrett</strong><br>
+         1206 North Down Street<br>
+         Los Angeles<br>
+         CA 98680 
+        <div class="ar">
+         عنوان المُستقبِل على يسار الصفحة.
+        </div>
+       </div>
+      </details>
+     </div>
+    </div><!-- TAB 5 ACTIVITY 4 -->
+    <div class="panel" id="t5">
+     <div class="card">
+      <h2>✉️ Activity 4 — Complete the Letter</h2>
+      <p><b>Read</b> Dr Cook's note to Sally Green. Then <b>copy and complete</b> the letter.</p>
+      <div class="ar">
+       اقرأ ملاحظات د. كوك إلى سالي جرين، ثم انسخ وأكمل الرسالة.
+      </div>
+      <h3>📝 Dr Cook's Note</h3>
+      <div class="note-paper"><b>Please tell the Jarretts:</b>
+       <ul style="list-style:none;padding:0">
+        <li>★ Pleased they can visit the school on April 25.</li>
+        <li>★ I hope to meet them then.</li>
+       </ul><b>Please ask them:</b>
+       <ul style="list-style:none;padding:0">
+        <li>★ What time will they arrive?</li>
+        <li>★ How long are they going to stay?</li>
+        <li>★ Who would they like to meet?</li>
+       </ul>
+      </div>
+      <h3>📜 The Letter Form</h3>
+      <div class="letter" id="letter">
+       <div class="l-row">
+        <div></div>
+        <div class="l-r"><span class="fld" data-k="s1">_________________</span><br><span class="fld" data-k="s2">_________________</span><br><span class="fld" data-k="s3">_________________</span><br><span class="fld" data-k="s4">_________________</span>
+        </div>
+       </div>
+       <div class="l-row">
+        <div></div>
+        <div class="l-r"><span class="fld" data-k="dt">__________</span>
+        </div>
+       </div>
+       <div class="l-row">
+        <div class="l-l"><span class="fld" data-k="r1">_________________</span><br><span class="fld" data-k="r2">_________________</span><br><span class="fld" data-k="r3">_________________</span><br><span class="fld" data-k="r4">_________________</span>
+        </div>
+        <div></div>
+       </div>
+       <div style="margin-top:14px">
+        <b>Dear Mr and Mrs Jarrett</b>
+       </div>
+       <div style="margin-top:10px">
+        <b>Allen's start at Fairfax High</b>
+       </div>
+       <div style="margin-top:10px">
+        It was good to talk again this morning, and we are very happy that Allen can join us on May 22, as you hoped.
+       </div>
+       <div style="margin-top:10px">
+        Dr Cook says he is pleased that <span class="fld lg" data-k="b1">________________________________</span> <span class="fld lg" data-k="b2">________________________________</span>
+       </div>
+       <div style="margin-top:10px">
+        He also has one or two questions. He wants to know <span class="fld lg" data-k="b3">______________</span> <span class="fld lg" data-k="b4">________________________________</span> <span class="fld lg" data-k="b5">________________________________</span>
+       </div>
+       <div style="margin-top:10px">
+        We hope to hear from you soon. We will then immediately prepare a programme for your visit.
+       </div>
+       <div class="fin">
+        <div>
+         <em>Yours truly,</em>
+        </div>
+        <div style="margin-top:14px;font-family:'Brush Script MT',cursive;font-size:1.3em;color:#7c2d12">
+         Sally Green
+        </div>
+        <div>
+         S Green (Mrs)
+        </div>
+        <div style="margin-top:6px">
+         <em>(Personal Assistant to Dr Cook)</em>
+        </div>
+       </div>
+      </div><button class="btn btn-ok" onclick="fillForm()">✨ Fill with Model Answers</button> <button class="btn btn-pri" onclick="clearForm()">🔄 Clear Form</button>
+     </div>
+    </div>
+    <div class="foot">
+     ✨ <b>T. Wad Refae</b> · English for Palestine — Grade 8 · Unit 12 · Period 11
+    </div>
+   </div>
+  </div>
+  <script>
+// Tabs
+document.querySelectorAll('.tab').forEach(b=>{
+b.addEventListener('click',()=>{
+document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+b.classList.add('on');
+document.getElementById(b.dataset.t).classList.add('on');
+window.scrollTo({top:0,behavior:'smooth'});
+});
+});
+
+// Toggle answers
+function tg(id){document.getElementById(id).classList.toggle('show')}
+
+// Fill / clear letter form
+const ANS={
+s1:"Fairfax High School",s2:"792 Barton Street",s3:"Fairfax",s4:"CA 93781",
+dt:"1st May 2014",
+r1:"Mr and Mrs P Jarrett",r2:"1206 North Down Street",r3:"Los Angeles",r4:"CA 98680",
+b1:"you can visit the school on April 25th.",
+b2:"He says he hopes to meet you.",
+b3:"what time you will arrive,",
+b4:"how long you are going to stay,",
+b5:"and who you would like to meet."
+};
+function fillForm(){
+const letter=document.getElementById('letter');
+letter.classList.add('filled');
+letter.querySelectorAll('.fld').forEach(f=>{
+const k=f.dataset.k;
+if(ANS[k])f.textContent=ANS[k];
+});
+}
+function clearForm(){
+const letter=document.getElementById('letter');
+letter.classList.remove('filled');
+const def={
+s1:"_________________",s2:"_________________",s3:"_________________",s4:"_________________",
+dt:"__________",
+r1:"_________________",r2:"_________________",r3:"_________________",r4:"_________________",
+b1:"________________________________",b2:"________________________________",
+b3:"______________",b4:"________________________________",b5:"________________________________"
+};
+letter.querySelectorAll('.fld').forEach(f=>{
+const k=f.dataset.k;
+if(def[k])f.textContent=def[k];
+});
+}
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc4abba576893a1',t:'MTc3ODg3NDYxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
