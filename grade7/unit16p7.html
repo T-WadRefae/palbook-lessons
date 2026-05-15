@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 16 – Period 7 | Although</title>
+  <style>
+  :root {
+    --purple: #6b3fa0;
+    --purple-light: #9b6dd1;
+    --purple-pale: #f3eeff;
+    --gold: #f5a623;
+    --green: #27ae60;
+    --red: #e74c3c;
+    --blue: #2980b9;
+    --dark: #2c1654;
+    --text: #333;
+    --bg: #faf8ff;
+    --card: #fff;
+    --shadow: 0 4px 18px rgba(107,63,160,0.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-y: auto;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--purple) 100%);
+    color: #fff;
+    padding: 18px 24px 14px;
+    text-align: center;
+    position: relative;
+  }
+  header .grade-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 3px 14px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  header h1 { font-size: 22px; letter-spacing: 1px; }
+  header p  { font-size: 13px; opacity: .8; margin-top: 3px; }
+  header .teacher {
+    position: absolute;
+    top: 12px; right: 16px;
+    font-size: 11px;
+    opacity: .75;
+    background: rgba(255,255,255,.12);
+    border-radius: 8px;
+    padding: 4px 10px;
+  }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    overflow-x: auto;
+    background: var(--dark);
+    padding: 0 8px;
+    gap: 2px;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 11px 16px;
+    font-size: 12.5px;
+    font-weight: 600;
+    background: transparent;
+    color: rgba(255,255,255,.6);
+    border: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all .25s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+    background: rgba(255,255,255,.05);
+  }
+
+  /* PANELS */
+  .tab-panel { display: none; padding: 20px 16px 40px; max-width: 780px; margin: auto; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION TITLE */
+  .sec-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 16px;
+  }
+  .sec-title .icon {
+    width: 32px; height: 32px;
+    background: var(--purple);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+
+  /* OBJECTIVE CARDS */
+  .obj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media(max-width:500px){ .obj-grid { grid-template-columns: 1fr; } }
+  .obj-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--purple-light);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .obj-card .emoji { font-size: 22px; }
+  .obj-card .en { font-weight: 600; font-size: 14px; color: var(--dark); }
+  .obj-card .ar { font-size: 12px; color: #777; margin-top: 3px; direction: rtl; font-family: 'Segoe UI', Tahoma, sans-serif; }
+
+  /* GRAMMAR BOX */
+  .grammar-box {
+    background: linear-gradient(135deg, #ede0ff, #f9f3ff);
+    border-right: 5px solid var(--purple);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+  }
+  .grammar-box .title-ar {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+    direction: rtl;
+    margin-bottom: 8px;
+  }
+  .grammar-box .body-ar {
+    font-size: 13.5px;
+    color: #444;
+    direction: rtl;
+    line-height: 1.9;
+  }
+  .grammar-box .example {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--purple);
+    border-left: 3px solid var(--purple-light);
+  }
+  .grammar-box .example span { font-weight: 700; }
+
+  /* DICT ENTRY */
+  .dict-card {
+    background: var(--card);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 18px;
+    margin-bottom: 18px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .dict-word { font-size: 22px; font-weight: 800; color: var(--purple); }
+  .dict-pos  { font-size: 12px; font-style: italic; color: #888; }
+  .dict-def  { font-size: 14px; line-height: 1.7; color: var(--dark); }
+  .dict-ex   { font-style: italic; font-size: 13.5px; color: #555; border-left: 3px solid var(--gold); padding-left: 10px; }
+
+  /* Q&A style */
+  .qna { margin-bottom: 20px; }
+  .question-text { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: var(--dark); }
+  .answer-input {
+    width: 100%; padding: 10px 14px;
+    border: 2px solid #ddd; border-radius: 10px;
+    font-size: 14px; outline: none; transition: border .2s;
+  }
+  .answer-input:focus { border-color: var(--purple-light); }
+  .check-btn {
+    margin-top: 8px;
+    padding: 9px 22px;
+    background: var(--purple);
+    color: #fff;
+    border: none; border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .2s;
+  }
+  .check-btn:hover { background: var(--dark); }
+  .feedback {
+    margin-top: 8px; font-size: 13px;
+    padding: 8px 12px; border-radius: 8px;
+    display: none;
+  }
+  .feedback.correct { background: #e8f8f0; color: var(--green); display: block; }
+  .feedback.wrong   { background: #fdf0f0; color: var(--red); display: block; }
+
+  /* MATCH EXERCISE */
+  .match-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .match-row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .match-part {
+    background: var(--card); border: 2px solid #e0d4f7;
+    border-radius: 10px; padding: 10px 14px;
+    font-size: 13.5px; color: var(--dark); flex: 1; min-width: 140px;
+  }
+  .match-select {
+    flex: 1; min-width: 140px;
+    padding: 9px 10px;
+    border: 2px solid #e0d4f7; border-radius: 10px;
+    font-size: 13px; outline: none; cursor: pointer;
+    background: #fff;
+  }
+  .match-feedback { font-size: 18px; }
+
+  /* CHOOSE EXERCISE */
+  .choose-wrap { display: flex; flex-direction: column; gap: 14px; }
+  .choose-row { background: var(--card); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .choose-sentence { font-size: 14px; color: var(--dark); margin-bottom: 10px; line-height: 1.7; }
+  .choose-options { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice-btn {
+    padding: 7px 18px; border-radius: 20px;
+    border: 2px solid var(--purple-light);
+    background: #fff; color: var(--purple);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .choice-btn:hover { background: var(--purple-pale); }
+  .choice-btn.correct { background: var(--green); color: #fff; border-color: var(--green); }
+  .choice-btn.wrong   { background: var(--red);   color: #fff; border-color: var(--red); }
+  .choice-btn.reveal  { background: #e8f8f0; color: var(--green); border-color: var(--green); }
+
+  /* REWRITE EXERCISE */
+  .rewrite-list { display: flex; flex-direction: column; gap: 14px; }
+  .rewrite-item { background: var(--card); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .original-sent { font-size: 13.5px; color: #555; margin-bottom: 8px; font-style: italic; }
+  .rewrite-input {
+    width: 100%; padding: 10px 14px;
+    border: 2px solid #ddd; border-radius: 10px;
+    font-size: 13.5px; outline: none; transition: border .2s;
+    margin-bottom: 6px;
+  }
+  .rewrite-input:focus { border-color: var(--purple-light); }
+  .show-answer-btn {
+    padding: 7px 16px; background: var(--purple-pale);
+    color: var(--purple); border: 2px solid var(--purple-light);
+    border-radius: 8px; font-size: 12px; font-weight: 600;
+    cursor: pointer;
+  }
+  .answer-reveal {
+    margin-top: 8px; padding: 9px 14px;
+    background: #e8f8f0; color: var(--green);
+    border-radius: 8px; font-size: 13.5px;
+    font-weight: 600; display: none;
+  }
+
+  /* QUIZ */
+  .quiz-wrap { display: flex; flex-direction: column; gap: 18px; }
+  .quiz-card {
+    background: var(--card); border-radius: 14px;
+    padding: 16px; box-shadow: var(--shadow);
+    border-top: 4px solid var(--purple-light);
+  }
+  .quiz-q { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 12px; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    padding: 10px 16px; border-radius: 10px;
+    border: 2px solid #e0d4f7; background: #fff;
+    font-size: 13.5px; color: var(--dark);
+    cursor: pointer; transition: all .2s; text-align: left;
+  }
+  .quiz-opt:hover:not(.locked) { border-color: var(--purple-light); background: var(--purple-pale); }
+  .quiz-opt.correct { background: #e8f8f0; border-color: var(--green); color: var(--green); font-weight: 700; }
+  .quiz-opt.wrong   { background: #fdf0f0; border-color: var(--red);   color: var(--red); }
+  .quiz-opt.locked  { cursor: default; }
+  .quiz-result {
+    text-align: center; padding: 24px;
+    background: linear-gradient(135deg, var(--purple), var(--dark));
+    border-radius: 14px; color: #fff;
+    display: none;
+  }
+  .quiz-result .score { font-size: 40px; font-weight: 800; }
+  .quiz-result .msg   { font-size: 16px; margin-top: 6px; }
+  .quiz-result .msg-ar { font-size: 13px; opacity: .8; margin-top: 4px; direction: rtl; }
+  #submit-quiz {
+    display: block; width: 100%; padding: 14px;
+    background: var(--purple); color: #fff;
+    border: none; border-radius: 12px;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: background .2s;
+    margin-top: 6px;
+  }
+  #submit-quiz:hover { background: var(--dark); }
+  #retry-quiz {
+    margin-top: 14px; padding: 11px 28px;
+    background: var(--gold); color: var(--dark);
+    border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+  }
+
+  /* CONFETTI */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 14px;
+    top: -20px;
+    border-radius: 2px;
+    animation: confettiFall 3s ease-in forwards;
+    pointer-events: none; z-index: 9999;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(0) rotate(0deg) scaleX(1);   opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg) scaleX(-1); opacity: 0; }
+  }
+
+  /* UTIL */
+  .badge {
+    display: inline-block; padding: 3px 10px;
+    border-radius: 20px; font-size: 12px; font-weight: 700;
+    background: var(--purple); color: #fff;
+    margin-left: 6px;
+  }
+  .note {
+    background: #fffbea; border-left: 4px solid var(--gold);
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 13px; color: #555; margin-top: 10px;
+    direction: rtl;
+  }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <header>
+   <div class="grade-tag">
+    GRADE 7 — UNIT 16 — PERIOD 7
+   </div>
+   <h1>📖 Although — Joining Ideas</h1>
+   <p>Dictionary Skills &amp; Writing Skills</p>
+   <div class="teacher">
+    T. Wad Refae
+   </div>
+  </header>
+  <div class="tab-bar" role="tablist"><button class="tab-btn active" onclick="showTab('objectives',this)">🎯 Objectives</button> <button class="tab-btn" onclick="showTab('act1',this)">📚 Act. 1 – Dictionary</button> <button class="tab-btn" onclick="showTab('act2',this)">✏️ Act. 2 – Match</button> <button class="tab-btn" onclick="showTab('act4',this)">📝 Act. 4 – Write</button> <button class="tab-btn" onclick="showTab('act5',this)">🔄 Act. 5 – Rewrite</button> <button class="tab-btn" onclick="showTab('act6',this)">☑️ Act. 6 – Choose</button> <button class="tab-btn" onclick="showTab('quiz',this)">🏆 Quiz</button>
+  </div><!-- ===================== OBJECTIVES ===================== -->
+  <div id="objectives" class="tab-panel active">
+   <div class="sec-title">
+    <div class="icon">
+     🎯
+    </div> Lesson Objectives — أهداف الدرس
+   </div>
+   <div style="display:flex;flex-direction:column;gap:10px;">
+    <div class="obj-card">
+     <div class="emoji">
+      📖
+     </div>
+     <div>
+      <div class="en">
+       Read a dictionary entry
+      </div>
+      <div class="ar">
+       قراءة تعريف من القاموس
+      </div>
+     </div>
+    </div>
+    <div class="obj-card">
+     <div class="emoji">
+      🔗
+     </div>
+     <div>
+      <div class="en">
+       Use <em>although</em> to join contrasting ideas
+      </div>
+      <div class="ar">
+       ربط الجمل المتناقضة بـ although
+      </div>
+     </div>
+    </div>
+    <div class="obj-card">
+     <div class="emoji">
+      🔄
+     </div>
+     <div>
+      <div class="en">
+       Rewrite sentences starting with <em>although</em>
+      </div>
+      <div class="ar">
+       إعادة كتابة الجمل بالبدء بـ although
+      </div>
+     </div>
+    </div>
+    <div class="obj-card">
+     <div class="emoji">
+      ☑️
+     </div>
+     <div>
+      <div class="en">
+       Choose the correct conjunction: because / so / although
+      </div>
+      <div class="ar">
+       اختيار أداة الربط الصحيحة
+      </div>
+     </div>
+    </div>
+   </div>
+  </div><!-- ===================== ACT 1 ===================== -->
+  <div id="act1" class="tab-panel">
+   <div class="sec-title">
+    <div class="icon">
+     1
+    </div> Activity 1 — Read the Dictionary Entry
+   </div>
+   <div class="grammar-box" style="margin-bottom:16px;">
+    <div class="title-ar">
+     📌 القاعدة: استخدام "although" لربط الجمل
+    </div>
+    <div class="body-ar">
+     كلمة <strong>although</strong> هي <strong>أداة ربط (conjunction)</strong> تُستخدم لربط فكرتين عندما تكون الفكرة الثانية <strong>مفاجئة أو غير متوقعة</strong> بالنسبة للأولى.<br><br>
+      📌 <strong>الصيغة:</strong><br>
+      &nbsp;&nbsp;• <strong>Although + جملة، + جملة</strong> &nbsp;(إذا بدأنا بـ although)<br>
+      &nbsp;&nbsp;• <strong>جملة + although + جملة</strong> &nbsp;(إذا وضعناها في المنتصف)<br><br>
+      ⚠️ عندما تبدأ الجملة بـ although نضع <strong>فاصلة (,)</strong> في المنتصف.
+    </div>
+    <div class="example"><span>Although</span> it was snowing, they played football.<br><span style="color:#888;font-size:12px;">رغم أنه كان يثلج، لعبوا كرة القدم.</span>
+    </div>
+   </div>
+   <div class="dict-card">
+    <div><span class="dict-word">although</span> <span class="dict-pos">conjunction</span>
+    </div>
+    <div class="dict-def">
+     A word used to join two ideas when the second idea makes the first surprising.
+    </div>
+    <div class="dict-ex">
+     They played football <strong>although</strong> it was snowing.
+    </div>
+   </div><!-- Q1 -->
+   <div class="qna">
+    <div class="question-text">
+     1. What part of speech is <em>although</em>?
+    </div><input class="answer-input" id="q1-input" placeholder="Type your answer..." oninput="clearFeedback('q1-fb')"> <button class="check-btn" onclick="checkAnswer('q1-input','q1-fb','conjunction')">Check ✓</button>
+    <div class="feedback" id="q1-fb"></div>
+   </div><!-- Q2 -->
+   <div class="qna">
+    <div class="question-text">
+     2. What other conjunctions do you know? <span style="font-size:12px;color:#888;">(write any of them)</span>
+    </div><input class="answer-input" id="q2-input" placeholder="e.g. because, so, but, however..."> <button class="check-btn" onclick="checkConjunctions()">Check ✓</button>
+    <div class="feedback" id="q2-fb"></div>
+    <div class="note" style="margin-top:10px;">
+     ✅ الإجابات المقبولة: <strong>so, because, however, but</strong>
+    </div>
+   </div>
+  </div><!-- ===================== ACT 2 ===================== -->
+  <div id="act2" class="tab-panel">
+   <div class="sec-title">
+    <div class="icon">
+     2
+    </div> Activity 2 — Match the Sentences
+   </div>
+   <div class="grammar-box" style="margin-bottom:16px;">
+    <div class="title-ar">
+     📌 القاعدة: ربط الجمل بـ although
+    </div>
+    <div class="body-ar">
+     نستخدم <strong>although</strong> لربط جملتين عندما تكون إحداهما <strong>مفاجئة</strong> مقارنةً بالأخرى.<br><br>
+      الصيغة: &nbsp;<strong>Sentence A + although + Sentence B</strong><br><br>
+      مثال: Rania went to bed <strong>although</strong> she wasn't tired.<br><span style="font-size:12px;color:#888;">ذهبت رانيا للنوم رغم أنها لم تكن متعبة. ← غير متوقع!</span><br><br>
+      🔗 صِل كل جملة من (A) مع ما يناسبها من (B).
+    </div>
+   </div>
+   <div class="match-wrap" id="match-wrap"><!-- rows inserted by JS -->
+   </div><button class="check-btn" style="margin-top:14px;" onclick="checkMatches()">Check All ✓</button>
+   <div class="feedback" id="match-fb"></div>
+  </div><!-- ===================== ACT 4 ===================== -->
+  <div id="act4" class="tab-panel">
+   <div class="sec-title">
+    <div class="icon">
+     4
+    </div> Activity 4 — Write the Sentences
+   </div>
+   <div class="grammar-box" style="margin-bottom:16px;">
+    <div class="title-ar">
+     📌 القاعدة: كتابة جملة كاملة بـ although
+    </div>
+    <div class="body-ar">
+     اكتب الجملتين معاً باستخدام <strong>although</strong> في المنتصف.<br><br>
+      مثال: &nbsp;"Rania went to bed" + "she wasn't tired"<br>
+      ← &nbsp;Rania went to bed <strong>although</strong> she wasn't tired.<br><br>
+      ⚠️ لا تضع فاصلة (,) حين تكون although في المنتصف.
+    </div>
+   </div>
+   <div class="rewrite-list" id="act4-list"><!-- inserted by JS -->
+   </div>
+  </div><!-- ===================== ACT 5 ===================== -->
+  <div id="act5" class="tab-panel">
+   <div class="sec-title">
+    <div class="icon">
+     5
+    </div> Activity 5 — Rewrite Starting with <em>although</em>
+   </div>
+   <div class="grammar-box" style="margin-bottom:16px;">
+    <div class="title-ar">
+     📌 القاعدة: البدء بـ although
+    </div>
+    <div class="body-ar">
+     عندما نبدأ الجملة بـ <strong>although</strong> نضع الجملة المفاجئة أولاً ثم <strong>فاصلة (,)</strong> ثم الجملة الرئيسية.<br><br>
+      مثال قبل: &nbsp;Rania went to bed <strong>although</strong> she wasn't tired.<br>
+      مثال بعد: &nbsp;<strong>Although</strong> she wasn't tired<strong>,</strong> Rania went to bed.<br><br>
+      ⚠️ الفاصلة (,) <strong>إلزامية</strong> عند البدء بـ although!
+    </div>
+   </div>
+   <div class="rewrite-list">
+    <div class="rewrite-item">
+     <div class="original-sent">
+      Rania went to bed although she wasn't tired.
+     </div><input class="rewrite-input" placeholder="Although she wasn't tired, ..."> <button class="show-answer-btn" onclick="revealAnswer(this)">Show Answer 👁</button>
+     <div class="answer-reveal">
+      Although she wasn't tired, Rania went to bed.
+     </div>
+    </div>
+    <div class="rewrite-item">
+     <div class="original-sent">
+      He didn't wear a coat although it was cold.
+     </div><input class="rewrite-input" placeholder="Although it was cold, ..."> <button class="show-answer-btn" onclick="revealAnswer(this)">Show Answer 👁</button>
+     <div class="answer-reveal">
+      Although it was cold, he didn't wear a coat.
+     </div>
+    </div>
+    <div class="rewrite-item">
+     <div class="original-sent">
+      I didn't have a drink although I was thirsty.
+     </div><input class="rewrite-input" placeholder="Although I was thirsty, ..."> <button class="show-answer-btn" onclick="revealAnswer(this)">Show Answer 👁</button>
+     <div class="answer-reveal">
+      Although I was thirsty, I didn't have a drink.
+     </div>
+    </div>
+    <div class="rewrite-item">
+     <div class="original-sent">
+      Faisal wants to play football although he hurt his leg.
+     </div><input class="rewrite-input" placeholder="Although he hurt his leg, ..."> <button class="show-answer-btn" onclick="revealAnswer(this)">Show Answer 👁</button>
+     <div class="answer-reveal">
+      Although he hurt his leg, Faisal wants to play football.
+     </div>
+    </div>
+    <div class="rewrite-item">
+     <div class="original-sent">
+      Ghada went to school although she was ill.
+     </div><input class="rewrite-input" placeholder="Although she was ill, ..."> <button class="show-answer-btn" onclick="revealAnswer(this)">Show Answer 👁</button>
+     <div class="answer-reveal">
+      Although she was ill, Ghada went to school.
+     </div>
+    </div>
+   </div>
+  </div><!-- ===================== ACT 6 ===================== -->
+  <div id="act6" class="tab-panel">
+   <div class="sec-title">
+    <div class="icon">
+     6
+    </div> Activity 6 — Choose the Correct Conjunction
+   </div>
+   <div class="grammar-box" style="margin-bottom:16px;">
+    <div class="title-ar">
+     📌 القاعدة: الفرق بين أدوات الربط
+    </div>
+    <div class="body-ar"><strong>because</strong> = لأن &nbsp;→&nbsp; تُعطي <strong>السبب</strong><br>
+      مثال: I didn't go to school <strong>because</strong> I was ill. (السبب: كنت مريضاً)<br><br><strong>so</strong> = لذلك &nbsp;→&nbsp; تُعطي <strong>النتيجة</strong><br>
+      مثال: I was ill, <strong>so</strong> I didn't go to school. (النتيجة: لم أذهب)<br><br><strong>although</strong> = رغم أن &nbsp;→&nbsp; تُعطي <strong>تناقضاً مفاجئاً</strong><br>
+      مثال: I went to school <strong>although</strong> I was ill. (مفاجأة: ذهبت رغم المرض!)<br><br>
+      💡 السؤال الذهبي: هل الجملة تُعطي <em>سبباً</em>؟ أم <em>نتيجة</em>؟ أم <em>تناقضاً</em>؟
+    </div>
+   </div>
+   <div class="choose-wrap" id="choose-wrap"><!-- inserted by JS -->
+   </div>
+  </div><!-- ===================== QUIZ ===================== -->
+  <div id="quiz" class="tab-panel">
+   <div class="sec-title">
+    <div class="icon">
+     🏆
+    </div> Final Quiz — التقويم الختامي
+   </div>
+   <div class="quiz-wrap" id="quiz-questions"><!-- inserted by JS -->
+   </div><button id="submit-quiz" onclick="submitQuiz()">Submit Quiz 🎯</button>
+   <div class="quiz-result" id="quiz-result">
+    <div class="score" id="quiz-score"></div>
+    <div class="msg" id="quiz-msg"></div>
+    <div class="msg-ar" id="quiz-msg-ar"></div><button id="retry-quiz" onclick="retryQuiz()">🔁 Try Again</button>
+   </div>
+  </div>
+  <script>
+// ===== FONT SIZE CONTROL =====
+let fontSizeScale = 100;
+const MIN_SIZE = 80;
+const MAX_SIZE = 150;
+
+function increaseFont(){
+  if(fontSizeScale < MAX_SIZE){
+    fontSizeScale += 10;
+    applyFontSize();
+  }
+}
+
+function decreaseFont(){
+  if(fontSizeScale > MIN_SIZE){
+    fontSizeScale -= 10;
+    applyFontSize();
+  }
+}
+
+function applyFontSize(){
+  document.documentElement.style.fontSize = (fontSizeScale / 100) * 16 + 'px';
+  document.getElementById('font-size-display').textContent = fontSizeScale + '%';
+}
+
+// ===== TABS =====
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== ACT 1 =====
+function clearFeedback(id){ document.getElementById(id).className='feedback'; }
+
+function checkAnswer(inputId, fbId, correct){
+  const v = document.getElementById(inputId).value.trim().toLowerCase();
+  const fb = document.getElementById(fbId);
+  if(v === correct.toLowerCase()){
+    fb.className='feedback correct'; fb.textContent='✅ Correct! Well done!';
+  } else {
+    fb.className='feedback wrong'; fb.textContent='❌ Try again! Hint: it is a ' + correct;
+  }
+}
+
+function checkConjunctions(){
+  const v = document.getElementById('q2-input').value.trim().toLowerCase();
+  const accepted = ['so','because','however','but'];
+  const found = accepted.filter(w => v.includes(w));
+  const fb = document.getElementById('q2-fb');
+  if(found.length > 0){
+    fb.className='feedback correct';
+    fb.textContent='✅ Great! You mentioned: ' + found.join(', ');
+  } else {
+    fb.className='feedback wrong';
+    fb.textContent='❌ Think of: because, so, however, but';
+  }
+}
+
+// ===== ACT 2 — MATCH =====
+const colA = [
+  "Rania went to bed",
+  "He didn't wear a coat",
+  "I didn't have a drink",
+  "Faisal wants to play football",
+  "Ghada went to school"
+];
+const colB = [
+  { num:"3", text:"I was thirsty."  },
+  { num:"5", text:"she was ill."    },
+  { num:"4", text:"he hurt his leg."},
+  { num:"1", text:"she wasn't tired."},
+  { num:"2", text:"it was cold."    }
+];
+const correctMatch = ["1","2","3","4","5"];
+
+function buildMatch(){
+  const wrap = document.getElementById('match-wrap');
+  colA.forEach((a, i) => {
+    const row = document.createElement('div');
+    row.className = 'match-row';
+    row.innerHTML = `
+      <div class="match-part">${i+1}. ${a}</div>
+      <div style="font-size:13px;font-weight:700;color:var(--purple);">although</div>
+      <select class="match-select" id="match-sel-${i}">
+        <option value="">— choose —</option>
+        ${colB.map(b=>`<option value="${b.num}">${b.num}. ${b.text}</option>`).join('')}
+      </select>
+      <span class="match-feedback" id="mfb-${i}"></span>
+    `;
+    wrap.appendChild(row);
+  });
+}
+buildMatch();
+
+function checkMatches(){
+  let score=0;
+  colA.forEach((_,i)=>{
+    const val = document.getElementById(`match-sel-${i}`).value;
+    const fb  = document.getElementById(`mfb-${i}`);
+    if(val === correctMatch[i]){ fb.textContent='✅'; score++; }
+    else { fb.textContent = val ? '❌' : '⚠️'; }
+  });
+  const mfb = document.getElementById('match-fb');
+  if(score===5){ mfb.className='feedback correct'; mfb.textContent='🎉 Perfect! All 5 correct!'; }
+  else { mfb.className='feedback wrong'; mfb.textContent=`You got ${score}/5 correct. Try again!`; }
+}
+
+// ===== ACT 4 — WRITE =====
+const act4Answers = [
+  "Rania went to bed although she wasn't tired.",
+  "He didn't wear a coat although it was cold.",
+  "I didn't have a drink although I was thirsty.",
+  "Faisal wants to play football although he hurt his leg.",
+  "Ghada went to school although she was ill."
+];
+function buildAct4(){
+  const list = document.getElementById('act4-list');
+  act4Answers.forEach((ans, i) => {
+    const div = document.createElement('div');
+    div.className = 'rewrite-item';
+    div.innerHTML = `
+      <div class="original-sent">Sentence ${i+1}</div>
+      <input class="rewrite-input" id="act4-${i}" placeholder="Write the full sentence...">
+      <button class="show-answer-btn" onclick="revealAnswer(this)">Show Answer 👁</button>
+      <div class="answer-reveal">${ans}</div>
+    `;
+    list.appendChild(div);
+  });
+}
+buildAct4();
+
+function revealAnswer(btn){
+  const box = btn.nextElementSibling;
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+  btn.textContent = box.style.display==='block' ? 'Hide 🙈' : 'Show Answer 👁';
+}
+
+// ===== ACT 6 — CHOOSE =====
+const chooseData = [
+  { sent:"I didn't phone you yesterday ___ I was ill.", opts:["because","although"], answer:"because", ar:"لأن 'because' تُعطي السبب" },
+  { sent:"I can't receive emails ___ my computer is working.", opts:["because","although"], answer:"although", ar:"رغم أن الكمبيوتر يعمل — تناقض!" },
+  { sent:"I want to get a new phone ___ I can use the Internet outside.", opts:["because","so"], answer:"so", ar:"إذن / لذلك — نتيجة" },
+  { sent:"The mobile phone doesn't work here ___ we are outside of the city.", opts:["because","so","although"], answer:"because", ar:"لأن 'because' تُعطي السبب" },
+  { sent:"This phone works fine here ___ it is very old.", opts:["because","so","although"], answer:"although", ar:"رغم أنه قديم — تناقض مفاجئ!" }
+];
+
+function buildChoose(){
+  const wrap = document.getElementById('choose-wrap');
+  chooseData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'choose-row';
+    div.innerHTML = `
+      <div class="choose-sentence">${i+1}. ${item.sent}</div>
+      <div class="choose-options" id="co-${i}">
+        ${item.opts.map(o=>`<button class="choice-btn" onclick="pickChoice(this,${i},'${o}')">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="co-fb-${i}" style="margin-top:8px;direction:rtl;"></div>
+    `;
+    wrap.appendChild(div);
+  });
+}
+buildChoose();
+
+function pickChoice(btn, i, val){
+  const row = document.getElementById(`co-${i}`);
+  if(row.querySelector('.correct,.wrong')) return;
+  const correct = chooseData[i].answer;
+  const fb = document.getElementById(`co-fb-${i}`);
+  if(val === correct){
+    btn.classList.add('correct');
+    fb.className='feedback correct'; fb.textContent='✅ Correct! ' + chooseData[i].ar;
+  } else {
+    btn.classList.add('wrong');
+    row.querySelectorAll('.choice-btn').forEach(b=>{
+      if(b.textContent===correct) b.classList.add('reveal');
+    });
+    fb.className='feedback wrong'; fb.textContent='❌ ' + chooseData[i].ar;
+  }
+}
+
+// ===== QUIZ =====
+const quizData = [
+  { q:"What part of speech is 'although'?", opts:["verb","conjunction","noun","adjective"], answer:1 },
+  { q:"Choose the correct sentence:", opts:["Although it was raining so we played.","Although it was raining, we played.","We played although, it was raining.","Although it was raining but we played."], answer:1 },
+  { q:"I didn't phone you ___ I was ill.", opts:["although","so","because","however"], answer:2 },
+  { q:"I can't receive emails ___ my computer is working.", opts:["because","so","but","although"], answer:3 },
+  { q:"Which conjunction gives a REASON?", opts:["although","however","because","so"], answer:2 },
+  { q:"Which conjunction gives a RESULT?", opts:["but","so","although","because"], answer:1 },
+  { q:"Rewrite: 'He didn't wear a coat although it was cold.' — start with Although:", opts:["Although he didn't wear a coat, it was cold.","Although it was cold, he didn't wear a coat.","It was cold, he didn't wear although a coat.","He didn't wear a coat, although."], answer:1 },
+  { q:"'Although she was ill, Ghada went to school.' — Which is surprising?", opts:["She was ill","She went to school","Both","Neither"], answer:1 }
+];
+
+let quizAnswers = new Array(quizData.length).fill(null);
+
+function buildQuiz(){
+  const wrap = document.getElementById('quiz-questions');
+  quizData.forEach((item, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.innerHTML = `
+      <div class="quiz-q">Q${qi+1}. ${item.q}</div>
+      <div class="quiz-opts">
+        ${item.opts.map((o,oi)=>`<button class="quiz-opt" id="qo-${qi}-${oi}" onclick="selectOpt(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+buildQuiz();
+
+function selectOpt(qi, oi){
+  if(quizAnswers[qi] !== null && document.getElementById(`qo-${qi}-${quizAnswers[qi]}`).classList.contains('correct')) return;
+  const prev = quizAnswers[qi];
+  if(prev !== null){
+    const prevBtn = document.getElementById(`qo-${qi}-${prev}`);
+    if(!prevBtn.classList.contains('correct') && !prevBtn.classList.contains('wrong'))
+      prevBtn.style.background = '';
+  }
+  quizAnswers[qi] = oi;
+  document.querySelectorAll(`[id^="qo-${qi}-"]`).forEach(b => b.style.background='');
+  document.getElementById(`qo-${qi}-${oi}`).style.background='var(--purple-pale)';
+}
+
+function submitQuiz(){
+  let score = 0;
+  quizData.forEach((item, qi) => {
+    const sel = quizAnswers[qi];
+    for(let oi=0; oi<item.opts.length; oi++){
+      const btn = document.getElementById(`qo-${qi}-${oi}`);
+      btn.classList.add('locked');
+      btn.style.background='';
+      if(oi === item.answer){ btn.classList.add('correct'); }
+      else if(oi === sel && oi !== item.answer){ btn.classList.add('wrong'); }
+    }
+    if(sel === item.answer) score++;
+  });
+
+  const result = document.getElementById('quiz-result');
+  const pct = Math.round(score/quizData.length*100);
+  document.getElementById('quiz-score').textContent = `${score}/${quizData.length}`;
+
+  let msg, msgAr;
+  if(pct===100){ msg="🌟 Perfect! Excellent work!"; msgAr="ممتاز! أحسنت يا نجم!"; launchConfetti(); }
+  else if(pct>=75){ msg="👏 Well done! Keep it up!"; msgAr="أداء جيد جداً! استمر!"; }
+  else if(pct>=50){ msg="💪 Good try! Review and retry."; msgAr="محاولة جيدة، راجع الدرس وأعد!"; }
+  else { msg="📖 Study more and try again!"; msgAr="راجع القاعدة جيداً وحاول مجدداً!"; }
+
+  document.getElementById('quiz-msg').textContent = msg;
+  document.getElementById('quiz-msg-ar').textContent = msgAr;
+  result.style.display = 'block';
+  document.getElementById('submit-quiz').style.display = 'none';
+  result.scrollIntoView({behavior:'smooth'});
+}
+
+function retryQuiz(){
+  quizAnswers = new Array(quizData.length).fill(null);
+  document.getElementById('quiz-questions').innerHTML='';
+  buildQuiz();
+  document.getElementById('quiz-result').style.display='none';
+  document.getElementById('submit-quiz').style.display='block';
+}
+
+// ===== CONFETTI =====
+function launchConfetti(){
+  const colors=['#6b3fa0','#f5a623','#27ae60','#e74c3c','#2980b9','#fff'];
+  for(let i=0;i<80;i++){
+    const c=document.createElement('div');
+    c.className='confetti-piece';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDelay=Math.random()*2+'s';
+    c.style.animationDuration=(2+Math.random()*2)+'s';
+    c.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc4c1b72296e209',t:'MTc3ODg3NTUxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
