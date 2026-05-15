@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hangman Game</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    * { font-family: 'Fredoka', sans-serif; }
+    .mono { font-family: 'Space Mono', monospace; }
+    .letter-btn { transition: all 0.15s ease; }
+    .letter-btn:hover:not(:disabled) { transform: translateY(-2px); }
+    .letter-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+    .word-letter { animation: popIn 0.3s ease forwards; }
+    @keyframes popIn { from { transform: scale(0); opacity:0; } to { transform: scale(1); opacity:1; } }
+    @keyframes swing { 0%,100%{ transform: rotate(0deg); } 50%{ transform: rotate(3deg); } }
+    .gallows-swing { animation: swing 2s ease-in-out infinite; transform-origin: top center; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .fade-in { animation: fadeIn 0.4s ease forwards; }
+    .confetti-piece { position: fixed; width: 10px; height: 10px; border-radius: 2px; animation: confettiFall 2.5s ease-out forwards; pointer-events: none; z-index: 50; }
+    @keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg); opacity:1; } 100% { transform: translateY(100%) rotate(720deg); opacity:0; } }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="h-full w-full overflow-auto" style="background: #1a1a2e;"><!-- Header -->
+   <div class="text-center pt-6 pb-2 px-4">
+    <h1 id="gameTitle" class="text-3xl md:text-4xl font-bold" style="color: #e94560;">Hangman Challenge</h1>
+    <p class="mt-1 text-lg" style="color: #eee8a9;"><span id="teacherLabel">By T. Wad Refae</span> <span class="text-xl">👩‍🏫</span></p>
+    <div id="difficultySelector" class="flex justify-center gap-3 mt-4 mb-2">
+     <button id="easyBtn" onclick="setDifficulty('easy')" class="px-5 py-2 rounded-full font-semibold text-sm transition-all" style="background:#16c79a; color:#1a1a2e;">🟢 Easy</button> <button id="mediumBtn" onclick="setDifficulty('medium')" class="px-5 py-2 rounded-full font-semibold text-sm transition-all" style="background:#0f3460; color:#eee8a9; border:2px solid #eee8a9;">🟡 Medium</button> <button id="hardBtn" onclick="setDifficulty('hard')" class="px-5 py-2 rounded-full font-semibold text-sm transition-all" style="background:#0f3460; color:#eee8a9; border:2px solid #eee8a9;">🔴 Hard</button>
+    </div>
+   </div><!-- Game Area -->
+   <div class="max-w-2xl mx-auto px-4 pb-8"><!-- Category + Score -->
+    <div class="flex justify-between items-center mb-3 px-2"><span id="categoryBadge" class="text-sm font-medium px-3 py-1 rounded-full" style="background:#0f3460; color:#e94560;"></span> <span id="scoreDisplay" class="text-sm font-medium" style="color:#eee8a9;">⭐ 0</span>
+    </div><!-- Hangman SVG -->
+    <div class="flex justify-center mb-4">
+     <svg id="hangmanSvg" viewbox="0 0 200 180" width="180" height="160" style="filter: drop-shadow(0 0 8px rgba(233,69,96,0.3));"><!-- Base --> <line x1="20" y1="170" x2="180" y2="170" stroke="#e94560" stroke-width="3" stroke-linecap="round" /> <!-- Pole --> <line x1="50" y1="170" x2="50" y2="20" stroke="#e94560" stroke-width="3" stroke-linecap="round" /> <!-- Top --> <line x1="50" y1="20" x2="120" y2="20" stroke="#e94560" stroke-width="3" stroke-linecap="round" /> <!-- Rope --> <line x1="120" y1="20" x2="120" y2="40" stroke="#eee8a9" stroke-width="2" stroke-linecap="round" /> <!-- Body parts (hidden initially) --> <g id="hangBody" class="gallows-swing">
+       <circle id="hp1" cx="120" cy="52" r="12" stroke="#16c79a" stroke-width="2.5" fill="none" style="display:none" />
+       <line id="hp2" x1="120" y1="64" x2="120" y2="105" stroke="#16c79a" stroke-width="2.5" stroke-linecap="round" style="display:none" />
+       <line id="hp3" x1="120" y1="75" x2="100" y2="90" stroke="#16c79a" stroke-width="2.5" stroke-linecap="round" style="display:none" />
+       <line id="hp4" x1="120" y1="75" x2="140" y2="90" stroke="#16c79a" stroke-width="2.5" stroke-linecap="round" style="display:none" />
+       <line id="hp5" x1="120" y1="105" x2="102" y2="130" stroke="#16c79a" stroke-width="2.5" stroke-linecap="round" style="display:none" />
+       <line id="hp6" x1="120" y1="105" x2="138" y2="130" stroke="#16c79a" stroke-width="2.5" stroke-linecap="round" style="display:none" /> <!-- Face (shown on lose) -->
+       <text id="hp_face" x="120" y="56" text-anchor="middle" font-size="10" fill="#e94560" style="display:none">
+        ✕ ✕
+       </text>
+      </g>
+     </svg>
+    </div><!-- Tries left -->
+    <div class="text-center mb-4"><span id="triesLeft" class="text-sm mono" style="color:#eee8a9;">❤️❤️❤️❤️❤️❤️</span>
+    </div><!-- Word Display -->
+    <div id="wordDisplay" class="flex justify-center flex-wrap gap-2 mb-6 min-h-[48px]"></div><!-- Hint -->
+    <div id="hintArea" class="text-center mb-5"><button id="hintBtn" onclick="useHint()" class="text-sm px-4 py-1.5 rounded-full font-medium transition-all hover:scale-105" style="background:#0f3460; color:#eee8a9; border:1px solid #e94560;"> 💡 Hint </button>
+     <p id="hintText" class="text-sm mt-2 hidden" style="color:#16c79a;"></p>
+    </div><!-- Keyboard -->
+    <div id="keyboard" class="flex flex-wrap justify-center gap-1.5 max-w-md mx-auto mb-5"></div><!-- Result + New Game -->
+    <div id="resultArea" class="text-center hidden fade-in">
+     <p id="resultMsg" class="text-2xl font-bold mb-2"></p>
+     <p id="resultWord" class="text-sm mb-3 mono" style="color:#eee8a9;"></p><button onclick="newGame()" class="px-6 py-2.5 rounded-full font-semibold text-white transition-all hover:scale-105" style="background:#e94560;"> <i data-lucide="refresh-cw" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> New Word </button>
+    </div>
+   </div>
+  </div>
+  <script>
+// Sound Effects using Web Audio API
+function playSound(type) {
+  try {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    if (type === 'correct') {
+      // Ding sound for correct guess
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.frequency.value = 800;
+      gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      osc.start(audioContext.currentTime);
+      osc.stop(audioContext.currentTime + 0.2);
+    } else if (type === 'wrong') {
+      // Buzz sound for wrong guess
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.frequency.value = 300;
+      gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      osc.start(audioContext.currentTime);
+      osc.stop(audioContext.currentTime + 0.3);
+    } else if (type === 'win') {
+      // Victory fanfare
+      const notes = [523, 659, 784, 1047]; // C, E, G, C high
+      notes.forEach((freq, i) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.frequency.value = freq;
+        const time = audioContext.currentTime + (i * 0.1);
+        gain.gain.setValueAtTime(0.2, time);
+        gain.gain.exponentialRampToValueAtTime(0.01, time + 0.2);
+        osc.start(time);
+        osc.stop(time + 0.2);
+      });
+    }
+  } catch (e) {
+    console.log('Audio not available');
+  }
+}
+
+const WORDS_EASY = [
+  { word: "CAT", category: "Animals", hint: "A small furry pet that says meow" },
+  { word: "DOG", category: "Animals", hint: "A loyal pet that barks" },
+  { word: "APPLE", category: "Food", hint: "Red fruit that keeps doctors away" },
+  { word: "TREE", category: "Nature", hint: "Has leaves and branches" },
+  { word: "STAR", category: "Space", hint: "Shines in the night sky" },
+  { word: "SUN", category: "Nature", hint: "Bright and warm, rises in morning" },
+  { word: "MOON", category: "Space", hint: "Shines at night" },
+  { word: "FISH", category: "Animals", hint: "Lives in water" },
+  { word: "BIRD", category: "Animals", hint: "Has wings and feathers" },
+  { word: "BOOK", category: "School", hint: "You read this" },
+];
+
+const WORDS_MEDIUM = [
+  { word: "ELEPHANT", category: "Animals", hint: "Largest land animal with a trunk" },
+  { word: "BUTTERFLY", category: "Animals", hint: "Colorful insect with wings" },
+  { word: "VOLCANO", category: "Nature", hint: "Mountain that erupts with lava" },
+  { word: "RAINBOW", category: "Nature", hint: "Colorful arc in the sky after rain" },
+  { word: "LIBRARY", category: "Places", hint: "A place full of books" },
+  { word: "PENGUIN", category: "Animals", hint: "A bird that cannot fly but swims" },
+  { word: "GUITAR", category: "Music", hint: "A stringed instrument you strum" },
+  { word: "DIAMOND", category: "Science", hint: "The hardest natural material" },
+  { word: "GLACIER", category: "Nature", hint: "A slow-moving river of ice" },
+  { word: "DOLPHIN", category: "Animals", hint: "Intelligent ocean mammal" },
+];
+
+const WORDS_HARD = [
+  { word: "TELESCOPE", category: "Science", hint: "Used to see distant stars" },
+  { word: "SYMPHONY", category: "Music", hint: "A long musical composition for orchestra" },
+  { word: "COMBUSTION", category: "Science", hint: "Chemical reaction involving burning" },
+  { word: "ARCHAEOLOGY", category: "History", hint: "Study of ancient civilizations" },
+  { word: "PHENOMENAL", category: "Adjective", hint: "Remarkable or extraordinary" },
+  { word: "PERSEVERANCE", category: "Virtue", hint: "Continuing despite difficulty" },
+  { word: "SOPHISTICATED", category: "Adjective", hint: "Complex and refined" },
+  { word: "ATMOSPHERE", category: "Science", hint: "Layer of gases around Earth" },
+  { word: "DESTINATION", category: "Travel", hint: "Where you're heading" },
+  { word: "MAGNIFICENT", category: "Adjective", hint: "Extremely beautiful or impressive" },
+];
+
+let currentDifficulty = 'medium';
+let currentWord, guessedLetters, wrongCount, score = 0, hintUsed, gameOver;
+const MAX_WRONG = 6;
+
+const defaultConfig = {
+  teacher_name: "T. Wad Refae",
+  game_title: "Hangman Challenge",
+  background_color: "#1a1a2e",
+  accent_color: "#e94560",
+  success_color: "#16c79a",
+  text_color: "#eee8a9",
+  surface_color: "#0f3460",
+  font_family: "Fredoka",
+  font_size: 16
+};
+
+function applyConfig(config) {
+  const bg = config.background_color || defaultConfig.background_color;
+  const accent = config.accent_color || defaultConfig.accent_color;
+  const success = config.success_color || defaultConfig.success_color;
+  const text = config.text_color || defaultConfig.text_color;
+  const surface = config.surface_color || defaultConfig.surface_color;
+  const font = config.font_family || defaultConfig.font_family;
+  const fs = config.font_size || defaultConfig.font_size;
+
+  document.getElementById('app').style.background = bg;
+  const title = document.getElementById('gameTitle');
+  title.textContent = config.game_title || defaultConfig.game_title;
+  title.style.color = accent;
+  title.style.fontFamily = `${font}, Fredoka, sans-serif`;
+  title.style.fontSize = `${fs * 2}px`;
+
+  const tl = document.getElementById('teacherLabel');
+  tl.textContent = `By ${config.teacher_name || defaultConfig.teacher_name}`;
+  tl.style.color = text;
+  tl.style.fontFamily = `${font}, Fredoka, sans-serif`;
+  tl.style.fontSize = `${fs}px`;
+
+  document.getElementById('triesLeft').style.color = text;
+  document.getElementById('scoreDisplay').style.color = text;
+
+  const cb = document.getElementById('categoryBadge');
+  cb.style.background = surface;
+  cb.style.color = accent;
+
+  const hb = document.getElementById('hintBtn');
+  if (hb) { hb.style.background = surface; hb.style.color = text; hb.style.borderColor = accent; }
+
+  document.getElementById('hintText').style.color = success;
+
+  // Update keyboard buttons
+  document.querySelectorAll('.letter-btn').forEach(btn => {
+    if (!btn.disabled) {
+      btn.style.background = surface;
+      btn.style.color = text;
+    }
+  });
+
+  // Update word letters
+  document.querySelectorAll('.wl-box').forEach(el => {
+    el.style.borderColor = accent;
+    el.style.color = text;
+    el.style.fontFamily = `Space Mono, monospace`;
+  });
+
+  // SVG colors
+  document.querySelectorAll('#hangmanSvg line:not(#hp2):not(#hp3):not(#hp4):not(#hp5):not(#hp6)').forEach(l => {
+    if (!l.id || !l.id.startsWith('hp')) l.setAttribute('stroke', accent);
+  });
+  ['hp1','hp2','hp3','hp4','hp5','hp6'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute('stroke', success);
+  });
+}
+
+function buildKeyboard() {
+  const kb = document.getElementById('keyboard');
+  kb.innerHTML = '';
+  const config = window.elementSdk?.config || defaultConfig;
+  const surface = config.surface_color || defaultConfig.surface_color;
+  const text = config.text_color || defaultConfig.text_color;
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l => {
+    const btn = document.createElement('button');
+    btn.className = 'letter-btn w-9 h-9 md:w-10 md:h-10 rounded-lg font-bold text-sm mono';
+    btn.style.background = surface;
+    btn.style.color = text;
+    btn.textContent = l;
+    btn.onclick = () => guess(l, btn);
+    kb.appendChild(btn);
+  });
+}
+
+function renderWord() {
+  const wd = document.getElementById('wordDisplay');
+  const config = window.elementSdk?.config || defaultConfig;
+  const accent = config.accent_color || defaultConfig.accent_color;
+  const text = config.text_color || defaultConfig.text_color;
+  wd.innerHTML = '';
+  currentWord.word.split('').forEach((ch, i) => {
+    const div = document.createElement('div');
+    div.className = 'wl-box w-9 h-11 md:w-11 md:h-13 flex items-center justify-center text-xl md:text-2xl font-bold mono rounded-md';
+    div.style.borderBottom = `3px solid ${accent}`;
+    div.style.color = text;
+    if (guessedLetters.has(ch)) {
+      div.textContent = ch;
+      div.classList.add('word-letter');
+      div.style.animationDelay = `${i * 0.05}s`;
+    }
+    wd.appendChild(div);
+  });
+}
+
+function renderTries() {
+  const remaining = MAX_WRONG - wrongCount;
+  document.getElementById('triesLeft').innerHTML = '❤️'.repeat(remaining) + '🖤'.repeat(wrongCount);
+}
+
+function showBodyPart(n) {
+  const el = document.getElementById('hp' + n);
+  if (el) el.style.display = '';
+}
+
+function guess(letter, btn) {
+  if (gameOver || guessedLetters.has(letter)) return;
+  guessedLetters.add(letter);
+  btn.disabled = true;
+
+  const config = window.elementSdk?.config || defaultConfig;
+  const accent = config.accent_color || defaultConfig.accent_color;
+  const success = config.success_color || defaultConfig.success_color;
+
+  if (currentWord.word.includes(letter)) {
+    playSound('correct');
+    btn.style.background = success;
+    btn.style.color = '#fff';
+    renderWord();
+    if (currentWord.word.split('').every(c => guessedLetters.has(c))) endGame(true);
+  } else {
+    playSound('wrong');
+    wrongCount++;
+    btn.style.background = accent;
+    btn.style.color = '#fff';
+    showBodyPart(wrongCount);
+    renderTries();
+    if (wrongCount >= MAX_WRONG) endGame(false);
+  }
+}
+
+function useHint() {
+  if (hintUsed || gameOver) return;
+  hintUsed = true;
+  const ht = document.getElementById('hintText');
+  ht.textContent = '💡 ' + currentWord.hint;
+  ht.classList.remove('hidden');
+  document.getElementById('hintBtn').disabled = true;
+  document.getElementById('hintBtn').style.opacity = '0.4';
+}
+
+function spawnConfetti() {
+  const colors = ['#e94560','#16c79a','#eee8a9','#0f3460','#fff'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.top = '-10px';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDelay = Math.random() * 0.8 + 's';
+    c.style.animationDuration = (2 + Math.random()) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3500);
+  }
+}
+
+function endGame(won) {
+  gameOver = true;
+  const ra = document.getElementById('resultArea');
+  const rm = document.getElementById('resultMsg');
+  const rw = document.getElementById('resultWord');
+  const config = window.elementSdk?.config || defaultConfig;
+
+  if (won) {
+    score += hintUsed ? 5 : 10;
+    document.getElementById('scoreDisplay').textContent = '⭐ ' + score;
+    rm.textContent = '🎉 Excellent!';
+    rm.style.color = config.success_color || defaultConfig.success_color;
+    playSound('win');
+    spawnConfetti();
+  } else {
+    document.getElementById('hp_face').style.display = '';
+    rm.textContent = '😢 Game Over!';
+    rm.style.color = config.accent_color || defaultConfig.accent_color;
+    rw.textContent = `The word was: ${currentWord.word}`;
+  }
+  ra.classList.remove('hidden');
+  // Disable remaining keys
+  document.querySelectorAll('.letter-btn:not(:disabled)').forEach(b => b.disabled = true);
+  lucide.createIcons();
+}
+
+function newGame() {
+  const wordLists = {
+    easy: WORDS_EASY,
+    medium: WORDS_MEDIUM,
+    hard: WORDS_HARD
+  };
+  const words = wordLists[currentDifficulty] || WORDS_MEDIUM;
+  currentWord = words[Math.floor(Math.random() * words.length)];
+  guessedLetters = new Set();
+  wrongCount = 0;
+  hintUsed = false;
+  gameOver = false;
+
+  // Reset body parts
+  for (let i = 1; i <= 6; i++) document.getElementById('hp' + i).style.display = 'none';
+  document.getElementById('hp_face').style.display = 'none';
+
+  document.getElementById('categoryBadge').textContent = '📂 ' + currentWord.category;
+  document.getElementById('resultArea').classList.add('hidden');
+  document.getElementById('hintText').classList.add('hidden');
+  const hb = document.getElementById('hintBtn');
+  hb.disabled = false;
+  hb.style.opacity = '1';
+
+  buildKeyboard();
+  renderWord();
+  renderTries();
+  applyConfig(window.elementSdk?.config || defaultConfig);
+}
+
+function setDifficulty(level) {
+  currentDifficulty = level;
+  
+  // Update button styles
+  ['easy', 'medium', 'hard'].forEach(l => {
+    const btn = document.getElementById(l + 'Btn');
+    if (l === level) {
+      btn.style.background = (level === 'easy' ? '#16c79a' : (level === 'medium' ? '#e94560' : '#e94560'));
+      btn.style.color = '#fff';
+      btn.style.border = 'none';
+    } else {
+      btn.style.background = '#0f3460';
+      btn.style.color = '#eee8a9';
+      btn.style.border = '2px solid #eee8a9';
+    }
+  });
+  
+  score = 0;
+  document.getElementById('scoreDisplay').textContent = '⭐ 0';
+  newGame();
+}
+
+// Init
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (config) => applyConfig(config),
+  mapToCapabilities: (config) => ({
+    recolorables: [
+      { get: () => config.background_color || defaultConfig.background_color, set: v => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+      { get: () => config.surface_color || defaultConfig.surface_color, set: v => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+      { get: () => config.text_color || defaultConfig.text_color, set: v => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+      { get: () => config.accent_color || defaultConfig.accent_color, set: v => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } },
+      { get: () => config.success_color || defaultConfig.success_color, set: v => { config.success_color = v; window.elementSdk.setConfig({ success_color: v }); } },
+    ],
+    borderables: [],
+    fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: v => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+    fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: v => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } },
+  }),
+  mapToEditPanelValues: (config) => new Map([
+    ["teacher_name", config.teacher_name || defaultConfig.teacher_name],
+    ["game_title", config.game_title || defaultConfig.game_title],
+  ])
+});
+
+newGame();
+lucide.createIcons();
+
+// Set initial difficulty button state
+document.getElementById('mediumBtn').style.background = '#e94560';
+document.getElementById('mediumBtn').style.color = '#fff';
+document.getElementById('mediumBtn').style.border = 'none';
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc58e4ae4d7e163',t:'MTc3ODg4Mzg5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
