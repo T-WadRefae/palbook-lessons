@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مغامرة الحروف السحرية 🔮</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0D1B2A;
+  --bg2:#1A2D45;
+  --bg3:#243B55;
+  --tq:#00E5CC;--tq2:#00B8A5;
+  --sky:#4FC3F7;
+  --yel:#FFD740;--yel2:#FFAB00;
+  --grn:#69F0AE;--grn2:#00C853;
+  --pur:#CE93D8;--pur2:#9C27B0;
+  --red:#FF5252;
+  --wht:#F0FAFA;
+  --txt:#E8F4F8;
+  --txt2:#90CAD8;
+  --gold:#FFD700;
+  --r:16px;--rl:22px;
+}
+body{background:var(--bg);color:var(--txt);font-family:'Cairo',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* ===== STARS BG ===== */
+.stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle 3s infinite;}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(1);}50%{opacity:1;transform:scale(1.3);}}
+
+/* ===== MAIN WRAPPER ===== */
+.game{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:1rem 1rem 3rem;}
+
+/* ===== HEADER ===== */
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50px;margin-bottom:1.25rem;backdrop-filter:blur(4px);}
+.lives{display:flex;gap:4px;font-size:20px;}
+.score-pill{background:rgba(255,215,0,.15);border:1.5px solid var(--gold);border-radius:50px;padding:5px 14px;font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;color:var(--gold);}
+.level-pill{background:rgba(0,229,204,.12);border:1.5px solid var(--tq);border-radius:50px;padding:5px 14px;font-size:13px;font-weight:700;color:var(--tq);}
+
+/* ===== SCREENS ===== */
+.screen{display:none;animation:fadeIn .4s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== INTRO SCREEN ===== */
+.hero-box{text-align:center;padding:2rem 1rem;}
+.hero-emoji{font-size:72px;margin-bottom:.5rem;display:block;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.hero-title{font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;color:var(--yel);margin-bottom:.5rem;line-height:1.3;}
+.hero-sub{font-size:14px;color:var(--txt2);margin-bottom:1.5rem;line-height:1.7;}
+.story-card{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:var(--rl);padding:1.25rem;text-align:right;margin-bottom:1.5rem;}
+.story-card p{font-size:14px;line-height:1.9;color:var(--txt);}
+.story-card .speaker{color:var(--tq);font-weight:700;}
+.story-card .guard{color:var(--pur);font-weight:700;}
+.big-btn{display:block;width:100%;padding:15px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--tq),var(--sky));color:#0D1B2A;font-family:'Cairo',sans-serif;font-size:17px;font-weight:900;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(0,229,204,.35);}
+.big-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,229,204,.45);}
+
+/* ===== LEVEL INTRO ===== */
+.level-intro{text-align:center;padding:1.5rem 0;}
+.level-badge{display:inline-block;padding:6px 20px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;margin-bottom:.75rem;letter-spacing:1px;}
+.lb-green{background:rgba(105,240,174,.15);border:2px solid var(--grn);color:var(--grn);}
+.lb-blue{background:rgba(79,195,247,.15);border:2px solid var(--sky);color:var(--sky);}
+.lb-purple{background:rgba(206,147,216,.15);border:2px solid var(--pur);color:var(--pur);}
+.level-title{font-family:'Nunito',sans-serif;font-size:24px;font-weight:900;margin-bottom:.5rem;}
+.level-desc{font-size:13px;color:var(--txt2);line-height:1.8;margin-bottom:1.25rem;}
+.dialog-box{background:rgba(255,255,255,.05);border-right:4px solid var(--tq);border-radius:0 var(--r) var(--r) 0;padding:1rem 1.25rem;margin-bottom:1.25rem;text-align:right;}
+.dialog-box p{font-size:14px;line-height:1.9;}
+.dialog-box .name{font-weight:700;color:var(--tq);display:block;margin-bottom:3px;font-size:13px;}
+.dialog-box.guard-dialog{border-right-color:var(--pur);}
+.dialog-box.guard-dialog .name{color:var(--pur);}
+.dialog-box.surprise{border-right-color:var(--yel);}
+.dialog-box.surprise .name{color:var(--yel);}
+
+/* ===== WORD DISCOVERY ===== */
+.discover-title{font-size:14px;font-weight:700;color:var(--txt2);text-align:center;margin-bottom:.75rem;}
+.words-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.25rem;}
+.word-gem{background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.1);border-radius:var(--r);padding:14px 10px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.word-gem::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,229,204,.15),transparent);opacity:0;transition:.25s;}
+.word-gem:hover::before,.word-gem.revealed::before{opacity:1;}
+.word-gem.revealed{border-color:var(--tq);box-shadow:0 0 16px rgba(0,229,204,.25);}
+.word-gem.revealed-blue{border-color:var(--sky);box-shadow:0 0 16px rgba(79,195,247,.25);}
+.word-gem.revealed-blue::before{background:linear-gradient(135deg,rgba(79,195,247,.15),transparent);opacity:1;}
+.word-gem.revealed-pur{border-color:var(--pur);box-shadow:0 0 16px rgba(206,147,216,.25);}
+.word-gem.revealed-pur::before{background:linear-gradient(135deg,rgba(206,147,216,.15),transparent);opacity:1;}
+.gem-icon{font-size:22px;display:block;margin-bottom:4px;}
+.gem-word{font-family:'Nunito',sans-serif;font-size:19px;font-weight:900;direction:ltr;display:block;color:var(--wht);}
+.gem-word .sil{color:var(--red);text-decoration:line-through;text-decoration-color:var(--red);}
+.gem-ar{font-size:11px;color:var(--txt2);display:block;margin-top:3px;}
+.gem-ipa{font-size:10px;color:var(--tq);display:block;direction:ltr;font-weight:700;}
+.gem-hint{font-size:10px;color:var(--yel);margin-top:4px;display:none;}
+.word-gem.revealed .gem-hint{display:block;}
+.gem-sound{font-size:10px;color:var(--grn);margin-top:2px;display:none;font-weight:700;}
+.word-gem.revealed .gem-sound,.word-gem.revealed-blue .gem-sound,.word-gem.revealed-pur .gem-sound{display:block;}
+
+/* ===== QUIZ ===== */
+.quiz-area{margin-bottom:1rem;}
+.q-bubble{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:1.25rem;margin-bottom:.75rem;}
+.q-num{font-size:11px;color:var(--txt2);margin-bottom:.5rem;font-weight:700;}
+.q-text{font-size:15px;font-weight:700;color:var(--txt);margin-bottom:.1rem;text-align:center;}
+.q-word-big{font-family:'Nunito',sans-serif;font-size:36px;font-weight:900;text-align:center;direction:ltr;color:var(--yel);margin:.5rem 0 .75rem;cursor:pointer;transition:transform .15s;display:block;}
+.q-word-big:hover{transform:scale(1.08);}
+.q-options{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.q-opt{padding:9px 22px;border-radius:50px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;color:var(--txt);transition:all .15s;direction:ltr;}
+.q-opt:hover{border-color:var(--tq);background:rgba(0,229,204,.1);color:var(--tq);}
+.q-opt.ok{background:rgba(105,240,174,.15);border-color:var(--grn);color:var(--grn);}
+.q-opt.no{background:rgba(255,82,82,.12);border-color:var(--red);color:var(--red);}
+.q-fb{text-align:center;font-size:13px;font-weight:700;min-height:22px;margin-top:.5rem;}
+.q-fb.ok{color:var(--grn);}
+.q-fb.no{color:var(--red);}
+
+/* ===== PROGRESS ===== */
+.progress-bar{background:rgba(255,255,255,.08);border-radius:50px;height:8px;margin:.75rem 0;overflow:hidden;}
+.progress-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--tq),var(--sky));transition:width .4s ease;}
+
+/* ===== NEXT BTN ===== */
+.next-btn{display:block;width:100%;padding:13px;border-radius:50px;border:none;font-family:'Cairo',sans-serif;font-size:16px;font-weight:900;cursor:pointer;transition:all .2s;margin-top:.75rem;}
+.next-green{background:linear-gradient(135deg,var(--grn2),var(--grn));color:#0D1B2A;box-shadow:0 5px 18px rgba(0,200,83,.3);}
+.next-blue{background:linear-gradient(135deg,var(--sky2,#0288D1),var(--sky));color:#fff;box-shadow:0 5px 18px rgba(79,195,247,.3);}
+.next-purple{background:linear-gradient(135deg,var(--pur2),var(--pur));color:#fff;box-shadow:0 5px 18px rgba(156,39,176,.3);}
+.next-btn:hover{transform:translateY(-2px);}
+
+/* ===== WIN SCREEN ===== */
+.win-box{text-align:center;padding:1.5rem 0;}
+.trophy{font-size:80px;display:block;animation:bounce .8s ease infinite alternate;}
+@keyframes bounce{from{transform:scale(1);}to{transform:scale(1.12);}}
+.win-title{font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:var(--gold);margin:.75rem 0 .25rem;}
+.win-sub{font-size:14px;color:var(--txt2);margin-bottom:1.25rem;line-height:1.7;}
+.final-score{background:rgba(255,215,0,.12);border:2px solid var(--gold);border-radius:var(--rl);padding:1rem;margin-bottom:1.25rem;}
+.final-score .num{font-family:'Nunito',sans-serif;font-size:48px;font-weight:900;color:var(--gold);display:block;}
+.final-score .lbl{font-size:13px;color:var(--txt2);}
+.rules-summary{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:1.25rem;margin-bottom:1.25rem;text-align:right;}
+.rules-summary h3{font-size:15px;font-weight:700;color:var(--tq);margin-bottom:.75rem;text-align:center;}
+.rule-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:.6rem;font-size:13px;line-height:1.6;}
+.rule-row .icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.star-row{display:flex;justify-content:center;gap:4px;font-size:28px;margin-bottom:1rem;}
+
+/* ===== CONFETTI DOTS ===== */
+.confetti-piece{position:fixed;border-radius:3px;animation:confettiFall 2.5s ease-in forwards;pointer-events:none;z-index:999;}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+
+/* ===== UTILS ===== */
+.shine{animation:shine 2s ease-in-out infinite;}
+@keyframes shine{0%,100%{text-shadow:0 0 8px rgba(255,215,0,.3);}50%{text-shadow:0 0 20px rgba(255,215,0,.8);}}
+.tap-hint{font-size:11px;color:var(--txt2);text-align:center;margin:.5rem 0;}
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<div class="game">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="lives" id="lives">❤️❤️❤️</div>
+    <div class="score-pill">⭐ <span id="score">0</span> نقطة</div>
+    <div class="level-pill" id="level-pill">البداية</div>
+  </div>
+
+  <!-- ══════════ SCREEN: INTRO ══════════ -->
+  <div class="screen active" id="screen-intro">
+    <div class="hero-box">
+      <span class="hero-emoji">🧙‍♂️</span>
+      <div class="hero-title">مغامرة الحروف<br>السحرية! ✨</div>
+      <div class="hero-sub">ساعد البطل "زيد" في إنقاذ الكلمات<br>من الارتباك الصوتي!</div>
+    </div>
+    <div class="story-card">
+      <p>
+        في عالم سحري اسمه <strong style="color:var(--tq)">مملكة اللغة</strong>، كانت الكلمات تعيش بسعادة…<br><br>
+        فجأة ظهر <strong style="color:var(--red)">الشيطان الصوتي</strong> وأخفى بعض الحروف داخل الكلمات!<br>
+        الحروف موجودة في الكتابة، لكنها <strong style="color:var(--yel)">لا تُنطق!</strong><br><br>
+        <span class="speaker">🧙 زيد:</span> "أنا مستعد! سأكتشف الحروف الصامتة وأنقذ المملكة!"<br><br>
+        <span class="guard">🛡️ حارس الكلمات:</span> "أهلاً يا بطل! ثلاثة مستويات تنتظرك… هل أنت جاهز؟"
+      </p>
+    </div>
+    <button class="big-btn" onclick="startLevel(1)">🚀 ابدأ المغامرة!</button>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 1 INTRO ══════════ -->
+  <div class="screen" id="screen-l1-intro">
+    <div class="level-intro">
+      <div class="level-badge lb-green">🟢 LEVEL 1</div>
+      <div class="level-title" style="color:var(--grn)">عالم WH السحري 🌿</div>
+      <div class="level-desc">كلمات تبدأ بـ <strong style="color:var(--wht)">wh</strong> — فيها سر خفي!</div>
+    </div>
+    <div class="dialog-box">
+      <span class="name">🛡️ حارس الكلمات:</span>
+      <p>يا زيد! وصلنا إلى <strong style="color:var(--grn)">غابة WH السحرية</strong>.<br>
+      هنا تعيش كلمات عجيبة… كلها تبدأ بـ <strong>wh</strong>!<br>
+      لكن حرف <strong style="color:var(--red)">H</strong> فيها يختبئ ولا يُنطق أبداً! 🫥</p>
+    </div>
+    <div class="dialog-box guard-dialog" style="border-right-color:var(--yel);">
+      <span class="name" style="color:var(--yel);">🧙 زيد:</span>
+      <p>"إذن كلمة <strong>why</strong> تُنطق <strong style="color:var(--tq)">/waɪ/</strong>… كأن الـ H غير موجودة!"<br>
+      "رائع! سأكتشف كل الكنوز الصوتية!"</p>
+    </div>
+    <button class="next-btn next-green" onclick="showScreen('screen-l1-discover')">🔍 اكتشف الكنوز!</button>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 1 DISCOVER ══════════ -->
+  <div class="screen" id="screen-l1-discover">
+    <div class="discover-title">💎 اضغط على كل كلمة لفتح كنزها الصوتي!</div>
+    <div class="words-row">
+      <div class="word-gem" id="gem-why" onclick="revealGem(this,'why','why','لماذا','/waɪ/','H تختفي! تُنطق /w/')">
+        <span class="gem-icon">💎</span>
+        <span class="gem-word">w<span class="sil">h</span>y</span>
+        <span class="gem-ar">لماذا</span>
+        <span class="gem-ipa">/waɪ/</span>
+        <span class="gem-hint">🔕 H صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-when" onclick="revealGem(this,'when','when','متى','/wɛn/','H تختفي!')">
+        <span class="gem-icon">💎</span>
+        <span class="gem-word">w<span class="sil">h</span>en</span>
+        <span class="gem-ar">متى</span>
+        <span class="gem-ipa">/wɛn/</span>
+        <span class="gem-hint">🔕 H صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-where" onclick="revealGem(this,'where','where','أين','/wɛr/','H تختفي!')">
+        <span class="gem-icon">💎</span>
+        <span class="gem-word">w<span class="sil">h</span>ere</span>
+        <span class="gem-ar">أين</span>
+        <span class="gem-ipa">/wɛr/</span>
+        <span class="gem-hint">🔕 H صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-while" onclick="revealGem(this,'while','while','أثناء','/waɪl/','H تختفي!')">
+        <span class="gem-icon">💎</span>
+        <span class="gem-word">w<span class="sil">h</span>ile</span>
+        <span class="gem-ar">أثناء</span>
+        <span class="gem-ipa">/waɪl/</span>
+        <span class="gem-hint">🔕 H صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-whale" onclick="revealGem(this,'whale','whale','حوت','/weɪl/','H تختفي!')">
+        <span class="gem-icon">💎</span>
+        <span class="gem-word">w<span class="sil">h</span>ale</span>
+        <span class="gem-ar">حوت</span>
+        <span class="gem-ipa">/weɪl/</span>
+        <span class="gem-hint">🔕 H صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-white" onclick="revealGem(this,'white','white','أبيض','/waɪt/','H تختفي!')">
+        <span class="gem-icon">💎</span>
+        <span class="gem-word">w<span class="sil">h</span>ite</span>
+        <span class="gem-ar">أبيض</span>
+        <span class="gem-ipa">/waɪt/</span>
+        <span class="gem-hint">🔕 H صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog1" style="width:0%"></div></div>
+    <div id="l1-disc-status" style="text-align:center;font-size:13px;color:var(--txt2);">اكتشف 0 من 6 كنوز</div>
+    <div id="l1-next-btn" style="display:none;">
+      <div class="dialog-box" style="margin-top:1rem;">
+        <span class="name">🛡️ حارس الكلمات:</span>
+        <p>عظيم يا زيد! فتحت كل الكنوز! الآن اختبر معلوماتك! 🎯</p>
+      </div>
+      <button class="next-btn next-green" onclick="showScreen('screen-l1-quiz')">⚔️ اختبار المستوى الأول!</button>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 1 QUIZ ══════════ -->
+  <div class="screen" id="screen-l1-quiz">
+    <div class="level-badge lb-green" style="display:inline-block;margin-bottom:.75rem;">⚔️ اختبار Level 1</div>
+    <div id="quiz-l1"></div>
+    <div id="l1-quiz-next" style="display:none;">
+      <div class="dialog-box" style="margin-top:1rem;border-right-color:var(--yel);">
+        <span class="name" style="color:var(--yel)">🧙 زيد:</span>
+        <p>رائع! انتهيت من غابة WH! لكن… هناك <strong style="color:var(--sky)">مستوى أصعب</strong> ينتظرني! 😮</p>
+      </div>
+      <button class="next-btn next-blue" onclick="startLevel(2)">➡️ المستوى الثاني!</button>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 2 INTRO ══════════ -->
+  <div class="screen" id="screen-l2-intro">
+    <div class="level-intro">
+      <div class="level-badge lb-blue">🔵 LEVEL 2</div>
+      <div class="level-title" style="color:var(--sky)">القاعدة المقلوبة! 🌀</div>
+      <div class="level-desc">مفاجأة كبيرة في هذا المستوى…</div>
+    </div>
+    <div class="dialog-box guard-dialog" style="border-right-color:var(--red);">
+      <span class="name" style="color:var(--red)">⚡ تحذير مفاجئ!</span>
+      <p>يا زيد! انتبه! في هذه المنطقة <strong style="color:var(--yel)">السحر معكوس!</strong><br>
+      الذي يختبئ الآن هو حرف <strong style="color:var(--red)">W</strong>… وليس H!</p>
+    </div>
+    <div class="dialog-box">
+      <span class="name">🛡️ حارس الكلمات:</span>
+      <p>كلمة <strong>who</strong> لا تُنطق /hwuː/…<br>
+      بل تُنطق <strong style="color:var(--sky)">/huː/</strong> !<br>
+      الـ <strong style="color:var(--red)">W سُرقت</strong> من النطق! 😱<br>
+      "من سرق صوت W؟ هذا لغز المستوى!"</p>
+    </div>
+    <div class="dialog-box" style="border-right-color:var(--yel);">
+      <span class="name" style="color:var(--yel)">🧙 زيد:</span>
+      <p>"إذن الكتابة فيها W… لكن النطق بدونها؟<br>سأتذكر هذا السر إلى الأبد!" 💪</p>
+    </div>
+    <button class="next-btn next-blue" onclick="showScreen('screen-l2-discover')">🔍 اكتشف السر المقلوب!</button>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 2 DISCOVER ══════════ -->
+  <div class="screen" id="screen-l2-discover">
+    <div class="discover-title">🌀 الـ W هي المختبئة هنا! اضغط لاكتشاف كل كلمة</div>
+    <div class="words-row">
+      <div class="word-gem" id="gem-who" onclick="revealGem(this,'who','who','من','/huː/','W تختبئ! تُنطق /h/','revealed-blue')">
+        <span class="gem-icon">🔮</span>
+        <span class="gem-word"><span class="sil">w</span>ho</span>
+        <span class="gem-ar">من</span>
+        <span class="gem-ipa">/huː/</span>
+        <span class="gem-hint">🔕 W صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-whose" onclick="revealGem(this,'whose','whose','لمن','/huːz/','W تختبئ!','revealed-blue')">
+        <span class="gem-icon">🔮</span>
+        <span class="gem-word"><span class="sil">w</span>hose</span>
+        <span class="gem-ar">لمن</span>
+        <span class="gem-ipa">/huːz/</span>
+        <span class="gem-hint">🔕 W صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-whom" onclick="revealGem(this,'whom','whom','من (مفعول)','/huːm/','W تختبئ!','revealed-blue')">
+        <span class="gem-icon">🔮</span>
+        <span class="gem-word"><span class="sil">w</span>hom</span>
+        <span class="gem-ar">من (مفعول)</span>
+        <span class="gem-ipa">/huːm/</span>
+        <span class="gem-hint">🔕 W صامتة!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog2" style="width:0%;background:linear-gradient(90deg,var(--sky),var(--pur));"></div></div>
+    <div id="l2-disc-status" style="text-align:center;font-size:13px;color:var(--txt2);">اكتشف 0 من 3 كنوز</div>
+    <div id="l2-next-btn" style="display:none;">
+      <div class="dialog-box" style="margin-top:1rem;border-right-color:var(--sky);">
+        <span class="name" style="color:var(--sky)">🛡️ حارس الكلمات:</span>
+        <p>اكتشفت السر المقلوب! الآن حل لغز W! 🎯</p>
+      </div>
+      <button class="next-btn next-blue" onclick="showScreen('screen-l2-quiz')">⚔️ اختبار المستوى الثاني!</button>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 2 QUIZ ══════════ -->
+  <div class="screen" id="screen-l2-quiz">
+    <div class="level-badge lb-blue" style="display:inline-block;margin-bottom:.75rem;">⚔️ اختبار Level 2</div>
+    <div id="quiz-l2"></div>
+    <div id="l2-quiz-next" style="display:none;">
+      <div class="dialog-box" style="margin-top:1rem;border-right-color:var(--pur);">
+        <span class="name" style="color:var(--pur)">🛡️ حارس الكلمات:</span>
+        <p>بطولي يا زيد! المستوى الأخير ينتظرك...<br>
+        <strong style="color:var(--red)">تحذير:</strong> هذا المستوى فيه أشباح! 👻</p>
+      </div>
+      <button class="next-btn next-purple" onclick="startLevel(3)">👻 المستوى الأخير!</button>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 3 INTRO ══════════ -->
+  <div class="screen" id="screen-l3-intro">
+    <div class="level-intro">
+      <div class="level-badge lb-purple">🟣 LEVEL 3</div>
+      <div class="level-title" style="color:var(--pur)">قلعة H الصامت 👻</div>
+      <div class="level-desc">المستوى الأصعب… أصوات الأشباح!</div>
+    </div>
+    <div class="dialog-box guard-dialog">
+      <span class="name">🛡️ حارس الكلمات:</span>
+      <p>وصلنا إلى <strong style="color:var(--pur)">قلعة الأشباح</strong>!<br>
+      هنا كلمات تبدأ بـ <strong style="color:var(--red)">H</strong>…<br>
+      لكن هذه الـ H <strong style="color:var(--red)">شبح! لا صوت لها إطلاقاً! 👻</strong></p>
+    </div>
+    <div class="dialog-box" style="border-right-color:var(--yel);">
+      <span class="name" style="color:var(--yel)">🧙 زيد:</span>
+      <p>"hour تُنطق /aʊər/؟ لكن… أين الـ H؟!"</p>
+    </div>
+    <div class="dialog-box guard-dialog">
+      <span class="name">🛡️ حارس الكلمات:</span>
+      <p>هههه! <strong style="color:var(--pur)">ذهبت مع الأشباح!</strong> 👻<br>
+      كلمات مثل <strong>hour, honest, honor</strong>… الـ H فيها خفية تماماً!<br>
+      مهمتك: <strong style="color:var(--yel)">اكتشف الأشباح وأنقذ الكلمات!</strong></p>
+    </div>
+    <button class="next-btn next-purple" onclick="showScreen('screen-l3-discover')">👻 ادخل قلعة الأشباح!</button>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 3 DISCOVER ══════════ -->
+  <div class="screen" id="screen-l3-discover">
+    <div class="discover-title">👻 الـ H شبح لا يُسمع! اضغط لكشف الأشباح</div>
+    <div class="words-row">
+      <div class="word-gem" id="gem-hour" onclick="revealGem(this,'hour','hour','ساعة','/ˈaʊər/','H شبح! تُنطق بدونها','revealed-pur')">
+        <span class="gem-icon">👻</span>
+        <span class="gem-word"><span class="sil">H</span>our</span>
+        <span class="gem-ar">ساعة</span>
+        <span class="gem-ipa">/ˈaʊər/</span>
+        <span class="gem-hint">👻 H شبح صامت!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-honest" onclick="revealGem(this,'honest','honest','صادق','/ˈɒnɪst/','H شبح!','revealed-pur')">
+        <span class="gem-icon">👻</span>
+        <span class="gem-word"><span class="sil">H</span>onest</span>
+        <span class="gem-ar">صادق</span>
+        <span class="gem-ipa">/ˈɒnɪst/</span>
+        <span class="gem-hint">👻 H شبح صامت!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+      <div class="word-gem" id="gem-honor" onclick="revealGem(this,'honor','honor','شرف','/ˈɒnər/','H شبح!','revealed-pur')">
+        <span class="gem-icon">👻</span>
+        <span class="gem-word"><span class="sil">H</span>onor</span>
+        <span class="gem-ar">شرف</span>
+        <span class="gem-ipa">/ˈɒnər/</span>
+        <span class="gem-hint">👻 H شبح صامت!</span>
+        <span class="gem-sound">🔊 اضغط للسماع</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog3" style="width:0%;background:linear-gradient(90deg,var(--pur2),var(--pur));"></div></div>
+    <div id="l3-disc-status" style="text-align:center;font-size:13px;color:var(--txt2);">اكتشف 0 من 3 كنوز</div>
+    <div id="l3-next-btn" style="display:none;">
+      <div class="dialog-box" style="margin-top:1rem;border-right-color:var(--pur);">
+        <span class="name" style="color:var(--pur)">🛡️ حارس الكلمات:</span>
+        <p>طردت كل الأشباح يا بطل! الاختبار النهائي! 👊</p>
+      </div>
+      <button class="next-btn next-purple" onclick="showScreen('screen-l3-quiz')">⚔️ الاختبار النهائي!</button>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN: LEVEL 3 QUIZ ══════════ -->
+  <div class="screen" id="screen-l3-quiz">
+    <div class="level-badge lb-purple" style="display:inline-block;margin-bottom:.75rem;">⚔️ الاختبار النهائي</div>
+    <div id="quiz-l3"></div>
+    <div id="l3-quiz-next" style="display:none;">
+      <button class="next-btn next-purple" onclick="showWin()">🏆 افتح صندوق الكنز!</button>
+    </div>
+  </div>
+
+  <!-- ══════════ SCREEN: WIN ══════════ -->
+  <div class="screen" id="screen-win">
+    <div class="win-box">
+      <span class="trophy">🏆</span>
+      <div class="win-title shine">أنقذت المملكة يا بطل! 🎉</div>
+      <div class="win-sub">زيد أتم مهمته وهزم الشيطان الصوتي!</div>
+      <div class="final-score">
+        <span class="num" id="final-score-num">0</span>
+        <span class="lbl">نقطة سحرية جمعتها في المغامرة ⭐</span>
+      </div>
+      <div class="star-row" id="star-row">⭐⭐⭐</div>
+      <div class="rules-summary">
+        <h3>📜 ما تعلمته في المغامرة</h3>
+        <div class="rule-row"><span class="icon">🟢</span><span>كلمات <strong>wh</strong> مثل why, when, where… حرف <strong style="color:var(--red)">H لا يُنطق</strong></span></div>
+        <div class="rule-row"><span class="icon">🔵</span><span>كلمات who, whose, whom… حرف <strong style="color:var(--red)">W لا يُنطق</strong> (سحر معكوس!)</span></div>
+        <div class="rule-row"><span class="icon">👻</span><span>كلمات hour, honest, honor… حرف <strong style="color:var(--red)">H شبح</strong> لا يُسمع إطلاقاً!</span></div>
+        <div class="rule-row" style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.1);">
+          <span class="icon">💡</span>
+          <span style="color:var(--yel);font-weight:700;">"بعض الكلمات فيها حروف لا تُنطق… لكن يجب أن نعرفها!"</span>
+        </div>
+      </div>
+      <button class="big-btn" onclick="restartGame()">🔄 العب مجدداً!</button>
+    </div>
+  </div>
+
+</div><!-- end .game -->
+
+<script>
+// ── Stars ──
+(function(){
+  const s=document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const d=document.createElement('div');
+    d.className='star';
+    const sz=Math.random()*2.5+1;
+    d.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*4}s;animation-duration:${2+Math.random()*3}s`;
+    s.appendChild(d);
+  }
+})();
+
+// ── State ──
+let totalScore=0;
+let hearts=3;
+const l1Revealed={};
+const l2Revealed={};
+const l3Revealed={};
+
+// ── Quiz data ──
+const quizL1=[
+  {w:'why',q:'أي حرف لا يُنطق؟',opts:['W','H','Y'],ans:'H'},
+  {w:'whale',q:'كيف تُنطق whale؟',opts:['/hweɪl/','/weɪl/','/wɑːl/'],ans:'/weɪl/'},
+  {w:'when',q:'أي حرف صامت في when؟',opts:['W','H','N'],ans:'H'},
+];
+const quizL2=[
+  {w:'who',q:'أي حرف لا يُنطق في who؟',opts:['W','H','O'],ans:'W'},
+  {w:'whose',q:'كيف تُنطق whose؟',opts:['/hwuːz/','/huːz/','/wuːz/'],ans:'/huːz/'},
+  {w:'whom',q:'أي حرف مسروق في whom؟',opts:['H','O','W'],ans:'W'},
+];
+const quizL3=[
+  {w:'hour',q:'كيف تُنطق hour؟',opts:['/haʊər/','/aʊər/','/hɔːr/'],ans:'/aʊər/'},
+  {w:'honest',q:'أي حرف شبح في honest؟',opts:['N','H','T'],ans:'H'},
+  {w:'honor',q:'كيف تُنطق honor؟',opts:['/ˈhɒnər/','/ˈɒnər/','/ˈhoʊnər/'],ans:'/ˈɒnər/'},
+];
+
+// ── Helpers ──
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function addScore(n){
+  totalScore+=n;
+  document.getElementById('score').textContent=totalScore;
+}
+
+function speak(w){
+  if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(w);
+  u.lang='en-US';u.rate=0.82;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+
+function loseHeart(){
+  if(hearts>0)hearts--;
+  const h=['❤️❤️❤️','❤️❤️🖤','❤️🖤🖤','🖤🖤🖤'];
+  document.getElementById('lives').textContent=h[3-hearts];
+}
+
+// ── Reveal gems ──
+function revealGem(el,word,speakWord,ar,ipa,hint,cls='revealed'){
+  if(el.classList.contains('revealed')||el.classList.contains('revealed-blue')||el.classList.contains('revealed-pur'))return;
+  el.classList.add(cls);
+  el.querySelector('.gem-icon').textContent='✨';
+  speak(speakWord);
+  addScore(5);
+
+  // track progress
+  const id=el.id;
+  if(id.startsWith('gem-')&&['gem-why','gem-when','gem-where','gem-while','gem-whale','gem-white'].includes(id)){
+    l1Revealed[id]=true;
+    const done=Object.keys(l1Revealed).length;
+    document.getElementById('prog1').style.width=(done/6*100)+'%';
+    document.getElementById('l1-disc-status').textContent=`اكتشفت ${done} من 6 كنوز 💎`;
+    if(done>=6)document.getElementById('l1-next-btn').style.display='block';
+  } else if(['gem-who','gem-whose','gem-whom'].includes(id)){
+    l2Revealed[id]=true;
+    const done=Object.keys(l2Revealed).length;
+    document.getElementById('prog2').style.width=(done/3*100)+'%';
+    document.getElementById('l2-disc-status').textContent=`اكتشفت ${done} من 3 كنوز 🔮`;
+    if(done>=3)document.getElementById('l2-next-btn').style.display='block';
+  } else if(['gem-hour','gem-honest','gem-honor'].includes(id)){
+    l3Revealed[id]=true;
+    const done=Object.keys(l3Revealed).length;
+    document.getElementById('prog3').style.width=(done/3*100)+'%';
+    document.getElementById('l3-disc-status').textContent=`طردت ${done} من 3 أشباح 👻`;
+    if(done>=3)document.getElementById('l3-next-btn').style.display='block';
+  }
+}
+
+// ── Build quiz ──
+function buildQuiz(data,containerId,nextId){
+  const c=document.getElementById(containerId);
+  c.innerHTML='';
+  let answered=0;
+  data.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='q-bubble';card.id=`qc-${containerId}-${i}`;
+    const opts=q.opts.map(o=>`<button class="q-opt" onclick="answerQ('${containerId}',${i},'${o.replace(/'/g,"\\'")}','${q.ans.replace(/'/g,"\\'")}','${nextId}',${data.length},this)">${o}</button>`).join('');
+    card.innerHTML=`
+      <div class="q-num">سؤال ${i+1} من ${data.length}</div>
+      <div class="q-text">${q.q}</div>
+      <span class="q-word-big" onclick="speak('${q.w}')">${q.w} 🔊</span>
+      <div class="q-options">${opts}</div>
+      <div class="q-fb" id="fb-${containerId}-${i}"></div>`;
+    c.appendChild(card);
+  });
+}
+
+let quizAnswered={};
+function answerQ(cid,i,chosen,correct,nextId,total,btn){
+  const key=`${cid}-${i}`;
+  if(quizAnswered[key])return;
+  quizAnswered[key]=true;
+  const card=document.getElementById(`qc-${cid}-${i}`);
+  card.querySelectorAll('.q-opt').forEach(b=>b.disabled=true);
+  const fb=document.getElementById(`fb-${cid}-${i}`);
+  if(chosen===correct){
+    btn.classList.add('ok');
+    fb.className='q-fb ok';
+    fb.textContent='✅ صحيح! +10 نقاط سحرية! 🌟';
+    addScore(10);
+  } else {
+    btn.classList.add('no');
+    fb.className='q-fb no';
+    fb.textContent=`❌ الإجابة: ${correct}`;
+    card.querySelectorAll('.q-opt').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('ok');});
+    loseHeart();
+  }
+  const doneCount=Object.keys(quizAnswered).filter(k=>k.startsWith(cid)).length;
+  if(doneCount>=total){
+    setTimeout(()=>{document.getElementById(nextId).style.display='block';},600);
+  }
+}
+
+// ── Level start ──
+function startLevel(n){
+  quizAnswered={};
+  if(n===1){
+    document.getElementById('level-pill').textContent='Level 1 🟢';
+    buildQuiz(quizL1,'quiz-l1','l1-quiz-next');
+    showScreen('screen-l1-intro');
+  } else if(n===2){
+    document.getElementById('level-pill').textContent='Level 2 🔵';
+    buildQuiz(quizL2,'quiz-l2','l2-quiz-next');
+    showScreen('screen-l2-intro');
+  } else {
+    document.getElementById('level-pill').textContent='Level 3 🟣';
+    buildQuiz(quizL3,'quiz-l3','l3-quiz-next');
+    showScreen('screen-l3-intro');
+  }
+}
+
+// ── Win ──
+function showWin(){
+  document.getElementById('level-pill').textContent='🏆 انتهيت!';
+  document.getElementById('final-score-num').textContent=totalScore;
+  const stars = totalScore>=120?'⭐⭐⭐':totalScore>=80?'⭐⭐☆':'⭐☆☆';
+  document.getElementById('star-row').textContent=stars;
+  showScreen('screen-win');
+  launchConfetti();
+}
+
+function restartGame(){
+  totalScore=0;hearts=3;
+  Object.keys(l1Revealed).forEach(k=>delete l1Revealed[k]);
+  Object.keys(l2Revealed).forEach(k=>delete l2Revealed[k]);
+  Object.keys(l3Revealed).forEach(k=>delete l3Revealed[k]);
+  document.getElementById('score').textContent='0';
+  document.getElementById('lives').textContent='❤️❤️❤️';
+  document.getElementById('level-pill').textContent='البداية';
+  document.getElementById('l1-next-btn').style.display='none';
+  document.getElementById('l2-next-btn').style.display='none';
+  document.getElementById('l3-next-btn').style.display='none';
+  document.getElementById('prog1').style.width='0%';
+  document.getElementById('prog2').style.width='0%';
+  document.getElementById('prog3').style.width='0%';
+  document.querySelectorAll('.word-gem').forEach(g=>{
+    g.classList.remove('revealed','revealed-blue','revealed-pur');
+    const icons={why:'💎',when:'💎',where:'💎',while:'💎',whale:'💎',white:'💎',who:'🔮',whose:'🔮',whom:'🔮',hour:'👻',honest:'👻',honor:'👻'};
+    const word=g.id.replace('gem-','');
+    if(g.querySelector('.gem-icon'))g.querySelector('.gem-icon').textContent=icons[word]||'💎';
+  });
+  quizAnswered={};
+  showScreen('screen-intro');
+}
+
+// ── Confetti ──
+function launchConfetti(){
+  const colors=['#FFD740','#00E5CC','#4FC3F7','#69F0AE','#CE93D8','#FF5252'];
+  for(let i=0;i<60;i++){
+    setTimeout(()=>{
+      const d=document.createElement('div');
+      d.className='confetti-piece';
+      const sz=6+Math.random()*8;
+      d.style.cssText=`width:${sz}px;height:${sz}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}%;top:-10px;animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s;border-radius:${Math.random()>0.5?'50%':'3px'};`;
+      document.body.appendChild(d);
+      setTimeout(()=>d.remove(),3500);
+    },i*40);
+  }
+}
+</script>
+</body>
+</html>
