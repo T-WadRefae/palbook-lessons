@@ -1,203 +1,1324 @@
-<!DOCTYPE html>
-<html lang="en">
+
+html_game = '''<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Olive Tree</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    body{
-      font-family:'Poppins',sans-serif;
-      background:#f5f7f2;
-      color:#333;
-      line-height:1.8;
-    }
-
-    .container{
-      width:90%;
-      max-width:1000px;
-      margin:auto;
-      padding:40px 0;
-    }
-
-    .hero{
-      background:linear-gradient(135deg,#6b8e23,#9dc183);
-      color:white;
-      padding:60px 30px;
-      border-radius:24px;
-      text-align:center;
-      margin-bottom:40px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    .hero h1{
-      font-size:3rem;
-      margin-bottom:10px;
-    }
-
-    .hero p{
-      font-size:1.1rem;
-      opacity:0.9;
-    }
-
-    .section{
-      background:white;
-      padding:30px;
-      border-radius:20px;
-      margin-bottom:30px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .section h2{
-      color:#6b8e23;
-      margin-bottom:20px;
-      font-size:1.8rem;
-    }
-
-    .reading-text{
-      font-size:1.05rem;
-    }
-
-    .vocab-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:15px;
-      margin-top:20px;
-    }
-
-    .vocab-card{
-      background:#f8faf4;
-      border-left:5px solid #6b8e23;
-      padding:15px;
-      border-radius:12px;
-    }
-
-    .vocab-card h3{
-      color:#6b8e23;
-      margin-bottom:5px;
-    }
-
-    .questions li{
-      margin-bottom:12px;
-    }
-
-    .highlight{
-      background:#eef6df;
-      padding:2px 6px;
-      border-radius:6px;
-      font-weight:600;
-      color:#5d7a1f;
-    }
-
-    .footer{
-      text-align:center;
-      padding:30px;
-      color:#777;
-      font-size:0.9rem;
-    }
-
-    @media(max-width:768px){
-
-      .hero h1{
-        font-size:2rem;
-      }
-
-      .section{
-        padding:22px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌿 مغامرة قرية الزيتون السحرية — فلسطين</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+  
+  :root {
+    --olive: #556b2f;
+    --olive-light: #8fbc8f;
+    --olive-dark: #3d4d22;
+    --gold: #daa520;
+    --gold-light: #ffe4b5;
+    --sky: #87ceeb;
+    --sky-light: #e0f7fa;
+    --sand: #f5deb3;
+    --sand-light: #fff8dc;
+    --sun: #ff8c00;
+    --success: #32cd32;
+    --danger: #ff6347;
+    --text: #2f4f4f;
+    --text-light: #708090;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(180deg, var(--sky-light) 0%, var(--sand-light) 100%);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  /* Animations */
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+  @keyframes shine { 0%{background-position:-200%} 100%{background-position:200%} }
+  @keyframes leaf-fall { 0%{transform:translateY(-10vh) rotate(0deg)} 100%{transform:translateY(110vh) rotate(360deg)} }
+  @keyframes pop { 0%{transform:scale(0)} 80%{transform:scale(1.1)} 100%{transform:scale(1)} }
+  @keyframes slideIn { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+  
+  .floating { animation: float 3s ease-in-out infinite; }
+  .bouncing { animation: bounce 2s ease-in-out infinite; }
+  .pulsing { animation: pulse 2s ease-in-out infinite; }
+  .pop-in { animation: pop 0.5s ease-out forwards; }
+  .slide-in { animation: slideIn 0.6s ease-out forwards; }
+  
+  /* Header */
+  .game-header {
+    background: linear-gradient(135deg, var(--olive) 0%, var(--olive-dark) 100%);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .game-title { font-size: 1.3rem; font-weight: 900; }
+  .game-stats {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  .stat-box {
+    background: rgba(255,255,255,0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Main Container */
+  .game-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+  
+  /* Screens */
+  .screen { display: none; }
+  .screen.active { display: block; }
+  
+  /* Intro Screen */
+  .intro-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .intro-hero {
+    font-size: 5rem;
+    margin-bottom: 10px;
+    display: inline-block;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .intro-title {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--olive);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 var(--gold-light);
+  }
+  .intro-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+  }
+  .intro-story {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+    line-height: 2;
+    text-align: justify;
+    border: 3px solid var(--olive-light);
+  }
+  .intro-story .emoji-big { font-size: 1.5rem; }
+  
+  /* Characters */
+  .character-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+  }
+  .character-card {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 140px;
+    border-top: 5px solid var(--gold);
+    transition: transform 0.3s;
+  }
+  .character-card:hover { transform: translateY(-5px); }
+  .character-emoji { font-size: 3rem; display: block; margin-bottom: 5px; }
+  .character-name { font-weight: 800; color: var(--olive); font-size: 0.95rem; }
+  .character-role { font-size: 0.8rem; color: var(--text-light); }
+  
+  /* Buttons */
+  .btn-game {
+    display: inline-block;
+    padding: 16px 45px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--sun) 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    font-family: 'Tajawal', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(218,165,32,0.4);
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .btn-game:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(218,165,32,0.5); }
+  .btn-game:active { transform: translateY(0); }
+  .btn-small {
+    padding: 10px 25px;
+    font-size: 1rem;
+    border-radius: 30px;
+  }
+  .btn-olive {
+    background: linear-gradient(135deg, var(--olive) 0%, var(--olive-dark) 100%);
+    box-shadow: 0 6px 20px rgba(85,107,47,0.4);
+  }
+  .btn-olive:hover { box-shadow: 0 10px 30px rgba(85,107,47,0.5); }
+  .btn-sky {
+    background: linear-gradient(135deg, var(--sky) 0%, #4682b4 100%);
+    box-shadow: 0 6px 20px rgba(135,206,235,0.4);
+  }
+  
+  /* Level Map */
+  .level-map {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+  }
+  .level-node {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-right: 6px solid var(--olive-light);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .level-node:hover { transform: translateX(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+  .level-node.locked { opacity: 0.5; pointer-events: none; filter: grayscale(0.7); }
+  .level-node.completed { border-right-color: var(--success); background: linear-gradient(135deg, white 0%, #f0fff4 100%); }
+  .level-badge {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--olive-light) 0%, var(--olive) 100%);
+    color: white;
+    font-weight: 900;
+    box-shadow: 0 4px 10px rgba(85,107,47,0.3);
+  }
+  .level-node.completed .level-badge { background: linear-gradient(135deg, var(--success) 0%, #228b22 100%); }
+  .level-info { flex: 1; }
+  .level-name { font-size: 1.3rem; font-weight: 800; color: var(--olive); margin-bottom: 5px; }
+  .level-desc { font-size: 0.95rem; color: var(--text-light); }
+  .level-stars { font-size: 1.3rem; }
+  
+  /* Game Scene */
+  .scene-box {
+    background: linear-gradient(180deg, var(--sky-light) 0%, var(--sand-light) 60%, var(--sand) 100%);
+    border-radius: 25px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 3px solid var(--olive-light);
+    position: relative;
+    overflow: hidden;
+  }
+  .scene-box::before {
+    content: "🌿🌿🌿";
+    position: absolute;
+    top: 10px; left: 15px;
+    font-size: 1.2rem;
+    opacity: 0.3;
+  }
+  .scene-sky {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: float 4s ease-in-out infinite;
+  }
+  .scene-ground {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .tree-emoji {
+    font-size: 4rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    display: inline-block;
+  }
+  .tree-emoji:hover { transform: scale(1.2) rotate(-5deg); }
+  .tree-emoji.shake { animation: bounce 0.5s ease-in-out 3; }
+  .tree-emoji.found { filter: drop-shadow(0 0 15px var(--gold)); animation: pulse 1s ease-in-out infinite; }
+  
+  /* Dialogue Box */
+  .dialogue-box {
+    background: white;
+    border-radius: 20px;
+    padding: 20px 25px;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    border-right: 5px solid var(--gold);
+  }
+  .dialogue-box::after {
+    content: "";
+    position: absolute;
+    bottom: -10px; right: 30px;
+    width: 20px; height: 20px;
+    background: white;
+    transform: rotate(45deg);
+    border-bottom: 3px solid var(--gold);
+    border-left: 3px solid var(--gold);
+  }
+  .dialogue-speaker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .speaker-emoji { font-size: 2rem; }
+  .speaker-name { font-weight: 900; color: var(--olive); font-size: 1.1rem; }
+  .dialogue-text {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--text);
+  }
+  .dialogue-text .keyword {
+    background: linear-gradient(120deg, var(--gold-light) 0%, var(--gold-light) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 40%;
+    background-position: 0 88%;
+    padding: 0 4px;
+    font-weight: 800;
+    color: var(--olive-dark);
+  }
+  
+  /* Mission Box */
+  .mission-box {
+    background: linear-gradient(135deg, var(--gold-light) 0%, #fff8dc 100%);
+    border: 3px dashed var(--gold);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .mission-box h3 {
+    color: var(--sun);
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .mission-box p { font-size: 1.05rem; color: var(--text); }
+  
+  /* Quiz inside game */
+  .game-quiz {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .game-quiz h3 {
+    font-size: 1.2rem;
+    color: var(--olive);
+    margin-bottom: 15px;
+    font-weight: 800;
+  }
+  .quiz-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 500px) { .quiz-choices { grid-template-columns: 1fr; } }
+  .choice-btn {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 3px solid #dee2e6;
+    border-radius: 15px;
+    padding: 15px;
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .choice-btn:hover {
+    border-color: var(--olive);
+    background: var(--olive-light);
+    color: white;
+    transform: translateY(-2px);
+  }
+  .choice-btn.correct {
+    border-color: var(--success);
+    background: #d4edda;
+    color: #155724;
+    pointer-events: none;
+  }
+  .choice-btn.wrong {
+    border-color: var(--danger);
+    background: #f8d7da;
+    color: #721c24;
+    pointer-events: none;
+  }
+  .choice-btn.disabled { pointer-events: none; opacity: 0.7; }
+  
+  /* Reward Popup */
+  .reward-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    backdrop-filter: blur(5px);
+  }
+  .reward-overlay.show { display: flex; }
+  .reward-box {
+    background: white;
+    border-radius: 30px;
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: pop 0.5s ease-out;
+  }
+  .reward-emoji { font-size: 5rem; margin-bottom: 15px; display: block; }
+  .reward-title { font-size: 1.8rem; font-weight: 900; color: var(--gold); margin-bottom: 10px; }
+  .reward-text { font-size: 1.1rem; color: var(--text); margin-bottom: 20px; line-height: 1.8; }
+  .reward-stars { font-size: 2.5rem; margin: 10px 0; }
+  
+  /* Ending Screen */
+  .ending-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .ending-hero { font-size: 6rem; animation: bounce 2s ease-in-out infinite; display: inline-block; }
+  .ending-title { font-size: 2rem; font-weight: 900; color: var(--olive); margin: 15px 0; }
+  .ending-summary {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    margin: 25px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 4px solid var(--olive-light);
+    font-size: 1.2rem;
+    line-height: 2.2;
+  }
+  .ending-summary .highlight-line {
+    background: linear-gradient(120deg, var(--gold-light) 0%, var(--gold-light) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 50%;
+    background-position: 0 90%;
+    font-weight: 900;
+    color: var(--olive-dark);
+    padding: 0 5px;
+  }
+  .final-score-box {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--sand) 100%);
+    border-radius: 25px;
+    padding: 25px;
+    margin: 20px 0;
+    border: 3px solid var(--gold);
+  }
+  .final-score { font-size: 3.5rem; font-weight: 900; color: var(--sun); }
+  .final-stars { font-size: 3rem; margin: 10px 0; }
+  .treasure-box {
+    background: linear-gradient(135deg, #fff8dc 0%, var(--gold-light) 100%);
+    border: 3px dashed var(--gold);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px 0;
+  }
+  .treasure-title { font-size: 1.4rem; font-weight: 900; color: var(--sun); margin-bottom: 15px; }
+  .treasure-items { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+  .treasure-item {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    width: 100px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+  .treasure-item:hover { transform: translateY(-5px) rotate(3deg); }
+  .treasure-icon { font-size: 2.5rem; display: block; margin-bottom: 5px; }
+  .treasure-label { font-size: 0.85rem; font-weight: 700; color: var(--olive); }
+  
+  /* Mini-game: Collect olives */
+  .olive-garden {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+    padding: 20px;
+    background: linear-gradient(180deg, #90EE90 0%, #8FBC8F 100%);
+    border-radius: 20px;
+    border: 3px solid var(--olive);
+  }
+  @media (max-width: 500px) { .olive-garden { grid-template-columns: repeat(3, 1fr); } }
+  .olive-bush {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 2px solid transparent;
+  }
+  .olive-bush:hover { transform: scale(1.1); border-color: var(--gold); }
+  .olive-bush.collected { opacity: 0.3; pointer-events: none; transform: scale(0.8); }
+  .olive-bush .bush-emoji { font-size: 2.5rem; display: block; }
+  .olive-bush .bush-label { font-size: 0.8rem; font-weight: 700; color: var(--olive); margin-top: 5px; }
+  
+  /* Progress Steps */
+  .story-steps {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+  }
+  .step-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #ddd;
+    transition: all 0.3s;
+  }
+  .step-dot.active { background: var(--gold); transform: scale(1.3); box-shadow: 0 0 10px var(--gold); }
+  .step-dot.done { background: var(--success); }
+  
+  /* Navigation */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .nav-buttons.center { justify-content: center; }
+  
+  /* Particles */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 150;
+    font-size: 1.5rem;
+    animation: pop 0.8s ease-out forwards;
+  }
+  
+  /* Vocab tooltip in story */
+  .vocab-inline {
+    background: linear-gradient(120deg, var(--gold-light) 0%, var(--gold-light) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 40%;
+    background-position: 0 88%;
+    padding: 0 4px;
+    font-weight: 800;
+    color: var(--olive-dark);
+    cursor: help;
+    position: relative;
+  }
+  .vocab-inline:hover::after {
+    content: attr(data-en);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--olive);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .game-title { font-size: 1rem; }
+    .intro-title { font-size: 1.6rem; }
+    .scene-sky { font-size: 2rem; }
+    .tree-emoji { font-size: 3rem; }
+    .quiz-choices { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
-
 <body>
 
-  <div class="container">
+<!-- Header -->
+<div class="game-header">
+  <div class="game-title">🌿 قرية الزيتون السحرية</div>
+  <div class="game-stats">
+    <div class="stat-box">⭐ <span id="stars-count">0</span></div>
+    <div class="stat-box">🏆 <span id="points-count">0</span></div>
+  </div>
+</div>
 
-    <div class="hero">
-      <h1>The Olive Tree</h1>
-      <p>Reading Lesson</p>
-    </div>
+<div class="game-container">
 
-    <div class="section">
-      <h2>📖 Reading Passage</h2>
-
-      <div class="reading-text">
-        <p>
-          The <span class="highlight">olive tree</span> is one of the oldest trees in the world.
-          It is very important in Palestine and many Mediterranean countries.
-          People use olives to make olive oil, soap, and delicious food.
-        </p>
-
-        <br>
-
-        <p>
-          Olive trees can live for hundreds of years.
-          Farmers take care of the trees during the whole year.
-          In autumn, families gather together to pick olives and celebrate the harvest season.
-        </p>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>📝 Vocabulary</h2>
-
-      <div class="vocab-grid">
-
-        <div class="vocab-card">
-          <h3>Olive</h3>
-          <p>A small fruit used for oil and food.</p>
-        </div>
-
-        <div class="vocab-card">
-          <h3>Harvest</h3>
-          <p>The season of collecting crops.</p>
-        </div>
-
-        <div class="vocab-card">
-          <h3>Farmer</h3>
-          <p>A person who grows plants and trees.</p>
-        </div>
-
-        <div class="vocab-card">
-          <h3>Mediterranean</h3>
-          <p>Countries near the Mediterranean Sea.</p>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>❓ Comprehension Questions</h2>
-
-      <ol class="questions">
-        <li>Why is the olive tree important?</li>
-        <li>What do people make from olives?</li>
-        <li>When do families pick olives?</li>
-        <li>How long can olive trees live?</li>
-      </ol>
-    </div>
-
-    <div class="section">
-      <h2>✍️ Activity</h2>
-
+<!-- ==================== SCREEN 1: INTRO ==================== -->
+<div class="screen active" id="screen-intro">
+  <div class="intro-screen">
+    <div class="intro-hero bouncing">🌳🧒🌳</div>
+    <h1 class="intro-title">مغامرة قرية الزيتون السحرية</h1>
+    <p class="intro-subtitle">رحلة إلى فلسطين — حيث تنمو أشجار الزيتون منذ آلاف السنين</p>
+    
+    <div class="intro-story slide-in">
       <p>
-        Write 3 sentences about your favorite tree or plant.
+        <span class="emoji-big">🌄</span> في قرية جميلة بين جبال فلسطين الخضراء، كانت تنمو أشجار زيتون <span class="vocab-inline" data-en="Ancient Trees">قديمة</span> جداً. هذه الأشجار عمرها أكثر من <strong>500 سنة</strong>! <span class="emoji-big">🌳✨</span>
+      </p>
+      <p style="margin-top:15px">
+        <span class="emoji-big">🧒</span> أنت البطل الصغير! جدك المزارع الحكيم ينتظرك ليخبرك بسرّ عظيم عن هذه الأشجار. هل أنت مستعد للمغامرة؟
       </p>
     </div>
-
+    
+    <div class="character-row">
+      <div class="character-card">
+        <span class="character-emoji">🧒</span>
+        <div class="character-name">أنت البطل</div>
+        <div class="character-role">المغامر الشجاع</div>
+      </div>
+      <div class="character-card">
+        <span class="character-emoji">👨‍🌾</span>
+        <div class="character-name">جد سليم</div>
+        <div class="character-role">المزارع الحكيم</div>
+      </div>
+      <div class="character-card">
+        <span class="character-emoji">🌳</span>
+        <div class="character-name">شجرة أم زيتون</div>
+        <div class="character-role">الشجرة العجوز</div>
+      </div>
+    </div>
+    
+    <div style="text-align:center; margin-top:30px;">
+      <button class="btn-game" onclick="goToMap()">🚀 ابدأ المغامرة!</button>
+    </div>
   </div>
+</div>
 
-  <div class="footer">
-    Made with ❤️ for better learning
+<!-- ==================== SCREEN 2: MAP ==================== -->
+<div class="screen" id="screen-map">
+  <div style="text-align:center; padding:30px 20px;">
+    <h2 style="font-size:1.8rem; color:var(--olive); font-weight:900; margin-bottom:10px;">🗺️ خريطة المغامرة</h2>
+    <p style="color:var(--text-light); margin-bottom:20px;">اختر المرحلة التي تريد اكتشافها</p>
+    
+    <div class="level-map">
+      <div class="level-node" id="node-1" onclick="startLevel(1)">
+        <div class="level-badge">1</div>
+        <div class="level-info">
+          <div class="level-name">🟢 سرّ الأشجار القديمة</div>
+          <div class="level-desc">اكتشف أسرار أشجار الزيتون العتيقة</div>
+        </div>
+        <div class="level-stars" id="stars-1"></div>
+      </div>
+      
+      <div class="level-node locked" id="node-2" onclick="startLevel(2)">
+        <div class="level-badge">2</div>
+        <div class="level-info">
+          <div class="level-name">🟡 موسم الحصاد السحري</div>
+          <div class="level-desc">ساعد العائلة في جمع الزيتون</div>
+        </div>
+        <div class="level-stars" id="stars-2">🔒</div>
+      </div>
+      
+      <div class="level-node locked" id="node-3" onclick="startLevel(3)">
+        <div class="level-badge">3</div>
+        <div class="level-info">
+          <div class="level-name">🔵 سر زيت الزيتون الذهبي</div>
+          <div class="level-desc">اكشف رمز السلام والصبر</div>
+        </div>
+        <div class="level-stars" id="stars-3">🔒</div>
+      </div>
+    </div>
   </div>
+</div>
+
+<!-- ==================== SCREEN 3: LEVEL 1 ==================== -->
+<div class="screen" id="screen-level1">
+  <div class="scene-box">
+    <div class="scene-sky floating">☀️ 🏔️ 🌤️</div>
+    <div class="story-steps" id="steps-1">
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+    </div>
+    
+    <!-- Step 1 -->
+    <div class="level-step" id="l1-step1">
+      <div class="dialogue-box">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">👨‍🌾</span>
+          <span class="speaker-name">جد سليم</span>
+        </div>
+        <div class="dialogue-text">
+          مرحباً يا بطل! انظر حولك… هذه الأشجار ليست عادية. أشجار الزيتون في فلسطين عمرها <span class="keyword">مئات السنين</span>! بعضها عمره أكثر من جدّ جدّ جدّك. 🌳
+        </div>
+      </div>
+      <div class="scene-ground">
+        <span class="tree-emoji bouncing">🌳</span>
+        <span class="tree-emoji" style="font-size:5rem; animation: float 3s ease-in-out infinite;">🌳</span>
+        <span class="tree-emoji bouncing" style="animation-delay:0.5s">🌳</span>
+      </div>
+      <div class="dialogue-box" style="border-right-color:var(--olive-light);">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">🌳</span>
+          <span class="speaker-name">شجرة أم زيتون</span>
+        </div>
+        <div class="dialogue-text">
+          أهلاً يا صغير! أنا أشجار <span class="keyword">فلسطين</span>. جذوري عميقة في الأرض مثل <span class="keyword">جذور التاريخ</span>. أنا أعطي ثماراً لذيذة وصحية للجميع. هل تريد معرفة سرّي؟ 🤫
+        </div>
+      </div>
+      <div class="nav-buttons center">
+        <button class="btn-game btn-small" onclick="nextStep(1,1)">👉 استمر</button>
+      </div>
+    </div>
+    
+    <!-- Step 2 -->
+    <div class="level-step" id="l1-step2" style="display:none">
+      <div class="mission-box">
+        <h3>🎯 المهمة الأولى: ابحث عن الشجرة الأقدم!</h3>
+        <p>اضغط على الشجرة التي تعتقد أنها الأقدم. تلميح: الشجرة الأقدم هي الأكبر!</p>
+      </div>
+      <div class="scene-ground">
+        <span class="tree-emoji" onclick="checkTree(this,false)" style="font-size:3rem">🌲</span>
+        <span class="tree-emoji" onclick="checkTree(this,true)" style="font-size:5.5rem; filter: drop-shadow(0 0 10px var(--gold))">🌳</span>
+        <span class="tree-emoji" onclick="checkTree(this,false)" style="font-size:3.5rem">🌴</span>
+      </div>
+      <div id="tree-feedback" style="text-align:center; margin:15px 0; font-weight:800; font-size:1.2rem; min-height:30px;"></div>
+      <div class="nav-buttons center" id="l1-nav2" style="display:none">
+        <button class="btn-game btn-small" onclick="nextStep(1,2)">👉 رائع! استمر</button>
+      </div>
+    </div>
+    
+    <!-- Step 3 -->
+    <div class="level-step" id="l1-step3" style="display:none">
+      <div class="dialogue-box">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">🌳</span>
+          <span class="speaker-name">شجرة أم زيتون</span>
+        </div>
+        <div class="dialogue-text">
+          أحسنت! هذه الشجرة عمرها <span class="keyword">800 سنة</span>! 🎉 أجدادي زرعوني قبل زمن بعيد. أنا أشهد تاريخ <span class="keyword">القرى</span> الفلسطينية. كل موسم، العائلات تجتمع حولي. هل تعرف لماذا؟
+        </div>
+      </div>
+      <div class="game-quiz">
+        <h3>🤔 سؤال الذكاء: لماذا تجتمع العائلات حول شجرة الزيتون؟</h3>
+        <div class="quiz-choices">
+          <button class="choice-btn" onclick="answerQuiz(1,3,0,this,false)">لأنها مكان للعب فقط</button>
+          <button class="choice-btn" onclick="answerQuiz(1,3,1,this,true)">لجمع الزيتون والعمل معاً</button>
+          <button class="choice-btn" onclick="answerQuiz(1,3,2,this,false)">لأنها شجرة صغيرة وسهلة</button>
+          <button class="choice-btn" onclick="answerQuiz(1,3,3,this,false)">لأنها تتكلم معهم</button>
+        </div>
+        <div id="feedback-1-3" style="margin-top:15px; font-weight:700; display:none;"></div>
+      </div>
+      <div class="nav-buttons center" id="l1-nav3" style="display:none">
+        <button class="btn-game btn-small" onclick="nextStep(1,3)">👉 أحسنت! تابع</button>
+      </div>
+    </div>
+    
+    <!-- Step 4 -->
+    <div class="level-step" id="l1-step4" style="display:none">
+      <div class="dialogue-box">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">👨‍🌾</span>
+          <span class="speaker-name">جد سليم</span>
+        </div>
+        <div class="dialogue-text">
+          صحيح! أشجار الزيتون تجمع <span class="keyword">العائلة</span> والجيران. هي جزء من <span class="keyword">حياتنا</span> وتاريخنا. الآن… هل أنت مستعد لمرحلة الحصاد؟ موسم جمع الزيتون قد بدأ! 🌾
+        </div>
+      </div>
+      <div style="text-align:center; margin:30px 0;">
+        <button class="btn-game btn-olive" onclick="completeLevel(1)">🎉 أكمل المرحلة الأولى!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 4: LEVEL 2 ==================== -->
+<div class="screen" id="screen-level2">
+  <div class="scene-box">
+    <div class="scene-sky floating">☀️ 🏡 🌤️</div>
+    <div class="story-steps" id="steps-2">
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+    </div>
+    
+    <!-- Step 1 -->
+    <div class="level-step" id="l2-step1">
+      <div class="dialogue-box">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">👨‍🌾</span>
+          <span class="speaker-name">جد سليم</span>
+        </div>
+        <div class="dialogue-text">
+          ها هو <span class="keyword">موسم الحصاد</span>! 🌾 انظر كيف تملأ العائلات الحقول. الجدات، الأجداد، الأطفال، الجيران — الجميع يعمل <span class="keyword">معاً</span> كيد واحدة. هذا هو سرّ قوتنا! 🤝
+        </div>
+      </div>
+      <div class="scene-ground">
+        <span class="tree-emoji bouncing">👵</span>
+        <span class="tree-emoji" style="font-size:4rem; animation: float 3s ease-in-out infinite;">👨‍👩‍👧‍👦</span>
+        <span class="tree-emoji bouncing" style="animation-delay:0.3s">👴</span>
+        <span class="tree-emoji" style="font-size:3.5rem; animation: float 2.5s ease-in-out infinite; animation-delay:0.6s">👧</span>
+      </div>
+      <div class="dialogue-box" style="border-right-color:var(--olive-light);">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">👧</span>
+          <span class="speaker-name">ليلى (ابنة الجيران)</span>
+        </div>
+        <div class="dialogue-text">
+          هيا يا بطل! ساعدنا في جمع الزيتون قبل غروب الشمس! ☀️ كلما جمعنا أكثر، كلما كان <span class="keyword">الحصاد</span> أفضل. اضغط على الأشجار لجمع الزيتون!
+        </div>
+      </div>
+      <div class="nav-buttons center">
+        <button class="btn-game btn-small" onclick="nextStep(2,1)">👉 هيا نجمع!</button>
+      </div>
+    </div>
+    
+    <!-- Step 2: Mini-game -->
+    <div class="level-step" id="l2-step2" style="display:none">
+      <div class="mission-box">
+        <h3>🎯 المهمة الثانية: ساعد العائلة في جمع الزيتون!</h3>
+        <p>اضغط على كل شجرة لجمع الزيتون. هدفك: جمع <strong>8</strong> شجرة قبل انتهاء الوقت! ⏳</p>
+        <div style="font-size:1.3rem; font-weight:900; color:var(--sun); margin-top:10px;">
+          🫒 الزيتون المجموع: <span id="olive-count">0</span> / 8
+        </div>
+      </div>
+      <div class="olive-garden" id="olive-garden">
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 1</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 2</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 3</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 4</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 5</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 6</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 7</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 8</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 9</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 10</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 11</span></div>
+        <div class="olive-bush" onclick="collectOlive(this)"><span class="bush-emoji">🌳</span><span class="bush-label">شجرة 12</span></div>
+      </div>
+      <div id="harvest-feedback" style="text-align:center; margin:15px 0; font-weight:800; font-size:1.2rem; min-height:30px;"></div>
+      <div class="nav-buttons center" id="l2-nav2" style="display:none">
+        <button class="btn-game btn-small" onclick="nextStep(2,2)">🎉 ممتاز! تابع</button>
+      </div>
+    </div>
+    
+    <!-- Step 3 -->
+    <div class="level-step" id="l2-step3" style="display:none">
+      <div class="dialogue-box">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">👨‍🌾</span>
+          <span class="speaker-name">جد سليم</span>
+        </div>
+        <div class="dialogue-text">
+          رائع! انظر كيف الجميع يضحكون ويغنون أثناء العمل. <span class="keyword">التعاون</span> يجعل العمل سهلاً وممتعاً. حتى <span class="keyword">الأقارب</span> من القرى المجاورة يأتون لمساعدتنا. هذا هو <span class="keyword">المجتمع</span>! 💚
+        </div>
+      </div>
+      <div class="game-quiz">
+        <h3>🤔 سؤال التعاون: لماذا يأتي الجيران لمساعدة في الحصاد؟</h3>
+        <div class="quiz-choices">
+          <button class="choice-btn" onclick="answerQuiz(2,3,0,this,false)">لأنهم يحبون اللعب فقط</button>
+          <button class="choice-btn" onclick="answerQuiz(2,3,1,this,true)">لأن العمل الجماعي أقوى وأسرع</button>
+          <button class="choice-btn" onclick="answerQuiz(2,3,2,this,false)">لأنهم يأخذون المال</button>
+          <button class="choice-btn" onclick="answerQuiz(2,3,3,this,false)">لأنهم يشعرون بالملل</button>
+        </div>
+        <div id="feedback-2-3" style="margin-top:15px; font-weight:700; display:none;"></div>
+      </div>
+      <div class="nav-buttons center" id="l2-nav3" style="display:none">
+        <button class="btn-game btn-small" onclick="nextStep(2,3)">👉 صحيح! استمر</button>
+      </div>
+    </div>
+    
+    <!-- Step 4 -->
+    <div class="level-step" id="l2-step4" style="display:none">
+      <div class="dialogue-box">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">👧</span>
+          <span class="speaker-name">ليلى</span>
+        </div>
+        <div class="dialogue-text">
+          بعد جمع الزيتون، نأخله إلى المعصرة ليصبح <span class="keyword">زيت زيتون</span> ذهبي! 🫒✨ هل تعرف أن زيت الزيتون ليس فقط <span class="keyword">لذيذاً</span> و<span class="keyword">صحياً</span>، بل له معنى كبير؟
+        </div>
+      </div>
+      <div class="nav-buttons center">
+        <button class="btn-game btn-small" onclick="nextStep(2,4)">🤔 ما هو المعنى؟</button>
+      </div>
+    </div>
+    
+    <!-- Step 5 -->
+    <div class="level-step" id="l2-step5" style="display:none">
+      <div class="dialogue-box">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">👨‍🌾</span>
+          <span class="speaker-name">جد سليم</span>
+        </div>
+        <div class="dialogue-text">
+          الآن… حان وقت اكتشاف <span class="keyword">سرّ زيت الزيتون</span>. هل أنت مستعد للمرحلة الأخيرة؟ 🌟
+        </div>
+      </div>
+      <div style="text-align:center; margin:30px 0;">
+        <button class="btn-game btn-olive" onclick="completeLevel(2)">🎉 أكمل المرحلة الثانية!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 5: LEVEL 3 ==================== -->
+<div class="screen" id="screen-level3">
+  <div class="scene-box">
+    <div class="scene-sky floating">🌙 ✨ 🌤️</div>
+    <div class="story-steps" id="steps-3">
+      <div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+    </div>
+    
+    <!-- Step 1 -->
+    <div class="level-step" id="l3-step1">
+      <div class="dialogue-box">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">🌳</span>
+          <span class="speaker-name">شجرة أم زيتون</span>
+        </div>
+        <div class="dialogue-text">
+          أهلاً بك في المرحلة الأخيرة! 🌟 أنا شجرة الزيتون، وعندي <span class="keyword">لغز</span> لك. لقد عشت مئات السنين، رأيت الحروب والسلام، رأيت الفرح والحزن. لكنني ظللت هنا… أعطي ثماراً دائماً. لماذا؟
+        </div>
+      </div>
+      <div class="scene-ground">
+        <span class="tree-emoji pulsing" style="font-size:5rem; filter: drop-shadow(0 0 20px var(--gold))">🌳</span>
+        <span class="tree-emoji" style="font-size:3rem">🫒</span>
+        <span class="tree-emoji" style="font-size:3rem">🫒</span>
+        <span class="tree-emoji" style="font-size:3rem">🫒</span>
+      </div>
+      <div class="nav-buttons center">
+        <button class="btn-game btn-small" onclick="nextStep(3,1)">🤔 لماذا؟</button>
+      </div>
+    </div>
+    
+    <!-- Step 2 -->
+    <div class="level-step" id="l3-step2" style="display:none">
+      <div class="mission-box">
+        <h3>🎯 المهمة الأخيرة: افتح سرّ زيت الزيتون الذهبي!</h3>
+        <p>الشجرة تحتاج أن تفهم معانيها الثلاثة. أجب على الأسئلة لفتح الكنز! 🔐</p>
+      </div>
+      <div class="game-quiz">
+        <h3>🔐 اللغز الأول: ما الذي ترمز إليه شجرة الزيتون؟</h3>
+        <div class="quiz-choices">
+          <button class="choice-btn" onclick="answerQuiz(3,2,0,this,false)">السرعة والقوة</button>
+          <button class="choice-btn" onclick="answerQuiz(3,2,1,this,true)">السلام والصبر</button>
+          <button class="choice-btn" onclick="answerQuiz(3,2,2,this,false)">الغضب والحرب</button>
+          <button class="choice-btn" onclick="answerQuiz(3,2,3,this,false)">الخوف والقلق</button>
+        </div>
+        <div id="feedback-3-2" style="margin-top:15px; font-weight:700; display:none;"></div>
+      </div>
+      <div class="nav-buttons center" id="l3-nav2" style="display:none">
+        <button class="btn-game btn-small" onclick="nextStep(3,2)">🔓 لغز منحل! تابع</button>
+      </div>
+    </div>
+    
+    <!-- Step 3 -->
+    <div class="level-step" id="l3-step3" style="display:none">
+      <div class="game-quiz">
+        <h3>🔐 اللغز الثاني: لماذا نحتاج "الصبر" مع أشجار الزيتون؟</h3>
+        <div class="quiz-choices">
+          <button class="choice-btn" onclick="answerQuiz(3,3,0,this,false)">لأنها تنمو في يوم واحد</button>
+          <button class="choice-btn" onclick="answerQuiz(3,3,1,this,false)">لأنها لا تحتاج ماء</button>
+          <button class="choice-btn" onclick="answerQuiz(3,3,2,this,true)">لأنها تحتاج سنوات لتعطي ثماراً جيدة</button>
+          <button class="choice-btn" onclick="answerQuiz(3,3,3,this,false)">لأنها تموت بسرعة</button>
+        </div>
+        <div id="feedback-3-3" style="margin-top:15px; font-weight:700; display:none;"></div>
+      </div>
+      <div class="nav-buttons center" id="l3-nav3" style="display:none">
+        <button class="btn-game btn-small" onclick="nextStep(3,3)">🔓 ممتاز! اللغز الأخير</button>
+      </div>
+    </div>
+    
+    <!-- Step 4 -->
+    <div class="level-step" id="l3-step4" style="display:none">
+      <div class="game-quiz">
+        <h3>🔐 اللغز الثالث: ماذا تمثل "الجذور العميقة"؟</h3>
+        <div class="quiz-choices">
+          <button class="choice-btn" onclick="answerQuiz(3,4,0,this,true)">الارتباط العميق بالأرض والتاريخ</button>
+          <button class="choice-btn" onclick="answerQuiz(3,4,1,this,false)">أن الشجرة تخاف الرياح</button>
+          <button class="choice-btn" onclick="answerQuiz(3,4,2,this,false)">أن الأرض ضعيفة</button>
+          <button class="choice-btn" onclick="answerQuiz(3,4,3,this,false)">أن الجذور ليست مهمة</button>
+        </div>
+        <div id="feedback-3-4" style="margin-top:15px; font-weight:700; display:none;"></div>
+      </div>
+      <div class="nav-buttons center" id="l3-nav4" style="display:none">
+        <button class="btn-game btn-small" onclick="nextStep(3,4)">🔓 كل الألغاز محلولة!</button>
+      </div>
+    </div>
+    
+    <!-- Step 5: The Reveal -->
+    <div class="level-step" id="l3-step5" style="display:none">
+      <div class="dialogue-box" style="border-right-color:var(--gold); background: linear-gradient(135deg, white 0%, var(--gold-light) 100%);">
+        <div class="dialogue-speaker">
+          <span class="speaker-emoji">🌳</span>
+          <span class="speaker-name">شجرة أم زيتون</span>
+        </div>
+        <div class="dialogue-text">
+          🎉 <span class="keyword">أحسنت يا بطل!</span> لقد فتحت سرّي! أنا لست مجرد شجرة… أنا <span class="keyword">تاريخ</span>، أنا <span class="keyword">حياة</span>، أنا <span class="keyword">صبر</span>، وأنا <span class="keyword">سلام</span>. 🕊️<br><br>
+          في فلسطين، أشجار الزيتون شاهدة على كل شيء. نحن نعطي رغيفاً، ونوراً، وأملاً. جذورنا عميقة مثل حبّ الناس لأرضهم. 💚
+        </div>
+      </div>
+      <div style="text-align:center; margin:20px 0; font-size:4rem; animation: bounce 2s ease-in-out infinite;">
+        🌳🫒🕊️✨
+      </div>
+      <div style="text-align:center; margin:30px 0;">
+        <button class="btn-game" onclick="completeLevel(3)">🏆 اكتشف الكنز النهائي!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN 6: ENDING ==================== -->
+<div class="screen" id="screen-ending">
+  <div class="ending-screen">
+    <div class="ending-hero bouncing">🏆🌳🎉</div>
+    <h2 class="ending-title">تهانينا يا بطل صغير!</h2>
+    <p style="font-size:1.2rem; color:var(--text-light); margin-bottom:20px;">أكملت مغامرة قرية الزيتون السحرية بنجاح</p>
+    
+    <div class="final-score-box pop-in">
+      <div style="font-size:1.2rem; font-weight:700; color:var(--olive); margin-bottom:10px;">مجموع نقاطك</div>
+      <div class="final-score" id="final-score">0</div>
+      <div class="final-stars" id="final-stars"></div>
+      <div style="font-size:1rem; color:var(--text-light);">من أصل 180 نقطة ممكنة</div>
+    </div>
+    
+    <div class="ending-summary slide-in">
+      <p>
+        🌿 <span class="highlight-line">أشجار الزيتون ليست فقط شجر… بل تاريخ وحياة وصبر وسلام.</span> 🌿
+      </p>
+      <p style="margin-top:15px; font-size:1rem; color:var(--text-light);">
+        في فلسطين، الزيتون يرمز إلى <strong>السلام</strong> 🕊️، والحصاد يجمع <strong>العائلة</strong> 👨‍👩‍👧‍👦، والجذور العميقة تعني <strong>الصبر</strong> ⏳ و<strong>الارتباط بالأرض</strong> 🌍.
+      </p>
+    </div>
+    
+    <div class="treasure-box pop-in">
+      <div class="treasure-title">🎁 كنز الثقافة الفلسطينية الذي اكتشفته:</div>
+      <div class="treasure-items">
+        <div class="treasure-item">
+          <span class="treasure-icon">🌳</span>
+          <span class="treasure-label">شجرة الزيتون</span>
+        </div>
+        <div class="treasure-item">
+          <span class="treasure-icon">🫒</span>
+          <span class="treasure-label">الحصاد الجماعي</span>
+        </div>
+        <div class="treasure-item">
+          <span class="treasure-icon">🕊️</span>
+          <span class="treasure-label">رمز السلام</span>
+        </div>
+        <div class="treasure-item">
+          <span class="treasure-icon">⏳</span>
+          <span class="treasure-label">الصبر والجذور</span>
+        </div>
+        <div class="treasure-item">
+          <span class="treasure-icon">👨‍👩‍👧‍👦</span>
+          <span class="treasure-label">العائلة والمجتمع</span>
+        </div>
+      </div>
+    </div>
+    
+    <div style="margin-top:30px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+      <button class="btn-game btn-olive" onclick="restartGame()">🔄 العب مرة أخرى</button>
+      <button class="btn-game btn-sky" onclick="goToMap()">🗺️ العودة للخريطة</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== REWARD POPUP ==================== -->
+<div class="reward-overlay" id="reward-popup">
+  <div class="reward-box">
+    <span class="reward-emoji bouncing" id="reward-icon">⭐</span>
+    <div class="reward-title" id="reward-title">أحسنت!</div>
+    <div class="reward-text" id="reward-text">حصلت على 10 نقاط ونجمة!</div>
+    <div class="reward-stars" id="reward-stars">⭐</div>
+    <button class="btn-game btn-small" onclick="closeReward()">🎉 استمر!</button>
+  </div>
+</div>
+
+</div><!-- /game-container -->
+
+<script>
+// ==================== GAME STATE ====================
+let gameState = {
+  points: 0,
+  stars: 0,
+  levelsCompleted: [false, false, false],
+  currentLevel: 0,
+  currentStep: 1,
+  olivesCollected: 0
+};
+
+const LEVEL_POINTS = { 1: 40, 2: 60, 3: 80 };
+const STEP_POINTS = 10;
+
+// ==================== NAVIGATION ====================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToMap() {
+  updateMap();
+  showScreen('map');
+}
+
+function updateMap() {
+  for (let i = 1; i <= 3; i++) {
+    const node = document.getElementById('node-' + i);
+    const starsEl = document.getElementById('stars-' + i);
+    if (gameState.levelsCompleted[i-1]) {
+      node.classList.add('completed');
+      node.classList.remove('locked');
+      starsEl.textContent = '⭐⭐⭐';
+    } else if (i === 1 || gameState.levelsCompleted[i-2]) {
+      node.classList.remove('locked');
+      starsEl.textContent = '';
+    }
+  }
+}
+
+// ==================== LEVEL START ====================
+function startLevel(n) {
+  if (n > 1 && !gameState.levelsCompleted[n-2]) return;
+  gameState.currentLevel = n;
+  gameState.currentStep = 1;
+  gameState.olivesCollected = 0;
+  
+  // Reset steps visibility
+  document.querySelectorAll('.level-step').forEach(s => s.style.display = 'none');
+  document.getElementById('l' + n + '-step1').style.display = 'block';
+  updateStepDots(n, 1);
+  
+  showScreen('level' + n);
+}
+
+function nextStep(level, currentStepNum) {
+  document.getElementById('l' + level + '-step' + currentStepNum).style.display = 'none';
+  document.getElementById('l' + level + '-step' + (currentStepNum + 1)).style.display = 'block';
+  gameState.currentStep = currentStepNum + 1;
+  updateStepDots(level, gameState.currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateStepDots(level, activeStep) {
+  const dots = document.querySelectorAll('#steps-' + level + ' .step-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i < activeStep - 1) d.classList.add('done');
+    else if (i === activeStep - 1) d.classList.add('active');
+  });
+}
+
+// ==================== POINTS & REWARDS ====================
+function addPoints(amount, reason) {
+  gameState.points += amount;
+  gameState.stars += Math.floor(amount / 10);
+  updateStats();
+  
+  const icons = ['⭐', '🌟', '🏆', '🎉', '🌿'];
+  const titles = ['رائع!', 'ممتاز!', 'أحسنت!', 'بطل!', ' genius!'];
+  document.getElementById('reward-icon').textContent = icons[Math.floor(Math.random() * icons.length)];
+  document.getElementById('reward-title').textContent = titles[Math.floor(Math.random() * titles.length)];
+  document.getElementById('reward-text').textContent = reason + ' حصلت على +' + amount + ' نقاط!';
+  document.getElementById('reward-stars').textContent = '⭐'.repeat(Math.floor(amount / 10));
+  document.getElementById('reward-popup').classList.add('show');
+  
+  // Particle effect
+  for (let i = 0; i < 8; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = ['⭐', '🌿', '🫒', '✨'][Math.floor(Math.random() * 4)];
+    p.style.left = (Math.random() * 80 + 10) + '%';
+    p.style.top = (Math.random() * 50 + 20) + '%';
+    p.style.animationDuration = (Math.random() * 0.5 + 0.5) + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1000);
+  }
+}
+
+function closeReward() {
+  document.getElementById('reward-popup').classList.remove('show');
+}
+
+function updateStats() {
+  document.getElementById('points-count').textContent = gameState.points;
+  document.getElementById('stars-count').textContent = gameState.stars;
+}
+
+// ==================== LEVEL 1: TREE GAME ====================
+function checkTree(el, isCorrect) {
+  const feedback = document.getElementById('tree-feedback');
+  document.querySelectorAll('.tree-emoji').forEach(t => t.onclick = null);
+  
+  if (isCorrect) {
+    el.classList.add('found');
+    feedback.innerHTML = '<span style="color:var(--success)">🎉 صحيح! هذه الشجرة عمرها 800 سنة! أقدم شجرة في القرية!</span>';
+    addPoints(20, 'اكتشفت الشجرة الأقدم!');
+    document.getElementById('l1-nav2').style.display = 'flex';
+  } else {
+    el.style.transform = 'rotate(10deg)';
+    feedback.innerHTML = '<span style="color:var(--danger)">❌ ليست هذه! جرب شجرة أكبر وأعرض!</span>';
+    setTimeout(() => {
+      el.style.transform = '';
+      document.querySelectorAll('.tree-emoji').forEach(t => {
+        t.onclick = function() { checkTree(this, t.style.fontSize === '5.5rem'); };
+      });
+    }, 1500);
+  }
+}
+
+// ==================== LEVEL 2: OLIVE COLLECTION ====================
+function collectOlive(el) {
+  if (el.classList.contains('collected')) return;
+  el.classList.add('collected');
+  gameState.olivesCollected++;
+  document.getElementById('olive-count').textContent = gameState.olivesCollected;
+  
+  // Pop animation
+  const pop = document.createElement('div');
+  pop.textContent = '+1 🫒';
+  pop.style.position = 'absolute';
+  pop.style.fontWeight = '900';
+  pop.style.color = 'var(--olive)';
+  pop.style.fontSize = '1.5rem';
+  pop.style.pointerEvents = 'none';
+  pop.style.animation = 'float 1s ease-out forwards';
+  el.appendChild(pop);
+  setTimeout(() => pop.remove(), 1000);
+  
+  if (gameState.olivesCollected >= 8) {
+    document.getElementById('harvest-feedback').innerHTML = '<span style="color:var(--success)">🎉 ممتاز! جمعت 8 أشجار! العائلة فخورة بك!</span>';
+    addPoints(30, 'أكملت مهمة الحصاد!');
+    document.getElementById('l2-nav2').style.display = 'flex';
+  }
+}
+
+// ==================== QUIZ SYSTEM ====================
+function answerQuiz(level, step, choice, btn, isCorrect) {
+  const feedbackEl = document.getElementById('feedback-' + level + '-' + step);
+  const allBtns = btn.parentElement.querySelectorAll('.choice-btn');
+  
+  allBtns.forEach(b => b.classList.add('disabled'));
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    feedbackEl.innerHTML = '<span style="color:var(--success)">✅ إجابة صحيحة! ' + getFeedbackText(level, step) + '</span>';
+    feedbackEl.style.display = 'block';
+    addPoints(10, 'أجبت بشكل صحيح!');
+    
+    // Show continue button
+    const navId = 'l' + level + '-nav' + step;
+    const navEl = document.getElementById(navId);
+    if (navEl) navEl.style.display = 'flex';
+  } else {
+    btn.classList.add('wrong');
+    // Highlight correct answer
+    allBtns.forEach((b, i) => {
+      if (getCorrectIndex(level, step) === i) b.classList.add('correct');
+    });
+    feedbackEl.innerHTML = '<span style="color:var(--danger)">❌ ليست هذه الإجابة. ' + getFeedbackText(level, step) + '</span>';
+    feedbackEl.style.display = 'block';
+    addPoints(5, 'حاولت بشجاعة!');
+    
+    const navId = 'l' + level + '-nav' + step;
+    const navEl = document.getElementById(navId);
+    if (navEl) navEl.style.display = 'flex';
+  }
+}
+
+function getCorrectIndex(level, step) {
+  const answers = { '1-3': 1, '2-3': 1, '3-2': 1, '3-3': 2, '3-4': 0 };
+  return answers[level + '-' + step];
+}
+
+function getFeedbackText(level, step) {
+  const texts = {
+    '1-3': 'العائلات تجتمع لجمع الزيتون والعمل معاً كمجتمع واحد.',
+    '2-3': 'التعاون يجعل العمل أسهل وأمتع للجميع.',
+    '3-2': 'الزيتون يرمز إلى السلام والصبر في الثقافة الفلسطينية.',
+    '3-3': 'أشجار الزيتون تحتاج سنوات طويلة لتنمو وتعطي ثماراً جيدة — هذا يعلمنا الصبر.',
+    '3-4': 'الجذور العميقة تعني الارتباط العميق بالأرض والتاريخ والهوية.'
+  };
+  return texts[level + '-' + step] || '';
+}
+
+// ==================== LEVEL COMPLETION ====================
+function completeLevel(level) {
+  gameState.levelsCompleted[level - 1] = true;
+  const bonus = LEVEL_POINTS[level];
+  addPoints(bonus, 'أكملت المرحلة ' + level + '!');
+  
+  setTimeout(() => {
+    if (level < 3) {
+      goToMap();
+    } else {
+      showEnding();
+    }
+  }, 1500);
+}
+
+// ==================== ENDING ====================
+function showEnding() {
+  document.getElementById('final-score').textContent = gameState.points;
+  const starCount = Math.min(5, Math.floor(gameState.points / 36));
+  document.getElementById('final-stars').textContent = '⭐'.repeat(starCount) + (starCount < 5 ? '☆'.repeat(5 - starCount) : '');
+  showScreen('ending');
+}
+
+function restartGame() {
+  gameState = { points: 0, stars: 0, levelsCompleted: [false, false, false], currentLevel: 0, currentStep: 1, olivesCollected: 0 };
+  updateStats();
+  
+  // Reset UI
+  document.querySelectorAll('.level-node').forEach(n => { n.classList.remove('completed'); if (n.id !== 'node-1') n.classList.add('locked'); });
+  document.getElementById('stars-1').textContent = ''; document.getElementById('stars-2').textContent = '🔒'; document.getElementById('stars-3').textContent = '🔒';
+  document.querySelectorAll('.olive-bush').forEach(b => b.classList.remove('collected'));
+  document.getElementById('olive-count').textContent = '0';
+  document.querySelectorAll('.choice-btn').forEach(b => { b.classList.remove('correct', 'wrong', 'disabled'); });
+  document.querySelectorAll('[id^="feedback-"]').forEach(f => { f.style.display = 'none'; f.innerHTML = ''; });
+  document.querySelectorAll('[id^="l"][id*="-nav"]').forEach(n => n.style.display = 'none');
+  document.getElementById('tree-feedback').innerHTML = '';
+  document.getElementById('harvest-feedback').innerHTML = '';
+  
+  showScreen('intro');
+}
+
+// ==================== INIT ====================
+updateStats();
+</script>
 
 </body>
-</html>
+</html>'''
+
+with open('/mnt/agents/output/olive_adventure.html', 'w', encoding='utf-8') as f:
+    f.write(html_game)
+
+print("✅ تم إنشاء مغامرة قرية الزيتون السحرية!")
+print(f"📁 المسار: /mnt/agents/output/olive_adventure.html")
+print(f"📊 الحجم: {len(html_game)} حرف")
