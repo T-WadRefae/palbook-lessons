@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jericho – The City of Palm Trees</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Lato:wght@300;400;700&amp;family=Tajawal:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --orange: #E07B2A;
+    --orange-dark: #C56520;
+    --orange-light: #F5A552;
+    --sand: #F9EDD7;
+    --deep: #2C1A0E;
+    --green: #4A7C3F;
+    --sky: #6AACCC;
+    --white: #fff;
+    --correct: #4CAF50;
+    --wrong: #e53935;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(160deg, #1a0e05 0%, #2e1a08 40%, #1a2a1a 100%);
+    min-height: 100vh;
+    color: var(--deep);
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--orange-dark), var(--orange), var(--orange-light));
+    padding: 22px 30px 18px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  header::before {
+    content: "🌴";
+    position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+    font-size: 2.6rem; opacity: .7;
+  }
+  header::after {
+    content: "🌴";
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    font-size: 2.6rem; opacity: .7;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.1rem;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,.3);
+    letter-spacing: 1px;
+  }
+  header p {
+    color: #ffe8cc;
+    font-size: .95rem;
+    margin-top: 4px;
+    font-family: 'Tajawal', sans-serif;
+  }
+  .grade-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    border-radius: 20px;
+    padding: 2px 14px;
+    font-size: .8rem;
+    margin-top: 6px;
+    letter-spacing: .5px;
+  }
+
+  /* ── TABS ── */
+  .tabs-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: rgba(0,0,0,0.35);
+    padding: 10px 20px 0;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    font-family: 'Lato', sans-serif;
+    font-size: .92rem;
+    font-weight: 700;
+    padding: 10px 22px;
+    cursor: pointer;
+    border-radius: var(--radius) var(--radius) 0 0;
+    border-bottom: 3px solid transparent;
+    transition: all .25s;
+    letter-spacing: .4px;
+  }
+  .tab-btn:hover { color: var(--orange-light); background: rgba(255,255,255,.05); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom: 3px solid var(--orange);
+    background: rgba(249,237,215,.08);
+  }
+
+  /* ── MAIN WRAPPER ── */
+  .main { max-width: 900px; margin: 0 auto; padding: 28px 18px 50px; }
+
+  /* ── PANELS ── */
+  .panel { display: none; animation: fadeUp .35s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* card base */
+  .card {
+    background: var(--sand);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 18px rgba(0,0,0,.25);
+    padding: 28px 30px;
+    margin-bottom: 22px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--orange-dark);
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 9px;
+  }
+
+  /* ── TAB 1: READING ── */
+  .website-chrome {
+    background: #ddd;
+    border-radius: 10px 10px 0 0;
+    padding: 8px 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .dot.r{background:#e74c3c} .dot.y{background:#f1c40f} .dot.g{background:#2ecc71}
+  .url-bar {
+    flex: 1; background: #fff; border-radius: 4px; padding: 3px 10px;
+    font-size: .8rem; color: #555; font-family: monospace;
+  }
+  .website-body {
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+  }
+  .website-header-bar {
+    background: var(--orange);
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .website-header-bar h2 {
+    font-family: 'Playfair Display', serif;
+    color: #fff; font-size: 1.5rem;
+  }
+  .website-nav { display: flex; gap: 16px; }
+  .website-nav span { color: rgba(255,255,255,.85); font-size: .8rem; font-weight: 700; cursor: pointer; }
+  .website-content { padding: 22px 24px; line-height: 1.85; font-size: .97rem; color: #333; position: relative; }
+  
+  /* tooltip words */
+  .vocab {
+    color: var(--orange-dark);
+    font-weight: 700;
+    border-bottom: 2px dashed var(--orange);
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+  }
+  .vocab .tip {
+    display: none;
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--deep);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: .82rem;
+    white-space: nowrap;
+    z-index: 100;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 700;
+    pointer-events: none;
+    box-shadow: 0 3px 10px rgba(0,0,0,.4);
+  }
+  .vocab .tip::after {
+    content: '';
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--deep);
+  }
+  .vocab:hover .tip { display: block; }
+
+  /* paragraph block */
+  .para-block { margin-bottom: 10px; }
+
+  /* paragraph questions dropdown */
+  .para-qs-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 10px;
+    background: #fef3e5;
+    border: 1.5px solid var(--orange-light);
+    color: var(--orange-dark);
+    font-size: .82rem; font-weight: 700;
+    padding: 5px 14px; border-radius: 20px;
+    cursor: pointer; transition: background .2s;
+    font-family: 'Tajawal', sans-serif;
+    user-select: none;
+  }
+  .para-qs-toggle:hover { background: #fde0b8; }
+  .para-qs-toggle .arrow { transition: transform .25s; display: inline-block; }
+  .para-qs-toggle.open .arrow { transform: rotate(90deg); }
+
+  .para-qs-box {
+    display: none;
+    margin-top: 8px;
+    background: #fff8f0;
+    border-right: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    direction: rtl; text-align: right;
+    font-family: 'Tajawal', sans-serif;
+  }
+  .para-qs-box.open { display: block; animation: fadeUp .2s ease; }
+  .para-qs-box li {
+    font-size: .9rem; color: #444;
+    margin-bottom: 7px; line-height: 1.6;
+    list-style: none;
+    padding-right: 4px;
+  }
+  .para-qs-box li::before { content: "🔹 "; }
+
+  /* ── TAB 2: TRUE/FALSE ── */
+  .tf-intro {
+    font-size: .97rem;
+    color: #555;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: #fff8f0;
+    border-left: 4px solid var(--orange);
+    border-radius: 6px;
+    font-family: 'Tajawal', sans-serif;
+    direction: rtl;
+    text-align: right;
+  }
+  .tf-item {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    border: 2px solid #eee;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: border .2s, box-shadow .2s;
+  }
+  .tf-item.correct { border-color: var(--correct); background: #f0faf0; }
+  .tf-item.wrong { border-color: var(--wrong); background: #fff0f0; }
+  .tf-statement { font-size: .97rem; color: #333; font-weight: 700; }
+  .tf-statement span.num { 
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px;
+    background: var(--orange);
+    color: #fff;
+    border-radius: 50%;
+    font-size: .8rem;
+    margin-right: 8px;
+    font-weight: 900;
+  }
+  .tf-btns { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1; border: 2px solid; border-radius: 8px;
+    padding: 8px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all .2s; background: transparent;
+  }
+  .tf-btn.true-btn { border-color: var(--correct); color: var(--correct); }
+  .tf-btn.false-btn { border-color: var(--wrong); color: var(--wrong); }
+  .tf-btn.selected-t { background: var(--correct); color: #fff; }
+  .tf-btn.selected-f { background: var(--wrong); color: #fff; }
+  .tf-feedback {
+    font-size: .88rem; font-weight: 700;
+    font-family: 'Tajawal', sans-serif;
+    display: none; padding: 6px 10px; border-radius: 6px;
+    direction: rtl; text-align: right;
+  }
+  .tf-feedback.show { display: block; }
+  .tf-feedback.ok { background: #e8f5e9; color: #2e7d32; }
+  .tf-feedback.no { background: #fce4ec; color: #c62828; }
+  .tf-check-btn {
+    display: block; margin: 20px auto 0;
+    background: var(--orange); color: #fff;
+    border: none; border-radius: 30px;
+    padding: 12px 40px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: background .2s; letter-spacing: .5px;
+    font-family: 'Lato', sans-serif;
+  }
+  .tf-check-btn:hover { background: var(--orange-dark); }
+  .tf-score {
+    text-align: center; margin-top: 18px;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--orange-dark);
+    font-family: 'Tajawal', sans-serif;
+    display: none;
+  }
+
+  /* ── TAB 3: FAQ ── */
+  .faq-chrome {
+    background: #eee;
+    border-radius: 10px 10px 0 0;
+    padding: 8px 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .faq-header {
+    background: var(--orange);
+    padding: 14px 24px;
+  }
+  .faq-header h2 {
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+  }
+  .faq-header span { color: #ffe0bb; font-weight: 300; }
+  .faq-body { background: #fff; border: 1px solid #ccc; border-top: none; border-radius: 0 0 10px 10px; padding: 22px 24px; }
+  .faq-row {
+    display: grid; grid-template-columns: 30px 1fr;
+    gap: 10px; align-items: start;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed #e0c9a8;
+  }
+  .faq-row:last-child { border-bottom: none; margin-bottom: 0; }
+  .faq-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--orange); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: .85rem;
+    margin-top: 2px;
+  }
+  .faq-qa { display: flex; flex-direction: column; gap: 8px; }
+  .faq-q { font-weight: 700; color: #333; font-size: .97rem; display: flex; align-items: center; gap: 6px; }
+  .faq-q::before { content: 'Q'; color: var(--orange); font-weight: 900; font-size: 1rem; }
+  .faq-a-label { color: var(--green); font-weight: 900; font-size: .9rem; }
+  .faq-input {
+    border: none; border-bottom: 2px solid var(--orange-light);
+    width: 100%; padding: 5px 4px;
+    font-family: 'Lato', sans-serif; font-size: .95rem;
+    background: transparent; color: var(--deep);
+    transition: border .2s;
+  }
+  .faq-input:focus { outline: none; border-bottom-color: var(--orange); }
+  .faq-hint { 
+    font-size: .8rem; color: #999; 
+    font-family: 'Tajawal', sans-serif;
+    direction: rtl; text-align: right;
+  }
+  .faq-reveal-btn {
+    display: block; margin: 20px auto 0;
+    background: var(--green); color: #fff;
+    border: none; border-radius: 30px;
+    padding: 11px 36px; font-size: .95rem; font-weight: 700;
+    cursor: pointer; transition: background .2s;
+    font-family: 'Lato', sans-serif;
+  }
+  .faq-reveal-btn:hover { background: #3a6232; }
+  .answer-reveal {
+    display: none; color: var(--green);
+    font-weight: 700; font-size: .93rem;
+    background: #f0faf0; padding: 5px 10px;
+    border-radius: 6px; margin-top: 4px;
+  }
+  .answer-reveal.show { display: block; }
+
+  /* ── TAB 4: QUIZ ── */
+  .quiz-banner {
+    background: linear-gradient(135deg, var(--orange-dark), #a04010);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .quiz-banner h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 4px; }
+  .quiz-banner p { font-size: .9rem; opacity: .9; font-family: 'Tajawal', sans-serif; }
+  .quiz-progress-bar { background: rgba(255,255,255,.2); border-radius: 20px; height: 8px; margin-top: 12px; }
+  .quiz-progress-fill { background: #fff; height: 8px; border-radius: 20px; transition: width .4s; }
+
+  .quiz-q-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 24px 26px;
+    box-shadow: 0 3px 14px rgba(0,0,0,.1);
+    margin-bottom: 18px;
+  }
+  .quiz-q-num { font-size: .82rem; color: var(--orange); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .quiz-q-text { font-size: 1.05rem; font-weight: 700; color: var(--deep); margin-bottom: 16px; line-height: 1.5; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt {
+    background: var(--sand);
+    border: 2px solid #e0c9a8;
+    border-radius: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-size: .95rem;
+    font-weight: 600;
+    color: #444;
+    transition: all .2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .quiz-opt:hover:not(.disabled) { border-color: var(--orange); background: #fef3e5; }
+  .quiz-opt.selected { border-color: var(--orange); background: #fef3e5; }
+  .quiz-opt.correct-ans { border-color: var(--correct); background: #e8f5e9; color: var(--correct); }
+  .quiz-opt.wrong-ans { border-color: var(--wrong); background: #fce4ec; color: var(--wrong); }
+  .quiz-opt.disabled { cursor: default; }
+  .opt-letter {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--orange-light); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 900; flex-shrink: 0;
+  }
+  .quiz-feedback-msg {
+    padding: 10px 16px; border-radius: 8px; font-size: .92rem;
+    font-family: 'Tajawal', sans-serif; font-weight: 700;
+    direction: rtl; text-align: right;
+    margin-top: 12px; display: none;
+  }
+  .quiz-feedback-msg.show { display: block; }
+  .quiz-feedback-msg.ok { background: #e8f5e9; color: #2e7d32; }
+  .quiz-feedback-msg.no { background: #fce4ec; color: #c62828; }
+  .quiz-nav { display: flex; justify-content: space-between; margin-top: 18px; }
+  .quiz-nav-btn {
+    background: var(--orange); color: #fff; border: none;
+    padding: 10px 28px; border-radius: 30px; font-size: .93rem;
+    font-weight: 700; cursor: pointer; transition: background .2s;
+    font-family: 'Lato', sans-serif;
+  }
+  .quiz-nav-btn:hover { background: var(--orange-dark); }
+  .quiz-nav-btn:disabled { background: #ccc; cursor: default; }
+
+  .quiz-result {
+    background: linear-gradient(135deg, #fff8f0, #ffe9cc);
+    border-radius: var(--radius); padding: 36px 30px;
+    text-align: center; display: none;
+    box-shadow: 0 4px 18px rgba(0,0,0,.15);
+  }
+  .quiz-result.show { display: block; }
+  .result-emoji { font-size: 4rem; margin-bottom: 12px; }
+  .result-score { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--orange-dark); }
+  .result-msg { font-size: 1.1rem; color: #555; margin-top: 8px; font-family: 'Tajawal', sans-serif; }
+  .quiz-retry-btn {
+    margin-top: 20px; background: var(--orange); color: #fff;
+    border: none; border-radius: 30px; padding: 12px 40px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* responsive */
+  @media(max-width:600px){
+    header h1 { font-size: 1.4rem; }
+    .tab-btn { font-size: .8rem; padding: 8px 14px; }
+    .card { padding: 18px 16px; }
+  }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <header>
+   <h1>🏛 Jericho – The City of Palm Trees</h1>
+   <p>أريحا – مدينة أشجار النخيل</p>
+   <div class="grade-badge">
+    Grade 8 · Unit 10  — Reading &amp; Comprehension
+   </div>
+  </header>
+  <div class="tabs-bar"><button class="tab-btn active" onclick="showTab('objectives')">🎯 Objectives</button> <button class="tab-btn" onclick="showTab('reading')">📖 Reading</button> <button class="tab-btn" onclick="showTab('trueFalse')">✔✘ True / False</button> <button class="tab-btn" onclick="showTab('faq')">❓ FAQ</button> <button class="tab-btn" onclick="showTab('quiz')">🏆 Quiz</button>
+  </div>
+  <div class="main"><!-- ═══════════════════════════════════════════════
+     TAB 0 — OBJECTIVES
+═══════════════════════════════════════════════ -->
+   <div id="tab-objectives" class="panel active">
+    <div class="card">
+     <div class="card-title">
+      🎯 Objectives – ما ستتعلمه اليوم
+     </div>
+     <p style="font-size:.95rem;color:#555;margin-bottom:18px;line-height:1.8;font-family:'Tajawal',sans-serif;direction:rtl;text-align:right;">بنهاية هذا الدرس، ستكون قادراً على:</p>
+     <div style="display:flex;flex-direction:column;gap:14px;direction:rtl;">
+      <div style="background:#fff8f0;border-right:4px solid var(--orange);border-radius:0 8px 8px 0;padding:14px 16px;font-family:'Tajawal',sans-serif;text-align:right;">
+       <div style="font-weight:700;color:var(--orange);font-size:.95rem;margin-bottom:4px;">
+        ✓ فهم موقع أريحا الجغرافي
+       </div>
+       <div style="font-size:.9rem;color:#666;">
+        معرفة أين تقع أريحا بالضبط وموقعها بالنسبة للمدن الأخرى والبحر الميت
+       </div>
+      </div>
+      <div style="background:#fff8f0;border-right:4px solid var(--orange);border-radius:0 8px 8px 0;padding:14px 16px;font-family:'Tajawal',sans-serif;text-align:right;">
+    <div style="background:#fff8f0;border-right:4px solid var(--orange);border-radius:0 8px 8px 0;padding:14px 16px;font-family:'Tajawal',sans-serif;text-align:right;">
+  <div style="font-weight:700;color:var(--orange);font-size:.95rem;margin-bottom:4px;direction:ltr;text-align:left;">
+    ✓ Know the historical importance of Jericho
+  </div>
+  <div style="font-size:.9rem;color:#666;">
+    فهم لماذا تُعتبر أريحا أول مدينة في العالم وقيمتها التاريخية
+  </div>
+</div>
+
+<div style="background:#fff8f0;border-right:4px solid var(--orange);border-radius:0 8px 8px 0;padding:14px 16px;font-family:'Tajawal',sans-serif;text-align:right;">
+  <div style="font-weight:700;color:var(--orange);font-size:.95rem;margin-bottom:4px;direction:ltr;text-align:left;">
+    ✓ Identify the main industries
+  </div>
+  <div style="font-size:.9rem;color:#666;">
+    معرفة القطاعات الاقتصادية المهمة مثل السياحة والزراعة وأنواع المحاصيل
+  </div>
+</div>
+
+<div style="background:#fff8f0;border-right:4px solid var(--orange);border-radius:0 8px 8px 0;padding:14px 16px;font-family:'Tajawal',sans-serif;text-align:right;">
+  <div style="font-weight:700;color:var(--orange);font-size:.95rem;margin-bottom:4px;direction:ltr;text-align:left;">
+    ✓ Understand pronouns and their references
+  </div>
+  <div style="font-size:.9rem;color:#666;">
+    القدرة على تحديد ما يشير إليه الضمير (They, These, It) في النص
+  </div>
+</div>
+
+<div style="background:#fff8f0;border-right:4px solid var(--orange);border-radius:0 8px 8px 0;padding:14px 16px;font-family:'Tajawal',sans-serif;text-align:right;">
+  <div style="font-weight:700;color:var(--orange);font-size:.95rem;margin-bottom:4px;direction:ltr;text-align:left;">
+    ✓ Answer comprehension questions
+  </div>
+  <div style="font-size:.9rem;color:#666;">
+    الإجابة على أسئلة متنوعة تقيس مستوى فهمك للنص (True/False, MCQ, الإجابات القصيرة)
+  </div>
+</div>
+      </div>
+     </div>
+    </div>
+   </div><!-- tab-objectives --> <!-- ═══════════════════════════════════════════════
+     TAB 1 — READING
+═══════════════════════════════════════════════ -->
+   <div id="tab-reading" class="panel">
+    <div class="card">
+     <div class="card-title">
+      🌐 The Website
+     </div><!-- fake browser -->
+     <div style="border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.15);">
+      <div class="website-chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+       <div class="url-bar">
+        http://www.cityofpalmtrees.org
+       </div>
+      </div>
+      <div class="website-body">
+       <div class="website-header-bar">
+        <h2>🌴 The City of Palm Trees</h2>
+        <div class="website-nav"><span>HOME</span><span>MAP</span><span>FAQ</span><span>CONTACT</span>
+        </div>
+       </div>
+       <div class="website-content"><!-- PARAGRAPH 1 -->
+        <div class="para-block">
+         <p>Jericho is a <span class="vocab">small city<span class="tip">مدينة صغيرة</span></span> which <span class="vocab">stands<span class="tip">تقع / تقوم</span></span> in a <span class="vocab">deep valley<span class="tip">وادٍ عميق</span></span> between Jerusalem and Amman, near the <span class="vocab">Dead Sea<span class="tip">البحر الميت</span></span>. This is a famous <span class="vocab">salt lake<span class="tip">بحيرة مالحة</span></span> that is 400 metres <span class="vocab">below sea level<span class="tip">تحت مستوى سطح البحر</span></span> and is the <span class="vocab">lowest place<span class="tip">أخفض مكان</span></span> on Earth.</p><button class="para-qs-toggle" onclick="toggleQ(this)"><span class="arrow">▶</span> أسئلة متوقعة على هذه الفقرة</button>
+         <ul class="para-qs-box">
+          <li>Where is Jericho located / situated?</li>
+          <li>What is the Dead Sea?</li>
+          <li>How far below sea level is Jericho?</li>
+          <li>What is special / unique about the Dead Sea?</li>
+         </ul>
+        </div><!-- PARAGRAPH 2 -->
+        <div class="para-block">
+         <p>Jericho is most <span class="vocab">popular<span class="tip">مشهورة / محبوبة</span></span> with <span class="vocab">tourists<span class="tip">السياح</span></span> in the warm <span class="vocab">winter months<span class="tip">أشهر الشتاء</span></span>. There are <span class="vocab">hotels<span class="tip">فنادق</span></span> for these visitors, and a lot of the people who live there <span class="vocab">work in tourism<span class="tip">يعملون في السياحة</span></span>. <span class="vocab">Farming<span class="tip">الزراعة</span></span> is also very important in this area.</p><button class="para-qs-toggle" onclick="toggleQ(this)"><span class="arrow">▶</span> أسئلة متوقعة على هذه الفقرة</button>
+         <ul class="para-qs-box">
+          <li>When is Jericho most popular with tourists?</li>
+          <li>What do many people in Jericho do for work?</li>
+          <li>What does "these visitors" refer to? (pronoun reference)</li>
+          <li>Is tourism important in Jericho? Why?</li>
+         </ul>
+        </div><!-- PARAGRAPH 3 -->
+        <div class="para-block">
+         <p>With large <span class="vocab">quantities<span class="tip">كميات</span></span> of water and a <span class="vocab">warm climate<span class="tip">مناخ دافئ</span></span>, this part of Palestine is an <span class="vocab">excellent place<span class="tip">مكان ممتاز</span></span> to grow <span class="vocab">bananas<span class="tip">الموز</span></span> and various other <span class="vocab">fruit and vegetable crops<span class="tip">محاصيل الفاكهة والخضروات</span></span> – including, of course, <span class="vocab">dates<span class="tip">التمور</span></span> from all the palms.</p><button class="para-qs-toggle" onclick="toggleQ(this)"><span class="arrow">▶</span> أسئلة متوقعة على هذه الفقرة</button>
+         <ul class="para-qs-box">
+          <li>Why is Jericho a good place for farming?</li>
+          <li>What crops grow well in Jericho?</li>
+          <li>What fruit comes from the palm trees?</li>
+          <li>Name two conditions that make farming possible in Jericho.</li>
+         </ul>
+        </div><!-- PARAGRAPH 4 -->
+        <div class="para-block">
+         <p>With its water and warm climate, <span class="vocab">human beings<span class="tip">البشر</span></span> first started <span class="vocab">visiting the area<span class="tip">زيارة المنطقة</span></span> 12,000 years ago. There were many people who chose to <span class="vocab">remain<span class="tip">يبقون / يمكثون</span></span>, and they became some of the world's first <span class="vocab">farmers<span class="tip">المزارعين</span></span>. These were also the people that 500 years later <span class="vocab">constructed<span class="tip">بنوا / شيّدوا</span></span> the first city in the world.</p><button class="para-qs-toggle" onclick="toggleQ(this)"><span class="arrow">▶</span> أسئلة متوقعة على هذه الفقرة</button>
+         <ul class="para-qs-box">
+          <li>How long ago did people first visit the area?</li>
+          <li>Why did many people choose to remain in Jericho?</li>
+          <li>What does "they" refer to in "they became some of the world's first farmers"?</li>
+          <li>What does "These" refer to in "These were also the people that constructed…"?</li>
+          <li>Why is Jericho historically important / unique?</li>
+         </ul>
+        </div><!-- PARAGRAPH 5 -->
+        <div class="para-block">
+         <p>Later, it had a high <span class="vocab">tower<span class="tip">برج</span></span> and <span class="vocab">stone walls<span class="tip">جدران حجرية</span></span> which were almost <span class="vocab">four metres high<span class="tip">أربعة أمتار ارتفاعاً</span></span>. Tourists love seeing those walls today. They are a <span class="vocab">window on our most ancient past<span class="tip">نافذة على ماضينا القديم</span></span>.</p><button class="para-qs-toggle" onclick="toggleQ(this)"><span class="arrow">▶</span> أسئلة متوقعة على هذه الفقرة</button>
+         <ul class="para-qs-box">
+          <li>How high were the ancient stone walls?</li>
+          <li>What can tourists see in Jericho today?</li>
+          <li>What does "They" refer to in "They are a window on our most ancient past"?</li>
+          <li>What does the phrase "a window on our most ancient past" mean?</li>
+         </ul>
+        </div>
+       </div><!-- website-content -->
+      </div>
+     </div><!-- fake browser end -->
+    </div><!-- card end -->
+   </div><!-- tab-reading --> <!-- ═══════════════════════════════════════════════
+     TAB 2 — TRUE / FALSE
+═══════════════════════════════════════════════ -->
+   <div id="tab-trueFalse" class="panel">
+    <div class="card">
+     <div class="card-title">
+      ✔✘ Read and mark the statements True (✔) or False (✘)
+     </div>
+     <div class="tf-intro">
+      اقرأ الجُمل وحدِّد: هل هي صحيحة أم خاطئة بناءً على النص؟ ثم صحِّح الجمل الخاطئة مع شريكك.
+     </div>
+     <div id="tf-container"></div><button class="tf-check-btn" onclick="checkTF()">✔ Check Answers / تحقق من الإجابات</button>
+     <div class="tf-score" id="tf-score"></div>
+    </div>
+   </div><!-- ═══════════════════════════════════════════════
+     TAB 3 — FAQ
+═══════════════════════════════════════════════ -->
+   <div id="tab-faq" class="panel">
+    <div class="card">
+     <div class="card-title">
+      ❓ FAQ – Jericho, What you need to know
+     </div>
+     <p style="font-size:.9rem;color:#777;margin-bottom:18px;font-family:'Tajawal',sans-serif;direction:rtl;text-align:right;">اقرأ النص في التبويب الأول ثم أكمل الإجابات عن أريحا أدناه.</p><!-- fake browser -->
+     <div style="border-radius:10px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.12);">
+      <div class="faq-chrome"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+       <div class="url-bar">
+        http://www.cityofpalmtrees.org/faq
+       </div>
+      </div>
+      <div class="faq-header">
+       <h2>❓ FAQ <span>— Jericho: What you need to know</span></h2>
+      </div>
+      <div class="faq-body" id="faq-body"></div>
+     </div><button class="faq-reveal-btn" onclick="revealFAQ()">👁 Show Model Answers / اعرض الإجابات النموذجية</button>
+    </div>
+   </div><!-- ═══════════════════════════════════════════════
+     TAB 4 — QUIZ
+═══════════════════════════════════════════════ -->
+   <div id="tab-quiz" class="panel">
+    <div class="quiz-banner">
+     <h2>🏆 Comprehensive Quiz</h2>
+     <p>اختبر فهمك للنص — بما يشمل الضمائر ومرجعها</p>
+     <div class="quiz-progress-bar">
+      <div class="quiz-progress-fill" id="quiz-prog"></div>
+     </div>
+    </div>
+    <div id="quiz-area"></div>
+    <div id="quiz-result" class="quiz-result"></div>
+   </div>
+  </div><!-- main -->
+  <script>
+// ─── PARAGRAPH QUESTIONS TOGGLE ──────────────────────────
+function toggleQ(btn){
+  const box = btn.nextElementSibling;
+  btn.classList.toggle('open');
+  box.classList.toggle('open');
+}
+
+// ─── TAB SWITCHING ────────────────────────────────────────
+function showTab(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ─── TRUE / FALSE DATA ────────────────────────────────────
+const tfData = [
+  {
+    text: "Adnan and Yasmeen learned a lot about Jericho on the internet.",
+    correct: true,
+    feedback_ok: "✔ صحيح! لقد وجدا هذا الموقع على الإنترنت ليتعلما أكثر عن أريحا.",
+    feedback_no: "✘ خطأ. في الحقيقة هم تعلموا عن أريحا من خلال الإنترنت."
+  },
+  {
+    text: "Tourists prefer to go to Jericho in the summer months.",
+    correct: false,
+    feedback_ok: "",
+    feedback_no: "✘ خطأ. الجملة الصحيحة: Tourists prefer to go to Jericho in the winter months. — يُفضّل السياح زيارة أريحا في أشهر الشتاء الدافئة."
+  },
+  {
+    text: "A lot of the people of Jericho live in hotels.",
+    correct: false,
+    feedback_ok: "",
+    feedback_no: "✘ خطأ. الجملة الصحيحة: A lot of people work in tourism / in hotels. — كثير من الناس يعملون في الفنادق، لا يسكنون فيها."
+  },
+  {
+    text: "The ancient city of Jericho is more than 11,000 years old.",
+    correct: true,
+    feedback_ok: "✔ صحيح! بدأ البشر بزيارة المنطقة قبل 12,000 عام.",
+    feedback_no: ""
+  },
+  {
+    text: "There are windows in the ancient walls of Jericho.",
+    correct: false,
+    feedback_ok: "",
+    feedback_no: "✘ خطأ. الجدران القديمة تُشبَّه بـ'نافذة على الماضي' — أي هي رمز، ليست نوافذ حقيقية."
+  }
+];
+
+(function buildTF(){
+  const c = document.getElementById('tf-container');
+  tfData.forEach((item,i)=>{
+    c.innerHTML += `
+    <div class="tf-item" id="tfi-${i}">
+      <div class="tf-statement"><span class="num">${i+1}</span>${item.text}</div>
+      <div class="tf-btns">
+        <button class="tf-btn true-btn" onclick="selectTF(${i},'T')">✔ True</button>
+        <button class="tf-btn false-btn" onclick="selectTF(${i},'F')">✘ False</button>
+      </div>
+      <div class="tf-feedback" id="tff-${i}"></div>
+    </div>`;
+  });
+})();
+
+const tfAnswers = {};
+function selectTF(i,v){
+  tfAnswers[i]=v;
+  const item=document.getElementById('tfi-'+i);
+  item.querySelectorAll('.tf-btn').forEach(b=>{b.classList.remove('selected-t','selected-f')});
+  item.querySelector(v==='T'?'.true-btn':'.false-btn').classList.add(v==='T'?'selected-t':'selected-f');
+  item.classList.remove('correct','wrong');
+}
+
+function checkTF(){
+  let score=0;
+  tfData.forEach((item,i)=>{
+    const ans=tfAnswers[i];
+    const row=document.getElementById('tfi-'+i);
+    const fb=document.getElementById('tff-'+i);
+    if(!ans){fb.textContent='⚠️ لم تختر إجابة!';fb.className='tf-feedback show no';return;}
+    const isCorrect=(ans==='T')===item.correct;
+    if(isCorrect){score++;row.className='tf-item correct';fb.textContent=item.feedback_ok||'✔ أحسنت! إجابتك صحيحة.';fb.className='tf-feedback show ok';}
+    else{row.className='tf-item wrong';fb.textContent=item.feedback_no||'✘ خطأ.';fb.className='tf-feedback show no';}
+  });
+  const sc=document.getElementById('tf-score');
+  sc.textContent=`نتيجتك: ${score} من ${tfData.length} 🎉`;
+  sc.style.display='block';
+}
+
+// ─── FAQ DATA ─────────────────────────────────────────────
+const faqData = [
+  {
+    q:"Where is it?",
+    hint:"تلميح: بين مدينتين قريبتين من البحر الميت",
+    answer:"It is in a deep valley between Jerusalem and Amman, near the Dead Sea."
+  },
+  {
+    q:"How old is the ancient city?",
+    hint:"تلميح: فكّر في عدد السنوات منذ بدأ البشر البقاء هناك",
+    answer:"The ancient city is more than 12,000 years old. It was the first city in the world."
+  },
+  {
+    q:"What kinds of work do people do?",
+    hint:"تلميح: قطاعان رئيسيان ذُكرا في النص",
+    answer:"People work in tourism and farming."
+  },
+  {
+    q:"What crops grow well in the area?",
+    hint:"تلميح: ذُكرت ثلاثة أنواع في النص",
+    answer:"Bananas, other fruits and vegetables, and dates from the palm trees."
+  },
+  {
+    q:"When is the best time to visit?",
+    hint:"تلميح: موسم واحد فقط ذُكر في النص",
+    answer:"The best time to visit is in the warm winter months."
+  },
+  {
+    q:"What is there to do?",
+    hint:"تلميح: شيء تاريخي يُحبّه السياح",
+    answer:"Tourists can see the ancient stone walls and tower which are nearly four metres high."
+  }
+];
+
+(function buildFAQ(){
+  const b=document.getElementById('faq-body');
+  faqData.forEach((item,i)=>{
+    b.innerHTML+=`
+    <div class="faq-row">
+      <div class="faq-num">${i+1}</div>
+      <div class="faq-qa">
+        <div class="faq-q">${item.q}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+          <span class="faq-a-label">A</span>
+          <input class="faq-input" id="faq-in-${i}" placeholder="Write your answer…" type="text">
+        </div>
+        <div class="faq-hint">${item.hint}</div>
+        <div class="answer-reveal" id="faq-rev-${i}">✅ ${item.answer}</div>
+      </div>
+    </div>`;
+  });
+})();
+
+function revealFAQ(){
+  faqData.forEach((_,i)=>{
+    document.getElementById('faq-rev-'+i).classList.add('show');
+  });
+}
+
+// ─── QUIZ DATA ────────────────────────────────────────────
+const quizData = [
+  {
+    q:"Where is Jericho located?",
+    opts:["In a high mountain between Cairo and Baghdad","In a deep valley between Jerusalem and Amman","On the coast of the Mediterranean Sea","Near the city of Tel Aviv"],
+    ans:1,
+    fb_ok:"✔ صحيح! أريحا في وادٍ عميق بين القدس وعمّان.",
+    fb_no:"✘ خطأ. أريحا تقع في وادٍ عميق بين القدس وعمّان."
+  },
+  {
+    q:"What is the Dead Sea?",
+    opts:["A deep river","A small ocean","A famous salt lake","A mountain lake"],
+    ans:2,
+    fb_ok:"✔ ممتاز! البحر الميت بحيرة مالحة مشهورة.",
+    fb_no:"✘ خطأ. البحر الميت هو بحيرة مالحة مشهورة."
+  },
+  {
+    q:"When is Jericho most popular with tourists?",
+    opts:["Summer months","Spring months","Autumn months","Winter months"],
+    ans:3,
+    fb_ok:"✔ صحيح! تكون أريحا أكثر شعبيةً في أشهر الشتاء الدافئة.",
+    fb_no:"✘ خطأ. السياح يُفضّلون زيارة أريحا في أشهر الشتاء الدافئة."
+  },
+  {
+    q:"Which crop is NOT mentioned in the text as growing in Jericho?",
+    opts:["Bananas","Dates","Oranges","Vegetables"],
+    ans:2,
+    fb_ok:"✔ صحيح! البرتقال لم يُذكر في النص.",
+    fb_no:"✘ خطأ. البرتقال هو المحصول الذي لم يُذكر في النص."
+  },
+  {
+    q:"How long ago did human beings first start visiting the area of Jericho?",
+    opts:["5,000 years ago","500 years ago","12,000 years ago","1,000 years ago"],
+    ans:2,
+    fb_ok:"✔ صحيح! بدأ البشر زيارة المنطقة قبل 12,000 عام.",
+    fb_no:"✘ خطأ. بدأ البشر زيارة المنطقة قبل 12,000 عام."
+  },
+  {
+    q:"Look at the sentence: 'They are a window on our most ancient past.' What does the word THEY refer to?",
+    opts:["The palm trees","The tourists","The ancient stone walls","The farmers"],
+    ans:2,
+    fb_ok:"✔ ممتاز! الضمير 'they' يعود على الجدران الحجرية القديمة (the stone walls).",
+    fb_no:"✘ خطأ. الضمير 'they' يعود على الجدران الحجرية القديمة (the walls)."
+  },
+  {
+    q:"'There are many people who chose to remain, and they became some of the world's first farmers.' What does THEY refer to?",
+    opts:["The tourists","The people who stayed in Jericho","The farmers from other cities","The people of Amman"],
+    ans:1,
+    fb_ok:"✔ صحيح! الضمير 'they' يعود على 'many people who chose to remain' — الناس الذين اختاروا البقاء.",
+    fb_no:"✘ خطأ. الضمير 'they' يعود على الناس الذين اختاروا البقاء في المنطقة."
+  },
+  {
+    q:"'Jericho is most popular with tourists in the warm winter months. There are hotels for THESE visitors…' What does THESE VISITORS refer to?",
+    opts:["People who live in Jericho","Farmers in the area","Tourists who come in winter","People from Jerusalem"],
+    ans:2,
+    fb_ok:"✔ ممتاز! 'these visitors' تعود على السياح الذين يزورون أريحا في الشتاء.",
+    fb_no:"✘ خطأ. 'these visitors' تشير إلى السياح الذين يزورون أريحا في أشهر الشتاء."
+  },
+  {
+    q:"How high were the stone walls of the ancient city of Jericho?",
+    opts:["Almost 2 metres","Almost 4 metres","About 10 metres","More than 6 metres"],
+    ans:1,
+    fb_ok:"✔ صحيح! كانت الجدران يبلغ ارتفاعها نحو أربعة أمتار.",
+    fb_no:"✘ خطأ. ارتفاع الجدران كان نحو أربعة أمتار."
+  },
+  {
+    q:"'These were also the people that 500 years later constructed the first city in the world.' What does THESE refer to?",
+    opts:["The tourists","The ancient builders from Egypt","The first farmers who stayed in Jericho","The people of Jerusalem"],
+    ans:2,
+    fb_ok:"✔ ممتاز! 'these' تعود على المزارعين الأوائل الذين بقوا في المنطقة.",
+    fb_no:"✘ خطأ. 'these' تعود على المزارعين الأوائل الذين بقوا في أريحا."
+  },
+  {
+    q:"What is a SYNONYM (مرادف) for the word 'POPULAR'?",
+    opts:["Famous and well-liked","Unknown and forgotten","Expensive and rare","Dangerous and scary"],
+    ans:0,
+    fb_ok:"✔ ممتاز! مرادف 'popular' هو 'famous and well-liked' — مشهور ومحبوب.",
+    fb_no:"✘ خطأ. المرادف الصحيح هو 'famous and well-liked'."
+  },
+  {
+    q:"What is an ANTONYM (ضد) for the word 'WARM'?",
+    opts:["Cold","Sunny","Dry","Bright"],
+    ans:0,
+    fb_ok:"✔ صحيح! ضد 'warm' هو 'cold' — البارد ضد الدافئ.",
+    fb_no:"✘ خطأ. الضد الصحيح للكلمة 'warm' هو 'cold'."
+  },
+  {
+    q:"What is a SYNONYM for 'REMAIN'?",
+    opts:["To leave quickly","To stay in a place","To visit for a day","To travel far"],
+    ans:1,
+    fb_ok:"✔ ممتاز! مرادف 'remain' هو 'to stay in a place' — يبقى / يمكث.",
+    fb_no:"✘ خطأ. المرادف الصحيح هو 'to stay in a place'."
+  },
+  {
+    q:"What is an ANTONYM for 'ANCIENT'?",
+    opts:["Old and historic","Modern and new","Small and tiny","Large and big"],
+    ans:1,
+    fb_ok:"✔ صحيح! ضد 'ancient' هو 'modern and new' — الحديث ضد القديم.",
+    fb_no:"✘ خطأ. الضد الصحيح للكلمة 'ancient' هو 'modern and new'."
+  },
+  {
+    q:"What is a SYNONYM for 'CONSTRUCT'?",
+    opts:["To destroy completely","To build or create","To plan only","To move something"],
+    ans:1,
+    fb_ok:"✔ ممتاز! مرادف 'construct' هو 'to build or create' — يبني / ينشئ.",
+    fb_no:"✘ خطأ. المرادف الصحيح هو 'to build or create'."
+  },
+  {
+    q:"What is an ANTONYM for 'DEEP'?",
+    opts:["Dark and gloomy","Shallow and not deep","Wide and broad","Long and narrow"],
+    ans:1,
+    fb_ok:"✔ صحيح! ضد 'deep' هو 'shallow' — السطحي / الضحل ضد العميق.",
+    fb_no:"✘ خطأ. الضد الصحيح للكلمة 'deep' هو 'shallow'."
+  },
+  {
+    q:"What is a SYNONYM for 'FARMING'?",
+    opts:["Building houses","Agriculture and growing crops","Selling goods","Making clothes"],
+    ans:1,
+    fb_ok:"✔ ممتاز! مرادف 'farming' هو 'agriculture and growing crops' — الزراعة.",
+    fb_no:"✘ خطأ. المرادف الصحيح هو 'agriculture and growing crops'."
+  }
+];
+
+let qIdx=0, qScore=0, answered=false;
+
+function buildQuiz(){
+  const area=document.getElementById('quiz-area');
+  if(qIdx>=quizData.length){showResult();return;}
+  const q=quizData[qIdx];
+  const prog=((qIdx/quizData.length)*100).toFixed(0);
+  document.getElementById('quiz-prog').style.width=prog+'%';
+  const letters=['A','B','C','D'];
+  area.innerHTML=`
+  <div class="quiz-q-card">
+    <div class="quiz-q-num">Question ${qIdx+1} of ${quizData.length}</div>
+    <div class="quiz-q-text">${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((o,i)=>`
+        <div class="quiz-opt" id="qopt-${i}" onclick="selectOpt(${i})">
+          <span class="opt-letter">${letters[i]}</span>${o}
+        </div>`).join('')}
+    </div>
+    <div class="quiz-feedback-msg" id="qfb"></div>
+  </div>
+  <div class="quiz-nav">
+    <span></span>
+    <button class="quiz-nav-btn" id="qnext" onclick="nextQ()" disabled>
+      ${qIdx<quizData.length-1?'Next →':'Finish 🏁'}
+    </button>
+  </div>`;
+  answered=false;
+}
+
+function selectOpt(i){
+  if(answered)return;
+  answered=true;
+  const q=quizData[qIdx];
+  document.querySelectorAll('.quiz-opt').forEach(o=>o.classList.add('disabled'));
+  const fb=document.getElementById('qfb');
+  if(i===q.ans){
+    document.getElementById('qopt-'+i).classList.add('correct-ans');
+    fb.textContent=q.fb_ok; fb.className='quiz-feedback-msg show ok';
+    qScore++;
+  } else {
+    document.getElementById('qopt-'+i).classList.add('wrong-ans');
+    document.getElementById('qopt-'+q.ans).classList.add('correct-ans');
+    fb.textContent=q.fb_no; fb.className='quiz-feedback-msg show no';
+  }
+  document.getElementById('qnext').disabled=false;
+}
+
+function nextQ(){qIdx++;buildQuiz();}
+
+function showResult(){
+  document.getElementById('quiz-area').innerHTML='';
+  document.getElementById('quiz-prog').style.width='100%';
+  const pct=Math.round((qScore/quizData.length)*100);
+  let emoji='🌟', msg='ممتاز جداً! أداء رائع!';
+  if(pct<50){emoji='📚';msg='راجع النص مرة أخرى — يمكنك الأفضل!';}
+  else if(pct<75){emoji='👍';msg='جيد! لكن يمكنك المزيد من المراجعة.';}
+  const r=document.getElementById('quiz-result');
+  r.innerHTML=`
+  <div class="result-emoji">${emoji}</div>
+  <div class="result-score">${qScore}/${quizData.length}</div>
+  <div style="font-size:.95rem;color:#888;margin-top:4px;">${pct}%</div>
+  <div class="result-msg">${msg}</div>
+  <button class="quiz-retry-btn" onclick="retryQuiz()">🔄 Try Again / أعد المحاولة</button>`;
+  r.classList.add('show');
+}
+
+function retryQuiz(){
+  qIdx=0;qScore=0;answered=false;
+  document.getElementById('quiz-result').classList.remove('show');
+  buildQuiz();
+}
+
+buildQuiz();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc8b71247db93a1',t:'MTc3ODkxNzAyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
