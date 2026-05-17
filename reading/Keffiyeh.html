@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Palestinian Keffiyeh — Interactive Reading</title>
+<style>
+:root{
+  --black:#1a1a1a;
+  --white:#fafafa;
+  --gold:#d4a574;
+  --gold-deep:#b8894d;
+  --gold-glow:#e8c994;
+  --red:#8b2635;
+  --cream:#f5efe6;
+  --paper:#faf6ef;
+  --shadow:rgba(0,0,0,.25);
+  --ink:#2a2520;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:hidden}
+body{
+  font-family:'Georgia','Times New Roman',serif;
+  background:var(--cream);
+  color:var(--ink);
+  min-height:100vh;
+  position:relative;
+  line-height:1.7;
+}
+
+/* ===== KEFFIYEH BACKGROUND PATTERN ===== */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    /* Fishnet pattern - diagonal lines */
+    repeating-linear-gradient(45deg, transparent 0 18px, rgba(26,26,26,.04) 18px 19px),
+    repeating-linear-gradient(-45deg, transparent 0 18px, rgba(26,26,26,.04) 18px 19px),
+    /* Triangle dots */
+    radial-gradient(circle at 20% 30%, rgba(212,165,116,.06) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, rgba(212,165,116,.06) 0 2px, transparent 3px);
+  background-size: 40px 40px, 40px 40px, 80px 80px, 80px 80px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Floating golden threads */
+.thread{
+  position:fixed;
+  width:2px;
+  background:linear-gradient(180deg, transparent, var(--gold-glow), transparent);
+  pointer-events:none;
+  z-index:1;
+  opacity:.4;
+  animation:weave 8s ease-in-out infinite;
+}
+@keyframes weave{
+  0%,100%{transform:translateY(-20px) rotate(0deg);opacity:0}
+  50%{transform:translateY(20px) rotate(2deg);opacity:.5}
+}
+
+/* Sparkles */
+.sparkle{
+  position:fixed;
+  width:6px;height:6px;
+  background:var(--gold);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:2;
+  box-shadow:0 0 10px var(--gold-glow), 0 0 20px var(--gold);
+  animation:twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{transform:scale(0);opacity:0}
+  50%{transform:scale(1);opacity:1}
+}
+
+/* ===== CONTAINER ===== */
+.container{
+  position:relative;
+  z-index:10;
+  max-width:1100px;
+  margin:0 auto;
+  padding:20px 16px 100px;
+}
+
+/* ===== HEADER ===== */
+.header{
+  text-align:center;
+  padding:30px 20px 40px;
+  position:relative;
+}
+.header::before, .header::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.header::before{top:10px;width:60%}
+.header::after{bottom:0;width:80%}
+
+.boy-frame{
+  width:140px;height:140px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  position:relative;
+  padding:6px;
+  background:
+    conic-gradient(from 0deg, var(--gold), var(--gold-glow), var(--gold-deep), var(--gold), var(--gold-glow));
+  box-shadow:
+    0 0 30px var(--gold-glow),
+    0 0 60px rgba(212,165,116,.4),
+    inset 0 0 20px rgba(255,255,255,.3);
+  animation:glow-pulse 3s ease-in-out infinite;
+}
+@keyframes glow-pulse{
+  0%,100%{box-shadow:0 0 30px var(--gold-glow), 0 0 60px rgba(212,165,116,.4)}
+  50%{box-shadow:0 0 45px var(--gold-glow), 0 0 90px rgba(212,165,116,.6)}
+}
+.boy-frame::before{
+  content:'';
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:1px dashed var(--gold);
+  animation:rotate 20s linear infinite;
+}
+@keyframes rotate{
+  to{transform:rotate(360deg)}
+}
+.boy-frame img{
+  width:100%;height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  background:var(--white);
+  border:3px solid var(--white);
+}
+
+.title-decoration{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  margin:15px 0;
+}
+.title-decoration .line{
+  height:1px;
+  width:60px;
+  background:linear-gradient(90deg, transparent, var(--gold));
+}
+.title-decoration .line.right{
+  background:linear-gradient(270deg, transparent, var(--gold));
+}
+.fishnet-icon{
+  width:50px;height:50px;
+  position:relative;
+  flex-shrink:0;
+}
+.fishnet-icon svg{
+  width:100%;height:100%;
+  filter:drop-shadow(0 2px 4px rgba(212,165,116,.6));
+}
+
+h1{
+  font-family:'Georgia',serif;
+  font-size:clamp(28px, 5vw, 44px);
+  color:var(--black);
+  font-weight:bold;
+  letter-spacing:1px;
+  margin-bottom:8px;
+  text-shadow:2px 2px 0 var(--gold-glow);
+}
+.subtitle-ar{
+  font-family:'Amiri','Traditional Arabic','Times New Roman',serif;
+  font-size:clamp(22px, 4vw, 32px);
+  color:var(--red);
+  font-weight:bold;
+  margin-top:5px;
+  direction:rtl;
+}
+
+/* ===== BOOKMARK TABS ===== */
+.tabs{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin:30px auto 0;
+  flex-wrap:wrap;
+  padding:0 10px;
+}
+.tab{
+  background:var(--paper);
+  border:none;
+  padding:14px 22px 18px;
+  font-family:'Georgia',serif;
+  font-size:16px;
+  font-weight:bold;
+  color:var(--ink);
+  cursor:pointer;
+  position:relative;
+  clip-path:polygon(0 0, 100% 0, 100% 75%, 90% 100%, 10% 100%, 0 75%);
+  transition:all .3s;
+  box-shadow:0 4px 0 var(--gold-deep);
+  min-width:140px;
+}
+.tab:hover{
+  transform:translateY(-3px);
+  background:var(--gold-glow);
+}
+.tab.active{
+  background:var(--black);
+  color:var(--gold);
+  box-shadow:0 4px 0 var(--gold);
+  transform:translateY(-5px);
+}
+.tab .icon{display:block;font-size:22px;margin-bottom:4px}
+
+/* ===== TAB CONTENT ===== */
+.tab-content{
+  display:none;
+  margin-top:20px;
+  animation:fadeIn .5s ease;
+}
+.tab-content.active{display:block}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ===== READING TAB - WOVEN CLOTH STYLE ===== */
+.cloth-container{
+  background:var(--paper);
+  border-radius:8px;
+  padding:30px 25px;
+  position:relative;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.15),
+    inset 0 0 60px rgba(212,165,116,.08);
+  /* Keffiyeh border decoration */
+  border:8px solid var(--black);
+  background-image:
+    repeating-linear-gradient(45deg, transparent 0 12px, rgba(26,26,26,.02) 12px 13px),
+    repeating-linear-gradient(-45deg, transparent 0 12px, rgba(26,26,26,.02) 12px 13px);
+  background-size:30px 30px;
+}
+
+/* Keffiyeh corners */
+.cloth-container::before,
+.cloth-container::after{
+  content:'';
+  position:absolute;
+  width:60px;height:60px;
+  background:
+    repeating-linear-gradient(45deg, var(--black) 0 3px, transparent 3px 6px);
+  opacity:.3;
+}
+.cloth-container::before{top:0;left:0;clip-path:polygon(0 0, 100% 0, 0 100%)}
+.cloth-container::after{bottom:0;right:0;clip-path:polygon(100% 0, 100% 100%, 0 100%)}
+
+.paragraph-counter{
+  text-align:center;
+  font-family:'Georgia',serif;
+  font-style:italic;
+  color:var(--gold-deep);
+  margin-bottom:15px;
+  font-size:14px;
+  letter-spacing:2px;
+}
+
+.listen-btn{
+  display:block;
+  margin:0 auto 18px;
+  background:linear-gradient(135deg, var(--black), #333);
+  color:var(--gold);
+  border:2px solid var(--gold);
+  padding:10px 24px;
+  font-family:'Georgia',serif;
+  font-size:15px;
+  font-weight:bold;
+  border-radius:30px;
+  cursor:pointer;
+  transition:all .3s;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+  letter-spacing:1px;
+}
+.listen-btn:hover{
+  transform:scale(1.05);
+  background:linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color:var(--black);
+}
+.listen-btn.speaking{
+  animation:pulse-listen 1s ease-in-out infinite;
+}
+@keyframes pulse-listen{
+  0%,100%{box-shadow:0 0 0 0 rgba(212,165,116,.7)}
+  50%{box-shadow:0 0 0 15px rgba(212,165,116,0)}
+}
+
+.paragraph-image{
+  width:100%;
+  max-width:500px;
+  margin:0 auto 20px;
+  display:block;
+  border-radius:6px;
+  border:4px solid;
+  border-image:linear-gradient(135deg, var(--gold), var(--gold-glow), var(--gold-deep)) 1;
+  padding:4px;
+  background:var(--white);
+  box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.paragraph-text{
+  font-family:'Georgia',serif;
+  font-size:18px;
+  line-height:2;
+  color:var(--ink);
+  text-align:justify;
+  padding:0 5px;
+}
+
+/* Hover words */
+.word{
+  position:relative;
+  cursor:help;
+  border-bottom:1px dotted var(--gold-deep);
+  transition:all .2s;
+  padding:0 2px;
+}
+.word:hover{
+  background:var(--gold-glow);
+  color:var(--black);
+  border-radius:3px;
+}
+.tooltip{
+  visibility:hidden;
+  opacity:0;
+  position:absolute;
+  bottom:130%;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--black);
+  color:var(--white);
+  padding:12px 16px;
+  border-radius:8px;
+  font-size:13px;
+  font-family:'Georgia',serif;
+  width:240px;
+  z-index:100;
+  box-shadow:0 8px 25px rgba(0,0,0,.4);
+  border:2px solid var(--gold);
+  transition:opacity .3s;
+  line-height:1.6;
+  text-align:right;
+  direction:rtl;
+  pointer-events:none;
+}
+.tooltip::after{
+  content:'';
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  border:6px solid transparent;
+  border-top-color:var(--gold);
+}
+.tooltip .ar{color:var(--gold-glow);font-weight:bold;font-size:15px}
+.tooltip .syn{color:#90ee90}
+.tooltip .ant{color:#ff9999}
+.tooltip .ref{color:#87ceeb;font-style:italic}
+.tooltip .label{color:var(--gold);font-weight:bold}
+.word:hover .tooltip{
+  visibility:visible;
+  opacity:1;
+}
+
+/* Navigation arrows */
+.nav-arrows{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:25px;
+  padding:0 10px;
+}
+.arrow{
+  background:var(--black);
+  color:var(--gold);
+  border:2px solid var(--gold);
+  width:50px;height:50px;
+  border-radius:50%;
+  font-size:24px;
+  cursor:pointer;
+  transition:all .3s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Georgia',serif;
+  font-weight:bold;
+}
+.arrow:hover:not(:disabled){
+  background:var(--gold);
+  color:var(--black);
+  transform:scale(1.15);
+  box-shadow:0 0 20px var(--gold-glow);
+}
+.arrow:disabled{
+  opacity:.3;
+  cursor:not-allowed;
+}
+.dot-indicator{
+  display:flex;
+  gap:8px;
+}
+.dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--gold-deep);
+  opacity:.4;
+  transition:all .3s;
+}
+.dot.active{
+  opacity:1;
+  background:var(--gold);
+  transform:scale(1.4);
+  box-shadow:0 0 8px var(--gold-glow);
+}
+
+/* Hidden paragraphs */
+.paragraph{display:none}
+.paragraph.active{display:block;animation:fadeIn .5s ease}
+
+/* ===== MAIN IDEAS TAB ===== */
+.ideas-container{
+  background:var(--paper);
+  border-radius:8px;
+  padding:30px 25px;
+  border:8px solid var(--black);
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+.idea-section{
+  margin-bottom:25px;
+  padding:20px;
+  background:var(--white);
+  border-radius:8px;
+  border-left:5px solid var(--gold);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  position:relative;
+  overflow:hidden;
+}
+.idea-section::before{
+  content:'';
+  position:absolute;
+  top:0;right:0;
+  width:80px;height:80px;
+  background:
+    repeating-linear-gradient(45deg, var(--gold) 0 2px, transparent 2px 8px);
+  opacity:.15;
+  clip-path:polygon(100% 0, 100% 100%, 0 0);
+}
+.idea-title{
+  font-family:'Georgia',serif;
+  font-size:22px;
+  color:var(--black);
+  font-weight:bold;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.idea-title .emoji{font-size:28px}
+.idea-en{
+  font-size:16px;
+  color:var(--ink);
+  margin-bottom:8px;
+  line-height:1.7;
+}
+.idea-ar{
+  font-family:'Amiri','Traditional Arabic',serif;
+  font-size:17px;
+  color:var(--red);
+  direction:rtl;
+  text-align:right;
+  line-height:1.9;
+  padding-top:8px;
+  border-top:1px dashed var(--gold);
+}
+.sub-list{
+  list-style:none;
+  margin-top:12px;
+}
+.sub-list li{
+  padding:10px 0 10px 30px;
+  position:relative;
+  border-bottom:1px dotted rgba(212,165,116,.4);
+}
+.sub-list li:last-child{border-bottom:none}
+.sub-list li::before{
+  content:'◆';
+  color:var(--gold);
+  position:absolute;
+  left:8px;
+  top:10px;
+}
+.sub-en{display:block;font-size:15px;color:var(--ink);margin-bottom:4px}
+.sub-ar{
+  display:block;
+  font-family:'Amiri','Traditional Arabic',serif;
+  font-size:15px;
+  color:var(--red);
+  direction:rtl;
+  text-align:right;
+}
+
+/* ===== QUESTIONS TAB ===== */
+.quiz-container{
+  background:var(--paper);
+  border-radius:8px;
+  padding:30px 25px;
+  border:8px solid var(--black);
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+.score-bar{
+  position:sticky;
+  top:10px;
+  background:var(--black);
+  color:var(--gold);
+  padding:12px 20px;
+  border-radius:30px;
+  margin:0 auto 25px;
+  text-align:center;
+  font-family:'Georgia',serif;
+  font-weight:bold;
+  font-size:18px;
+  box-shadow:0 4px 15px rgba(0,0,0,.3);
+  border:2px solid var(--gold);
+  max-width:280px;
+  z-index:50;
+  letter-spacing:1px;
+}
+.score-bar .stars{color:var(--gold-glow);margin-right:8px}
+
+.question{
+  background:var(--white);
+  border-radius:10px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  border-left:5px solid var(--gold);
+  position:relative;
+}
+.q-num{
+  display:inline-block;
+  background:var(--gold);
+  color:var(--black);
+  font-weight:bold;
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:14px;
+  margin-bottom:10px;
+}
+.q-type{
+  display:inline-block;
+  background:var(--red);
+  color:var(--white);
+  padding:3px 10px;
+  border-radius:15px;
+  font-size:12px;
+  margin-left:8px;
+  font-family:'Georgia',serif;
+}
+.q-text{
+  font-family:'Georgia',serif;
+  font-size:17px;
+  color:var(--ink);
+  margin:10px 0 15px;
+  line-height:1.6;
+  font-weight:bold;
+}
+.q-options{
+  display:grid;
+  gap:10px;
+}
+.q-options.tf{grid-template-columns:1fr 1fr}
+.option{
+  background:var(--cream);
+  border:2px solid var(--gold-deep);
+  padding:12px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-family:'Georgia',serif;
+  font-size:15px;
+  text-align:left;
+  transition:all .25s;
+  color:var(--ink);
+}
+.option:hover:not(:disabled){
+  background:var(--gold-glow);
+  transform:translateX(4px);
+}
+.option.correct{
+  background:#4caf50 !important;
+  color:white;
+  border-color:#2e7d32;
+  animation:correct-pulse .6s;
+}
+.option.wrong{
+  background:#e57373 !important;
+  color:white;
+  border-color:#c62828;
+  animation:shake .4s;
+}
+@keyframes correct-pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  75%{transform:translateX(6px)}
+}
+.option:disabled{cursor:not-allowed;opacity:.7}
+.feedback{
+  margin-top:10px;
+  padding:10px;
+  border-radius:6px;
+  font-family:'Amiri','Traditional Arabic',serif;
+  font-size:16px;
+  direction:rtl;
+  text-align:right;
+  display:none;
+}
+.feedback.show{display:block;animation:fadeIn .4s}
+.feedback.right{background:#e8f5e9;color:#1b5e20;border-right:4px solid #4caf50}
+.feedback.wrong{background:#ffebee;color:#b71c1c;border-right:4px solid #c62828}
+
+/* Result screen */
+.result-screen{
+  display:none;
+  text-align:center;
+  padding:40px 20px;
+  background:linear-gradient(135deg, var(--black), #2a2a2a);
+  border-radius:15px;
+  color:var(--gold);
+  margin-top:20px;
+  position:relative;
+  overflow:hidden;
+}
+.result-screen.show{display:block;animation:fadeIn .8s}
+.result-screen::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 12px, rgba(212,165,116,.05) 12px 13px),
+    repeating-linear-gradient(-45deg, transparent 0 12px, rgba(212,165,116,.05) 12px 13px);
+  background-size:25px 25px;
+  pointer-events:none;
+}
+.result-stars{
+  font-size:60px;
+  margin:15px 0;
+  letter-spacing:8px;
+}
+.result-title{
+  font-family:'Georgia',serif;
+  font-size:32px;
+  color:var(--gold-glow);
+  margin-bottom:10px;
+  text-shadow:0 0 20px var(--gold);
+}
+.result-score{
+  font-size:50px;
+  font-weight:bold;
+  color:var(--white);
+  margin:15px 0;
+}
+.result-msg{
+  font-family:'Amiri','Traditional Arabic',serif;
+  font-size:22px;
+  color:var(--gold-glow);
+  direction:rtl;
+  margin-top:15px;
+}
+.retry-btn{
+  margin-top:20px;
+  background:var(--gold);
+  color:var(--black);
+  border:none;
+  padding:12px 28px;
+  font-family:'Georgia',serif;
+  font-size:16px;
+  font-weight:bold;
+  border-radius:30px;
+  cursor:pointer;
+  transition:all .3s;
+}
+.retry-btn:hover{
+  background:var(--white);
+  transform:scale(1.05);
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  margin-top:50px;
+  padding:25px 20px;
+  background:linear-gradient(90deg, var(--black) 0%, #2a2a2a 50%, var(--black) 100%);
+  text-align:center;
+  border-top:3px solid var(--gold);
+  border-bottom:3px solid var(--gold);
+  position:relative;
+  overflow:hidden;
+}
+.footer::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 10px, rgba(212,165,116,.1) 10px 11px);
+  pointer-events:none;
+}
+.footer-text{
+  color:var(--gold);
+  font-family:'Georgia',serif;
+  font-size:18px;
+  letter-spacing:1px;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.footer-text .heart{
+  font-size:24px;
+  color:var(--red);
+  animation:heartbeat 1.5s ease-in-out infinite;
+  display:inline-block;
+  text-shadow:0 0 15px var(--red);
+}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  25%{transform:scale(1.2)}
+  50%{transform:scale(1)}
+  75%{transform:scale(1.15)}
+}
+.teacher-name{
+  font-family:'Georgia',serif;
+  font-weight:bold;
+  font-style:italic;
+  font-size:22px;
+  color:var(--gold-glow);
+  text-shadow:
+    0 0 10px var(--gold),
+    1px 1px 0 var(--black);
+  letter-spacing:2px;
+  padding:0 8px;
+  border-bottom:2px dotted var(--gold);
+}
+
+/* Confetti */
+.confetti{
+  position:fixed;
+  width:10px;height:10px;
+  pointer-events:none;
+  z-index:9999;
+  animation:confetti-fall 3s linear forwards;
+}
+@keyframes confetti-fall{
+  0%{transform:translateY(-100vh) rotate(0deg);opacity:1}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+
+/* Mobile */
+@media(max-width:600px){
+  .container{padding:15px 10px 80px}
+  .tab{min-width:auto;padding:12px 16px;font-size:14px}
+  .tab .icon{font-size:18px}
+  .cloth-container, .ideas-container, .quiz-container{padding:20px 15px}
+  .paragraph-text{font-size:16px}
+  .tooltip{width:200px;font-size:12px}
+  .boy-frame{width:110px;height:110px}
+  h1{font-size:24px}
+  .subtitle-ar{font-size:20px}
+  .q-options.tf{grid-template-columns:1fr}
+  .arrow{width:42px;height:42px;font-size:20px}
+  .footer-text{font-size:14px;flex-direction:column;gap:8px}
+  .teacher-name{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<!-- Animated background threads -->
+<div class="thread" style="left:5%;height:60vh;animation-delay:0s"></div>
+<div class="thread" style="left:25%;height:80vh;animation-delay:2s"></div>
+<div class="thread" style="left:50%;height:50vh;animation-delay:4s"></div>
+<div class="thread" style="left:75%;height:70vh;animation-delay:1s"></div>
+<div class="thread" style="left:95%;height:65vh;animation-delay:3s"></div>
+
+<!-- Sparkles -->
+<div class="sparkle" style="top:15%;left:10%;animation-delay:0s"></div>
+<div class="sparkle" style="top:25%;left:85%;animation-delay:1.5s"></div>
+<div class="sparkle" style="top:60%;left:5%;animation-delay:0.8s"></div>
+<div class="sparkle" style="top:75%;left:90%;animation-delay:2.2s"></div>
+<div class="sparkle" style="top:40%;left:50%;animation-delay:1s"></div>
+
+<div class="container">
+
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <div class="boy-frame">
+      <img src="https://i.ibb.co/hRTMTy0B/1778984711023.png" alt="Palestinian Boy">
+    </div>
+    
+    <div class="title-decoration">
+      <div class="line"></div>
+      <div class="fishnet-icon">
+        <!-- Fishnet pattern - signature Keffiyeh design -->
+        <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="fishnet" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 0 5 L 5 0 L 10 5 L 5 10 Z" fill="none" stroke="#d4a574" stroke-width="1.5"/>
+            </pattern>
+          </defs>
+          <circle cx="25" cy="25" r="22" fill="#1a1a1a" stroke="#d4a574" stroke-width="2"/>
+          <circle cx="25" cy="25" r="18" fill="url(#fishnet)"/>
+          <circle cx="25" cy="25" r="4" fill="#d4a574"/>
+        </svg>
+      </div>
+      <div class="line right"></div>
+    </div>
+    
+    <h1>The Palestinian Keffiyeh</h1>
+    <div class="subtitle-ar">الكوفية الفلسطينية</div>
+  </div>
+
+  <!-- ===== TABS ===== -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('reading', this)">
+      <span class="icon">📖</span>Reading
+    </button>
+    <button class="tab" onclick="switchTab('ideas', this)">
+      <span class="icon">💡</span>Main Ideas
+    </button>
+    <button class="tab" onclick="switchTab('questions', this)">
+      <span class="icon">✍️</span>Questions
+    </button>
+  </div>
+
+  <!-- ===== READING TAB ===== -->
+  <div class="tab-content active" id="reading">
+    <div class="cloth-container">
+      <div class="paragraph-counter">— Paragraph <span id="pCurrent">1</span> of 3 —</div>
+      
+      <!-- Paragraph 1 -->
+      <div class="paragraph active" id="p1">
+        <button class="listen-btn" onclick="speakParagraph(1, this)">🔊 Listen</button>
+        <img src="https://i.ibb.co/0Vmbc12t/Gemini-Generated-Image-g23q8xg23q8xg23q.png" alt="Keffiyeh symbol" class="paragraph-image">
+        <div class="paragraph-text" id="paragraph-1-text">
+          The Palestinian <span class="word">keffiyeh<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">الكوفية</span><br><span class="label">Syn:</span> <span class="syn">scarf, headdress</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span> is more than a <span class="word">traditional<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">تقليدي / تراثي</span><br><span class="label">Syn:</span> <span class="syn">customary, classical</span><br><span class="label">Ant:</span> <span class="ant">modern, new</span></span></span> <span class="word">scarf<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">وشاح / غطاء رأس</span><br><span class="label">Syn:</span> <span class="syn">shawl, wrap</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span>. <span class="word">It<span class="tooltip"><span class="label">Refers to:</span> <span class="ref">the keffiyeh / الكوفية</span></span></span> has <span class="word">become<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">أصبح / صار</span><br><span class="label">Syn:</span> <span class="syn">turned into, grown</span><br><span class="label">Ant:</span> <span class="ant">remained</span></span></span> an <span class="word">international<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">عالمي / دولي</span><br><span class="label">Syn:</span> <span class="syn">global, worldwide</span><br><span class="label">Ant:</span> <span class="ant">local, national</span></span></span> <span class="word">symbol<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">رمز</span><br><span class="label">Syn:</span> <span class="syn">sign, emblem</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span> of Palestinian <span class="word">identity<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">هوية</span><br><span class="label">Syn:</span> <span class="syn">character, individuality</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span> and <span class="word">resistance<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">مقاومة</span><br><span class="label">Syn:</span> <span class="syn">struggle, defiance</span><br><span class="label">Ant:</span> <span class="ant">surrender</span></span></span>.
+        </div>
+      </div>
+
+      <!-- Paragraph 2 -->
+      <div class="paragraph" id="p2">
+        <button class="listen-btn" onclick="speakParagraph(2, this)">🔊 Listen</button>
+        <img src="https://i.ibb.co/LDr8P2SR/Gemini-Generated-Image-mifhfzmifhfzmifh.png" alt="Farmers wearing keffiyeh" class="paragraph-image">
+        <div class="paragraph-text" id="paragraph-2-text">
+          <span class="word">Farmers<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">المزارعون / الفلاحون</span><br><span class="label">Syn:</span> <span class="syn">peasants, cultivators</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span> <span class="word">originally<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">في الأصل / أصلاً</span><br><span class="label">Syn:</span> <span class="syn">initially, at first</span><br><span class="label">Ant:</span> <span class="ant">finally, recently</span></span></span> <span class="word">wore<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">ارتدوا / لبسوا</span><br><span class="label">Syn:</span> <span class="syn">put on, dressed in</span><br><span class="label">Ant:</span> <span class="ant">took off, removed</span></span></span> the black-and-white scarf to <span class="word">protect<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">يحمي / يقي</span><br><span class="label">Syn:</span> <span class="syn">shield, guard</span><br><span class="label">Ant:</span> <span class="ant">expose, harm</span></span></span> <span class="word">themselves<span class="tooltip"><span class="label">Refers to:</span> <span class="ref">the farmers / المزارعون</span></span></span> from the <span class="word">hot<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">حارة / ساخنة</span><br><span class="label">Syn:</span> <span class="syn">scorching, burning</span><br><span class="label">Ant:</span> <span class="ant">cold, cool</span></span></span> sun and <span class="word">dust<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">الغبار / التراب</span><br><span class="label">Syn:</span> <span class="syn">dirt, sand</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span> while working <span class="word">outdoors<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">في الخارج / في الهواء الطلق</span><br><span class="label">Syn:</span> <span class="syn">outside, in open air</span><br><span class="label">Ant:</span> <span class="ant">indoors, inside</span></span></span>. <span class="word">Over time<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">مع مرور الوقت</span><br><span class="label">Syn:</span> <span class="syn">gradually, eventually</span><br><span class="label">Ant:</span> <span class="ant">suddenly</span></span></span>, the keffiyeh <span class="word">gained<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">اكتسبت</span><br><span class="label">Syn:</span> <span class="syn">acquired, obtained</span><br><span class="label">Ant:</span> <span class="ant">lost</span></span></span> <span class="word">political<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">سياسي</span><br><span class="label">Syn:</span> <span class="syn">governmental, diplomatic</span><br><span class="label">Ant:</span> <span class="ant">apolitical</span></span></span> and <span class="word">cultural<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">ثقافي</span><br><span class="label">Syn:</span> <span class="syn">traditional, social</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span> <span class="word">importance<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">أهمية</span><br><span class="label">Syn:</span> <span class="syn">significance, value</span><br><span class="label">Ant:</span> <span class="ant">insignificance</span></span></span>.
+        </div>
+      </div>
+
+      <!-- Paragraph 3 -->
+      <div class="paragraph" id="p3">
+        <button class="listen-btn" onclick="speakParagraph(3, this)">🔊 Listen</button>
+        <img src="https://i.ibb.co/21zkHktb/3.png" alt="National pride" class="paragraph-image">
+        <div class="paragraph-text" id="paragraph-3-text">
+          <span class="word">Today<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">اليوم / في الوقت الحاضر</span><br><span class="label">Syn:</span> <span class="syn">nowadays, presently</span><br><span class="label">Ant:</span> <span class="ant">yesterday, long ago</span></span></span>, <span class="word">many<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">كثير من</span><br><span class="label">Syn:</span> <span class="syn">numerous, plenty of</span><br><span class="label">Ant:</span> <span class="ant">few</span></span></span> Palestinians <span class="word">wear<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">يرتدون / يلبسون</span><br><span class="label">Syn:</span> <span class="syn">put on, don</span><br><span class="label">Ant:</span> <span class="ant">remove</span></span></span> <span class="word">it<span class="tooltip"><span class="label">Refers to:</span> <span class="ref">the keffiyeh / الكوفية</span></span></span> during <span class="word">national<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">وطنية</span><br><span class="label">Syn:</span> <span class="syn">patriotic, civic</span><br><span class="label">Ant:</span> <span class="ant">international</span></span></span> <span class="word">events<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">مناسبات / فعاليات</span><br><span class="label">Syn:</span> <span class="syn">occasions, ceremonies</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span> to <span class="word">express<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">يعبّر عن</span><br><span class="label">Syn:</span> <span class="syn">show, convey</span><br><span class="label">Ant:</span> <span class="ant">hide, conceal</span></span></span> <span class="word">pride<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">فخر / اعتزاز</span><br><span class="label">Syn:</span> <span class="syn">honor, dignity</span><br><span class="label">Ant:</span> <span class="ant">shame</span></span></span> in <span class="word">their<span class="tooltip"><span class="label">Refers to:</span> <span class="ref">the Palestinians / الفلسطينيون</span></span></span> <span class="word">heritage<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">تراث / إرث</span><br><span class="label">Syn:</span> <span class="syn">legacy, tradition</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span> and <span class="word">solidarity<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">تضامن</span><br><span class="label">Syn:</span> <span class="syn">unity, support</span><br><span class="label">Ant:</span> <span class="ant">division, conflict</span></span></span> with <span class="word">their<span class="tooltip"><span class="label">Refers to:</span> <span class="ref">the Palestinians / الفلسطينيون</span></span></span> <span class="word">people<span class="tooltip"><span class="label">Meaning:</span> <span class="ar">شعبهم</span><br><span class="label">Syn:</span> <span class="syn">nation, citizens</span><br><span class="label">Ant:</span> <span class="ant">—</span></span></span>.
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="nav-arrows">
+        <button class="arrow" id="prevBtn" onclick="navParagraph(-1)" disabled>‹</button>
+        <div class="dot-indicator">
+          <div class="dot active" data-p="1"></div>
+          <div class="dot" data-p="2"></div>
+          <div class="dot" data-p="3"></div>
+        </div>
+        <button class="arrow" id="nextBtn" onclick="navParagraph(1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== IDEAS TAB ===== -->
+  <div class="tab-content" id="ideas">
+    <div class="ideas-container">
+      
+      <div class="idea-section">
+        <div class="idea-title"><span class="emoji">🎯</span>Main Idea</div>
+        <div class="idea-en">The Palestinian keffiyeh evolved from a practical farmer's scarf into a powerful international symbol of Palestinian identity, heritage, and resistance.</div>
+        <div class="idea-ar">تطوّرت الكوفية الفلسطينية من وشاح عملي يرتديه الفلاحون إلى رمز عالمي قوي للهوية الفلسطينية والتراث والمقاومة.</div>
+      </div>
+
+      <div class="idea-section">
+        <div class="idea-title"><span class="emoji">🔍</span>Sub-Objectives</div>
+        <ul class="sub-list">
+          <li>
+            <span class="sub-en"><strong>Origin:</strong> Understand the keffiyeh's original practical use by farmers.</span>
+            <span class="sub-ar"><strong>الأصل:</strong> فهم الاستخدام العملي الأصلي للكوفية من قبل المزارعين.</span>
+          </li>
+          <li>
+            <span class="sub-en"><strong>Transformation:</strong> Recognize how the keffiyeh gained political and cultural meaning over time.</span>
+            <span class="sub-ar"><strong>التحوّل:</strong> إدراك كيف اكتسبت الكوفية معنى سياسياً وثقافياً مع مرور الوقت.</span>
+          </li>
+          <li>
+            <span class="sub-en"><strong>Modern Symbolism:</strong> Identify the keffiyeh as a symbol of Palestinian pride and solidarity today.</span>
+            <span class="sub-ar"><strong>الرمزية الحديثة:</strong> التعرف على الكوفية كرمز للفخر الفلسطيني والتضامن اليوم.</span>
+          </li>
+          <li>
+            <span class="sub-en"><strong>Vocabulary:</strong> Learn key terms like identity, resistance, heritage, and solidarity.</span>
+            <span class="sub-ar"><strong>المفردات:</strong> تعلّم مصطلحات مفتاحية مثل الهوية، المقاومة، التراث، والتضامن.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="idea-section">
+        <div class="idea-title"><span class="emoji">💎</span>Values</div>
+        <ul class="sub-list">
+          <li>
+            <span class="sub-en"><strong>Cultural Pride:</strong> Honoring our Palestinian heritage and traditional crafts.</span>
+            <span class="sub-ar"><strong>الفخر الثقافي:</strong> الاعتزاز بتراثنا الفلسطيني وحرفنا التقليدية.</span>
+          </li>
+          <li>
+            <span class="sub-en"><strong>National Identity:</strong> Wearing symbols that connect us to our land and people.</span>
+            <span class="sub-ar"><strong>الهوية الوطنية:</strong> ارتداء رموز تربطنا بأرضنا وشعبنا.</span>
+          </li>
+          <li>
+            <span class="sub-en"><strong>Solidarity:</strong> Standing together as one people through shared symbols.</span>
+            <span class="sub-ar"><strong>التضامن:</strong> الوقوف معاً كشعب واحد من خلال الرموز المشتركة.</span>
+          </li>
+          <li>
+            <span class="sub-en"><strong>Respect for Labor:</strong> Remembering the farmers who gave us this proud symbol.</span>
+            <span class="sub-ar"><strong>احترام العمل:</strong> تذكّر الفلاحين الذين أعطونا هذا الرمز الفخور.</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== QUESTIONS TAB ===== -->
+  <div class="tab-content" id="questions">
+    <div class="quiz-container">
+      <div class="score-bar">
+        <span class="stars">★</span>Score: <span id="scoreNum">0</span> / 10
+      </div>
+
+      <!-- Q1 True/False -->
+      <div class="question" data-q="1">
+        <span class="q-num">Q1</span><span class="q-type">True / False</span>
+        <div class="q-text">The keffiyeh is just a traditional scarf with no deeper meaning.</div>
+        <div class="q-options tf">
+          <button class="option" onclick="checkAnswer(this, false, 1)">True</button>
+          <button class="option" onclick="checkAnswer(this, true, 1)">False</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q2 True/False -->
+      <div class="question" data-q="2">
+        <span class="q-num">Q2</span><span class="q-type">True / False</span>
+        <div class="q-text">Farmers wore the keffiyeh to protect themselves from the sun and dust.</div>
+        <div class="q-options tf">
+          <button class="option" onclick="checkAnswer(this, true, 2)">True</button>
+          <button class="option" onclick="checkAnswer(this, false, 2)">False</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q3 Multiple Choice -->
+      <div class="question" data-q="3">
+        <span class="q-num">Q3</span><span class="q-type">Multiple Choice</span>
+        <div class="q-text">What colors is the traditional keffiyeh?</div>
+        <div class="q-options">
+          <button class="option" onclick="checkAnswer(this, false, 3)">A. Red and green</button>
+          <button class="option" onclick="checkAnswer(this, true, 3)">B. Black and white</button>
+          <button class="option" onclick="checkAnswer(this, false, 3)">C. Blue and gold</button>
+          <button class="option" onclick="checkAnswer(this, false, 3)">D. Yellow and white</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q4 Multiple Choice -->
+      <div class="question" data-q="4">
+        <span class="q-num">Q4</span><span class="q-type">Multiple Choice</span>
+        <div class="q-text">Who originally wore the keffiyeh?</div>
+        <div class="q-options">
+          <button class="option" onclick="checkAnswer(this, false, 4)">A. Soldiers</button>
+          <button class="option" onclick="checkAnswer(this, false, 4)">B. Teachers</button>
+          <button class="option" onclick="checkAnswer(this, true, 4)">C. Farmers</button>
+          <button class="option" onclick="checkAnswer(this, false, 4)">D. Fishermen</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q5 Multiple Choice -->
+      <div class="question" data-q="5">
+        <span class="q-num">Q5</span><span class="q-type">Multiple Choice</span>
+        <div class="q-text">Why do many Palestinians wear the keffiyeh today?</div>
+        <div class="q-options">
+          <button class="option" onclick="checkAnswer(this, false, 5)">A. To stay warm in winter</button>
+          <button class="option" onclick="checkAnswer(this, true, 5)">B. To express pride and solidarity</button>
+          <button class="option" onclick="checkAnswer(this, false, 5)">C. For fashion only</button>
+          <button class="option" onclick="checkAnswer(this, false, 5)">D. To work in farms</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q6 Synonym -->
+      <div class="question" data-q="6">
+        <span class="q-num">Q6</span><span class="q-type">Synonym</span>
+        <div class="q-text">Choose the synonym of "<strong>protect</strong>":</div>
+        <div class="q-options">
+          <button class="option" onclick="checkAnswer(this, false, 6)">A. Harm</button>
+          <button class="option" onclick="checkAnswer(this, true, 6)">B. Shield</button>
+          <button class="option" onclick="checkAnswer(this, false, 6)">C. Expose</button>
+          <button class="option" onclick="checkAnswer(this, false, 6)">D. Ignore</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q7 Synonym -->
+      <div class="question" data-q="7">
+        <span class="q-num">Q7</span><span class="q-type">Synonym</span>
+        <div class="q-text">Choose the synonym of "<strong>heritage</strong>":</div>
+        <div class="q-options">
+          <button class="option" onclick="checkAnswer(this, false, 7)">A. Future</button>
+          <button class="option" onclick="checkAnswer(this, false, 7)">B. Money</button>
+          <button class="option" onclick="checkAnswer(this, true, 7)">C. Legacy</button>
+          <button class="option" onclick="checkAnswer(this, false, 7)">D. Discovery</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q8 Antonym -->
+      <div class="question" data-q="8">
+        <span class="q-num">Q8</span><span class="q-type">Antonym</span>
+        <div class="q-text">Choose the antonym of "<strong>traditional</strong>":</div>
+        <div class="q-options">
+          <button class="option" onclick="checkAnswer(this, false, 8)">A. Customary</button>
+          <button class="option" onclick="checkAnswer(this, false, 8)">B. Cultural</button>
+          <button class="option" onclick="checkAnswer(this, true, 8)">C. Modern</button>
+          <button class="option" onclick="checkAnswer(this, false, 8)">D. Classical</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q9 Antonym -->
+      <div class="question" data-q="9">
+        <span class="q-num">Q9</span><span class="q-type">Antonym</span>
+        <div class="q-text">Choose the antonym of "<strong>pride</strong>":</div>
+        <div class="q-options">
+          <button class="option" onclick="checkAnswer(this, false, 9)">A. Honor</button>
+          <button class="option" onclick="checkAnswer(this, false, 9)">B. Dignity</button>
+          <button class="option" onclick="checkAnswer(this, true, 9)">C. Shame</button>
+          <button class="option" onclick="checkAnswer(this, false, 9)">D. Joy</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Q10 Pronoun Reference -->
+      <div class="question" data-q="10">
+        <span class="q-num">Q10</span><span class="q-type">Pronoun Reference</span>
+        <div class="q-text">In the sentence "Today, many Palestinians wear <strong>it</strong> during national events," the word "<strong>it</strong>" refers to:</div>
+        <div class="q-options">
+          <button class="option" onclick="checkAnswer(this, false, 10)">A. The sun</button>
+          <button class="option" onclick="checkAnswer(this, false, 10)">B. The dust</button>
+          <button class="option" onclick="checkAnswer(this, true, 10)">C. The keffiyeh</button>
+          <button class="option" onclick="checkAnswer(this, false, 10)">D. The heritage</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <!-- Result -->
+      <div class="result-screen" id="result">
+        <div class="result-title">Quiz Complete!</div>
+        <div class="result-stars" id="resultStars">★ ★ ★ ★ ★</div>
+        <div class="result-score"><span id="finalScore">0</span> / 10</div>
+        <div class="result-msg" id="resultMsg">ممتاز! أحسنت!</div>
+        <button class="retry-btn" onclick="retryQuiz()">🔁 Try Again</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="footer-text">
+    <span class="heart">♥</span>
+    Prepared with love by
+    <span class="teacher-name">T. Wad Refae</span>
+    <span class="heart">♥</span>
+  </div>
+</div>
+
+<script>
+// ===== TAB SWITCHING =====
+function switchTab(name, btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(name).classList.add('active');
+  playSound('tab');
+}
+
+// ===== PARAGRAPH NAVIGATION =====
+let currentP = 1;
+const totalP = 3;
+
+function navParagraph(dir){
+  const next = currentP + dir;
+  if(next < 1 || next > totalP) return;
+  
+  window.speechSynthesis.cancel(); // stop any audio
+  document.querySelectorAll('.listen-btn').forEach(b=>b.classList.remove('speaking'));
+  
+  document.getElementById('p'+currentP).classList.remove('active');
+  currentP = next;
+  document.getElementById('p'+currentP).classList.add('active');
+  document.getElementById('pCurrent').textContent = currentP;
+  
+  document.querySelectorAll('.dot').forEach(d=>{
+    d.classList.toggle('active', parseInt(d.dataset.p) === currentP);
+  });
+  
+  document.getElementById('prevBtn').disabled = currentP === 1;
+  document.getElementById('nextBtn').disabled = currentP === totalP;
+  
+  playSound('flip');
+}
+
+// ===== TTS - WEB SPEECH API =====
+let voicesLoaded = false;
+function loadVoices(){
+  voicesLoaded = true;
+}
+if(typeof window.speechSynthesis !== 'undefined'){
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  // trigger
+  window.speechSynthesis.getVoices();
+}
+
+function speakParagraph(num, btn){
+  if(!('speechSynthesis' in window)){
+    alert('Sorry, your browser does not support text-to-speech.');
+    return;
+  }
+  
+  // Stop if already speaking
+  if(window.speechSynthesis.speaking){
+    window.speechSynthesis.cancel();
+    document.querySelectorAll('.listen-btn').forEach(b=>b.classList.remove('speaking'));
+    return;
+  }
+  
+  const text = document.getElementById(`paragraph-${num}-text`).innerText;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.85;
+  u.pitch = 1;
+  
+  const voices = window.speechSynthesis.getVoices();
+  const v = voices.find(x => x.lang.startsWith('en') && /female|Samantha|Karen|Zira|Google US English|Microsoft/i.test(x.name)) 
+         || voices.find(x => x.lang.startsWith('en-US')) 
+         || voices.find(x => x.lang.startsWith('en'));
+  if(v) u.voice = v;
+  
+  btn.classList.add('speaking');
+  btn.innerHTML = '⏸ Stop';
+  
+  u.onend = () => {
+    btn.classList.remove('speaking');
+    btn.innerHTML = '🔊 Listen';
+  };
+  u.onerror = () => {
+    btn.classList.remove('speaking');
+    btn.innerHTML = '🔊 Listen';
+  };
+  
+  window.speechSynthesis.speak(u);
+}
+
+// ===== QUIZ =====
+let score = 0;
+let answered = new Set();
+
+const positiveMessages = [
+  'أحسنت! إجابة ممتازة 🌟',
+  'رائع! أنت متفوّق ✨',
+  'عظيم! استمر هكذا 🎉',
+  'ممتاز! إجابة صحيحة 💫',
+  'بطل! أنت في الطريق الصحيح 🏆'
+];
+const negativeMessages = [
+  'لا بأس، حاول مرة أخرى 💪',
+  'قريب! راجع النص جيداً 📖',
+  'لا تستسلم، أنت تتعلم 🌱',
+  'كل خطأ خطوة نحو النجاح ✨'
+];
+
+function checkAnswer(btn, isCorrect, qNum){
+  const question = btn.closest('.question');
+  if(answered.has(qNum)) return;
+  answered.add(qNum);
+  
+  const options = question.querySelectorAll('.option');
+  const feedback = question.querySelector('.feedback');
+  
+  options.forEach(o => o.disabled = true);
+  
+  if(isCorrect){
+    btn.classList.add('correct');
+    score++;
+    document.getElementById('scoreNum').textContent = score;
+    feedback.className = 'feedback show right';
+    feedback.textContent = positiveMessages[Math.floor(Math.random()*positiveMessages.length)];
+    playSound('correct');
+    miniConfetti(btn);
+  } else {
+    btn.classList.add('wrong');
+    options.forEach(o => {
+      if(o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+    });
+    feedback.className = 'feedback show wrong';
+    feedback.textContent = negativeMessages[Math.floor(Math.random()*negativeMessages.length)];
+    playSound('wrong');
+  }
+  
+  // Show results if all answered
+  if(answered.size === 10){
+    setTimeout(showResults, 800);
+  }
+}
+
+function showResults(){
+  const result = document.getElementById('result');
+  document.getElementById('finalScore').textContent = score;
+  
+  let stars, msg;
+  if(score === 10){ stars='★★★★★'; msg='🌟 مذهل! أنت نجم لامع! 🌟'; }
+  else if(score >= 8){ stars='★★★★☆'; msg='🎉 أداء رائع! أحسنت كثيراً! 🎉'; }
+  else if(score >= 6){ stars='★★★☆☆'; msg='👏 جيد جداً! استمر بالتعلم! 👏'; }
+  else if(score >= 4){ stars='★★☆☆☆'; msg='💪 لا بأس، راجع الدرس مرة أخرى!'; }
+  else{ stars='★☆☆☆☆'; msg='📖 لا تستسلم! اقرأ النص بتأنٍ وحاول مجدداً.'; }
+  
+  document.getElementById('resultStars').textContent = stars;
+  document.getElementById('resultMsg').textContent = msg;
+  result.classList.add('show');
+  result.scrollIntoView({behavior:'smooth', block:'center'});
+  
+  if(score >= 7) bigConfetti();
+}
+
+function retryQuiz(){
+  score = 0;
+  answered.clear();
+  document.getElementById('scoreNum').textContent = 0;
+  document.getElementById('result').classList.remove('show');
+  
+  document.querySelectorAll('.option').forEach(o => {
+    o.disabled = false;
+    o.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll('.feedback').forEach(f => {
+    f.className = 'feedback';
+    f.textContent = '';
+  });
+  
+  document.querySelector('.quiz-container').scrollIntoView({behavior:'smooth'});
+}
+
+// ===== SOUND EFFECTS (Web Audio API) =====
+let audioCtx;
+function getCtx(){
+  if(!audioCtx){
+    try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch(e){ return null; }
+  }
+  return audioCtx;
+}
+
+function playSound(type){
+  const ctx = getCtx();
+  if(!ctx) return;
+  
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  
+  const now = ctx.currentTime;
+  
+  if(type === 'correct'){
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(523, now);
+    osc.frequency.setValueAtTime(659, now + 0.1);
+    osc.frequency.setValueAtTime(784, now + 0.2);
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+    osc.start(now); osc.stop(now + 0.4);
+  } else if(type === 'wrong'){
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(200, now);
+    osc.frequency.exponentialRampToValueAtTime(100, now + 0.3);
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+    osc.start(now); osc.stop(now + 0.3);
+  } else if(type === 'tab'){
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, now);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+    osc.start(now); osc.stop(now + 0.1);
+  } else if(type === 'flip'){
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(440, now);
+    osc.frequency.exponentialRampToValueAtTime(660, now + 0.15);
+    gain.gain.setValueAtTime(0.1, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+    osc.start(now); osc.stop(now + 0.15);
+  }
+}
+
+// ===== CONFETTI =====
+function miniConfetti(target){
+  const rect = target.getBoundingClientRect();
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top + rect.height/2;
+  const colors = ['#d4a574','#8b2635','#1a1a1a','#e8c994','#ce1126','#007a3d'];
+  
+  for(let i=0; i<15; i++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.left = cx + 'px';
+    c.style.top = cy + 'px';
+    c.style.transform = `translate(${(Math.random()-0.5)*200}px, ${-Math.random()*100}px)`;
+    c.style.animationDuration = (1.5 + Math.random()) + 's';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 3000);
+  }
+}
+
+function bigConfetti(){
+  const colors = ['#d4a574','#8b2635','#1a1a1a','#e8c994','#ce1126','#007a3d','#ffd700'];
+  for(let i=0; i<80; i++){
+    setTimeout(()=>{
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.left = Math.random()*100 + 'vw';
+      c.style.top = '-20px';
+      c.style.width = (6 + Math.random()*8) + 'px';
+      c.style.height = c.style.width;
+      c.style.animationDuration = (2 + Math.random()*2) + 's';
+      if(Math.random() > 0.5) c.style.borderRadius = '50%';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(), 4500);
+    }, i*40);
+  }
+}
+
+// Stop speech when leaving page
+window.addEventListener('beforeunload', ()=>{
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+});
+</script>
+
+</body>
+</html>
