@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sea C-Quest 🏴‍☠️ | T. Wad Refae</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+  
+  :root {
+    --ocean-deep: #0C4A6E;
+    --ocean: #0369A1;
+    --ocean-light: #38BDF8;
+    --sky: #BAE6FD;
+    --sand: #FCD34D;
+    --sand-deep: #F59E0B;
+    --gold: #FBBF24;
+    --gold-bright: #FFD700;
+    --coral: #FB7185;
+    --coral-deep: #E11D48;
+    --seaweed: #15803D;
+    --treasure: #B45309;
+    --treasure-light: #FCD34D;
+    --pirate: #1F2937;
+    --shell: #FFE4E6;
+    --shell-pink: #FBCFE8;
+    --danger: #DC2626;
+    --night: #0F172A;
+    --magic: #8B5CF6;
+  }
+  
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Trebuchet MS', 'Comic Sans MS', sans-serif;
+    background: var(--ocean-deep);
+    color: white;
+  }
+  
+  /* ===== OCEAN BACKGROUND ===== */
+  .ocean-bg {
+    position: fixed;
+    inset: 0;
+    background: 
+      linear-gradient(180deg, 
+        #0EA5E9 0%, 
+        #0284C7 30%, 
+        #0369A1 60%, 
+        #0C4A6E 100%);
+    z-index: -3;
+  }
+  
+  /* Animated waves */
+  .wave {
+    position: fixed;
+    width: 200%;
+    height: 80px;
+    bottom: 0;
+    left: -50%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.15) 20%, transparent 70%);
+    z-index: -2;
+    animation: wave-move 10s infinite linear;
+    pointer-events: none;
+  }
+  
+  .wave:nth-child(2) {
+    bottom: 40px;
+    opacity: 0.5;
+    animation-duration: 15s;
+    animation-direction: reverse;
+  }
+  
+  @keyframes wave-move {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  /* Bubbles */
+  .bubble {
+    position: fixed;
+    bottom: -50px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    animation: bubble-rise linear infinite;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  @keyframes bubble-rise {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(-110vh) translateX(50px); opacity: 0; }
+  }
+  
+  /* Floating sea creatures background */
+  .sea-creature {
+    position: fixed;
+    font-size: 40px;
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+    animation: swim 25s infinite linear;
+  }
+  
+  @keyframes swim {
+    0% { transform: translateX(-100px) translateY(0); }
+    50% { transform: translateX(50vw) translateY(-30px); }
+    100% { transform: translateX(110vw) translateY(0); }
+  }
+  
+  /* ===== Screens ===== */
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    overflow-y: auto;
+    padding-bottom: 50px;
+  }
+  
+  .screen.active {
+    display: flex;
+    animation: screenIn 0.6s ease;
+  }
+  
+  @keyframes screenIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  /* ===== FOOTER (Teacher Name) ===== */
+  .footer-name {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, 
+      var(--pirate) 0%, 
+      var(--treasure) 50%, 
+      var(--pirate) 100%);
+    color: var(--gold-bright);
+    text-align: center;
+    padding: 8px 5px;
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: 2px;
+    border-top: 3px solid var(--gold);
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
+    z-index: 200;
+    font-family: 'Georgia', serif;
+  }
+  
+  .footer-name::before, .footer-name::after {
+    content: '⚓';
+    margin: 0 8px;
+    color: var(--gold);
+  }
+  
+  /* ===== HOME SCREEN ===== */
+  .home-content {
+    margin: auto;
+    text-align: center;
+    max-width: 540px;
+    width: 100%;
+  }
+  
+  .pirate-flag {
+    font-size: 80px;
+    animation: flag-wave 2s infinite;
+    display: inline-block;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+  }
+  
+  @keyframes flag-wave {
+    0%, 100% { transform: rotate(-10deg) scale(1); }
+    50% { transform: rotate(10deg) scale(1.1); }
+  }
+  
+  .game-title {
+    font-size: clamp(34px, 8vw, 56px);
+    font-weight: 900;
+    background: linear-gradient(135deg, #FFD700, #F59E0B, #DC2626);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    letter-spacing: 2px;
+    margin: 8px 0;
+    line-height: 1;
+    font-family: 'Georgia', serif;
+  }
+  
+  .game-subtitle {
+    font-size: clamp(15px, 4vw, 20px);
+    color: var(--gold-bright);
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .game-subtitle-ar {
+    font-size: clamp(14px, 3.5vw, 17px);
+    color: var(--sky);
+    direction: rtl;
+    margin-bottom: 20px;
+  }
+  
+  .story-scroll {
+    background: 
+      linear-gradient(135deg, #FEF3C7 0%, #FDE68A 50%, #FCD34D 100%);
+    border-radius: 16px;
+    padding: 18px;
+    margin: 12px auto;
+    text-align: center;
+    box-shadow: 
+      0 10px 30px rgba(0,0,0,0.4),
+      inset 0 0 30px rgba(180, 83, 9, 0.2);
+    border: 3px solid var(--treasure);
+    position: relative;
+    max-width: 480px;
+  }
+  
+  .story-scroll::before, .story-scroll::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    background: 
+      linear-gradient(90deg, var(--treasure), var(--sand-deep));
+    border-radius: 8px;
+  }
+  
+  .story-scroll::before { left: -8px; }
+  .story-scroll::after { right: -8px; }
+  
+  .story-scroll p {
+    font-size: 14px;
+    line-height: 1.7;
+    direction: rtl;
+    color: var(--pirate);
+    font-weight: 600;
+  }
+  
+  .start-btn {
+    background: linear-gradient(135deg, #DC2626, #F59E0B);
+    color: white;
+    border: 4px solid var(--gold);
+    padding: 16px 45px;
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 
+      0 10px 30px rgba(220, 38, 38, 0.5), 
+      inset 0 -4px 0 rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: pulse-btn 2s infinite;
+    margin-top: 15px;
+    font-family: inherit;
+  }
+  
+  @keyframes pulse-btn {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  .start-btn:active { transform: scale(0.95); }
+  
+  /* Captain Kid avatar */
+  .captain-avatar {
+    font-size: 60px;
+    margin: 10px 0;
+    display: inline-block;
+    animation: bob 3s infinite ease-in-out;
+  }
+  
+  @keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-8px) rotate(3deg); }
+  }
+  
+  /* ===== MAP SCREEN - Islands Layout ===== */
+  .map-header {
+    text-align: center;
+    margin: 40px 0 10px;
+  }
+  
+  .map-title {
+    font-size: 28px;
+    background: linear-gradient(135deg, var(--gold-bright), var(--coral));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    font-family: 'Georgia', serif;
+    text-shadow: 2px 2px 0 var(--pirate);
+  }
+  
+  .map-subtitle {
+    color: var(--sky);
+    font-size: 13px;
+    direction: rtl;
+    margin-top: 5px;
+  }
+  
+  .islands-container {
+    width: 100%;
+    max-width: 540px;
+    padding: 10px 0;
+    position: relative;
+  }
+  
+  .islands-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 5px;
+  }
+  
+  .island-card {
+    position: relative;
+    background: 
+      radial-gradient(ellipse at 50% 60%, 
+        var(--sand) 0%, 
+        var(--sand-deep) 70%, 
+        var(--treasure) 100%);
+    border-radius: 50% 50% 45% 55% / 60% 60% 40% 40%;
+    padding: 16px 8px 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+    box-shadow: 
+      0 10px 25px rgba(0,0,0,0.4),
+      inset 0 -10px 20px rgba(180, 83, 9, 0.3);
+    min-height: 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+  }
+  
+  /* ===== PALM TREES on islands ===== */
+  .palm-tree {
+    position: absolute;
+    font-size: 28px;
+    z-index: 2;
+    filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3));
+    pointer-events: none;
+    animation: palm-sway 4s infinite ease-in-out;
+  }
+  
+  .palm-tree.left {
+    top: -6px;
+    left: 8px;
+    transform: rotate(-15deg);
+    animation-delay: 0s;
+  }
+  
+  .palm-tree.right {
+    top: -4px;
+    right: 8px;
+    transform: rotate(15deg);
+    animation-delay: 1s;
+  }
+  
+  @keyframes palm-sway {
+    0%, 100% { transform: rotate(var(--palm-rot, -15deg)) translateY(0); }
+    50% { transform: rotate(calc(var(--palm-rot, -15deg) + 5deg)) translateY(-3px); }
+  }
+  
+  .palm-tree.left { --palm-rot: -15deg; }
+  .palm-tree.right { --palm-rot: 15deg; }
+  
+  /* Sea creature decoration around island */
+  .island-decoration {
+    position: absolute;
+    font-size: 18px;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.9;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+  }
+  
+  .island-decoration.bottom-left {
+    bottom: -8px;
+    left: -5px;
+    animation: float-deco 3s infinite ease-in-out;
+  }
+  
+  .island-decoration.bottom-right {
+    bottom: -8px;
+    right: -5px;
+    animation: float-deco 3s infinite ease-in-out reverse;
+  }
+  
+  @keyframes float-deco {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  
+  /* Water ring around island */
+  .island-card::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: radial-gradient(ellipse at center, 
+      transparent 60%, 
+      rgba(56, 189, 248, 0.3) 70%, 
+      transparent 100%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: ripple 3s infinite ease-in-out;
+  }
+  
+  @keyframes ripple {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 0.3; }
+  }
+  
+  .island-card.locked {
+    background: radial-gradient(ellipse at 50% 60%, 
+      #94A3B8 0%, 
+      #64748B 70%, 
+      #475569 100%);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .island-card.completed {
+    background: radial-gradient(ellipse at 50% 60%, 
+      #FDE68A 0%, 
+      #FBBF24 70%, 
+      #B45309 100%);
+    box-shadow: 
+      0 10px 25px rgba(0,0,0,0.4),
+      inset 0 -10px 20px rgba(180, 83, 9, 0.3),
+      0 0 30px rgba(251, 191, 36, 0.6);
+  }
+  
+  .island-card:not(.locked):active {
+    transform: scale(0.96);
+  }
+  
+  .island-num-flag {
+    position: absolute;
+    top: -8px;
+    background: linear-gradient(135deg, var(--coral-deep), var(--danger));
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 18px;
+    border: 3px solid var(--gold);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    font-family: 'Georgia', serif;
+  }
+  
+  .island-card.locked .island-num-flag {
+    background: #475569;
+  }
+  
+  .island-icon {
+    font-size: 42px;
+    margin: 8px 0 4px;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+  }
+  
+  .island-name {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--pirate);
+    margin: 4px 0 2px;
+    font-family: 'Georgia', serif;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+  }
+  
+  .island-sound-tag {
+    display: inline-block;
+    background: var(--pirate);
+    color: var(--gold-bright);
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 900;
+    margin-top: 2px;
+    border: 1px solid var(--gold);
+  }
+  
+  .island-stars {
+    margin-top: 4px;
+    font-size: 13px;
+  }
+  
+  /* Boss island */
+  .boss-island {
+    grid-column: span 2;
+    background: radial-gradient(ellipse at 50% 60%, 
+      var(--coral) 0%, 
+      var(--danger) 70%, 
+      #7F1D1D 100%) !important;
+    min-height: 130px !important;
+  }
+  
+  .boss-island .island-icon {
+    font-size: 60px;
+    animation: octopus-wiggle 2s infinite;
+  }
+  
+  @keyframes octopus-wiggle {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.05); }
+  }
+  
+  /* ===== HUD ===== */
+  .hud {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 6px;
+    z-index: 100;
+  }
+  
+  .hud-item {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(15, 23, 42, 0.95));
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--gold);
+    color: var(--gold-bright);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 900;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  
+  .back-btn {
+    position: fixed;
+    top: 50px;
+    left: 10px;
+    background: linear-gradient(135deg, var(--pirate), #374151);
+    color: var(--gold-bright);
+    border: 2px solid var(--gold);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    z-index: 100;
+    font-size: 12px;
+    font-family: inherit;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  
+  /* ===== LESSON SCREEN - Treasure Map Style ===== */
+  .lesson-screen {
+    margin-top: 50px;
+    width: 100%;
+    max-width: 540px;
+    padding: 5px;
+  }
+  
+  .lesson-header {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  
+  .lesson-island-emoji {
+    font-size: 55px;
+    display: inline-block;
+    animation: float-icon 3s infinite ease-in-out;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4));
+  }
+  
+  @keyframes float-icon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  
+  .lesson-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--gold-bright);
+    margin: 5px 0;
+    font-family: 'Georgia', serif;
+    text-shadow: 2px 2px 0 var(--pirate);
+  }
+  
+  .lesson-subtitle {
+    color: var(--sky);
+    direction: rtl;
+    font-size: 13px;
+  }
+  
+  /* The PARCHMENT/SCROLL RULE BOX */
+  .parchment {
+    background: 
+      linear-gradient(135deg, #FEF3C7 0%, #FDE68A 30%, #FCD34D 70%, #FBBF24 100%);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    box-shadow: 
+      0 15px 30px rgba(0,0,0,0.5),
+      inset 0 0 40px rgba(180, 83, 9, 0.15);
+    border: 3px solid var(--treasure);
+    position: relative;
+    color: var(--pirate);
+  }
+  
+  /* Decorative corners */
+  .parchment::before, .parchment::after {
+    content: '⚓';
+    position: absolute;
+    font-size: 18px;
+    color: var(--treasure);
+  }
+  
+  .parchment::before { top: 6px; left: 10px; }
+  .parchment::after { top: 6px; right: 10px; }
+  
+  .parchment-label {
+    background: var(--pirate);
+    color: var(--gold-bright);
+    padding: 5px 16px;
+    border-radius: 14px;
+    font-weight: 900;
+    font-size: 13px;
+    border: 2px solid var(--gold);
+    display: inline-block;
+    margin-bottom: 12px;
+    font-family: 'Georgia', serif;
+    letter-spacing: 1px;
+  }
+  
+  .rule-formula-box {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    padding: 14px 8px;
+    margin: 10px 0;
+    border: 2px dashed var(--treasure);
+  }
+  
+  .rule-formula {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .rule-piece {
+    background: white;
+    color: var(--pirate);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 900;
+    font-size: 16px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    border: 2px solid var(--treasure);
+  }
+  
+  .rule-piece.c-letter {
+    background: linear-gradient(135deg, var(--danger), var(--coral));
+    color: white;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 3px solid var(--gold);
+    animation: c-pulse 2s infinite;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .rule-piece.c-letter::after {
+    content: '🔊';
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    font-size: 14px;
+    background: var(--pirate);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @keyframes c-pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+    50% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+  }
+  
+  .rule-arrow {
+    font-size: 26px;
+    color: var(--treasure);
+    font-weight: 900;
+  }
+  
+  .rule-sound {
+    background: linear-gradient(135deg, var(--seaweed), #166534);
+    color: white;
+    font-size: 22px;
+    font-weight: 900;
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 3px solid var(--gold);
+    box-shadow: 0 4px 12px rgba(21, 128, 61, 0.5);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+  }
+  
+  .rule-sound::after {
+    content: '🔊';
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    font-size: 14px;
+    background: var(--pirate);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .rule-sound:active {
+    transform: scale(0.92);
+  }
+  
+  .rule-sound.playing {
+    animation: sound-glow 0.6s infinite;
+  }
+  
+  @keyframes sound-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.7); transform: scale(1); }
+    50% { box-shadow: 0 0 0 12px rgba(21, 128, 61, 0); transform: scale(1.05); }
+  }
+  
+  .rule-piece.c-letter:active {
+    transform: scale(0.92);
+  }
+  
+  .rule-piece.c-letter.playing {
+    animation: c-pulse-fast 0.5s infinite;
+  }
+  
+  @keyframes c-pulse-fast {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.9); }
+    50% { transform: scale(1.15); box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+  }
+  
+  .pronunciation-line {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 900;
+    color: var(--pirate);
+  }
+  
+  .pronunciation-arabic {
+    background: var(--pirate);
+    color: var(--gold-bright);
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-left: 5px;
+    border: 1px solid var(--gold);
+  }
+  
+  .rule-explanation {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    padding: 12px;
+    direction: rtl;
+    text-align: right;
+    color: var(--pirate);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 10px;
+    border-right: 4px solid var(--treasure);
+    font-weight: 600;
+  }
+  
+  .rule-explanation strong {
+    color: var(--coral-deep);
+    font-size: 15px;
+  }
+  
+  /* SHELLS - Examples */
+  .shells-title {
+    text-align: center;
+    font-size: 16px;
+    color: var(--gold-bright);
+    font-weight: 900;
+    margin: 15px 0 10px;
+    text-shadow: 2px 2px 0 var(--pirate);
+    font-family: 'Georgia', serif;
+    letter-spacing: 2px;
+  }
+  
+  .shells-subtitle {
+    text-align: center;
+    color: var(--sky);
+    font-size: 12px;
+    direction: rtl;
+    margin-bottom: 10px;
+  }
+  
+  .shells-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  
+  /* Shell-shaped card */
+  .shell-card {
+    background: 
+      radial-gradient(ellipse at 50% 30%, 
+        #FFE4E6 0%, 
+        #FBCFE8 50%, 
+        #F9A8D4 100%);
+    border-radius: 50% 50% 20% 20% / 60% 60% 30% 30%;
+    padding: 14px 8px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    box-shadow: 
+      0 8px 20px rgba(0,0,0,0.3),
+      inset 0 -5px 15px rgba(190, 24, 93, 0.2);
+    border: 2px solid var(--coral);
+    overflow: visible;
+  }
+  
+  /* Shell ridges (decoration) */
+  .shell-card::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 30%;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 4px,
+      rgba(190, 24, 93, 0.15) 4px,
+      rgba(190, 24, 93, 0.15) 5px
+    );
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  
+  .shell-card:active { transform: scale(0.95); }
+  
+  .shell-speaker {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 14px;
+    background: var(--pirate);
+    color: var(--gold-bright);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gold);
+  }
+  
+  .shell-emoji { 
+    font-size: 32px; 
+    margin: 2px 0; 
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+  
+  .shell-word {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--pirate);
+    margin: 3px 0;
+    letter-spacing: 1px;
+    font-family: 'Georgia', serif;
+  }
+  
+  .shell-word .highlight {
+    color: var(--danger);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 3px;
+  }
+  
+  .shell-word .highlight-green {
+    color: var(--seaweed);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 3px;
+  }
+  
+  .shell-phonetic {
+    background: var(--pirate);
+    color: var(--gold-bright);
+    padding: 1px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 900;
+    display: inline-block;
+    margin-top: 3px;
+    border: 1px solid var(--gold);
+  }
+  
+  .shell-arabic {
+    font-size: 12px;
+    color: var(--pirate);
+    direction: rtl;
+    margin-top: 3px;
+    font-weight: 600;
+  }
+  
+  /* Treasure note */
+  .treasure-note {
+    background: linear-gradient(135deg, 
+      rgba(31, 41, 55, 0.95), 
+      rgba(15, 23, 42, 0.95));
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+  
+  .treasure-note-label {
+    background: var(--gold);
+    color: var(--pirate);
+    padding: 3px 12px;
+    border-radius: 10px;
+    font-weight: 900;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 8px;
+    direction: rtl;
+    font-family: 'Georgia', serif;
+  }
+  
+  .treasure-note-content {
+    color: var(--gold-bright);
+    direction: rtl;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  
+  .treasure-note-content strong {
+    color: white;
+    font-size: 15px;
+  }
+  
+  /* Captain Kid tip */
+  .captain-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: linear-gradient(135deg, 
+      rgba(31, 41, 55, 0.95), 
+      rgba(15, 23, 42, 0.95));
+    border: 2px solid var(--ocean-light);
+    border-radius: 14px;
+    padding: 10px;
+    margin: 12px 0;
+  }
+  
+  .captain-tip-icon {
+    font-size: 38px;
+    flex-shrink: 0;
+  }
+  
+  .captain-tip-content {
+    flex: 1;
+    direction: rtl;
+    text-align: right;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--sky);
+  }
+  
+  .captain-tip-title {
+    color: var(--gold-bright);
+    font-weight: 900;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+  
+  /* Set Sail button */
+  .sail-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--seaweed), #166534);
+    color: white;
+    border: 4px solid var(--gold);
+    padding: 14px;
+    font-size: 17px;
+    font-weight: 900;
+    border-radius: 16px;
+    cursor: pointer;
+    margin: 12px 0;
+    box-shadow: 0 8px 20px rgba(21, 128, 61, 0.5);
+    font-family: inherit;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .sail-btn:active { transform: scale(0.97); }
+  
+  /* ===== PLAY AREA ===== */
+  .play-area {
+    width: 100%;
+    max-width: 540px;
+    padding: 10px;
+    margin-top: 50px;
+  }
+  
+  .level-header { text-align: center; margin-bottom: 15px; }
+  
+  .level-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--gold-bright);
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 0 var(--pirate);
+    font-family: 'Georgia', serif;
+  }
+  
+  .mini-rule {
+    background: var(--pirate);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--gold-bright);
+    margin: 8px auto;
+    display: inline-block;
+    font-weight: 900;
+  }
+  
+  /* Treasure progress bar */
+  .progress-treasure {
+    width: 100%;
+    height: 16px;
+    background: var(--pirate);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid var(--gold);
+    margin: 8px 0;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, 
+      var(--coral), 
+      var(--gold-bright), 
+      var(--seaweed));
+    width: 0%;
+    transition: width 0.5s;
+    border-radius: 8px;
+  }
+  
+  /* Challenge in wooden box style */
+  .challenge {
+    background: linear-gradient(135deg, 
+      rgba(31, 41, 55, 0.95), 
+      rgba(15, 23, 42, 0.95));
+    border-radius: 16px;
+    padding: 16px;
+    border: 3px solid var(--gold);
+    box-shadow: 
+      0 15px 30px rgba(0,0,0,0.5),
+      inset 0 0 20px rgba(180, 83, 9, 0.1);
+  }
+  
+  .challenge-q {
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--gold-bright);
+    font-weight: 900;
+    direction: rtl;
+  }
+  
+  .big-word {
+    font-size: 54px;
+    text-align: center;
+    font-weight: 900;
+    margin: 15px 0;
+    background: linear-gradient(135deg, 
+      var(--gold-bright), 
+      var(--coral), 
+      var(--sand-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 3px;
+    animation: word-pulse 2s infinite;
+    font-family: 'Georgia', serif;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  }
+  
+  @keyframes word-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+  
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  
+  /* Treasure chest button */
+  .option-btn {
+    background: linear-gradient(180deg, 
+      var(--treasure-light) 0%, 
+      var(--sand-deep) 40%, 
+      var(--treasure) 100%);
+    color: var(--pirate);
+    border: 3px solid var(--gold);
+    padding: 14px 8px;
+    font-size: 18px;
+    font-weight: 900;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Georgia', serif;
+    box-shadow: 
+      0 6px 12px rgba(0,0,0,0.3),
+      inset 0 -3px 6px rgba(180, 83, 9, 0.4);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  }
+  
+  .option-btn:active { transform: scale(0.95); }
+  
+  .option-btn.correct {
+    background: linear-gradient(180deg, 
+      #86EFAC 0%, 
+      var(--seaweed) 100%);
+    color: white;
+    animation: correct-shake 0.5s;
+  }
+  
+  .option-btn.wrong {
+    background: linear-gradient(180deg, 
+      #FCA5A5 0%, 
+      var(--danger) 100%);
+    color: white;
+    animation: wrong-shake 0.5s;
+  }
+  
+  @keyframes correct-shake {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.15) rotate(-5deg); }
+    75% { transform: scale(1.15) rotate(5deg); }
+  }
+  
+  @keyframes wrong-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+  
+  /* Drag area - shells as draggable */
+  .drag-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin: 12px 0;
+  }
+  
+  .drag-word {
+    background: 
+      radial-gradient(ellipse at 50% 30%, 
+        var(--shell-pink) 0%, 
+        var(--coral) 80%);
+    color: var(--pirate);
+    padding: 10px 6px;
+    border-radius: 50% 50% 20% 20% / 60% 60% 30% 30%;
+    font-weight: 900;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid var(--coral-deep);
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    font-family: 'Georgia', serif;
+  }
+  
+  .drag-word.dragging { 
+    opacity: 0.5; 
+    transform: scale(0.9); 
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  }
+  .drag-word.placed { opacity: 0.3; pointer-events: none; }
+  
+  .drop-zones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  
+  .drop-zone {
+    min-height: 90px;
+    background: 
+      linear-gradient(180deg, 
+        rgba(56, 189, 248, 0.2), 
+        rgba(12, 74, 110, 0.4));
+    border: 3px dashed var(--gold);
+    border-radius: 14px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .drop-label {
+    color: var(--gold-bright);
+    font-weight: 900;
+    font-size: 15px;
+    background: var(--pirate);
+    padding: 3px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--gold);
+  }
+  
+  .dropped-word {
+    background: var(--seaweed);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: 900;
+    animation: drop-in 0.3s;
+    font-size: 13px;
+  }
+  
+  @keyframes drop-in {
+    from { transform: scale(0) rotate(180deg); }
+    to { transform: scale(1) rotate(0); }
+  }
+  
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, var(--seaweed), #166534);
+    color: white;
+    padding: 20px 35px;
+    border-radius: 20px;
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    z-index: 1000;
+    border: 4px solid var(--gold);
+    text-align: center;
+    font-family: 'Georgia', serif;
+  }
+  
+  .toast.show { animation: toast-pop 1.2s; }
+  .toast.wrong { background: linear-gradient(135deg, var(--danger), #7F1D1D); }
+  
+  @keyframes toast-pop {
+    0% { transform: translate(-50%, -50%) scale(0) rotate(-20deg); }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); }
+    100% { transform: translate(-50%, -50%) scale(0) rotate(20deg); opacity: 0; }
+  }
+  
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 999;
+    animation: confetti-fall 3s linear forwards;
+  }
+  
+  @keyframes confetti-fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(120vh) rotate(720deg); opacity: 0; }
+  }
+  
+  /* Boss Octopus Fight */
+  .boss-arena {
+    width: 100%;
+    max-width: 540px;
+    text-align: center;
+    padding: 15px;
+    margin-top: 50px;
+  }
+  
+  .octopus {
+    font-size: 100px;
+    margin: 15px 0;
+    animation: octopus-attack 3s infinite;
+    filter: drop-shadow(0 0 25px var(--danger));
+    display: inline-block;
+  }
+  
+  @keyframes octopus-attack {
+    0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
+    25% { transform: translateY(-10px) rotate(3deg) scale(1.05); }
+    50% { transform: translateY(0) rotate(-5deg) scale(1); }
+    75% { transform: translateY(-5px) rotate(5deg) scale(1.05); }
+  }
+  
+  .octopus.hit { animation: octopus-hit 0.5s; }
+  
+  @keyframes octopus-hit {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3) rotate(20deg); filter: drop-shadow(0 0 40px white) brightness(2); }
+  }
+  
+  .boss-hp-wrap {
+    width: 100%;
+    height: 28px;
+    background: var(--pirate);
+    border: 3px solid var(--danger);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px 0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .boss-hp {
+    height: 100%;
+    background: linear-gradient(90deg, var(--danger), var(--coral), var(--sand-deep));
+    width: 100%;
+    transition: width 0.5s;
+  }
+  
+  .boss-hp-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: white;
+    text-shadow: 1px 1px 3px black;
+    font-size: 13px;
+  }
+  
+  /* Victory */
+  .victory { text-align: center; padding: 15px; max-width: 500px; }
+  
+  .victory-treasure {
+    font-size: 90px;
+    animation: treasure-glow 2s infinite;
+    display: inline-block;
+  }
+  
+  @keyframes treasure-glow {
+    0%, 100% { transform: scale(1) rotate(-3deg); filter: drop-shadow(0 0 20px var(--gold)); }
+    50% { transform: scale(1.1) rotate(3deg); filter: drop-shadow(0 0 40px var(--gold-bright)) brightness(1.3); }
+  }
+  
+  .victory-title {
+    font-size: 36px;
+    background: linear-gradient(135deg, var(--gold-bright), var(--coral), var(--sand-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    margin: 10px 0;
+    font-family: 'Georgia', serif;
+    text-shadow: 2px 2px 0 var(--pirate);
+  }
+  
+  .final-score {
+    font-size: 22px;
+    color: var(--gold-bright);
+    margin: 12px 0;
+    font-weight: bold;
+  }
+  
+  /* Captain character speech */
+  .character {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 12px 0;
+    background: linear-gradient(135deg, 
+      rgba(31, 41, 55, 0.95), 
+      rgba(15, 23, 42, 0.95));
+    padding: 10px;
+    border-radius: 14px;
+    border: 2px solid var(--ocean-light);
+  }
+  
+  .char-avatar { font-size: 42px; flex-shrink: 0; }
+  
+  .char-speech {
+    flex: 1;
+    text-align: right;
+    direction: rtl;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--sky);
+  }
+  
+  /* Match cards - sea creatures style */
+  .match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  
+  .match-card {
+    background: linear-gradient(135deg, var(--ocean-light), var(--ocean));
+    color: white;
+    padding: 12px 6px;
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 900;
+    border: 2px solid var(--gold);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    font-family: 'Georgia', serif;
+  }
+  
+  .match-card.selected {
+    background: linear-gradient(135deg, var(--gold-bright), var(--sand-deep));
+    color: var(--pirate);
+    transform: scale(1.05);
+  }
+  
+  .match-card.matched {
+    background: linear-gradient(135deg, #86EFAC, var(--seaweed));
+    pointer-events: none;
+    animation: match-bounce 0.5s;
+  }
+  
+  @keyframes match-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  
+  .match-card.wrong { animation: wrong-shake 0.4s; }
+  
+  /* Speaker button */
+  .speak-btn {
+    background: linear-gradient(135deg, var(--coral), var(--danger));
+    color: white;
+    border: 3px solid var(--gold);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 15px rgba(220, 38, 38, 0.5);
+    margin: 8px;
+  }
+  
+  .speak-btn:active { transform: scale(0.9); }
+  .speak-btn.playing { animation: speak-wave 0.6s infinite; }
+  
+  @keyframes speak-wave {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+    50% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+  }
+  
+  /* Sound cards */
+  .sound-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  
+  .sound-card {
+    background: linear-gradient(135deg, var(--ocean), var(--ocean-deep));
+    color: white;
+    padding: 16px 8px;
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid var(--gold);
+    font-weight: 900;
+  }
+  
+  .sound-card:active { transform: scale(0.95); }
+  .sound-card .word { font-size: 18px; font-family: 'Georgia', serif; }
+  .sound-card .hint { font-size: 11px; color: var(--gold-bright); margin-top: 4px; }
+  .sound-card.matched {
+    background: linear-gradient(135deg, #86EFAC, var(--seaweed));
+    pointer-events: none;
+  }
+  .sound-card.wrong { animation: wrong-shake 0.4s; }
+  
+  .action-btn {
+    background: linear-gradient(135deg, var(--seaweed), #166534);
+    color: white;
+    border: 3px solid var(--gold);
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 900;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 8px 4px;
+    box-shadow: 0 6px 15px rgba(21, 128, 61, 0.4);
+    font-family: inherit;
+  }
+  
+  .action-btn:active { transform: scale(0.95); }
+  .action-btn.secondary { background: linear-gradient(135deg, var(--pirate), #374151); color: var(--gold-bright); }
+  
+  @media (min-width: 768px) {
+    .islands-grid { grid-template-columns: repeat(3, 1fr); }
+    .boss-island { grid-column: span 3; }
+    .shells-grid { grid-template-columns: repeat(4, 1fr); }
+    .big-word { font-size: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg"></div>
+<div class="wave"></div>
+<div class="wave"></div>
+
+<!-- Floating sea creatures (decorative) -->
+<div class="sea-creature" style="top: 15%; animation-delay: 0s;">🐠</div>
+<div class="sea-creature" style="top: 35%; animation-delay: 8s;">🐟</div>
+<div class="sea-creature" style="top: 60%; animation-delay: 15s;">🦀</div>
+<div class="sea-creature" style="top: 80%; animation-delay: 20s;">🐢</div>
+
+<!-- Bubbles -->
+<div id="bubbleContainer"></div>
+
+<!-- ========== HOME SCREEN ========== -->
+<div class="screen active" id="screen-home">
+  <div class="home-content">
+    <div class="pirate-flag">🏴‍☠️</div>
+    <h1 class="game-title">The Sea C-Quest</h1>
+    <p class="game-subtitle">⚓ A Pirate's Phonics Adventure ⚓</p>
+    <p class="game-subtitle-ar">مغامرة بحرية لتعلم نطق حرف C</p>
+    
+    <div class="captain-avatar">🧑‍✈️</div>
+    
+    <div class="story-scroll">
+      <p>
+        <strong>أهلاً بك يا Captain Kid! 🧑‍✈️</strong><br><br>
+        أخطبوط شرير اسمه <strong style="color: var(--danger);">"The Confusion Kraken"</strong> 🐙 
+        سرق <strong style="color: var(--treasure);">كنوز أصوات حرف C</strong> 
+        وخبأها في <strong>6 جزر</strong> بحرية!<br><br>
+        🗺️ أبحر بسفينتك من جزيرة لأخرى<br>
+        🐚 اجمع الأصداف السحرية<br>
+        💎 وحرر كنز الكلمات!<br><br>
+        في النهاية: واجه الأخطبوط في معركة بحرية! 🦑⚔️
+      </p>
+    </div>
+    
+    <button class="start-btn" onclick="startGame()">⚓ Set Sail! ⚓</button>
+  </div>
+</div>
+
+<!-- ========== MAP / ISLANDS SCREEN ========== -->
+<div class="screen" id="screen-map">
+  <div class="hud">
+    <div class="hud-item">⭐ <span id="hudStars">0</span></div>
+    <div class="hud-item">💎 <span id="hudGems">0</span></div>
+    <div class="hud-item">❤️ <span id="hudHearts">3</span></div>
+  </div>
+  
+  <div class="map-header">
+    <h2 class="map-title">🗺️ The Sea Map</h2>
+    <p class="map-subtitle">⚓ اختر جزيرة لتبدأ المغامرة ⚓</p>
+  </div>
+  
+  <div class="islands-container">
+    <div class="islands-grid" id="islandsGrid"></div>
+  </div>
+</div>
+
+<!-- ========== LESSON SCREEN ========== -->
+<div class="screen" id="screen-lesson">
+  <div class="hud">
+    <div class="hud-item">⭐ <span id="lessonStars">0</span></div>
+    <div class="hud-item">💎 <span id="lessonGems">0</span></div>
+  </div>
+  <button class="back-btn" onclick="goMap()">← Map</button>
+  
+  <div class="lesson-screen" id="lessonContent"></div>
+</div>
+
+<!-- ========== PLAY SCREEN ========== -->
+<div class="screen" id="screen-play">
+  <div class="hud">
+    <div class="hud-item">⭐ <span id="playStars">0</span></div>
+    <div class="hud-item">💎 <span id="playGems">0</span></div>
+    <div class="hud-item">❤️ <span id="playHearts">3</span></div>
+  </div>
+  <button class="back-btn" onclick="goMap()">← Map</button>
+  
+  <div class="play-area" id="playArea"></div>
+</div>
+
+<!-- ========== BOSS FIGHT - OCTOPUS ========== -->
+<div class="screen" id="screen-boss">
+  <div class="hud">
+    <div class="hud-item">⭐ <span id="bossStars">0</span></div>
+    <div class="hud-item">💎 <span id="bossGems">0</span></div>
+    <div class="hud-item">❤️ <span id="bossHearts">5</span></div>
+  </div>
+  
+  <div class="boss-arena">
+    <h2 style="color: var(--danger); font-size: 24px; font-weight: 900; font-family: Georgia, serif; text-shadow: 2px 2px 0 var(--pirate);">⚡ KRAKEN BATTLE ⚡</h2>
+    <p style="color: var(--gold-bright); direction: rtl; margin: 6px 0; font-size: 13px;">المعركة النهائية ضد الأخطبوط!</p>
+    
+    <div class="octopus" id="octopus">🐙</div>
+    <p style="color: white; font-weight: 900; font-family: Georgia, serif;">THE CONFUSION KRAKEN</p>
+    
+    <div class="boss-hp-wrap">
+      <div class="boss-hp" id="bossHP"></div>
+      <div class="boss-hp-text">⚓ HP: <span id="bossHPText">100</span>/100 ⚓</div>
+    </div>
+    
+    <div id="bossChallenge"></div>
+  </div>
+</div>
+
+<!-- ========== VICTORY ========== -->
+<div class="screen" id="screen-victory">
+  <div class="victory">
+    <div class="victory-treasure">💰</div>
+    <h1 class="victory-title">TREASURE WON!</h1>
+    <p style="font-size: 16px; color: var(--gold-bright); direction: rtl; margin: 10px 0;">
+      🎉 لقد هزمت الأخطبوط واسترجعت الكنز! 🎉
+    </p>
+    <p style="font-size: 20px; color: white; font-weight: 900; margin: 10px 0; font-family: Georgia, serif;">
+      ⚓ Master Captain of C-Sounds ⚓
+    </p>
+    
+    <div class="final-score">
+      ⭐ Stars: <span id="finalStars">0</span><br>
+      💎 Gems: <span id="finalGems">0</span><br>
+      🏅 Rank: <span id="finalRank">Captain</span>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, #FEF3C7, #FCD34D); border: 3px solid var(--treasure); border-radius: 14px; padding: 14px; margin: 12px 0; direction: rtl; text-align: right; color: var(--pirate);">
+      <p style="color: var(--coral-deep); font-weight: 900; margin-bottom: 6px;">🌟 الكنوز التي جمعتها:</p>
+      <p style="font-size: 13px; line-height: 1.8; font-weight: 600;">
+        ✅ C + a/o/u/consonant = /k/<br>
+        ✅ C + e/i/y = /s/<br>
+        ✅ ch = /ch/<br>
+        ✅ ck = /k/ قوية<br>
+        ✅ Silent C (صامتة)<br>
+        ✅ c + ia = /sh/
+      </p>
+    </div>
+    
+    <button class="action-btn" onclick="restart()">🔄 New Adventure</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ===== FIXED FOOTER WITH TEACHER NAME ===== -->
+<div class="footer-name">T. WAD REFAE</div>
+
+<script>
+// ============ STATE ============
+const state = {
+  stars: 0,
+  gems: 0,
+  hearts: 3,
+  currentLevel: 0,
+  currentChallenge: 0,
+  completedLevels: [],
+  bossHP: 100,
+  challengeData: {}
+};
+
+// ============ ISLANDS DATA ============
+const levels = [
+  {
+    id: 1,
+    icon: '🐱',
+    name: 'Cat Island',
+    nameAr: 'جزيرة القطط',
+    sound: '/k/',
+    lesson: {
+      formula: { left: 'a, o, u, ساكن', sound: '/k/', soundAr: 'ك' },
+      arabicExplanation: `<strong>متى يُنطق C كصوت /k/ (ك)؟</strong><br>
+        عندما يأتي بعد حرف C:<br>
+        🔸 <strong>a</strong> (مثل cat)<br>
+        🔸 <strong>o</strong> (مثل cold)<br>
+        🔸 <strong>u</strong> (مثل cup)<br>
+        🔸 أو أي <strong>حرف ساكن</strong> مثل class`,
+      examples: [
+        { word: 'cat', highlight: 'c', emoji: '🐱', arabic: 'قطة', phonetic: '/kæt/' },
+        { word: 'cup', highlight: 'c', emoji: '☕', arabic: 'كوب', phonetic: '/kʌp/' },
+        { word: 'cold', highlight: 'c', emoji: '❄️', arabic: 'بارد', phonetic: '/koʊld/' },
+        { word: 'class', highlight: 'c', emoji: '🏫', arabic: 'صف', phonetic: '/klæs/' }
+      ],
+      importantNote: {
+        title: '💡 استثناء مهم',
+        content: 'كلمة <strong>school</strong> يُنطق فيها C كصوت /k/ (سْكول) رغم وجود "h"!'
+      },
+      captainTip: 'تذكّر يا قبطان: a, o, u <strong>أحرف صلبة</strong> مثل الصخور البحرية - تخلي C قوي = /k/ 🪨'
+    },
+    challenges: [
+      { type: 'choice', word: 'cat', q: 'كيف يُنطق حرف C في كلمة cat؟', options: ['/k/', '/s/'], correct: '/k/', hint: 'cat = كات 🐱' },
+      { type: 'choice', word: 'cup', q: 'كيف يُنطق حرف C في كلمة cup؟', options: ['/s/', '/k/'], correct: '/k/', hint: 'cup = كاب ☕' },
+      { type: 'choice', word: 'cold', q: 'كيف يُنطق حرف C في كلمة cold؟', options: ['/k/', '/sh/'], correct: '/k/', hint: 'cold = كولد ❄️' },
+      { type: 'match', q: 'طابق الكلمة مع معناها', pairs: [
+        { en: 'cat', ar: 'قطة' },
+        { en: 'cup', ar: 'كوب' },
+        { en: 'cold', ar: 'بارد' },
+        { en: 'class', ar: 'صف' }
+      ]}
+    ]
+  },
+  {
+    id: 2,
+    icon: '🏙️',
+    name: 'City Bay',
+    nameAr: 'خليج المدينة',
+    sound: '/s/',
+    lesson: {
+      formula: { left: 'e, i, y', sound: '/s/', soundAr: 'س' },
+      arabicExplanation: `<strong>متى يُنطق C كصوت /s/ (س)؟</strong><br>
+        عندما يأتي بعد حرف C:<br>
+        🔸 <strong>e</strong> (مثل center)<br>
+        🔸 <strong>i</strong> (مثل city)<br>
+        🔸 <strong>y</strong> (مثل cycle)<br><br>
+        💡 <strong>القاعدة الذهبية:</strong> e, i, y → /s/ دائماً!`,
+      examples: [
+        { word: 'city', highlight: 'c', emoji: '🏙️', arabic: 'مدينة', phonetic: '/ˈsɪti/' },
+        { word: 'center', highlight: 'c', emoji: '🎯', arabic: 'مركز', phonetic: '/ˈsentər/' },
+        { word: 'cycle', highlight: 'c', emoji: '🔄', arabic: 'دورة', phonetic: '/ˈsaɪkəl/' },
+        { word: 'cinema', highlight: 'c', emoji: '🎬', arabic: 'سينما', phonetic: '/ˈsɪnəmə/' }
+      ],
+      importantNote: {
+        title: '🤔 ليش الفرق؟',
+        content: 'نقرأ <strong>cat</strong> (كات) لكن <strong>city</strong> (سيتي)؟ السر: <strong>الحرف بعد C</strong> هو اللي بيغير النطق!'
+      },
+      captainTip: 'e, i, y أحرف <strong>ناعمة مثل الموج</strong> 🌊 بتخلي C ناعم = /s/'
+    },
+    challenges: [
+      { type: 'choice', word: 'city', q: 'كيف يُنطق حرف C في كلمة city؟', options: ['/k/', '/s/'], correct: '/s/', hint: 'city = سيتي 🏙️' },
+      { type: 'choice', word: 'cycle', q: 'كيف يُنطق حرف C في كلمة cycle؟', options: ['/s/', '/k/'], correct: '/s/', hint: 'cycle = سايكل 🔄' },
+      { type: 'choice', word: 'cinema', q: 'كيف يُنطق حرف C في كلمة cinema؟', options: ['/k/', '/s/'], correct: '/s/', hint: 'cinema = سينما 🎬' },
+      { type: 'drag', q: 'اسحب كل كلمة إلى الصوت الصحيح', words: ['city', 'cat', 'center', 'cup'], zones: [
+        { label: '/s/', correct: ['city', 'center'] },
+        { label: '/k/', correct: ['cat', 'cup'] }
+      ]}
+    ]
+  },
+  {
+    id: 3,
+    icon: '🧀',
+    name: 'Cheese Cove',
+    nameAr: 'خليج الجبن',
+    sound: '/ch/',
+    lesson: {
+      formula: { left: 'h', sound: '/ch/', soundAr: 'تش' },
+      arabicExplanation: `<strong>متى يُنطق C كصوت /ch/ (تش)؟</strong><br>
+        عندما يأتي بعد C حرف <strong>h</strong> مباشرةً:<br>
+        🔸 <strong>ch</strong> معاً = صوت واحد جديد!<br><br>
+        🎵 الصوت يشبه: "تـْـش"`,
+      examples: [
+        { word: 'chair', highlight: 'ch', emoji: '🪑', arabic: 'كرسي', phonetic: '/tʃer/' },
+        { word: 'cheese', highlight: 'ch', emoji: '🧀', arabic: 'جبنة', phonetic: '/tʃiːz/' },
+        { word: 'chicken', highlight: 'ch', emoji: '🐔', arabic: 'دجاج', phonetic: '/ˈtʃɪkən/' },
+        { word: 'cherry', highlight: 'ch', emoji: '🍒', arabic: 'كرز', phonetic: '/ˈtʃeri/' }
+      ],
+      importantNote: {
+        title: '⚠️ انتبه!',
+        content: 'في كلمة <strong>school</strong> الـ ch تُنطق /k/ مش /ch/! استثناء 📌'
+      },
+      captainTip: 'صوت /ch/ مثل صوت سفينة بتمشي 🚢 "تش تش تش"! جربوا: "cheese!" 🧀'
+    },
+    challenges: [
+      { type: 'choice', word: 'chair', q: 'كيف يُنطق ch في chair؟', options: ['/ch/', '/k/'], correct: '/ch/', hint: 'chair = تشير 🪑' },
+      { type: 'choice', word: 'cheese', q: 'كيف يُنطق ch في cheese؟', options: ['/s/', '/ch/'], correct: '/ch/', hint: 'cheese = تشيز 🧀' },
+      { type: 'choice', word: 'chicken', q: 'كيف يُنطق ch في chicken؟', options: ['/ch/', '/sh/'], correct: '/ch/', hint: 'chicken = تشيكن 🐔' },
+      { type: 'sound', q: 'أيٌّ من هذه الكلمات يبدأ بـ /ch/؟', options: [
+        { word: 'chair', correct: true, hint: 'كرسي' },
+        { word: 'cat', correct: false, hint: 'قطة' },
+        { word: 'cheese', correct: true, hint: 'جبن' },
+        { word: 'city', correct: false, hint: 'مدينة' }
+      ], correctCount: 2 }
+    ]
+  },
+  {
+    id: 4,
+    icon: '🔒',
+    name: 'Lock Reef',
+    nameAr: 'شعاب الأقفال',
+    sound: '/k/!',
+    lesson: {
+      formula: { left: 'k', sound: '/k/', soundAr: 'ك قوية' },
+      arabicExplanation: `<strong>متى يأتي ck؟</strong><br>
+        عندما نشوف <strong>ck</strong> معاً:<br>
+        🔸 يُنطقوا كصوت <strong>/k/ قوية</strong><br>
+        🔸 الحرفين معاً = صوت واحد!<br><br>
+        ⚡ غالباً تجي في <strong>نهاية الكلمات</strong>`,
+      examples: [
+        { word: 'black', highlight: 'ck', emoji: '⚫', arabic: 'أسود', phonetic: '/blæk/' },
+        { word: 'lock', highlight: 'ck', emoji: '🔒', arabic: 'قفل', phonetic: '/lɑːk/' },
+        { word: 'pick', highlight: 'ck', emoji: '👆', arabic: 'يختار', phonetic: '/pɪk/' },
+        { word: 'pack', highlight: 'ck', emoji: '🎒', arabic: 'حقيبة', phonetic: '/pæk/' }
+      ],
+      importantNote: {
+        title: '🎯 لاحظ',
+        content: 'الحرفين <strong>ck</strong> معاً يُنطقوا صوت واحد قوي = /k/'
+      },
+      captainTip: 'تخيل ck زي <strong>صندوق كنز مقفول</strong> 🔒 صوت قوي ومحكم! جربوا: "click!" 👆'
+    },
+    challenges: [
+      { type: 'choice', word: 'black', q: 'كيف يُنطق ck في black؟', options: ['/k/', '/s/'], correct: '/k/', hint: 'black = بلاك ⚫' },
+      { type: 'choice', word: 'lock', q: 'كيف يُنطق ck في lock؟', options: ['/ch/', '/k/'], correct: '/k/', hint: 'lock = لوك 🔒' },
+      { type: 'choice', word: 'pick', q: 'كيف يُنطق ck في pick؟', options: ['/k/', '/s/'], correct: '/k/', hint: 'pick = بيك 👆' },
+      { type: 'match', q: 'طابق الكلمة مع معناها', pairs: [
+        { en: 'black', ar: 'أسود' },
+        { en: 'lock', ar: 'قفل' },
+        { en: 'pick', ar: 'يختار' },
+        { en: 'pack', ar: 'حقيبة' }
+      ]}
+    ]
+  },
+  {
+    id: 5,
+    icon: '🤫',
+    name: 'Silent Lagoon',
+    nameAr: 'البحيرة الصامتة',
+    sound: 'Silent',
+    lesson: {
+      formula: { left: '(silent)', sound: '🤫', soundAr: 'لا تُنطق!' },
+      arabicExplanation: `<strong>متى يكون C صامت؟</strong><br>
+        أحياناً يأتي C لكن <strong>لا نسمع صوته!</strong><br><br>
+        🤫 يحدث عندما يأتي بعد حرف <strong>s</strong>:<br>
+        🔸 <strong>sc</strong> + i/e → C صامت<br>
+        🔸 مثل: scissors, scene, science`,
+      examples: [
+        { word: 'scissors', highlight: 'c', emoji: '✂️', arabic: 'مقص', phonetic: '/ˈsɪzərz/' },
+        { word: 'muscle', highlight: 'c', emoji: '💪', arabic: 'عضلة', phonetic: '/ˈmʌsl̩/' },
+        { word: 'scene', highlight: 'c', emoji: '🎭', arabic: 'مشهد', phonetic: '/siːn/' },
+        { word: 'science', highlight: 'c', emoji: '🔬', arabic: 'علوم', phonetic: '/ˈsaɪəns/' }
+      ],
+      importantNote: {
+        title: '🤫 سر مهم',
+        content: 'في scissors نقول "<strong>سيزرز</strong>" مش "سكيزرز"! C موجود بس مختفي مثل <strong>كنز مخبأ</strong> 💎'
+      },
+      captainTip: 'احفظ هاي الكلمات لأنها <strong>كنوز نادرة</strong>! ما في قاعدة ثابتة 🎓'
+    },
+    challenges: [
+      { type: 'choice', word: 'scissors', q: 'هل يُنطق C في scissors؟', options: ['نعم', 'لا (صامت)'], correct: 'لا (صامت)', hint: 'scissors = سيزرز ✂️' },
+      { type: 'choice', word: 'muscle', q: 'هل يُنطق C في muscle؟', options: ['لا (صامت)', 'نعم'], correct: 'لا (صامت)', hint: 'muscle = مَسِل 💪' },
+      { type: 'choice', word: 'scene', q: 'هل يُنطق C في scene؟', options: ['نعم', 'لا (صامت)'], correct: 'لا (صامت)', hint: 'scene = سين 🎭' },
+      { type: 'sound', q: 'أيٌّ من هذه الكلمات فيها C صامت؟', options: [
+        { word: 'scissors', correct: true, hint: '✂️' },
+        { word: 'cat', correct: false, hint: '🐱' },
+        { word: 'scene', correct: true, hint: '🎭' },
+        { word: 'cake', correct: false, hint: '🎂' }
+      ], correctCount: 2 }
+    ]
+  },
+  {
+    id: 6,
+    icon: '⭐',
+    name: 'Special Isle',
+    nameAr: 'جزيرة الكنوز النادرة',
+    sound: '/sh/',
+    lesson: {
+      formula: { left: 'i + a', sound: '/sh/', soundAr: 'ش' },
+      arabicExplanation: `<strong>متى يُنطق C كصوت /sh/ (ش)؟</strong><br>
+        عندما يأتي بعد C تركيبة <strong>(i + a)</strong>:<br>
+        🔸 <strong>cia</strong> → تُنطق "شَ"<br><br>
+        أمثلة شائعة:<br>
+        🔸 spe<strong>cia</strong>l → سبيـ<strong>شـ</strong>ل<br>
+        🔸 so<strong>cia</strong>l → سو<strong>شـ</strong>ل`,
+      examples: [
+        { word: 'special', highlight: 'ci', emoji: '⭐', arabic: 'مميز', phonetic: '/ˈspeʃəl/' },
+        { word: 'social', highlight: 'ci', emoji: '👥', arabic: 'اجتماعي', phonetic: '/ˈsoʊʃəl/' },
+        { word: 'official', highlight: 'ci', emoji: '📜', arabic: 'رسمي', phonetic: '/əˈfɪʃəl/' },
+        { word: 'musician', highlight: 'ci', emoji: '🎵', arabic: 'موسيقار', phonetic: '/mjuˈzɪʃən/' }
+      ],
+      importantNote: {
+        title: '🌟 كنز المحترفين',
+        content: 'هاي القاعدة في كلمات <strong>متقدمة</strong>! إذا حفظتها = <strong>كنز نطق ذهبي</strong> 👑'
+      },
+      captainTip: '<strong>ci + a</strong> = صوت /sh/<br>هذا كنز <strong>القباطنة المحترفين</strong>! 💎'
+    },
+    challenges: [
+      { type: 'choice', word: 'special', q: 'كيف يُنطق ci في special؟', options: ['/sh/', '/s/'], correct: '/sh/', hint: 'special = سبيشل ⭐' },
+      { type: 'choice', word: 'social', q: 'كيف يُنطق ci في social؟', options: ['/k/', '/sh/'], correct: '/sh/', hint: 'social = سوشل 👥' },
+      { type: 'choice', word: 'official', q: 'كيف يُنطق ci في official؟', options: ['/sh/', '/ch/'], correct: '/sh/', hint: 'official = أوفيشل 📜' },
+      { type: 'drag', q: 'اسحب الكلمة إلى الصوت الصحيح', words: ['special', 'cat', 'social', 'city'], zones: [
+        { label: '/sh/', correct: ['special', 'social'] },
+        { label: 'غير ذلك', correct: ['cat', 'city'] }
+      ]}
+    ]
+  }
+];
+
+// ============ BUBBLES ============
+function createBubbles() {
+  const container = document.getElementById('bubbleContainer');
+  for (let i = 0; i < 15; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = Math.random() * 30 + 10;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    b.style.animationDuration = (Math.random() * 8 + 8) + 's';
+    b.style.animationDelay = Math.random() * 10 + 's';
+    container.appendChild(b);
+  }
+}
+createBubbles();
+
+// ============ SCREEN MGMT ============
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function updateHUD() {
+  ['hud', 'play', 'boss', 'lesson'].forEach(p => {
+    const s = document.getElementById(p + 'Stars');
+    const g = document.getElementById(p + 'Gems');
+    const h = document.getElementById(p + 'Hearts');
+    if (s) s.textContent = state.stars;
+    if (g) g.textContent = state.gems;
+    if (h) h.textContent = state.hearts;
+  });
+}
+
+function startGame() {
+  playSound('start');
+  showScreen('map');
+  renderMap();
+}
+
+function renderMap() {
+  updateHUD();
+  const grid = document.getElementById('islandsGrid');
+  grid.innerHTML = '';
+  
+  // Sea decorations for each island
+  const seaDecorations = [
+    ['🐚', '🐠'],   // Island 1 - Cat
+    ['🐟', '⭐'],   // Island 2 - City
+    ['🦀', '🐚'],   // Island 3 - Cheese
+    ['💎', '🐙'],   // Island 4 - Lock
+    ['🐢', '🪸'],   // Island 5 - Silent
+    ['⭐', '💰']    // Island 6 - Special
+  ];
+  
+  levels.forEach((lvl, idx) => {
+    const card = document.createElement('div');
+    const isLocked = idx > 0 && !state.completedLevels.includes(idx - 1);
+    const isDone = state.completedLevels.includes(idx);
+    
+    card.className = 'island-card' + (isLocked ? ' locked' : '') + (isDone ? ' completed' : '');
+    
+    let stars = '';
+    if (isDone) stars = '⭐⭐⭐';
+    
+    const deco = seaDecorations[idx] || ['🐚', '🐠'];
+    
+    card.innerHTML = `
+      <span class="palm-tree left">🌴</span>
+      <span class="palm-tree right">🌴</span>
+      <span class="island-decoration bottom-left">${deco[0]}</span>
+      <span class="island-decoration bottom-right">${deco[1]}</span>
+      <div class="island-num-flag">${isLocked ? '🔒' : lvl.id}</div>
+      <div class="island-icon">${lvl.icon}</div>
+      <div class="island-name">${lvl.name}</div>
+      <div class="island-sound-tag">${lvl.sound}</div>
+      ${stars ? `<div class="island-stars">${stars}</div>` : ''}
+    `;
+    
+    if (!isLocked) {
+      card.onclick = () => showLesson(idx);
+    }
+    
+    grid.appendChild(card);
+  });
+  
+  if (state.completedLevels.length === 6) {
+    const bossCard = document.createElement('div');
+    bossCard.className = 'island-card boss-island';
+    bossCard.innerHTML = `
+      <span class="palm-tree left" style="filter: drop-shadow(0 0 8px var(--danger));">🌴</span>
+      <span class="palm-tree right" style="filter: drop-shadow(0 0 8px var(--danger));">🌴</span>
+      <span class="island-decoration bottom-left">🦑</span>
+      <span class="island-decoration bottom-right">⚔️</span>
+      <div class="island-num-flag" style="background: linear-gradient(135deg, var(--danger), var(--pirate));">🐙</div>
+      <div class="island-icon">🐙</div>
+      <div class="island-name" style="color: white; font-size: 14px;">FINAL KRAKEN</div>
+      <div style="color: var(--gold-bright); font-size: 11px; direction: rtl;">معركة الأخطبوط النهائية</div>
+    `;
+    bossCard.onclick = startBoss;
+    grid.appendChild(bossCard);
+  }
+}
+
+function goMap() {
+  showScreen('map');
+  renderMap();
+}
+
+// ============ LESSON ============
+function showLesson(idx) {
+  state.currentLevel = idx;
+  const lvl = levels[idx];
+  const lesson = lvl.lesson;
+  const area = document.getElementById('lessonContent');
+  
+  const examplesHTML = lesson.examples.map(ex => {
+    let wordHTML = ex.word;
+    if (ex.highlight === 'c') {
+      wordHTML = '<span class="highlight">c</span>' + ex.word.substring(1);
+    } else if (ex.highlight === 'ch') {
+      wordHTML = '<span class="highlight">ch</span>' + ex.word.substring(2);
+    } else if (ex.highlight === 'ck') {
+      const i = ex.word.indexOf('ck');
+      wordHTML = ex.word.substring(0, i) + '<span class="highlight-green">ck</span>' + ex.word.substring(i + 2);
+    } else if (ex.highlight === 'ci') {
+      const i = ex.word.indexOf('ci');
+      wordHTML = ex.word.substring(0, i) + '<span class="highlight">ci</span>' + ex.word.substring(i + 2);
+    }
+    
+    return `
+      <div class="shell-card" onclick="speak('${ex.word}', this)">
+        <div class="shell-speaker">🔊</div>
+        <div class="shell-emoji">${ex.emoji}</div>
+        <div class="shell-word">${wordHTML}</div>
+        <div class="shell-phonetic">${ex.phonetic}</div>
+        <div class="shell-arabic">${ex.arabic}</div>
+      </div>
+    `;
+  }).join('');
+  
+  area.innerHTML = `
+    <div class="lesson-header">
+      <div class="lesson-island-emoji">${lvl.icon}</div>
+      <h2 class="lesson-title">${lvl.name}</h2>
+      <p class="lesson-subtitle">${lvl.nameAr} • Island ${lvl.id}</p>
+    </div>
+    
+    <div class="parchment">
+      <div style="text-align: center;">
+        <div class="parchment-label">📜 The Pirate's Rule</div>
+      </div>
+      
+      <div class="rule-formula-box">
+        <div class="rule-formula">
+          <div class="rule-piece c-letter" onclick="playPhonicSound('C', this)" title="انطق حرف C">C</div>
+          <div class="rule-piece">+ ${lesson.formula.left}</div>
+          <div class="rule-arrow">→</div>
+          <div class="rule-sound" onclick="playPhonicSound('${lesson.formula.sound}', this)" title="انطق الصوت">${lesson.formula.sound}</div>
+        </div>
+        <p class="pronunciation-line">
+          يُنطق <span class="pronunciation-arabic">${lesson.formula.soundAr}</span>
+        </p>
+      </div>
+      
+      <div class="rule-explanation">
+        ${lesson.arabicExplanation}
+      </div>
+    </div>
+    
+    <h3 class="shells-title">🐚 MAGIC SHELLS 🐚</h3>
+    <p class="shells-subtitle">اضغط على الصدفة لتسمع نطقها 🔊</p>
+    <div class="shells-grid">
+      ${examplesHTML}
+    </div>
+    
+    ${lesson.importantNote ? `
+      <div class="treasure-note">
+        <div class="treasure-note-label">${lesson.importantNote.title}</div>
+        <div class="treasure-note-content">${lesson.importantNote.content}</div>
+      </div>
+    ` : ''}
+    
+    <div class="captain-tip">
+      <div class="captain-tip-icon">🧑‍✈️</div>
+      <div class="captain-tip-content">
+        <div class="captain-tip-title">⚓ نصيحة الكابتن</div>
+        ${lesson.captainTip}
+      </div>
+    </div>
+    
+    <button class="sail-btn" onclick="startLevel(${idx})">
+      ⛵ Set Sail to Challenge! ⛵
+    </button>
+  `;
+  
+  updateHUD();
+  showScreen('lesson');
+}
+
+function startLevel(idx) {
+  state.currentLevel = idx;
+  state.currentChallenge = 0;
+  state.hearts = 3;
+  showScreen('play');
+  renderChallenge();
+}
+
+function renderChallenge() {
+  updateHUD();
+  const lvl = levels[state.currentLevel];
+  const ch = lvl.challenges[state.currentChallenge];
+  const area = document.getElementById('playArea');
+  
+  const progress = (state.currentChallenge / lvl.challenges.length) * 100;
+  
+  let challengeHTML = '';
+  
+  if (ch.type === 'choice') {
+    challengeHTML = `
+      <div class="challenge">
+        <div class="challenge-q">${ch.q}</div>
+        <div class="big-word">${ch.word}</div>
+        <div style="text-align:center;">
+          <button class="speak-btn" onclick="speak('${ch.word}', this)">🔊</button>
+        </div>
+        <p style="text-align:center; color: var(--gold-bright); direction:rtl; font-size: 13px; margin: 8px 0;">${ch.hint}</p>
+        <div class="options">
+          ${ch.options.map(o => `<button class="option-btn" onclick="checkChoice(this, '${o}', '${ch.correct}')">${o}</button>`).join('')}
+        </div>
+      </div>
+    `;
+  } else if (ch.type === 'match') {
+    state.challengeData = { selected: null, matched: 0, pairs: ch.pairs };
+    const allCards = [];
+    ch.pairs.forEach(p => {
+      allCards.push({ text: p.en, pair: p.en, type: 'en' });
+      allCards.push({ text: p.ar, pair: p.en, type: 'ar' });
+    });
+    shuffleArray(allCards);
+    
+    challengeHTML = `
+      <div class="challenge">
+        <div class="challenge-q">${ch.q}</div>
+        <p style="text-align:center; color: var(--gold-bright); direction:rtl; font-size: 12px; margin-bottom: 8px;">اضغط على كلمة ثم على معناها</p>
+        <div class="match-grid">
+          ${allCards.map((c, i) => `<div class="match-card" data-pair="${c.pair}" data-i="${i}" onclick="selectMatch(this)">${c.text}</div>`).join('')}
+        </div>
+      </div>
+    `;
+  } else if (ch.type === 'drag') {
+    state.challengeData = { placed: 0, total: ch.words.length, zones: ch.zones, selectedWord: null };
+    challengeHTML = `
+      <div class="challenge">
+        <div class="challenge-q">${ch.q}</div>
+        <p style="text-align:center; color: var(--gold-bright); direction:rtl; font-size: 12px;">اضغط على الكلمة ثم على الصوت الصحيح</p>
+        <div class="drag-area">
+          ${ch.words.map(w => `<div class="drag-word" data-word="${w}" onclick="selectDragWord(this)">${w}</div>`).join('')}
+        </div>
+        <div class="drop-zones">
+          ${ch.zones.map((z, i) => `
+            <div class="drop-zone" data-zone="${i}" onclick="dropOnZone(this)">
+              <div class="drop-label">${z.label}</div>
+              <div class="zone-contents" data-i="${i}"></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } else if (ch.type === 'sound') {
+    state.challengeData = { found: 0, target: ch.correctCount };
+    challengeHTML = `
+      <div class="challenge">
+        <div class="challenge-q">${ch.q}</div>
+        <p style="text-align:center; color: var(--gold-bright); direction:rtl; font-size: 12px;">اضغط على الكلمات الصحيحة (${ch.correctCount})</p>
+        <div class="sound-options">
+          ${ch.options.map((o, i) => `
+            <div class="sound-card" data-correct="${o.correct}" onclick="checkSound(this, ${o.correct})">
+              <div class="word">${o.word}</div>
+              <div class="hint">${o.hint}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+  
+  area.innerHTML = `
+    <div class="level-header">
+      <div class="level-title">${lvl.icon} ${lvl.name}</div>
+      <div style="color: var(--sky); direction: rtl; font-size: 13px;">${lvl.nameAr}</div>
+      <span class="mini-rule">📜 C + ${lvl.lesson.formula.left} → ${lvl.lesson.formula.sound}</span>
+      <div class="progress-treasure"><div class="progress-fill" style="width:${progress}%"></div></div>
+      <div style="font-size: 12px; color: var(--sky);">⚓ Challenge ${state.currentChallenge + 1} / ${lvl.challenges.length} ⚓</div>
+    </div>
+    ${challengeHTML}
+    <div class="character">
+      <div class="char-avatar">🧑‍✈️</div>
+      <div class="char-speech">${getCaptainHint()}</div>
+    </div>
+  `;
+}
+
+function getCaptainHint() {
+  const hints = [
+    'هيا يا قبطان! أنت أقوى من الأخطبوط! ⚓',
+    'تذكّر القاعدة... استمع جيدًا للأمواج 🌊',
+    'كل صدفة سحرية تجمعها تقربك من الكنز! 🐚',
+    'لو أخطأت لا تخف، البحارة الحقيقيون يعيدون المحاولة! ⛵',
+    'كل إجابة صحيحة = ضربة قوية للأخطبوط! 🦑⚔️'
+  ];
+  return hints[Math.floor(Math.random() * hints.length)];
+}
+
+function checkChoice(btn, picked, correct) {
+  const buttons = btn.parentElement.querySelectorAll('.option-btn');
+  buttons.forEach(b => b.disabled = true);
+  
+  if (picked === correct) {
+    btn.classList.add('correct');
+    state.stars += 10;
+    state.gems += 1;
+    showToast('🎉 Correct! +10⭐', 'correct');
+    playSound('correct');
+    spawnConfetti();
+    setTimeout(nextChallenge, 1500);
+  } else {
+    btn.classList.add('wrong');
+    buttons.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    state.hearts--;
+    showToast('❌ Try again!', 'wrong');
+    playSound('wrong');
+    if (state.hearts <= 0) {
+      setTimeout(gameOver, 1500);
+    } else {
+      setTimeout(() => { renderChallenge(); }, 2000);
+    }
+  }
+  updateHUD();
+}
+
+function selectMatch(card) {
+  if (card.classList.contains('matched')) return;
+  
+  if (!state.challengeData.selected) {
+    document.querySelectorAll('.match-card.selected').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    state.challengeData.selected = card;
+  } else {
+    if (state.challengeData.selected === card) {
+      card.classList.remove('selected');
+      state.challengeData.selected = null;
+      return;
+    }
+    
+    const a = state.challengeData.selected;
+    const b = card;
+    
+    if (a.dataset.pair === b.dataset.pair && a !== b) {
+      a.classList.remove('selected');
+      a.classList.add('matched');
+      b.classList.add('matched');
+      state.challengeData.matched++;
+      state.stars += 5;
+      state.gems += 1;
+      playSound('correct');
+      updateHUD();
+      
+      if (state.challengeData.matched === state.challengeData.pairs.length) {
+        showToast('🌟 Perfect!', 'correct');
+        spawnConfetti();
+        setTimeout(nextChallenge, 1500);
+      }
+    } else {
+      a.classList.add('wrong');
+      b.classList.add('wrong');
+      playSound('wrong');
+      setTimeout(() => {
+        a.classList.remove('selected', 'wrong');
+        b.classList.remove('wrong');
+      }, 600);
+    }
+    state.challengeData.selected = null;
+  }
+}
+
+function selectDragWord(el) {
+  if (el.classList.contains('placed')) return;
+  document.querySelectorAll('.drag-word').forEach(w => w.classList.remove('dragging'));
+  el.classList.add('dragging');
+  state.challengeData.selectedWord = el;
+}
+
+function dropOnZone(zone) {
+  if (!state.challengeData.selectedWord) return;
+  const word = state.challengeData.selectedWord;
+  const zoneIdx = parseInt(zone.dataset.zone);
+  const zoneData = state.challengeData.zones[zoneIdx];
+  
+  if (zoneData.correct.includes(word.dataset.word)) {
+    const contents = zone.querySelector('.zone-contents');
+    const placed = document.createElement('div');
+    placed.className = 'dropped-word';
+    placed.textContent = word.dataset.word;
+    contents.appendChild(placed);
+    word.classList.add('placed');
+    word.classList.remove('dragging');
+    state.challengeData.placed++;
+    state.stars += 5;
+    state.gems += 1;
+    playSound('correct');
+    updateHUD();
+    
+    if (state.challengeData.placed === state.challengeData.total) {
+      showToast('🎯 All Correct!', 'correct');
+      spawnConfetti();
+      setTimeout(nextChallenge, 1500);
+    }
+  } else {
+    word.classList.remove('dragging');
+    showToast('❌ Not here!', 'wrong');
+    playSound('wrong');
+    state.hearts = Math.max(0, state.hearts - 1);
+    updateHUD();
+    if (state.hearts === 0) setTimeout(gameOver, 1500);
+  }
+  state.challengeData.selectedWord = null;
+}
+
+function checkSound(card, correct) {
+  if (card.dataset.found === 'true') return;
+  
+  if (correct) {
+    card.classList.add('matched');
+    card.dataset.found = 'true';
+    state.challengeData.found++;
+    state.stars += 5;
+    state.gems += 1;
+    playSound('correct');
+    updateHUD();
+    
+    if (state.challengeData.found === state.challengeData.target) {
+      showToast('🌟 Excellent!', 'correct');
+      spawnConfetti();
+      setTimeout(nextChallenge, 1500);
+    }
+  } else {
+    card.classList.add('wrong');
+    playSound('wrong');
+    state.hearts--;
+    updateHUD();
+    setTimeout(() => card.classList.remove('wrong'), 500);
+    if (state.hearts === 0) setTimeout(gameOver, 1500);
+  }
+}
+
+function nextChallenge() {
+  state.currentChallenge++;
+  const lvl = levels[state.currentLevel];
+  
+  if (state.currentChallenge >= lvl.challenges.length) {
+    if (!state.completedLevels.includes(state.currentLevel)) {
+      state.completedLevels.push(state.currentLevel);
+    }
+    state.stars += 20;
+    state.gems += 5;
+    showLevelComplete();
+  } else {
+    renderChallenge();
+  }
+}
+
+function showLevelComplete() {
+  const lvl = levels[state.currentLevel];
+  const area = document.getElementById('playArea');
+  area.innerHTML = `
+    <div class="victory" style="margin-top: 20px;">
+      <div style="font-size: 70px;">🏆</div>
+      <h2 class="victory-title" style="font-size: 28px;">Island Conquered!</h2>
+      <p style="color: var(--gold-bright); font-size: 18px; margin: 8px 0;">⭐⭐⭐</p>
+      <p style="direction: rtl; color: var(--sky); margin: 8px 0; font-size: 14px;">
+        أحسنت يا قبطان! حررت ${lvl.name} من الأخطبوط! ⚓
+      </p>
+      <div class="character">
+        <div class="char-avatar">🧑‍✈️</div>
+        <div class="char-speech">
+          عمل رائع! جمعت كنزاً جديداً! استعد للجزيرة التالية! 🏝️
+        </div>
+      </div>
+      <button class="action-btn" onclick="goMap()">🗺️ Back to Map</button>
+    </div>
+  `;
+  spawnConfetti(true);
+  playSound('victory');
+}
+
+function gameOver() {
+  const area = document.getElementById('playArea');
+  area.innerHTML = `
+    <div class="victory" style="margin-top: 20px;">
+      <div style="font-size: 70px;">💔</div>
+      <h2 style="color: var(--danger); font-size: 24px; font-weight: 900; font-family: Georgia, serif;">Try Again, Captain!</h2>
+      <p style="direction: rtl; color: var(--sky); margin: 12px 0; font-size: 14px;">
+        لا تستسلم! القباطنة الحقيقيون يعيدون المحاولة! ⚓
+      </p>
+      <button class="action-btn" onclick="showLesson(state.currentLevel)">📜 Review Rule</button>
+      <button class="action-btn secondary" onclick="goMap()">🗺️ Map</button>
+    </div>
+  `;
+}
+
+// ============ KRAKEN BOSS FIGHT ============
+function startBoss() {
+  state.bossHP = 100;
+  state.hearts = 5;
+  state.currentChallenge = 0;
+  showScreen('boss');
+  renderBoss();
+}
+
+const bossQuestions = [
+  { word: 'cake', q: 'cake → C?', options: ['/k/', '/s/'], correct: '/k/' },
+  { word: 'center', q: 'center → C?', options: ['/k/', '/s/'], correct: '/s/' },
+  { word: 'cheese', q: 'cheese → ch?', options: ['/sh/', '/ch/'], correct: '/ch/' },
+  { word: 'lock', q: 'lock → ck?', options: ['/k/', '/s/'], correct: '/k/' },
+  { word: 'scene', q: 'scene → C?', options: ['Silent', '/s/'], correct: 'Silent' },
+  { word: 'special', q: 'special → ci?', options: ['/sh/', '/ch/'], correct: '/sh/' },
+  { word: 'cup', q: 'cup → C?', options: ['/s/', '/k/'], correct: '/k/' },
+  { word: 'social', q: 'social → ci?', options: ['/k/', '/sh/'], correct: '/sh/' },
+  { word: 'chair', q: 'chair → ch?', options: ['/ch/', '/k/'], correct: '/ch/' },
+  { word: 'cycle', q: 'cycle → C?', options: ['/s/', '/k/'], correct: '/s/' }
+];
+
+function renderBoss() {
+  updateHUD();
+  document.getElementById('bossHP').style.width = state.bossHP + '%';
+  document.getElementById('bossHPText').textContent = state.bossHP;
+  
+  if (state.bossHP <= 0) { bossDefeated(); return; }
+  if (state.hearts <= 0) { bossWon(); return; }
+  
+  const q = bossQuestions[state.currentChallenge % bossQuestions.length];
+  document.getElementById('bossChallenge').innerHTML = `
+    <div class="challenge" style="margin-top: 12px;">
+      <div class="challenge-q">⚡ ${q.q}</div>
+      <div class="big-word" style="font-size: 42px;">${q.word}</div>
+      <div style="text-align:center;">
+        <button class="speak-btn" onclick="speak('${q.word}', this)">🔊</button>
+      </div>
+      <div class="options">
+        ${q.options.map(o => `<button class="option-btn" onclick="bossAttack(this, '${o}', '${q.correct}')">${o}</button>`).join('')}
+      </div>
+      <p style="text-align: center; color: var(--gold-bright); font-size: 12px; direction: rtl; margin-top: 8px;">
+        ⚔️ كل إجابة صحيحة = ضربة للأخطبوط!
+      </p>
+    </div>
+  `;
+}
+
+function bossAttack(btn, picked, correct) {
+  const buttons = btn.parentElement.querySelectorAll('.option-btn');
+  buttons.forEach(b => b.disabled = true);
+  
+  if (picked === correct) {
+    btn.classList.add('correct');
+    state.bossHP -= 12;
+    state.stars += 15;
+    state.gems += 2;
+    document.getElementById('octopus').classList.add('hit');
+    setTimeout(() => document.getElementById('octopus').classList.remove('hit'), 500);
+    showToast('💥 -12 HP!', 'correct');
+    playSound('correct');
+    spawnConfetti();
+  } else {
+    btn.classList.add('wrong');
+    state.hearts--;
+    showToast('🦑 Kraken Strikes!', 'wrong');
+    playSound('wrong');
+  }
+  state.currentChallenge++;
+  updateHUD();
+  setTimeout(renderBoss, 1500);
+}
+
+function bossDefeated() {
+  state.stars += 100;
+  state.gems += 50;
+  updateHUD();
+  document.getElementById('finalStars').textContent = state.stars;
+  document.getElementById('finalGems').textContent = state.gems;
+  let rank = 'Sea Captain';
+  if (state.stars >= 300) rank = 'Master Captain 🧑‍✈️';
+  if (state.stars >= 400) rank = 'LEGENDARY PIRATE KING 👑';
+  document.getElementById('finalRank').textContent = rank;
+  showScreen('victory');
+  spawnConfetti(true);
+  playSound('victory');
+}
+
+function bossWon() {
+  document.getElementById('bossChallenge').innerHTML = `
+    <div class="challenge" style="margin-top: 12px;">
+      <h3 style="text-align: center; color: var(--danger); font-size: 22px; font-family: Georgia, serif;">⚔️ Kraken Won!</h3>
+      <p style="direction: rtl; text-align: center; margin: 12px 0; color: var(--sky); font-size: 13px;">
+        الأخطبوط هزمك... لكن القباطنة الحقيقيون لا يستسلمون! ⚓
+      </p>
+      <div style="text-align:center;">
+        <button class="action-btn" onclick="startBoss()">🔄 Try Again</button>
+        <button class="action-btn secondary" onclick="goMap()">🗺️ Map</button>
+      </div>
+    </div>
+  `;
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type === 'wrong' ? ' wrong' : '');
+  setTimeout(() => t.classList.remove('show'), 1200);
+}
+
+function spawnConfetti(big = false) {
+  const colors = ['#FFD700', '#FB7185', '#38BDF8', '#15803D', '#F59E0B', '#DC2626'];
+  const count = big ? 80 : 30;
+  for (let i = 0; i < count; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    c.style.transform = `rotate(${Math.random() * 360}deg)`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3500);
+  }
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function speak(word, btn) {
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(word);
+    u.lang = 'en-US';
+    u.rate = 0.7;
+    if (btn) {
+      btn.classList.add('playing');
+      u.onend = () => btn.classList.remove('playing');
+    }
+    speechSynthesis.speak(u);
+  }
+}
+
+// Play phonic sound for rule formula (C letter or /k/, /s/, /ch/, /sh/, Silent)
+// Strategy: TTS pronounces single letters as their NAMES (k="kay", s="ess").
+// To get the actual PHONEME sound, we use short syllables that approximate it.
+function playPhonicSound(sound, btn) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  
+  let phonemeWord = '';   // the phoneme sound itself ONLY
+  
+  if (sound === 'C') {
+    phonemeWord = 'see';   // letter C name in English
+  } else if (sound === '/k/' || sound === '/k/!') {
+    phonemeWord = 'kuh';
+  } else if (sound === '/s/') {
+    phonemeWord = 'sss';
+  } else if (sound === '/ch/') {
+    phonemeWord = 'chuh';
+  } else if (sound === '/sh/') {
+    phonemeWord = 'shh';
+  } else if (sound === 'Silent' || sound === '🤫') {
+    phonemeWord = 'silent';
+  } else {
+    phonemeWord = sound;
+  }
+  
+  if (btn) btn.classList.add('playing');
+  
+  const u = new SpeechSynthesisUtterance(phonemeWord);
+  u.lang = 'en-US';
+  u.rate = 0.55;
+  u.pitch = 1.0;
+  u.onend = () => { if (btn) btn.classList.remove('playing'); };
+  
+  speechSynthesis.speak(u);
+}
+
+const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
+function playSound(type) {
+  if (!audioCtx) return;
+  try {
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.connect(g); g.connect(audioCtx.destination);
+    
+    if (type === 'correct') {
+      o.frequency.setValueAtTime(523, audioCtx.currentTime);
+      o.frequency.setValueAtTime(659, audioCtx.currentTime + 0.1);
+      o.frequency.setValueAtTime(784, audioCtx.currentTime + 0.2);
+      g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+      o.start(); o.stop(audioCtx.currentTime + 0.4);
+    } else if (type === 'wrong') {
+      o.frequency.setValueAtTime(200, audioCtx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.3);
+      g.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+      o.type = 'sawtooth';
+      o.start(); o.stop(audioCtx.currentTime + 0.3);
+    } else if (type === 'victory') {
+      [523, 659, 784, 1047].forEach((f, i) => {
+        const oo = audioCtx.createOscillator();
+        const gg = audioCtx.createGain();
+        oo.connect(gg); gg.connect(audioCtx.destination);
+        oo.frequency.setValueAtTime(f, audioCtx.currentTime + i * 0.15);
+        gg.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.15);
+        gg.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.15 + 0.4);
+        oo.start(audioCtx.currentTime + i * 0.15);
+        oo.stop(audioCtx.currentTime + i * 0.15 + 0.4);
+      });
+    } else if (type === 'start') {
+      o.frequency.setValueAtTime(440, audioCtx.currentTime);
+      o.frequency.setValueAtTime(554, audioCtx.currentTime + 0.1);
+      g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+      o.start(); o.stop(audioCtx.currentTime + 0.3);
+    }
+  } catch(e) {}
+}
+
+function restart() {
+  state.stars = 0;
+  state.gems = 0;
+  state.hearts = 3;
+  state.completedLevels = [];
+  state.currentLevel = 0;
+  state.currentChallenge = 0;
+  state.bossHP = 100;
+  showScreen('home');
+}
+</script>
+</body>
+</html>
