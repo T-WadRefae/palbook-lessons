@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft Grammar Quest — Present Continuous</title>
+<style>
+  /* ====== FONTS (system stack, no external links — Canva safe) ====== */
+  :root{
+    --grass:#5fa83d; --grass-dark:#3c7a23; --dirt:#7a5235; --dirt-dark:#5a3a24;
+    --stone:#8a8a8a; --stone-dark:#5e5e5e; --sky:#7fc4ff; --sky-deep:#3a7bd5;
+    --gold:#f5c518; --gold-dark:#c79100; --diamond:#4fd6e6; --diamond-dark:#1d9aa8;
+    --emerald:#2ec16b; --redstone:#d23b2e; --night:#1b2a3a; --ink:#1a1208;
+    --panel:#c6c6c6; --panel-dark:#8b8b8b; --panel-light:#efefef;
+    --xp:#7ed957; --pix:3px;
+    --font: "Trebuchet MS","Segoe UI",Verdana,Tahoma,sans-serif;
+    --ar: "Tahoma","Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    font-family:var(--font);
+    background:
+      repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 2px,transparent 2px 4px),
+      linear-gradient(180deg,var(--sky) 0%,var(--sky-deep) 60%,#2a5fa0 100%);
+    color:var(--ink);
+    overflow-x:hidden;
+    min-height:100vh;
+    image-rendering:pixelated;
+    -webkit-font-smoothing:none;
+  }
+  /* pixel cloud bg */
+  .clouds{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;overflow:hidden;}
+  .cloud{position:absolute;width:120px;height:36px;background:#fff;
+    box-shadow:36px 0 0 #fff,72px 0 0 #fff,18px -18px 0 #fff,54px -18px 0 #fff;
+    animation:drift linear infinite;}
+  @keyframes drift{from{transform:translateX(-200px)}to{transform:translateX(110vw)}}
+
+  /* ====== PIXEL UI HELPERS ====== */
+  .pix-panel{
+    background:var(--panel);
+    border:var(--pix) solid #2b2b2b;
+    box-shadow:
+      inset 4px 4px 0 var(--panel-light),
+      inset -4px -4px 0 var(--panel-dark),
+      0 8px 0 rgba(0,0,0,.25);
+    position:relative;
+  }
+  .btn{
+    font-family:var(--font);font-weight:bold;cursor:pointer;
+    border:var(--pix) solid #1c1c1c;color:#fff;
+    background:var(--stone);
+    box-shadow:inset 3px 3px 0 rgba(255,255,255,.35),inset -3px -3px 0 rgba(0,0,0,.4),0 5px 0 rgba(0,0,0,.35);
+    padding:14px 18px;font-size:1rem;letter-spacing:.5px;
+    transition:transform .05s, filter .1s;
+    text-shadow:2px 2px 0 rgba(0,0,0,.45);
+    user-select:none;
+  }
+  .btn:hover{filter:brightness(1.12);}
+  .btn:active{transform:translateY(4px);box-shadow:inset 3px 3px 0 rgba(255,255,255,.35),inset -3px -3px 0 rgba(0,0,0,.4),0 1px 0 rgba(0,0,0,.35);}
+  .btn.green{background:var(--grass);} .btn.gold{background:var(--gold-dark);}
+  .btn.diamond{background:var(--diamond-dark);} .btn.red{background:var(--redstone);}
+  .btn.dirt{background:var(--dirt);}
+  .btn:disabled{filter:grayscale(.7) brightness(.8);cursor:not-allowed;}
+
+  /* ====== TOP HUD ====== */
+  #hud{
+    position:sticky;top:0;z-index:50;
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+    padding:10px 14px;
+    background:rgba(20,28,38,.92);
+    border-bottom:var(--pix) solid #000;
+  }
+  #hud .grp{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .stat{display:flex;align-items:center;gap:6px;color:#fff;font-weight:bold;font-size:.95rem;
+    text-shadow:2px 2px 0 #000;}
+  .stat .ico{width:22px;height:22px;display:inline-block;}
+  .hearts{display:flex;gap:3px;}
+  .heart{width:18px;height:16px;background:var(--redstone);
+    clip-path:polygon(50% 100%,0 35%,15% 10%,35% 10%,50% 28%,65% 10%,85% 10%,100% 35%);}
+  .heart.empty{background:#444;}
+  .xpbar{width:140px;height:16px;background:#222;border:var(--pix) solid #000;position:relative;overflow:hidden;}
+  .xpbar > div{height:100%;background:var(--xp);width:0%;transition:width .4s;
+    box-shadow:inset 0 3px 0 rgba(255,255,255,.4);}
+  .lvlbadge{background:var(--gold);color:#3a2a00;font-weight:bold;padding:3px 8px;
+    border:var(--pix) solid #000;text-shadow:none;font-size:.9rem;}
+
+  /* ====== LAYOUT ====== */
+  #app{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:18px 14px 60px;}
+  .scene{display:none;animation:popin .35s ease;}
+  .scene.active{display:block;}
+  @keyframes popin{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+
+  h1,h2,h3{line-height:1.2;text-shadow:3px 3px 0 rgba(0,0,0,.3);}
+  .title-pixel{font-size:clamp(1.6rem,5vw,2.6rem);color:#fff;text-align:center;
+    text-shadow:4px 4px 0 #2b6f1f, 8px 8px 0 rgba(0,0,0,.3);letter-spacing:1px;}
+  .sub{text-align:center;color:#ffe9a8;font-weight:bold;margin-top:6px;text-shadow:2px 2px 0 #000;}
+
+  .card{padding:22px;margin:16px 0;color:var(--ink);}
+  .card h2{color:#2b2b2b;text-shadow:1px 1px 0 #fff;margin-bottom:10px;}
+  .ar{font-family:var(--ar);direction:rtl;color:#3a3a3a;font-size:.95rem;}
+  .note{background:#fff7d6;border-left:6px solid var(--gold);padding:10px 12px;margin-top:10px;
+    font-family:var(--ar);direction:rtl;border-radius:0;}
+
+  /* ====== NPC dialog ====== */
+  .npc{display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,.9);
+    border:var(--pix) solid #2b2b2b;padding:14px;margin:14px 0;
+    box-shadow:0 6px 0 rgba(0,0,0,.2);}
+  .face{width:64px;height:64px;flex:0 0 64px;border:var(--pix) solid #000;image-rendering:pixelated;}
+  .bubble{flex:1;}
+  .bubble .name{font-weight:bold;color:var(--grass-dark);}
+  .bubble p{margin-top:4px;}
+
+  /* ====== map ====== */
+  .map{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:18px;}
+  .region{cursor:pointer;padding:16px;text-align:center;color:#fff;position:relative;
+    border:var(--pix) solid #1c1c1c;box-shadow:inset 3px 3px 0 rgba(255,255,255,.25),inset -3px -3px 0 rgba(0,0,0,.4),0 6px 0 rgba(0,0,0,.3);
+    transition:transform .1s;}
+  .region:hover{transform:translateY(-3px);}
+  .region .ricon{font-size:2.4rem;display:block;margin-bottom:6px;}
+  .region .rname{font-weight:bold;text-shadow:2px 2px 0 #000;}
+  .region .rsub{font-size:.75rem;opacity:.92;text-shadow:1px 1px 0 #000;}
+  .region.done::after{content:"✓";position:absolute;top:6px;right:8px;color:var(--gold);font-size:1.4rem;
+    text-shadow:2px 2px 0 #000;}
+  .region.locked{filter:grayscale(.85) brightness(.6);cursor:not-allowed;}
+  .region.locked::before{content:"🔒";position:absolute;top:6px;left:8px;font-size:1.1rem;}
+  .r1{background:var(--grass);} .r2{background:var(--diamond-dark);} .r3{background:var(--stone-dark);}
+  .r4{background:#2c4d2c;} .r5{background:var(--sky-deep);} .r6{background:#6a3aa0;}
+
+  /* ====== blocks for grammar ====== */
+  .blocks{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;margin:16px 0;}
+  .gblock{min-width:84px;padding:14px 10px;text-align:center;font-weight:bold;color:#fff;
+    border:var(--pix) solid #1c1c1c;box-shadow:inset 3px 3px 0 rgba(255,255,255,.3),inset -3px -3px 0 rgba(0,0,0,.4);
+    text-shadow:2px 2px 0 rgba(0,0,0,.5);font-size:1.05rem;}
+  .b-am{background:var(--sky-deep);} .b-is{background:var(--grass);} .b-are{background:var(--gold-dark);}
+  .b-verb{background:var(--dirt);} .b-ing{background:var(--diamond-dark);} .b-subj{background:#6a3aa0;}
+  .plus{font-size:1.6rem;font-weight:bold;color:#fff;text-shadow:2px 2px 0 #000;}
+
+  /* ====== quiz / activities ====== */
+  .q{margin:14px 0;}
+  .q .prompt{font-size:1.15rem;font-weight:bold;margin-bottom:12px;color:#2b2b2b;text-shadow:1px 1px 0 #fff;}
+  .opts{display:grid;gap:10px;}
+  .opt{cursor:pointer;padding:14px;background:#e9e2d0;border:var(--pix) solid #2b2b2b;
+    box-shadow:inset 2px 2px 0 #fff,inset -2px -2px 0 rgba(0,0,0,.25);font-weight:bold;font-size:1.05rem;
+    color:#2b2b2b;transition:transform .06s;}
+  .opt:hover{transform:translateX(4px);filter:brightness(1.04);}
+  .opt.correct{background:var(--emerald);color:#fff;text-shadow:1px 1px 0 #000;}
+  .opt.wrong{background:var(--redstone);color:#fff;text-shadow:1px 1px 0 #000;animation:shake .3s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+  .opt.disabled{pointer-events:none;opacity:.85;}
+
+  .fb{margin-top:12px;padding:12px;font-weight:bold;display:none;border:var(--pix) solid #1c1c1c;}
+  .fb.show{display:block;animation:popin .25s;}
+  .fb.good{background:#d8ffd8;color:#1d6b1d;}
+  .fb.bad{background:#ffe0dc;color:#9b2218;}
+  .fb .ar{color:inherit;margin-top:4px;}
+
+  /* drag build */
+  .build-target{min-height:64px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;
+    padding:12px;background:#3a3a3a;border:var(--pix) dashed var(--gold);margin:10px 0;}
+  .build-bank{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0;}
+  .word{cursor:pointer;padding:12px 14px;background:var(--dirt);color:#fff;font-weight:bold;
+    border:var(--pix) solid #1c1c1c;box-shadow:inset 2px 2px 0 rgba(255,255,255,.25),inset -2px -2px 0 rgba(0,0,0,.4);
+    text-shadow:1px 1px 0 #000;transition:transform .06s;user-select:none;}
+  .word:hover{transform:translateY(-2px);}
+  .word.placed{background:var(--grass);}
+  .word.used{opacity:.25;pointer-events:none;}
+
+  .progress-mini{font-size:.85rem;color:#555;text-align:right;font-family:var(--ar);direction:rtl;margin-top:6px;}
+
+  /* zombie / runner */
+  #zombieScene .lane{display:flex;align-items:center;gap:12px;background:#1f2d1f;padding:18px;
+    border:var(--pix) solid #000;margin:12px 0;position:relative;overflow:hidden;}
+  .hero-pix,.zomb-pix{font-size:2.4rem;transition:transform .4s;}
+  .gap{flex:1;text-align:center;color:#9fe09f;font-weight:bold;}
+
+  /* boss */
+  #bossScene .dragon{font-size:5rem;text-align:center;animation:float 2.4s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  .bosshp{height:24px;background:#3a0d0a;border:var(--pix) solid #000;position:relative;overflow:hidden;margin:10px 0;}
+  .bosshp > div{height:100%;background:linear-gradient(var(--redstone),#7a1810);width:100%;transition:width .4s;
+    box-shadow:inset 0 4px 0 rgba(255,255,255,.2);}
+  .bosshp span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:bold;text-shadow:2px 2px 0 #000;}
+
+  /* toast / level up */
+  #toast{position:fixed;left:50%;top:80px;transform:translateX(-50%) translateY(-30px);
+    background:var(--gold);color:#3a2a00;font-weight:bold;padding:14px 22px;border:var(--pix) solid #000;
+    box-shadow:0 6px 0 rgba(0,0,0,.4);z-index:200;opacity:0;pointer-events:none;transition:.3s;font-size:1.1rem;
+    text-align:center;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* confetti */
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:150;}
+
+  .center{text-align:center;}
+  .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px;}
+  .speakbtn{background:var(--diamond-dark);}
+  .footer{text-align:center;color:#fff;text-shadow:2px 2px 0 #000;margin-top:30px;font-weight:bold;opacity:.9;}
+  .footer small{font-weight:normal;opacity:.85;}
+
+  .badgewrap{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0;}
+  .badge{width:70px;text-align:center;font-size:.7rem;color:#fff;text-shadow:1px 1px 0 #000;}
+  .badge .b{width:54px;height:54px;margin:0 auto 4px;border:var(--pix) solid #000;display:flex;
+    align-items:center;justify-content:center;font-size:1.8rem;background:#555;}
+  .badge.got .b{background:var(--gold);}
+  .badge:not(.got){opacity:.4;}
+
+  .pill{display:inline-block;background:#2b2b2b;color:#fff;padding:4px 10px;font-size:.8rem;
+    border:2px solid #000;font-weight:bold;margin:2px;}
+  @media(max-width:560px){
+    .gblock{min-width:64px;padding:10px 6px;font-size:.85rem;}
+    .face{width:48px;height:48px;flex-basis:48px;}
+  }
+</style>
+</head>
+<body>
+<div class="clouds" id="clouds"></div>
+<div id="confetti"></div>
+<div id="toast"></div>
+
+<!-- ===== HUD ===== -->
+<div id="hud">
+  <div class="grp">
+    <span class="lvlbadge" id="lvlBadge">LV 1</span>
+    <div class="stat"><span>⚡ XP</span><div class="xpbar"><div id="xpFill"></div></div><span id="xpTxt">0/100</span></div>
+  </div>
+  <div class="grp">
+    <div class="stat"><span>💰</span><span id="coins">0</span></div>
+    <div class="stat"><div class="hearts" id="hearts"></div></div>
+    <div class="stat"><span>🔥</span><span id="combo">0</span></div>
+    <button class="btn dirt" style="padding:8px 12px;font-size:.8rem" onclick="goMap()">🗺️ Map</button>
+  </div>
+</div>
+
+<div id="app">
+
+<!-- ============ SCENE 0: INTRO STORY ============ -->
+<section class="scene active" id="introScene">
+  <h1 class="title-pixel">⛏️ GRAMMAR QUEST ⛏️</h1>
+  <p class="sub">Present Continuous — The ING Crystal Adventure</p>
+
+  <div class="pix-panel card">
+    <h2>🚨 The World Is Freezing!</h2>
+    <p style="font-size:1.1rem;line-height:1.6">
+      The magic <b>ING Crystals</b> are broken! 💎<br>
+      The whole Minecraft world is freezing into ice! ❄️<br>
+      Sami, Salma, and the villagers cannot move… because they cannot say
+      <b>what they are doing NOW</b>.
+    </p>
+    <div class="note">
+      ❄️ تجمّد عالم ماين كرافت! بلورات الـ ING انكسرت. صار الناس مش قادرين يقولوا شو
+      عم يعملوا <b>الآن</b>. وأنت البطل اللي رح ينقذ العالم بتعلّم قاعدة المضارع المستمر!
+    </div>
+  </div>
+
+  <div class="npc">
+    <canvas class="face" id="introFace" width="16" height="16"></canvas>
+    <div class="bubble">
+      <span class="name">🛡️ Sami the Builder</span>
+      <p>"Hero! Only YOU can fix the ING Crystals. Learn how to say <b>am / is / are + verb + ing</b>
+      and bring the world back to life. Are you ready for the quest?"</p>
+      <p class="ar">"يا بطل! إنت الوحيد اللي بقدر يصلّح البلورات. تعلّم القاعدة وارجِّع الحياة للعالم. جاهز؟"</p>
+    </div>
+  </div>
+
+  <div class="center">
+    <button class="btn green" style="font-size:1.3rem;padding:18px 40px" onclick="startQuest()">▶ START THE QUEST</button>
+    <p class="ar" style="color:#fff;text-shadow:2px 2px 0 #000;margin-top:10px">اضغط للبدء 🎮</p>
+  </div>
+  <div class="footer">Created by <b>T. Wad Refae</b></div>
+</section>
+
+<!-- ============ SCENE: MAP ============ -->
+<section class="scene" id="mapScene">
+  <h1 class="title-pixel">🗺️ THE GRAMMAR WORLD</h1>
+  <p class="sub">Choose your region. Finish all 6 to unlock the Dragon Boss!</p>
+  <div class="map" id="mapGrid"></div>
+  <div class="center" style="margin-top:18px">
+    <button class="btn red" id="bossBtn" disabled onclick="goScene('bossScene')">🐉 DRAGON BOSS (locked)</button>
+  </div>
+  <div class="badgewrap" id="badgeRow"></div>
+  <div class="footer">Created by <b>T. Wad Refae</b></div>
+</section>
+
+<!-- ============ REGION 1: VERB VILLAGE (intro to verbs) ============ -->
+<section class="scene" id="r1">
+  <h1 class="title-pixel">🌳 VERB VILLAGE</h1>
+  <p class="sub">Verbs are ACTION tools! ⛏️</p>
+  <div class="npc">
+    <div class="face" style="background:var(--grass);display:flex;align-items:center;justify-content:center;font-size:2rem">🧑‍🌾</div>
+    <div class="bubble">
+      <span class="name">Grammar Villager</span>
+      <p>"A verb is an <b>action</b> — run, build, eat, mine! Pick the correct action for each picture."</p>
+      <p class="ar">الفعل = حركة. زي: run / build / eat / mine. اختر الفعل الصحيح للصورة.</p>
+    </div>
+  </div>
+  <div class="pix-panel card" id="r1quiz"></div>
+</section>
+
+<!-- ============ REGION 2: ING CAVE (verb + ing rule) ============ -->
+<section class="scene" id="r2">
+  <h1 class="title-pixel">💎 ING CAVE</h1>
+  <p class="sub">Add the magic ING crystal to every verb!</p>
+  <div class="pix-panel card">
+    <h2>✨ The ING Spell</h2>
+    <div class="blocks">
+      <div class="gblock b-verb">run</div><span class="plus">+</span>
+      <div class="gblock b-ing">ing</div><span class="plus">=</span>
+      <div class="gblock b-is">running</div>
+    </div>
+    <div class="note">القاعدة السحرية: نضيف <b>ing</b> على الفعل = عم يصير الفعل دلوقتي! 🪄</div>
+  </div>
+  <div class="pix-panel card" id="r2quiz"></div>
+</section>
+
+<!-- ============ REGION 3: GRAMMAR CASTLE (am/is/are rule) ============ -->
+<section class="scene" id="r3">
+  <h1 class="title-pixel">🏰 GRAMMAR CASTLE</h1>
+  <p class="sub">Pick the right helper block: am / is / are</p>
+  <div class="pix-panel card">
+    <h2>🧱 The Helper Blocks</h2>
+    <div class="blocks">
+      <div class="gblock b-am">am<br><small>I</small></div>
+      <div class="gblock b-is">is<br><small>he/she/it</small></div>
+      <div class="gblock b-are">are<br><small>you/we/they</small></div>
+    </div>
+    <div class="note">
+      🔵 <b>am</b> ← I &nbsp;|&nbsp; 🟢 <b>is</b> ← he / she / it / Sami &nbsp;|&nbsp; 🟡 <b>are</b> ← you / we / they
+    </div>
+  </div>
+  <div class="pix-panel card" id="r3quiz"></div>
+</section>
+
+<!-- ============ REGION 4: ZOMBIE FOREST (escape game) ============ -->
+<section class="scene" id="r4">
+  <h1 class="title-pixel">🧟 ZOMBIE FOREST</h1>
+  <p class="sub">The zombie speaks WRONG grammar! Fix it to escape!</p>
+  <div class="npc">
+    <div class="face" style="background:#2c4d2c;display:flex;align-items:center;justify-content:center;font-size:2rem">🧟</div>
+    <div class="bubble">
+      <span class="name">Zombie of Bad Grammar</span>
+      <p>"Meee... say... 'Sami <b>are running</b>'... uuugh... is it correct? Choose RIGHT to run away!"</p>
+      <p class="ar">الزومبي بيحكي غلط! اختر الجملة الصحيحة عشان تهرب وتبتعد عنه 🏃</p>
+    </div>
+  </div>
+  <div class="lane">
+    <span class="hero-pix" id="heroRun">🧑</span>
+    <span class="gap" id="gapTxt">— — — — —</span>
+    <span class="zomb-pix" id="zombChase">🧟</span>
+  </div>
+  <div class="pix-panel card" id="r4quiz"></div>
+</section>
+
+<!-- ============ REGION 5: ACTION RIVER (build the sentence) ============ -->
+<section class="scene" id="r5">
+  <h1 class="title-pixel">🌊 ACTION RIVER</h1>
+  <p class="sub">Build the bridge by ordering the words!</p>
+  <div class="npc">
+    <div class="face" style="background:var(--sky-deep);display:flex;align-items:center;justify-content:center;font-size:2rem">🧝‍♀️</div>
+    <div class="bubble">
+      <span class="name">🪄 ING Wizard</span>
+      <p>"Tap the word blocks in the correct order to build a sentence-bridge across the river!"</p>
+      <p class="ar">رتّب الكلمات بالترتيب الصحيح لتبني جسر الجملة وتعبر النهر 🌉</p>
+    </div>
+  </div>
+  <div class="pix-panel card" id="r5build"></div>
+</section>
+
+<!-- ============ REGION 6: PRESENT TOWER (speed + speak) ============ -->
+<section class="scene" id="r6">
+  <h1 class="title-pixel">🗼 PRESENT TOWER</h1>
+  <p class="sub">Speed round + speak like a hero!</p>
+  <div class="npc">
+    <canvas class="face" id="alexFace" width="16" height="16"></canvas>
+    <div class="bubble">
+      <span class="name">🏹 Salma the Explorer</span>
+      <p>"Final training before the Dragon! Answer fast, then SAY the sentence out loud. Repeat after me!"</p>
+      <p class="ar">آخر تدريب قبل التنين! جاوب بسرعة، وبعدين احكي الجملة بصوت عالي. ردّد ورا سلمى 🔊</p>
+    </div>
+  </div>
+  <div class="pix-panel card" id="r6quiz"></div>
+</section>
+
+<!-- ============ BOSS: GRAMMAR DRAGON ============ -->
+<section class="scene" id="bossScene">
+  <h1 class="title-pixel">🐉 THE GRAMMAR DRAGON</h1>
+  <p class="sub">Defeat it with PERFECT Present Continuous!</p>
+  <div class="dragon" id="dragonPix">🐉</div>
+  <div class="bosshp"><div id="dragonHp"></div><span id="dragonHpTxt">100 / 100</span></div>
+  <div class="pix-panel card" id="bossQuiz"></div>
+</section>
+
+<!-- ============ VICTORY ============ -->
+<section class="scene" id="winScene">
+  <h1 class="title-pixel">🏆 YOU SAVED THE WORLD!</h1>
+  <p class="sub">The ING Crystals are glowing again! 💎✨</p>
+  <div class="pix-panel card center">
+    <div style="font-size:3rem">🌈🌳☀️🐑🌸</div>
+    <h2 style="margin-top:10px">Quest Complete!</h2>
+    <p style="font-size:1.1rem;margin-top:8px">You are now a <b>Grammar Hero</b>! You can say what everyone is doing now using
+      <b>am / is / are + verb + ing</b>.</p>
+    <div class="note" style="text-align:center">انتصرت! 🎉 صلّحت كل البلورات ورجّعت الحياة للعالم. صرت <b>بطل القواعد</b>!
+      بتعرف تقول شو عم يعمل أي حدا دلوقتي.</div>
+    <div class="badgewrap" id="winBadges"></div>
+    <div class="row">
+      <span class="pill">⚡ XP: <span id="finalXp">0</span></span>
+      <span class="pill">💰 Coins: <span id="finalCoins">0</span></span>
+      <span class="pill">🏅 Level <span id="finalLvl">1</span></span>
+    </div>
+    <div class="row">
+      <button class="btn green" onclick="location.reload()">🔁 Play Again</button>
+    </div>
+  </div>
+  <div class="footer">Created by <b>T. Wad Refae</b><br><small>Minecraft Grammar Quest — Present Continuous</small></div>
+</section>
+
+</div>
+
+<script>
+/* ============================================================
+   GAME STATE
+   ============================================================ */
+const S = {
+  xp:0, coins:0, lvl:1, hearts:5, combo:0,
+  xpToNext:100,
+  done:{r1:false,r2:false,r3:false,r4:false,r5:false,r6:false},
+  badges:{} // id -> true
+};
+const BADGES = [
+  {id:'verb', ico:'⛏️', name:'Verb Miner'},
+  {id:'ing', ico:'💎', name:'ING Mage'},
+  {id:'helper', ico:'🧱', name:'Castle Guard'},
+  {id:'escape', ico:'🧟', name:'Zombie Escaper'},
+  {id:'bridge', ico:'🌉', name:'Bridge Builder'},
+  {id:'speak', ico:'🔊', name:'Loud Hero'},
+  {id:'dragon', ico:'🐉', name:'Dragon Slayer'},
+];
+
+/* ============================================================
+   SOUND (Web Audio API — no files needed)
+   ============================================================ */
+let AC=null;
+function tone(freq,dur,type='square',vol=.12){
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.type=type;o.frequency.value=freq;o.connect(g);g.connect(AC.destination);
+    g.gain.setValueAtTime(vol,AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+dur);
+    o.start();o.stop(AC.currentTime+dur);
+  }catch(e){}
+}
+const sGood=()=>{tone(523,.09);setTimeout(()=>tone(784,.14),90);};
+const sBad =()=>{tone(160,.18,'sawtooth',.1);};
+const sClick=()=>tone(330,.05,'square',.08);
+const sLevel=()=>{[523,659,784,1046].forEach((f,i)=>setTimeout(()=>tone(f,.13),i*90));};
+const sCoin=()=>{tone(988,.06);setTimeout(()=>tone(1318,.1),60);};
+
+/* ============================================================
+   TEXT TO SPEECH (browser native)
+   ============================================================ */
+function speak(txt){
+  try{
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(txt);
+    u.lang='en-US';u.rate=.85;u.pitch=1;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* ============================================================
+   HUD + REWARDS
+   ============================================================ */
+function renderHUD(){
+  document.getElementById('lvlBadge').textContent='LV '+S.lvl;
+  document.getElementById('coins').textContent=S.coins;
+  document.getElementById('combo').textContent=S.combo;
+  const pct=Math.min(100,Math.round(S.xp/S.xpToNext*100));
+  document.getElementById('xpFill').style.width=pct+'%';
+  document.getElementById('xpTxt').textContent=S.xp+'/'+S.xpToNext;
+  const h=document.getElementById('hearts');h.innerHTML='';
+  for(let i=0;i<5;i++){const d=document.createElement('div');d.className='heart'+(i<S.hearts?'':' empty');h.appendChild(d);}
+}
+function addXP(n){
+  S.xp+=n;
+  while(S.xp>=S.xpToNext){
+    S.xp-=S.xpToNext;S.lvl++;S.xpToNext+=50;
+    sLevel();toast('⭐ LEVEL UP! Now Level '+S.lvl,1600);
+    confettiBurst();
+  }
+  renderHUD();
+}
+function addCoins(n){S.coins+=n;sCoin();renderHUD();}
+function loseHeart(){if(S.hearts>0)S.hearts--;S.combo=0;renderHUD();}
+function bumpCombo(){S.combo++;if(S.combo>0&&S.combo%3===0){toast('🔥 COMBO x'+S.combo+'! +5 coins');addCoins(5);}}
+
+function toast(msg,ms=1300){
+  const t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),ms);
+}
+function awardBadge(id){
+  if(S.badges[id])return;
+  S.badges[id]=true;
+  const b=BADGES.find(x=>x.id===id);
+  if(b){toast('🏅 Badge unlocked: '+b.name+' '+b.ico,1800);confettiBurst();}
+  renderBadges();
+}
+function renderBadges(){
+  ['badgeRow','winBadges'].forEach(rid=>{
+    const r=document.getElementById(rid);if(!r)return;r.innerHTML='';
+    BADGES.forEach(b=>{
+      const d=document.createElement('div');
+      d.className='badge'+(S.badges[b.id]?' got':'');
+      d.innerHTML='<div class="b">'+b.ico+'</div>'+b.name;
+      r.appendChild(d);
+    });
+  });
+}
+
+/* ============================================================
+   CONFETTI
+   ============================================================ */
+function confettiBurst(){
+  const c=document.getElementById('confetti');
+  const cols=['#5fa83d','#f5c518','#4fd6e6','#d23b2e','#fff','#7ed957'];
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');
+    p.style.cssText='position:absolute;width:10px;height:10px;top:-12px;left:'+Math.random()*100+'%;'+
+      'background:'+cols[i%cols.length]+';border:1px solid rgba(0,0,0,.3);';
+    c.appendChild(p);
+    const dur=900+Math.random()*900, x=(Math.random()-.5)*200;
+    p.animate([{transform:'translate(0,0) rotate(0)',opacity:1},
+      {transform:'translate('+x+'px,'+(window.innerHeight+40)+'px) rotate(720deg)',opacity:.9}],
+      {duration:dur,easing:'ease-in'});
+    setTimeout(()=>p.remove(),dur);
+  }
+}
+
+/* ============================================================
+   SCENE NAV
+   ============================================================ */
+function goScene(id){
+  sClick();
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goMap(){renderMap();goScene('mapScene');}
+function startQuest(){renderMap();goScene('mapScene');toast('🗺️ Pick your first region!',1400);}
+
+const REGIONS=[
+  {id:'r1',cls:'r1',ico:'🌳',name:'Verb Village',sub:'Learn verbs',req:null},
+  {id:'r2',cls:'r2',ico:'💎',name:'ING Cave',sub:'verb + ing',req:'r1'},
+  {id:'r3',cls:'r3',ico:'🏰',name:'Grammar Castle',sub:'am/is/are',req:'r2'},
+  {id:'r4',cls:'r4',ico:'🧟',name:'Zombie Forest',sub:'Find errors',req:'r3'},
+  {id:'r5',cls:'r5',ico:'🌊',name:'Action River',sub:'Build sentence',req:'r4'},
+  {id:'r6',cls:'r6',ico:'🗼',name:'Present Tower',sub:'Speak & speed',req:'r5'},
+];
+function renderMap(){
+  const g=document.getElementById('mapGrid');g.innerHTML='';
+  REGIONS.forEach(r=>{
+    const locked = r.req && !S.done[r.req];
+    const d=document.createElement('div');
+    d.className='region '+r.cls+(S.done[r.id]?' done':'')+(locked?' locked':'');
+    d.innerHTML='<span class="ricon">'+r.ico+'</span><span class="rname">'+r.name+'</span><span class="rsub">'+r.sub+'</span>';
+    if(!locked) d.onclick=()=>{openRegion(r.id);};
+    g.appendChild(d);
+  });
+  const all=Object.values(S.done).every(Boolean);
+  const bb=document.getElementById('bossBtn');
+  bb.disabled=!all;
+  bb.textContent=all?'🐉 FIGHT THE DRAGON BOSS!':'🐉 DRAGON BOSS (locked)';
+  if(all)bb.classList.remove('dirt');
+  renderBadges();
+}
+function openRegion(id){
+  if(id==='r1')buildR1();
+  if(id==='r2')buildR2();
+  if(id==='r3')buildR3();
+  if(id==='r4')buildR4();
+  if(id==='r5')buildR5();
+  if(id==='r6')buildR6();
+  goScene(id);
+}
+function finishRegion(id,badge){
+  S.done[id]=true;
+  if(badge)awardBadge(badge);
+  toast('✅ Region complete! +20 coins',1500);
+  addCoins(20);addXP(30);
+  setTimeout(goMap,900);
+}
+
+/* ============================================================
+   GENERIC MCQ RENDERER
+   data: {prompt, ar, opts:[{t,ok}], hint}
+   ============================================================ */
+function makeMCQ(container, items, onDone){
+  let idx=0;
+  function render(){
+    if(idx>=items.length){onDone();return;}
+    const it=items[idx];
+    container.innerHTML =
+      '<div class="progress-mini">سؤال '+(idx+1)+' من '+items.length+'</div>'+
+      '<div class="q"><div class="prompt">'+it.prompt+'</div>'+
+      (it.ar?'<div class="ar" style="margin-bottom:10px">'+it.ar+'</div>':'')+
+      '<div class="opts" id="opts"></div>'+
+      '<div class="fb" id="fb"></div></div>';
+    const optsEl=container.querySelector('#opts');
+    const fb=container.querySelector('#fb');
+    const order=[...it.opts].sort(()=>Math.random()-.5);
+    order.forEach(o=>{
+      const b=document.createElement('div');b.className='opt';b.textContent=o.t;
+      b.onclick=()=>{
+        sClick();
+        container.querySelectorAll('.opt').forEach(x=>x.classList.add('disabled'));
+        if(o.ok){
+          b.classList.add('correct');sGood();bumpCombo();addXP(15);addCoins(3);
+          fb.className='fb good show';
+          fb.innerHTML='✅ '+(it.good||'Correct! Awesome!')+(it.goodAr?'<div class="ar">'+it.goodAr+'</div>':'');
+        }else{
+          b.classList.add('wrong');sBad();loseHeart();
+          const right=container.querySelectorAll('.opt');
+          right.forEach(x=>{if(x.textContent===it.opts.find(z=>z.ok).t)x.classList.add('correct');});
+          fb.className='fb bad show';
+          fb.innerHTML='❌ '+(it.bad||'Not quite!')+' '+(it.hint?'<br>💡 '+it.hint:'')+
+            (it.hintAr?'<div class="ar">'+it.hintAr+'</div>':'');
+        }
+        const nb=document.createElement('button');
+        nb.className='btn green';nb.style.marginTop='12px';
+        nb.textContent= (idx+1>=items.length)?'🏁 Finish ▶':'Next ▶';
+        nb.onclick=()=>{idx++;render();};
+        fb.appendChild(nb);
+      };
+      optsEl.appendChild(b);
+    });
+  }
+  render();
+}
+
+/* ============================================================
+   REGION 1 — VERB VILLAGE
+   ============================================================ */
+function buildR1(){
+  const items=[
+    {prompt:'⛏️ Sami has a pickaxe and digs stone. The action is…',
+     ar:'سامي بيحفر الحجارة. شو الفعل؟',
+     opts:[{t:'mining',ok:true},{t:'eating'},{t:'sleeping'}],
+     good:'"mine / mining" = يحفر ⛏️'},
+    {prompt:'🏃 Salma moves her legs very fast. The action is…',
+     ar:'سلمى بتحرّك رجليها بسرعة. شو الفعل؟',
+     opts:[{t:'running',ok:true},{t:'reading'},{t:'flying'}],
+     good:'"run / running" = يجري 🏃'},
+    {prompt:'🧱 The villager puts blocks to make a house. The action is…',
+     ar:'القروي بيحط بلوكات عشان يعمل بيت. شو الفعل؟',
+     opts:[{t:'building',ok:true},{t:'swimming'},{t:'singing'}],
+     good:'"build / building" = يبني 🏠'},
+    {prompt:'🍎 The player puts food in his mouth. The action is…',
+     ar:'اللاعب بياكل أكل. شو الفعل؟',
+     opts:[{t:'eating',ok:true},{t:'jumping'},{t:'crafting'}],
+     good:'"eat / eating" = ياكل 🍎'},
+  ];
+  makeMCQ(document.getElementById('r1quiz'),items,()=>finishRegion('r1','verb'));
+}
+
+/* ============================================================
+   REGION 2 — ING CAVE  (add ing)
+   ============================================================ */
+function buildR2(){
+  const items=[
+    {prompt:'Add the ING crystal: 💎 jump + ing = ?',
+     ar:'ضيف بلورة ing على jump:',
+     opts:[{t:'jumping',ok:true},{t:'jumps'},{t:'jumped'}],
+     good:'jump → jumping ✨'},
+    {prompt:'💎 swim + ing = ? (careful! double the m)',
+     ar:'انتبه! بنكرّر حرف الـ m:',
+     opts:[{t:'swimming',ok:true},{t:'swiming'},{t:'swimming?... swims'}],
+     good:'swim → swim+m+ing = swimming 🏊',
+     hint:'Short vowel + one consonant → double it!',
+     hintAr:'فعل قصير بحرف ساكن آخر → نكرّر الحرف.'},
+    {prompt:'💎 make + ing = ? (drop the silent e)',
+     ar:'بنشيل الـ e الصامتة:',
+     opts:[{t:'making',ok:true},{t:'makeing'},{t:'makking'}],
+     good:'make → mak + ing = making 🛠️',
+     hint:'Verb ends in e → drop e, add ing.',
+     hintAr:'الفعل بينتهي بـ e → نشيلها ونضيف ing.'},
+    {prompt:'💎 play + ing = ?',
+     ar:'',
+     opts:[{t:'playing',ok:true},{t:'plaiing'},{t:'playng'}],
+     good:'play → playing 🎮'},
+    {prompt:'💎 run + ing = ?',
+     ar:'انتبه! بنكرّر الـ n:',
+     opts:[{t:'running',ok:true},{t:'runing'},{t:'runned'}],
+     good:'run → run+n+ing = running 🏃',
+     hint:'Double the last letter!',hintAr:'نكرّر آخر حرف.'},
+  ];
+  makeMCQ(document.getElementById('r2quiz'),items,()=>finishRegion('r2','ing'));
+}
+
+/* ============================================================
+   REGION 3 — GRAMMAR CASTLE (am/is/are)
+   ============================================================ */
+function buildR3(){
+  const items=[
+    {prompt:'I ___ mining diamonds.',ar:'مع I بنستخدم…',
+     opts:[{t:'am',ok:true},{t:'is'},{t:'are'}],good:'I → am 🔵'},
+    {prompt:'Sami ___ building a house.',ar:'مع اسم مفرد (he) بنستخدم…',
+     opts:[{t:'is',ok:true},{t:'am'},{t:'are'}],good:'Sami = he → is 🟢'},
+    {prompt:'They ___ running from the creeper.',ar:'مع they بنستخدم…',
+     opts:[{t:'are',ok:true},{t:'is'},{t:'am'}],good:'they → are 🟡'},
+    {prompt:'She ___ crafting a sword.',ar:'مع she بنستخدم…',
+     opts:[{t:'is',ok:true},{t:'are'},{t:'am'}],good:'she → is 🟢'},
+    {prompt:'We ___ exploring the cave.',ar:'مع we بنستخدم…',
+     opts:[{t:'are',ok:true},{t:'am'},{t:'is'}],good:'we → are 🟡'},
+    {prompt:'You ___ fighting the zombie.',ar:'مع you بنستخدم…',
+     opts:[{t:'are',ok:true},{t:'is'},{t:'am'}],good:'you → are 🟡'},
+  ];
+  makeMCQ(document.getElementById('r3quiz'),items,()=>finishRegion('r3','helper'));
+}
+
+/* ============================================================
+   REGION 4 — ZOMBIE FOREST (escape: pick correct sentence)
+   ============================================================ */
+function buildR4(){
+  const hero=document.getElementById('heroRun');
+  const zomb=document.getElementById('zombChase');
+  const gap =document.getElementById('gapTxt');
+  let distance=5; // bigger = safer
+  function updateLane(){
+    gap.textContent = Array(Math.max(1,distance)).fill('—').join(' ');
+    hero.style.transform='translateX('+(distance>4?10:0)+'px)';
+    zomb.style.transform='translateX(-'+(5-distance)*14+'px)';
+  }
+  updateLane();
+  const items=[
+    {prompt:'Which sentence is CORRECT? 🧟',ar:'اختر الجملة الصحيحة عشان تهرب:',
+     opts:[{t:'Sami is running.',ok:true},{t:'Sami are running.'},{t:'Sami am running.'}],
+     good:'Sami = he → IS running ✔'},
+    {prompt:'Which sentence is CORRECT?',ar:'',
+     opts:[{t:'They are building.',ok:true},{t:'They is building.'},{t:'They building.'}],
+     good:'they → ARE building ✔'},
+    {prompt:'Which sentence is CORRECT?',ar:'',
+     opts:[{t:'I am eating bread.',ok:true},{t:'I is eating bread.'},{t:'I eating bread.'}],
+     good:'I → AM eating ✔'},
+    {prompt:'Which one has the right ING spelling?',ar:'مين فيها إملاء ing صح؟',
+     opts:[{t:'She is swimming.',ok:true},{t:'She is swiming.'},{t:'She is swim.'}],
+     good:'swim → swimming ✔'},
+    {prompt:'Last escape! Which is CORRECT?',ar:'آخر هروب!',
+     opts:[{t:'We are mining gold.',ok:true},{t:'We is mining gold.'},{t:'We are mine gold.'}],
+     good:'we → ARE mining ✔'},
+  ];
+  let idx=0;const c=document.getElementById('r4quiz');
+  function render(){
+    if(idx>=items.length){finishRegion('r4','escape');return;}
+    const it=items[idx];
+    c.innerHTML='<div class="progress-mini">هروب '+(idx+1)+' / '+items.length+'</div>'+
+      '<div class="q"><div class="prompt">'+it.prompt+'</div>'+
+      (it.ar?'<div class="ar" style="margin-bottom:10px">'+it.ar+'</div>':'')+
+      '<div class="opts" id="o4"></div><div class="fb" id="f4"></div></div>';
+    const o=c.querySelector('#o4'),fb=c.querySelector('#f4');
+    [...it.opts].sort(()=>Math.random()-.5).forEach(op=>{
+      const b=document.createElement('div');b.className='opt';b.textContent=op.t;
+      b.onclick=()=>{sClick();c.querySelectorAll('.opt').forEach(x=>x.classList.add('disabled'));
+        if(op.ok){b.classList.add('correct');sGood();bumpCombo();addXP(15);addCoins(3);
+          distance=Math.min(6,distance+1);updateLane();
+          fb.className='fb good show';fb.innerHTML='🏃 '+it.good+' — You ran away!';
+        }else{b.classList.add('wrong');sBad();loseHeart();
+          distance=Math.max(1,distance-1);updateLane();
+          c.querySelectorAll('.opt').forEach(x=>{if(x.textContent===it.opts.find(z=>z.ok).t)x.classList.add('correct');});
+          fb.className='fb bad show';fb.innerHTML='🧟 The zombie got closer! Correct: <b>'+it.opts.find(z=>z.ok).t+'</b>';
+        }
+        const nb=document.createElement('button');nb.className='btn green';nb.style.marginTop='12px';
+        nb.textContent=(idx+1>=items.length)?'🏁 Escape! ▶':'Run! ▶';
+        nb.onclick=()=>{idx++;render();};fb.appendChild(nb);
+      };o.appendChild(b);
+    });
+  }
+  render();
+}
+
+/* ============================================================
+   REGION 5 — ACTION RIVER (build the sentence by tapping words)
+   ============================================================ */
+function buildR5(){
+  const puzzles=[
+    {words:['Salma','is','running'], hint:'🏃 Salma now…', ar:'رتّب: سلمى عم تجري'},
+    {words:['The','zombie','is','chasing'], hint:'🧟 The zombie now…', ar:'رتّب: الزومبي عم يطارد'},
+    {words:['They','are','building','a','house'], hint:'🏠 They now…', ar:'رتّب: هم عم يبنوا بيت'},
+    {words:['I','am','mining','diamonds'], hint:'💎 I now…', ar:'رتّب: أنا عم أحفر ألماس'},
+  ];
+  let idx=0;const c=document.getElementById('r5build');
+  function render(){
+    if(idx>=puzzles.length){finishRegion('r5','bridge');return;}
+    const p=puzzles[idx];
+    c.innerHTML='<div class="progress-mini">جسر '+(idx+1)+' / '+puzzles.length+'</div>'+
+      '<div class="q"><div class="prompt">'+p.hint+' — build the sentence!</div>'+
+      '<div class="ar" style="margin-bottom:8px">'+p.ar+'</div>'+
+      '<div class="build-target" id="target"></div>'+
+      '<div class="build-bank" id="bank"></div>'+
+      '<div class="fb" id="f5"></div></div>';
+    const target=c.querySelector('#target'),bank=c.querySelector('#bank'),fb=c.querySelector('#f5');
+    const placed=[];
+    const shuffled=[...p.words].map((w,i)=>({w,i})).sort(()=>Math.random()-.5);
+    function refreshTarget(){
+      target.innerHTML = placed.length? placed.map(x=>'<span class="word placed">'+x.w+'</span>').join('') :
+        '<span style="color:#aaa">tap words below…</span>';
+    }
+    refreshTarget();
+    shuffled.forEach(item=>{
+      const b=document.createElement('span');b.className='word';b.textContent=item.w;
+      b.onclick=()=>{
+        if(b.classList.contains('used'))return;sClick();
+        b.classList.add('used');placed.push(item);refreshTarget();
+        if(placed.length===p.words.length){
+          const ok = placed.every((x,i)=>x.w===p.words[i]);
+          if(ok){sGood();bumpCombo();addXP(20);addCoins(5);
+            const sent=p.words.join(' ');
+            fb.className='fb good show';
+            fb.innerHTML='🌉 Bridge built! <b>'+sent+'</b> '+
+              '<button class="btn diamond" style="padding:6px 10px;margin-left:8px" onclick="speak(\''+sent.replace(/'/g,"")+'\')">🔊 Hear it</button>';
+            const nb=document.createElement('button');nb.className='btn green';nb.style.marginTop='12px';
+            nb.textContent=(idx+1>=puzzles.length)?'🏁 Cross! ▶':'Next bridge ▶';
+            nb.onclick=()=>{idx++;render();};fb.appendChild(nb);
+          }else{
+            sBad();loseHeart();
+            fb.className='fb bad show';
+            fb.innerHTML='❌ Wrong order! Correct: <b>'+p.words.join(' ')+'</b>';
+            const rb=document.createElement('button');rb.className='btn gold';rb.style.marginTop='12px';
+            rb.textContent='🔄 Try again';rb.onclick=()=>render();fb.appendChild(rb);
+          }
+        }
+      };bank.appendChild(b);
+    });
+  }
+  render();
+}
+
+/* ============================================================
+   REGION 6 — PRESENT TOWER (speed + speak)
+   ============================================================ */
+function buildR6(){
+  const items=[
+    {prompt:'⏱️ FAST! Sami ___ building.',opts:[{t:'is',ok:true},{t:'are'},{t:'am'}],good:'is ✔'},
+    {prompt:'⏱️ FAST! We ___ swimming.',opts:[{t:'are',ok:true},{t:'is'},{t:'am'}],good:'are ✔'},
+    {prompt:'⏱️ FAST! pick the ING: run + ing =',opts:[{t:'running',ok:true},{t:'runing'},{t:'runs'}],good:'running ✔'},
+    {prompt:'⏱️ FAST! I ___ eating an apple.',opts:[{t:'am',ok:true},{t:'is'},{t:'are'}],good:'am ✔'},
+  ];
+  const c=document.getElementById('r6quiz');
+  makeMCQ(c,items,()=>{
+    // speaking stage
+    c.innerHTML='<h2 style="color:#2b2b2b">🔊 Repeat after Salma!</h2>'+
+      '<p class="ar" style="margin-bottom:10px">اضغط 🔊 لتسمع، وبعدين احكي الجملة بصوت عالي. كل جملة = نقاط!</p>'+
+      '<div id="speakList"></div>';
+    const list=['Salma is running.','Sami is mining.','They are building a house.','I am crafting a sword.'];
+    const wrap=c.querySelector('#speakList');let said=0;
+    list.forEach(sent=>{
+      const row=document.createElement('div');
+      row.style.cssText='display:flex;gap:8px;align-items:center;justify-content:space-between;background:#fff;border:3px solid #2b2b2b;padding:10px;margin:8px 0;';
+      row.innerHTML='<b style="font-size:1.1rem">'+sent+'</b>';
+      const grp=document.createElement('div');grp.style.display='flex';grp.style.gap='6px';
+      const hb=document.createElement('button');hb.className='btn diamond';hb.style.padding='8px 12px';hb.textContent='🔊 Hear';
+      hb.onclick=()=>speak(sent);
+      const db=document.createElement('button');db.className='btn green';db.style.padding='8px 12px';db.textContent='🎤 I said it!';
+      db.onclick=()=>{db.disabled=true;db.textContent='✅';sCoin();addXP(10);addCoins(2);said++;
+        if(said===list.length){
+          toast('🎤 Great speaking, hero!',1500);
+          const fin=document.createElement('button');fin.className='btn gold';fin.style.marginTop='12px';
+          fin.textContent='🏁 Finish Tower ▶';fin.onclick=()=>finishRegion('r6','speak');
+          wrap.appendChild(fin);
+        }};
+      grp.appendChild(hb);grp.appendChild(db);row.appendChild(grp);wrap.appendChild(row);
+    });
+  });
+}
+
+/* ============================================================
+   BOSS — GRAMMAR DRAGON
+   ============================================================ */
+function buildBoss(){
+  let hp=100;const c=document.getElementById('bossQuiz');
+  const hpBar=document.getElementById('dragonHp'),hpTxt=document.getElementById('dragonHpTxt');
+  const dragon=document.getElementById('dragonPix');
+  const items=[
+    {prompt:'🐉 Fix me: "She are crafting." → correct verb-to-be?',
+     opts:[{t:'She is crafting.',ok:true},{t:'She am crafting.'},{t:'She are crafting.'}]},
+    {prompt:'🐉 Choose the FULL correct sentence:',
+     opts:[{t:'They are running fast.',ok:true},{t:'They is running fast.'},{t:'They are run fast.'}]},
+    {prompt:'🐉 Add ING: "The villager is ___ (build) a wall."',
+     opts:[{t:'building',ok:true},{t:'builds'},{t:'buildding'}]},
+    {prompt:'🐉 Pick the correct sentence about NOW:',
+     opts:[{t:'I am mining diamonds now.',ok:true},{t:'I mining diamonds now.'},{t:'I is mining diamonds now.'}]},
+    {prompt:'🐉 FINAL BLOW! Which is 100% correct?',
+     opts:[{t:'We are swimming in the river.',ok:true},{t:'We is swiming in the river.'},{t:'We are swim in the river.'}]},
+  ];
+  let idx=0;
+  function setHp(){hpBar.style.width=hp+'%';hpTxt.textContent=Math.max(0,hp)+' / 100';}
+  setHp();
+  function render(){
+    const it=items[idx];
+    c.innerHTML='<div class="progress-mini">هجوم '+(idx+1)+' / '+items.length+'</div>'+
+      '<div class="q"><div class="prompt">'+it.prompt+'</div><div class="opts" id="ob"></div><div class="fb" id="fbb"></div></div>';
+    const o=c.querySelector('#ob'),fb=c.querySelector('#fbb');
+    [...it.opts].sort(()=>Math.random()-.5).forEach(op=>{
+      const b=document.createElement('div');b.className='opt';b.textContent=op.t;
+      b.onclick=()=>{sClick();c.querySelectorAll('.opt').forEach(x=>x.classList.add('disabled'));
+        if(op.ok){b.classList.add('correct');sGood();bumpCombo();addXP(20);addCoins(5);
+          hp-=20;setHp();dragon.textContent='🐲';dragon.style.color='#d23b2e';
+          setTimeout(()=>{dragon.textContent='🐉';dragon.style.color='';},300);
+          fb.className='fb good show';fb.innerHTML='⚔️ Direct hit! -20 HP';
+          const nb=document.createElement('button');nb.className='btn red';nb.style.marginTop='12px';
+          nb.textContent=(idx+1>=items.length)?'🐉 FINISH IT! ▶':'Attack again ▶';
+          nb.onclick=()=>{idx++; if(idx>=items.length||hp<=0){winGame();}else{render();}};
+          fb.appendChild(nb);
+        }else{b.classList.add('wrong');sBad();loseHeart();
+          c.querySelectorAll('.opt').forEach(x=>{if(x.textContent===it.opts.find(z=>z.ok).t)x.classList.add('correct');});
+          dragon.textContent='🔥';setTimeout(()=>dragon.textContent='🐉',300);
+          fb.className='fb bad show';fb.innerHTML='🔥 The dragon hit YOU! Correct: <b>'+it.opts.find(z=>z.ok).t+'</b>';
+          const nb=document.createElement('button');nb.className='btn gold';nb.style.marginTop='12px';
+          nb.textContent='Try next ▶';nb.onclick=()=>{idx++;if(idx>=items.length){if(hp<=0)winGame();else winGame();}else render();};
+          fb.appendChild(nb);
+        }
+      };o.appendChild(b);
+    });
+  }
+  render();
+}
+function winGame(){
+  awardBadge('dragon');
+  document.getElementById('finalXp').textContent=S.xp + (S.lvl-1)*100;
+  document.getElementById('finalCoins').textContent=S.coins;
+  document.getElementById('finalLvl').textContent=S.lvl;
+  renderBadges();
+  goScene('winScene');
+  confettiBurst();setTimeout(confettiBurst,400);setTimeout(confettiBurst,800);
+  sLevel();
+}
+
+/* hook boss scene build when shown */
+const _goScene=goScene;
+goScene=function(id){_goScene(id);if(id==='bossScene')buildBoss();};
+
+/* ============================================================
+   PIXEL FACES (tiny canvas portraits)
+   ============================================================ */
+function drawFace(canvas, skin, hair, shirt){
+  const ctx=canvas.getContext('2d');const px=(x,y,c)=>{ctx.fillStyle=c;ctx.fillRect(x,y,1,1);};
+  // bg
+  ctx.fillStyle='#8fd0ff';ctx.fillRect(0,0,16,16);
+  // head
+  for(let y=2;y<=9;y++)for(let x=4;x<=11;x++)px(x,y,skin);
+  // hair top
+  for(let x=4;x<=11;x++){px(x,2,hair);px(x,3,hair);}
+  px(4,4,hair);px(11,4,hair);
+  // eyes
+  px(6,5,'#fff');px(7,5,'#3a5'); px(9,5,'#fff');px(10,5,'#3a5');
+  // mouth
+  px(7,8,'#7a3b2b');px(8,8,'#7a3b2b');
+  // shirt
+  for(let y=10;y<=15;y++)for(let x=3;x<=12;x++)px(x,y,shirt);
+  // arms
+  for(let y=10;y<=13;y++){px(3,y,skin);px(12,y,skin);}
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function makeClouds(){
+  const c=document.getElementById('clouds');
+  for(let i=0;i<5;i++){
+    const d=document.createElement('div');d.className='cloud';
+    d.style.top=(8+i*16)+'%';d.style.animationDuration=(28+i*8)+'s';
+    d.style.animationDelay=(-i*6)+'s';d.style.transform='scale('+(.6+Math.random()*.7)+')';
+    c.appendChild(d);
+  }
+}
+window.addEventListener('load',()=>{
+  makeClouds();renderHUD();renderBadges();
+  drawFace(document.getElementById('introFace'),'#e0ac7e','#5a3a24','#2aa1c0'); // Sami
+  drawFace(document.getElementById('alexFace'),'#f0c39a','#c77a2a','#5fa83d');  // Alex
+});
+// unlock audio on first tap
+document.body.addEventListener('pointerdown',()=>{try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();}catch(e){}},{once:true});
+</script>
+</body>
+</html>
