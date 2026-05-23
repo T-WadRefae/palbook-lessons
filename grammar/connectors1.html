@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sunbula & the Connector Words 🌾</title>
+<style>
+:root{
+  --sand:#f4ead7; --sand2:#ede0c8; --cream:#fbf5e9;
+  --clay:#c5683f; --clay-d:#a4502c; --terra:#e08a52;
+  --olive:#7a8450; --olive-d:#5f6840; --gold:#e3a72f;
+  --ink:#4a3424; --ink-soft:#8a7256; --line:#e0cfae;
+  --and:#7a8450; --but:#c5683f; --because:#e3a72f; --until:#9b6a8f;
+  --shadow:0 12px 28px rgba(120,80,40,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans Arabic",Tahoma,sans-serif;
+  color:var(--ink);min-height:100vh;display:flex;justify-content:center;
+  background:
+    radial-gradient(circle at 18% 12%, #f6d9a8 0%, transparent 42%),
+    radial-gradient(circle at 85% 88%, #e8c79c 0%, transparent 45%),
+    linear-gradient(165deg,#f4ead7,#ecdcc0 60%,#e3cfa8);
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
+/* subtle field/horizon texture */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:linear-gradient(180deg,transparent 60%,rgba(122,132,80,.10) 100%);}
+
+.app{width:100%;max-width:540px;min-height:100vh;position:relative;z-index:1;
+  display:flex;flex-direction:column;padding:0 14px 30px}
+@media(min-width:580px){
+  .app{margin:16px 0;min-height:calc(100vh - 32px)}
+}
+
+/* ---- HEADER ---- */
+.hdr{position:sticky;top:0;z-index:40;padding:12px 4px 10px;
+  background:linear-gradient(180deg,#f4ead7 70%,rgba(244,234,215,0));}
+.hdr-row{display:flex;align-items:center;gap:10px}
+.mini-bird{width:40px;height:40px;border-radius:50%;background:linear-gradient(150deg,var(--terra),var(--clay));
+  display:grid;place-items:center;font-size:1.3rem;box-shadow:var(--shadow);border:2px solid var(--cream)}
+.hdr-name{font-weight:800;font-size:1.02rem;line-height:1.1}
+.hdr-name small{display:block;font-size:.72rem;color:var(--ink-soft);font-weight:600}
+.hearts{margin-left:auto;font-size:.95rem;letter-spacing:1px}
+.track{height:9px;background:#e3d3b4;border-radius:20px;margin-top:10px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(120,80,40,.15)}
+.track > i{display:block;height:100%;width:0;border-radius:20px;
+  background:linear-gradient(90deg,var(--olive),var(--gold));transition:width .55s cubic-bezier(.2,.85,.25,1)}
+.pills{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+.pill{background:var(--cream);border:1.5px solid var(--line);border-radius:20px;
+  padding:3px 10px;font-size:.74rem;font-weight:800;color:var(--ink-soft)}
+.pill b{color:var(--clay)}
+
+/* ---- CHAT STREAM ---- */
+.stream{flex:1;padding:14px 2px 10px;display:flex;flex-direction:column;gap:14px}
+
+/* mascot message */
+.msg{display:flex;gap:9px;align-items:flex-end;opacity:0;transform:translateY(12px);
+  animation:rise .45s forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.bird{width:46px;height:46px;flex-shrink:0;border-radius:50% 50% 48% 48%;
+  background:linear-gradient(150deg,var(--terra),var(--clay));position:relative;
+  box-shadow:var(--shadow);border:2.5px solid var(--cream);display:grid;place-items:center;font-size:1.5rem}
+.bird::after{content:"";position:absolute;bottom:-3px;right:6px;width:10px;height:10px;
+  background:var(--gold);border-radius:2px;transform:rotate(45deg)} /* embroidery hint */
+.bubble{background:var(--cream);border:2px solid var(--line);border-radius:20px 20px 20px 6px;
+  padding:13px 15px;max-width:80%;box-shadow:var(--shadow);position:relative}
+.bubble .who{font-size:.7rem;font-weight:800;color:var(--clay);margin-bottom:3px;letter-spacing:.5px}
+.bubble p{font-size:1rem;line-height:1.5;font-weight:600}
+.bubble .ar{direction:rtl;text-align:right;color:var(--ink-soft);font-size:.86rem;line-height:1.8;margin-top:6px;font-weight:600}
+
+/* student reply (right) */
+.me{justify-content:flex-end}
+.me .bubble{background:linear-gradient(135deg,var(--olive),var(--olive-d));color:#fdf8ec;
+  border:none;border-radius:20px 20px 6px 20px;font-weight:700}
+.me .bubble p{color:#fdf8ec}
+
+/* word intro card */
+.word-card{background:var(--cream);border:2px solid var(--line);border-radius:20px;padding:0;overflow:hidden;
+  box-shadow:var(--shadow);max-width:88%;align-self:flex-start;opacity:0;transform:translateY(12px);animation:rise .5s forwards}
+.wc-top{padding:14px 16px;color:#fff;display:flex;align-items:center;gap:10px}
+.wc-emoji{font-size:1.8rem}
+.wc-word{font-size:1.6rem;font-weight:800}
+.wc-body{padding:14px 16px}
+.wc-mean{direction:rtl;text-align:right;font-weight:800;font-size:1.05rem;margin-bottom:10px}
+.wc-eg{background:var(--sand);border-radius:13px;padding:11px 12px;margin-top:9px;border-left:5px solid var(--gold)}
+.wc-eg .en{font-weight:800;font-size:1.02rem}
+.wc-eg .arx{direction:rtl;text-align:right;color:var(--ink-soft);font-size:.82rem;margin-top:3px;font-weight:600}
+.wc-viz{margin-top:11px;text-align:center;background:linear-gradient(120deg,#fff7e6,var(--cream));
+  border:2px dashed var(--gold);border-radius:13px;padding:11px;font-weight:800;font-size:.95rem}
+
+/* choices */
+.choices{display:flex;flex-direction:column;gap:9px;align-self:flex-end;align-items:flex-end;max-width:90%;width:100%;
+  opacity:0;animation:rise .4s .15s forwards}
+.choice{background:var(--cream);border:2.5px solid var(--line);border-radius:18px 18px 6px 18px;
+  padding:13px 18px;font-size:1.05rem;font-weight:800;cursor:pointer;color:var(--ink);
+  transition:.15s;font-family:inherit;min-width:55%;text-align:center;box-shadow:0 4px 0 var(--line)}
+.choice:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.choice.correct{background:#eaf0d8;border-color:var(--olive);color:var(--olive-d);box-shadow:0 4px 0 var(--olive)}
+.choice.wrong{background:#f7e0d4;border-color:var(--clay);color:var(--clay-d);box-shadow:0 4px 0 var(--clay)}
+
+/* word-order builder */
+.builder{align-self:stretch;background:var(--cream);border:2px solid var(--line);border-radius:18px;
+  padding:14px;box-shadow:var(--shadow);opacity:0;animation:rise .4s forwards}
+.b-slot{min-height:50px;background:var(--sand);border:2px dashed var(--line);border-radius:13px;
+  display:flex;flex-wrap:wrap;gap:7px;padding:9px;align-items:center;justify-content:center}
+.b-hint{color:#b8a888;font-weight:700;font-size:.9rem}
+.b-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.tok{background:linear-gradient(135deg,var(--until),#7d5374);color:#fff;font-weight:800;
+  padding:10px 15px;border-radius:12px;cursor:pointer;font-size:1.02rem;box-shadow:0 4px 0 #6a4561;user-select:none;transition:.1s}
+.tok:active{transform:translateY(2px);box-shadow:0 2px 0 #6a4561}
+.tok.used{opacity:.28;pointer-events:none}
+.b-actions{display:flex;gap:9px;margin-top:12px}
+.b-actions button{flex:1;font-family:inherit}
+
+/* generic button */
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:800;font-size:1.05rem;
+  padding:14px;border-radius:16px;color:#fff;background:linear-gradient(135deg,var(--clay),var(--clay-d));
+  box-shadow:0 5px 0 #8a4222;transition:.1s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #8a4222}
+.btn.olive{background:linear-gradient(135deg,var(--olive),var(--olive-d));box-shadow:0 5px 0 #4a5232}
+.btn.olive:active{box-shadow:0 2px 0 #4a5232}
+.btn.ghost{background:var(--cream);color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn.ghost:active{box-shadow:0 2px 0 var(--line)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.center{align-self:center;width:100%;max-width:340px}
+
+/* feedback bubble = mascot reaction (handled as msg) */
+.fix{background:#fff;border-radius:10px;padding:8px 11px;margin-top:8px;font-weight:800;color:var(--olive-d);font-size:.98rem}
+
+/* typing dots */
+.typing{display:flex;gap:4px;padding:6px 2px}
+.typing span{width:8px;height:8px;background:var(--clay);border-radius:50%;animation:blink 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-4px)}}
+
+/* result */
+.result-card{align-self:center;text-align:center;background:var(--cream);border:2px solid var(--line);
+  border-radius:24px;padding:22px;box-shadow:var(--shadow);width:100%;opacity:0;animation:rise .5s forwards}
+.medal{font-size:3.8rem}
+.score{font-size:2.2rem;font-weight:800;color:var(--clay);margin:4px 0}
+.badges{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.badge{width:78px;background:var(--sand);border:2px solid var(--line);border-radius:14px;padding:10px}
+.badge.lit{border-color:var(--gold);background:linear-gradient(160deg,#fff7e6,var(--cream))}
+.badge .bi{font-size:1.6rem}.badge .bn{font-size:.68rem;font-weight:800;margin-top:3px}
+.an{text-align:left;background:var(--sand);border-radius:14px;padding:13px;margin-top:6px}
+.an-row{display:flex;align-items:center;gap:8px;padding:7px 0;font-weight:800;font-size:.92rem;border-bottom:1px solid var(--line)}
+.an-row:last-child{border:none}
+.an-row .tag{margin-left:auto;font-size:.72rem;padding:3px 9px;border-radius:20px}
+
+/* confetti + toast */
+.confetti{position:fixed;top:-12px;width:10px;height:15px;z-index:999;pointer-events:none;border-radius:2px}
+@keyframes fall{to{transform:translateY(105vh) rotate(700deg);opacity:.85}}
+.toast{position:fixed;left:50%;top:14%;transform:translateX(-50%) scale(.8);background:var(--ink);color:#fff;
+  padding:10px 20px;border-radius:30px;font-weight:800;z-index:200;opacity:0;transition:.3s;pointer-events:none;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translateX(-50%) scale(1)}
+
+.foot{text-align:center;padding:18px 0 4px;color:var(--ink-soft);font-size:.8rem;font-weight:700}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hdr">
+    <div class="hdr-row">
+      <div class="mini-bird">🌾</div>
+      <div class="hdr-name">Sunbula<small>your English friend 🐦</small></div>
+      <div class="hearts" id="hearts">❤️❤️❤️</div>
+    </div>
+    <div class="pills">
+      <div class="pill">⭐ <b id="xp">0</b> XP</div>
+      <div class="pill">🌟 <b id="stars">0</b>/8</div>
+    </div>
+    <div class="track"><i id="prog"></i></div>
+  </div>
+
+  <div class="stream" id="stream"></div>
+
+  <div class="foot">Designed by T. Wad Refae 🌾</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== DATA ===== */
+const C={and:'#7a8450',but:'#c5683f',because:'#e3a72f',until:'#9b6a8f'};
+const IC={and:'➕',but:'🔀',because:'💡',until:'⏳'};
+
+const TEACH=[
+ {w:'and',mean:'و — لإضافة شيءٍ آخر',
+  e:{en:'I like tea and bread.',ar:'أحبّ الشاي والخبز.'},
+  viz:'🍵 ➕ 🍞 = and'},
+ {w:'but',mean:'لكن — لإظهار شيءٍ مختلف أو مفاجئ',
+  e:{en:'I was tired, but I finished.',ar:'كنتُ متعبًا، لكنني أنهيت.'},
+  viz:'😴 🔀 ✅ = but'},
+ {w:'because',mean:'لأن / بسبب — لإعطاء السبب',
+  e:{en:'She stayed home because she was sick.',ar:'بقيت في البيت لأنها مريضة.'},
+  viz:'❓ 💡 sick = because'},
+ {w:'until',mean:'حتى — نهاية وقتٍ ما',
+  e:{en:'We played until it got dark.',ar:'لعبنا حتى حلّ الظلام.'},
+  viz:'▶️ ⏳ 🌙 = until'}
+];
+
+const QUIZ=[
+ {kind:'mcq',lvl:'Easy',q:'I have a pen ___ a book.',hint:'نُضيف شيئًا ثانيًا.',opts:['and','but','because'],ans:'and',
+  why:'"and" adds a second thing — both together!',ar:'and تُضيف شيئًا ثانيًا.'},
+ {kind:'mcq',lvl:'Easy',q:'It is cold, ___ the sun is out.',hint:'بارد لكن مشمس — مفاجأة!',opts:['until','and','but'],ans:'but',
+  why:'Cold + sunny is surprising, so we use "but".',ar:'but تُظهر التضاد أو المفاجأة.'},
+ {kind:'mcq',lvl:'Easy',q:'He is sad ___ he lost the game.',hint:'لماذا حزين؟ هذا سبب.',opts:['because','but','and'],ans:'because',
+  why:'"because" tells us the reason WHY.',ar:'because تُعطي السبب.'},
+ {kind:'mcq',lvl:'Medium',q:'Stay here ___ I come back.',hint:'ابقَ… إلى متى؟',opts:['and','until','but'],ans:'until',
+  why:'"until" shows the end time.',ar:'until تدلّ على نهاية الوقت.'},
+ {kind:'tf',lvl:'Medium',q:'Is this correct? → "I ate but I was hungry."',hint:'أكلتُ لأني جائع — سبب أم تضاد؟',opts:['Correct ✅','Wrong ❌'],ans:'Wrong ❌',
+  why:'Eating when hungry is a REASON. Use "because".',ar:'الصواب: I ate because I was hungry.'},
+ {kind:'mcq',lvl:'Medium',q:'We waited ___ the bus came.',hint:'انتظرنا… إلى متى؟',opts:['until','and','because'],ans:'until',
+  why:'Waiting continued until the bus arrived.',ar:'until = استمرّ حتى وصول الباص.'},
+ {kind:'order',lvl:'Challenge',pieces:['I','was','tired','but','I','won'],ans:'I was tired but I won',hint:'متعب… لكن… فزت.',
+  why:'"but" links a contrast: tired ↔ won.',ar:'but تربط فكرتين متضادتين.'},
+ {kind:'order',lvl:'Challenge',pieces:['We','were','happy','because','we','passed'],ans:'We were happy because we passed',hint:'سعداء… لأن… نجحنا.',
+  why:'"because" gives the reason.',ar:'because تُعطي السبب.'}
+];
+
+/* ===== STATE ===== */
+let phase=0, teachIdx=0, qIdx=0, xp=0, stars=0, hearts=3, attempt=0, chosen=[];
+let perWord={and:{c:0,t:0},but:{c:0,t:0},because:{c:0,t:0},until:{c:0,t:0}};
+const TOTAL=QUIZ.length;
+const stream=document.getElementById('stream');
+const $=id=>document.getElementById(id);
+
+function refresh(){
+  $('xp').textContent=xp;$('stars').textContent=stars;
+  $('hearts').textContent='❤️'.repeat(hearts)+'🤍'.repeat(3-hearts);
+  const total=TEACH.length+TOTAL;
+  const done=(phase==='quiz'?TEACH.length+qIdx:teachIdx);
+  $('prog').style.width=Math.round((done/total)*100)+'%';
+}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),900);}
+function scroll(){setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),60);}
+function sound(ok){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';if(ok){o.frequency.setValueAtTime(660,a.currentTime);o.frequency.setValueAtTime(880,a.currentTime+.1)}else{o.frequency.setValueAtTime(300,a.currentTime);o.frequency.setValueAtTime(220,a.currentTime+.12)}g.gain.setValueAtTime(.16,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.3);o.start();o.stop(a.currentTime+.3)}catch(e){}}
+function confetti(){const cs=['#c5683f','#e3a72f','#7a8450','#9b6a8f','#e08a52'];for(let i=0;i<60;i++){const d=document.createElement('div');d.className='confetti';d.style.left=Math.random()*100+'vw';d.style.background=cs[i%cs.length];d.style.animation=`fall ${1+Math.random()*1.3}s ${Math.random()*.4}s ease-in forwards`;document.body.appendChild(d);setTimeout(()=>d.remove(),2500)}}
+
+/* ===== BUBBLE BUILDERS ===== */
+function mascot(html,cb){
+  // typing indicator then message
+  const t=document.createElement('div');t.className='msg';
+  t.innerHTML=`<div class="bird">🐦</div><div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  stream.appendChild(t);scroll();
+  setTimeout(()=>{
+    t.querySelector('.bubble').innerHTML=`<div class="who">SUNBULA</div>${html}`;
+    scroll();if(cb)cb();
+  },650);
+}
+function meSay(txt){
+  const m=document.createElement('div');m.className='msg me';
+  m.innerHTML=`<div class="bubble"><p>${txt}</p></div>`;
+  stream.appendChild(m);scroll();
+}
+function clearInteractive(){document.querySelectorAll('.choices,.builder,.center,.word-card').forEach(e=>{e.style.pointerEvents='none'});}
+
+/* ===== FLOW ===== */
+function start(){
+  mascot(`<p>Hi! I'm <b>Sunbula</b> 🌾 I live in the za'atar fields. Today we'll catch <b>4 magic words</b> together!</p>
+    <div class="ar">مرحبًا! أنا سُنبلة 🌾 اليوم رح نمسك ٤ كلمات سحرية تربط الجُمل سوا 🔗</div>`,()=>{
+    addButton('Let\'s go! 🚀','olive',()=>{meSay('Let\'s go! 🚀');teach();});
+  });
+}
+function addButton(label,cls,fn){
+  const w=document.createElement('div');w.className='center';
+  const b=document.createElement('button');b.className='btn '+(cls||'');b.textContent=label;
+  b.onclick=()=>{w.remove();fn()};w.appendChild(b);stream.appendChild(w);scroll();
+}
+
+function teach(){
+  phase='teach';refresh();
+  const t=TEACH[teachIdx];
+  mascot(`<p>Word ${teachIdx+1} of 4 — meet <b>${t.w}</b>! ${IC[t.w]}</p>`,()=>{
+    const card=document.createElement('div');card.className='word-card';
+    card.innerHTML=`
+      <div class="wc-top" style="background:linear-gradient(135deg,${C[t.w]},${shade(C[t.w])})">
+        <span class="wc-emoji">${IC[t.w]}</span><span class="wc-word">${t.w}</span></div>
+      <div class="wc-body">
+        <div class="wc-mean">${t.mean}</div>
+        <div class="wc-eg"><div class="en">${t.e.en}</div><div class="arx">${t.e.ar}</div></div>
+        <div class="wc-viz">${t.viz}</div>
+      </div>`;
+    stream.appendChild(card);scroll();
+    const last=teachIdx===TEACH.length-1;
+    addButton(last?'I\'m ready! Quiz time 🎮':'Got it! Next word ➡️','olive',()=>{
+      meSay(last?'Ready! 🎮':'Got it! ✔️');
+      if(last){teachIdx=TEACH.length;qIdx=0;quiz();}else{teachIdx++;xp+=5;toast('+5 XP ⭐');teach();}
+    });
+  });
+}
+function shade(hex){return hex} // top gradient already darkens visually
+
+/* ---- QUIZ ---- */
+function quiz(){
+  phase='quiz';attempt=0;chosen=[];refresh();
+  const q=QUIZ[qIdx];
+  if(q.kind==='order'){
+    mascot(`<p>🧩 <b>Challenge!</b> Build the sentence in the right order.</p><div class="ar">💭 ${q.hint}</div>`,()=>buildOrder(q));
+  }else{
+    const qt=q.q.replace('___','<b style="color:#c5683f">___</b>');
+    mascot(`<p>${q.kind==='tf'?'🤔':'✏️'} ${qt}</p><div class="ar">💭 ${q.hint}</div>`,()=>{
+      const wrap=document.createElement('div');wrap.className='choices';
+      q.opts.forEach(o=>{
+        const b=document.createElement('button');b.className='choice';b.textContent=o;
+        b.onclick=()=>pickMcq(b,o,q,wrap);wrap.appendChild(b);
+      });
+      stream.appendChild(wrap);scroll();
+    });
+  }
+}
+function pickMcq(btn,val,q,wrap){
+  if(wrap.dataset.done)return;
+  wrap.querySelectorAll('.choice').forEach(c=>c.style.pointerEvents='none');
+  if(val===q.ans){
+    btn.classList.add('correct');wrap.dataset.done=1;meSay(val);
+    win(q);
+  }else{
+    btn.classList.add('wrong');attempt++;sound(false);hearts=Math.max(0,hearts-1);refresh();meSay(val);
+    if(attempt===1){
+      mascot(`<p>Hmm, not quite! Try once more 💛</p><div class="ar">تلميح: ${q.hint}<br>فكّر في معنى الكلمة 😉</div>`,()=>{
+        wrap.querySelectorAll('.choice').forEach(c=>{c.style.pointerEvents='auto';c.classList.remove('wrong')});
+      });
+    }else{
+      wrap.dataset.done=1;wrap.querySelectorAll('.choice').forEach(c=>{if(c.textContent===q.ans)c.classList.add('correct')});
+      record(q,false);
+      mascot(`<p>No worries — let's learn it! 🌱</p><div class="fix">✅ ${q.q.replace('___','<b>'+q.ans+'</b>')}</div>
+        <div class="ar">${q.ar}</div>`,()=>next());
+    }
+  }
+}
+function win(q){
+  sound(true);xp+= (q.kind==='order'?15:10);stars++;record(q,attempt===0);
+  toast(attempt===0?'+'+(q.kind==='order'?15:10)+' XP ⭐':'+5 XP 👍');confetti();refresh();
+  mascot(`<p>🎉 ${praise()}</p><div class="ar">✔️ ${q.why}<br>${q.ar}</div>`,()=>next());
+}
+function praise(){const p=['Amazing!','Super English Hero!','Brilliant!','You rock! 🌟','Perfect!','Mashallah! 🌾'];return p[Math.floor(Math.random()*p.length)];}
+function record(q,ok){let w=q.ans;if(q.kind==='order')w=q.pieces.find(x=>['and','but','because','until'].includes(x));if(perWord[w]){perWord[w].t++;if(ok)perWord[w].c++;}}
+function next(){
+  const last=qIdx>=TOTAL-1;
+  addButton(last?'See my results 🏆':'Next ➡️',last?'':'olive',()=>{
+    if(last){result();}else{qIdx++;quiz();}
+  });
+}
+
+/* ---- ORDER BUILDER ---- */
+function buildOrder(q){
+  const b=document.createElement('div');b.className='builder';
+  b.innerHTML=`<div class="b-slot" id="slot"><span class="b-hint">Tap words to build ⬇️</span></div>
+    <div class="b-bank" id="bank">${q.pieces.map((p,i)=>`<span class="tok" data-i="${i}">${p}</span>`).join('')}</div>
+    <div class="b-actions">
+      <button class="btn ghost" id="undo">↩️ Undo</button>
+      <button class="btn olive" id="chk" disabled>Check ✅</button>
+    </div>`;
+  stream.appendChild(b);scroll();
+  b.querySelectorAll('.tok').forEach(t=>t.onclick=()=>{chosen.push(+t.dataset.i);t.classList.add('used');draw(q,b)});
+  b.querySelector('#undo').onclick=()=>{if(chosen.length){const i=chosen.pop();b.querySelector(`.tok[data-i="${i}"]`).classList.remove('used');draw(q,b)}};
+  b.querySelector('#chk').onclick=()=>checkOrder(q,b);
+}
+function draw(q,b){
+  const slot=b.querySelector('#slot');
+  slot.innerHTML=chosen.length?chosen.map(i=>`<span class="tok" style="box-shadow:0 3px 0 #6a4561">${q.pieces[i]}</span>`).join(''):'<span class="b-hint">Tap words to build ⬇️</span>';
+  b.querySelector('#chk').disabled=chosen.length!==q.pieces.length;
+}
+function checkOrder(q,b){
+  const built=chosen.map(i=>q.pieces[i]).join(' ');
+  b.querySelectorAll('.tok,button').forEach(x=>x.style.pointerEvents='none');
+  meSay(built);
+  if(built===q.ans){win(q);}
+  else{
+    attempt++;sound(false);hearts=Math.max(0,hearts-1);refresh();
+    if(attempt===1){
+      mascot(`<p>Almost! Check the order again 💛</p><div class="ar">${q.hint}</div>`,()=>{
+        chosen=[];b.querySelectorAll('.tok').forEach(t=>{t.classList.remove('used');t.style.pointerEvents='auto'});
+        b.querySelectorAll('button').forEach(x=>x.style.pointerEvents='auto');draw(q,b);
+      });
+    }else{
+      record(q,false);
+      mascot(`<p>Here it is, my friend 🌱</p><div class="fix">✅ ${q.ans}</div><div class="ar">${q.ar}</div>`,()=>next());
+    }
+  }
+}
+
+/* ---- RESULT ---- */
+function result(){
+  phase='done';refresh();$('prog').style.width='100%';
+  const pct=Math.round(stars/TOTAL*100);
+  let medal='🥉',title='Connector Explorer';
+  if(pct>=85){medal='🏆';title='Connector Master!';}else if(pct>=60){medal='🥈';title='Connector Champion!';}
+  const W=['and','but','because','until'];
+  const badges=W.map(w=>`<div class="badge ${perWord[w].c>0?'lit':''}"><div class="bi">${perWord[w].c>0?IC[w]:'🔒'}</div><div class="bn">${w}</div></div>`).join('');
+  const rows=W.map(w=>{const o=perWord[w];const good=o.t===0?true:o.c>=Math.ceil(o.t/2);
+    return `<div class="an-row"><span>${IC[w]} ${w}</span><span class="tag" style="background:${good?'#eaf0d8':'#f7e7d4'};color:${good?'#5f6840':'#a4502c'}">${good?'Strong 💪':'Review 🔁'}</span></div>`}).join('');
+  const weak=W.filter(w=>{const o=perWord[w];return o.t>0&&o.c<Math.ceil(o.t/2)});
+  const tip=weak.length?`راجِع هذه الكلمات: <b>${weak.join('، ')}</b> 🔁`:'ممتاز! أتقنت كل الروابط 🌟';
+  mascot(`<p>You did it! 🌾 Let's see your harvest...</p><div class="ar">أحسنت! خلينا نشوف حصادك 🌾</div>`,()=>{
+    const r=document.createElement('div');r.className='result-card';
+    r.innerHTML=`<div class="medal">${medal}</div><h2 style="color:var(--ink)">${title}</h2>
+      <div class="score">${stars}/${TOTAL} ✅</div>
+      <div class="pill" style="display:inline-block">⭐ ${xp} XP</div>
+      <div class="badges">${badges}</div>
+      <p style="color:var(--clay);font-weight:800;direction:rtl">🎖️ فتحتَ شارة Connector Master!</p>
+      <div class="an"><div style="font-weight:800;margin-bottom:4px">📊 Strengths & weak spots</div>${rows}
+        <div class="ar" style="margin-top:10px;background:var(--cream);padding:9px;border-radius:10px">${tip}</div></div>`;
+    stream.appendChild(r);scroll();confetti();
+    addButton('Play again 🔁','',()=>location.reload());
+  });
+}
+
+/* go */
+refresh();start();
+</script>
+</body>
+</html>
