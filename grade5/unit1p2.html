@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Grade 7 – Unit 1, Period 2 | Sports Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --blue:#2563eb;--blue-deep:#1e40af;--sky:#5bb8f5;--sky-light:#d6efff;
+  --sun:#ffd23f;--sun-glow:#ffb300;--sand:#f5dfa0;--teal:#2ec4b6;--teal-dark:#1a8a82;
+  --pink:#ff6b9d;--green:#34d399;--green-dark:#059669;--red:#ef4444;
+  --ink:#1e293b;--ink-soft:#64748b;--paper:#ffffff;--shadow:rgba(30,64,175,.18);
+  --narrator:#f59e0b;--ben:#2563eb;--omar:#10b981;--rania:#a855f7;--teacher:#0ea5e9;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Fredoka',sans-serif;
+  background:
+    radial-gradient(ellipse 200px 90px at 12% 6%, rgba(255,255,255,.6),transparent 70%),
+    radial-gradient(ellipse 240px 100px at 80% 4%, rgba(255,255,255,.5),transparent 70%),
+    linear-gradient(165deg,var(--sky-light) 0%,#e8f6ff 45%,#fff8e8 100%);
+  background-attachment:fixed;min-height:100vh;color:var(--ink);
+}
+.header{
+  position:relative;overflow:hidden;
+  background:linear-gradient(120deg,#1e40af 0%,#2563eb 40%,#0ea5e9 75%,#2ec4b6 100%);
+  background-size:200% 200%;animation:gradShift 8s ease infinite;
+  padding:clamp(16px,3vw,26px) clamp(14px,4vw,40px) clamp(20px,3vw,30px);
+  box-shadow:0 8px 32px var(--shadow);
+}
+@keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.header::before{
+  content:'';position:absolute;top:-40px;right:8%;width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,210,63,.9),rgba(255,179,0,.3) 60%,transparent 70%);
+  animation:sunPulse 4s ease-in-out infinite;
+}
+@keyframes sunPulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.15);opacity:1}}
+.header::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:7px;
+  background:repeating-linear-gradient(90deg,var(--sun) 0 28px,var(--pink) 28px 56px,var(--teal) 56px 84px,#fff 84px 88px);
+  animation:slideStripes 6s linear infinite;
+}
+@keyframes slideStripes{to{background-position:336px 0}}
+.h-deco{position:absolute;font-size:1.4rem;opacity:.35;animation:float 6s ease-in-out infinite}
+.h-deco.d1{top:18px;left:6%;animation-delay:0s}
+.h-deco.d2{top:50%;left:38%;animation-delay:1.5s}
+.h-deco.d3{bottom:22px;left:55%;animation-delay:3s}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-12px) rotate(6deg)}}
+.h-inner{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.h-title{display:flex;align-items:center;gap:14px}
+.h-mascot{font-size:clamp(2rem,5vw,3rem);filter:drop-shadow(2px 4px 6px rgba(0,0,0,.3));animation:run 1.2s ease-in-out infinite}
+@keyframes run{0%,100%{transform:translateX(0) rotate(-5deg)}50%{transform:translateX(6px) rotate(5deg)}}
+.h-title h1{color:#fff;font-size:clamp(1.2rem,3.2vw,2rem);font-weight:700;text-shadow:3px 3px 0 rgba(0,0,0,.25),0 0 20px rgba(255,255,255,.3);letter-spacing:.5px}
+.h-title .tag{display:inline-block;margin-top:3px;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.4);border-radius:30px;padding:3px 14px;color:#fff;font-family:'Tajawal',sans-serif;font-weight:700;font-size:clamp(.65rem,1.4vw,.8rem);backdrop-filter:blur(4px)}
+.xp{background:rgba(255,255,255,.18);border:2.5px solid rgba(255,255,255,.45);border-radius:40px;padding:8px 18px;display:flex;align-items:center;gap:10px;backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.xp-label{color:#fff;font-weight:700;font-size:.78rem;white-space:nowrap;font-family:'Tajawal',sans-serif}
+.xp-stars{display:flex;gap:3px}
+.xp-star{font-size:1.25rem;opacity:.3;transition:.3s;filter:grayscale(1)}
+.xp-star.on{opacity:1;filter:none;animation:pop .4s cubic-bezier(.36,.07,.19,.97)}
+@keyframes pop{0%{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.5)}100%{transform:scale(1)}}
+.prog-wrap{width:100%;background:#e2e8f0;height:10px;overflow:hidden}
+.prog-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--sun),var(--pink),var(--teal));transition:width .6s cubic-bezier(.4,0,.2,1);box-shadow:0 0 10px var(--sun-glow)}
+.tabs{display:flex;overflow-x:auto;gap:6px;padding:12px clamp(10px,3vw,24px);scrollbar-width:none;background:rgba(255,255,255,.5);backdrop-filter:blur(4px)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:none;cursor:pointer;padding:9px 18px;border-radius:30px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:clamp(.72rem,1.6vw,.9rem);background:#fff;color:var(--ink-soft);box-shadow:0 3px 0 #cbd5e1,0 5px 12px rgba(0,0,0,.08);transition:all .2s;white-space:nowrap}
+.tab:hover{transform:translateY(-2px);color:var(--blue)}
+.tab.active{background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;box-shadow:0 4px 0 var(--blue-deep),0 8px 18px rgba(37,99,235,.35);transform:translateY(-2px)}
+.panel{display:none;padding:clamp(14px,3vw,30px) clamp(14px,4vw,40px);max-width:1100px;margin:0 auto}
+.panel.active{display:block;animation:slideUp .4s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border-radius:24px;padding:clamp(16px,3vw,26px);box-shadow:0 4px 0 rgba(0,0,0,.05),0 10px 30px rgba(0,0,0,.1);border:3px solid rgba(255,255,255,.9)}
+.sec{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.sec-badge{width:46px;height:46px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;box-shadow:0 4px 10px var(--shadow)}
+.sec h2{font-size:clamp(.95rem,2.2vw,1.25rem);font-weight:700;line-height:1.2}
+.sec .sub{font-family:'Tajawal',sans-serif;font-size:.78rem;color:var(--ink-soft);font-weight:700;direction:rtl}
+.obj-intro{background:linear-gradient(135deg,#fff8e1,#fff0f5);border:2.5px dashed var(--sun-glow);border-radius:20px;padding:18px 20px;margin-bottom:22px;text-align:center;direction:rtl;font-family:'Tajawal',sans-serif}
+.obj-intro .big{font-size:clamp(1.1rem,2.6vw,1.4rem);font-weight:800;color:var(--blue-deep);margin-bottom:6px}
+.obj-intro p{font-size:clamp(.85rem,1.9vw,1rem);font-weight:500;color:var(--ink-soft);line-height:1.6}
+.obj-track{display:flex;flex-direction:column;gap:14px;max-width:640px;margin:0 auto}
+.obj-item{display:flex;align-items:center;gap:14px;background:var(--paper);border-radius:18px;padding:14px 18px;box-shadow:0 3px 0 rgba(0,0,0,.05),0 6px 18px rgba(0,0,0,.08);border:2.5px solid #f1f5f9;direction:rtl;text-align:right;transition:transform .25s,box-shadow .25s}
+.obj-item:hover{transform:translateX(-6px);box-shadow:0 3px 0 rgba(0,0,0,.05),0 10px 26px rgba(0,0,0,.12);border-color:var(--teal)}
+.obj-step{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue),var(--teal));box-shadow:0 4px 8px var(--shadow)}
+.obj-item:nth-child(2) .obj-step{background:linear-gradient(135deg,var(--teal),var(--green))}
+.obj-item:nth-child(3) .obj-step{background:linear-gradient(135deg,var(--sun),var(--pink))}
+.obj-item:nth-child(4) .obj-step{background:linear-gradient(135deg,var(--pink),var(--rania))}
+.obj-item:nth-child(5) .obj-step{background:linear-gradient(135deg,var(--rania),var(--blue))}
+.obj-txt{font-family:'Tajawal',sans-serif;font-weight:700;font-size:clamp(.85rem,1.9vw,1rem);line-height:1.5}
+.obj-txt .en{display:block;font-family:'Fredoka',sans-serif;font-size:.78rem;color:var(--ink-soft);font-weight:500;direction:ltr;text-align:left;margin-top:2px}
+.finish-banner{text-align:center;margin-top:24px;padding:16px;background:linear-gradient(135deg,var(--green),var(--teal));border-radius:20px;color:#fff;font-weight:700;font-family:'Tajawal',sans-serif;font-size:clamp(.95rem,2.2vw,1.15rem);box-shadow:0 4px 0 var(--green-dark),0 8px 20px rgba(5,150,105,.3);direction:rtl}
+.scene-img{width:100%;max-width:560px;display:block;margin:0 auto 20px;border-radius:18px;border:4px solid #fff;box-shadow:0 6px 0 rgba(0,0,0,.06),0 12px 30px rgba(0,0,0,.14)}
+.audio{background:linear-gradient(135deg,#eff6ff,#f0fdfa);border:2.5px solid var(--sky);border-radius:18px;padding:12px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 4px 14px rgba(91,184,245,.2)}
+.audio .lbl{font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:6px;white-space:nowrap;color:var(--blue-deep)}
+.audio iframe{border:none;border-radius:10px;height:38px;flex:1;min-width:200px}
+.note{background:#fff8e1;border-right:5px solid var(--sun-glow);border-radius:12px;padding:11px 16px;margin-bottom:18px;font-family:'Tajawal',sans-serif;font-weight:700;font-size:clamp(.82rem,1.8vw,.96rem);color:#92400e;direction:rtl;text-align:right}
+.btn-main{background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;border:none;border-radius:40px;padding:12px 32px;font-family:'Fredoka',sans-serif;font-size:clamp(.9rem,1.9vw,1.05rem);font-weight:700;cursor:pointer;box-shadow:0 5px 0 var(--blue-deep),0 8px 18px rgba(37,99,235,.3);transition:all .2s;display:block;margin:18px auto 0}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--blue-deep),0 12px 26px rgba(37,99,235,.4)}
+.btn-main:active{transform:translateY(2px);box-shadow:0 3px 0 var(--blue-deep)}
+.btn-main:disabled{opacity:.5;cursor:not-allowed}
+.fb{margin-top:18px;padding:14px 18px;border-radius:14px;font-family:'Tajawal',sans-serif;font-weight:700;font-size:clamp(.85rem,1.8vw,1rem);display:none;direction:rtl;text-align:right}
+.fb.show{display:block;animation:slideUp .3s ease}
+.fb.good{background:#d1fae5;border:2px solid var(--green);color:#065f46}
+.fb.bad{background:#fee2e2;border:2px solid var(--red);color:#991b1b}
+.dbox{background:linear-gradient(135deg,#f8fafc,#eff6ff);border:2.5px solid #e2e8f0;border-radius:18px;padding:clamp(12px,3vw,22px);line-height:2.1}
+.dline{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:8px 0;border-bottom:1px dashed #e2e8f0;font-size:clamp(.8rem,1.7vw,.94rem)}
+.dline:last-child{border-bottom:none}
+.spk{font-weight:700;font-size:clamp(.66rem,1.4vw,.78rem);padding:4px 10px;border-radius:20px;text-align:center;color:#fff;white-space:nowrap;margin-top:2px;display:inline-flex;align-items:center;gap:4px}
+.sp-n{background:var(--narrator)}.sp-b{background:var(--ben)}.sp-o{background:var(--omar)}
+.sp-r{background:var(--rania)}.sp-t{background:var(--teacher)}
+.dtxt{font-family:'Tajawal',sans-serif;font-weight:500}
+.kw{cursor:pointer;padding:1px 4px;border-radius:6px;transition:all .15s;font-weight:700;color:var(--blue-deep);border:2px solid transparent;display:inline-block}
+.kw:hover{background:#fef9c3}
+.kw.circled{border:2.5px solid var(--pink);border-radius:50px;background:#fff0f5;color:var(--pink);box-shadow:0 2px 6px rgba(255,107,157,.3);animation:pop .3s ease}
+.tts-btn{background:linear-gradient(135deg,var(--teal),var(--green));color:#fff;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:1rem;flex-shrink:0;box-shadow:0 3px 8px rgba(46,196,182,.4);transition:all .2s;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.tts-btn:hover{transform:scale(1.12)}
+.tts-btn:active{transform:scale(.92)}
+.tts-btn.speaking{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 3px 8px rgba(46,196,182,.4)}50%{box-shadow:0 0 0 8px rgba(46,196,182,.15)}}
+.dline2{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:start;padding:9px 0;border-bottom:1px dashed #e2e8f0;font-size:clamp(.8rem,1.7vw,.94rem)}
+.dline2:last-child{border-bottom:none}
+.gender-tag{font-size:.58rem;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:4px;font-family:'Tajawal',sans-serif}
+.g-m{background:#dbeafe;color:#1d4ed8}
+.g-f{background:#fce7f3;color:#9d174d}
+.qlist{display:flex;flex-direction:column;gap:14px}
+.qit{background:linear-gradient(135deg,#fff,#f8fafc);border:2.5px solid #e2e8f0;border-radius:18px;padding:16px 18px;box-shadow:0 3px 0 rgba(0,0,0,.04),0 6px 16px rgba(0,0,0,.07);transition:transform .2s}
+.qit:hover{transform:translateY(-2px)}
+.qsent{font-size:clamp(.85rem,1.9vw,1rem);font-weight:500;line-height:2.2;font-family:'Fredoka',sans-serif}
+.qnum{display:inline-flex;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;font-weight:700;font-size:.8rem;align-items:center;justify-content:center;margin-right:6px}
+.inline-opt{cursor:pointer;padding:3px 12px;border-radius:30px;border:2.5px solid #cbd5e1;background:#fff;font-weight:600;color:var(--ink);transition:all .18s;margin:0 2px;display:inline-block;box-shadow:0 2px 0 #cbd5e1}
+.inline-opt:hover{border-color:var(--teal);transform:translateY(-1px)}
+.inline-sep{color:var(--ink-soft);font-weight:400;margin:0 2px}
+.inline-opt.ok{background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;border-color:var(--green);box-shadow:0 2px 0 var(--green-dark)}
+.inline-opt.no{background:linear-gradient(135deg,#fca5a5,var(--red));color:#fff;border-color:var(--red);text-decoration:line-through}
+.inline-opt.rev{border-color:var(--green);color:var(--green-dark);background:#d1fae5}
+.qfb{margin-top:10px;font-family:'Tajawal',sans-serif;font-size:.85rem;font-weight:700;direction:rtl;text-align:right;display:none}
+.qfb.show{display:block}.qfb.y{color:var(--green-dark)}.qfb.n{color:var(--red)}
+.qz{max-width:650px;margin:0 auto}
+.qzq{background:linear-gradient(135deg,#fff,#f8fafc);border:2.5px solid #e2e8f0;border-radius:20px;padding:20px 22px;box-shadow:0 4px 0 rgba(0,0,0,.05),0 8px 22px rgba(0,0,0,.1);display:none}
+.qzq.active{display:block;animation:slideUp .3s ease}
+.qzt{font-size:clamp(.88rem,2vw,1.08rem);font-weight:600;margin-bottom:16px;line-height:1.4}
+.qzo{display:flex;flex-direction:column;gap:9px}
+.qzopt{padding:11px 18px;border:2.5px solid #cbd5e1;border-radius:12px;font-family:'Fredoka',sans-serif;font-size:clamp(.8rem,1.7vw,.94rem);font-weight:500;cursor:pointer;background:#fff;transition:all .2s;text-align:left;box-shadow:0 3px 0 #e2e8f0}
+.qzopt:hover{transform:translateX(4px);border-color:var(--teal)}
+.qzopt.ok{background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;border-color:var(--green)}
+.qzopt.no{background:linear-gradient(135deg,#fca5a5,var(--red));color:#fff;border-color:var(--red)}
+.qznav{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.qzprog{font-size:.82rem;font-weight:600;color:var(--ink-soft)}
+.qzbtn{background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;border:none;border-radius:30px;padding:9px 26px;font-family:'Fredoka',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;box-shadow:0 4px 0 var(--blue-deep);transition:all .2s}
+.qzbtn:hover{transform:translateY(-2px)}.qzbtn:disabled{opacity:.4;cursor:not-allowed}
+.result{background:linear-gradient(135deg,#fff,#f0fdfa);border:3px solid var(--teal);border-radius:24px;padding:34px;text-align:center;display:none;box-shadow:0 5px 0 rgba(0,0,0,.06),0 14px 36px rgba(0,0,0,.14)}
+.result.show{display:block;animation:slideUp .5s ease}
+.result .em{font-size:3.4rem;animation:pop .6s .1s both;display:block;margin-bottom:6px}
+.result .sc{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:700;color:var(--blue)}
+.result .ms{font-family:'Tajawal',sans-serif;font-size:clamp(1rem,2.4vw,1.25rem);font-weight:800;margin:10px 0 22px;direction:rtl;color:var(--ink)}
+.btn-retry{background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;border:none;border-radius:40px;padding:13px 34px;font-family:'Fredoka',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 5px 0 var(--blue-deep)}
+.btn-retry:hover{transform:translateY(-2px)}
+.confetti{position:fixed;width:10px;height:14px;top:-20px;z-index:200;pointer-events:none;border-radius:2px}
+.credit{text-align:center;padding:12px;font-size:.72rem;color:#94a3b8;font-family:'Tajawal',sans-serif;font-weight:700;border-top:1px solid #e2e8f0;margin-top:22px}
+@media(max-width:500px){.dline{grid-template-columns:auto 1fr}.dline2{grid-template-columns:auto 1fr}.dline2 .tts-btn{grid-row:span 2}.spk{font-size:.58rem}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="h-deco d1">🏅</span>
+  <span class="h-deco d2">⚡</span>
+  <span class="h-deco d3">🌟</span>
+  <div class="h-inner">
+    <div class="h-title">
+      <span class="h-mascot">🏃‍♂️</span>
+      <div>
+        <h1>Sports Day Adventure!</h1>
+        <span class="tag">English for Palestine · Grade 7 · Unit 1 — T. Wad Refae</span>
+      </div>
+    </div>
+    <div class="xp">
+      <span class="xp-label">⭐ نجومك:</span>
+      <div class="xp-stars">
+        <span class="xp-star" id="st1">⭐</span>
+        <span class="xp-star" id="st2">⭐</span>
+        <span class="xp-star" id="st3">⭐</span>
+        <span class="xp-star" id="st4">⭐</span>
+        <span class="xp-star" id="st5">⭐</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="prog-wrap"><div class="prog-bar" id="progBar"></div></div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('obj',this)">🎯 الأهداف</button>
+  <button class="tab" onclick="showTab('a1',this)">🎧 Activity 1</button>
+  <button class="tab" onclick="showTab('a2',this)">🔊 Activity 2</button>
+  <button class="tab" onclick="showTab('a4',this)">✅ Activity 4</button>
+  <button class="tab" onclick="showTab('qz',this)">🏆 Quiz</button>
+</div>
+
+<div id="obj" class="panel active">
+  <div class="card">
+    <div class="obj-intro">
+      <div class="big">🏁 أهلاً بك في درس اليوم!</div>
+      <p>في هذا الدرس سنرافق <b>Ben</b> و<b>Omar</b> في مدرستهما الجديدة 🏫<br>
+      تخيّل أنك في سباق! كل هدف تكمله = خطوة نحو خط النهاية 🏃💨</p>
+    </div>
+    <div class="obj-track">
+      <div class="obj-item"><div class="obj-step">1</div><div class="obj-txt">سأتعرّف على الكلمات الجديدة وأسمعها بوضوح<span class="en">Listen and recognize new words</span></div></div>
+      <div class="obj-item"><div class="obj-step">2</div><div class="obj-txt">سأقرأ الحوار بصوت واضح وأكرّره<span class="en">Read the dialogue aloud and repeat</span></div></div>
+      <div class="obj-item"><div class="obj-step">3</div><div class="obj-txt">سأختار الكلمة الصحيحة لإكمال الجُمَل<span class="en">Choose the correct word in sentences</span></div></div>
+      <div class="obj-item"><div class="obj-step">4</div><div class="obj-txt">سأتحدّث عن أفراد العائلة والأشياء التي نحبها<span class="en">Talk about family and things we like</span></div></div>
+      <div class="obj-item"><div class="obj-step">5</div><div class="obj-txt">سأختبر فهمي للدرس في النهاية 🏆<span class="en">Test my understanding in the quiz</span></div></div>
+    </div>
+    <div class="finish-banner">🎉 أكمِل كل الأنشطة لتصل إلى خط النهاية وتفوز بالنجوم! ⭐⭐⭐⭐⭐</div>
+  </div>
+  <div class="credit">T. Wad Refae — English for Palestine, Grade 7</div>
+</div>
+
+<div id="a1" class="panel">
+  <div class="card">
+    <div class="sec">
+      <div class="sec-badge">1</div>
+      <div><h2>Listen and circle the words you hear</h2>
+        <span class="sub">استمع للتسجيل، ثم ضع دائرة على الكلمات الملوّنة التي سمعتها داخل النص</span></div>
+    </div>
+    <img class="scene-img" src="https://i.ibb.co/tTKKrk9v/1780762287886.png" alt="Classroom scene" onerror="this.style.display='none'"/>
+    <div class="audio">
+      <span class="lbl">🎵 Audio 1</span>
+      <iframe src="https://drive.google.com/file/d/12-WFmKv8U-hRRDbY8qgU7Xp9cEqPHtsG/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="note">👂 اضغط ▶ واستمع، ثم انقر على الكلمات الملوّنة داخل المحادثة لتضع دائرة حولها — بعدها اضغط «تحقق»!</div>
+    <div class="dbox" id="dbox1"></div>
+    <button class="btn-main" id="chk1" onclick="checkA1()">✔ تحقق من إجابتي</button>
+    <div class="fb" id="fb1"></div>
+  </div>
+  <div class="credit">T. Wad Refae — English for Palestine, Grade 7</div>
+</div>
+
+<div id="a2" class="panel">
+  <div class="card">
+    <div class="sec">
+      <div class="sec-badge">2</div>
+      <div><h2>Listen and repeat the passage</h2>
+        <span class="sub">اضغط 🔊 بجانب كل متحدّث لتسمع جملته وتكرّرها براحتك</span></div>
+    </div>
+    <div class="audio">
+      <span class="lbl">🎵 Audio 2</span>
+      <iframe src="https://drive.google.com/file/d/120sO-OR7tCVKN14t5BbkQBOUkbzaF5ip/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="note">🔊 استمع للتسجيل الكامل أولاً، ثم اضغط زر السماعة 🔊 بجانب أي دور لتسمعه بمفرده وتكرّره براحتك.</div>
+    <div class="dbox dbox2" id="dbox2"></div>
+  </div>
+  <div class="credit">T. Wad Refae — English for Palestine, Grade 7</div>
+</div>
+
+<div id="a4" class="panel">
+  <div class="card">
+    <div class="sec">
+      <div class="sec-badge">4</div>
+      <div><h2>Read and circle the correct word</h2>
+        <span class="sub">اقرأ الجملة واختر الكلمة الصحيحة من داخلها — تغذية راجعة فورية!</span></div>
+    </div>
+    <div class="qlist" id="a4list"></div>
+  </div>
+  <div class="credit">T. Wad Refae — English for Palestine, Grade 7</div>
+</div>
+
+<div id="qz" class="panel">
+  <div class="card">
+    <div class="sec">
+      <div class="sec-badge" style="background:linear-gradient(135deg,var(--sun),var(--pink))">🏆</div>
+      <div><h2>Final Quiz — خط النهاية!</h2>
+        <span class="sub">اختبر فهمك للدرس — لكل إجابة صحيحة نجمة!</span></div>
+    </div>
+    <div class="qz">
+      <div id="qzQs"></div>
+      <div class="result" id="result">
+        <span class="em" id="rEm">🏅</span>
+        <div class="sc" id="rSc"></div>
+        <div class="ms" id="rMs"></div>
+        <button class="btn-retry" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+      </div>
+    </div>
+  </div>
+  <div class="credit">T. Wad Refae — English for Palestine, Grade 7</div>
+</div>
+
+<script>
+let stars=0;
+function addStar(){ if(stars>=5)return; stars++; const s=document.getElementById('st'+stars); if(s)s.classList.add('on'); }
+function setProgress(p){ document.getElementById('progBar').style.width=p+'%'; }
+
+const TTS_OK = ('speechSynthesis' in window);
+let voices=[];
+function loadVoices(){ if(TTS_OK) voices = window.speechSynthesis.getVoices() || []; }
+if(TTS_OK){ loadVoices(); window.speechSynthesis.onvoiceschanged=loadVoices; }
+function pickVoice(gender){
+  if(!voices.length) loadVoices();
+  const en=voices.filter(v=>/en[-_]/i.test(v.lang)||/english/i.test(v.name));
+  const pool=en.length?en:voices;
+  if(!pool.length) return null;
+  const femaleHints=/female|woman|samantha|victoria|karen|moira|tessa|zira|susan|fiona|amelie|girl|google uk english female/i;
+  const maleHints=/male|man|daniel|alex|fred|david|mark|george|james|boy|rishi|google uk english male/i;
+  let v=pool.find(x=> gender==='f'?femaleHints.test(x.name):maleHints.test(x.name));
+  return v || pool[0] || null;
+}
+function doSpeak(text,gender,btn){
+  try{
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    const v=pickVoice(gender);
+    if(v) u.voice=v;
+    u.lang = v? v.lang : 'en-US';
+    u.rate=0.9; u.pitch = gender==='f'?1.25:0.85;
+    if(btn){ btn.classList.add('speaking'); u.onend=()=>btn.classList.remove('speaking'); u.onerror=()=>btn.classList.remove('speaking'); }
+    window.speechSynthesis.speak(u);
+  }catch(e){ if(btn)btn.classList.remove('speaking'); }
+}
+function speak(text,gender,btn){
+  if(!TTS_OK){ if(btn){btn.textContent='🔇';setTimeout(()=>btn.textContent='🔊',1200);} return; }
+  // If voices not ready yet, load then speak after a short delay
+  if(!voices.length){
+    loadVoices();
+    if(!voices.length){
+      setTimeout(function(){ loadVoices(); doSpeak(text,gender,btn); }, 250);
+      return;
+    }
+  }
+  doSpeak(text,gender,btn);
+}
+
+const SPK={
+  n:{name:'Narrator',cls:'sp-n',emoji:'📖',gender:'f'},
+  t:{name:'Teacher',cls:'sp-t',emoji:'👩‍🏫',gender:'f'},
+  o:{name:'Omar',cls:'sp-o',emoji:'👦',gender:'m'},
+  b:{name:'Ben',cls:'sp-b',emoji:'🧑',gender:'m'},
+  r:{name:'Rania',cls:'sp-r',emoji:'👧',gender:'f'},
+};
+const dialogue=[
+  ['n',"Ben is in the classroom in his new school in Palestine. He sits next to Omar. Omar's twin sister Rania sits behind him."],
+  ['t',"Good morning. Today we have a new pupil in our class. Welcome him to our class, Omar."],
+  ['o',"Hi, I'm Omar. This is my sister Rania. We're twins. We're 11 years old. What's your name?"],
+  ['n',"Ben shows Omar a picture of his family. Omar looks at his parents and his sister."],
+  ['b',"Hi, I'm Ben. These are my parents and this is my sister Amy. I like drawing pictures."],
+  ['o',"Welcome to Palestine! I like drawing pictures too! I'm good at art. Where are you from?"],
+  ['n',"Omar looks at a picture of Ben's dad. He's in a walking race. His mum helps his dad. She has a bottle of water in her hand."],
+  ['b',"I'm from Britain. I'm British. My dad's an engineer. He works in Ramallah. He likes walking races. My mum helps him."],
+  ['o',"What do you like doing Ben?"],
+  ['n',"Rania, Ben and Omar talk about what they like doing. Rania likes looking at cats on the internet. Omar and Ben both like watching films at the cinema. Ben likes writing emails."],
+  ['b',"I like writing emails. I like watching films at the cinema. What do you like doing Rania?"],
+  ['r',"I like looking at cats on the internet."],
+  ['o',"I like watching films at the cinema, too."],
+];
+
+const KEYWORDS=['Rania','Omar','Amy','Ben','class','parents','parent','twins','twin','race','works','work','art','email','emails','film','films','cinema','internet'];
+function makeClickable(text){
+  return text.replace(/\b([A-Za-z']+)\b/g,(m)=>{
+    const base=m.replace(/'s$/,'');
+    if(KEYWORDS.includes(m)||KEYWORDS.includes(base)){
+      return '<span class="kw" onclick="toggleKw(this)">'+m+'</span>';
+    }
+    return m;
+  });
+}
+function toggleKw(el){ el.classList.toggle('circled'); }
+
+function renderA1(){
+  const box=document.getElementById('dbox1');
+  box.innerHTML=dialogue.map(function(d){
+    const s=SPK[d[0]];
+    return '<div class="dline"><span class="spk '+s.cls+'">'+s.emoji+' '+s.name+'</span><span class="dtxt">'+makeClickable(d[1])+'</span></div>';
+  }).join('');
+}
+renderA1();
+
+function checkA1(){
+  const kws=document.querySelectorAll('#dbox1 .kw');
+  let circled=0;
+  kws.forEach(function(k){ if(k.classList.contains('circled')) circled++; });
+  const fb=document.getElementById('fb1');fb.classList.add('show');
+  if(circled>=10){
+    fb.className='fb show good';
+    fb.textContent='🎉 رائع! وضعت دائرة على '+circled+' كلمة. هذه هي الكلمات المفتاحية في التسجيل — أحسنت! نجمة لك ⭐';
+  } else {
+    fb.className='fb show bad';
+    fb.textContent='✏️ أحسنت المحاولة! وضعت دائرة على '+circled+' كلمة فقط. حاول الاستماع مرة أخرى والتقاط المزيد من الكلمات الملوّنة!';
+  }
+  addStar();setProgress(20);
+  document.getElementById('chk1').disabled=true;
+}
+
+function renderA2(){
+  const box=document.getElementById('dbox2');
+  box.innerHTML=dialogue.map(function(d,idx){
+    const s=SPK[d[0]];
+    return '<div class="dline2"><button class="tts-btn" onclick="speakLine('+idx+',this)" title="استمع للدور">🔊</button><span class="spk '+s.cls+'">'+s.emoji+' '+s.name+'</span><span class="dtxt">'+d[1]+'</span></div>';
+  }).join('');
+}
+renderA2();
+
+function speakLine(idx,btn){
+  const d=dialogue[idx];
+  const s=SPK[d[0]];
+  speak(d[1], s.gender, btn);
+}
+
+const a4=[
+  {pre:'My parents are my ',o:['brother and sister','mum and dad'],a:1,post:'.'},
+  {pre:'Omar and his sister are ',o:['twins','cousins'],a:0,post:'. They are both eleven years old.'},
+  {pre:'You need a ',o:['computer','pencil'],a:0,post:' to write an email.'},
+  {pre:'You can watch a film at the ',o:['greengrocers','cinema'],a:1,post:'.'},
+  {pre:'You can read an email on the ',o:['internet','TV'],a:0,post:'.'},
+  {pre:'I can ',o:['swim','walk'],a:1,post:' up a mountain.'},
+];
+let a4done=0;
+const a4list=document.getElementById('a4list');
+a4.forEach(function(q,i){
+  const it=document.createElement('div');it.className='qit';
+  let opts='';
+  q.o.forEach(function(o,j){
+    opts+='<span class="inline-opt" onclick="pickInline(this,'+i+','+j+')">'+o+'</span>';
+    if(j<q.o.length-1) opts+='<span class="inline-sep">/</span>';
+  });
+  it.innerHTML='<div class="qsent"><span class="qnum">'+(i+1)+'</span>'+q.pre+opts+q.post+'</div><div class="qfb" id="f'+i+'"></div>';
+  a4list.appendChild(it);
+});
+function pickInline(el,i,j){
+  const it=el.closest('.qit');
+  if(it.dataset.d)return; it.dataset.d=1;
+  const fb=document.getElementById('f'+i);
+  const opts=it.querySelectorAll('.inline-opt');
+  if(j===a4[i].a){ el.classList.add('ok'); fb.textContent='✅ صحيح! أحسنت!'; fb.className='qfb show y'; }
+  else{ el.classList.add('no'); opts[a4[i].a].classList.add('rev'); fb.textContent='❌ خطأ — الإجابة الصحيحة مظللة بالأخضر.'; fb.className='qfb show n'; }
+  a4done++; if(a4done===a4.length){ addStar(); setProgress(60); }
+}
+
+const quiz=[
+  {q:"Where is Ben's new school?",o:["Britain","Palestine","Egypt","Jordan"],a:1},
+  {q:"Who is Omar's twin sister?",o:["Amy","Rania","Sara","Layla"],a:1},
+  {q:"How old are Omar and Rania?",o:["10","12","11","13"],a:2},
+  {q:"What is Ben's dad's job?",o:["doctor","engineer","teacher","driver"],a:1},
+  {q:"Where does Ben's dad work?",o:["Gaza","Jerusalem","Ramallah","Nablus"],a:2},
+  {q:"What does Ben like doing?",o:["cooking","writing emails","swimming","running"],a:1},
+  {q:"What does Rania like looking at?",o:["films","emails","cats on the internet","books"],a:2},
+  {q:"What do Omar AND Ben both like?",o:["art","emails","watching films at the cinema","sport"],a:2},
+  {q:"What does Ben's mum hold in the race?",o:["a flag","a bottle of water","a camera","a bag"],a:1},
+  {q:"Ben is good at drawing. Omar is good at ___.",o:["sport","music","art","science"],a:2},
+];
+let score=0,ans=[];
+const qzQs=document.getElementById('qzQs');
+function buildQuiz(){
+  qzQs.innerHTML='';
+  quiz.forEach(function(q,i){
+    const d=document.createElement('div');d.className='qzq'+(i===0?' active':'');d.id='qq'+i;
+    d.innerHTML='<div class="qzt">'+(i+1)+'. '+q.q+'</div><div class="qzo" id="qo'+i+'"></div><div class="qznav"><span class="qzprog">سؤال '+(i+1)+' / '+quiz.length+'</span><button class="qzbtn" id="qn'+i+'" disabled onclick="nextQ('+i+')">'+(i<quiz.length-1?'التالي ▶':'النتيجة 🏅')+'</button></div>';
+    qzQs.appendChild(d);
+    q.o.forEach(function(o,j){const b=document.createElement('button');b.className='qzopt';b.textContent=o;b.onclick=function(){selQ(i,j,b,d);};d.querySelector('#qo'+i).appendChild(b);});
+  });
+}
+function selQ(i,j,btn,d){
+  if(ans[i]!==undefined)return;ans[i]=j;
+  d.querySelectorAll('.qzopt').forEach(function(b){b.style.pointerEvents='none';});
+  if(j===quiz[i].a){btn.classList.add('ok');score++;}
+  else{btn.classList.add('no');d.querySelectorAll('.qzopt')[quiz[i].a].classList.add('ok');}
+  document.getElementById('qn'+i).disabled=false;
+}
+function nextQ(i){
+  document.getElementById('qq'+i).classList.remove('active');
+  if(i<quiz.length-1)document.getElementById('qq'+(i+1)).classList.add('active');
+  else showResult();
+}
+function showResult(){
+  qzQs.style.display='none';document.getElementById('result').classList.add('show');
+  const pct=score/quiz.length;
+  document.getElementById('rSc').textContent=score+' / '+quiz.length;
+  let em='📚',ms='حاول مرة أخرى — أنت قادر على النجاح! 💪';
+  if(pct===1){em='🏆';ms='ممتاز جداً! أنت بطل الفصل! 🌟';}
+  else if(pct>=.8){em='🌟';ms='أحسنت! نتيجة رائعة! 👏';}
+  else if(pct>=.6){em='💪';ms='جيد جداً! خطوة أخرى للكمال!';}
+  document.getElementById('rEm').textContent=em;document.getElementById('rMs').textContent=ms;
+  addStar();setProgress(100);
+  if(pct>=.6)fireConfetti();
+}
+function resetQuiz(){score=0;ans=[];qzQs.style.display='block';document.getElementById('result').classList.remove('show');buildQuiz();}
+buildQuiz();
+
+function fireConfetti(){
+  const cols=['#ffd23f','#ff6b9d','#2ec4b6','#2563eb','#34d399'];
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');c.className='confetti';
+    c.style.left=Math.random()*100+'vw';c.style.background=cols[Math.floor(Math.random()*cols.length)];
+    c.style.transform='rotate('+Math.random()*360+'deg)';
+    const dur=2+Math.random()*2;
+    c.animate([{transform:'translateY(0) rotate(0)',opacity:1},{transform:'translateY(100vh) rotate('+(Math.random()*720)+'deg)',opacity:0}],{duration:dur*1000,easing:'ease-in'});
+    document.body.appendChild(c);setTimeout(function(){c.remove();},dur*1000);
+  }
+}
+
+function showTab(id,btn){
+  if(TTS_OK) window.speechSynthesis.cancel();
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});
+  document.getElementById(id).classList.add('active');btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
