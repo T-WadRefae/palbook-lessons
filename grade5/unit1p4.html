@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Period 4 | A Day in Our Lives</title>
+<style>
+:root{
+  --blue:#3b82f6; --blue-d:#2563eb; --purple:#8b5cf6; --purple-d:#7c3aed;
+  --turq:#06b6d4; --turq-d:#0891b2; --yellow:#fbbf24; --yellow-d:#f59e0b;
+  --ink:#2a2d43; --paper:#ffffff; --soft:#f1f5fd;
+  --ok:#16a34a; --bad:#dc2626;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:clamp(18px,2.2vw,28px)}
+body{
+  font-family:'Segoe UI','Tahoma',sans-serif; color:var(--ink); line-height:1.55; overflow-x:hidden;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(139,92,246,.10), transparent 40%),
+    radial-gradient(circle at 82% 78%, rgba(6,182,212,.10), transparent 42%),
+    radial-gradient(circle at 1px 1px, rgba(59,130,246,.12) 1px, transparent 0) 0 0/26px 26px,
+    linear-gradient(180deg,#eef3ff,#f7faff);
+}
+/* floating school decorations */
+.deco{position:fixed;inset:0;pointer-events:none;z-index:0}
+.deco span{position:absolute;font-size:1.9rem;opacity:.18;filter:drop-shadow(0 4px 6px rgba(0,0,0,.15));animation:bob 6s ease-in-out infinite}
+.deco span:nth-child(2n){animation-duration:7.5s}
+.deco span:nth-child(3n){animation-duration:5s}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-14px) rotate(8deg)}}
+.wrap{position:relative;z-index:1;max-width:1050px;margin:0 auto;padding:1rem .8rem 3rem}
+
+/* HEADER */
+header{position:relative;color:#fff;border-radius:30px;padding:1.6rem 1.4rem;overflow:hidden;text-align:center;
+  background:linear-gradient(135deg,var(--blue) 0%,var(--purple) 55%,var(--turq) 100%);
+  box-shadow:0 22px 45px rgba(91,79,210,.40), inset 0 2px 6px rgba(255,255,255,.35)}
+header::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.22),transparent 45%);pointer-events:none}
+header .float{position:absolute;font-size:1.9rem;opacity:.32;animation:bob 5s ease-in-out infinite}
+.f1{top:14%;left:6%}.f2{top:62%;left:13%;animation-delay:1s}.f3{top:20%;right:8%;animation-delay:.6s}
+.f4{top:64%;right:12%;animation-delay:1.6s}.f5{top:40%;right:43%;animation-delay:2.1s}
+header .unit{position:relative;display:inline-block;background:var(--yellow);color:#5b3d00;font-weight:900;padding:.2rem 1rem;border-radius:999px;font-size:.7rem;letter-spacing:1px;box-shadow:0 5px 12px rgba(245,158,11,.5)}
+header h1{position:relative;font-size:2rem;margin:.55rem 0 .15rem;font-weight:900;text-shadow:0 3px 8px rgba(0,0,0,.28)}
+header .ar{position:relative;font-size:1rem;font-weight:800;color:#fff7d6}
+header .teacher{position:relative;margin-top:.55rem;font-size:.72rem;font-weight:800;background:rgba(255,255,255,.22);display:inline-block;padding:.22rem .85rem;border-radius:999px;backdrop-filter:blur(2px)}
+
+/* TABS (left to right) */
+nav{direction:ltr;display:flex;flex-wrap:wrap;gap:.55rem;justify-content:center;margin:1.3rem 0}
+.tab-btn{font-family:inherit;font-size:.8rem;font-weight:800;cursor:pointer;border:none;color:var(--blue-d);
+  background:linear-gradient(180deg,#fff,#eef3ff);padding:.6rem 1.1rem;border-radius:16px;transition:.18s;
+  display:flex;align-items:center;gap:.4rem;box-shadow:0 6px 14px rgba(91,79,210,.18), inset 0 -3px 5px rgba(60,80,180,.12), inset 0 2px 3px #fff}
+.tab-btn:hover{transform:translateY(-2px)}
+.tab-btn.active{color:#fff;background:linear-gradient(180deg,var(--purple),var(--purple-d));box-shadow:0 10px 20px rgba(124,58,237,.45), inset 0 2px 4px rgba(255,255,255,.4)}
+
+/* PANELS / CARDS */
+.panel{display:none;animation:fade .35s ease}
+.panel.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border-radius:28px;padding:1.5rem 1.3rem;margin-bottom:1rem;border:2px solid #fff;
+  box-shadow:0 20px 44px rgba(60,80,180,.15), 0 4px 12px rgba(60,80,180,.08)}
+
+/* glossy 3D badge */
+.badge{flex:0 0 auto;width:2.5rem;height:2.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:1.05rem;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);
+  box-shadow:0 7px 15px rgba(0,0,0,.22), inset 0 -3px 6px rgba(0,0,0,.22), inset 0 3px 5px rgba(255,255,255,.6)}
+.b-blue{background:radial-gradient(circle at 32% 28%,#dbeafe,var(--blue) 45%,var(--blue-d))}
+.b-purple{background:radial-gradient(circle at 32% 28%,#ede9fe,var(--purple) 45%,var(--purple-d))}
+.b-turq{background:radial-gradient(circle at 32% 28%,#cffafe,var(--turq) 45%,var(--turq-d))}
+.b-yellow{background:radial-gradient(circle at 32% 28%,#fff7d6,var(--yellow) 45%,var(--yellow-d));color:#5b3d00;text-shadow:none}
+
+h2{font-size:1.25rem;font-weight:900;margin-bottom:.2rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+h2 .ttl{display:flex;flex-direction:column}
+h2 .en{font-size:.78rem;color:var(--turq-d);font-weight:800;direction:ltr}
+.sub{font-size:.8rem;color:#717693;margin-bottom:1rem}
+
+/* OBJECTIVES */
+.obj{list-style:none;display:grid;gap:.7rem}
+.obj li{background:var(--soft);border-right:7px solid var(--yellow);border-radius:16px;padding:.75rem .95rem;font-size:.92rem;font-weight:700;box-shadow:0 4px 10px rgba(60,80,180,.07)}
+.obj li b{color:var(--purple-d)}
+.obj li span{display:block;font-size:.78rem;color:#646a86;font-weight:600;direction:ltr;text-align:left;margin-top:.2rem}
+
+/* WORD BANK + DRAG */
+.bank{display:flex;flex-wrap:wrap;gap:.55rem;justify-content:center;background:linear-gradient(180deg,#f0f5ff,#e7eeff);
+  border:2px dashed var(--blue);border-radius:18px;padding:1rem;margin-bottom:1.1rem;min-height:3rem}
+.chip{background:linear-gradient(180deg,#fff,#eef3ff);border:2px solid var(--blue);color:var(--blue-d);border-radius:999px;
+  padding:.32rem .95rem;font-weight:800;font-size:.82rem;direction:ltr;cursor:grab;touch-action:none;user-select:none;
+  box-shadow:0 5px 11px rgba(59,130,246,.28), inset 0 2px 3px #fff}
+.chip:active{cursor:grabbing}
+.chip.dragging{opacity:.35}
+.ghost{position:fixed;z-index:9999;pointer-events:none;background:linear-gradient(180deg,var(--purple),var(--purple-d));color:#fff;
+  border-radius:999px;padding:.32rem .95rem;font-weight:800;font-size:.82rem;direction:ltr;box-shadow:0 10px 22px rgba(0,0,0,.32)}
+
+/* ACTIVITY 1 CARDS */
+.q{display:flex;gap:1rem;align-items:flex-start;background:var(--soft);border-radius:20px;padding:1rem;margin-bottom:.9rem;
+  flex-wrap:wrap;box-shadow:0 6px 16px rgba(60,80,180,.08)}
+.q img{width:150px;height:150px;object-fit:cover;border-radius:16px;border:4px solid #fff;background:#fff;flex:0 0 auto;
+  box-shadow:0 8px 18px rgba(60,80,180,.22)}
+.q .body{flex:1;min-width:230px}
+.q .num{display:inline-flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;border-radius:50%;
+  color:#fff;font-weight:900;margin-bottom:.45rem;background:radial-gradient(circle at 32% 28%,#cffafe,var(--turq) 45%,var(--turq-d));
+  box-shadow:0 5px 11px rgba(8,145,178,.4), inset 0 -2px 4px rgba(0,0,0,.2), inset 0 2px 3px rgba(255,255,255,.6)}
+.q p{direction:ltr;text-align:left;font-size:.92rem;font-weight:600;color:#2a2d43;line-height:1.95}
+.drop{display:inline-block;min-width:92px;text-align:center;border-bottom:3px dashed var(--purple);background:#fff;
+  border-radius:9px 9px 0 0;padding:.1rem .45rem;font-weight:800;color:#b9bfd6;margin:0 .15rem;cursor:pointer}
+.drop.filled{color:var(--purple-d);border-bottom-style:solid}
+.drop.over{background:var(--yellow);color:#5b3d00}
+.drop.good{background:#e7f8ee;border-color:var(--ok);color:var(--ok)}
+.drop.bad{background:#fdeaea;border-color:var(--bad);color:var(--bad)}
+.row-tools{display:flex;gap:.5rem;margin-top:.6rem;flex-wrap:wrap}
+.mini{font-family:inherit;font-size:.72rem;font-weight:800;cursor:pointer;border-radius:12px;padding:.38rem .8rem;border:none;
+  box-shadow:0 4px 9px rgba(60,80,180,.2), inset 0 2px 3px rgba(255,255,255,.5)}
+.mini.say{background:linear-gradient(180deg,#cffafe,#a5f3fc);color:var(--turq-d)}
+.mini.ans{background:linear-gradient(180deg,#fef3c7,#fde68a);color:var(--yellow-d)}
+.mini:hover{transform:translateY(-2px)}
+.model{display:none;direction:ltr;text-align:left;background:#e7f8ee;border-right:6px solid var(--ok);border-radius:10px;padding:.45rem .65rem;margin-top:.5rem;font-size:.82rem;font-weight:800;color:var(--ok)}
+.model.show{display:block}
+.tools-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+
+/* ACTIVITY 2 */
+.say-line{display:flex;align-items:center;gap:.7rem;background:var(--soft);border-radius:16px;padding:.7rem .9rem;margin-bottom:.6rem;box-shadow:0 5px 12px rgba(60,80,180,.08)}
+.say-line .n{flex:0 0 auto;width:1.8rem;height:1.8rem;border-radius:50%;color:#fff;font-weight:900;font-size:.8rem;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 32% 28%,#dbeafe,var(--blue) 45%,var(--blue-d));box-shadow:0 4px 9px rgba(37,99,235,.4),inset 0 2px 3px rgba(255,255,255,.6)}
+.say-line p{flex:1;direction:ltr;text-align:left;font-size:.9rem;font-weight:700}
+.say-line button{flex:0 0 auto;border:none;color:var(--turq-d);background:linear-gradient(180deg,#cffafe,#a5f3fc);border-radius:50%;width:2.4rem;height:2.4rem;font-size:1.1rem;cursor:pointer;box-shadow:0 4px 9px rgba(8,145,178,.3)}
+.say-line button:hover{transform:translateY(-2px)}
+.tip{background:linear-gradient(180deg,#fff7d6,#fef3c7);border:2px solid var(--yellow);border-radius:16px;padding:.85rem 1rem;font-size:.85rem;font-weight:700;box-shadow:0 6px 14px rgba(245,158,11,.18)}
+.tip b{color:var(--purple-d)}
+
+/* GRAMMAR BOX */
+.rule{background:linear-gradient(180deg,#f3f0ff,#fff);border:2px solid var(--purple);border-radius:18px;padding:1rem 1.1rem;margin-bottom:1.1rem;box-shadow:0 8px 18px rgba(124,58,237,.14)}
+.rule h3{color:var(--purple-d);font-size:1rem;font-weight:900;margin-bottom:.6rem}
+.rule h3 .en{display:block;font-size:.74rem;color:var(--turq-d);direction:ltr}
+.rule .g{background:#fff;border-radius:12px;padding:.55rem .7rem;margin-bottom:.5rem;font-size:.86rem;font-weight:700;border-right:5px solid var(--blue);box-shadow:0 3px 8px rgba(60,80,180,.07)}
+.rule .g code{direction:ltr;display:inline-block;background:linear-gradient(180deg,#fff7d6,var(--yellow));color:#5b3d00;border-radius:7px;padding:.05rem .42rem;font-weight:800;margin:0 .1rem;font-family:inherit;box-shadow:0 2px 4px rgba(245,158,11,.3)}
+.rule .g b{color:var(--blue-d)}
+
+/* PROFILE + OPTIONS (shared by Activity 3 & Quiz) */
+.profile{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin-bottom:1rem}
+.profile span{color:#fff;border-radius:12px;padding:.32rem .75rem;font-weight:800;font-size:.78rem;direction:ltr;
+  background:linear-gradient(180deg,var(--blue),var(--blue-d));box-shadow:0 5px 11px rgba(37,99,235,.3)}
+.profile span b{color:var(--yellow)}
+.qz{background:var(--soft);border-radius:18px;padding:.95rem 1rem;margin-bottom:.8rem;box-shadow:0 6px 14px rgba(60,80,180,.08)}
+.qz .qt{direction:ltr;text-align:left;font-size:.95rem;font-weight:800;margin-bottom:.6rem}
+.opts{display:flex;gap:.6rem;flex-wrap:wrap}
+.opt{direction:ltr;font-family:inherit;font-size:.85rem;font-weight:800;cursor:pointer;border:none;color:var(--blue-d);
+  background:linear-gradient(180deg,#fff,#eef3ff);border-radius:14px;padding:.5rem 1.2rem;transition:.15s;
+  box-shadow:0 5px 12px rgba(91,79,210,.18), inset 0 2px 3px #fff}
+.opt:hover{transform:translateY(-2px)}
+.opt.picked{background:linear-gradient(180deg,var(--yellow),var(--yellow-d));color:#5b3d00}
+.opt.correct{background:linear-gradient(180deg,#bbf7d0,#86efac);color:var(--ok)}
+.opt.incorrect{background:linear-gradient(180deg,#fecaca,#fca5a5);color:var(--bad)}
+.big-btn{display:block;margin:.7rem auto 0;font-family:inherit;font-size:1rem;font-weight:900;cursor:pointer;color:#fff;border:none;
+  padding:.72rem 2rem;border-radius:18px;background:linear-gradient(180deg,var(--purple),var(--purple-d));
+  box-shadow:0 12px 24px rgba(124,58,237,.42), inset 0 2px 4px rgba(255,255,255,.35)}
+.big-btn:hover{transform:translateY(-2px)}
+.big-btn.alt{background:linear-gradient(180deg,#fff,#eef3ff);color:var(--blue-d);font-size:.8rem;padding:.55rem 1.3rem;
+  box-shadow:0 6px 14px rgba(91,79,210,.2), inset 0 2px 3px #fff}
+#score{text-align:center;font-size:1.4rem;font-weight:900;color:var(--purple-d);margin-top:1rem;display:none}
+#score.show{display:block}
+
+footer{text-align:center;margin-top:1.5rem;font-size:.78rem;font-weight:800;color:var(--purple-d)}
+footer .heart{color:var(--coral,#ff6b6b)}
+.confetti{position:fixed;top:-12px;width:11px;height:11px;z-index:999;pointer-events:none;border-radius:2px}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
+@media(max-width:560px){.q img{width:120px;height:120px}.deco span{font-size:1.4rem}}
+</style>
+</head>
+<body>
+
+<div class="deco" aria-hidden="true">
+  <span style="top:8%;left:3%">✏️</span><span style="top:22%;right:4%">📚</span>
+  <span style="top:40%;left:2%">⭐</span><span style="top:55%;right:3%">💡</span>
+  <span style="top:70%;left:4%">🎓</span><span style="top:85%;right:5%">📐</span>
+  <span style="top:33%;right:2%">🔤</span><span style="top:78%;left:2%">🖍️</span>
+  <span style="top:15%;left:46%">⭐</span><span style="top:92%;left:44%">✏️</span>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <span class="float f1">🏃</span><span class="float f2">🎬</span><span class="float f3">💻</span>
+    <span class="float f4">📚</span><span class="float f5">🏊</span>
+    <span class="unit">UNIT 1 · PERIOD 4</span>
+    <h1>A Day in Our Lives</h1>
+    <div class="ar">يومٌ في حياتنا — الحديث عن العائلة والأنشطة</div>
+    <div class="teacher">✦ T. Wad Refae ✦</div>
+  </header>
+
+  <nav>
+    <button class="tab-btn active" data-t="t0">🎯 Objectives</button>
+    <button class="tab-btn" data-t="t1">✏️ Activity 1</button>
+    <button class="tab-btn" data-t="t2">🗣️ Activity 2</button>
+    <button class="tab-btn" data-t="t3">📖 Activity 3</button>
+    <button class="tab-btn" data-t="t4">🏆 Quiz</button>
+  </nav>
+
+  <!-- TAB 0 -->
+  <section class="panel show" id="t0">
+    <div class="card">
+      <h2><span class="badge b-yellow">🎯</span><span class="ttl">أهداف الدرس<span class="en">Lesson Objectives</span></span></h2>
+      <p class="sub">في نهاية هذه الحصة سيكون الطالب قادراً على:</p>
+      <ul class="obj">
+        <li><b>١.</b> إكمال الجمل بالكلمات الصحيحة عن العائلة والأنشطة اليومية (عبر سحب الكلمات).
+          <span>Complete sentences with the correct words by dragging.</span></li>
+        <li><b>٢.</b> قراءة الجمل بصوتٍ واضح والعمل ضمن أزواج.
+          <span>Read sentences aloud and work in pairs.</span></li>
+        <li><b>٣.</b> اختيار الفعل الصحيح في المضارع البسيط (is / has / does …).
+          <span>Choose the correct present-simple verb.</span></li>
+        <li><b>٤.</b> الحديث عن معلومات شخصية: الاسم، البلد، العمر، والعائلة.
+          <span>Talk about name, country, age and family.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TAB 1 -->
+  <section class="panel" id="t1">
+    <div class="card">
+      <h2><span class="badge b-blue">1</span><span class="ttl">النشاط الأول<span class="en">Look &amp; complete · Drag the words</span></span></h2>
+      <p class="sub">اسحب الكلمة من الصندوق وأفلِتها في الفراغ المناسب. اضغط على أي فراغ ممتلئ لإفراغه.</p>
+      <div class="bank" id="bank"></div>
+      <div id="a1"></div>
+      <div class="tools-row">
+        <button class="big-btn alt" id="checkA1">✔ تحقّق · Check</button>
+        <button class="big-btn alt" id="resetA1">↺ إعادة · Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2 -->
+  <section class="panel" id="t2">
+    <div class="card">
+      <h2><span class="badge b-purple">2</span><span class="ttl">النشاط الثاني<span class="en">Work in pairs · Read aloud</span></span></h2>
+      <p class="sub">اعمل مع زميلك بالتناوب. اقرأ كل جملة بوضوح. اضغط 🔊 لتسمع النطق.</p>
+      <div id="a2"></div>
+      <div class="tip">💡 <b>للأزواج:</b> الطالب «أ» يقرأ الجمل ١·٣·٥ والطالب «ب» يقرأ ٢·٤·٦، ثم تبادلا الأدوار.
+        <br><span style="direction:ltr;display:block;text-align:left;font-size:.78rem;color:#646a86;margin-top:.3rem">Student A reads 1·3·5, Student B reads 2·4·6, then swap.</span></div>
+    </div>
+  </section>
+
+  <!-- TAB 3 -->
+  <section class="panel" id="t3">
+    <div class="card">
+      <h2><span class="badge b-turq">3</span><span class="ttl">النشاط الثالث<span class="en">Read &amp; circle the correct word</span></span></h2>
+
+      <div class="rule">
+        <h3>📘 القاعدة: المضارع البسيط مع الضمير المفرد (he / she / it)
+          <span class="en">Present Simple — 3rd person singular</span></h3>
+        <div class="g">• مع <b>he / she / it</b> (مثل Nadia) نضيف <code>-s</code> إلى الفعل:
+          <code>she comes</code> ، <code>she spells</code>.</div>
+        <div class="g">• فعل الكون <b>to be</b>: <code>I → am</code> · <code>he/she/it → is</code> · <code>you/we/they → are</code>.</div>
+        <div class="g">• فعل التملّك <b>to have</b>: <code>he/she/it → has</code> · الباقي <code>have</code>.</div>
+        <div class="g">• النفي بالمساعد: <b>he/she/it → does not</b> ويأتي بعده الفعل بدون s:
+          <code>she does not have</code>.</div>
+      </div>
+
+      <p class="sub">اقرأ بطاقة «نادية» واختر الكلمة الصحيحة في كل جملة، ثم اضغط «أظهر الإجابات».</p>
+      <div class="profile">
+        <span>👧 <b>Name:</b> Nadia</span><span>📍 <b>Country:</b> Palestine</span>
+        <span>🎂 <b>Age:</b> 11</span><span>👨‍👩‍👧 <b>Family:</b> 5 sisters, no brothers</span>
+      </div>
+      <div id="a3"></div>
+      <button class="big-btn alt" id="showA3">👁 أظهر الإجابات · Show answers</button>
+    </div>
+  </section>
+
+  <!-- TAB 4 -->
+  <section class="panel" id="t4">
+    <div class="card">
+      <h2><span class="badge b-yellow">🏆</span><span class="ttl">الكويز<span class="en">Quiz · 5 points</span></span></h2>
+      <p class="sub">اختبار قصير على المفردات والقاعدة. اختر الإجابة الصحيحة في كل سؤال — ٥ نقاط.</p>
+      <div id="quiz"></div>
+      <button class="big-btn" id="checkQuiz">تحقّق من إجاباتي ✦ Check answers</button>
+      <div id="score"></div>
+    </div>
+  </section>
+
+  <footer>صُمِّم بكل <span class="heart">❤</span> — <b>T. Wad Refae</b></footer>
+</div>
+
+<script>
+function say(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u);}catch(e){}}
+
+/* ===== ACTIVITY 1 (DRAG & DROP) ===== */
+function D(a){return '<span class="drop" data-a="'+a+'" data-val="">_____</span>';}
+var A1=[
+ {img:"https://i.ibb.co/zV045yhn/Chat-GPT-Image-Jun-8-2026-09-44-29-PM.png",
+  html:"You can have walking, swimming or running "+D("races")+".",
+  full:"You can have walking, swimming or running races.",model:"races"},
+ {img:"https://i.ibb.co/DDsv16j5/Chat-GPT-Image-Jun-8-2026-09-48-53-PM.png",
+  html:"You can watch a "+D("film")+" at the "+D("cinema")+".",
+  full:"You can watch a film at the cinema.",model:"film / cinema"},
+ {img:"https://i.ibb.co/5Pc5jYh/Chat-GPT-Image-Jun-8-2026-09-50-13-PM.png",
+  html:"Omar and Rania are "+D("twins")+". They are eleven years old.",
+  full:"Omar and Rania are twins. They are eleven years old.",model:"twins"},
+ {img:"https://i.ibb.co/MkHY9jW2/Chat-GPT-Image-Jun-8-2026-09-53-11-PM.png",
+  html:"These are Ben's mum and dad. They are his "+D("parents")+". Ben's dad is going to "+D("work")+".",
+  full:"These are Ben's parents. Ben's dad is going to work.",model:"parents / work"},
+ {img:"https://i.ibb.co/PVq9FZT/Chat-GPT-Image-Jun-8-2026-09-53-19-PM.png",
+  html:"Rania "+D("helps")+" Ben do his homework. She reads on the "+D("computer")+".",
+  full:"Rania helps Ben. She reads on the computer.",model:"helps / computer"},
+ {img:"https://i.ibb.co/b5CHFjBr/Chat-GPT-Image-Jun-8-2026-09-53-38-PM.png",
+  html:"Ben is a new pupil. He is in Omar's "+D("class")+".",
+  full:"Ben is a new pupil. He is in Omar's class.",model:"class"}
+];
+var WORDS=["computer","races","class","parents","film","helps","twins","work","cinema"];
+var a1box=document.getElementById('a1'),bank=document.getElementById('bank');
+A1.forEach(function(q,i){
+  var d=document.createElement('div');d.className='q';
+  d.innerHTML='<img src="'+q.img+'" alt="picture '+(i+1)+'">'+
+   '<div class="body"><span class="num">'+(i+1)+'</span><p>'+q.html+'</p>'+
+   '<div class="row-tools"><button class="mini say" data-say="'+q.full+'">🔊 استمع</button>'+
+   '<button class="mini ans">👁 الإجابة</button></div><div class="model">✔ '+q.model+'</div></div>';
+  a1box.appendChild(d);
+});
+function buildBank(){bank.innerHTML='';WORDS.forEach(function(w){addChip(w);});}
+function addChip(w){var c=document.createElement('span');c.className='chip';c.dataset.w=w;c.textContent=w;makeDrag(c);bank.appendChild(c);}
+buildBank();
+var dragEl=null,ghost=null;
+function makeDrag(el){el.addEventListener('pointerdown',start);}
+function start(e){dragEl=e.currentTarget;ghost=document.createElement('div');ghost.className='ghost';ghost.textContent=dragEl.dataset.w;
+  document.body.appendChild(ghost);move(e);dragEl.classList.add('dragging');
+  document.addEventListener('pointermove',move);document.addEventListener('pointerup',end);e.preventDefault();}
+function move(e){ghost.style.left=(e.clientX-ghost.offsetWidth/2)+'px';ghost.style.top=(e.clientY-ghost.offsetHeight/2)+'px';
+  ghost.style.display='none';var u=document.elementFromPoint(e.clientX,e.clientY);ghost.style.display='';
+  document.querySelectorAll('.drop.over').forEach(function(d){d.classList.remove('over');});
+  var dz=u&&u.closest?u.closest('.drop'):null;if(dz)dz.classList.add('over');}
+function end(e){document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',end);
+  ghost.style.display='none';var u=document.elementFromPoint(e.clientX,e.clientY);ghost.remove();
+  document.querySelectorAll('.drop.over').forEach(function(d){d.classList.remove('over');});
+  dragEl.classList.remove('dragging');var dz=u&&u.closest?u.closest('.drop'):null;if(dz)place(dragEl,dz);dragEl=null;}
+function place(chip,dz){if(dz.dataset.val)addChip(dz.dataset.val);dz.textContent=chip.dataset.w;dz.dataset.val=chip.dataset.w;
+  dz.classList.add('filled');dz.classList.remove('good','bad');chip.remove();}
+document.addEventListener('click',function(e){var dz=e.target.closest?e.target.closest('.drop'):null;
+  if(dz&&dz.dataset.val){addChip(dz.dataset.val);dz.dataset.val='';dz.textContent='_____';dz.classList.remove('filled','good','bad');}});
+document.querySelectorAll('.mini.say').forEach(function(b){b.onclick=function(){say(b.getAttribute('data-say'));};});
+document.querySelectorAll('.mini.ans').forEach(function(b){b.onclick=function(){b.closest('.q').querySelector('.model').classList.toggle('show');};});
+document.getElementById('checkA1').onclick=function(){document.querySelectorAll('.drop').forEach(function(d){
+  d.classList.remove('good','bad');d.classList.add(d.dataset.val&&d.dataset.val===d.dataset.a?'good':'bad');});};
+document.getElementById('resetA1').onclick=function(){document.querySelectorAll('.drop').forEach(function(d){
+  d.dataset.val='';d.textContent='_____';d.classList.remove('filled','good','bad');});buildBank();};
+
+/* ===== ACTIVITY 2 ===== */
+var A2=["You can have walking, swimming or running races.","You can watch a film at the cinema.",
+ "Omar and Rania are twins. They are eleven years old.","These are Ben's parents. Ben's dad is going to work.",
+ "Rania helps Ben do his homework. She reads on the computer.","Ben is a new pupil. He is in Omar's class."];
+var a2box=document.getElementById('a2');
+A2.forEach(function(s,i){var d=document.createElement('div');d.className='say-line';
+  d.innerHTML='<span class="n">'+(i+1)+'</span><p>'+s+'</p><button title="استمع">🔊</button>';
+  d.querySelector('button').onclick=function(){say(s);};a2box.appendChild(d);});
+
+/* ===== ACTIVITY 3 (READ & CIRCLE — practice, not scored) ===== */
+var A3=[
+ {t:"Nadia ___ from Palestine.",o:["comes","come"],a:0},
+ {t:"She ___ eleven years old.",o:["is","am"],a:0},
+ {t:"She ___ have brothers.",o:["do not","does not"],a:1},
+ {t:"She ___ five sisters.",o:["has","have"],a:0},
+ {t:"She ___ her name N-A-D-I-A.",o:["spell","spells"],a:1}
+];
+var a3box=document.getElementById('a3');
+A3.forEach(function(q,i){var d=document.createElement('div');d.className='qz';var op='';
+  q.o.forEach(function(o,j){op+='<button class="opt a3opt" data-q="'+i+'" data-o="'+j+'">'+o+'</button>';});
+  d.innerHTML='<div class="qt">'+(i+1)+'. '+q.t+'</div><div class="opts">'+op+'</div>';a3box.appendChild(d);});
+document.querySelectorAll('.a3opt').forEach(function(b){b.onclick=function(){
+  b.parentElement.querySelectorAll('.opt').forEach(function(x){x.classList.remove('picked');});b.classList.add('picked');};});
+document.getElementById('showA3').onclick=function(){
+  a3box.querySelectorAll('.qz').forEach(function(card,i){
+    var btns=card.querySelectorAll('.opt');btns.forEach(function(x){x.classList.remove('correct');});
+    btns[A3[i].a].classList.add('correct');});};
+
+/* ===== QUIZ (separate, scored) ===== */
+var QZ=[
+ {t:"You watch a film at the ___.",o:["cinema","computer"],a:0},
+ {t:"Omar and Rania are eleven. They are ___.",o:["twins","parents"],a:0},
+ {t:"He ___ from Palestine.",o:["comes","come"],a:0},
+ {t:"She ___ five sisters.",o:["has","have"],a:0},
+ {t:"He ___ not play football.",o:["does","do"],a:0}
+];
+var picks=[null,null,null,null,null];
+var qbox=document.getElementById('quiz');
+QZ.forEach(function(q,i){var d=document.createElement('div');d.className='qz';var op='';
+  q.o.forEach(function(o,j){op+='<button class="opt qopt" data-q="'+i+'" data-o="'+j+'">'+o+'</button>';});
+  d.innerHTML='<div class="qt">'+(i+1)+'. '+q.t+'</div><div class="opts">'+op+'</div>';qbox.appendChild(d);});
+document.querySelectorAll('.qopt').forEach(function(b){b.onclick=function(){var qi=+b.getAttribute('data-q');
+  picks[qi]=+b.getAttribute('data-o');b.parentElement.querySelectorAll('.opt').forEach(function(x){x.classList.remove('picked');});b.classList.add('picked');};});
+document.getElementById('checkQuiz').onclick=function(){var score=0;
+  qbox.querySelectorAll('.qz').forEach(function(card,i){var btns=card.querySelectorAll('.opt');
+    btns.forEach(function(x){x.classList.remove('correct','incorrect');});
+    if(picks[i]===QZ[i].a){btns[QZ[i].a].classList.add('correct');score++;}
+    else{if(picks[i]!==null)btns[picks[i]].classList.add('incorrect');btns[QZ[i].a].classList.add('correct');}});
+  var s=document.getElementById('score');s.classList.add('show');
+  s.innerHTML='نتيجتك: '+score+' / 5 '+(score===5?'🎉 ممتاز!':score>=3?'👍 جيد جداً!':'💪 حاول مرة أخرى');
+  if(score===5)confetti();};
+function confetti(){var c=['#3b82f6','#8b5cf6','#06b6d4','#fbbf24','#ff6b6b'];
+  for(var i=0;i<90;i++){(function(){var p=document.createElement('div');p.className='confetti';
+    p.style.left=Math.random()*100+'vw';p.style.background=c[Math.floor(Math.random()*c.length)];
+    p.style.animation='fall '+(2+Math.random()*2)+'s linear '+Math.random()+'s forwards';
+    document.body.appendChild(p);setTimeout(function(){p.remove();},5000);})();}}
+
+/* TABS */
+document.querySelectorAll('.tab-btn').forEach(function(b){b.onclick=function(){
+  document.querySelectorAll('.tab-btn').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('show');});
+  b.classList.add('active');document.getElementById(b.getAttribute('data-t')).classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});};});
+</script>
+</body>
+</html>
