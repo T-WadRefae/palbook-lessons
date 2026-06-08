@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Pictures — Unit 1 · Period 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&family=Cairo:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eaf6ff; --ink:#34334a; --soft:#6b6a85; --white:#ffffff;
+  --blue:#3aa0e8; --blue-d:#2176c7;
+  --coral:#ff6b6b; --coral-d:#e84a4a;
+  --yellow:#ffc93c; --yellow-d:#f0a500;
+  --mint:#36c98f; --mint-d:#22a875;
+  --purple:#9b5de5; --purple-d:#7d3fc9;
+  --line:#dfe7f2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:clamp(18px,2.2vw,27px)}
+body{
+  font-family:'Nunito','Cairo',sans-serif; color:var(--ink); line-height:1.5;
+  background:
+    radial-gradient(circle at 8% 6%, rgba(255,201,60,.35), transparent 26%),
+    radial-gradient(circle at 92% 12%, rgba(255,107,107,.30), transparent 28%),
+    radial-gradient(circle at 85% 92%, rgba(155,93,229,.28), transparent 30%),
+    radial-gradient(circle at 12% 88%, rgba(54,201,143,.30), transparent 28%),
+    var(--bg);
+  background-attachment:fixed; padding:0 0 60px;
+}
+.ar{font-family:'Cairo',sans-serif; direction:rtl}
+.wrap{max-width:1000px; margin:0 auto; padding:0 18px}
+
+/* ===== HEADER ===== */
+header{position:relative; overflow:hidden; padding:34px 18px 44px; text-align:center;
+  background:linear-gradient(135deg,#4db6f0,#6d8bf5 50%,#9b5de5);}
+.album{position:relative; z-index:3; display:inline-block; background:var(--white);
+  padding:24px 34px 28px; border-radius:30px; border:5px solid #fff;
+  box-shadow:0 14px 0 rgba(0,0,0,.10), 0 22px 40px rgba(43,40,90,.30);
+  max-width:760px;}
+.kicker{font-family:'Fredoka'; letter-spacing:2px; text-transform:uppercase;
+  font-weight:600; color:var(--blue-d); font-size:.6rem;
+  background:#e8f3ff; display:inline-block; padding:5px 14px; border-radius:20px}
+.album h1{font-family:'Baloo 2'; font-weight:800; font-size:2.4rem; line-height:1; margin:10px 0 2px;
+  background:linear-gradient(90deg,var(--coral),var(--purple),var(--blue)); -webkit-background-clip:text;
+  background-clip:text; -webkit-text-fill-color:transparent;}
+.album .h-ar{font-family:'Cairo'; font-weight:800; font-size:1.5rem; color:var(--coral-d); direction:rtl}
+.album .focus{margin-top:10px; font-size:.66rem; color:var(--soft); font-weight:800; font-family:'Fredoka'}
+.teacher{position:relative; z-index:3; margin-top:18px; display:inline-flex; gap:8px; align-items:center;
+  background:var(--yellow); color:#5a3d00; font-family:'Baloo 2'; font-weight:700;
+  padding:8px 20px; border-radius:30px; font-size:.74rem;
+  box-shadow:0 5px 0 var(--yellow-d); border:3px solid #fff}
+.floaters{position:absolute; inset:0; z-index:1; pointer-events:none}
+.floaters span{position:absolute; font-size:2rem; animation:bob 4.5s ease-in-out infinite}
+.floaters span:nth-child(1){left:5%;top:22%} .floaters span:nth-child(2){right:7%;top:16%;animation-delay:.7s}
+.floaters span:nth-child(3){left:11%;bottom:12%;animation-delay:1.4s} .floaters span:nth-child(4){right:11%;bottom:18%;animation-delay:2.1s}
+.floaters span:nth-child(5){left:47%;top:6%;animation-delay:1s}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-16px) rotate(8deg)}}
+
+/* ===== TABS ===== */
+nav{position:sticky; top:0; z-index:30; background:rgba(234,246,255,.95);
+  backdrop-filter:blur(6px); padding:12px 0; margin-bottom:24px; border-bottom:3px solid var(--line)}
+.tabs{display:flex; gap:9px; overflow-x:auto; padding:0 18px; max-width:1000px; margin:0 auto; scrollbar-width:thin}
+.tab{flex:0 0 auto; cursor:pointer; border:3px solid var(--line); background:var(--white);
+  color:var(--soft); font-family:'Baloo 2'; font-weight:700; font-size:.66rem;
+  padding:9px 16px; border-radius:30px; white-space:nowrap; transition:.15s; box-shadow:0 4px 0 var(--line)}
+.tab:hover{transform:translateY(-2px); color:var(--blue-d)}
+.tab.active{background:var(--blue); color:#fff; border-color:var(--blue-d); box-shadow:0 5px 0 var(--blue-d)}
+
+/* ===== PANELS ===== */
+.panel{display:none; animation:pop .4s ease}
+.panel.show{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.card{background:var(--white); border:4px solid #fff; border-radius:26px;
+  padding:24px 26px; box-shadow:0 10px 0 rgba(0,0,0,.06), 0 16px 34px rgba(43,40,90,.14);
+  margin-bottom:20px;}
+h2{font-family:'Baloo 2'; font-weight:800; color:var(--blue-d); font-size:1.45rem; margin-bottom:4px; display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.num{display:inline-flex; width:42px; height:42px; align-items:center; justify-content:center;
+  border-radius:50%; font-family:'Baloo 2'; font-size:1.1rem; color:#fff; flex:0 0 auto}
+.n1{background:var(--coral);box-shadow:0 4px 0 var(--coral-d)} .n2{background:var(--purple);box-shadow:0 4px 0 var(--purple-d)}
+.n3{background:var(--mint);box-shadow:0 4px 0 var(--mint-d)} .n4{background:var(--yellow);color:#5a3d00;box-shadow:0 4px 0 var(--yellow-d)}
+.sub{font-family:'Cairo'; direction:rtl; color:var(--soft); font-weight:700; font-size:.82rem; margin:8px 0 16px}
+
+/* ===== Audio ===== */
+.audio-box{background:#fff7e6; border:3px dashed var(--yellow-d); border-radius:18px; padding:14px 16px; margin:14px 0 20px}
+.audio-box .lbl{font-family:'Baloo 2'; font-weight:700; color:var(--yellow-d); font-size:.74rem; margin-bottom:8px; display:flex; align-items:center; gap:8px}
+.audio-box iframe{width:100%; height:64px; border:none; border-radius:12px; background:#fff}
+
+/* ===== Image ===== */
+.scene{text-align:center; margin:8px 0 18px}
+.scene img{max-width:100%; border-radius:20px; border:7px solid #fff;
+  box-shadow:0 10px 0 rgba(0,0,0,.06), 0 14px 30px rgba(43,40,90,.2)}
+
+/* ===== Objectives ===== */
+.obj{list-style:none; display:grid; gap:12px}
+.obj li{display:flex; gap:12px; align-items:flex-start; border-radius:18px; padding:13px 15px; border:3px solid var(--line)}
+.obj li:nth-child(1){background:#eaf6ff;border-color:#bfe2ff} .obj li:nth-child(2){background:#fff0f0;border-color:#ffcccc}
+.obj li:nth-child(3){background:#f3ecff;border-color:#ddc9ff} .obj li:nth-child(4){background:#e9faf2;border-color:#b9ecd6}
+.obj li:nth-child(5){background:#fff8e3;border-color:#ffe5a3}
+.obj .ic{font-size:1.5rem; flex:0 0 auto}
+.obj .en{font-weight:800; font-size:.84rem}
+.obj .arq{font-family:'Cairo'; direction:rtl; color:var(--soft); font-weight:700; font-size:.86rem; margin-top:2px}
+.vocab{display:flex; flex-wrap:wrap; gap:9px; margin-top:14px}
+.vocab b{color:#fff; font-family:'Baloo 2'; font-weight:600; font-size:.72rem; padding:7px 15px; border-radius:24px}
+.vocab b:nth-child(odd){background:var(--coral);box-shadow:0 4px 0 var(--coral-d)}
+.vocab b:nth-child(even){background:var(--purple);box-shadow:0 4px 0 var(--purple-d)}
+.vocab b:nth-child(3n){background:var(--blue);box-shadow:0 4px 0 var(--blue-d)}
+
+/* ===== Click & Drop ===== */
+.howto{background:#fff7e6; border:3px dashed var(--yellow-d); border-radius:14px;
+  padding:10px 15px; font-family:'Cairo'; direction:rtl; font-weight:700; font-size:.78rem; color:#9a6a00; margin-bottom:16px}
+.q-row{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:2px dashed var(--line); flex-wrap:wrap}
+.q-row:last-child{border-bottom:none}
+.q-num{width:34px; height:34px; flex:0 0 auto; background:var(--blue); color:#fff; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-family:'Baloo 2'; font-weight:700; font-size:.78rem; box-shadow:0 3px 0 var(--blue-d)}
+.q-txt{flex:1; min-width:170px; font-weight:800; font-size:.84rem}
+.slot{flex:0 0 auto; min-width:200px; min-height:46px; border:3px dashed var(--coral);
+  border-radius:14px; background:#fff5f5; display:flex; align-items:center; justify-content:center;
+  padding:4px; cursor:pointer; transition:.15s}
+.slot.filled{border-style:solid; background:#fff}
+.slot.ok{border-color:var(--mint-d); background:#e6f9f0}
+.slot.no{border-color:var(--coral-d); background:#ffe6e6}
+.bank{display:flex; flex-wrap:wrap; gap:11px; margin:16px 0 6px; min-height:50px;
+  background:#f4f8ff; border-radius:18px; padding:14px; border:3px solid var(--line)}
+.bank-lbl{font-family:'Cairo'; direction:rtl; font-weight:800; color:var(--soft); font-size:.74rem; margin-top:12px}
+.chip{cursor:pointer; background:#fff; border:3px solid var(--purple); color:var(--ink);
+  font-weight:800; font-size:.76rem; padding:8px 14px; border-radius:24px; transition:.15s; user-select:none; box-shadow:0 4px 0 var(--purple-d)}
+.chip:hover{transform:translateY(-3px)}
+.chip.sel{background:var(--yellow); border-color:var(--yellow-d); box-shadow:0 4px 0 var(--yellow-d); transform:scale(1.06)}
+
+/* ===== Circle / choose ===== */
+.s-line{display:flex; align-items:center; gap:9px; flex-wrap:wrap; padding:14px 0; border-bottom:2px dashed var(--line); font-weight:800; font-size:.86rem}
+.s-line:last-child{border-bottom:none}
+.opt{cursor:pointer; border:3px solid var(--line); background:#fff; padding:6px 16px;
+  border-radius:30px; font-weight:800; font-size:.8rem; transition:.15s; box-shadow:0 4px 0 var(--line)}
+.opt:hover{transform:translateY(-2px); border-color:var(--blue)}
+.opt.sel{background:var(--blue); color:#fff; border-color:var(--blue-d); box-shadow:0 4px 0 var(--blue-d)}
+.opt.ok{background:var(--mint); color:#fff; border-color:var(--mint-d); box-shadow:0 4px 0 var(--mint-d)}
+.opt.no{background:var(--coral); color:#fff; border-color:var(--coral-d); box-shadow:0 4px 0 var(--coral-d)}
+.slash{color:var(--soft); font-weight:800}
+
+/* ===== Blanks ===== */
+.blank{display:inline-flex; min-width:130px; min-height:42px; vertical-align:middle;
+  border:3px dashed var(--coral); margin:0 4px; align-items:center; justify-content:center;
+  cursor:pointer; padding:2px 6px; border-radius:14px; background:#fff5f5}
+.blank.filled{background:#fff; border-style:solid}
+.blank.ok{border-color:var(--mint-d); background:#e6f9f0}
+.blank.no{border-color:var(--coral-d); background:#ffe6e6}
+.blank .chip{margin:2px}
+.b-line{padding:15px 0; border-bottom:2px dashed var(--line); font-weight:800; font-size:.88rem; line-height:2.2}
+.b-line:last-child{border-bottom:none}
+
+/* ===== Buttons & result ===== */
+.btn{font-family:'Baloo 2'; font-weight:800; cursor:pointer; border:none; color:#fff;
+  background:var(--mint); padding:12px 26px; border-radius:30px; font-size:.84rem;
+  box-shadow:0 6px 0 var(--mint-d); transition:.12s; margin-top:18px}
+.btn:hover{transform:translateY(-2px)} .btn:active{transform:translateY(3px); box-shadow:0 3px 0 var(--mint-d)}
+.btn.ghost{background:#fff; color:var(--soft); border:3px solid var(--line); box-shadow:0 5px 0 var(--line); margin-left:8px}
+.btn.ghost:hover{color:var(--blue-d)}
+.result{margin-top:14px; font-family:'Cairo'; direction:rtl; font-weight:800; font-size:.98rem; text-align:center; min-height:1.2em}
+.result.win{color:var(--mint-d)} .result.mid{color:var(--yellow-d)}
+
+/* ===== Pair work ===== */
+.bubbles{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:16px 0}
+.bubble{background:#fff; border:3px solid var(--blue); color:var(--blue-d); border-radius:22px;
+  padding:13px 20px; font-family:'Baloo 2'; font-weight:700; font-size:.86rem; box-shadow:0 5px 0 var(--blue-d)}
+.bubble.b2{border-color:var(--coral); color:var(--coral-d); box-shadow:0 5px 0 var(--coral-d)}
+.models .m{background:#f4f8ff; border:3px solid var(--line); border-radius:16px; padding:12px 16px; margin-bottom:10px; cursor:pointer; transition:.15s}
+.models .m:hover{border-color:var(--purple)}
+.models .m .qq{font-weight:800; font-size:.82rem; color:var(--purple-d)}
+.models .m .aa{font-weight:700; font-size:.8rem; color:var(--soft); display:none; margin-top:6px}
+.models .m.open .aa{display:block}
+.review{font-family:'Cairo'; direction:rtl; font-weight:700; font-size:.8rem; color:#9a6a00;
+  background:#fff7e6; border:3px dashed var(--yellow-d); border-radius:14px; padding:13px 16px; margin-top:14px}
+
+footer{text-align:center; margin-top:30px; color:var(--soft); font-family:'Baloo 2'; font-weight:700; font-size:.72rem}
+footer b{color:var(--blue-d)}
+.conf{position:fixed; top:-12px; width:12px; height:15px; z-index:999; pointer-events:none; border-radius:3px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="floaters"><span>📷</span><span>🏔️</span><span>🏛️</span><span>🎬</span><span>✉️</span></div>
+  <div class="album">
+    <div class="kicker">English for Palestine · Unit 1 · Period 6</div>
+    <h1>Family Pictures</h1>
+    <div class="h-ar">صُوَرُ العائلة</div>
+    <div class="focus">Listening · Reading · Speaking</div>
+  </div>
+  <div class="teacher">👩‍🏫 T. Wad Refae</div>
+</header>
+
+<nav>
+  <div class="tabs">
+    <button class="tab active" data-p="obj">🎯 Goals</button>
+    <button class="tab" data-p="a1">🎧 Listen &amp; Answer</button>
+    <button class="tab" data-p="a2">✏️ Read &amp; Circle</button>
+    <button class="tab" data-p="a3">📝 Listen &amp; Complete</button>
+    <button class="tab" data-p="a4">💬 Talk Time</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ===== GOALS ===== -->
+<section class="panel show" id="obj">
+  <div class="card">
+    <h2>🎯 Lesson Goals</h2>
+    <div class="sub">في نهاية هذا الدرس سيكون الطالب قادرًا على:</div>
+    <ul class="obj">
+      <li><span class="ic">🎧</span><div class="t"><div class="en">Listen to a dialogue and understand the details.</div><div class="arq">أستمعُ إلى حوارٍ بين بِن وإيمي وأفهمُ تفاصيلَه.</div></div></li>
+      <li><span class="ic">❓</span><div class="t"><div class="en">Answer comprehension questions correctly.</div><div class="arq">أُجيبُ عن أسئلةِ الفهمِ بدقّةٍ ووضوح.</div></div></li>
+      <li><span class="ic">✏️</span><div class="t"><div class="en">Read sentences and circle the correct words.</div><div class="arq">أقرأُ الجملَ وأختارُ الكلمةَ الصحيحة.</div></div></li>
+      <li><span class="ic">📝</span><div class="t"><div class="en">Complete sentences by listening carefully.</div><div class="arq">أُكملُ الجملَ بالاستماعِ الجيّد.</div></div></li>
+      <li><span class="ic">💬</span><div class="t"><div class="en">Ask and answer questions about the pictures.</div><div class="arq">أطرحُ أسئلةً وأُجيبُ عنها حولَ الصورِ مع زميلي.</div></div></li>
+    </ul>
+    <div class="bank-lbl ar" style="margin-top:18px">الكلمات الجديدة في الدرس:</div>
+    <div class="vocab">
+      <b>walking race</b><b>mountain</b><b>art museum</b><b>internet</b><b>email</b><b>twins</b><b>film</b><b>cinema</b><b>pupil</b>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTIVITY 1 ===== -->
+<section class="panel" id="a1">
+  <div class="card">
+    <h2><span class="num n1">1</span>Listen and answer</h2>
+    <div class="sub">استمع إلى الحوار، ثمّ طابق كلَّ سؤالٍ بإجابته الصحيحة.</div>
+
+    <div class="audio-box">
+      <div class="lbl">🔊 Audio 4 — استمع للحوار</div>
+      <iframe src="https://drive.google.com/file/d/129fVn8AxBTxylIoxG72vFWrXUaZSwHd-/preview" allow="autoplay"></iframe>
+    </div>
+
+    <div class="scene">
+      <img src="https://i.ibb.co/sdgnHq4c/91eaf4cb-6522-4c33-9128-fb8c1d05fdc6.jpg" alt="Amy and Ben looking at family pictures on the computer">
+    </div>
+
+    <div class="howto">👆 طريقة الحل: انقر على الإجابة الصحيحة من الصندوق، ثمّ انقر على المربّع بجانب السؤال لوضعها فيه. لإرجاع الإجابة، انقر عليها داخل المربّع.</div>
+
+    <div id="cd1">
+      <div class="q-row"><span class="q-num">1</span><span class="q-txt">What is dad doing?</span><span class="slot" data-k="a"></span></div>
+      <div class="q-row"><span class="q-num">2</span><span class="q-txt">Who is walking up the mountain?</span><span class="slot" data-k="b"></span></div>
+      <div class="q-row"><span class="q-num">3</span><span class="q-txt">Where are the twins?</span><span class="slot" data-k="c"></span></div>
+      <div class="q-row"><span class="q-num">4</span><span class="q-txt">What does Ben want to do?</span><span class="slot" data-k="d"></span></div>
+      <div class="q-row"><span class="q-num">5</span><span class="q-txt">Does Amy like the subject of the film?</span><span class="slot" data-k="e"></span></div>
+
+      <div class="bank-lbl ar">صندوق الإجابات — انقر لاختيار الإجابة:</div>
+      <div class="bank">
+        <span class="chip" data-k="c">In front of the art museum</span>
+        <span class="chip" data-k="a">He is walking fast in a race</span>
+        <span class="chip" data-k="e">No, she doesn't</span>
+        <span class="chip" data-k="b">Mum and dad (his parents)</span>
+        <span class="chip" data-k="d">He wants to go to the cinema</span>
+      </div>
+
+      <button class="btn" onclick="checkCD('cd1','r1')">✓ تحقّق من الإجابات</button>
+      <button class="btn ghost" onclick="resetCD('cd1','r1')">↺ إعادة</button>
+      <div class="result" id="r1"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTIVITY 2 ===== -->
+<section class="panel" id="a2">
+  <div class="card">
+    <h2><span class="num n2">2</span>Read. Then listen and circle</h2>
+    <div class="sub">اقرأ الجمل، استمع، ثمّ انقر على الكلمة الصحيحة في كلِّ جملة.</div>
+
+    <div class="audio-box">
+      <div class="lbl">🔊 Audio 5 — استمع وتحقّق</div>
+      <iframe src="https://drive.google.com/file/d/11m4BXmW4tMTGAc1NtvjpwTmWlTr4zpOm/preview" allow="autoplay"></iframe>
+    </div>
+
+    <div id="ch2">
+      <div class="s-line" data-g><span>1. Ben's dad</span><span class="opt" data-c="1">walks</span><span class="slash">/</span><span class="opt">runs</span><span>fast.</span></div>
+      <div class="s-line" data-g><span>2. Ben's</span><span class="opt" data-c="1">parents</span><span class="slash">/</span><span class="opt">cousins</span><span>are walking up the mountain.</span></div>
+      <div class="s-line" data-g><span>3. The twins are in front of the</span><span class="opt" data-c="1">art museum</span><span class="slash">/</span><span class="opt">shoe shop</span><span>.</span></div>
+      <div class="s-line" data-g><span>4. The pictures are</span><span class="opt">in a book</span><span class="slash">/</span><span class="opt" data-c="1">on the internet</span><span>.</span></div>
+
+      <button class="btn" onclick="checkChoice('ch2','r2')">✓ تحقّق من الإجابات</button>
+      <button class="btn ghost" onclick="resetChoice('ch2','r2')">↺ إعادة</button>
+      <div class="result" id="r2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTIVITY 3 ===== -->
+<section class="panel" id="a3">
+  <div class="card">
+    <h2><span class="num n3">3</span>Read. Then listen and complete</h2>
+    <div class="sub">انقر على الكلمة من الصندوق، ثمّ انقر على الفراغ المناسب لإكمال الجملة.</div>
+
+    <div class="audio-box">
+      <div class="lbl">🔊 Audio 6 — استمع وأكمِل</div>
+      <iframe src="https://drive.google.com/file/d/11o1vxhE4UhW9DlkOQCvng16Jw3Bf-Zjo/preview" allow="autoplay"></iframe>
+    </div>
+
+    <div id="cd3">
+      <div class="b-line">1. Ben and I are not <span class="slot blank" data-k="t"></span>.</div>
+      <div class="b-line">2. Ben is eleven years old and I am <span class="slot blank" data-k="n"></span> years old.</div>
+      <div class="b-line">3. I like the computer. I write <span class="slot blank" data-k="e"></span> to my friends.</div>
+      <div class="b-line">4. I like helping new pupils in my <span class="slot blank" data-k="c"></span>.</div>
+
+      <div class="bank-lbl ar">صندوق الكلمات — انقر لاختيار الكلمة:</div>
+      <div class="bank">
+        <span class="chip" data-k="e">emails</span>
+        <span class="chip" data-k="c">class</span>
+        <span class="chip" data-k="t">twins</span>
+        <span class="chip" data-k="n">ten</span>
+      </div>
+
+      <button class="btn" onclick="checkCD('cd3','r3')">✓ تحقّق من الإجابات</button>
+      <button class="btn ghost" onclick="resetCD('cd3','r3')">↺ إعادة</button>
+      <div class="result" id="r3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTIVITY 4 ===== -->
+<section class="panel" id="a4">
+  <div class="card">
+    <h2><span class="num n4">4</span>Work in pairs — Ask &amp; answer</h2>
+    <div class="sub">انظر إلى الصور، ثمّ اسأل زميلك وأجب باستخدام العبارات أدناه.</div>
+
+    <div class="bubbles">
+      <div class="bubble">❓ What can you see?</div>
+      <div class="bubble b2">💬 I can see …</div>
+    </div>
+
+    <div class="scene">
+      <img src="https://i.ibb.co/sdgnHq4c/91eaf4cb-6522-4c33-9128-fb8c1d05fdc6.jpg" alt="The pictures to talk about">
+    </div>
+
+    <div class="bank-lbl ar">نماذج للأسئلة والأجوبة — انقر على كلٍّ منها لإظهار الإجابة:</div>
+    <div class="models" id="models">
+      <div class="m"><div class="qq">❓ What can you see in picture 1?</div><div class="aa">💬 I can see a walking race. Dad is walking fast.</div></div>
+      <div class="m"><div class="qq">❓ Who is in front of the art museum?</div><div class="aa">💬 The twins, Fiona and Sarah, are in front of the art museum.</div></div>
+      <div class="m"><div class="qq">❓ What are mum and dad doing?</div><div class="aa">💬 They are walking up the mountain.</div></div>
+      <div class="m"><div class="qq">❓ What does Ben want to do?</div><div class="aa">💬 He wants to go to the cinema to see a film.</div></div>
+    </div>
+
+    <div class="review ar">⭐ <b>مراجعة سريعة (What's missing?):</b> اعرض بطاقات كلمات الوحدة، اقرأها مع الطلاب، ثمّ أخفِ بطاقةً واطلب منهم تخمين الكلمة الناقصة.</div>
+  </div>
+</section>
+
+</div>
+
+<footer>Made with ❤️ by <b>T. Wad Refae</b> · English for Palestine — Unit 1 · Period 6 🇵🇸</footer>
+
+<script>
+/* Tabs */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.p).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* Click & Drop engine */
+let selChip=null;
+function selectChip(chip){
+  if(selChip===chip){chip.classList.remove('sel');selChip=null;return;}
+  if(selChip)selChip.classList.remove('sel');
+  selChip=chip;chip.classList.add('sel');
+}
+document.querySelectorAll('#cd1,#cd3').forEach(root=>{
+  const bank=root.querySelector('.bank');
+  root.addEventListener('click',e=>{
+    const chip=e.target.closest('.chip');
+    const slot=e.target.closest('.slot');
+    if(chip){
+      if(slot){ bank.appendChild(chip); chip.classList.remove('sel'); selChip=null;
+        slot.classList.remove('filled','ok','no'); return; }
+      selectChip(chip); return;
+    }
+    if(slot){
+      const ex=slot.querySelector('.chip');
+      if(ex){ bank.appendChild(ex); slot.classList.remove('filled','ok','no'); }
+      if(selChip){ slot.appendChild(selChip); selChip.classList.remove('sel');
+        slot.classList.add('filled'); slot.classList.remove('ok','no'); selChip=null; }
+    }
+  });
+});
+function checkCD(id,rid){
+  const root=document.getElementById(id);
+  const slots=[...root.querySelectorAll('.slot')];
+  let ok=0; const total=slots.length; let filled=0;
+  slots.forEach(s=>{
+    s.classList.remove('ok','no');
+    const c=s.querySelector('.chip');
+    if(!c)return; filled++;
+    if(c.dataset.k===s.dataset.k){s.classList.add('ok');ok++;}else s.classList.add('no');
+  });
+  const r=document.getElementById(rid);
+  if(filled<total){ r.textContent='⚠️ أكمل جميع الإجابات أولًا!'; r.className='result mid'; return; }
+  if(ok===total){ r.textContent='🎉 ممتاز! '+ok+' من '+total+' إجابات صحيحة'; r.className='result win'; confetti(); }
+  else { r.textContent='📌 لديك '+ok+' من '+total+' صحيحة — أعد المحاولة للمربّعات الحمراء'; r.className='result mid'; }
+}
+function resetCD(id,rid){
+  const root=document.getElementById(id), bank=root.querySelector('.bank');
+  root.querySelectorAll('.slot .chip').forEach(c=>bank.appendChild(c));
+  root.querySelectorAll('.slot').forEach(s=>s.classList.remove('filled','ok','no'));
+  if(selChip){selChip.classList.remove('sel');selChip=null;}
+  document.getElementById(rid).textContent='';
+}
+
+/* Choice (circle) */
+document.querySelectorAll('#ch2 .opt').forEach(o=>{
+  o.addEventListener('click',()=>{
+    o.parentElement.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel','ok','no'));
+    o.classList.add('sel');
+  });
+});
+function checkChoice(id,rid){
+  const groups=[...document.querySelectorAll('#'+id+' [data-g]')];
+  let ok=0; let answered=0;
+  groups.forEach(g=>{
+    const sel=g.querySelector('.opt.sel'); if(!sel)return; answered++;
+    g.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok','no'));
+    if(sel.dataset.c==='1'){sel.classList.remove('sel');sel.classList.add('ok');ok++;}
+    else{sel.classList.remove('sel');sel.classList.add('no');
+      g.querySelector('.opt[data-c="1"]').classList.add('ok');}
+  });
+  const r=document.getElementById(rid);
+  if(answered<groups.length){ r.textContent='⚠️ اختر إجابةً لكلِّ جملة!'; r.className='result mid'; return; }
+  if(ok===groups.length){ r.textContent='🎉 رائع! '+ok+' من '+groups.length+' صحيحة'; r.className='result win'; confetti(); }
+  else { r.textContent='📌 '+ok+' من '+groups.length+' صحيحة — الكلمة الصحيحة باللون الأخضر'; r.className='result mid'; }
+}
+function resetChoice(id,rid){
+  document.querySelectorAll('#'+id+' .opt').forEach(o=>o.classList.remove('sel','ok','no'));
+  document.getElementById(rid).textContent='';
+}
+
+/* Pair-work model answers */
+document.querySelectorAll('#models .m').forEach(m=>m.addEventListener('click',()=>m.classList.toggle('open')));
+
+/* Confetti */
+function confetti(){
+  const cols=['#ff6b6b','#3aa0e8','#ffc93c','#36c98f','#9b5de5'];
+  for(let i=0;i<90;i++){
+    const c=document.createElement('div'); c.className='conf';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=cols[i%cols.length];
+    c.style.transform='rotate('+Math.random()*360+'deg)';
+    const dur=2.2+Math.random()*1.6;
+    c.animate([{top:'-12px',opacity:1},{top:'100vh',opacity:.9}],
+      {duration:dur*1000,easing:'cubic-bezier(.3,.6,.5,1)'});
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),dur*1000);
+  }
+}
+</script>
+</body>
+</html>
