@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 · Period 5 — All About Me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fdf6e9; --ink:#2a2118; --green:#1b7f5c; --green-d:#0f5c41;
+  --red:#c23b2e; --gold:#e9b949; --blue:#2f6fb0; --line:#d8c7a6;
+  --card:#fffdf6; --shadow:rgba(60,40,20,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:clamp(18px,2.2vw,28px)}
+body{
+  font-family:'Fredoka','Cairo',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 18%,rgba(233,185,73,.18),transparent 40%),
+    radial-gradient(circle at 88% 82%,rgba(27,127,92,.15),transparent 42%),
+    repeating-linear-gradient(0deg,transparent 0 38px,rgba(180,150,100,.06) 38px 39px),
+    var(--paper);
+  min-height:100vh;padding:1rem;line-height:1.5;
+}
+.ar{font-family:'Cairo',sans-serif;direction:rtl}
+.wrap{max-width:960px;margin:0 auto}
+
+/* ===== Header: kids ID badge ===== */
+.hwrap{position:relative;display:flex;justify-content:center;margin:1.8rem 0 .3rem}
+.lanyard{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);z-index:1;
+  width:.7rem;height:1.4rem;background:var(--red);border:3px solid var(--ink);border-radius:3px}
+.clip{position:absolute;top:-1.6rem;left:50%;transform:translateX(-50%);z-index:3;
+  width:2.4rem;height:1.15rem;background:linear-gradient(#eee,#c4c4c4);
+  border:3px solid var(--ink);border-radius:8px}
+header{
+  position:relative;background:#fffdf6;border:4px solid var(--ink);border-radius:30px;
+  box-shadow:9px 9px 0 var(--shadow);padding:1.5rem 1.5rem 1.4rem;width:100%;overflow:hidden
+}
+header::before{content:"";position:absolute;inset:7px;border:3px dashed var(--gold);
+  border-radius:22px;pointer-events:none;z-index:1}
+.hrow{position:relative;z-index:2;display:flex;align-items:center;gap:1rem}
+.kids{display:flex;flex:none;align-items:center}
+.kid-img{width:4.4rem;height:4.4rem;border-radius:50%;object-fit:cover;
+  border:4px solid var(--ink);background:#fff;box-shadow:3px 3px 0 var(--ink)}
+.kid-img:nth-child(2){margin-left:-1.1rem}
+.htext .badge{display:inline-block;background:var(--red);color:#fff;font-weight:700;
+  padding:.2rem .8rem;border-radius:999px;font-size:.56rem;letter-spacing:1.5px;
+  box-shadow:2px 2px 0 var(--ink)}
+.htext h1{font-size:1.6rem;font-weight:700;color:var(--green-d);margin:.32rem 0 .05rem;line-height:1.02}
+.htext .sub{font-size:.82rem;font-weight:600;color:var(--red)}
+.htext .ar{font-size:.68rem;color:#7a6a4a;margin-top:.18rem}
+.teacher{position:relative;z-index:2;display:inline-block;margin-top:.8rem;
+  background:var(--green);color:#fff;font-size:.62rem;font-weight:700;
+  padding:.28rem .85rem;border-radius:999px;box-shadow:2px 2px 0 var(--ink)}
+/* playful doodles */
+.doodle{position:absolute;z-index:1}
+.b1{top:.5rem;right:1rem;animation:flo 4s ease-in-out infinite}
+.b2{top:2rem;right:3rem;animation:flo 5.5s ease-in-out infinite}
+.st{font-weight:700}
+.s1{top:.6rem;left:1rem;color:var(--blue);font-size:1.1rem}
+.s2{bottom:.7rem;left:1.5rem;color:var(--red);font-size:.9rem}
+.s3{bottom:1.4rem;right:1.3rem;color:var(--gold);font-size:1.2rem}
+.dots{top:1.1rem;left:5.2rem;width:.42rem;height:.42rem;border-radius:50%;background:var(--gold);
+  box-shadow:.7rem .35rem 0 var(--red),.35rem .95rem 0 var(--blue)}
+@keyframes flo{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-7px) rotate(5deg)}}
+
+/* ===== Tabs ===== */
+nav{display:flex;gap:.4rem;flex-wrap:wrap;margin:1rem 0 .8rem;justify-content:center}
+.tab{
+  font-family:inherit;cursor:pointer;border:2.5px solid var(--ink);
+  background:var(--card);color:var(--ink);font-weight:600;font-size:.7rem;
+  padding:.5rem .85rem;border-radius:14px;box-shadow:3px 3px 0 var(--ink);
+  transition:.12s;display:flex;align-items:center;gap:.3rem
+}
+.tab:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.tab.active{background:var(--gold);transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+
+/* ===== Panels ===== */
+.panel{display:none;animation:pop .35s ease}
+.panel.show{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card{
+  background:var(--card);border:3px solid var(--ink);border-radius:20px;
+  padding:1.2rem;box-shadow:6px 6px 0 var(--shadow);margin-bottom:1rem
+}
+.htitle{display:flex;align-items:center;gap:.55rem;margin-bottom:.4rem}
+.htitle .n{background:var(--red);color:#fff;width:1.9rem;height:1.9rem;border-radius:50%;
+  display:grid;place-items:center;font-weight:700;font-size:.85rem;flex:none}
+.htitle h2{font-size:1.05rem;font-weight:700}
+.hint{font-size:.7rem;color:var(--green-d);font-weight:600;margin:.3rem 0 .9rem;
+  background:rgba(27,127,92,.08);border-right:4px solid var(--green);padding:.5rem .7rem;border-radius:10px}
+
+/* ===== ID card (Activity 1) ===== */
+.idcard{
+  background:linear-gradient(160deg,#fffdf6,#f3e6c8);border:3px solid var(--green);
+  border-radius:18px;padding:1rem 1.1rem;position:relative;overflow:hidden
+}
+.idcard::before{content:"ID";position:absolute;left:-8px;bottom:-22px;font-size:5rem;
+  font-weight:700;color:rgba(27,127,92,.08)}
+.id-top{display:flex;align-items:center;gap:.7rem;border-bottom:2px dashed var(--line);padding-bottom:.6rem;margin-bottom:.8rem}
+.photo{width:3.2rem;height:3.2rem;border-radius:12px;background:var(--green);color:var(--gold);
+  display:grid;place-items:center;font-size:1.6rem;flex:none;border:2px solid var(--gold)}
+.id-top b{font-size:.85rem}.id-top span{font-size:.62rem;color:#7a6a4a;display:block}
+.field{margin:.55rem 0}
+.field label{font-size:.72rem;font-weight:600;display:block;margin-bottom:.2rem}
+.field input{
+  font-family:inherit;font-size:.78rem;width:100%;padding:.45rem .6rem;
+  border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)
+}
+.field input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(27,127,92,.15)}
+.field.inline{display:flex;gap:.5rem;align-items:flex-end;flex-wrap:wrap}
+.field.inline>div{flex:1;min-width:120px}
+.fb{font-size:.66rem;margin-top:.25rem;font-weight:600;min-height:1rem}
+.fb.ok{color:var(--green-d)} .fb.no{color:var(--red)}
+
+/* ===== Buttons ===== */
+.btn{
+  font-family:inherit;cursor:pointer;border:none;border-radius:14px;font-weight:700;
+  font-size:.78rem;padding:.6rem 1.2rem;color:#fff;background:var(--green);
+  box-shadow:0 5px 0 var(--green-d);transition:.1s;margin-top:.7rem
+}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--green-d)}
+.btn.red{background:var(--red);box-shadow:0 5px 0 #8e2519}
+.spk{cursor:pointer;border:none;background:var(--gold);color:#3a2c0a;border-radius:50%;
+  width:1.7rem;height:1.7rem;font-size:.8rem;flex:none;box-shadow:0 3px 0 #b8902f}
+.spk:active{transform:translateY(3px);box-shadow:0 0 0 #b8902f}
+
+/* ===== Matching (Activity 2) ===== */
+.speakers{display:flex;justify-content:space-around;gap:1rem;margin-bottom:.9rem;flex-wrap:wrap}
+.speaker{text-align:center}
+.speaker img{width:5.5rem;height:5.5rem;object-fit:cover;border-radius:50%;
+  border:4px solid var(--gold);box-shadow:0 6px 14px var(--shadow);background:#fff}
+.speaker p{font-size:.68rem;font-weight:600;margin-top:.3rem}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:.6rem .9rem}
+.mcol h4{font-size:.7rem;text-align:center;margin-bottom:.4rem;color:var(--green-d)}
+.mitem{
+  border:2.5px solid var(--ink);border-radius:12px;background:#fff;padding:.5rem .55rem;
+  margin-bottom:.5rem;cursor:pointer;font-size:.72rem;display:flex;align-items:center;gap:.4rem;
+  transition:.12s;font-family:inherit
+}
+.mitem:hover{background:#fff6da}
+.mitem.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(47,111,176,.25)}
+.mitem .dot{width:.85rem;height:.85rem;border-radius:50%;border:2px solid var(--line);flex:none}
+.mitem.correct{background:#e6f5ee;border-color:var(--green)}
+.mitem.wrong{background:#fbe7e4;border-color:var(--red)}
+
+/* ===== Correct word (Activity 3) ===== */
+.sent{font-size:.78rem;margin:.7rem 0;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;
+  background:#fff;border:2px solid var(--line);border-radius:12px;padding:.55rem .7rem}
+.opt{cursor:pointer;border:2px solid var(--ink);background:#fff;border-radius:9px;
+  padding:.18rem .6rem;font-family:inherit;font-size:.74rem;font-weight:600;transition:.1s}
+.opt:hover{background:#fff6da}
+.opt.pick{background:var(--blue);color:#fff;border-color:var(--blue)}
+.opt.right{background:var(--green);color:#fff;border-color:var(--green)}
+.opt.bad{background:var(--red);color:#fff;border-color:var(--red)}
+
+/* ===== Rule + verb tables (Activity 4) ===== */
+.rule{background:linear-gradient(135deg,#fff6da,#f6e6b8);border:2.5px dashed var(--gold);
+  border-radius:14px;padding:.9rem 1rem;margin-bottom:1rem;font-size:.74rem}
+.rule b{color:var(--red)}
+.rule .ar{margin-top:.4rem;font-size:.72rem;color:#5a4a2a}
+.vtables{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.8rem}
+.vtab{border:2.5px solid var(--ink);border-radius:14px;overflow:hidden}
+.vtab h5{background:var(--green);color:#fff;text-align:center;padding:.35rem;font-size:.8rem;font-weight:700}
+.vrow{display:flex;align-items:center;gap:.4rem;padding:.3rem .5rem;border-bottom:1px solid var(--line);font-size:.74rem}
+.vrow span{width:2.6rem;font-weight:600}
+.vrow input{flex:1;font-family:inherit;font-size:.72rem;padding:.25rem .4rem;
+  border:2px solid var(--line);border-radius:8px;background:#fff;width:100%}
+.vrow input:focus{outline:none;border-color:var(--green)}
+.vrow .fix{font-size:.65rem;color:var(--green-d);font-weight:700}
+.vrow .given{flex:1;color:#7a6a4a;font-style:italic}
+
+/* ===== Lesson goals ===== */
+.intro{font-size:.78rem;font-weight:600;text-align:center;color:var(--green-d);margin-bottom:.9rem}
+.goals{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+.goals li{background:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:.6rem .8rem .6rem 2.7rem;
+  box-shadow:3px 3px 0 var(--shadow);position:relative}
+.goals li::before{content:"⭐";position:absolute;left:.7rem;top:.55rem;font-size:1.05rem}
+.g-en{display:block;font-size:.76rem;font-weight:600}
+.g-ar{display:block;font-size:.72rem;color:#5a4a2a;margin-top:.12rem}
+.result{text-align:center;font-size:.85rem;font-weight:700;margin-top:.8rem;min-height:1.4rem}
+.result.win{color:var(--green-d)}
+footer{text-align:center;font-size:.6rem;color:#8a795a;padding:1rem 0 .4rem}
+footer b{color:var(--green-d)}
+
+/* confetti */
+.cft{position:fixed;width:.6rem;height:.9rem;top:-20px;z-index:999;pointer-events:none;border-radius:2px}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.2}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hwrap">
+  <span class="lanyard"></span>
+  <span class="clip"></span>
+  <header>
+    <!-- playful doodles -->
+    <svg class="doodle b1" width="40" height="58" viewBox="0 0 40 58"><ellipse cx="20" cy="19" rx="16" ry="18" fill="#c23b2e" stroke="#2a2118" stroke-width="3"/><path d="M16 35l4 5 4-5z" fill="#c23b2e" stroke="#2a2118" stroke-width="2"/><path d="M20 40q5 9-1 17" fill="none" stroke="#2a2118" stroke-width="2"/></svg>
+    <svg class="doodle b2" width="30" height="44" viewBox="0 0 40 58"><ellipse cx="20" cy="19" rx="16" ry="18" fill="#2f9e8f" stroke="#2a2118" stroke-width="3"/><path d="M16 35l4 5 4-5z" fill="#2f9e8f" stroke="#2a2118" stroke-width="2"/><path d="M20 40q-5 9 1 17" fill="none" stroke="#2a2118" stroke-width="2"/></svg>
+    <span class="doodle st s1">★</span>
+    <span class="doodle st s2">✦</span>
+    <span class="doodle st s3">★</span>
+    <span class="doodle dots"></span>
+
+    <div class="hrow">
+      <span class="kids">
+        <img class="kid-img" src="https://i.ibb.co/SDm919g5/1b45348e-83fd-42e2-bceb-c79dcad2bdf2.jpg" alt="student">
+        <img class="kid-img" src="https://i.ibb.co/8nwdH00K/wggd-s3rx-230713.jpg" alt="student">
+      </span>
+      <div class="htext">
+        <span class="badge">UNIT 1 · PERIOD 5</span>
+        <h1>All About Me</h1>
+        <p class="sub">📇 My ID Card</p>
+      </div>
+    </div>
+    <span class="teacher">👩‍🏫 T. Wad Refae</span>
+  </header>
+</div>
+
+<nav>
+  <button class="tab active" data-t="0">🎯 <span>Goals</span></button>
+  <button class="tab" data-t="1">📝 <span>My ID</span></button>
+  <button class="tab" data-t="2">💬 <span>Match</span></button>
+  <button class="tab" data-t="3">✏️ <span>Correct</span></button>
+  <button class="tab" data-t="4">⭐ <span>Verbs</span></button>
+</nav>
+
+<!-- ============ PANEL 0: GOALS ============ -->
+<section class="panel show" id="p0">
+  <div class="card">
+    <div class="htitle"><div class="n">🎯</div><h2>Lesson Goals · أهداف الدرس</h2></div>
+    <p class="intro ar">في نهايةِ هذا الدرسِ سأكونُ قادرًا على… ✨</p>
+    <ul class="goals">
+      <li>
+        <span class="g-en">I can write information about myself: my name, age, town and family.</span>
+        <span class="g-ar ar">أستطيعُ أن أكتبَ معلوماتٍ عن نفسي: اسمي، وعُمري، ومدينتي، وعائلتي.</span>
+      </li>
+      <li>
+        <span class="g-en">I can use capital letters for names of people and places.</span>
+        <span class="g-ar ar">أستطيعُ استخدامَ الأحرفِ الكبيرةِ لأسماءِ الأشخاصِ والأماكنِ.</span>
+      </li>
+      <li>
+        <span class="g-en">I can match questions with the correct answers.</span>
+        <span class="g-ar ar">أستطيعُ توصيلَ الأسئلةِ بإجاباتِها الصّحيحةِ.</span>
+      </li>
+      <li>
+        <span class="g-en">I can read and correct sentences in the present simple.</span>
+        <span class="g-ar ar">أستطيعُ قراءةَ الجُملِ وتصحيحَها في زمنِ المُضارعِ البسيطِ.</span>
+      </li>
+      <li>
+        <span class="g-en">I can add -s to the verb after He, She and It.</span>
+        <span class="g-ar ar">أستطيعُ إضافةَ حرفِ s إلى الفعلِ بعدَ He و She و It.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PANEL 1: ID CARD ============ -->
+<section class="panel" id="p1">
+  <div class="card">
+    <div class="htitle"><div class="n">1</div><h2>Think and complete</h2></div>
+    <p class="hint ar">اكتبْ معلوماتِكَ في بطاقتِكَ الشخصيّة باللغةِ الإنجليزيّة. تذكّرْ:
+    تبدأُ الأسماءُ وأسماءُ المُدنِ بحرفٍ كبيرٍ <b>Capital letter</b>، والعُمرُ يُكتبُ بالأرقام.</p>
+
+    <div class="idcard">
+      <div class="id-top">
+        <div class="photo">🙂</div>
+        <div><b>STUDENT ID CARD</b><span class="ar">البطاقة التعريفيّة للطالب</span></div>
+      </div>
+
+      <div class="field">
+        <label>1 · My name is …</label>
+        <input id="f-name" placeholder="My name is Sami.">
+        <div class="fb" id="fb-name"></div>
+      </div>
+      <div class="field">
+        <label>2 · I am from …</label>
+        <input id="f-from" placeholder="I am from Ramallah.">
+        <div class="fb" id="fb-from"></div>
+      </div>
+      <div class="field">
+        <label>3 · I am … years old.</label>
+        <input id="f-age" placeholder="10">
+        <div class="fb" id="fb-age"></div>
+      </div>
+      <div class="field inline">
+        <div><label>4 · I have … brother. His name is …</label>
+        <input id="f-bro" placeholder="His name is Adam."></div>
+        <div class="fb" id="fb-bro"></div>
+      </div>
+      <div class="field inline">
+        <div><label>5 · I have … sisters. Their names are …</label>
+        <input id="f-sis" placeholder="Their names are Lana and Mona."></div>
+        <div class="fb" id="fb-sis"></div>
+      </div>
+    </div>
+    <button class="btn" onclick="checkID()">✅ Check my card · تحقّقْ</button>
+    <div class="result" id="r1"></div>
+  </div>
+</section>
+
+<!-- ============ PANEL 2: MATCHING ============ -->
+<section class="panel" id="p2">
+  <div class="card">
+    <div class="htitle"><div class="n">2</div><h2>Match the question to the answer</h2></div>
+    <p class="hint ar">اِنقرْ على السؤالِ ثمّ على الإجابةِ المُناسبةِ لِتوصِلَ بينهما. استمعْ للجُملِ بِالضّغطِ على زرِّ الصّوت 🔊</p>
+
+    <div class="speakers">
+      <div class="speaker">
+        <img src="https://i.ibb.co/MyGspd6P/Gemini-Generated-Image-u8l782u8l782u8l7-1.png" alt="boy asking">
+        <p>👦 Asks the questions</p>
+      </div>
+      <div class="speaker">
+        <img src="https://i.ibb.co/DfhgwDCT/Gemini-Generated-Image-c90gjsc90gjsc90g.png" alt="boy answering">
+        <p>🧒 Gives the answers</p>
+      </div>
+    </div>
+
+    <div class="match">
+      <div class="mcol">
+        <h4>Questions ❓</h4>
+        <div class="mitem" data-q="1" data-ans="1"><span class="dot"></span>How are you? <button class="spk" onclick="say('How are you?',event)">🔊</button></div>
+        <div class="mitem" data-q="2" data-ans="2"><span class="dot"></span>Where do you live? <button class="spk" onclick="say('Where do you live?',event)">🔊</button></div>
+        <div class="mitem" data-q="3" data-ans="3"><span class="dot"></span>What's your favourite subject? <button class="spk" onclick="say('What is your favourite subject?',event)">🔊</button></div>
+        <div class="mitem" data-q="4" data-ans="4"><span class="dot"></span>What do you like doing? <button class="spk" onclick="say('What do you like doing?',event)">🔊</button></div>
+      </div>
+      <div class="mcol">
+        <h4>Answers ✅</h4>
+        <div class="mitem" data-a="2"><span class="dot"></span>I live in Ramallah. <button class="spk" onclick="say('I live in Ramallah.',event)">🔊</button></div>
+        <div class="mitem" data-a="1"><span class="dot"></span>I'm fine, thanks. <button class="spk" onclick="say('I am fine, thanks.',event)">🔊</button></div>
+        <div class="mitem" data-a="4"><span class="dot"></span>I like writing emails. <button class="spk" onclick="say('I like writing emails.',event)">🔊</button></div>
+        <div class="mitem" data-a="3"><span class="dot"></span>My favourite subject is maths. <button class="spk" onclick="say('My favourite subject is maths.',event)">🔊</button></div>
+      </div>
+    </div>
+    <button class="btn" onclick="checkMatch()">✅ Check matches · تحقّقْ</button>
+    <div class="result" id="r2"></div>
+  </div>
+</section>
+
+<!-- ============ PANEL 3: CORRECT ============ -->
+<section class="panel" id="p3">
+  <div class="card">
+    <div class="htitle"><div class="n">3</div><h2>Read and choose the correct word</h2></div>
+    <p class="hint ar">اِقرأِ الجُملةَ ثمّ اِنقرْ على الكلمةِ الصّحيحةِ. تذكّرْ أنّ الفعلَ يتغيّرُ حسبَ الفاعلِ.</p>
+    <div id="sents"></div>
+    <button class="btn" onclick="checkSents()">✅ Check · تحقّقْ</button>
+    <div class="result" id="r3"></div>
+  </div>
+</section>
+
+<!-- ============ PANEL 4: VERBS ============ -->
+<section class="panel" id="p4">
+  <div class="card">
+    <div class="htitle"><div class="n">4</div><h2>Complete the verb tables</h2></div>
+
+    <div class="rule">
+      <b>The Present Simple</b> — We add <b>-s</b> to the verb after <b>He / She / It</b>.<br>
+      With <b>I / We / You / They</b> the verb stays the same.<br>
+      <span class="ar">في زمنِ المُضارعِ البسيطِ نُضيفُ حرفَ <b>s</b> إلى الفعلِ بعدَ الضّمائرِ
+      <b>He / She / It</b>. أمّا مع <b>I / We / You / They</b> فيبقى الفعلُ كما هو.</span>
+    </div>
+
+    <div class="vtables" id="vtabs"></div>
+    <button class="btn" onclick="checkVerbs()">✅ Check verbs · تحقّقْ</button>
+    <div class="result" id="r4"></div>
+  </div>
+</section>
+
+<footer>
+  Made with care for young learners · <b>T. Wad Refae</b> · English for Palestine — Grade 5
+</footer>
+</div>
+
+<script>
+/* ===== Tabs ===== */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+  t.classList.add('active');
+  document.getElementById('p'+t.dataset.t).classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* ===== Text-to-speech ===== */
+function say(txt,e){if(e)e.stopPropagation();
+  if(!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;speechSynthesis.speak(u);
+}
+
+/* ===== Activity 1: ID card language check ===== */
+function cap(s){return /^[A-Z]/.test(s.trim());}
+function setFb(id,ok,msg){const el=document.getElementById(id);el.className='fb '+(ok?'ok':'no');el.textContent=(ok?'✔ ':'➜ ')+msg;}
+function checkID(){
+  let ok=0,total=5;
+  const name=val('f-name'),from=val('f-from'),age=val('f-age'),bro=val('f-bro'),sis=val('f-sis');
+  // name
+  if(!name) setFb('fb-name',false,'اكتبِ اسمَكَ أوّلاً.');
+  else if(!cap(name)) setFb('fb-name',false,'ابدأِ الاسمَ بحرفٍ كبيرٍ، مثل: Sami.');
+  else {setFb('fb-name',true,'اسمٌ صحيحٌ بحرفٍ كبيرٍ! 🌟');ok++;}
+  // from
+  if(!from) setFb('fb-from',false,'اكتبِ اسمَ مدينتِكَ.');
+  else if(!cap(from)) setFb('fb-from',false,'اسمُ المدينةِ يبدأُ بحرفٍ كبيرٍ، مثل: Ramallah.');
+  else {setFb('fb-from',true,'أحسنتَ! اسمُ المكانِ بحرفٍ كبيرٍ. 🌟');ok++;}
+  // age
+  if(!age) setFb('fb-age',false,'اكتبْ عُمرَكَ بالأرقامِ.');
+  else if(!/^\d{1,2}$/.test(age.trim())) setFb('fb-age',false,'اكتبِ العُمرَ بالأرقامِ فقط، مثل: 10.');
+  else {setFb('fb-age',true,'عُمرٌ مكتوبٌ بشكلٍ صحيحٍ! 🌟');ok++;}
+  // brother
+  if(!bro) setFb('fb-bro',false,'اكتبْ جملةً عن أخيكَ.');
+  else if(!/[A-Z]/.test(bro)) setFb('fb-bro',false,'تذكّرْ أنْ يبدأَ اسمُ أخيكَ بحرفٍ كبيرٍ.');
+  else {setFb('fb-bro',true,'جميلٌ! 🌟');ok++;}
+  // sisters
+  if(!sis) setFb('fb-sis',false,'اكتبْ جملةً عن أخواتِكَ.');
+  else if(!/[A-Z]/.test(sis)) setFb('fb-sis',false,'تبدأُ الأسماءُ بحرفٍ كبيرٍ.');
+  else {setFb('fb-sis',true,'عملٌ رائعٌ! 🌟');ok++;}
+
+  const r=document.getElementById('r1');
+  if(ok===total){r.className='result win';r.textContent='🎉 بطاقةٌ كاملةٌ وصحيحةٌ! '+ok+'/'+total;burst();}
+  else {r.className='result';r.textContent='راجعِ الملاحظاتِ ثمّ حاولْ مرّةً أخرى ('+ok+'/'+total+')';}
+}
+function val(id){return document.getElementById(id).value;}
+
+/* ===== Activity 2: matching ===== */
+let selQ=null, pairs={}, colors=['#c23b2e','#2f6fb0','#1b7f5c','#9b59b6'];
+document.querySelectorAll('#p2 .mitem').forEach(it=>{
+  it.addEventListener('click',e=>{
+    if(e.target.classList.contains('spk'))return;
+    if(it.dataset.q){ // a question
+      document.querySelectorAll('#p2 .mitem[data-q]').forEach(x=>x.classList.remove('sel'));
+      selQ=it; it.classList.add('sel');
+    } else if(it.dataset.a && selQ){ // an answer
+      const q=selQ.dataset.q;
+      // remove old pairing for this q or this a
+      for(const k in pairs){if(pairs[k]===it.dataset.a)delete pairs[k];}
+      pairs[q]=it.dataset.a;
+      paint();
+      selQ.classList.remove('sel'); selQ=null;
+    }
+  });
+});
+function paint(){
+  document.querySelectorAll('#p2 .mitem .dot').forEach(d=>{d.style.background='';});
+  let i=0;
+  for(const q in pairs){
+    const c=colors[(parseInt(q)-1)%4];
+    const qe=document.querySelector('#p2 .mitem[data-q="'+q+'"] .dot');
+    const ae=document.querySelector('#p2 .mitem[data-a="'+pairs[q]+'"] .dot');
+    if(qe)qe.style.background=c; if(ae)ae.style.background=c;
+  }
+}
+function checkMatch(){
+  let ok=0;
+  document.querySelectorAll('#p2 .mitem').forEach(x=>x.classList.remove('correct','wrong'));
+  document.querySelectorAll('#p2 .mitem[data-q]').forEach(q=>{
+    const want=q.dataset.ans, got=pairs[q.dataset.q];
+    const ae=got?document.querySelector('#p2 .mitem[data-a="'+got+'"]'):null;
+    if(got===want){q.classList.add('correct');if(ae)ae.classList.add('correct');ok++;}
+    else{q.classList.add('wrong');if(ae)ae.classList.add('wrong');}
+  });
+  const r=document.getElementById('r2');
+  if(ok===4){r.className='result win';r.textContent='🎉 توصيلٌ مثاليٌّ! 4/4';burst();}
+  else{r.className='result';r.textContent='إجاباتٌ صحيحةٌ: '+ok+'/4 — حاولْ مرّةً أخرى.';}
+}
+
+/* ===== Activity 3: choose correct word ===== */
+const SENTS=[
+  {a:'I',opts:['lives','live'],ok:'live',b:'in Ramallah.'},
+  {a:'He',opts:['is','am'],ok:'is',b:'eleven years old.'},
+  {a:'Her favourite subject',opts:['are','is'],ok:'is',b:'English.'},
+  {a:'They',opts:['likes','like'],ok:'like',b:'writing emails.'}
+];
+let picks={};
+(function buildSents(){
+  const box=document.getElementById('sents');
+  SENTS.forEach((s,i)=>{
+    const d=document.createElement('div');d.className='sent';
+    d.innerHTML='<b>'+(i+1)+'.</b> '+s.a+' '+
+      s.opts.map(o=>'<button class="opt" data-i="'+i+'" data-o="'+o+'">'+o+'</button>').join(' / ')+
+      ' '+s.b;
+    box.appendChild(d);
+  });
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const i=b.dataset.i;
+    box.querySelectorAll('.opt[data-i="'+i+'"]').forEach(x=>x.classList.remove('pick'));
+    b.classList.add('pick');picks[i]=b.dataset.o;
+  });
+})();
+function checkSents(){
+  let ok=0;const box=document.getElementById('sents');
+  box.querySelectorAll('.opt').forEach(x=>x.classList.remove('right','bad'));
+  SENTS.forEach((s,i)=>{
+    if(picks[i]===s.ok){ok++;
+      box.querySelector('.opt[data-i="'+i+'"][data-o="'+s.ok+'"]').classList.add('right');
+    } else if(picks[i]){
+      box.querySelector('.opt[data-i="'+i+'"][data-o="'+picks[i]+'"]').classList.add('bad');
+      box.querySelector('.opt[data-i="'+i+'"][data-o="'+s.ok+'"]').classList.add('right');
+    }
+  });
+  const r=document.getElementById('r3');
+  if(ok===4){r.className='result win';r.textContent='🎉 كلُّ الجُملِ صحيحةٌ! 4/4';burst();}
+  else{r.className='result';r.textContent='صحيحٌ: '+ok+'/4 — اللونُ الأخضرُ هو الإجابةُ الصّحيحةُ.';}
+}
+
+/* ===== Activity 4: verb tables ===== */
+const VERBS=[
+  {v:'look',rows:[['I','look',1],['He','looks',0],['She','looks',0],['We','look',0],['They','look',0]]},
+  {v:'walk',rows:[['I','walk',0],['He','walks',1],['She','walks',0],['We','walk',0],['They','walk',0]]},
+  {v:'work',rows:[['I','work',0],['He','works',0],['She','works',1],['We','work',0],['They','work',0]]}
+];
+(function buildVerbs(){
+  const box=document.getElementById('vtabs');
+  VERBS.forEach((t,ti)=>{
+    const c=document.createElement('div');c.className='vtab';
+    let html='<h5>to '+t.v+'</h5>';
+    t.rows.forEach((row,ri)=>{
+      const[pr,ans,given]=row;
+      if(given) html+='<div class="vrow"><span>'+pr+'</span><span class="given">'+ans+' ✓</span></div>';
+      else html+='<div class="vrow"><span>'+pr+'</span><input data-t="'+ti+'" data-r="'+ri+'" data-ans="'+ans+'" placeholder="...">'+
+        '<span class="fix" id="fix-'+ti+'-'+ri+'"></span></div>';
+    });
+    c.innerHTML=html;box.appendChild(c);
+  });
+})();
+function checkVerbs(){
+  let ok=0,tot=0;
+  document.querySelectorAll('#vtabs input').forEach(inp=>{
+    tot++;const ans=inp.dataset.ans;const fix=document.getElementById('fix-'+inp.dataset.t+'-'+inp.dataset.r);
+    if(inp.value.trim().toLowerCase()===ans){inp.style.borderColor='#1b7f5c';fix.textContent='✔';fix.style.color='#0f5c41';ok++;}
+    else{inp.style.borderColor='#c23b2e';fix.textContent=ans;fix.style.color='#c23b2e';}
+  });
+  const r=document.getElementById('r4');
+  if(ok===tot){r.className='result win';r.textContent='🎉 أحسنتَ! أتقنتَ المُضارعَ البسيطَ '+ok+'/'+tot;burst();}
+  else{r.className='result';r.textContent='صحيحٌ: '+ok+'/'+tot+' — الكلمةُ الحمراءُ هي الإجابةُ الصّحيحةُ.';}
+}
+
+/* ===== Confetti ===== */
+function burst(){
+  const cols=['#c23b2e','#1b7f5c','#e9b949','#2f6fb0','#fff'];
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');c.className='cft';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=cols[i%cols.length];
+    c.style.animation='fall '+(2+Math.random()*1.5)+'s ease-in '+Math.random()*0.4+'s forwards';
+    document.body.appendChild(c);setTimeout(()=>c.remove(),4200);
+  }
+}
+</script>
+</body>
+</html>
