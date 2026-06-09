@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 - Period 7 | Writing</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --board:#22543d; --board2:#1c4332; --chalk:#f4f1e9;
+  --paper:#fffdf6; --wall:#fdf3df;
+  --yellow:#ffc93c; --coral:#ff6b6b; --teal:#3fc1b0; --sky:#45b7d1; --leaf:#51cf66; --purple:#9b8cff;
+  --ink:#33373d; --line:#cfe3ff; --margin:#ffb3b3;
+}
+body{
+  font-family:'Comic Sans MS','Segoe UI',Tahoma,sans-serif;
+  background:var(--wall);
+  background-image:radial-gradient(var(--yellow) 1.5px,transparent 1.5px);
+  background-size:26px 26px;
+  color:var(--ink); line-height:1.6;
+}
+.ar{font-family:'Segoe UI',Tahoma,sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:920px;margin:0 auto;padding:14px}
+
+/* HEADER - chalkboard */
+header{
+  background:linear-gradient(160deg,var(--board),var(--board2));
+  border:9px solid #8a5a2b; border-radius:18px;
+  box-shadow:0 8px 0 #6b441f,0 14px 26px rgba(0,0,0,.22);
+  padding:clamp(18px,4vw,30px); text-align:center; color:var(--chalk);
+  position:relative; overflow:hidden; margin-bottom:10px;
+}
+header::before{content:"🎒 ✏️ 📚 🍎 🎨";position:absolute;top:8px;left:0;right:0;text-align:center;font-size:clamp(14px,3vw,20px);opacity:.85}
+header h1{font-size:clamp(1.5rem,5vw,2.5rem);margin-top:18px;text-shadow:2px 2px 0 rgba(0,0,0,.25);letter-spacing:.5px}
+header .sub{font-size:clamp(.85rem,2.6vw,1.05rem);opacity:.92;margin-top:4px}
+header .teach{display:inline-block;margin-top:12px;background:var(--yellow);color:#5a3d00;
+  padding:5px 16px;border-radius:30px;font-weight:bold;font-size:clamp(.8rem,2.4vw,.95rem);
+  box-shadow:0 3px 0 #d6a017;transform:rotate(-2deg)}
+
+/* TABS */
+nav{position:sticky;top:0;z-index:50;background:var(--wall);
+  padding:10px 0;display:flex;gap:8px;overflow-x:auto;
+  border-bottom:3px dashed #d9b85f;margin-bottom:14px;-webkit-overflow-scrolling:touch}
+nav button{flex:0 0 auto;border:none;cursor:pointer;font-family:inherit;font-weight:bold;
+  font-size:clamp(.78rem,2.3vw,.95rem);padding:10px 16px;border-radius:12px 12px 4px 4px;
+  background:#fff;color:var(--ink);box-shadow:0 3px 0 rgba(0,0,0,.12);transition:.15s;white-space:nowrap}
+nav button:hover{transform:translateY(-2px)}
+nav button.on{color:#fff;transform:translateY(-2px)}
+nav button:nth-child(1).on{background:var(--purple);box-shadow:0 3px 0 #6f5ed6}
+nav button:nth-child(2).on{background:var(--coral);box-shadow:0 3px 0 #d64b4b}
+nav button:nth-child(3).on{background:var(--sky);box-shadow:0 3px 0 #2f93ad}
+nav button:nth-child(4).on{background:var(--leaf);box-shadow:0 3px 0 #34a84c}
+nav button:nth-child(5).on{background:var(--teal);box-shadow:0 3px 0 #2c9588}
+nav button:nth-child(6).on{background:#f08a3c;box-shadow:0 3px 0 #cf6d20}
+nav button:nth-child(7).on{background:var(--yellow);color:#5a3d00;box-shadow:0 3px 0 #d6a017}
+
+section{display:none;animation:pop .35s ease}
+section.show{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* notebook card */
+.card{background:var(--paper);border-radius:14px;padding:clamp(16px,4vw,26px);margin-bottom:16px;
+  box-shadow:0 4px 0 rgba(0,0,0,.08),0 10px 22px rgba(0,0,0,.08);
+  border-left:7px solid var(--coral);position:relative}
+.card.l2{border-left-color:var(--sky)} .card.l3{border-left-color:var(--leaf)}
+.card.l4{border-left-color:var(--teal)} .card.l5{border-left-color:#f08a3c}
+.tag{display:inline-block;background:var(--yellow);color:#5a3d00;font-weight:bold;
+  padding:4px 14px;border-radius:20px;font-size:clamp(.8rem,2.4vw,.95rem);margin-bottom:10px;box-shadow:0 2px 0 #d6a017}
+h2{font-size:clamp(1.15rem,3.6vw,1.6rem);color:var(--board);margin-bottom:6px}
+h3{font-size:clamp(1rem,3vw,1.25rem);color:var(--board);margin:14px 0 8px}
+p{margin-bottom:8px;font-size:clamp(.92rem,2.7vw,1.05rem)}
+
+/* arabic helper note */
+.note{background:#eafaf0;border:2px dashed var(--leaf);border-radius:12px;padding:12px 16px;margin:12px 0;font-size:clamp(.9rem,2.7vw,1.02rem)}
+.rule{background:#fff6e0;border:2px solid var(--yellow);border-radius:12px;padding:14px 18px;margin:12px 0;
+  box-shadow:0 3px 0 rgba(214,160,23,.3)}
+.rule .h{font-weight:bold;color:#a86b00;margin-bottom:6px;font-size:clamp(1rem,3vw,1.15rem)}
+
+/* objectives */
+.objlist{list-style:none}
+.objlist li{background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;
+  box-shadow:0 3px 0 rgba(0,0,0,.07);display:flex;gap:10px;align-items:flex-start;
+  font-size:clamp(.92rem,2.7vw,1.05rem)}
+.objlist li span{font-size:1.4rem;flex:0 0 auto}
+
+/* writing rows */
+.q{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 3px 0 rgba(0,0,0,.06)}
+.q .ask{font-weight:bold;color:var(--board);font-size:clamp(.95rem,2.9vw,1.1rem);margin-bottom:8px}
+.q .help{color:#888;font-size:.85rem}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+input.txt{flex:1;min-width:180px;border:2px solid #d8e6f5;border-radius:10px;padding:10px 12px;
+  font-family:inherit;font-size:clamp(.92rem,2.7vw,1.02rem);background:repeating-linear-gradient(transparent,transparent 30px,#eef4ff 30px,#eef4ff 32px)}
+input.txt:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(69,183,209,.18)}
+.starter{font-weight:bold;color:var(--coral)}
+button.check{border:none;cursor:pointer;font-family:inherit;font-weight:bold;color:#fff;
+  background:var(--leaf);padding:10px 16px;border-radius:10px;box-shadow:0 3px 0 #34a84c;font-size:clamp(.85rem,2.5vw,.95rem)}
+button.check:active{transform:translateY(2px);box-shadow:0 1px 0 #34a84c}
+.fb{margin-top:8px;border-radius:10px;padding:8px 12px;font-size:clamp(.85rem,2.6vw,.98rem);display:none}
+.fb.show{display:block}
+.fb.ok{background:#e7f9ec;color:#1d7a3a;border:1px solid #9be0ad}
+.fb.bad{background:#fff0f0;color:#b53939;border:1px solid #f0b3b3}
+.fb.warn{background:#fff8e0;color:#9a6b00;border:1px solid #f0d68a}
+.fb ul{margin:6px 18px 0;text-align:right;direction:rtl}
+
+/* speech img + bubble */
+.imgbox{text-align:center;margin:14px 0}
+.imgbox img{max-width:160px;width:38%;border-radius:14px;box-shadow:0 5px 14px rgba(0,0,0,.18)}
+.bubble{display:inline-block;background:#fff;border:2px solid var(--board);border-radius:16px;
+  padding:8px 14px;font-weight:bold;color:var(--board);position:relative;margin-bottom:8px;font-size:clamp(.9rem,2.7vw,1.05rem)}
+.bubble::after{content:"";position:absolute;bottom:-12px;left:30px;border:7px solid transparent;border-top-color:var(--board)}
+
+/* table */
+table{width:100%;border-collapse:collapse;margin:10px 0;background:#fff;border-radius:10px;overflow:hidden}
+th,td{border:1px solid #e0e0e0;padding:10px;text-align:left;font-size:clamp(.85rem,2.6vw,1rem)}
+th{background:var(--board);color:var(--chalk)}
+td input{width:100%;border:none;border-bottom:2px dotted #bbb;font-family:inherit;padding:4px;font-size:1rem;background:transparent}
+td input:focus{outline:none;border-bottom-color:var(--sky)}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:12px}
+.flip{perspective:800px;height:120px;cursor:pointer}
+.fi{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.f .fi{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;padding:8px;box-shadow:0 4px 0 rgba(0,0,0,.12)}
+.front{background:linear-gradient(135deg,var(--sky),var(--teal));color:#fff;font-weight:bold;font-size:clamp(1rem,3vw,1.2rem)}
+.back{background:#fff;transform:rotateY(180deg);color:var(--board);text-align:center}
+.back .ar2{font-size:1.15rem;font-weight:bold;direction:rtl}
+.spk{margin-top:6px;border:none;background:var(--yellow);color:#5a3d00;border-radius:20px;
+  padding:4px 12px;font-weight:bold;cursor:pointer;font-size:.8rem}
+
+/* spelling practice */
+.sp{background:#fff;border-radius:12px;padding:14px;margin-top:14px;box-shadow:0 3px 0 rgba(0,0,0,.06)}
+.sprow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.sprow .arw{font-weight:bold;color:var(--coral);direction:rtl;min-width:90px}
+.sprow input{flex:1;min-width:140px;border:2px solid #d8e6f5;border-radius:10px;padding:8px 10px;font-family:inherit;font-size:1rem}
+.sprow input:focus{outline:none;border-color:var(--sky)}
+.sprow .mark{font-weight:bold;font-size:1.2rem;width:24px;text-align:center}
+
+/* quiz */
+.quiz .qz{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:12px;box-shadow:0 3px 0 rgba(0,0,0,.06)}
+.quiz .qz .ask{font-weight:bold;color:var(--board);margin-bottom:8px;font-size:clamp(.95rem,2.8vw,1.08rem)}
+.opt{display:block;width:100%;text-align:left;border:2px solid #e6e6e6;background:#fafafa;border-radius:10px;
+  padding:10px 12px;margin-bottom:7px;cursor:pointer;font-family:inherit;font-size:clamp(.9rem,2.7vw,1rem);transition:.12s}
+.opt:hover{border-color:var(--sky)}
+.opt.right{background:#e7f9ec;border-color:var(--leaf);color:#1d7a3a;font-weight:bold}
+.opt.wrong{background:#fff0f0;border-color:var(--coral);color:#b53939}
+.submit{display:block;width:100%;border:none;cursor:pointer;font-family:inherit;font-weight:bold;color:#fff;
+  background:var(--coral);padding:14px;border-radius:12px;font-size:clamp(1rem,3vw,1.15rem);box-shadow:0 4px 0 #d64b4b;margin-top:6px}
+.score{display:none;text-align:center;background:#fff;border-radius:14px;padding:22px;margin-top:14px;box-shadow:0 4px 0 rgba(0,0,0,.1)}
+.score.show{display:block}
+.score .big{font-size:clamp(2rem,7vw,3rem);font-weight:bold;color:var(--board)}
+.score .stars{font-size:2rem;margin:8px 0}
+
+footer{text-align:center;padding:20px;color:var(--board);font-weight:bold;font-size:clamp(.9rem,2.7vw,1.05rem)}
+footer .t{background:var(--yellow);color:#5a3d00;display:inline-block;padding:6px 18px;border-radius:30px;box-shadow:0 3px 0 #d6a017;margin-top:6px}
+
+.conf{position:fixed;top:-20px;font-size:22px;z-index:999;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Unit 1 · Period 7</h1>
+  <div class="sub">Focus on Writing ✍️ — Me, My Classmate &amp; My Family</div>
+  <div class="teach">👩‍🏫 T. Wad Refae</div>
+</header>
+
+<nav id="nav">
+  <button class="on" onclick="go(0,this)">🎯 Objectives</button>
+  <button onclick="go(1,this)">1️⃣ Questions</button>
+  <button onclick="go(2,this)">2️⃣ Classmate</button>
+  <button onclick="go(3,this)">3️⃣ Make a Question</button>
+  <button onclick="go(4,this)">4️⃣ My Family</button>
+  <button onclick="go(5,this)">5️⃣ Words</button>
+  <button onclick="go(6,this)">⭐ Quiz</button>
+</nav>
+
+<!-- 0 OBJECTIVES -->
+<section class="show">
+  <div class="card l3">
+    <span class="tag">🎯 Lesson Objectives</span>
+    <h2>What will I learn today?</h2>
+    <p class="ar note">في نهاية الدرس، رح تكون قادر/ة على:</p>
+    <ul class="objlist">
+      <li><span>🗣️</span><div>Ask and answer questions about <b>myself</b> and my <b>classmate</b>.<br><span class="ar" style="color:#888">أسأل وأجيب عن نفسي وعن زميلي.</span></div></li>
+      <li><span>❓</span><div>Write <b>correct questions</b> with a capital letter and a question mark.<br><span class="ar" style="color:#888">أكتب أسئلة صحيحة بحرف كبير وعلامة استفهام.</span></div></li>
+      <li><span>👨‍👩‍👧‍👦</span><div>Write sentences about my <b>family</b>.<br><span class="ar" style="color:#888">أكتب جمل عن عائلتي.</span></div></li>
+      <li><span>📝</span><div>Spell and write Unit 1 <b>words</b> correctly.<br><span class="ar" style="color:#888">أكتب كلمات الوحدة بإملاء صحيح.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 1 ACTIVITY 1 -->
+<section>
+  <div class="card">
+    <span class="tag">Activity 1</span>
+    <h2>Write answers to the questions</h2>
+    <div class="note ar">📌 اقرأ كل سؤال واكتب إجابتك <b>عن نفسك</b> بجملة كاملة. ابدأ بحرف كبير وانهِ الجملة بنقطة.</div>
+
+    <div class="q">
+      <div class="ask">Where do you live?</div>
+      <div class="row"><span class="starter">I live in</span><input class="txt" id="a1" placeholder="Birzeit."><button class="check" onclick="ck('a1','.')">Check ✓</button></div>
+      <div class="fb" id="f_a1"></div>
+    </div>
+    <div class="q">
+      <div class="ask">What's your favourite subject?</div>
+      <div class="row"><span class="starter">My favourite subject is</span><input class="txt" id="a2" placeholder="English."><button class="check" onclick="ck('a2','.')">Check ✓</button></div>
+      <div class="fb" id="f_a2"></div>
+    </div>
+    <div class="q">
+      <div class="ask">What do you like doing?</div>
+      <div class="row"><span class="starter">I like</span><input class="txt" id="a3" placeholder="reading books."><button class="check" onclick="ck('a3','.')">Check ✓</button></div>
+      <div class="fb" id="f_a3"></div>
+    </div>
+
+    <h3>📋 About my classmate</h3>
+    <p class="ar" style="color:#888">اسأل زميلك ثم اكتب إجاباته في الجدول:</p>
+    <table>
+      <tr><th>About my classmate</th><th>Answers</th></tr>
+      <tr><td>Place</td><td><input placeholder="..."></td></tr>
+      <tr><td>Subject</td><td><input placeholder="..."></td></tr>
+      <tr><td>Like</td><td><input placeholder="..."></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 2 ACTIVITY 2 -->
+<section>
+  <div class="card l2">
+    <span class="tag">Activity 2</span>
+    <h2>Complete the sentences about your classmate</h2>
+    <div class="note ar">📌 أكمل الجمل عن زميلك باستخدام المعلومات من الجدول في التمرين السابق.</div>
+
+    <div class="q">
+      <div class="row"><input class="txt" id="b1" style="max-width:160px" placeholder="Ahmad"><span class="starter">lives in</span><input class="txt" id="b1b" placeholder="Ramallah."><button class="check" onclick="ckPair('b1','b1b','.')">Check ✓</button></div>
+      <div class="fb" id="f_b1"></div>
+    </div>
+    <div class="q">
+      <div class="row"><span class="starter">His favourite subject is</span><input class="txt" id="b2" placeholder="art."><button class="check" onclick="ck('b2','.')">Check ✓</button></div>
+      <div class="fb" id="f_b2"></div>
+    </div>
+    <div class="q">
+      <div class="row"><span class="starter">He likes</span><input class="txt" id="b3" placeholder="playing football."><button class="check" onclick="ck('b3','.')">Check ✓</button></div>
+      <div class="fb" id="f_b3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ACTIVITY 3 -->
+<section>
+  <div class="card l3">
+    <span class="tag">Activity 3</span>
+    <h2>Write correct questions</h2>
+
+    <div class="rule">
+      <div class="h">📐 The Rule — قاعدة كتابة السؤال</div>
+      <p>① Start a question with a <b>CAPITAL</b> letter.</p>
+      <p>② End a question with a <b>question mark</b> ( <b>?</b> ).</p>
+      <p class="ar" style="margin-top:6px;color:#a86b00">① ابدأ السؤال بحرف كبير. &nbsp; ② انهِ السؤال بعلامة استفهام (؟).</p>
+    </div>
+
+    <div class="imgbox">
+      <img src="https://i.ibb.co/kgPGdTR7/Gemini-Generated-Image-sclp1ssclp1ssclp.png" alt="Student asking a question">
+    </div>
+
+    <div class="note ar">📌 رتّب الكلمات لتكوين سؤال صحيح. لا تنسَ الحرف الكبير وعلامة الاستفهام!</div>
+
+    <div class="q">
+      <div class="ask">1) many how and ? sisters do you have brothers</div>
+      <div class="row"><input class="txt" id="c1" placeholder="Write the question..."><button class="check" onclick="ckQ('c1')">Check ✓</button></div>
+      <div class="fb" id="f_c1"></div>
+    </div>
+    <div class="q">
+      <div class="ask">2) where ? are from you</div>
+      <div class="row"><input class="txt" id="c2" placeholder="Write the question..."><button class="check" onclick="ckQ('c2')">Check ✓</button></div>
+      <div class="fb" id="f_c2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ACTIVITY 4 -->
+<section>
+  <div class="card l4">
+    <span class="tag">Activity 4</span>
+    <h2>Write sentences about your family</h2>
+    <div class="note ar">📌 فكّر في عائلتك واكتب جمل عن نفسك. كل جملة تبدأ بحرف كبير وتنتهي بنقطة.</div>
+
+    <div class="q"><div class="row"><span class="starter">My name is</span><input class="txt" id="d1" placeholder="Sara."><button class="check" onclick="ck('d1','.')">Check ✓</button></div><div class="fb" id="f_d1"></div></div>
+    <div class="q"><div class="row"><span class="starter">I come from</span><input class="txt" id="d2" placeholder="Palestine."><button class="check" onclick="ck('d2','.')">Check ✓</button></div><div class="fb" id="f_d2"></div></div>
+    <div class="q"><div class="row"><span class="starter">I live in</span><input class="txt" id="d3" placeholder="Surda."><button class="check" onclick="ck('d3','.')">Check ✓</button></div><div class="fb" id="f_d3"></div></div>
+    <div class="q"><div class="row"><span class="starter">I'm</span><input class="txt" id="d4" style="max-width:120px" placeholder="10 years old."><button class="check" onclick="ck('d4','.')">Check ✓</button></div><div class="fb" id="f_d4"></div></div>
+    <div class="q"><div class="row"><span class="starter">I have</span><input class="txt" id="d5" placeholder="two brothers and one sister."><button class="check" onclick="ck('d5','.')">Check ✓</button></div><div class="fb" id="f_d5"></div></div>
+  </div>
+</section>
+
+<!-- 5 WORDS -->
+<section>
+  <div class="card l5">
+    <span class="tag">Activity 5</span>
+    <h2>Write the words — Practise your handwriting</h2>
+    <div class="note ar">📌 اضغط على البطاقة لرؤية المعنى، واستمع للنطق 🔊، ثم تدرّب على كتابة الكلمات.</div>
+    <div class="cards" id="cards"></div>
+
+    <div class="sp">
+      <h3>✏️ Spelling Practice</h3>
+      <p class="ar" style="color:#888">اكتب الكلمة الإنجليزية الصحيحة بجانب كل معنى:</p>
+      <div id="sprows"></div>
+      <button class="check" style="background:var(--sky);box-shadow:0 3px 0 #2f93ad" onclick="ckSpell()">Check spelling ✓</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6 QUIZ -->
+<section>
+  <div class="card" style="border-left-color:var(--yellow)">
+    <span class="tag">⭐ Quiz</span>
+    <h2>Show what you learned!</h2>
+    <div class="quiz" id="quiz"></div>
+    <button class="submit" onclick="grade()">Submit Quiz 🚀</button>
+    <div class="score" id="score">
+      <div class="big" id="big"></div>
+      <div class="stars" id="stars"></div>
+      <p id="msg" style="font-weight:bold"></p>
+      <button class="check" style="margin-top:10px" onclick="resetQuiz()">Try again 🔁</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  🍎 English for Palestine · Grade 5 · Unit 1 — Period 7<br>
+  <span class="t">👩‍🏫 Made by T. Wad Refae</span>
+</footer>
+</div>
+
+<script>
+/* tabs */
+const secs=document.querySelectorAll('section');
+function go(i,btn){
+  secs.forEach((s,n)=>s.classList.toggle('show',n===i));
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* speech */
+function speak(t){if(!window.speechSynthesis)return;speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.85;speechSynthesis.speak(u);}
+
+/* writing checker for personal answers */
+function showFb(id,type,html){const f=document.getElementById('f_'+id);f.className='fb show '+type;f.innerHTML=html;}
+function checkText(val,endMark){
+  val=val.trim();
+  if(!val) return {type:'warn',msg:'اكتب إجابتك أولاً ✍️'};
+  let issues=[];
+  if(!/^[A-Z]/.test(val)) issues.push('ابدأ بحرف كبير (Capital letter).');
+  if(endMark==='?'){ if(!val.endsWith('?')) issues.push('انهِ السؤال بعلامة استفهام ( ? ).'); }
+  else { if(!/[.!?]$/.test(val)) issues.push('انهِ الجملة بنقطة ( . ).'); }
+  if(/\s{2,}/.test(val)) issues.push('اترك مسافة واحدة فقط بين الكلمات.');
+  if(issues.length) return {type:'bad',msg:'انتبه للكتابة الصحيحة:<ul><li>'+issues.join('</li><li>')+'</li></ul>'};
+  return {type:'ok',msg:'ممتاز! 🌟 كتابة صحيحة — Great writing!'};
+}
+function ck(id,mark){const r=checkText(document.getElementById(id).value,mark);showFb(id,r.type,r.msg);}
+function ckPair(id1,id2,mark){
+  const v1=document.getElementById(id1).value.trim();
+  const v2=document.getElementById(id2).value.trim();
+  const r=checkText((v1+' '+v2).trim(),mark);
+  let extra=(v1 && !/^[A-Z]/.test(v1))?'<li>اسم الشخص يبدأ بحرف كبير.</li>':'';
+  if(extra && r.type==='ok'){showFb(id1,'bad','انتبه:<ul>'+extra+'</ul>');return;}
+  showFb(id1,r.type,r.msg);
+}
+
+/* question checker (correct answers exist) */
+const QANS={
+  c1:'how many brothers and sisters do you have',
+  c2:'where are you from'
+};
+function norm(s){return s.toLowerCase().replace(/[?.!]/g,'').replace(/\s+/g,' ').trim();}
+function ckQ(id){
+  let raw=document.getElementById(id).value;
+  let v=raw.trim();
+  if(!v){showFb(id,'warn','اكتب السؤال أولاً ✍️');return;}
+  let issues=[];
+  if(norm(v)!==QANS[id]) issues.push('ترتيب الكلمات غير صحيح. أعد ترتيبها.');
+  if(!/^[A-Z]/.test(v)) issues.push('ابدأ بحرف كبير (Capital letter).');
+  if(!v.endsWith('?')) issues.push('انهِ السؤال بعلامة استفهام ( ? ).');
+  if(issues.length){showFb(id,'bad','راجع سؤالك:<ul><li>'+issues.join('</li><li>')+'</li></ul>');return;}
+  showFb(id,'ok','رائع! 🎉 سؤال صحيح تماماً — Perfect question!');
+}
+
+/* vocabulary */
+const VOCAB=[
+  {e:'parents',a:'الوالدان'},{e:'twins',a:'توأم'},{e:'art',a:'فن'},
+  {e:'work',a:'عمل'},{e:'race',a:'سباق'},{e:'internet',a:'الإنترنت'},
+  {e:'class',a:'صف / حصة'},{e:'film',a:'فيلم'},{e:'cinema',a:'سينما'},{e:'emails',a:'رسائل إلكترونية'}
+];
+const cw=document.getElementById('cards');
+VOCAB.forEach((w,i)=>{
+  const d=document.createElement('div');d.className='flip';
+  d.innerHTML=`<div class="fi">
+    <div class="face front">${w.e}</div>
+    <div class="face back"><div class="ar2">${w.a}</div>
+    <button class="spk" onclick="event.stopPropagation();speak('${w.e}')">🔊 say</button></div></div>`;
+  d.onclick=()=>d.classList.toggle('f');
+  cw.appendChild(d);
+});
+
+/* spelling practice (random 5) */
+const SP=[...VOCAB].sort(()=>Math.random()-0.5).slice(0,5);
+const spw=document.getElementById('sprows');
+SP.forEach((w,i)=>{
+  const r=document.createElement('div');r.className='sprow';
+  r.innerHTML=`<span class="arw">${w.a}</span><input id="sp${i}" data-ans="${w.e}" placeholder="English word..."><span class="mark" id="m${i}"></span>`;
+  spw.appendChild(r);
+});
+function ckSpell(){
+  SP.forEach((w,i)=>{
+    const inp=document.getElementById('sp'+i);
+    const m=document.getElementById('m'+i);
+    const v=inp.value.trim().toLowerCase();
+    if(!v){m.textContent='✍️';return;}
+    if(v===w.e){m.textContent='✅';inp.style.borderColor='#51cf66';}
+    else {m.textContent='❌';inp.style.borderColor='#ff6b6b';}
+  });
+}
+
+/* quiz */
+const QUIZ=[
+  {q:'Which question is written correctly?',o:['how old are you','How old are you?','How old are you'],c:1},
+  {q:'Where do we put a CAPITAL letter?',o:['at the end','in the middle','at the start of the question'],c:2},
+  {q:'What goes at the end of a question?',o:['a full stop ( . )','a question mark ( ? )','a comma ( , )'],c:1},
+  {q:'____ do you live?',o:['Where','What','How'],c:0},
+  {q:'____ many brothers do you have?',o:['What','How','Where'],c:1},
+  {q:'"twins" means ...',o:['توأم','سباق','فن'],c:0},
+  {q:'"cinema" means ...',o:['عمل','سينما','صف'],c:1}
+];
+const qz=document.getElementById('quiz');let picked={};
+QUIZ.forEach((item,i)=>{
+  const d=document.createElement('div');d.className='qz';
+  let h=`<div class="ask">${i+1}. ${item.q}</div>`;
+  item.o.forEach((o,j)=>h+=`<button class="opt" id="o${i}_${j}" onclick="pick(${i},${j})">${o}</button>`);
+  d.innerHTML=h;qz.appendChild(d);
+});
+function pick(i,j){
+  picked[i]=j;
+  QUIZ[i].o.forEach((o,k)=>document.getElementById('o'+i+'_'+k).style.borderColor='#e6e6e6');
+  document.getElementById('o'+i+'_'+j).style.borderColor='#45b7d1';
+}
+function grade(){
+  let s=0;
+  QUIZ.forEach((item,i)=>{
+    item.o.forEach((o,j)=>{
+      const b=document.getElementById('o'+i+'_'+j);b.classList.remove('right','wrong');b.disabled=true;
+      if(j===item.c)b.classList.add('right');
+      else if(picked[i]===j)b.classList.add('wrong');
+    });
+    if(picked[i]===item.c)s++;
+  });
+  const tot=QUIZ.length;const sc=document.getElementById('score');sc.classList.add('show');
+  document.getElementById('big').textContent=s+' / '+tot;
+  const pct=s/tot;const st=Math.round(pct*3);
+  document.getElementById('stars').textContent='⭐'.repeat(st)+'☆'.repeat(3-st);
+  let m=pct>=0.8?'🎉 Excellent work! ممتاز!':pct>=0.5?'👍 Good job! حاول مرة أخرى لتتحسّن.':'💪 Keep practising! راجع الدرس وحاول مجدداً.';
+  document.getElementById('msg').textContent=m;
+  sc.scrollIntoView({behavior:'smooth'});
+  if(pct>=0.8)confetti();
+}
+function resetQuiz(){
+  picked={};document.getElementById('score').classList.remove('show');
+  QUIZ.forEach((item,i)=>item.o.forEach((o,j)=>{const b=document.getElementById('o'+i+'_'+j);b.className='opt';b.disabled=false;}));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function confetti(){
+  const e=['🎉','⭐','🎊','🌟','✨','🍎'];
+  for(let i=0;i<40;i++){const d=document.createElement('div');d.className='conf';
+    d.textContent=e[Math.floor(Math.random()*e.length)];
+    d.style.left=Math.random()*100+'vw';d.style.animationDuration=(2+Math.random()*2)+'s';
+    d.style.animationDelay=Math.random()+'s';document.body.appendChild(d);
+    setTimeout(()=>d.remove(),4500);}
+}
+</script>
+</body>
+</html>
