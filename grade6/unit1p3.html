@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 · Period 3 — Up in the Tree House</title>
+<style>
+:root{
+  --sky:#bfe6f2; --sky2:#e8f7ed; --sun:#ffd86b;
+  --pine:#1f5d33; --pine2:#2f7d45; --leaf:#5aa860; --leaf2:#8fcf7a;
+  --wood:#a06b3a; --wood2:#7a4f29; --wood3:#6e451f; --rope:#c9a165;
+  --ember:#ff8c42; --berry:#e25563;
+  --cream:#fdf6e9; --card:#fffaf0; --ink:#2c2419; --soft:rgba(44,36,25,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Tahoma,system-ui,sans-serif;color:var(--ink);line-height:1.55;
+  background:var(--cream);overflow-x:hidden}
+.ar{direction:rtl;font-family:Tahoma,sans-serif}
+button{font-family:inherit}
+
+/* ============ HEADER — TREE HOUSE SCENE ============ */
+header{position:relative;overflow:hidden;min-height:clamp(330px,56vh,480px);
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px;
+  padding:24px 14px 24px clamp(14px,6vw,70px);
+  background:linear-gradient(180deg,#9fd9ee 0%,var(--sky) 45%,var(--sky2) 100%)}
+.sun{position:absolute;top:8%;left:8%;width:clamp(60px,9vw,100px);height:clamp(60px,9vw,100px);
+  background:radial-gradient(circle,#fff3c4 0%,var(--sun) 60%,#ffc94d 100%);border-radius:50%;
+  box-shadow:0 0 46px 14px rgba(255,216,107,.6);animation:sunpulse 5s ease-in-out infinite}
+@keyframes sunpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.cloud{position:absolute;background:#fff;border-radius:50px;opacity:.92;animation:drift linear infinite}
+.cloud:before,.cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cl1{top:13%;left:-15%;width:100px;height:30px;animation-duration:48s}
+.cl1:before{width:46px;height:46px;top:-25px;left:13px}
+.cl1:after{width:32px;height:32px;top:-16px;left:55px}
+.cl2{top:27%;left:-25%;width:72px;height:22px;opacity:.8;animation-duration:65s}
+.cl2:before{width:34px;height:34px;top:-18px;left:9px}
+@keyframes drift{to{transform:translateX(135vw)}}
+.bird{position:absolute;font-size:clamp(16px,2.4vw,24px);animation:fly linear infinite;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+.b1{top:18%;animation-duration:22s}
+.b2{top:11%;animation-duration:30s;animation-delay:-12s;font-size:clamp(13px,2vw,19px)}
+@keyframes fly{from{transform:translateX(-8vw) translateY(0)}50%{transform:translateX(55vw) translateY(-18px)}to{transform:translateX(115vw) translateY(6px)}}
+.hill{position:absolute;bottom:-2px;border-radius:50% 50% 0 0}
+.h1{left:-12%;width:75%;height:24%;background:linear-gradient(180deg,var(--leaf2),var(--leaf))}
+.h2{right:-15%;width:80%;height:30%;background:linear-gradient(180deg,var(--leaf),var(--pine2))}
+.grass-strip{position:absolute;bottom:0;left:0;right:0;height:9%;
+  background:linear-gradient(180deg,var(--leaf) 0%,var(--pine2) 100%)}
+
+/* ---- the big tree ---- */
+.tree{position:absolute;right:clamp(-60px,1vw,40px);bottom:0;width:clamp(240px,36vw,380px);height:96%;z-index:2;pointer-events:none}
+.trunk{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:13%;height:58%;
+  background:linear-gradient(90deg,#6e451f,#a06b3a 45%,#7a4f29);border-radius:40% 40% 8% 8%}
+.trunk:before{content:"";position:absolute;left:18%;top:22%;width:18%;height:30%;
+  background:rgba(0,0,0,.18);border-radius:50%}
+.branch{position:absolute;height:14px;background:linear-gradient(180deg,#8a5a2b,#6e451f);border-radius:10px}
+.br1{left:8%;bottom:55%;width:42%;transform:rotate(14deg)}
+.br2{right:6%;bottom:60%;width:40%;transform:rotate(-10deg)}
+.crown{position:absolute;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,var(--leaf2) 0%,var(--leaf) 55%,var(--pine2) 100%);
+  box-shadow:inset -10px -14px 24px rgba(0,0,0,.14);animation:breeze 6s ease-in-out infinite}
+.c1{left:2%;top:6%;width:52%;height:34%}
+.c2{right:0;top:2%;width:58%;height:38%;animation-delay:-2s}
+.c3{left:22%;top:-6%;width:56%;height:36%;animation-delay:-4s}
+.c4{left:-8%;top:22%;width:38%;height:24%;animation-delay:-1s}
+.c5{right:-6%;top:24%;width:36%;height:23%;animation-delay:-3s}
+@keyframes breeze{0%,100%{transform:translateX(0) scale(1)}50%{transform:translateX(6px) scale(1.015)}}
+/* tree house */
+.house{position:absolute;left:50%;transform:translateX(-50%);bottom:50%;width:46%;height:24%;z-index:3;
+  background:repeating-linear-gradient(180deg,#b5793f 0 12px,#9b6433 12px 14px);
+  border:3px solid var(--wood3);border-radius:6px;box-shadow:0 8px 16px rgba(0,0,0,.25)}
+.house .roof{position:absolute;left:-12%;top:-46%;width:124%;height:46%;
+  background:linear-gradient(180deg,#e25563,#b13b48);border:3px solid #7e2531;
+  clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:4px}
+.house .window{position:absolute;left:14%;top:22%;width:26%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,#fff8d9 35%,#ffe9a8 70%,#caa24f 100%);border:3px solid var(--wood3);
+  animation:glow 3.5s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 6px 2px rgba(255,232,150,.5)}50%{box-shadow:0 0 16px 6px rgba(255,232,150,.85)}}
+.house .door{position:absolute;right:14%;bottom:0;width:24%;height:64%;
+  background:linear-gradient(180deg,#7a4f29,#5e3a18);border:2px solid var(--wood3);border-radius:8px 8px 0 0}
+.house .door:after{content:"";position:absolute;right:14%;top:46%;width:5px;height:5px;background:#ffd86b;border-radius:50%}
+.flag{position:absolute;right:-4%;top:-78%;width:4px;height:36%;background:var(--wood3)}
+.flag:after{content:"";position:absolute;left:4px;top:0;border-top:9px solid transparent;border-bottom:9px solid transparent;
+  border-left:26px solid var(--ember);animation:flap 1.6s ease-in-out infinite;transform-origin:left}
+@keyframes flap{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.82) skewY(4deg)}}
+/* rope ladder from house to ground */
+.ladder{position:absolute;left:24%;bottom:0;width:14%;height:50%;z-index:2;
+  background:
+    linear-gradient(90deg,var(--rope) 0 4px,transparent 4px) left/4px 100% no-repeat,
+    linear-gradient(90deg,transparent calc(100% - 4px),var(--rope) calc(100% - 4px)) right/4px 100% no-repeat,
+    repeating-linear-gradient(180deg,transparent 0 16px,var(--wood) 16px 22px)}
+/* swing */
+.swing{position:absolute;right:4%;top:38%;width:14%;height:26%;z-index:3;
+  transform-origin:top center;animation:sway 3.2s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(7deg)}50%{transform:rotate(-7deg)}}
+.swing:before,.swing:after{content:"";position:absolute;top:0;width:3px;height:86%;background:var(--rope)}
+.swing:before{left:12%}.swing:after{right:12%}
+.swing .seat{position:absolute;bottom:8%;left:0;width:100%;height:9px;
+  background:linear-gradient(180deg,#b5793f,#8a5a2b);border:2px solid var(--wood3);border-radius:4px}
+.squirrel{position:absolute;left:6%;bottom:57%;font-size:clamp(22px,3.4vw,34px);z-index:4;
+  animation:bob 2.4s ease-in-out infinite;transform:scaleX(-1)}
+@keyframes bob{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-7px)}}
+/* falling leaves */
+.fleaf{position:absolute;top:-8%;font-size:clamp(13px,2vw,20px);opacity:.9;z-index:4;
+  animation:fall linear infinite;pointer-events:none}
+@keyframes fall{
+  0%{transform:translateY(-5vh) translateX(0) rotate(0)}
+  25%{transform:translateY(14vh) translateX(-26px) rotate(80deg)}
+  50%{transform:translateY(28vh) translateX(18px) rotate(170deg)}
+  75%{transform:translateY(40vh) translateX(-20px) rotate(260deg)}
+  100%{transform:translateY(58vh) translateX(10px) rotate(360deg)}}
+/* flowers on the ground (Amy crashed in the flowers!) */
+.flower{position:absolute;bottom:1.5%;font-size:clamp(15px,2.4vw,24px);z-index:3;
+  animation:wiggle 3s ease-in-out infinite;transform-origin:bottom}
+@keyframes wiggle{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+
+/* wooden sign */
+.sign{position:relative;text-align:center;z-index:5;
+  background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 14px,transparent 14px 30px),linear-gradient(180deg,#b5793f,#9b6433);
+  padding:16px 28px;border:4px solid var(--wood3);border-radius:14px;
+  box-shadow:0 12px 24px rgba(0,0,0,.3),inset 0 2px 0 rgba(255,255,255,.18);max-width:min(92%,560px);
+  animation:signin 1s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes signin{from{opacity:0;transform:translateY(-34px) rotate(-3deg)}to{opacity:1;transform:none}}
+.sign:before,.sign:after{content:"";position:absolute;top:-16px;width:12px;height:18px;background:#5e3a18;border-radius:3px}
+.sign:before{left:18px}.sign:after{right:18px}
+.sign h1{font-size:clamp(1.4rem,5.6vw,2.5rem);font-weight:900;color:#fff6e2;letter-spacing:.5px;line-height:1.12;
+  text-shadow:0 2px 0 var(--wood3),0 3px 5px rgba(0,0,0,.45)}
+.sign .sub{margin-top:6px;font-weight:800;color:#ffe9c2;font-size:clamp(.8rem,2.8vw,1.05rem);
+  text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.teacher-tag{position:relative;z-index:6;background:rgba(31,93,51,.92);color:#fff6e2;font-weight:800;
+  padding:6px 20px;border-radius:30px;font-size:clamp(.72rem,2.4vw,.9rem);letter-spacing:.5px;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);animation:signin 1s .25s cubic-bezier(.34,1.56,.64,1) both}
+
+/* ============ TABS (wooden planks) ============ */
+nav{position:sticky;top:0;z-index:50;background:var(--pine);display:flex;overflow-x:auto;
+  scrollbar-width:thin;padding:8px 8px 0;box-shadow:0 3px 8px rgba(0,0,0,.18)}
+nav button{flex:0 0 auto;border:2px solid var(--wood3);border-bottom:none;color:#fff6e2;
+  background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 10px,transparent 10px 22px),linear-gradient(180deg,#a06b3a,#8a5a2b);
+  padding:9px 15px;margin-right:6px;border-radius:12px 12px 0 0;cursor:pointer;font-weight:800;
+  font-size:clamp(.74rem,2.4vw,.92rem);white-space:nowrap;transition:.15s;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+nav button:hover{filter:brightness(1.15);transform:translateY(-2px)}
+nav button.active{background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 10px,transparent 10px 22px),linear-gradient(180deg,#ffd86b,#f3b93f);
+  color:var(--ink);text-shadow:none;transform:translateY(-3px)}
+nav button .done-star{display:none;margin-left:4px}
+nav button.completed .done-star{display:inline}
+
+/* ============ LAYOUT ============ */
+main{max-width:880px;margin:0 auto;padding:22px 14px 80px}
+section{display:none;animation:fade .35s ease}
+section.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.panel{background:var(--card);border:1px solid #ecddc2;border-left:6px solid var(--leaf);
+  border-radius:16px;padding:18px;margin-bottom:18px;box-shadow:0 8px 22px var(--soft)}
+h2.title{font-size:clamp(1.2rem,5vw,1.8rem);font-weight:900;color:var(--pine);margin-bottom:6px;
+  display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.badge{background:linear-gradient(180deg,#b5793f,#8a5a2b);color:#fff6e2;border:2px solid var(--wood3);
+  border-radius:50%;width:44px;height:44px;display:grid;place-items:center;font-size:1.25rem;flex:0 0 auto;
+  box-shadow:0 4px 8px rgba(0,0,0,.2)}
+.lead{background:#eef7e7;border:2px dashed var(--leaf);border-radius:12px;padding:10px 14px;margin:10px 0;font-weight:700}
+.hint{font-size:.88rem;color:#7a6a4f;font-family:Tahoma;direction:rtl;margin-top:8px}
+
+/* objectives */
+ul.obj{list-style:none;display:grid;gap:10px;margin-top:10px}
+ul.obj li{background:var(--cream);border:1px solid #ecddc2;border-radius:12px;padding:11px 14px;
+  display:flex;gap:11px;align-items:flex-start;box-shadow:0 3px 8px var(--soft)}
+ul.obj li .n{background:var(--ember);color:#fff;font-weight:900;border-radius:9px;padding:2px 10px;flex:0 0 auto}
+.vocab{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.vocab span{background:linear-gradient(180deg,#fffaf0,#f4e8cf);border:2px solid var(--wood);border-radius:30px;
+  padding:5px 14px;font-weight:800;color:var(--wood2);cursor:default;transition:.2s}
+.vocab span:hover{transform:translateY(-3px) rotate(-2deg);background:var(--sun)}
+
+/* story box */
+.story{background:linear-gradient(180deg,#fffef7,#fbf2dd);border:3px solid var(--wood);border-radius:14px;
+  padding:14px 18px;margin-top:10px;font-size:1.02rem;box-shadow:inset 0 0 24px rgba(160,107,58,.08)}
+.story b{color:var(--pine)}
+
+/* drive player */
+.player{margin:12px 0;border-radius:12px;overflow:hidden;border:3px solid var(--wood);
+  box-shadow:0 4px 10px var(--soft);background:#fff}
+.player iframe{width:100%;height:80px;border:0;display:block}
+
+/* quiz items */
+.qitem{background:var(--cream);border:1px solid #ecddc2;border-radius:14px;padding:13px 15px;margin-top:12px;
+  box-shadow:0 3px 8px var(--soft);transition:.25s}
+.qitem .qtext{font-weight:700;font-size:1.02rem;display:flex;gap:9px;align-items:flex-start}
+.qitem .qtext .num{background:var(--pine2);color:#fff;border-radius:8px;padding:1px 9px;font-weight:900;flex:0 0 auto}
+.qitem.right{border:2px solid var(--leaf);background:#effae8}
+.qitem.wrong{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.choices{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.choices button{flex:1 1 130px;border:2px solid var(--wood);border-radius:12px;background:#fff;
+  padding:9px 12px;font-weight:800;font-size:.98rem;cursor:pointer;transition:.15s}
+.choices button:hover:not(:disabled){background:var(--sun);transform:translateY(-2px)}
+.choices button:disabled{opacity:.55;cursor:default}
+.choices button.picked-right{background:var(--leaf);color:#fff;border-color:var(--pine);opacity:1}
+.choices button.picked-wrong{background:#f3c1c7;border-color:var(--berry)}
+.fix{display:none;margin-top:9px;background:#fdeff1;border-right:4px solid var(--berry);border-radius:9px;
+  padding:7px 11px;font-weight:700;color:#8e2f3a;font-size:.92rem}
+.fix.on{display:block}
+
+/* tick activity */
+.tickrow{display:flex;align-items:flex-start;gap:11px;cursor:pointer}
+.tickbox{flex:0 0 auto;width:32px;height:32px;border:3px solid var(--wood);border-radius:9px;background:#fff;
+  display:grid;place-items:center;font-size:1.2rem;font-weight:900;color:var(--pine);transition:.15s;user-select:none}
+.qitem.ticked .tickbox{background:var(--sun);border-color:var(--ember)}
+.qitem.locked .tickbox{background:var(--leaf);color:#fff;border-color:var(--pine)}
+.qitem.locked{pointer-events:none}
+
+/* word bank / blanks */
+.bank{display:flex;flex-wrap:wrap;gap:9px;background:#eef7e7;border:2px dashed var(--leaf);
+  border-radius:12px;padding:12px;margin:10px 0}
+.chip{background:linear-gradient(180deg,#fffaf0,#f6e9cd);border:2px solid var(--wood);border-radius:30px;
+  padding:6px 15px;font-weight:800;color:var(--wood2);cursor:pointer;transition:.15s;user-select:none}
+.chip:hover{transform:translateY(-3px)}
+.chip.sel{background:var(--sun);border-color:var(--ember);transform:scale(1.07)}
+.chip.used{opacity:.25;pointer-events:none}
+.blank{display:inline-block;min-width:120px;border-bottom:3px dashed var(--wood);text-align:center;
+  font-weight:800;color:var(--pine);padding:1px 9px;cursor:pointer;border-radius:7px 7px 0 0;transition:.15s;user-select:none}
+.blank:hover{background:#fdf0d2}
+.blank.filled{border-bottom-style:solid}
+.blank.ok{background:#dff3d0;border-color:var(--pine2);pointer-events:none}
+.blank.bad{background:#fbdce0;border-color:var(--berry);animation:shake .4s}
+
+/* open questions */
+.qitem textarea{width:100%;margin-top:9px;border:2px solid var(--wood);border-radius:11px;padding:9px 12px;
+  font-family:inherit;font-size:.98rem;resize:vertical;min-height:54px;background:#fff}
+.qitem textarea:focus{outline:3px solid rgba(255,216,107,.7)}
+.qrow-btns{display:flex;gap:9px;margin-top:9px;flex-wrap:wrap}
+.model{display:none;margin-top:9px;background:#e8f3fb;border-right:4px solid #4a90c4;border-radius:9px;
+  padding:8px 12px;font-weight:700;color:#23567c;font-size:.95rem}
+.model.on{display:block}
+
+/* generic buttons */
+.btn{border:none;border-radius:12px;padding:10px 22px;font-weight:900;font-size:1rem;cursor:pointer;
+  box-shadow:0 4px 10px var(--soft);transition:.15s;color:#fff}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn-go{background:linear-gradient(180deg,var(--pine2),var(--pine))}
+.btn-amber{background:linear-gradient(180deg,#f3b93f,#dd9a1d);color:var(--ink)}
+.btn-blue{background:linear-gradient(180deg,#5da4d6,#3f7eab)}
+.btn-sm{padding:7px 15px;font-size:.88rem}
+.result{display:none;margin-top:13px;font-weight:900;font-size:1.05rem;padding:10px 15px;border-radius:11px}
+.result.on{display:block}
+.result.win{background:#dff3d0;color:var(--pine)}
+.result.try{background:#fdeccf;color:#9a6a12}
+
+/* review sound game */
+.spy-prompt{font-size:clamp(1.05rem,4vw,1.45rem);font-weight:900;color:var(--pine);background:#eef7e7;
+  border:3px solid var(--leaf);border-radius:14px;padding:13px 17px;text-align:center;margin:12px 0}
+.spy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:11px}
+.spy-grid button{border:3px solid var(--wood);border-radius:14px;background:#fff;padding:15px 8px;
+  font-weight:900;font-size:1.08rem;cursor:pointer;transition:.15s;color:var(--wood2)}
+.spy-grid button:hover:not(:disabled){background:var(--sun);transform:translateY(-3px) rotate(-1deg)}
+.spy-grid button.hit{background:var(--leaf);color:#fff;border-color:var(--pine)}
+.spy-grid button.miss{background:#f3c1c7;animation:shake .4s}
+.spy-grid button:disabled{cursor:default}
+
+/* ============ LADDER PROGRESS WIDGET ============ */
+#ladderWidget{position:fixed;right:10px;bottom:14px;z-index:60;width:74px;text-align:center;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+#ladderWidget .top-house{font-size:1.7rem;line-height:1}
+#ladderWidget .rail{position:relative;margin:2px auto;width:46px;height:170px;border-radius:8px;
+  background:
+   linear-gradient(90deg,var(--rope) 0 5px,transparent 5px) left/5px 100% no-repeat,
+   linear-gradient(90deg,transparent calc(100% - 5px),var(--rope) calc(100% - 5px)) right/5px 100% no-repeat,
+   repeating-linear-gradient(180deg,transparent 0 15px,var(--wood) 15px 20px),
+   rgba(255,250,240,.75)}
+#climber{position:absolute;left:50%;transform:translateX(-50%);bottom:0;font-size:1.55rem;
+  transition:bottom .7s cubic-bezier(.34,1.56,.64,1)}
+#ladderWidget .score-pill{background:var(--pine);color:#fff6e2;font-weight:900;border-radius:20px;
+  padding:3px 8px;font-size:.78rem;margin-top:3px;display:inline-block}
+
+/* squirrel toast */
+#toast{position:fixed;left:12px;bottom:-130px;z-index:70;background:#fff;border:3px solid var(--wood);
+  border-radius:16px;padding:10px 16px;font-weight:900;color:var(--pine);box-shadow:0 8px 20px rgba(0,0,0,.25);
+  display:flex;align-items:center;gap:10px;font-size:1rem;transition:bottom .45s cubic-bezier(.34,1.56,.64,1);max-width:75vw}
+#toast.show{bottom:16px}
+#toast .sq{font-size:1.7rem;animation:bob 1s ease-in-out infinite}
+
+/* confetti pieces */
+.confy{position:fixed;z-index:80;pointer-events:none;font-size:1.25rem;will-change:transform,opacity}
+
+footer{background:var(--pine);color:#dff0d6;text-align:center;padding:16px;font-weight:700;font-size:.85rem}
+@media (max-width:600px){
+  header{align-items:center;padding-left:14px}
+  .tree{right:-80px;opacity:.85}
+  #ladderWidget{width:60px}
+  #ladderWidget .rail{height:130px;width:38px}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="sun"></div>
+  <div class="cloud cl1"></div><div class="cloud cl2"></div>
+  <span class="bird b1">🐦</span><span class="bird b2">🕊️</span>
+  <div class="hill h1"></div><div class="hill h2"></div>
+  <div class="grass-strip"></div>
+
+  <div class="tree">
+    <span class="branch br1"></span><span class="branch br2"></span>
+    <div class="trunk"></div>
+    <div class="ladder"></div>
+    <div class="crown c4"></div><div class="crown c5"></div>
+    <div class="crown c1"></div><div class="crown c2"></div><div class="crown c3"></div>
+    <div class="house">
+      <div class="roof"></div><div class="flag"></div>
+      <div class="window"></div><div class="door"></div>
+    </div>
+    <div class="swing"><div class="seat"></div></div>
+    <span class="squirrel">🐿️</span>
+  </div>
+
+  <span class="fleaf" style="left:8%;animation-duration:7s">🍃</span>
+  <span class="fleaf" style="left:24%;animation-duration:9s;animation-delay:-3s">🍂</span>
+  <span class="fleaf" style="left:43%;animation-duration:8s;animation-delay:-5s">🍃</span>
+  <span class="fleaf" style="left:60%;animation-duration:10s;animation-delay:-2s">🍂</span>
+  <span class="fleaf" style="left:78%;animation-duration:7.5s;animation-delay:-6s">🍃</span>
+
+  <span class="flower" style="left:5%">🌸</span>
+  <span class="flower" style="left:13%;animation-delay:-1s">🌼</span>
+  <span class="flower" style="left:21%;animation-delay:-2s">🌷</span>
+  <span class="flower" style="left:32%;animation-delay:-.5s">🌺</span>
+  <span class="flower" style="left:42%;animation-delay:-1.6s">🌼</span>
+
+  <div class="sign">
+    <h1>🌳 Up in the Tree House!</h1>
+    <div class="sub">Unit 1 · Period 3 — Reading &amp; Comprehension</div>
+    <div class="sub ar">قصة آمي وبيت الشجرة 🐿️ اقرأ، استمع، وتسلّق السلّم!</div>
+  </div>
+  <div class="teacher-tag">English for Palestine · Grade 6</div>
+</header>
+
+<!-- ================= TABS ================= -->
+<nav id="tabs">
+  <button data-tab="goals" class="active">🎯 الأهداف<span class="done-star">⭐</span></button>
+  <button data-tab="a1">🎧 1 · Listen<span class="done-star">⭐</span></button>
+  <button data-tab="a2">✅ 2 · Tick<span class="done-star">⭐</span></button>
+  <button data-tab="a3">✏️ 3 · Complete<span class="done-star">⭐</span></button>
+  <button data-tab="a4">❓ 4 · Answer<span class="done-star">⭐</span></button>
+  <button data-tab="rev">🔍 Review<span class="done-star">⭐</span></button>
+</nav>
+
+<main>
+
+<!-- ============ TAB: GOALS ============ -->
+<section id="goals" class="show">
+  <div class="panel">
+    <h2 class="title"><span class="badge">🎯</span> أهداف الدرس — Lesson Goals</h2>
+    <p class="lead ar">يا بطل! 👋 في نهاية هذا الدرس ستتسلّق سلّم بيت الشجرة كله! كل إجابة صحيحة تصعدك درجة 🪜</p>
+    <ul class="obj">
+      <li><span class="n">1</span><span>أستمع إلى جمل عن قصة <b>Amy</b> وأميّز الصحيح من الخطأ — أصفّق 👏 أو أدبّ بقدمي 🦶</span></li>
+      <li><span class="n">2</span><span>أقرأ الجمل وأضع علامة ✔ عند الجمل الصحيحة فقط</span></li>
+      <li><span class="n">3</span><span>أكمل الجمل بكلمات الدرس الجديدة</span></li>
+      <li><span class="n">4</span><span>أقرأ القصة وأجيب عن أسئلة الفهم بجمل كاملة</span></li>
+      <li><span class="n">5</span><span>أميّز الأصوات /aw/ و /m/ و /b/ في كلمات الدرس 🔊</span></li>
+    </ul>
+  </div>
+  <div class="panel">
+    <h2 class="title"><span class="badge">🔤</span> كلماتي الجديدة — My Words</h2>
+    <div class="vocab">
+      <span>accident 🤕</span><span>summer camp ⛺</span><span>tree house 🌳</span>
+      <span>awful 😟</span><span>miss 💚</span><span>welcome back 🤗</span>
+      <span>stairs 🪜</span><span>crashed 💥</span><span>tired 😴</span><span>banged 🤯</span>
+    </div>
+  </div>
+  <div class="panel">
+    <h2 class="title"><span class="badge">📖</span> Story Time — قصة آمي</h2>
+    <div class="story">
+      <b>Amy</b> was at a <b>summer camp</b> ⛺. She stayed in a <b>tree house</b> 🌳.
+      One day she was very <b>tired</b> 😴. She climbed up the <b>stairs</b> of the tree house,
+      fell down the stairs and <b>crashed</b> down in the flowers 🌸💥.
+      She had an <b>accident</b>: she broke her arm and <b>banged</b> her head 🤕.
+      Her friend <b>called</b> the teacher. <br>
+      Rania <b>missed</b> Amy very much. <i>"How <b>awful</b>!"</i> said Rania 😟.
+      Now Amy is back home — <b>welcome back</b>, Amy! 🤗
+    </div>
+    <p class="hint">اقرأ القصة جيدًا — ستحتاجها في كل الأنشطة! ثم اضغط تاب 🎧 لنبدأ.</p>
+  </div>
+</section>
+
+<!-- ============ TAB: ACTIVITY 1 — LISTEN, CLAP OR STAMP ============ -->
+<section id="a1">
+  <div class="panel">
+    <h2 class="title"><span class="badge">🎧</span> Activity 1 — Listen. Clap or stamp.</h2>
+    <p class="lead">▶️ Listen to each sentence. Is it correct? <b>Clap 👏</b> — Is it wrong? <b>Stamp 🦶</b></p>
+    <p class="hint">شغّل التسجيل واستمع لكل جملة، ثم اختر: صفّق 👏 إذا كانت الجملة صحيحة، أو دُبّ بقدمك 🦶 إذا كانت خاطئة.</p>
+    <div class="player">
+      <iframe src="https://drive.google.com/file/d/1B8Prp9X7hZ88XNj0vwVYUQwzVsZAfZNC/preview" allow="autoplay" title="Audio 4 — Listen. Clap or stamp."></iframe>
+    </div>
+    <div id="a1items"></div>
+    <div class="result win" id="a1done">🎉 Wonderful listening! أذناك قويتان مثل أذني السنجاب! 🐿️</div>
+  </div>
+</section>
+
+<!-- ============ TAB: ACTIVITY 2 — TICK ============ -->
+<section id="a2">
+  <div class="panel">
+    <h2 class="title"><span class="badge">✅</span> Activity 2 — Read. Then tick ✔ the correct sentences.</h2>
+    <p class="lead">Read each sentence about the story. Tick ✔ only the <b>correct</b> sentences, then press <b>Check</b>.</p>
+    <p class="hint">اقرأ الجمل وضع ✔ على الصحيحة فقط، ثم اضغط زر التحقق. تذكّر القصة في تاب الأهداف 📖</p>
+    <div id="a2items"></div>
+    <div style="margin-top:14px"><button class="btn btn-go" id="a2check">Check my answers ✔</button></div>
+    <div class="result" id="a2res"></div>
+  </div>
+</section>
+
+<!-- ============ TAB: ACTIVITY 3 — COMPLETE ============ -->
+<section id="a3">
+  <div class="panel">
+    <h2 class="title"><span class="badge">✏️</span> Activity 3 — Read and complete the sentences.</h2>
+    <p class="lead">Pick a word from the word tree 🌳 then click the empty space in the sentence.</p>
+    <p class="hint">اختر الكلمة من البنك الأخضر بالضغط عليها، ثم اضغط على الفراغ المناسب في الجملة. اضغط على فراغ ممتلئ لإرجاع الكلمة.</p>
+    <div class="bank" id="a3bank"></div>
+    <div id="a3items"></div>
+    <div style="margin-top:14px"><button class="btn btn-go" id="a3check">Check my sentences ✔</button></div>
+    <div class="result" id="a3res"></div>
+  </div>
+</section>
+
+<!-- ============ TAB: ACTIVITY 4 — ANSWER ============ -->
+<section id="a4">
+  <div class="panel">
+    <h2 class="title"><span class="badge">❓</span> Activity 4 — Read and write answers.</h2>
+    <p class="lead">Read the story again 📖 then answer with <b>full sentences</b>.</p>
+    <p class="hint">اقرأ القصة ثم اكتب إجابة كاملة بالإنجليزية. اضغط ✔ للتحقق، أو 👁 لرؤية الإجابة النموذجية.</p>
+    <details style="margin:10px 0">
+      <summary style="cursor:pointer;font-weight:900;color:var(--pine)">📖 Open the story — افتح القصة</summary>
+      <div class="story" style="margin-top:8px">
+        Amy was at a <b>summer camp</b>. She stayed in a <b>tree house</b>.
+        One day she was very <b>tired</b>. She climbed up the stairs, fell down the stairs
+        and crashed down in the flowers. She had an <b>accident</b>: she broke her arm and banged her head.
+        Her friend called the teacher. Rania <b>missed</b> Amy and was sad. "How <b>awful</b>!" said Rania.
+      </div>
+    </details>
+    <div id="a4items"></div>
+  </div>
+</section>
+
+<!-- ============ TAB: REVIEW — I SPY ============ -->
+<section id="rev">
+  <div class="panel">
+    <h2 class="title"><span class="badge">🔍</span> Review — I spy with my little eye…</h2>
+    <p class="lead">🐿️ The squirrel spies a word! Find the word that has the sound you hear.</p>
+    <p class="hint">لعبة "أرى بعيني الصغيرة": اقرأ الصوت المطلوب واضغط على الكلمة التي تبدأ به.</p>
+    <div class="spy-prompt" id="spyPrompt"></div>
+    <div class="spy-grid" id="spyGrid"></div>
+    <div class="result win" id="revdone">🏆 Super! أكملت كل أصوات الدرس! 🔊</div>
+  </div>
+  <div class="panel" id="finalPanel" style="display:none;text-align:center">
+    <h2 class="title" style="justify-content:center"><span class="badge">🏠</span> You reached the tree house!</h2>
+    <p style="font-size:2.6rem;margin:6px 0">🌳🐿️🎉</p>
+    <p class="lead ar" style="text-align:center">مبروووك! تسلّقت السلّم كله ووصلت إلى بيت الشجرة! أنت نجم القراءة اليوم ⭐</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ladder progress -->
+<div id="ladderWidget" title="تقدّمك نحو بيت الشجرة">
+  <div class="top-house">🏠</div>
+  <div class="rail"><span id="climber">🧗</span></div>
+  <div class="score-pill"><span id="scoreNow">0</span>/<span id="scoreMax">0</span> ⭐</div>
+</div>
+
+<!-- squirrel toast -->
+<div id="toast"><span class="sq">🐿️</span><span id="toastMsg"></span></div>
+
+<footer>🌳 Unit 1 · Period 3 · Up in the Tree House — Made with 💚 for Grade 6</footer>
+
+<script>
+/* ================= TABS ================= */
+const tabs=document.querySelectorAll('nav button');
+tabs.forEach(b=>b.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  document.querySelectorAll('main>section').forEach(s=>s.classList.remove('show'));
+  document.getElementById(b.dataset.tab).classList.add('show');
+  window.scrollTo({top:document.querySelector('nav').offsetTop,behavior:'smooth'});
+}));
+
+/* ================= SCORE / LADDER ================= */
+let score=0,TOTAL=0;
+const climber=document.getElementById('climber');
+function addPoint(fromEl){
+  score++;document.getElementById('scoreNow').textContent=score;
+  const rail=document.querySelector('#ladderWidget .rail');
+  const max=rail.clientHeight-34;
+  climber.style.bottom=(score/TOTAL*max)+'px';
+  if(fromEl)burst(fromEl,['🍃','⭐','🍂']);
+  if(score===TOTAL)grandFinale();
+}
+function grandFinale(){
+  climber.textContent='🐿️';
+  toast('وصلت إلى بيت الشجرة! 🏠🎉','🏆');
+  document.getElementById('finalPanel').style.display='block';
+  let n=0;const iv=setInterval(()=>{
+    burst(document.querySelector('#ladderWidget .top-house'),['🎉','⭐','🍃','🌸']);
+    if(++n>5)clearInterval(iv);},450);
+}
+
+/* tab completion stars */
+const tabDone={goals:true};
+function markTab(id){
+  tabDone[id]=true;
+  document.querySelector(`nav button[data-tab="${id}"]`).classList.add('completed');
+}
+markTab('goals');
+
+/* ================= EFFECTS ================= */
+function burst(el,emojis){
+  const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  for(let i=0;i<12;i++){
+    const s=document.createElement('span');s.className='confy';
+    s.textContent=emojis[i%emojis.length];
+    s.style.left=cx+'px';s.style.top=cy+'px';
+    document.body.appendChild(s);
+    const ang=Math.random()*Math.PI*2,d=60+Math.random()*90;
+    s.animate([
+      {transform:'translate(0,0) rotate(0) scale(1)',opacity:1},
+      {transform:`translate(${Math.cos(ang)*d}px,${Math.sin(ang)*d-40}px) rotate(${Math.random()*360}deg) scale(.5)`,opacity:0}
+    ],{duration:850+Math.random()*450,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish=()=>s.remove();
+  }
+}
+const praises=['أحسنت يا بطل! 🌟','رااائع! 💪','ممتاز! 🎉','عمل جميل! 🌳','واو! إجابة صحيحة! ✨','تسلّق درجة جديدة! 🪜'];
+let toastTimer;
+function toast(msg,icon='🐿️'){
+  const t=document.getElementById('toast');
+  t.querySelector('.sq').textContent=icon;
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),1900);
+}
+function praise(){toast(praises[Math.floor(Math.random()*praises.length)])}
+
+/* tiny sounds (WebAudio – no files needed) */
+let actx;
+function tone(f,t0,dur,type='sine',vol=.18){
+  actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+  const o=actx.createOscillator(),g=actx.createGain();
+  o.type=type;o.frequency.value=f;o.connect(g);g.connect(actx.destination);
+  const now=actx.currentTime+t0;
+  g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(vol,now+.02);
+  g.gain.exponentialRampToValueAtTime(.001,now+dur);
+  o.start(now);o.stop(now+dur+.05);
+}
+function sndRight(){tone(660,0,.14);tone(880,.12,.2)}
+function sndWrong(){tone(160,0,.25,'square',.1)}
+function sndWin(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.13,.22))}
+
+/* ================= ACTIVITY 1 — CLAP OR STAMP ================= */
+const A1=[
+  {s:'Amy broke her leg at summer camp.',clap:false,fix:'She broke her arm! 💪'},
+  {s:'Rania was not happy to see Amy. She did not miss her.',clap:false,fix:'Rania missed Amy very much! 💚'},
+  {s:'Amy stayed in a tree house in the summer camp.',clap:true},
+  {s:'Omar had an accident.',clap:false,fix:'Amy had the accident, not Omar! 🤕'}
+];
+let a1Done=0;
+const a1box=document.getElementById('a1items');
+A1.forEach((q,i)=>{
+  const d=document.createElement('div');d.className='qitem';
+  d.innerHTML=`<div class="qtext"><span class="num">${i+1}</span><span>${q.s}</span></div>
+    <div class="choices">
+      <button data-v="clap">👏 Clap — صحيحة</button>
+      <button data-v="stamp">🦶 Stamp — خاطئة</button>
+    </div>
+    <div class="fix">${q.fix?'✏️ '+q.fix:''}</div>`;
+  d.querySelectorAll('.choices button').forEach(btn=>btn.addEventListener('click',()=>{
+    const pick=btn.dataset.v==='clap';
+    if(pick===q.clap){
+      btn.classList.add('picked-right');
+      d.classList.add('right');
+      d.querySelectorAll('.choices button').forEach(b=>b.disabled=true);
+      if(q.fix)d.querySelector('.fix').classList.add('on');
+      sndRight();praise();addPoint(btn);
+      if(++a1Done===A1.length){
+        document.getElementById('a1done').classList.add('on');markTab('a1');sndWin();
+      }
+    }else{
+      btn.classList.add('picked-wrong');d.classList.add('wrong');sndWrong();
+      setTimeout(()=>{btn.classList.remove('picked-wrong');d.classList.remove('wrong')},600);
+      toast('استمع مرة أخرى وفكّر 🤔','🎧');
+    }
+  }));
+  a1box.appendChild(d);
+});
+
+/* ================= ACTIVITY 2 — TICK ================= */
+const A2=[
+  {s:'Ben banged his head and arm.',ok:false},
+  {s:'Amy came back to Palestine.',ok:true},
+  {s:'Rania said “How interesting!”',ok:false},
+  {s:'Amy was tired and she crashed down in the flowers.',ok:true},
+  {s:'Amy’s arm still hurts.',ok:false},
+  {s:'Ben fell down the stairs.',ok:false}
+];
+const a2box=document.getElementById('a2items');
+A2.forEach((q,i)=>{
+  const d=document.createElement('div');d.className='qitem';
+  d.innerHTML=`<div class="tickrow"><span class="tickbox"></span>
+    <div class="qtext"><span class="num">${i+1}</span><span>${q.s}</span></div></div>`;
+  d.addEventListener('click',()=>{
+    if(d.classList.contains('locked'))return;
+    d.classList.toggle('ticked');
+    d.querySelector('.tickbox').textContent=d.classList.contains('ticked')?'✔':'';
+    tone(420,0,.07,'triangle',.08);
+  });
+  a2box.appendChild(d);
+});
+document.getElementById('a2check').addEventListener('click',()=>{
+  let allRight=true;
+  [...a2box.children].forEach((d,i)=>{
+    if(d.classList.contains('locked'))return;
+    const ticked=d.classList.contains('ticked');
+    if(ticked===A2[i].ok){
+      d.classList.add('locked','right');
+      if(A2[i].ok)d.querySelector('.tickbox').textContent='✔';
+      addPoint(d);
+    }else{
+      allRight=false;
+      d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),600);
+    }
+  });
+  const res=document.getElementById('a2res');res.classList.add('on');
+  if(allRight){
+    res.className='result on win';res.textContent='🎉 Perfect! All sentences checked! عيناك قويتان كعيني البومة 🦉';
+    markTab('a2');sndWin();praise();
+    document.getElementById('a2check').disabled=true;
+  }else{
+    res.className='result on try';res.textContent='🔁 Almost! الجمل الخضراء صحيحة — راجع الباقي وحاول مجددًا';
+    sndWrong();
+  }
+});
+
+/* ================= ACTIVITY 3 — COMPLETE ================= */
+const A3=[
+  {pre:'Amy had an ',post:'.',ans:'accident'},
+  {pre:'She was at a ',post:'.',ans:'summer camp'},
+  {pre:'Rania said “',post:'!”',ans:'How awful'},
+  {pre:'Amy’s friend ',post:' the teacher.',ans:'called'},
+  {pre:'Amy climbed up the ',post:' of the tree house.',ans:'stairs'},
+  {pre:'She ',post:' down in the flowers.',ans:'crashed'}
+];
+const bankWords=['called','stairs','accident','How awful','crashed','summer camp'];
+const a3bank=document.getElementById('a3bank'),a3box=document.getElementById('a3items');
+let selChip=null;
+bankWords.forEach(w=>{
+  const c=document.createElement('span');c.className='chip';c.textContent=w;
+  c.addEventListener('click',()=>{
+    if(selChip)selChip.classList.remove('sel');
+    selChip=(selChip===c)?null:c;
+    if(selChip)c.classList.add('sel');
+    tone(520,0,.06,'triangle',.07);
+  });
+  a3bank.appendChild(c);
+});
+A3.forEach((q,i)=>{
+  const d=document.createElement('div');d.className='qitem';
+  d.innerHTML=`<div class="qtext"><span class="num">${i+1}</span>
+    <span>${q.pre}<span class="blank" data-i="${i}">&nbsp;</span>${q.post}</span></div>`;
+  const blank=d.querySelector('.blank');
+  blank.addEventListener('click',()=>{
+    if(blank.classList.contains('ok'))return;
+    if(blank.classList.contains('filled')){
+      const w=blank.dataset.word;
+      [...a3bank.children].find(c=>c.textContent===w).classList.remove('used');
+      blank.classList.remove('filled','bad');blank.innerHTML='&nbsp;';delete blank.dataset.word;
+      return;
+    }
+    if(!selChip){toast('اختر كلمة من البنك أولًا 🌳','✏️');return}
+    blank.textContent=selChip.textContent;blank.dataset.word=selChip.textContent;
+    blank.classList.add('filled');
+    selChip.classList.add('used');selChip.classList.remove('sel');selChip=null;
+    tone(620,0,.08,'triangle',.08);
+  });
+  a3box.appendChild(d);
+});
+document.getElementById('a3check').addEventListener('click',()=>{
+  let allRight=true,anyEmpty=false;
+  document.querySelectorAll('#a3items .blank').forEach(b=>{
+    if(b.classList.contains('ok'))return;
+    if(!b.classList.contains('filled')){anyEmpty=true;allRight=false;return}
+    if(b.dataset.word===A3[+b.dataset.i].ans){
+      b.classList.add('ok');b.closest('.qitem').classList.add('right');addPoint(b);
+    }else{
+      allRight=false;b.classList.add('bad');
+      const w=b.dataset.word;
+      setTimeout(()=>{
+        [...a3bank.children].find(c=>c.textContent===w).classList.remove('used');
+        b.classList.remove('filled','bad');b.innerHTML='&nbsp;';delete b.dataset.word;
+      },650);
+    }
+  });
+  const res=document.getElementById('a3res');res.classList.add('on');
+  if(allRight&&!anyEmpty){
+    res.className='result on win';res.textContent='🎉 All sentences complete! كاتب محترف! ✏️';
+    markTab('a3');sndWin();praise();
+    document.getElementById('a3check').disabled=true;
+  }else{
+    res.className='result on try';
+    res.textContent=anyEmpty?'✏️ أكمل كل الفراغات أولًا ثم اضغط تحقق':'🔁 الكلمات الخاطئة رجعت للبنك — حاول مرة أخرى!';
+    sndWrong();
+  }
+});
+
+/* ================= ACTIVITY 4 — OPEN QUESTIONS ================= */
+const A4=[
+  {q:'What happened to Amy?',keys:['accident','broke','bang'],
+   model:'She had an accident. She broke her arm and banged her head.'},
+  {q:'How did Rania feel?',keys:['miss','sad','not happy'],
+   model:'She missed her. She was not happy — she was sad.'},
+  {q:'Where did Amy’s accident happen?',keys:['camp','tree house'],
+   model:'At a summer camp, in a tree house.'},
+  {q:'How did Amy have the accident?',keys:['fell','fall','stairs'],
+   model:'She fell down the stairs.'},
+  {q:'Why did Amy fall?',keys:['tired'],
+   model:'Because she was tired.'},
+  {q:'Where did Amy fall?',keys:['flower','stairs'],
+   model:'Down in the flowers, down the stairs.'}
+];
+let a4Done=0;
+const a4box=document.getElementById('a4items');
+A4.forEach((q,i)=>{
+  const d=document.createElement('div');d.className='qitem';
+  d.innerHTML=`<div class="qtext"><span class="num">${i+1}</span><span>${q.q}</span></div>
+    <textarea placeholder="Write your answer here… ✏️"></textarea>
+    <div class="qrow-btns">
+      <button class="btn btn-go btn-sm chk">✔ Check</button>
+      <button class="btn btn-blue btn-sm peek">👁 Show answer</button>
+    </div>
+    <div class="model">⭐ ${q.model}</div>`;
+  const ta=d.querySelector('textarea'),model=d.querySelector('.model');
+  const finish=el=>{
+    if(d.dataset.done)return;d.dataset.done=1;
+    d.classList.add('right');model.classList.add('on');
+    d.querySelector('.chk').disabled=true;
+    addPoint(el);
+    if(++a4Done===A4.length){markTab('a4');sndWin();toast('أنهيت كل أسئلة الفهم! 📖🎉','🏅')}
+  };
+  d.querySelector('.chk').addEventListener('click',e=>{
+    const v=ta.value.toLowerCase();
+    if(v.trim().length<3){toast('اكتب إجابتك أولًا ✏️','📖');return}
+    if(q.keys.some(k=>v.includes(k))){sndRight();praise();finish(e.target)}
+    else{
+      d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),600);
+      sndWrong();toast('قريب! اقرأ القصة مرة أخرى 📖','🤔');
+    }
+  });
+  d.querySelector('.peek').addEventListener('click',e=>{
+    model.classList.add('on');
+    if(!d.dataset.done){toast('انسخ الإجابة بصوتك ثم اضغط ✔','👁');finish(e.target)}
+  });
+  a4box.appendChild(d);
+});
+
+/* ================= REVIEW — I SPY ================= */
+const REV=[
+  {sound:'/aw/',ans:'awful'},
+  {sound:'/m/',ans:'miss'},
+  {sound:'/b/',ans:'back'}
+];
+const spyWords=['awful','miss','back','stairs','tired','camp'];
+let round=0;
+const spyPrompt=document.getElementById('spyPrompt'),spyGrid=document.getElementById('spyGrid');
+function renderSpy(){
+  if(round>=REV.length){
+    spyPrompt.innerHTML='🏆 All sounds found!';
+    document.getElementById('revdone').classList.add('on');
+    markTab('rev');sndWin();
+    return;
+  }
+  spyPrompt.innerHTML=`🐿️ I spy something with the sound… <span style="color:var(--ember);font-size:1.3em">${REV[round].sound}</span>`;
+  spyGrid.innerHTML='';
+  spyWords.forEach(w=>{
+    const b=document.createElement('button');b.textContent=w;
+    if(REV.slice(0,round).some(r=>r.ans===w)){b.disabled=true;b.classList.add('hit');b.textContent=w+' ✔'}
+    b.addEventListener('click',()=>{
+      if(w===REV[round].ans){
+        b.classList.add('hit');sndRight();praise();addPoint(b);
+        round++;setTimeout(renderSpy,700);
+      }else{
+        b.classList.add('miss');sndWrong();
+        setTimeout(()=>b.classList.remove('miss'),500);
+      }
+    });
+    spyGrid.appendChild(b);
+  });
+}
+renderSpy();
+
+/* ================= TOTAL ================= */
+TOTAL=A1.length+A2.length+A3.length+A4.length+REV.length;
+document.getElementById('scoreMax').textContent=TOTAL;
+</script>
+</body>
+</html>
