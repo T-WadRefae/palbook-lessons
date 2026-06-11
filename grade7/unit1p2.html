@@ -9,100 +9,112 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#0e2a52;
-  --navy-2:#16407c;
-  --blue:#1d5aa8;
-  --sky:#9ed3ff;
-  --red:#e8554f;
-  --red-deep:#c43d38;
-  --gold:#ffce54;
-  --gold-deep:#e0a82e;
+  --coral:#ff6f61;
+  --coral-deep:#d94f43;
+  --teal:#14b8a6;
+  --teal-deep:#0d9488;
+  --sun:#ffc94d;
+  --sun-deep:#e0a82e;
   --purple:#5b46d6;
   --paper:#ffffff;
   --cream:#fff8ef;
-  --ink:#1c2b4a;
-  --ink-soft:#5f6f93;
-  --line:#dde6f5;
+  --ink:#33415c;
+  --ink-soft:#7b8794;
+  --line:#ffe3d6;
   --ok:#27c275;
   --no:#ff6b6b;
   --r:20px;
-  --shadow:0 16px 40px rgba(14,42,82,.25);
-  --shadow-sm:0 8px 20px rgba(14,42,82,.15);
+  --shadow:0 16px 40px rgba(217,79,67,.16);
+  --shadow-sm:0 8px 20px rgba(217,79,67,.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{
   font-family:'Fredoka','Nunito',sans-serif;
   color:var(--ink);
-  background:linear-gradient(180deg,#0e2a52 0%,#16407c 28%,#3d7cc9 55%,#bfe3ff 100%) fixed;
+  background:
+    radial-gradient(700px 420px at 92% 6%, #ffe3da, transparent 60%),
+    radial-gradient(640px 400px at 4% 28%, #d8f7f2, transparent 60%),
+    radial-gradient(700px 420px at 70% 80%, #fff3d4, transparent 55%),
+    linear-gradient(180deg,#fff4ea 0%,#fff9f1 50%,#effbf8 100%);
+  background-attachment:fixed;
   min-height:100vh;
   overflow-x:hidden;
 }
 .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
 .wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
 
-/* ====== sky decorations ====== */
-.sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.sky .cloud{position:absolute;font-size:52px;opacity:.22;animation:drift linear infinite}
-@keyframes drift{from{left:-90px}to{left:106%}}
-.sky .star{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;opacity:.5;animation:twinkle 2.4s infinite}
-@keyframes twinkle{0%,100%{opacity:.5}50%{opacity:.08}}
+/* ====== floating greeting bubbles ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{
+  position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;
+  background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;
+  padding:6px 14px;color:var(--coral-deep);box-shadow:var(--shadow-sm);opacity:0;
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0) rotate(-2deg);opacity:0}
+  8%{opacity:.55}
+  92%{opacity:.55}
+  100%{transform:translateY(-115vh) rotate(3deg);opacity:0}
+}
 
-/* ====== header : airport departures board ====== */
-header{position:relative;padding:30px 0 8px;text-align:center;color:#fff}
-.hero-plane{position:absolute;top:26px;font-size:40px;z-index:1;animation:fly 12s linear infinite;filter:drop-shadow(0 5px 10px rgba(0,0,0,.35))}
-@keyframes fly{from{left:-70px;transform:translateY(0)}50%{transform:translateY(-16px)}to{left:106%;transform:translateY(0)}}
-.dboard{
-  max-width:620px;margin:34px auto 0;background:#091c38;border:3px solid #1f4d8f;border-radius:18px;
-  box-shadow:var(--shadow),inset 0 0 40px rgba(30,90,170,.25);padding:0 0 18px;position:relative;overflow:hidden;
+/* ====== header : big hello speech bubble ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.hello-card{
+  max-width:600px;margin:0 auto;background:var(--paper);border:3px solid var(--coral);
+  border-radius:30px;padding:26px 24px 22px;position:relative;box-shadow:var(--shadow);
 }
-.dboard .scan{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,transparent 0%,rgba(158,211,255,.10) 50%,transparent 100%);
-  background-size:100% 90px;animation:scan 4.5s linear infinite;
+.hello-card:after{ /* speech-bubble tail */
+  content:"";position:absolute;bottom:-21px;left:13%;
+  border:11px solid transparent;border-top-color:var(--coral);
 }
-@keyframes scan{from{background-position:0 -90px}to{background-position:0 480px}}
-.db-top{
-  display:flex;justify-content:space-between;align-items:center;background:#0c2447;
-  padding:9px 16px;border-bottom:2px solid #1f4d8f;font-weight:600;font-size:.82rem;
-  letter-spacing:2px;color:var(--sky);
+.hello-card .tag{
+  display:inline-block;background:var(--teal);color:#fff;font-weight:600;font-size:.8rem;
+  letter-spacing:2px;border-radius:999px;padding:4px 16px;
 }
-.db-top .live{color:var(--gold)}
-.db-grid{
-  display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:12px 16px 0;
-  font-size:.78rem;letter-spacing:1.5px;font-weight:600;
+.wave-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:6px}
+.wave{
+  font-size:56px;display:inline-block;transform-origin:70% 80%;animation:wave 2.2s ease-in-out infinite;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.15));
 }
-.db-grid div{color:#6f8fc0}
-.db-grid b{display:block;color:#ffd97a;font-size:1rem;letter-spacing:2px;margin-top:2px}
-.dboard h1{
-  font-size:clamp(2rem,6vw,2.8rem);margin:10px 0 0;color:#fff;
-  text-shadow:0 0 18px rgba(158,211,255,.6);
+@keyframes wave{
+  0%,55%,100%{transform:rotate(0)}
+  60%{transform:rotate(22deg)}70%{transform:rotate(-12deg)}
+  80%{transform:rotate(20deg)}90%{transform:rotate(-6deg)}
 }
-.dboard .sub{color:var(--sky);font-weight:600;font-size:1rem;margin-top:2px}
-.status{
-  display:inline-flex;align-items:center;gap:8px;margin-top:12px;background:rgba(39,194,117,.15);
-  border:2px solid var(--ok);color:#7df0b4;border-radius:999px;padding:5px 18px;
-  font-weight:600;letter-spacing:2px;font-size:.85rem;
+.hello-card h1{
+  font-size:clamp(2.1rem,6vw,3rem);color:var(--coral-deep);
+  text-shadow:0 3px 0 #ffe3da;
 }
-.status i{width:10px;height:10px;border-radius:50%;background:var(--ok);animation:blink 1.1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
-.flags{margin:14px 0 4px;font-size:24px;letter-spacing:8px}
+.hello-card .sub{color:var(--teal-deep);font-weight:600;font-size:1.02rem;margin-top:2px}
+.hellos{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:14px}
+.hb{
+  background:var(--cream);border:2px solid var(--sun);color:#8a6500;border-radius:14px 14px 14px 4px;
+  padding:4px 14px;font-weight:600;font-size:.9rem;animation:pop 4s infinite;
+}
+.hb:nth-child(2){animation-delay:.7s;border-color:var(--teal);color:var(--teal-deep);border-radius:14px 14px 4px 14px}
+.hb:nth-child(3){animation-delay:1.4s;border-color:var(--coral);color:var(--coral-deep)}
+.hb:nth-child(4){animation-delay:2.1s;border-color:var(--purple);color:var(--purple);border-radius:14px 14px 4px 14px}
+.hb:nth-child(5){animation-delay:2.8s}
+@keyframes pop{0%,100%{transform:scale(1)}8%{transform:scale(1.13)}16%{transform:scale(1)}}
 
-/* ====== tabs ====== */
+/* ====== tabs (LTR, English) ====== */
 nav{
-  display:flex;gap:8px;overflow-x:auto;padding:18px 4px 14px;position:sticky;top:0;z-index:50;
-  background:linear-gradient(180deg,rgba(14,42,82,.92),rgba(14,42,82,.75) 70%,transparent);
+  display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(255,244,234,.95),rgba(255,244,234,.8) 70%,transparent);
   backdrop-filter:blur(6px);scrollbar-width:none;
 }
 nav::-webkit-scrollbar{display:none}
 .tab{
   flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;
-  background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.3);
+  background:#fff;color:var(--ink);border:2px solid var(--line);
   padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
 }
-.tab:hover{background:rgba(255,255,255,.26)}
-.tab.on{background:var(--paper);color:var(--navy);border-color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.25);transform:translateY(-2px)}
+.tab:hover{border-color:var(--coral);transform:translateY(-2px)}
+.tab.on{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
 .tab .done-mark{display:none;color:var(--ok);font-size:1rem}
+.tab.on .done-mark{color:#d6ffe9}
 .tab.done .done-mark{display:inline}
 
 /* ====== panels / cards ====== */
@@ -112,58 +124,72 @@ nav::-webkit-scrollbar{display:none}
 .card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
 .card .ribbon{
   position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
-  background:repeating-linear-gradient(90deg,var(--red) 0 26px,var(--paper) 26px 40px,var(--navy-2) 40px 66px,var(--paper) 66px 80px);
+  background:repeating-linear-gradient(90deg,var(--coral) 0 26px,var(--sun) 26px 48px,var(--teal) 48px 72px);
 }
-.card h2{font-size:1.3rem;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2{font-size:1.3rem;color:var(--coral-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
 .card h2 .gate{
-  font-size:.7rem;background:var(--navy);color:#fff;
+  font-size:.7rem;background:var(--teal);color:#fff;
   padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
 }
 .hint{
   color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
-  background:#f6f9ff;border-radius:12px;padding:8px 14px;border-right:4px solid var(--sky);
+  background:#f2fbf9;border-radius:12px;padding:8px 14px;border-right:4px solid var(--teal);
 }
 .divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
 
 /* ====== objectives ====== */
 .goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
 .goal{
-  background:var(--cream);border:2px solid #f4e3c8;border-radius:16px;padding:16px 14px;
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:16px;padding:16px 14px;
   display:flex;gap:12px;align-items:flex-start;transition:.25s;
 }
 .goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
 .goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
-.goal b{display:block;color:var(--navy);font-size:1rem}
+.goal b{display:block;color:var(--coral-deep);font-size:1rem}
 .goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
 .keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.kw{background:#eaf2ff;color:var(--navy-2);border:1.5px solid #cfe0f8;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+.kw{background:#e7f8f5;color:var(--teal-deep);border:1.5px solid #bdeae3;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
 
 /* ====== Drive audio player (compact, the only player) ====== */
 .gplayer{
-  background:#f4f8ff;border:2px solid var(--line);border-radius:14px;
+  background:#f2fbf9;border:2px solid #bdeae3;border-radius:14px;
   padding:9px 12px 10px;margin:10px 0 6px;max-width:480px;
 }
-.gplayer b{color:var(--navy);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer b{color:var(--teal-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
 .gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
 
-/* ====== A1 : listen & circle ====== */
+/* ====== A1 : listen & circle (two steps) ====== */
+.stepbox{
+  text-align:center;font-size:1.05rem;font-weight:600;color:var(--ink);margin-top:16px;
+  background:#fff8e0;border:2px dashed var(--sun-deep);border-radius:14px;padding:12px;line-height:1.9;
+}
+.stepbox .stp{
+  display:inline-block;background:var(--sun);color:#7a5800;border-radius:999px;
+  padding:2px 14px;font-size:.82rem;letter-spacing:1px;margin-bottom:4px;
+}
+.stepbox.teal{background:#eafaf7;border-color:var(--teal)}
+.stepbox.teal .stp{background:var(--teal);color:#fff}
 .wordbox{
   display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:var(--cream);
-  border:2px solid #f4e3c8;border-radius:16px;padding:16px;margin-top:12px;
+  border:2px solid #ffe9c9;border-radius:16px;padding:16px;margin-top:12px;
 }
 .wchip{
-  border:2.5px solid var(--line);background:#fff;color:var(--navy);border-radius:999px;
+  border:2.5px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;
   padding:8px 20px;font-family:inherit;font-weight:600;font-size:1.05rem;cursor:pointer;transition:.2s;
 }
-.wchip:hover{border-color:var(--sky);transform:translateY(-2px)}
-.wchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.wchip:hover{border-color:var(--teal);transform:translateY(-2px)}
+.wchip.heard{border-color:var(--teal);background:#eafaf7;color:var(--teal-deep);cursor:default}
+.wchip.missing{border-color:var(--sun-deep);background:var(--sun);color:#7a5800;box-shadow:var(--shadow-sm);cursor:default}
 .wchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
-.wchip:disabled{cursor:default}
+.wchip.pulse{animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
-.bigq{
-  text-align:center;font-size:1.1rem;font-weight:600;color:var(--navy);margin-top:16px;
-  background:#fff8e0;border:2px dashed var(--gold-deep);border-radius:14px;padding:12px;
+.hearbar{
+  display:flex;align-items:center;gap:12px;margin-top:12px;background:var(--teal);color:#fff;
+  border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap;
 }
+.hearbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.hearbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
 .feedback{display:none;margin-top:10px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
 .feedback.show{display:block;animation:fadeUp .35s}
 .feedback.good{background:#e9fbf2;color:#168a55}
@@ -176,13 +202,13 @@ nav::-webkit-scrollbar{display:none}
 .sline.done{border-color:#bfe8d2;background:#f6fffa}
 .num{
   display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
-  background:var(--navy);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
+  background:var(--coral);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
 }
 .pick{
   border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:3px 14px;margin:0 3px;
-  font-family:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:.2s;color:var(--navy);
+  font-family:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:.2s;color:var(--ink);
 }
-.pick:hover{border-color:var(--sky)}
+.pick:hover{border-color:var(--teal)}
 .pick.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
 .pick.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s;text-decoration:line-through}
 .pick:disabled{cursor:default}
@@ -190,22 +216,22 @@ nav::-webkit-scrollbar{display:none}
 /* ====== A3 : complete & match ====== */
 .bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px}
 .bword{
-  border:2.5px solid var(--gold-deep);background:#fff8e0;color:#8a6500;border-radius:999px;
+  border:2.5px solid var(--sun-deep);background:#fff8e0;color:#8a6500;border-radius:999px;
   padding:6px 18px;font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s;
 }
 .bword:hover{transform:translateY(-2px)}
-.bword.sel{background:var(--gold);border-color:var(--gold-deep);color:var(--navy);transform:scale(1.08);box-shadow:var(--shadow-sm)}
+.bword.sel{background:var(--sun);border-color:var(--sun-deep);color:var(--ink);transform:scale(1.08);box-shadow:var(--shadow-sm)}
 .bword.used{opacity:.35;cursor:default;text-decoration:line-through}
 .mimg{margin:14px auto 4px;max-width:560px}
-.mimg img{width:100%;height:auto;display:block;border-radius:16px;border:2px solid #f4e3c8}
+.mimg img{width:100%;height:auto;display:block;border-radius:16px;border:2px solid #ffe9c9}
 .msent{
   border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;
   font-size:1.02rem;font-weight:500;line-height:2;transition:.3s;
 }
 .msent.done{border-color:#bfe8d2;background:#f6fffa}
 .blank{
-  display:inline-block;min-width:120px;border-bottom:3px dashed var(--gold-deep);text-align:center;
-  font-weight:600;color:var(--gold-deep);cursor:pointer;border-radius:8px 8px 0 0;padding:0 8px;transition:.2s;
+  display:inline-block;min-width:120px;border-bottom:3px dashed var(--sun-deep);text-align:center;
+  font-weight:600;color:var(--sun-deep);cursor:pointer;border-radius:8px 8px 0 0;padding:0 8px;transition:.2s;
 }
 .blank:hover{background:#fff8e0}
 .blank.filled{color:#168a55;border-bottom-color:var(--ok);cursor:default}
@@ -214,9 +240,9 @@ nav::-webkit-scrollbar{display:none}
 .match-row span.lbl{font-size:.85rem;font-weight:600;color:var(--ink-soft)}
 .letter{
   border:2.5px solid var(--line);background:#fff;width:38px;height:38px;border-radius:12px;
-  font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s;color:var(--navy);
+  font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s;color:var(--ink);
 }
-.letter:hover{border-color:var(--sky)}
+.letter:hover{border-color:var(--teal)}
 .letter.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
 .letter.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
 .letter:disabled{cursor:default}
@@ -230,42 +256,42 @@ nav::-webkit-scrollbar{display:none}
 .chk .ans{color:#168a55;font-weight:600;background:#e9fbf2;border-radius:8px;padding:0 8px;filter:blur(6px);transition:.3s;cursor:pointer}
 .chk .ans.rev{filter:none;cursor:default}
 .reveal-btn{
-  border:0;background:var(--navy);color:#fff;font-family:inherit;font-weight:600;border-radius:12px;
+  border:0;background:var(--teal);color:#fff;font-family:inherit;font-weight:600;border-radius:12px;
   padding:9px 18px;cursor:pointer;font-size:.9rem;transition:.2s;margin-top:14px;
 }
-.reveal-btn:hover{background:var(--blue)}
+.reveal-btn:hover{background:var(--teal-deep)}
 
 /* ====== A5 : conversation + questions ====== */
 .story{
-  background:var(--cream);border:2px solid #f4e3c8;border-radius:18px;padding:18px 20px;margin-top:12px;
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:18px;padding:18px 20px;margin-top:12px;
   font-weight:500;line-height:2.1;font-size:1.02rem;color:var(--ink);
 }
 .story .ln{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start}
 .story .who{
   flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
-  background:var(--blue);border-radius:8px;padding:2px 9px;margin-top:6px;min-width:68px;text-align:center;
+  background:var(--teal);border-radius:8px;padding:2px 9px;margin-top:6px;min-width:68px;text-align:center;
 }
 .story .who.nar{background:#8a6fd8}
 .story .txt{flex:1;line-height:2}
 .legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
 .legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
-.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--gold-deep)}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--sun-deep)}
 .legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
 
 /* glossary + pronoun hover tooltips */
 .g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
-.g{background:#fff3c4;border-bottom:2px dashed var(--gold-deep);color:#8a6500}
+.g{background:#fff3c4;border-bottom:2px dashed var(--sun-deep);color:#8a6500}
 .p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
 .g::after,.p::after{
   content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);
-  background:var(--navy);color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  background:#33415c;color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
   width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;
   padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;
   opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3);
 }
 .g::before,.p::before{
   content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);
-  border:6px solid transparent;border-top-color:var(--navy);
+  border:6px solid transparent;border-top-color:#33415c;
   opacity:0;visibility:hidden;transition:.18s;z-index:60;
 }
 .p::after{background:var(--purple)}
@@ -278,7 +304,7 @@ nav::-webkit-scrollbar{display:none}
 /* questions dropdown */
 .qdrop{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fffdf6}
 .qdrop summary{
-  cursor:pointer;list-style:none;padding:13px 18px;font-weight:600;color:var(--navy);
+  cursor:pointer;list-style:none;padding:13px 18px;font-weight:600;color:var(--coral-deep);
   display:flex;align-items:center;gap:8px;transition:.2s;border-radius:14px;
 }
 .qdrop summary::-webkit-details-marker{display:none}
@@ -287,14 +313,14 @@ nav::-webkit-scrollbar{display:none}
 .qdrop[open] summary .chev{transform:rotate(180deg)}
 .qdrop .q-area{padding:0 18px 16px}
 .q{margin-top:12px}
-.q .q-txt{font-weight:600;color:var(--navy);margin-bottom:8px}
-.q .q-txt .qn{color:var(--red)}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.q .q-txt .qn{color:var(--coral)}
 .opts{display:flex;flex-direction:column;gap:7px}
 .opt{
   text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
   font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
 }
-.opt:hover{border-color:var(--sky)}
+.opt:hover{border-color:var(--teal)}
 .opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
 .opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
 .opt:disabled{cursor:default}
@@ -305,74 +331,65 @@ nav::-webkit-scrollbar{display:none}
 
 /* ====== quiz ====== */
 .quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
-.quiz-q .q-txt{font-weight:600;color:var(--navy);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
 .quiz-q .q-txt .qn{
   display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
-  background:var(--navy);color:#fff;font-size:.85rem;margin-right:8px;
+  background:var(--coral);color:#fff;font-size:.85rem;margin-right:8px;
 }
 .score-box{
-  display:none;margin-top:18px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--coral),#ff9a6b);color:#fff;
   border-radius:18px;padding:20px;text-align:center;
 }
 .score-box.show{display:block;animation:fadeUp .5s}
-.score-box .sc{font-size:2.6rem;font-weight:700;color:var(--gold)}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#fff3c4}
 .score-box p{font-weight:600;margin-top:6px;line-height:1.8}
 .big-btn{
-  margin-top:16px;border:0;background:var(--gold);color:var(--navy);font-family:inherit;font-weight:700;
+  margin-top:16px;border:0;background:var(--coral);color:#fff;font-family:inherit;font-weight:700;
   font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
 }
 .big-btn:hover{transform:scale(1.05)}
 .big-btn:disabled{opacity:.5;cursor:default;transform:none}
 
-/* ====== passport ====== */
-.passport{
-  background:linear-gradient(160deg,#163a6e,#0e2a52);border-radius:22px;padding:26px 22px;color:#fff;margin-top:16px;
-  border:3px solid var(--gold);box-shadow:var(--shadow);text-align:center;
+/* ====== hello badges board ====== */
+.badge-board{
+  background:linear-gradient(160deg,#fff4ea,#ffe9dd);border-radius:22px;padding:26px 22px;margin-top:16px;
+  border:3px solid var(--coral);box-shadow:var(--shadow);text-align:center;
 }
-.passport h3{letter-spacing:3px;color:var(--gold);font-size:1.1rem;font-weight:600}
-.passport .owner{margin-top:4px;font-weight:700;opacity:.9}
-.stamps{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
-.stamp-slot{
-  border:2.5px dashed rgba(255,255,255,.35);border-radius:14px;padding:14px 8px;min-height:104px;
+.badge-board h3{letter-spacing:3px;color:var(--coral-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{
+  border:2.5px dashed #f3c4b8;border-radius:16px;padding:14px 8px;min-height:112px;background:#fff;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
 }
-.stamp-slot .s-name{font-size:.78rem;font-weight:700;opacity:.75}
-.stamp-slot .s-mark{
-  font-weight:600;border:3px solid rgba(255,255,255,.25);color:rgba(255,255,255,.25);
-  border-radius:10px;padding:3px 12px;transform:rotate(-10deg);font-size:.92rem;transition:.3s;
-}
-.stamp-slot.earned{border-style:solid;border-color:var(--gold)}
-.stamp-slot.earned .s-mark{border-color:var(--gold);color:var(--gold);animation:stampPop .7s}
-@keyframes stampPop{0%{transform:rotate(-10deg) scale(2.2);opacity:0}60%{transform:rotate(-10deg) scale(.92);opacity:1}100%{transform:rotate(-10deg) scale(1)}}
-.final-msg{display:none;margin-top:18px;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;font-weight:600;line-height:1.9}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot.earned{border-style:solid;border-color:var(--teal);background:#f2fbf9}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--teal)}
 .final-msg.show{display:block;animation:fadeUp .5s}
-
-@media (max-width:560px){
-  .db-grid{gap:10px}
-}
 </style>
 </head>
 <body>
 
-<div class="sky" id="sky"></div>
+<div class="floaters" id="floaters"></div>
 
 <div class="wrap">
 <header>
-  <span class="hero-plane">✈️</span>
-  <div class="dboard">
-    <div class="scan"></div>
-    <div class="db-top"><span>🛫 DEPARTURES</span><span class="live">● LIVE</span><span>TERMINAL 7</span></div>
-    <div class="db-grid">
-      <div>FLIGHT<b>EN-102</b></div>
-      <div>GATE<b>P2</b></div>
-      <div>DESTINATION<b>WORD CITY</b></div>
-      <div>CLASS<b>GRADE 7</b></div>
+  <div class="hello-card">
+    <span class="tag">UNIT 1 · PERIOD 2 · GRADE 7</span>
+    <div class="wave-row">
+      <span class="wave">👋</span>
+      <h1>Oh, hello!</h1>
+      <span class="wave" style="animation-delay:1.1s;transform:scaleX(-1)">😊</span>
     </div>
-    <h1>Oh, hello!</h1>
-    <div class="sub">Word Practice · Period 2 · PB page 5</div>
-    <div class="status"><i></i> NOW BOARDING</div>
+    <div class="sub">Greetings &amp; New Words · PB page 5</div>
+    <div class="hellos">
+      <span class="hb">Hi!</span><span class="hb">Hello!</span><span class="hb ar">مرحباً!</span>
+      <span class="hb">Bonjour!</span><span class="hb">Hola!</span>
+    </div>
   </div>
-  <div class="flags">🇵🇸 🇫🇷 🇬🇧 🇯🇵 🇧🇷</div>
 </header>
 
 <nav id="tabs">
@@ -383,14 +400,14 @@ nav::-webkit-scrollbar{display:none}
   <button class="tab" data-p="p4">🎧 Check</button>
   <button class="tab" data-p="p5">💬 Questions <span class="done-mark">✔</span></button>
   <button class="tab" data-p="p6">🏁 Quiz <span class="done-mark">✔</span></button>
-  <button class="tab" data-p="p7">🛂 Passport</button>
+  <button class="tab" data-p="p7">🏅 Badges</button>
 </nav>
 
 <!-- ============ OBJECTIVES ============ -->
 <section class="panel on" id="p0">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE A</span>🎯 Lesson Objectives</h2>
-    <p class="hint ar">رحلة اليوم: نتدرب على كلمات الدرس الجديدة ونستخدمها في جمل. أنجز الأنشطة لتجمع الأختام في جواز سفرك! 🛂</p>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">درس اليوم: نتدرب على كلمات التحية الجديدة ونستخدمها في جمل. أنجز الأنشطة لتجمع أوسمة الترحيب الخمسة! 🏅</p>
     <div class="goals">
       <div class="goal"><div class="ico">👂</div><div><b>Listening</b><span class="ar">أستمع وأميّز كلمات الدرس وألاحظ الكلمة الناقصة.</span></div></div>
       <div class="goal"><div class="ico">⭕</div><div><b>Word Choice</b><span class="ar">أختار الكلمة الصحيحة المناسبة لمعنى الجملة.</span></div></div>
@@ -398,7 +415,7 @@ nav::-webkit-scrollbar{display:none}
       <div class="goal"><div class="ico">💬</div><div><b>Comprehension</b><span class="ar">أقرأ المحادثة مرة أخرى وأجيب عن أسئلة الفهم.</span></div></div>
     </div>
     <hr class="divider">
-    <h2 style="font-size:1.05rem">🧳 Word Bag</h2>
+    <h2 style="font-size:1.05rem">💬 Word Bag</h2>
     <div class="keywords">
       <span class="kw">ages</span><span class="kw">hug</span><span class="kw">kiss</span><span class="kw">often</span>
       <span class="kw">perhaps</span><span class="kw">pleased</span><span class="kw">smile</span><span class="kw">surprised</span>
@@ -409,14 +426,20 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ A1 : LISTEN & CIRCLE ============ -->
 <section class="panel" id="p1">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 1</span>👂 Activity 1: Listen and circle the words you hear</h2>
-    <p class="hint ar">شغّل التسجيل واستمع جيداً للكلمات، ثم أجب: <b>أي كلمة لم تسمعها في التسجيل؟</b> اضغط عليها!</p>
+    <h2><span class="gate">STEP 1</span>👂 Activity 1: Listen and circle the words you hear</h2>
+    <p class="hint ar">شغّل التسجيل واستمع جيداً. <b>أولاً:</b> اضغط على كل كلمة سمعتها في التسجيل (7 كلمات). <b>ثانياً:</b> اضغط على الكلمة التي لم تسمعها!</p>
     <div class="gplayer">
       <b>🎧 Audio 3 · The words</b>
       <iframe src="https://drive.google.com/file/d/1Azh572ekYFyBURG92LNvq75f98IDj3MZ/preview" allow="autoplay"></iframe>
     </div>
-    <div class="bigq">Which word didn't you hear? 🤔</div>
+    <div class="stepbox" id="step1box"><span class="stp">STEP 1</span><br>Tap all the words you <b>hear</b> in the recording 👂</div>
     <div class="wordbox" id="a1box"></div>
+    <div class="hearbar">
+      <span id="hearTxt">Heard: 0 / 7</span>
+      <div class="bar"><i id="hearBar"></i></div>
+      <span>👂</span>
+    </div>
+    <div class="stepbox teal" id="step2box" style="display:none"><span class="stp">STEP 2</span><br>Which word didn't you hear? 🤔 Tap it!</div>
     <div class="feedback good" id="a1fb">🎉 Correct! The word <b>hug</b> was not in the recording. <span class="ar">أحسنت! كلمة hug لم تُذكر في التسجيل.</span></div>
   </div>
 </section>
@@ -424,7 +447,7 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ A2 : CIRCLE CORRECT WORDS ============ -->
 <section class="panel" id="p2">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 2</span>⭕ Activity 2: Read and circle the correct words</h2>
+    <h2><span class="gate">STEP 2</span>⭕ Activity 2: Read and circle the correct words</h2>
     <p class="hint ar">اقرأ كل جملة بصمت ثم اضغط على الكلمة الصحيحة من الكلمتين.</p>
     <div id="a2box"></div>
   </div>
@@ -433,7 +456,7 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ A3 : COMPLETE & MATCH ============ -->
 <section class="panel" id="p3">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 3</span>✍️ Activity 3: Complete the sentences, then match them with the pictures</h2>
+    <h2><span class="gate">STEP 3</span>✍️ Activity 3: Complete the sentences, then match them with the pictures</h2>
     <p class="hint ar">أولاً: اضغط كلمة من البنك الذهبي ثم اضغط الفراغ المناسب لها. ثانياً: اختر حرف الصورة المناسبة (a–d) لكل جملة.</p>
     <div class="bank" id="bank"></div>
     <div class="mimg"><img src="https://i.ibb.co/dsRPt5ds/Gemini-Generated-Image-si0p1ksi0p1ksi0p.png" alt="Pictures a, b, c and d"></div>
@@ -444,11 +467,11 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ A4 : LISTEN & CHECK ============ -->
 <section class="panel" id="p4">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 4</span>🎧 Activity 4: Listen and check your sentences</h2>
+    <h2><span class="gate">STEP 4</span>🎧 Activity 4: Listen and check your sentences</h2>
     <p class="hint ar">استمع إلى التسجيل وتأكد من إجاباتك في النشاط السابق. اضغط على أي إجابة مموّهة لكشفها بعد الاستماع.</p>
     <div class="gplayer">
       <b>🎧 Audio 4 · Check your sentences</b>
-      <iframe src="https://drive.google.com/file/d/1BLdqfqN38YbfxIRw1qt3_9VEf2wZytSP/preview" allow="autoplay"></iframe>
+      <iframe src="https://drive.google.com/file/d/19s-i1v-htSh0Hb-570NEoIuTlHmb-pYS/preview" allow="autoplay"></iframe>
     </div>
     <div class="chk"><span class="num">1</span><span>I'm really <span class="ans">surprised</span> to see you here! → picture <span class="ans">d</span></span></div>
     <div class="chk"><span class="num">2</span><span>When I meet my best friend I always give her a <span class="ans">hug</span>. → picture <span class="ans">a</span></span></div>
@@ -461,7 +484,7 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ A5 : READ AGAIN & ANSWER ============ -->
 <section class="panel" id="p5">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 5</span>💬 Activity 5: Read the conversation again and answer</h2>
+    <h2><span class="gate">STEP 5</span>💬 Activity 5: Read the conversation again and answer</h2>
     <p class="hint ar">اقرأ محادثة الدرس السابق مرة أخرى، ثم افتح قائمة «Questions» وأجب عن الأسئلة. مرّر فوق الكلمات الملونة لرؤية المعاني ومرجع الضمائر.</p>
     <div class="legend">
       <span class="lg-g">كلمة جديدة — مرّر أو اضغط لترى معناها 🟡</span>
@@ -469,7 +492,7 @@ nav::-webkit-scrollbar{display:none}
     </div>
     <div class="story" id="story"></div>
     <details class="qdrop">
-      <summary>📋 Questions (5) <span class="ar" style="font-size:.85rem;color:#5f6f93">أسئلة الفهم</span><span class="chev">▼</span></summary>
+      <summary>📋 Questions (5) <span class="ar" style="font-size:.85rem;color:#7b8794">أسئلة الفهم</span><span class="chev">▼</span></summary>
       <div class="q-area" id="a5box"></div>
     </details>
   </div>
@@ -479,9 +502,9 @@ nav::-webkit-scrollbar{display:none}
 <section class="panel" id="p6">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
-    <p class="hint ar">كويز نهاية الرحلة! 5 أسئلة تغطي الدرس كاملاً. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة تغطي الدرس كاملاً. أجب عنها كلها ثم اضغط «Check my score».</p>
     <div id="quizBox"></div>
-    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>✈️ Check my score</button></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
     <div class="score-box" id="scoreBox">
       <div class="sc" id="scoreNum">0 / 5</div>
       <p id="scoreMsg"></p>
@@ -489,20 +512,20 @@ nav::-webkit-scrollbar{display:none}
   </div>
 </section>
 
-<!-- ============ PASSPORT ============ -->
+<!-- ============ BADGES ============ -->
 <section class="panel" id="p7">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE F</span>🛂 Travel Passport</h2>
-    <p class="hint ar">هنا تُجمع أختامك. أكمل الأنشطة الخمسة لتختم جوازك بالكامل!</p>
-    <div class="passport">
-      <h3>✦ TRAVEL PASSPORT ✦</h3>
-      <div class="owner ar">المسافر: طالب/طالبة الصف السابع 🎒</div>
-      <div class="stamps" id="stampsBoard"></div>
+    <h2><span class="gate">AWARDS</span>🏅 Hello Badges</h2>
+    <p class="hint ar">هنا تُجمع أوسمتك. أكمل الأنشطة الخمسة لتحصل على كل أوسمة الترحيب!</p>
+    <div class="badge-board">
+      <h3>✦ MY HELLO BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف السابع 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
       <div class="final-msg ar" id="finalMsg">
-        🎉 مبروك! أكملت رحلة كلمات <b>Oh, hello!</b> بنجاح!<br>
-        أصبحت تستخدم كلمات الدرس في جمل صحيحة. إلى اللقاء في الرحلة القادمة! 🌍✈️
+        🎉 مبروك! جمعت كل أوسمة <b>Oh, hello!</b> بنجاح!<br>
+        أصبحت تستخدم كلمات التحية في جمل صحيحة. أحسنت! 👋😊
       </div>
-      <button class="big-btn" onclick="resetTrip()">🔄 New journey (reset)</button>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
     </div>
   </div>
 </section>
@@ -511,24 +534,22 @@ nav::-webkit-scrollbar{display:none}
 <script>
 /* =========================================================
    Unit 1 – Period 2 : Oh, hello! (Grade 7) — Word practice
-   Departures-board header ✈️ — same travel theme as Period 1
+   Greetings theme 👋 — hello speech-bubble header, hello badges
 ========================================================= */
 
-/* ---------- sky decorations ---------- */
+/* ---------- floating greeting bubbles ---------- */
 (function(){
-  const sky=document.getElementById('sky');
-  for(let i=0;i<3;i++){
-    const c=document.createElement('span');c.className='cloud';c.textContent='☁️';
-    c.style.top=(20+i*120)+'px';c.style.fontSize=(40+i*16)+'px';
-    c.style.animationDuration=(16+i*7)+'s';c.style.animationDelay=(-i*8)+'s';
-    sky.appendChild(c);
-  }
-  for(let i=0;i<14;i++){
-    const s=document.createElement('span');s.className='star';
-    s.style.top=(Math.random()*40)+'%';s.style.left=(Math.random()*100)+'%';
-    s.style.animationDelay=(Math.random()*2)+'s';
-    sky.appendChild(s);
-  }
+  const box=document.getElementById('floaters');
+  const GREETS=['Hi! 👋','Hello! 😊','مرحباً!','Bonjour!','Hola!','Good morning! ☀️','Hey!'];
+  GREETS.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fl';b.textContent=g;
+    if(/[؀-ۿ]/.test(g))b.classList.add('ar');
+    b.style.left=(6+i*14)%88+'%';
+    b.style.animationDuration=(14+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
 })();
 
 /* ---------- tabs ---------- */
@@ -539,59 +560,81 @@ tabs.forEach(t=>t.addEventListener('click',()=>{
   window.scrollTo({top:0,behavior:'smooth'});
 }));
 
-/* ---------- stamps / progress ---------- */
-const STAMPS=[
-  {id:'listen', name:'Listen & Circle', mark:'HEAR ✓'},
-  {id:'circle', name:'Circle Words',    mark:'WORDS ✓'},
-  {id:'match',  name:'Complete & Match',mark:'MATCH ✓'},
-  {id:'compr',  name:'Questions',       mark:'READ ✓'},
-  {id:'quiz',   name:'Quiz',            mark:'QUIZ ✓'},
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'listen', name:'Listen & Circle', emo:'👂'},
+  {id:'circle', name:'Circle Words',    emo:'⭕'},
+  {id:'match',  name:'Complete & Match',emo:'✍️'},
+  {id:'compr',  name:'Questions',       emo:'💬'},
+  {id:'quiz',   name:'Quiz',            emo:'🏆'},
 ];
 const TAB_OF={listen:'p1',circle:'p2',match:'p3',compr:'p5',quiz:'p6'};
 let earned={};
-try{earned=JSON.parse(localStorage.getItem('u1p2trip')||'{}')}catch(e){earned={}}
+try{earned=JSON.parse(localStorage.getItem('u1p2hello')||'{}')}catch(e){earned={}}
 
-const board=document.getElementById('stampsBoard');
-function renderStamps(){
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
   board.innerHTML='';
   let n=0;
-  STAMPS.forEach(s=>{
+  BADGES.forEach(s=>{
     const d=document.createElement('div');
-    d.className='stamp-slot'+(earned[s.id]?' earned':'');
-    d.innerHTML='<span class="s-mark">'+s.mark+'</span><span class="s-name">'+s.name+'</span>';
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span>';
     board.appendChild(d);
     if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
   });
-  document.getElementById('finalMsg').classList.toggle('show',n===STAMPS.length);
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
 }
 function award(id){
   if(earned[id])return;
   earned[id]=true;
-  localStorage.setItem('u1p2trip',JSON.stringify(earned));
-  renderStamps();
+  localStorage.setItem('u1p2hello',JSON.stringify(earned));
+  renderBadges();
 }
-function resetTrip(){
-  localStorage.removeItem('u1p2trip');location.reload();
+function resetLesson(){
+  localStorage.removeItem('u1p2hello');location.reload();
 }
-renderStamps();
+renderBadges();
 
 /* =========================================================
-   A1 : which word didn't you hear? (answer: hug)
+   A1 : two steps — 1) tap the 7 words you heard
+                    2) tap the word you didn't hear (hug)
 ========================================================= */
 const A1WORDS=['ages','hug','kiss','often','perhaps','pleased','smile','surprised'];
+const MISSING='hug';
 const a1box=document.getElementById('a1box');
+let heardN=0,phase=1;
+const HEARD_TOTAL=A1WORDS.length-1;
 A1WORDS.forEach(w=>{
   const b=document.createElement('button');
   b.className='wchip';b.textContent=w;
   b.addEventListener('click',()=>{
-    if(w==='hug'){
-      b.classList.add('ok');
-      a1box.querySelectorAll('.wchip').forEach(x=>x.disabled=true);
-      document.getElementById('a1fb').classList.add('show');
-      award('listen');
+    if(b.classList.contains('heard')||b.classList.contains('missing'))return;
+    if(phase===1){
+      if(w!==MISSING){
+        b.classList.add('heard');
+        heardN++;
+        document.getElementById('hearTxt').textContent='Heard: '+heardN+' / '+HEARD_TOTAL;
+        document.getElementById('hearBar').style.width=(heardN/HEARD_TOTAL*100)+'%';
+        if(heardN===HEARD_TOTAL){
+          phase=2;
+          document.getElementById('step2box').style.display='block';
+          b.blur();
+          a1box.querySelectorAll('.wchip').forEach(x=>{
+            if(!x.classList.contains('heard'))x.classList.add('pulse');
+          });
+        }
+      }else{
+        b.classList.add('no');
+        setTimeout(()=>b.classList.remove('no'),500);
+      }
     }else{
-      b.classList.add('no');
-      setTimeout(()=>b.classList.remove('no'),500);
+      if(w===MISSING){
+        b.classList.remove('pulse');
+        b.classList.add('missing');
+        document.getElementById('a1fb').classList.add('show');
+        award('listen');
+      }
     }
   });
   a1box.appendChild(b);
@@ -839,7 +882,7 @@ document.getElementById('quizCheck').addEventListener('click',()=>{
   const box=document.getElementById('scoreBox');
   document.getElementById('scoreNum').textContent=score+' / 5';
   document.getElementById('scoreMsg').innerHTML=
-    score===5?'🏆 Perfect! You are a word champion! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score===5?'🏆 Perfect! You are a greetings champion! <span class="ar">ممتاز! علامة كاملة!</span>':
     score>=3 ?'⭐ Well done! Review the lesson to get 5/5. <span class="ar">أحسنت! راجع الدرس لتحصل على العلامة الكاملة.</span>':
               '💪 Keep trying! Go back and review the words. <span class="ar">حاول مرة أخرى! عد وراجع الكلمات.</span>';
   box.classList.add('show');
