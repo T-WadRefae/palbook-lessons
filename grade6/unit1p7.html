@@ -173,7 +173,7 @@ header{
 /* ===== crossword ===== */
 .cw-scroll{overflow-x:auto; padding-bottom:8px;}
 .cw-grid{
-  --cell:36px;
+  --cell:min(36px, calc((100vw - 90px) / 15));
   direction:ltr; display:grid; gap:3px; width:max-content; margin:0 auto 20px;
   background:#e0f2f1; padding:10px; border-radius:16px; border:3px solid #80cbc4;
 }
@@ -201,12 +201,22 @@ header{
 .clue-box h4{direction:ltr; text-align:left; font-family:'Baloo 2'; color:var(--teal-d); font-size:1.15rem; margin-bottom:8px;}
 .clue{
   direction:ltr; text-align:left; font-family:'Baloo 2'; font-weight:600; font-size:1rem; color:#37474f;
-  padding:7px 10px; border-radius:10px; cursor:pointer; transition:background .2s; display:flex; gap:8px;
+  padding:7px 10px; border-radius:10px; cursor:pointer; transition:background .2s;
+  display:flex; gap:8px; align-items:center;
 }
 .clue:hover{background:#b2dfdb;}
-.clue.solved{color:var(--green); text-decoration:line-through; text-decoration-thickness:2px;}
+.clue.solved{color:var(--green);}
+.clue.solved .clue-txt{text-decoration:line-through; text-decoration-thickness:2px;}
 .clue.solved::after{content:"✅"; margin-left:auto;}
 .clue b{color:var(--teal-d); min-width:24px;}
+.clue .clue-txt{flex:1;}
+.clue-erase{
+  border:none; cursor:pointer; flex-shrink:0; margin-left:auto;
+  width:32px; height:32px; border-radius:50%; font-size:.95rem;
+  background:#fff; box-shadow:0 2px 0 #b0bec5; transition:transform .15s;
+}
+.clue-erase:hover{transform:scale(1.15); background:#ffcdd2;}
+.clue.solved .clue-erase{display:none;}
 
 /* grammar box */
 .grammar-box{
@@ -373,7 +383,7 @@ footer .small{margin-top:8px; color:#80cbc4; font-weight:700; font-size:.9rem;}
   .header-title p{font-size:.88rem; padding:0 12px;}
   .owl{font-size:2.2rem; top:40px; right:22px;}
   .branch{width:100px; top:80px;}
-  .cube{transform:scale(.75) !important;}
+  .cube{width:32px !important; height:32px !important; font-size:1rem !important; border-radius:8px;}
   .crayon{width:18px; height:58px;}
   .crayon::before{border-left-width:9px; border-right-width:9px; border-bottom-width:16px; top:-14px;}
   .squiggle{width:110px; bottom:32px;}
@@ -389,8 +399,9 @@ footer .small{margin-top:8px; color:#80cbc4; font-weight:700; font-size:.9rem;}
   .panel{padding:18px 10px; border-radius:0 0 18px 18px;}
   .panel h3{font-size:1.05rem;}
   .panel .instr{font-size:.9rem;}
-  .cw-grid{--cell:24px; gap:2px; padding:6px;}
-  .cw-cell input{border-width:2px; border-radius:5px;}
+  .cw-grid{--cell:calc((100vw - 56px) / 15); gap:2px; padding:6px; border-width:2px;}
+  .cw-cell input{border-width:1.5px; border-radius:4px;}
+  .cw-cell .cw-num{top:0; left:1px;}
   .clue{font-size:.9rem; padding:6px 8px;}
   .grammar-box{padding:14px 12px;}
   .grammar-box h4{font-size:1.05rem;}
@@ -413,15 +424,15 @@ footer .small{margin-top:8px; color:#80cbc4; font-weight:700; font-size:.9rem;}
   <div class="cloud" style="top:36px; width:90px; animation-duration:46s;"></div>
   <div class="cloud" style="top:96px; width:120px; animation-duration:62s; animation-delay:-28s;"></div>
 
-  <div class="cube" style="top:54px; left:6%; width:54px; height:54px; font-size:1.7rem; background:#ef5350; animation-duration:5s;">W</div>
-  <div class="cube" style="top:120px; left:14%; width:44px; height:44px; font-size:1.4rem; background:#ab47bc; animation-duration:6s; animation-delay:-2s;">O</div>
-  <div class="cube" style="top:60px; left:23%; width:48px; height:48px; font-size:1.5rem; background:#ffa726; animation-duration:5.4s; animation-delay:-1s;">R</div>
-  <div class="cube" style="top:130px; left:31%; width:42px; height:42px; font-size:1.3rem; background:#66bb6a; animation-duration:6.4s; animation-delay:-3s;">D</div>
-  <div class="cube" style="top:70px; right:30%; width:46px; height:46px; font-size:1.45rem; background:#42a5f5; animation-duration:5.8s; animation-delay:-2.4s;">S</div>
+  <div class="cube" style="top:34px; left:2%; width:50px; height:50px; font-size:1.55rem; background:#ef5350; animation-duration:5s;">W</div>
+  <div class="cube" style="top:108px; left:5%; width:42px; height:42px; font-size:1.3rem; background:#ab47bc; animation-duration:6s; animation-delay:-2s;">O</div>
+  <div class="cube" style="bottom:96px; left:11%; width:46px; height:46px; font-size:1.4rem; background:#ffa726; animation-duration:5.4s; animation-delay:-1s;">R</div>
+  <div class="cube" style="bottom:90px; right:9%; width:42px; height:42px; font-size:1.3rem; background:#66bb6a; animation-duration:6.4s; animation-delay:-3s;">D</div>
+  <div class="cube" style="top:128px; right:3%; width:46px; height:46px; font-size:1.45rem; background:#42a5f5; animation-duration:5.8s; animation-delay:-2.4s;">S</div>
 
-  <div class="puz" style="top:150px; left:42%; animation-duration:8s;">🧩</div>
-  <div class="puz" style="top:90px; right:22%; animation-duration:10s; animation-delay:-4s;">🧩</div>
-  <div class="puz" style="top:170px; right:40%; animation-duration:9s; animation-delay:-2s;">🧩</div>
+  <div class="puz" style="bottom:104px; left:24%; animation-duration:8s;">🧩</div>
+  <div class="puz" style="top:34px; right:24%; animation-duration:10s; animation-delay:-4s;">🧩</div>
+  <div class="puz" style="bottom:96px; right:22%; animation-duration:9s; animation-delay:-2s;">🧩</div>
 
   <div class="branch"><span class="leaf" style="left:14px;">🍃</span><span class="leaf" style="left:64px;">🍃</span></div>
   <div class="owl">🦉</div>
@@ -765,7 +776,7 @@ const cluesA=document.getElementById('cluesA'), cluesD=document.getElementById('
 WORDS.forEach((w,wi)=>{
   const d=document.createElement('div');
   d.className='clue'; d.dataset.wi=wi;
-  d.innerHTML=`<b>${w.num}</b> ${w.clue}`;
+  d.innerHTML=`<b>${w.num}</b><span class="clue-txt">${w.clue}</span><button class="clue-erase" title="مسح الكلمة">🧹</button>`;
   d.addEventListener('click',()=>{
     lastDir=w.dir;
     highlightWords([wi]);
@@ -773,6 +784,19 @@ WORDS.forEach((w,wi)=>{
     if(first)inputs[first].focus();
     grid.scrollIntoView({behavior:'smooth', block:'center'});
     tone(880,.07,0,'triangle',.12);
+  });
+  d.querySelector('.clue-erase').addEventListener('click',e=>{
+    e.stopPropagation();
+    if(solved.has(wi))return;
+    wordCells(wi).forEach(k=>{
+      if(!inputs[k].classList.contains('ok'))inputs[k].value='';
+    });
+    lastDir=w.dir;
+    highlightWords([wi]);
+    const first=wordCells(wi).find(k=>!inputs[k].classList.contains('ok'));
+    if(first)inputs[first].focus();
+    tone(330,.08,0,'triangle',.1);
+    showToast('مُسحت الكلمة — حاول من جديد 💪');
   });
   (w.dir==='A'?cluesA:cluesD).appendChild(d);
 });
