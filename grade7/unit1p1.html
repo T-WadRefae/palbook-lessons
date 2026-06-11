@@ -17,6 +17,7 @@
   --red-deep:#c43d38;
   --gold:#ffce54;
   --gold-deep:#e0a82e;
+  --purple:#5b46d6;
   --paper:#ffffff;
   --cream:#fff8ef;
   --ink:#1c2b4a;
@@ -121,32 +122,13 @@ nav::-webkit-scrollbar{display:none}
 .keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .kw{background:#eaf2ff;color:var(--navy-2);border:1.5px solid #cfe0f8;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
 
-/* ====== custom audio player (single, all browsers, mobile-first) ====== */
-.aplayer{
-  background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:16px;
-  padding:12px 14px;display:flex;align-items:center;gap:12px;margin:10px 0 6px;box-shadow:var(--shadow-sm);
+/* ====== Drive audio player (compact, the only player) ====== */
+.gplayer{
+  background:#f4f8ff;border:2px solid var(--line);border-radius:14px;
+  padding:9px 12px 10px;margin:10px 0 6px;max-width:480px;
 }
-.ap-btn{
-  flex-shrink:0;width:52px;height:52px;border-radius:50%;border:0;cursor:pointer;
-  background:var(--gold);color:var(--navy);font-size:1.35rem;display:grid;place-items:center;
-  transition:.2s;box-shadow:0 4px 12px rgba(0,0,0,.3);
-}
-.ap-btn:active{transform:scale(.92)}
-.ap-mid{flex:1;min-width:0}
-.ap-title{font-weight:600;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ap-track{
-  margin-top:8px;height:14px;background:rgba(255,255,255,.22);border-radius:99px;
-  position:relative;cursor:pointer;touch-action:none;
-}
-.ap-fill{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--gold),#ffe9a8);border-radius:99px;pointer-events:none}
-.ap-knob{
-  position:absolute;top:50%;left:0;width:22px;height:22px;border-radius:50%;background:#fff;
-  transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(0,0,0,.35);pointer-events:none;
-}
-.ap-time{flex-shrink:0;font-size:.8rem;font-weight:600;opacity:.9;font-variant-numeric:tabular-nums}
-.audio-fallback{display:none;margin-top:8px}
-.audio-fallback iframe{width:100%;height:70px;border:0;border-radius:12px}
-.audio-fallback p{color:var(--ink-soft);font-size:.85rem;font-weight:600;margin-bottom:4px}
+.gplayer b{color:var(--navy);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
 
 /* ====== words : flashcards ====== */
 .words{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:14px}
@@ -205,20 +187,42 @@ nav::-webkit-scrollbar{display:none}
 }
 .seg-head b{color:var(--navy);font-size:1rem}
 .seg-head small{display:block;color:var(--ink-soft);font-weight:600}
-.seg-play{
-  margin-left:auto;border:0;background:var(--red);color:#fff;font-family:inherit;font-weight:600;
-  border-radius:999px;padding:8px 18px;cursor:pointer;font-size:.92rem;display:flex;align-items:center;gap:7px;transition:.2s;
-}
-.seg-play:hover{background:var(--red-deep)}
-.seg-play.playing{background:var(--ok)}
 .script{padding:14px 18px;border-top:2px dashed var(--line)}
-.script .ln{display:flex;gap:10px;margin-bottom:7px;align-items:flex-start}
+.script .ln{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start}
 .script .who{
   flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
   background:var(--blue);border-radius:8px;padding:2px 9px;margin-top:3px;min-width:68px;text-align:center;
 }
 .script .who.nar{background:#8a6fd8}
-.script .txt{font-weight:500;color:var(--ink);line-height:1.65;flex:1}
+.script .txt{font-weight:500;color:var(--ink);line-height:1.9;flex:1}
+
+/* glossary + pronoun hover tooltips */
+.g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
+.g{background:#fff3c4;border-bottom:2px dashed var(--gold-deep);color:#8a6500}
+.p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
+.g::after,.p::after{
+  content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);
+  background:var(--navy);color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;
+  padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3);
+}
+.g::before,.p::before{
+  content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);
+  border:6px solid transparent;border-top-color:var(--navy);
+  opacity:0;visibility:hidden;transition:.18s;z-index:60;
+}
+.p::after{background:var(--purple)}
+.p::before{border-top-color:var(--purple)}
+.g:hover::after,.p:hover::after,.g.ton::after,.p.ton::after,
+.g:hover::before,.p:hover::before,.g.ton::before,.p.ton::before{
+  opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
+}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--gold-deep)}
+.legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
+
 /* questions dropdown */
 .qdrop{border-top:2px dashed var(--line);background:#fffdf6}
 .qdrop summary{
@@ -242,10 +246,6 @@ nav::-webkit-scrollbar{display:none}
 .opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
 .opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
 .opt:disabled{cursor:default}
-.timing{margin-top:14px;border:2px dashed var(--line);border-radius:14px;padding:4px 14px 12px;background:#fafcff}
-.timing summary{cursor:pointer;font-weight:600;color:var(--ink-soft);padding:8px 0;font-size:.88rem}
-.timing .trow{display:flex;align-items:center;gap:8px;margin-top:7px;font-weight:600;font-size:.9rem;flex-wrap:wrap}
-.timing input{width:74px;border:2px solid var(--line);border-radius:9px;padding:5px 8px;font-family:inherit;font-weight:600;text-align:center}
 
 /* ====== read & find ====== */
 .story{
@@ -329,8 +329,6 @@ nav::-webkit-scrollbar{display:none}
 
 @media (max-width:560px){
   .pass{margin-top:64px}
-  .seg-play{margin-left:0;width:100%;justify-content:center}
-  .ap-time{display:none}
 }
 </style>
 </head>
@@ -387,9 +385,8 @@ nav::-webkit-scrollbar{display:none}
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">GATE 1</span>🔤 Activity 1: Listen and repeat the words</h2>
     <p class="hint ar">استمع إلى التسجيل وردّد الكلمات. اضغط زر 🔊 لسماع نطق الكلمة، واضغط البطاقة نفسها لقلبها ورؤية المعنى والمرادف والضد. اقلب البطاقات الثماني لتحصل على الختم!</p>
-    <div class="aplayer" data-audio="a1"></div>
-    <div class="audio-fallback" id="fb-a1">
-      <p class="ar">⚠️ إذا لم يعمل المشغل أعلاه، استخدم هذا:</p>
+    <div class="gplayer">
+      <b>🎧 Audio 1 · The words</b>
       <iframe src="https://drive.google.com/file/d/19XhsDbgTKQ6gXpqWjE3ciHtst0x8LzNK/preview" allow="autoplay"></iframe>
     </div>
     <div class="words" id="words"></div>
@@ -441,16 +438,16 @@ nav::-webkit-scrollbar{display:none}
 <section class="panel" id="p3">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">GATE 3</span>🎧 Activities 3 &amp; 4: Listen and understand</h2>
-    <p class="hint ar">سنستمع إلى المحادثة <b>مقطعاً مقطعاً</b>. شغّل كل مقطع، ثم افتح قائمة «Questions» وأجب عن الأسئلة لقياس فهمك. أجب عن كل الأسئلة بشكل صحيح لتحصل على الختم!</p>
-    <div class="aplayer" data-audio="a2"></div>
-    <div class="audio-fallback" id="fb-a2">
-      <p class="ar">⚠️ إذا لم يعمل المشغل أعلاه، استخدم هذا (أزرار تشغيل المقاطع تحتاج المشغل الأصلي):</p>
+    <p class="hint ar">شغّل التسجيل من المشغل وتابع قراءة النص مقطعاً مقطعاً. بعد كل مقطع افتح قائمة «Questions» وأجب عن الأسئلة. أجب عن كل الأسئلة بشكل صحيح لتحصل على الختم!</p>
+    <div class="gplayer">
+      <b>🎧 Audio 2 · The conversation</b>
       <iframe src="https://drive.google.com/file/d/18ek8NWq79V9veiSCT9dncAKgvcS0ZfD-/preview" allow="autoplay"></iframe>
     </div>
+    <div class="legend">
+      <span class="lg-g">كلمة جديدة — مرّر أو اضغط لترى معناها 🟡</span>
+      <span class="lg-p">ضمير — مرّر أو اضغط لتعرف على من يعود 🟣</span>
+    </div>
     <div id="segments"></div>
-    <details class="timing" id="timingBox">
-      <summary class="ar">⚙️ ضبط أزمنة المقاطع (للمعلم) — عدّل بداية ونهاية كل مقطع بالثواني</summary>
-    </details>
   </div>
 </section>
 
@@ -532,6 +529,7 @@ nav::-webkit-scrollbar{display:none}
 /* =========================================================
    Unit 1 – Period 1 : Oh, hello!  (Grade 7)
    Boarding-pass theme ✈️ — English pages, Arabic helper hints
+   Audio: Google Drive preview iframes only.
 ========================================================= */
 
 /* ---------- sky decorations ---------- */
@@ -557,7 +555,6 @@ tabs.forEach(t=>t.addEventListener('click',()=>{
   tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
   t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
   window.scrollTo({top:0,behavior:'smooth'});
-  Player.pauseAll();
 }));
 
 /* ---------- stamps / progress ---------- */
@@ -606,71 +603,6 @@ function speak(txt){
   u.lang='en-US';u.rate=.85;
   speechSynthesis.speak(u);
 }
-
-/* =========================================================
-   Custom audio player — single component, all browsers, mobile-first
-========================================================= */
-const AUDIO_SRC={
-  a1:{title:'🎧 Audio 1 · The words',
-      src:'https://drive.google.com/uc?export=download&id=19XhsDbgTKQ6gXpqWjE3ciHtst0x8LzNK'},
-  a2:{title:'🎧 Audio 2 · The conversation',
-      src:'https://drive.google.com/uc?export=download&id=18ek8NWq79V9veiSCT9dncAKgvcS0ZfD-'},
-};
-const Player={all:[],pauseAll(except){this.all.forEach(p=>{if(p!==except)p.pause();});}};
-
-function fmt(t){
-  if(!isFinite(t))return'0:00';
-  t=Math.max(0,Math.round(t));
-  return Math.floor(t/60)+':'+String(t%60).padStart(2,'0');
-}
-function buildPlayer(el){
-  const key=el.dataset.audio,cfg=AUDIO_SRC[key];
-  el.innerHTML=
-    '<button class="ap-btn" aria-label="Play">▶</button>'+
-    '<div class="ap-mid"><div class="ap-title">'+cfg.title+'</div>'+
-    '<div class="ap-track"><div class="ap-fill"></div><div class="ap-knob"></div></div></div>'+
-    '<span class="ap-time">0:00 / 0:00</span>';
-  const audio=new Audio();
-  audio.preload='metadata';
-  audio.src=cfg.src;
-  const btn=el.querySelector('.ap-btn'),track=el.querySelector('.ap-track'),
-        fill=el.querySelector('.ap-fill'),knob=el.querySelector('.ap-knob'),
-        time=el.querySelector('.ap-time');
-  const P={
-    audio,key,
-    play(){Player.pauseAll(P);audio.play().catch(()=>showFallback(key));},
-    pause(){audio.pause();},
-  };
-  Player.all.push(P);
-  btn.addEventListener('click',()=>{audio.paused?P.play():P.pause();});
-  audio.addEventListener('play', ()=>btn.textContent='⏸');
-  audio.addEventListener('pause',()=>btn.textContent='▶');
-  audio.addEventListener('error',()=>showFallback(key));
-  function paint(){
-    const d=audio.duration||0,c=audio.currentTime||0,pc=d?(c/d*100):0;
-    fill.style.width=pc+'%';knob.style.left=pc+'%';
-    time.textContent=fmt(c)+' / '+fmt(d);
-  }
-  audio.addEventListener('timeupdate',paint);
-  audio.addEventListener('loadedmetadata',paint);
-  function seekFromEvent(e){
-    const r=track.getBoundingClientRect();
-    const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
-    const pc=Math.min(1,Math.max(0,x/r.width));
-    if(isFinite(audio.duration))audio.currentTime=pc*audio.duration;
-  }
-  let drag=false;
-  track.addEventListener('pointerdown',e=>{drag=true;track.setPointerCapture(e.pointerId);seekFromEvent(e);});
-  track.addEventListener('pointermove',e=>{if(drag)seekFromEvent(e);});
-  track.addEventListener('pointerup',()=>drag=false);
-  return P;
-}
-function showFallback(key){
-  const fb=document.getElementById('fb-'+key);
-  if(fb)fb.style.display='block';
-}
-const players={};
-document.querySelectorAll('.aplayer').forEach(el=>{players[el.dataset.audio]=buildPlayer(el);});
 
 /* =========================================================
    WORDS : flashcards (front: EN word + emoji + 🔊 / back: AR + syn/ant)
@@ -731,17 +663,17 @@ document.querySelectorAll('.reveal-btn').forEach(b=>{
 });
 
 /* =========================================================
-   LISTENING : segments + dropdown questions
-   ⚙️ عدّل أزمنة بداية/نهاية كل مقطع (بالثواني) من لوحة
-   «ضبط أزمنة المقاطع» داخل الصفحة أو من المصفوفة أدناه.
+   LISTENING : transcript segments + dropdown questions
+   - class="g"  كلمة جديدة → تلميح بالمعنى العربي
+   - class="p"  ضمير → تلميح يبيّن على من يعود
 ========================================================= */
 const SEGMENTS=[
   {
     title:'Part 1: Meeting friends around the world',
     sub:'الراوي يتحدث عن عادات التحية',
-    start:0,end:27,
     lines:[
-      ['Narrator','nar',"Every day we meet people. We meet friends in the street or at school and sometimes we meet new people. What do you usually do when you meet friends? Do you kiss and hug them? Perhaps you never do that. But in some countries people always kiss and hug their friends."],
+      ['Narrator','nar',
+       "Every day <i class='p' data-t='نحن — الراوي والناس عموماً'>we</i> meet people. We meet friends in the <i class='g' data-t='الشارع'>street</i> or at school and sometimes we meet new people. What do <i class='p' data-t='أنت — المستمع'>you</i> <i class='g' data-t='عادةً'>usually</i> do when you meet friends? Do you <i class='g' data-t='تُقبّل'>kiss</i> and <i class='g' data-t='تعانق'>hug</i> <i class='p' data-t='تعود على الأصدقاء (friends)'>them</i>? <i class='g' data-t='ربما'>Perhaps</i> you never do that. But in some <i class='g' data-t='بلدان / دول'>countries</i> people always kiss and hug <i class='p' data-t='تعود على الناس (people)'>their</i> friends."],
     ],
     qs:[
       {t:'Where do we usually meet our friends?',
@@ -753,11 +685,13 @@ const SEGMENTS=[
   {
     title:'Part 2: Jane meets Anne',
     sub:'صديقتان لم تلتقيا منذ زمن طويل',
-    start:27,end:50,
     lines:[
-      ['Jane','',"Hi! How are you?! I haven't seen you for ages! How's your family?"],
-      ['Anne','',"Hello! How are you? You look great! We're all fine. How are your parents?"],
-      ['Jane','',"They're very well, thank you! Oh, I'm so surprised to see you here!"],
+      ['Jane','',
+       "Hi! How are <i class='p' data-t='تعود على Anne'>you</i>?! <i class='p' data-t='تعود على Jane المتحدثة'>I</i> haven't seen you for <i class='g' data-t='منذ زمن طويل'>ages</i>! How's <i class='p' data-t='عائلة Anne'>your</i> family?"],
+      ['Anne','',
+       "Hello! How are you? You look <i class='g' data-t='رائعة'>great</i>! <i class='p' data-t='تعود على Anne وعائلتها'>We</i>'re all fine. How are your <i class='g' data-t='الوالدان'>parents</i>?"],
+      ['Jane','',
+       "<i class='p' data-t='تعود على والدَي Jane (parents)'>They</i>'re very well, thank you! Oh, I'm so <i class='g' data-t='متفاجئة'>surprised</i> to see you here!"],
     ],
     qs:[
       {t:'Jane and Anne are …',
@@ -769,9 +703,9 @@ const SEGMENTS=[
   {
     title:"Part 3: The narrator's question",
     sub:'ماذا عن الأشخاص الجدد؟',
-    start:50,end:58,
     lines:[
-      ['Narrator','nar',"What do you do when you meet new people? Are you friendly? Do you often smile?"],
+      ['Narrator','nar',
+       "What do you do when you meet new people? Are you <i class='g' data-t='ودود'>friendly</i>? Do you <i class='g' data-t='غالباً'>often</i> <i class='g' data-t='تبتسم'>smile</i>?"],
     ],
     qs:[
       {t:'What does the narrator ask about?',
@@ -781,12 +715,15 @@ const SEGMENTS=[
   {
     title:'Part 4: Paul introduces his cousins',
     sub:'Jake يتعرّف على Evan و Clara',
-    start:58,end:95,
     lines:[
-      ['Paul','',"Jake, this is Evan. He's my cousin."],
-      ['Jake','',"Hi, Evan. I'm pleased to meet you."],
-      ['Evan','',"How do you do, Jake? Good to meet you too. I've heard a lot about you."],
-      ['Paul','',"And this is my cousin, Clara."],
+      ['Paul','',
+       "Jake, <i class='p' data-t='يشير إلى Evan'>this</i> is Evan. <i class='p' data-t='تعود على Evan'>He</i>'s my <i class='g' data-t='ابن العم / ابن الخال'>cousin</i>."],
+      ['Jake','',
+       "Hi, Evan. <i class='p' data-t='تعود على Jake المتحدث'>I</i>'m <i class='g' data-t='مسرور'>pleased</i> to meet <i class='p' data-t='تعود على Evan'>you</i>."],
+      ['Evan','',
+       "<i class='g' data-t='كيف حالك؟ (تحية رسمية عند أول لقاء)'>How do you do</i>, Jake? Good to meet you too. I've <i class='g' data-t='سمعتُ'>heard</i> a lot about <i class='p' data-t='تعود على Jake'>you</i>."],
+      ['Paul','',
+       "And <i class='p' data-t='تشير إلى Clara'>this</i> is my cousin, Clara."],
       ['Jake','',"Hi, Clara."],
       ['Clara','',"Hello."],
     ],
@@ -800,21 +737,8 @@ const SEGMENTS=[
 ];
 
 const segBox=document.getElementById('segments');
-let stopAt=null,playingBtn=null;
 let totalQs=0,correctQs=0;
 SEGMENTS.forEach(s=>totalQs+=s.qs.length);
-const a2=()=>players.a2.audio;
-
-function stopSegment(){
-  const au=a2();
-  if(!au.paused)au.pause();
-  stopAt=null;
-  if(playingBtn){playingBtn.classList.remove('playing');playingBtn.innerHTML='▶ Play this part';playingBtn=null;}
-}
-a2().addEventListener('timeupdate',()=>{
-  if(stopAt!==null&&a2().currentTime>=stopAt)stopSegment();
-});
-a2().addEventListener('pause',()=>{if(stopAt!==null)stopSegment();});
 
 SEGMENTS.forEach((s,si)=>{
   const seg=document.createElement('div');seg.className='seg';
@@ -822,22 +746,9 @@ SEGMENTS.forEach((s,si)=>{
     '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
   ).join('');
   seg.innerHTML=
-    '<div class="seg-head"><span class="seg-num">'+(si+1)+'</span><div><b>'+s.title+'</b><small class="ar">'+s.sub+'</small></div>'+
-    '<button class="seg-play">▶ Play this part</button></div>'+
+    '<div class="seg-head"><span class="seg-num">'+(si+1)+'</span><div><b>'+s.title+'</b><small class="ar">'+s.sub+'</small></div></div>'+
     '<div class="script">'+lines+'</div>'+
     '<details class="qdrop"><summary>📋 Questions ('+s.qs.length+') <span class="ar" style="font-size:.85rem;color:#5f6f93">أسئلة الفهم</span><span class="chev">▼</span></summary><div class="q-area"></div></details>';
-  const playBtn=seg.querySelector('.seg-play');
-  playBtn.addEventListener('click',()=>{
-    if(playingBtn===playBtn){stopSegment();return;}
-    stopSegment();
-    Player.pauseAll(players.a2);
-    const au=a2();
-    au.currentTime=s.start;stopAt=s.end;
-    au.play().then(()=>{
-      playingBtn=playBtn;
-      playBtn.classList.add('playing');playBtn.innerHTML='⏸ Stop';
-    }).catch(()=>{showFallback('a2');stopAt=null;});
-  });
   const qsBox=seg.querySelector('.q-area');
   let segLeft=s.qs.length;
   s.qs.forEach((q,qi)=>{
@@ -864,15 +775,17 @@ SEGMENTS.forEach((s,si)=>{
   segBox.appendChild(seg);
 });
 
-/* teacher timing controls */
-const timingBox=document.getElementById('timingBox');
-SEGMENTS.forEach((s,i)=>{
-  const r=document.createElement('div');r.className='trow';
-  r.innerHTML='Part '+(i+1)+': from <input type="number" min="0" step="1" value="'+s.start+'"> to <input type="number" min="0" step="1" value="'+s.end+'"> seconds';
-  const[inS,inE]=r.querySelectorAll('input');
-  inS.addEventListener('input',()=>s.start=+inS.value||0);
-  inE.addEventListener('input',()=>s.end=+inE.value||0);
-  timingBox.appendChild(r);
+/* tooltips on tap (mobile) */
+document.querySelectorAll('.g,.p').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    const was=el.classList.contains('ton');
+    document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+    if(!was)el.classList.add('ton');
+  });
+});
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
 });
 
 /* =========================================================
@@ -975,7 +888,7 @@ QUIZ.forEach((q,qi)=>{
   q.o.forEach((o,oi)=>{
     const b=document.createElement('button');b.className='opt';b.textContent=o;
     b.addEventListener('click',()=>{
-      opts.querySelectorAll('.opt').forEach(x=>{x.classList.remove('ok');x.style.borderColor='';});
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
       b.classList.add('ok');
       quizAns[qi]=oi;
       if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
