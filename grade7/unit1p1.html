@@ -3,131 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unit 1 – Oh, hello! | Grade 7 Interactive Lesson</title>
+<title>Unit 1 – Oh, hello! | Grade 7 · Period 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#0e2a52;
-  --navy-2:#16407c;
-  --blue:#1d5aa8;
-  --sky:#9ed3ff;
-  --red:#e8554f;
-  --red-deep:#c43d38;
-  --gold:#ffce54;
-  --gold-deep:#e0a82e;
+  --coral:#ff6f61;
+  --coral-deep:#d94f43;
+  --teal:#14b8a6;
+  --teal-deep:#0d9488;
+  --sun:#ffc94d;
+  --sun-deep:#e0a82e;
   --purple:#5b46d6;
   --paper:#ffffff;
   --cream:#fff8ef;
-  --ink:#1c2b4a;
-  --ink-soft:#5f6f93;
-  --line:#dde6f5;
+  --ink:#33415c;
+  --ink-soft:#7b8794;
+  --line:#ffe3d6;
   --ok:#27c275;
   --no:#ff6b6b;
   --r:20px;
-  --shadow:0 16px 40px rgba(14,42,82,.25);
-  --shadow-sm:0 8px 20px rgba(14,42,82,.15);
+  --shadow:0 16px 40px rgba(217,79,67,.16);
+  --shadow-sm:0 8px 20px rgba(217,79,67,.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{
   font-family:'Fredoka','Nunito',sans-serif;
   color:var(--ink);
-  background:linear-gradient(180deg,#0e2a52 0%,#16407c 28%,#3d7cc9 55%,#bfe3ff 100%) fixed;
+  background:
+    radial-gradient(700px 420px at 92% 6%, #ffe3da, transparent 60%),
+    radial-gradient(640px 400px at 4% 28%, #d8f7f2, transparent 60%),
+    radial-gradient(700px 420px at 70% 80%, #fff3d4, transparent 55%),
+    linear-gradient(180deg,#fff4ea 0%,#fff9f1 50%,#effbf8 100%);
+  background-attachment:fixed;
   min-height:100vh;
   overflow-x:hidden;
 }
 .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
 .wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
 
-/* ====== sky decorations ====== */
-.sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.sky .cloud{position:absolute;font-size:52px;opacity:.22;animation:drift linear infinite}
-@keyframes drift{from{left:-90px}to{left:106%}}
-.sky .star{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;opacity:.5;animation:twinkle 2.4s infinite}
-@keyframes twinkle{0%,100%{opacity:.5}50%{opacity:.08}}
-
-/* ====== header : boarding pass ====== */
-header{position:relative;padding:26px 0 8px;text-align:center;color:#fff}
-.hero-plane{position:absolute;top:34px;font-size:44px;z-index:1;animation:fly 11s linear infinite;filter:drop-shadow(0 5px 10px rgba(0,0,0,.35))}
-@keyframes fly{from{left:-70px;transform:translateY(0)}50%{transform:translateY(-18px)}to{left:106%;transform:translateY(0)}}
-.pass{
-  background:var(--paper);color:var(--navy);max-width:560px;margin:54px auto 0;
-  border-radius:18px;padding:18px 26px 16px;position:relative;box-shadow:var(--shadow);
+/* ====== floating greeting emojis ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fe{
+  position:absolute;bottom:-60px;font-size:30px;opacity:0;
+  animation:floatUp linear infinite;
 }
-.pass:before,.pass:after{content:"";position:absolute;width:28px;height:28px;background:var(--navy-2);border-radius:50%;top:50%;transform:translateY(-50%)}
-.pass:before{left:-14px}
-.pass:after{right:-14px}
-.pass .meta{display:flex;justify-content:space-between;font-weight:600;font-size:.78rem;color:#7a87a8;letter-spacing:1px}
-.pass h1{font-size:clamp(2rem,6vw,2.7rem);margin:2px 0}
-.pass .sub{color:var(--red);font-weight:700;font-size:1.02rem}
-.pass .barcode{margin-top:10px;height:30px;background:repeating-linear-gradient(90deg,var(--navy) 0 3px,transparent 3px 7px,var(--navy) 7px 9px,transparent 9px 14px)}
-.head-stamp{
-  position:absolute;right:14px;top:-20px;border:3px solid var(--red);color:var(--red);
-  border-radius:10px;padding:2px 12px;font-weight:700;transform:rotate(12deg);
-  background:rgba(255,255,255,.9);transition:.3s;
+@keyframes floatUp{
+  0%{transform:translateY(0) translateX(0) rotate(-6deg);opacity:0}
+  10%{opacity:.4}
+  88%{opacity:.4}
+  100%{transform:translateY(-115vh) translateX(40px) rotate(8deg);opacity:0}
 }
-.head-stamp.pop{animation:stampPop .7s}
-@keyframes stampPop{0%{transform:rotate(12deg) scale(2.2);opacity:0}60%{transform:rotate(12deg) scale(.92);opacity:1}100%{transform:rotate(12deg) scale(1)}}
-.flags{margin:14px 0 4px;font-size:24px;letter-spacing:8px}
 
-/* ====== tabs : boarding gates (LTR, English) ====== */
+/* ====== header : sunrise greeting ====== */
+header{position:relative;padding:26px 0 8px;text-align:center}
+.sunrise{
+  max-width:640px;margin:0 auto;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#ffd98a 0%,#ffb35c 38%,#ff8a65 72%,#ff6f61 100%);
+  border-radius:32px;box-shadow:var(--shadow);padding:120px 22px 26px;color:#fff;
+  border:3px solid #fff;
+}
+.rays{
+  position:absolute;top:-140px;left:50%;width:420px;height:420px;margin-left:-210px;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,255,255,.22) 0 9deg,transparent 9deg 22deg);
+  animation:spin 28s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sun-core{
+  position:absolute;top:-58px;left:50%;width:150px;height:150px;margin-left:-75px;border-radius:50%;
+  background:radial-gradient(circle at 50% 60%,#fff6d8,#ffe28a 60%,#ffd45e);
+  box-shadow:0 0 56px 18px rgba(255,235,170,.85);
+}
+.sun-face{position:absolute;top:6px;left:50%;transform:translateX(-50%);font-size:44px}
+.birds{position:absolute;top:84px;width:100%;left:0;font-size:20px;opacity:.85}
+.birds span{position:absolute;animation:flit 7s ease-in-out infinite}
+.birds span:nth-child(1){left:12%}
+.birds span:nth-child(2){left:78%;animation-delay:1.6s;font-size:16px}
+@keyframes flit{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.greeters{display:flex;justify-content:center;align-items:flex-end;gap:6px;position:relative}
+.greeters .kid{font-size:54px;animation:hop 2.6s ease-in-out infinite;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+.greeters .kid.r{animation-delay:.5s}
+@keyframes hop{0%,60%,100%{transform:translateY(0)}70%{transform:translateY(-12px)}80%{transform:translateY(0)}90%{transform:translateY(-5px)}}
+.sunrise h1{
+  font-size:clamp(2.2rem,6.5vw,3.2rem);margin-top:2px;
+  text-shadow:0 3px 0 rgba(217,79,67,.55),0 8px 22px rgba(0,0,0,.18);
+}
+.sunrise .sub{font-weight:600;font-size:1.02rem;opacity:.95;margin-top:2px}
+.sunrise .tag{
+  display:inline-block;margin-top:12px;background:rgba(255,255,255,.92);color:var(--coral-deep);
+  font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:5px 18px;
+}
+.greet-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.gr{
+  background:rgba(255,255,255,.92);color:var(--coral-deep);border-radius:50%;width:52px;height:52px;
+  display:grid;place-items:center;font-size:26px;box-shadow:0 6px 14px rgba(0,0,0,.15);
+  animation:swingy 3.4s ease-in-out infinite;
+}
+.gr:nth-child(2){animation-delay:.4s}
+.gr:nth-child(3){animation-delay:.8s}
+.gr:nth-child(4){animation-delay:1.2s}
+@keyframes swingy{0%,100%{transform:rotate(0) translateY(0)}30%{transform:rotate(-8deg) translateY(-6px)}60%{transform:rotate(8deg) translateY(0)}}
+
+/* ====== tabs (LTR, English) ====== */
 nav{
-  display:flex;gap:8px;overflow-x:auto;padding:18px 4px 14px;position:sticky;top:0;z-index:50;
-  background:linear-gradient(180deg,rgba(14,42,82,.92),rgba(14,42,82,.75) 70%,transparent);
+  display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(255,244,234,.95),rgba(255,244,234,.8) 70%,transparent);
   backdrop-filter:blur(6px);scrollbar-width:none;
 }
 nav::-webkit-scrollbar{display:none}
 .tab{
   flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;
-  background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.3);
+  background:#fff;color:var(--ink);border:2px solid var(--line);
   padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
 }
-.tab:hover{background:rgba(255,255,255,.26)}
-.tab.on{background:var(--paper);color:var(--navy);border-color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.25);transform:translateY(-2px)}
+.tab:hover{border-color:var(--coral);transform:translateY(-2px)}
+.tab.on{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
 .tab .done-mark{display:none;color:var(--ok);font-size:1rem}
+.tab.on .done-mark{color:#d6ffe9}
 .tab.done .done-mark{display:inline}
 
-/* ====== panels ====== */
+/* ====== panels / cards ====== */
 .panel{display:none;animation:fadeUp .45s}
 .panel.on{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
 .card .ribbon{
   position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
-  background:repeating-linear-gradient(90deg,var(--red) 0 26px,var(--paper) 26px 40px,var(--navy-2) 40px 66px,var(--paper) 66px 80px);
+  background:repeating-linear-gradient(90deg,var(--coral) 0 26px,var(--sun) 26px 48px,var(--teal) 48px 72px);
 }
-.card h2{font-size:1.3rem;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2{font-size:1.3rem;color:var(--coral-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
 .card h2 .gate{
-  font-size:.7rem;background:var(--navy);color:#fff;
+  font-size:.7rem;background:var(--teal);color:#fff;
   padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
 }
 .hint{
   color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
-  background:#f6f9ff;border-radius:12px;padding:8px 14px;border-right:4px solid var(--sky);
+  background:#f2fbf9;border-radius:12px;padding:8px 14px;border-right:4px solid var(--teal);
 }
 .divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
 
 /* ====== objectives ====== */
 .goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
 .goal{
-  background:var(--cream);border:2px solid #f4e3c8;border-radius:16px;padding:16px 14px;
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:16px;padding:16px 14px;
   display:flex;gap:12px;align-items:flex-start;transition:.25s;
 }
 .goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
 .goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
-.goal b{display:block;color:var(--navy);font-size:1rem}
+.goal b{display:block;color:var(--coral-deep);font-size:1rem}
 .goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
 .keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.kw{background:#eaf2ff;color:var(--navy-2);border:1.5px solid #cfe0f8;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+.kw{background:#e7f8f5;color:var(--teal-deep);border:1.5px solid #bdeae3;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
 
 /* ====== Drive audio player (compact, the only player) ====== */
 .gplayer{
-  background:#f4f8ff;border:2px solid var(--line);border-radius:14px;
+  background:#f2fbf9;border:2px solid #bdeae3;border-radius:14px;
   padding:9px 12px 10px;margin:10px 0 6px;max-width:480px;
 }
-.gplayer b{color:var(--navy);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer b{color:var(--teal-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
 .gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
 
 /* ====== words : flashcards ====== */
@@ -139,32 +174,32 @@ nav::-webkit-scrollbar{display:none}
   position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:6px;font-weight:600;box-shadow:var(--shadow-sm);padding:10px;
 }
-.wface.front{background:#fff;border:2.5px solid var(--line);color:var(--navy)}
+.wface.front{background:#fff;border:2.5px solid var(--line);color:var(--ink)}
 .wface.front .emo{font-size:42px;line-height:1}
-.wface.front .w-en{font-size:1.3rem}
+.wface.front .w-en{font-size:1.3rem;color:var(--coral-deep)}
 .spk{
-  border:0;background:#eaf2ff;color:var(--navy-2);border-radius:999px;padding:5px 16px;cursor:pointer;
+  border:0;background:#e7f8f5;color:var(--teal-deep);border-radius:999px;padding:5px 16px;cursor:pointer;
   font-family:inherit;font-weight:600;font-size:.85rem;transition:.2s;display:flex;align-items:center;gap:5px;
 }
-.spk:hover{background:#d8e8ff}
+.spk:hover{background:#c9efe8}
 .spk:active{transform:scale(.93)}
-.wface.back{background:linear-gradient(135deg,var(--red),#ff8a6b);color:#fff;transform:rotateY(180deg)}
+.wface.back{background:linear-gradient(135deg,var(--coral),#ff9a6b);color:#fff;transform:rotateY(180deg)}
 .wface.back .w-ar{font-size:1.2rem;font-weight:800}
-.wface.back .syn,.wface.back .ant{font-size:.8rem;background:rgba(255,255,255,.2);border-radius:99px;padding:2px 12px}
+.wface.back .syn,.wface.back .ant{font-size:.8rem;background:rgba(255,255,255,.22);border-radius:99px;padding:2px 12px}
 .flip-note{font-size:.85rem;color:var(--ink-soft);font-weight:600;margin-top:10px}
 
 /* ====== pictures (adaptive) ====== */
 .pics{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:12px}
-.pic-card{background:var(--cream);border-radius:18px;overflow:hidden;border:2px solid #f4e3c8}
+.pic-card{background:var(--cream);border-radius:18px;overflow:hidden;border:2px solid #ffe9c9}
 .pic-card img{width:100%;height:auto;display:block}
 .pic-card .pc-body{padding:14px}
-.pic-card h3{color:var(--navy);font-size:1.02rem;margin-bottom:8px}
+.pic-card h3{color:var(--coral-deep);font-size:1.02rem;margin-bottom:8px}
 .choice-row{display:flex;gap:8px;flex-wrap:wrap}
 .choice{
   border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 16px;font-family:inherit;
-  font-weight:600;cursor:pointer;transition:.2s;font-size:.92rem;color:var(--navy);
+  font-weight:600;cursor:pointer;transition:.2s;font-size:.92rem;color:var(--ink);
 }
-.choice:hover{border-color:var(--sky)}
+.choice:hover{border-color:var(--teal)}
 .choice.ok{border-color:var(--ok);background:#e9fbf2;color:var(--ok)}
 .choice.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
@@ -172,50 +207,50 @@ nav::-webkit-scrollbar{display:none}
 .feedback.show{display:block;animation:fadeUp .35s}
 .feedback.good{background:#e9fbf2;color:#168a55}
 .reveal-btn{
-  border:0;background:var(--navy);color:#fff;font-family:inherit;font-weight:600;border-radius:12px;
+  border:0;background:var(--teal);color:#fff;font-family:inherit;font-weight:600;border-radius:12px;
   padding:9px 18px;cursor:pointer;font-size:.9rem;transition:.2s;
 }
-.reveal-btn:hover{background:var(--blue)}
+.reveal-btn:hover{background:var(--teal-deep)}
 
 /* ====== listening segments ====== */
 .seg{border:2px solid var(--line);border-radius:18px;margin-top:16px;background:#fff;transition:.3s}
 .seg.done-seg{border-color:#bfe8d2}
-.seg-head{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#f4f8ff;flex-wrap:wrap;border-radius:16px 16px 0 0}
-.seg-tts{
-  margin-left:auto;border:0;background:var(--red);color:#fff;font-family:inherit;font-weight:600;
-  border-radius:999px;padding:8px 18px;cursor:pointer;font-size:.92rem;display:flex;align-items:center;gap:7px;transition:.2s;
-}
-.seg-tts:hover{background:var(--red-deep)}
-.seg-tts.playing{background:var(--ok)}
+.seg-head{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#fff6ee;flex-wrap:wrap;border-radius:16px 16px 0 0}
 .seg-head .seg-num{
-  background:var(--navy);color:#fff;width:38px;height:38px;border-radius:12px;
+  background:var(--coral);color:#fff;width:38px;height:38px;border-radius:12px;
   display:grid;place-items:center;font-weight:600;flex-shrink:0;
 }
-.seg-head b{color:var(--navy);font-size:1rem}
+.seg-head b{color:var(--coral-deep);font-size:1rem}
 .seg-head small{display:block;color:var(--ink-soft);font-weight:600}
+.seg-tts{
+  margin-left:auto;border:0;background:var(--teal);color:#fff;font-family:inherit;font-weight:600;
+  border-radius:999px;padding:8px 18px;cursor:pointer;font-size:.92rem;display:flex;align-items:center;gap:7px;transition:.2s;
+}
+.seg-tts:hover{background:var(--teal-deep)}
+.seg-tts.playing{background:var(--coral)}
 .script{padding:14px 18px;border-top:2px dashed var(--line)}
 .script .ln{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start}
 .script .who{
   flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
-  background:var(--blue);border-radius:8px;padding:2px 9px;margin-top:3px;min-width:68px;text-align:center;
+  background:var(--teal);border-radius:8px;padding:2px 9px;margin-top:3px;min-width:68px;text-align:center;
 }
 .script .who.nar{background:#8a6fd8}
 .script .txt{font-weight:500;color:var(--ink);line-height:1.9;flex:1}
 
 /* glossary + pronoun hover tooltips */
 .g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
-.g{background:#fff3c4;border-bottom:2px dashed var(--gold-deep);color:#8a6500}
+.g{background:#fff3c4;border-bottom:2px dashed var(--sun-deep);color:#8a6500}
 .p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
 .g::after,.p::after{
   content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);
-  background:var(--navy);color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  background:#33415c;color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
   width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;
   padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;
   opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3);
 }
 .g::before,.p::before{
   content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);
-  border:6px solid transparent;border-top-color:var(--navy);
+  border:6px solid transparent;border-top-color:#33415c;
   opacity:0;visibility:hidden;transition:.18s;z-index:60;
 }
 .p::after{background:var(--purple)}
@@ -226,13 +261,13 @@ nav::-webkit-scrollbar{display:none}
 }
 .legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
 .legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
-.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--gold-deep)}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--sun-deep)}
 .legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
 
 /* questions dropdown */
 .qdrop{border-top:2px dashed var(--line);background:#fffdf6;border-radius:0 0 16px 16px}
 .qdrop summary{
-  cursor:pointer;list-style:none;padding:12px 18px;font-weight:600;color:var(--navy);
+  cursor:pointer;list-style:none;padding:12px 18px;font-weight:600;color:var(--coral-deep);
   display:flex;align-items:center;gap:8px;transition:.2s;
 }
 .qdrop summary::-webkit-details-marker{display:none}
@@ -241,34 +276,34 @@ nav::-webkit-scrollbar{display:none}
 .qdrop[open] summary .chev{transform:rotate(180deg)}
 .qdrop .q-area{padding:0 18px 16px}
 .q{margin-top:12px}
-.q .q-txt{font-weight:600;color:var(--navy);margin-bottom:8px}
-.q .q-txt .qn{color:var(--red)}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.q .q-txt .qn{color:var(--coral)}
 .opts{display:flex;flex-direction:column;gap:7px}
 .opt{
   text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
   font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
 }
-.opt:hover{border-color:var(--sky)}
+.opt:hover{border-color:var(--teal)}
 .opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
 .opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
 .opt:disabled{cursor:default}
 
 /* ====== read & find ====== */
 .story{
-  background:var(--cream);border:2px solid #f4e3c8;border-radius:18px;padding:18px 20px;margin-top:12px;
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:18px;padding:18px 20px;margin-top:12px;
   font-weight:500;line-height:2.1;font-size:1.05rem;color:var(--ink);
 }
 .story .w{cursor:pointer;border-radius:6px;padding:1px 3px;transition:.15s}
 .story .w:hover{background:#ffeccc}
-.story .w.found{background:var(--gold);box-shadow:0 2px 0 var(--gold-deep);font-weight:600;text-decoration:underline 2.5px var(--red)}
+.story .w.found{background:var(--sun);box-shadow:0 2px 0 var(--sun-deep);font-weight:600;text-decoration:underline 2.5px var(--coral)}
 .story .w.oops{animation:shake .35s;background:#ffd9d9}
-.story .speaker{color:var(--blue);font-weight:600}
+.story .speaker{color:var(--teal-deep);font-weight:600}
 .hud{
-  display:flex;align-items:center;gap:14px;margin-top:12px;background:var(--navy);color:#fff;
+  display:flex;align-items:center;gap:14px;margin-top:12px;background:var(--coral);color:#fff;
   border-radius:14px;padding:11px 18px;font-weight:600;flex-wrap:wrap;
 }
-.hud .bar{flex:1;min-width:140px;height:12px;background:rgba(255,255,255,.22);border-radius:99px;overflow:hidden}
-.hud .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#ffe9a8);border-radius:99px;transition:.4s}
+.hud .bar{flex:1;min-width:140px;height:12px;background:rgba(255,255,255,.25);border-radius:99px;overflow:hidden}
+.hud .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sun),#ffe9a8);border-radius:99px;transition:.4s}
 .target-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
 .tchip{font-weight:600;border:2px solid var(--line);border-radius:999px;padding:3px 13px;font-size:.88rem;color:var(--ink-soft);transition:.3s}
 .tchip.got{border-color:var(--ok);color:var(--ok);background:#e9fbf2;text-decoration:line-through}
@@ -278,13 +313,13 @@ nav::-webkit-scrollbar{display:none}
 .role{background:#fff;border:2px solid var(--line);border-radius:16px;padding:14px 10px;text-align:center;transition:.25s}
 .role:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
 .role .face{font-size:38px}
-.role b{display:block;color:var(--navy);font-size:1.02rem}
+.role b{display:block;color:var(--coral-deep);font-size:1.02rem}
 .role span{font-size:.8rem;color:var(--ink-soft);font-weight:600;display:block}
-.ee-box{background:linear-gradient(135deg,#fff3c4,#ffe9a8);border-radius:16px;padding:16px 18px;margin-top:14px;border:2px solid var(--gold)}
+.ee-box{background:linear-gradient(135deg,#fff3c4,#ffe9a8);border-radius:16px;padding:16px 18px;margin-top:14px;border:2px solid var(--sun)}
 .ee-box h3{color:#8a6500;font-size:1.05rem;margin-bottom:10px}
 .ee-line{
   display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:9px 14px;margin-top:8px;
-  font-weight:500;color:var(--navy);box-shadow:var(--shadow-sm);flex-wrap:wrap;
+  font-weight:500;color:var(--ink);box-shadow:var(--shadow-sm);flex-wrap:wrap;
 }
 .ee-line .spk{flex-shrink:0}
 .ee-line .ee-ar{margin-left:auto;font-size:.85rem;color:var(--ink-soft);font-weight:700}
@@ -292,68 +327,72 @@ nav::-webkit-scrollbar{display:none}
 
 /* ====== quiz ====== */
 .quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
-.quiz-q .q-txt{font-weight:600;color:var(--navy);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
 .quiz-q .q-txt .qn{
   display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
-  background:var(--navy);color:#fff;font-size:.85rem;margin-right:8px;
+  background:var(--coral);color:#fff;font-size:.85rem;margin-right:8px;
 }
 .score-box{
-  display:none;margin-top:18px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--coral),#ff9a6b);color:#fff;
   border-radius:18px;padding:20px;text-align:center;
 }
 .score-box.show{display:block;animation:fadeUp .5s}
-.score-box .sc{font-size:2.6rem;font-weight:700;color:var(--gold)}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#fff3c4}
 .score-box p{font-weight:600;margin-top:6px;line-height:1.8}
 .big-btn{
-  margin-top:16px;border:0;background:var(--gold);color:var(--navy);font-family:inherit;font-weight:700;
+  margin-top:16px;border:0;background:var(--coral);color:#fff;font-family:inherit;font-weight:700;
   font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
 }
 .big-btn:hover{transform:scale(1.05)}
 .big-btn:disabled{opacity:.5;cursor:default;transform:none}
 
-/* ====== passport ====== */
-.passport{
-  background:linear-gradient(160deg,#163a6e,#0e2a52);border-radius:22px;padding:26px 22px;color:#fff;margin-top:16px;
-  border:3px solid var(--gold);box-shadow:var(--shadow);text-align:center;
+/* ====== hello badges board ====== */
+.badge-board{
+  background:linear-gradient(160deg,#fff4ea,#ffe9dd);border-radius:22px;padding:26px 22px;margin-top:16px;
+  border:3px solid var(--coral);box-shadow:var(--shadow);text-align:center;
 }
-.passport h3{letter-spacing:3px;color:var(--gold);font-size:1.1rem;font-weight:600}
-.passport .owner{margin-top:4px;font-weight:700;opacity:.9}
-.stamps{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
-.stamp-slot{
-  border:2.5px dashed rgba(255,255,255,.35);border-radius:14px;padding:14px 8px;min-height:104px;
+.badge-board h3{letter-spacing:3px;color:var(--coral-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{
+  border:2.5px dashed #f3c4b8;border-radius:16px;padding:14px 8px;min-height:112px;background:#fff;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
 }
-.stamp-slot .s-name{font-size:.78rem;font-weight:700;opacity:.75}
-.stamp-slot .s-mark{
-  font-weight:600;border:3px solid rgba(255,255,255,.25);color:rgba(255,255,255,.25);
-  border-radius:10px;padding:3px 12px;transform:rotate(-10deg);font-size:.92rem;transition:.3s;
-}
-.stamp-slot.earned{border-style:solid;border-color:var(--gold)}
-.stamp-slot.earned .s-mark{border-color:var(--gold);color:var(--gold);animation:stampPop .7s}
-.final-msg{display:none;margin-top:18px;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;font-weight:600;line-height:1.9}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot.earned{border-style:solid;border-color:var(--teal);background:#f2fbf9}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--teal)}
 .final-msg.show{display:block;animation:fadeUp .5s}
 
 @media (max-width:560px){
-  .pass{margin-top:64px}
   .seg-tts{margin-left:0;width:100%;justify-content:center}
 }
 </style>
 </head>
 <body>
 
-<div class="sky" id="sky"></div>
+<div class="floaters" id="floaters"></div>
 
 <div class="wrap">
 <header>
-  <span class="hero-plane">✈️</span>
-  <div class="pass">
-    <div class="head-stamp">HELLO!</div>
-    <div class="meta"><span>FLIGHT: UNIT 1</span><span>GATE: P1</span><span>SEAT: 7G</span></div>
+  <div class="sunrise">
+    <div class="rays"></div>
+    <div class="sun-core"></div>
+    <div class="sun-face">🌞</div>
+    <div class="birds"><span>🕊️</span><span>🕊️</span></div>
+    <div class="greeters">
+      <span class="kid">🙋‍♂️</span>
+      <span class="kid r">🙋‍♀️</span>
+    </div>
     <h1>Oh, hello!</h1>
-    <div class="sub">Greetings Journey · Grade 7 · Period 1</div>
-    <div class="barcode"></div>
+    <div class="sub">Greetings &amp; Meeting People · PB page 4</div>
+    <div class="greet-row">
+      <span class="gr">🤗</span><span class="gr">🤝</span><span class="gr">👋</span><span class="gr">😁</span>
+    </div>
+    <span class="tag">UNIT 1 · PERIOD 1 · GRADE 7</span>
   </div>
-  <div class="flags">🇵🇸 🇫🇷 🇬🇧 🇯🇵 🇧🇷</div>
 </header>
 
 <nav id="tabs">
@@ -364,14 +403,14 @@ nav::-webkit-scrollbar{display:none}
   <button class="tab" data-p="p4">✏️ Read &amp; Find <span class="done-mark">✔</span></button>
   <button class="tab" data-p="p5">🗣️ Speaking</button>
   <button class="tab" data-p="p6">🏁 Quiz <span class="done-mark">✔</span></button>
-  <button class="tab" data-p="p7">🛂 Passport</button>
+  <button class="tab" data-p="p7">🏅 Badges</button>
 </nav>
 
 <!-- ============ OBJECTIVES ============ -->
 <section class="panel on" id="p0">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE A</span>🎯 Lesson Objectives</h2>
-    <p class="hint ar">قبل الإقلاع... هذه هي المحطات التي سنصل إليها في نهاية الدرس. أنجز الأنشطة لتجمع الأختام في جواز سفرك! 🛂</p>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">صباح جديد ودرس جديد! هذه أهدافنا اليوم — أنجز الأنشطة لتجمع أوسمة الترحيب الخمسة! 🏅</p>
     <div class="goals">
       <div class="goal"><div class="ico">👋</div><div><b>Greetings</b><span class="ar">أستخدم عبارات التحية المناسبة عند لقاء الأصدقاء والأشخاص الجدد.</span></div></div>
       <div class="goal"><div class="ico">🔤</div><div><b>New Words</b><span class="ar">أنطق وأفهم كلمات الدرس الجديدة وأستخدمها في جمل.</span></div></div>
@@ -379,7 +418,7 @@ nav::-webkit-scrollbar{display:none}
       <div class="goal"><div class="ico">🗣️</div><div><b>Speaking</b><span class="ar">أمثّل حواراً للتعارف وأستخدم عبارات الـ Everyday English.</span></div></div>
     </div>
     <hr class="divider">
-    <h2 style="font-size:1.05rem">🧳 Word Bag</h2>
+    <h2 style="font-size:1.05rem">💬 Word Bag</h2>
     <div class="keywords">
       <span class="kw">ages</span><span class="kw">hug</span><span class="kw">kiss</span><span class="kw">often</span>
       <span class="kw">perhaps</span><span class="kw">pleased</span><span class="kw">smile</span><span class="kw">surprised</span>
@@ -390,8 +429,8 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ WORDS ============ -->
 <section class="panel" id="p1">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 1</span>🔤 Activity 1: Listen and repeat the words</h2>
-    <p class="hint ar">استمع إلى التسجيل وردّد الكلمات. اضغط زر 🔊 لسماع نطق الكلمة، واضغط البطاقة نفسها لقلبها ورؤية المعنى والمرادف والضد. اقلب البطاقات الثماني لتحصل على الختم!</p>
+    <h2><span class="gate">STEP 1</span>🔤 Activity 1: Listen and repeat the words</h2>
+    <p class="hint ar">استمع إلى التسجيل وردّد الكلمات. اضغط زر 🔊 لسماع نطق الكلمة، واضغط البطاقة نفسها لقلبها ورؤية المعنى والمرادف والضد. اقلب البطاقات الثماني لتحصل على الوسام!</p>
     <div class="gplayer">
       <b>🎧 Audio 1 · The words</b>
       <iframe src="https://drive.google.com/file/d/19XhsDbgTKQ6gXpqWjE3ciHtst0x8LzNK/preview" allow="autoplay"></iframe>
@@ -404,7 +443,7 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ PICTURES ============ -->
 <section class="panel" id="p2">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 2</span>🖼️ Activity 2: Look at the pictures and answer</h2>
+    <h2><span class="gate">STEP 2</span>🖼️ Activity 2: Look at the pictures and answer</h2>
     <p class="hint ar">اعمل مع زميلك: انظر إلى الصورتين وأجب عن السؤالين تحت كل صورة (هذان سؤالا الكتاب).</p>
     <div class="pics">
       <div class="pic-card">
@@ -444,8 +483,8 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ LISTENING ============ -->
 <section class="panel" id="p3">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 3</span>🎧 Activities 3 &amp; 4: Listen and understand</h2>
-    <p class="hint ar">شغّل التسجيل الكامل من المشغل، أو اضغط زر 🔊 بجانب كل مقطع لسماعه وحده. بعد كل مقطع افتح قائمة «Questions» وأجب عن الأسئلة. أجب عن كل الأسئلة بشكل صحيح لتحصل على الختم!</p>
+    <h2><span class="gate">STEP 3</span>🎧 Activities 3 &amp; 4: Listen and understand</h2>
+    <p class="hint ar">شغّل التسجيل الكامل من المشغل، أو اضغط زر 🔊 بجانب كل مقطع لسماعه وحده. بعد كل مقطع افتح قائمة «Questions» وأجب عن الأسئلة. أجب عن كل الأسئلة بشكل صحيح لتحصل على الوسام!</p>
     <div class="gplayer">
       <b>🎧 Audio 2 · The conversation</b>
       <iframe src="https://drive.google.com/file/d/18ek8NWq79V9veiSCT9dncAKgvcS0ZfD-/preview" allow="autoplay"></iframe>
@@ -461,14 +500,14 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ READ & FIND ============ -->
 <section class="panel" id="p4">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 4</span>✏️ Activity 4: Find the words from Activity 1</h2>
+    <h2><span class="gate">STEP 4</span>✏️ Activity 4: Find the words from Activity 1</h2>
     <p class="hint ar">اقرأ النص واضغط على كل كلمة من كلمات النشاط الأول تجدها. هناك <b>10 كلمات</b> مختبئة في النص!</p>
     <div class="target-list" id="targetList"></div>
     <div class="story" id="story"></div>
     <div class="hud">
       <span id="hudTxt">Found 0 of 10</span>
       <div class="bar"><i id="hudBar"></i></div>
-      <span id="hudStar">🧳</span>
+      <span id="hudStar">👋</span>
     </div>
   </div>
 </section>
@@ -476,7 +515,7 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ SPEAKING ============ -->
 <section class="panel" id="p5">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE 5</span>🗣️ Activity 5: Act out the conversations</h2>
+    <h2><span class="gate">STEP 5</span>🗣️ Activity 5: Act out the conversations</h2>
     <p class="hint ar">اعملوا في مجموعات من أربعة. اختاروا الأدوار ومثّلوا المحادثتين أمام الصف (تجدون نص الحوار في تبويب Read &amp; Find).</p>
     <div class="roles">
       <div class="role"><div class="face">👩‍🦰</div><b>Jane</b><span class="ar">تلتقي صديقتها القديمة</span></div>
@@ -503,9 +542,9 @@ nav::-webkit-scrollbar{display:none}
 <section class="panel" id="p6">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
-    <p class="hint ar">كويز نهاية الرحلة! 5 أسئلة تغطي الدرس كاملاً. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة تغطي الدرس كاملاً. أجب عنها كلها ثم اضغط «Check my score».</p>
     <div id="quizBox"></div>
-    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>✈️ Check my score</button></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
     <div class="score-box" id="scoreBox">
       <div class="sc" id="scoreNum">0 / 5</div>
       <p id="scoreMsg"></p>
@@ -513,20 +552,20 @@ nav::-webkit-scrollbar{display:none}
   </div>
 </section>
 
-<!-- ============ PASSPORT ============ -->
+<!-- ============ BADGES ============ -->
 <section class="panel" id="p7">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">GATE F</span>🛂 Travel Passport</h2>
-    <p class="hint ar">هنا تُجمع أختامك. أكمل الأنشطة الخمسة لتختم جوازك بالكامل!</p>
-    <div class="passport">
-      <h3>✦ TRAVEL PASSPORT ✦</h3>
-      <div class="owner ar">المسافر: طالب/طالبة الصف السابع 🎒</div>
-      <div class="stamps" id="stampsBoard"></div>
+    <h2><span class="gate">AWARDS</span>🏅 Hello Badges</h2>
+    <p class="hint ar">هنا تُجمع أوسمتك. أكمل الأنشطة الخمسة لتحصل على كل أوسمة الترحيب!</p>
+    <div class="badge-board">
+      <h3>✦ MY HELLO BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف السابع 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
       <div class="final-msg ar" id="finalMsg">
-        🎉 مبروك! أكملت رحلة <b>Oh, hello!</b> بنجاح!<br>
-        أصبحت الآن قادراً على تحية أصدقائك والتعرف على أشخاص جدد بالإنجليزية. 🌍✈️
+        🎉 مبروك! جمعت كل أوسمة <b>Oh, hello!</b> بنجاح!<br>
+        أصبحت الآن قادراً على تحية أصدقائك والتعرف على أشخاص جدد بالإنجليزية. 👋😊
       </div>
-      <button class="big-btn" onclick="resetTrip()">🔄 New journey (reset)</button>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
     </div>
   </div>
 </section>
@@ -535,25 +574,21 @@ nav::-webkit-scrollbar{display:none}
 <script>
 /* =========================================================
    Unit 1 – Period 1 : Oh, hello!  (Grade 7)
-   Boarding-pass theme ✈️ — English pages, Arabic helper hints
-   Audio: Google Drive preview iframes only.
+   Greetings theme 👋 — sunrise greeting header, hello badges
 ========================================================= */
 
-/* ---------- sky decorations ---------- */
+/* ---------- floating greeting emojis ---------- */
 (function(){
-  const sky=document.getElementById('sky');
-  for(let i=0;i<3;i++){
-    const c=document.createElement('span');c.className='cloud';c.textContent='☁️';
-    c.style.top=(20+i*120)+'px';c.style.fontSize=(40+i*16)+'px';
-    c.style.animationDuration=(16+i*7)+'s';c.style.animationDelay=(-i*8)+'s';
-    sky.appendChild(c);
-  }
-  for(let i=0;i<14;i++){
-    const s=document.createElement('span');s.className='star';
-    s.style.top=(Math.random()*40)+'%';s.style.left=(Math.random()*100)+'%';
-    s.style.animationDelay=(Math.random()*2)+'s';
-    sky.appendChild(s);
-  }
+  const box=document.getElementById('floaters');
+  const EMOJIS=['👋','😊','🤗','💬','🤝','😁','👋'];
+  EMOJIS.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fe';b.textContent=g;
+    b.style.left=(4+i*14)%90+'%';
+    b.style.animationDuration=(13+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*3.5)+'s';
+    box.appendChild(b);
+  });
 })();
 
 /* ---------- tabs ---------- */
@@ -565,43 +600,41 @@ tabs.forEach(t=>t.addEventListener('click',()=>{
   stopSegTTS();
 }));
 
-/* ---------- stamps / progress ---------- */
-const STAMPS=[
-  {id:'words', name:'Words',    mark:'WORDS ✓'},
-  {id:'pics',  name:'Pictures', mark:'LOOK ✓'},
-  {id:'listen',name:'Listening',mark:'LISTEN ✓'},
-  {id:'find',  name:'Read & Find', mark:'READ ✓'},
-  {id:'quiz',  name:'Quiz',     mark:'QUIZ ✓'},
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'words', name:'Words',       emo:'🔤'},
+  {id:'pics',  name:'Pictures',    emo:'🖼️'},
+  {id:'listen',name:'Listening',   emo:'🎧'},
+  {id:'find',  name:'Read & Find', emo:'✏️'},
+  {id:'quiz',  name:'Quiz',        emo:'🏆'},
 ];
 const TAB_OF={words:'p1',pics:'p2',listen:'p3',find:'p4',quiz:'p6'};
 let earned={};
-try{earned=JSON.parse(localStorage.getItem('u1p1trip2')||'{}')}catch(e){earned={}}
+try{earned=JSON.parse(localStorage.getItem('u1p1hello')||'{}')}catch(e){earned={}}
 
-const board=document.getElementById('stampsBoard');
-function renderStamps(){
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
   board.innerHTML='';
   let n=0;
-  STAMPS.forEach(s=>{
+  BADGES.forEach(s=>{
     const d=document.createElement('div');
-    d.className='stamp-slot'+(earned[s.id]?' earned':'');
-    d.innerHTML='<span class="s-mark">'+s.mark+'</span><span class="s-name">'+s.name+'</span>';
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span>';
     board.appendChild(d);
     if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
   });
-  document.getElementById('finalMsg').classList.toggle('show',n===STAMPS.length);
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
 }
 function award(id){
   if(earned[id])return;
   earned[id]=true;
-  localStorage.setItem('u1p1trip2',JSON.stringify(earned));
-  renderStamps();
-  const hs=document.querySelector('.head-stamp');
-  hs.classList.remove('pop');void hs.offsetWidth;hs.classList.add('pop');
+  localStorage.setItem('u1p1hello',JSON.stringify(earned));
+  renderBadges();
 }
-function resetTrip(){
-  localStorage.removeItem('u1p1trip2');location.reload();
+function resetLesson(){
+  localStorage.removeItem('u1p1hello');location.reload();
 }
-renderStamps();
+renderBadges();
 
 /* ---------- speech (TTS) ---------- */
 function speak(txt){
@@ -675,6 +708,7 @@ document.querySelectorAll('.reveal-btn').forEach(b=>{
    LISTENING : transcript segments + dropdown questions
    - class="g"  كلمة جديدة → تلميح بالمعنى العربي
    - class="p"  ضمير → تلميح يبيّن على من يعود
+   - per-segment listening = TTS button reading the transcript
 ========================================================= */
 const SEGMENTS=[
   {
@@ -763,7 +797,7 @@ SEGMENTS.forEach((s,si)=>{
     '<div class="seg-head"><span class="seg-num">'+(si+1)+'</span><div><b>'+s.title+'</b><small class="ar">'+s.sub+'</small></div>'+
     '<button class="seg-tts">🔊 Listen</button></div>'+
     '<div class="script">'+lines+'</div>'+
-    '<details class="qdrop"><summary>📋 Questions ('+s.qs.length+') <span class="ar" style="font-size:.85rem;color:#5f6f93">أسئلة الفهم</span><span class="chev">▼</span></summary><div class="q-area"></div></details>';
+    '<details class="qdrop"><summary>📋 Questions ('+s.qs.length+') <span class="ar" style="font-size:.85rem;color:#7b8794">أسئلة الفهم</span><span class="chev">▼</span></summary><div class="q-area"></div></details>';
   const ttsB=seg.querySelector('.seg-tts');
   ttsB.addEventListener('click',()=>{
     if(ttsBtn===ttsB){stopSegTTS();return;}
