@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Period 8 | Project Work 🎨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#2e7d32; --green-l:#66bb6a; --orange:#ff8f00; --orange-d:#ef6c00;
+  --cream:#fff8e1; --coral:#ff7043; --coral-d:#e64a19; --plum:#7b1fa2;
+  --red:#e53935; --blue:#1565c0;
+}
+*{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+body{
+  font-family:'Cairo','Baloo 2',sans-serif;
+  background:linear-gradient(180deg,#fff3e0 0%, #fffde7 100%);
+  min-height:100vh; overflow-x:hidden;
+}
+.en{font-family:'Baloo 2','Cairo',sans-serif; direction:ltr;}
+
+/* ============ HEADER (poster workshop / washing line) ============ */
+header{
+  position:relative; height:350px; overflow:hidden;
+  background:linear-gradient(180deg,#4527a0 0%, #7b1fa2 38%, #ec407a 68%, #ffb74d 88%, #8d6e63 88.5%, #5d4037 100%);
+  border-bottom:8px solid var(--coral);
+}
+/* washing line rope */
+.rope{
+  position:absolute; top:64px; left:-4%; width:108%; height:90px; z-index:3; pointer-events:none;
+}
+.rope svg{width:100%; height:100%;}
+.rope path{fill:none; stroke:#fff8e1; stroke-width:4; stroke-dasharray:none; opacity:.9;}
+/* polaroid cards pinned on the line */
+.polaroid{
+  position:absolute; z-index:4; width:86px; padding:7px 7px 20px; background:#fff;
+  border-radius:6px; box-shadow:0 10px 22px rgba(0,0,0,.35);
+  transform-origin:top center;
+  animation:swing ease-in-out infinite;
+}
+@keyframes swing{0%,100%{transform:rotate(-6deg);}50%{transform:rotate(7deg);}}
+.polaroid::before{ /* peg */
+  content:""; position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+  width:12px; height:18px; background:#ef5350; border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,.3);
+}
+.polaroid .ph{
+  width:100%; height:62px; border-radius:4px; display:flex; align-items:center; justify-content:center;
+  font-size:2rem;
+}
+.polaroid .cap{
+  font-family:'Baloo 2'; font-size:.55rem; font-weight:700; color:#78909c; text-align:center; margin-top:4px;
+  direction:ltr;
+}
+/* paint splats */
+.splat{
+  position:absolute; border-radius:48% 52% 55% 45% / 50% 46% 54% 50%; z-index:2; opacity:.85;
+  animation:splatPulse 4s ease-in-out infinite;
+}
+@keyframes splatPulse{0%,100%{transform:scale(1) rotate(-4deg);}50%{transform:scale(1.12) rotate(5deg);}}
+/* floating art tools */
+.tool{
+  position:absolute; font-size:1.9rem; z-index:3;
+  animation:toolFloat 6s ease-in-out infinite;
+  filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));
+}
+@keyframes toolFloat{
+  0%,100%{transform:translateY(0) rotate(-10deg);}
+  50%{transform:translateY(-22px) rotate(12deg);}
+}
+/* big paint brush painting a stroke */
+.brush-wrap{position:absolute; bottom:46px; right:7%; z-index:4; animation:paintMove 4.5s ease-in-out infinite;}
+@keyframes paintMove{0%,100%{transform:translateX(0) rotate(-8deg);}50%{transform:translateX(-34px) rotate(4deg);}}
+.brush{font-size:3.4rem; display:block; transform:rotate(-35deg);}
+.stroke{
+  position:absolute; bottom:42px; right:12%; width:180px; height:16px; z-index:3;
+  border-radius:10px; background:linear-gradient(90deg,#ffd54f,#ff7043,#ec407a);
+  opacity:.9; animation:strokeGrow 4.5s ease-in-out infinite; transform-origin:right center;
+}
+@keyframes strokeGrow{0%,100%{transform:scaleX(.35);}50%{transform:scaleX(1);}}
+/* stars sparkle */
+.spark2{position:absolute; z-index:2; pointer-events:none;}
+@keyframes popIn{from{transform:translateY(60px) scale(.6); opacity:0;}to{transform:translateY(0) scale(1); opacity:1;}}
+
+.header-title{
+  position:relative; z-index:6; text-align:center; padding-top:170px; color:#fff;
+}
+.header-title .badge{
+  display:inline-block; background:var(--coral); padding:6px 26px; border-radius:30px;
+  font-weight:800; font-size:1rem; box-shadow:0 4px 0 var(--coral-d); letter-spacing:.5px;
+  animation:popIn .7s both;
+}
+.header-title h1{
+  font-family:'Baloo 2',cursive; font-size:clamp(1.6rem,5.2vw,2.8rem); margin-top:10px;
+  text-shadow:0 4px 0 rgba(0,0,0,.35);
+  animation:popIn .7s .15s both;
+}
+.header-title h1 .wave{display:inline-block; animation:wiggle 1.7s ease-in-out infinite;}
+@keyframes wiggle{0%,100%{transform:rotate(0) scale(1);}30%{transform:rotate(12deg) scale(1.15);}60%{transform:rotate(-10deg) scale(1.05);}}
+.header-title p{margin-top:6px; font-size:1rem; color:#ffe0b2; font-weight:700; animation:popIn .7s .3s both;}
+
+/* ============ LAYOUT ============ */
+.wrap{max-width:1000px; margin:0 auto; padding:24px 16px 60px;}
+.objectives{
+  background:#fff; border:4px dashed var(--green-l); border-radius:24px;
+  padding:22px 26px; animation:popIn .6s both;
+}
+.start-btn{
+  display:block; margin:22px auto 4px; border:none; cursor:pointer; font-family:inherit;
+  font-weight:800; font-size:1.15rem; color:#fff; padding:14px 38px; border-radius:40px;
+  background:linear-gradient(135deg,var(--coral),#ff8a65); box-shadow:0 5px 0 var(--coral-d);
+  transition:transform .2s; animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 5px 0 var(--coral-d),0 0 0 0 rgba(255,112,67,.45);}50%{box-shadow:0 5px 0 var(--coral-d),0 0 0 14px rgba(255,112,67,0);}}
+.start-btn:hover{transform:scale(1.08);}
+.start-btn:active{transform:translateY(3px);}
+.objectives h2{color:var(--green); font-size:1.5rem; display:flex; align-items:center; gap:10px;}
+.objectives h2 .target{font-size:1.9rem; animation:toolFloat 3s ease-in-out infinite;}
+.objectives ul{list-style:none; margin-top:14px; display:grid; gap:10px;}
+@media(min-width:700px){.objectives ul{grid-template-columns:1fr 1fr;}}
+.objectives li{
+  background:var(--cream); border-radius:14px; padding:10px 14px; font-weight:700;
+  border-right:6px solid var(--coral); display:flex; gap:8px; align-items:flex-start;
+  transition:transform .25s;
+}
+.objectives li:hover{transform:translateX(-6px) scale(1.02);}
+.objectives li::before{content:"✔️";}
+
+/* tabs (LTR English) */
+.tabs{display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 0; justify-content:center; direction:ltr;}
+.tab-btn{
+  border:none; cursor:pointer; font-family:'Baloo 2','Cairo',sans-serif; font-weight:800; font-size:1rem;
+  padding:13px 20px; border-radius:18px 18px 0 0; background:#cfd8dc; color:#455a64;
+  box-shadow:0 -3px 0 rgba(0,0,0,.06) inset; transition:all .25s; position:relative; top:4px;
+}
+.tab-btn:hover{background:#ffccbc; transform:translateY(-4px);}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--coral),#ff8a65); color:#fff; top:0;
+  box-shadow:0 6px 16px rgba(255,112,67,.45); transform:scale(1.06);
+}
+.panel{
+  display:none; background:#fff; border-radius:0 0 24px 24px; border-top:6px solid var(--coral);
+  padding:28px 22px; box-shadow:0 14px 34px rgba(0,0,0,.1);
+  animation:fadeUp .45s both;
+}
+.panel.show{display:block;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(24px);}to{opacity:1; transform:translateY(0);}}
+.panel h3{color:var(--blue); font-size:1.35rem; margin-bottom:6px;}
+.panel .instr{color:#666; font-weight:700; margin-bottom:18px;}
+
+/* word bank + blanks */
+.bank{
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center; background:var(--cream);
+  border-radius:16px; padding:14px; margin-bottom:22px; border:3px solid #ffe082;
+  position:sticky; top:64px; z-index:40; box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+.chip{
+  font-family:'Baloo 2',sans-serif; direction:ltr; font-weight:700; font-size:1rem;
+  background:linear-gradient(135deg,#42a5f5,#1e88e5); color:#fff; padding:7px 16px;
+  border-radius:30px; cursor:pointer; border:none; box-shadow:0 4px 0 #1565c0;
+  transition:transform .15s;
+}
+.chip:hover{transform:translateY(-3px) scale(1.07);}
+.chip:active{transform:translateY(2px);}
+.chip.used{opacity:.28; pointer-events:none; text-decoration:line-through;}
+.chip.selected{background:linear-gradient(135deg,#ff8a65,#ff7043); box-shadow:0 4px 0 var(--coral-d); transform:scale(1.12);}
+
+.q1-item{
+  display:grid; gap:16px; align-items:center; margin-bottom:26px;
+  background:#fbe9e7; border-radius:20px; padding:16px; border:3px solid #ffab91;
+}
+@media(min-width:680px){.q1-item{grid-template-columns:230px 1fr;}}
+.q1-item img{
+  width:100%; max-width:230px; border-radius:16px; border:4px solid #fff;
+  box-shadow:0 8px 18px rgba(0,0,0,.18); transition:transform .3s; justify-self:center;
+}
+.q1-item img:hover{transform:scale(1.05) rotate(-1.5deg);}
+.sentence{direction:ltr; text-align:left; font-family:'Baloo 2',sans-serif; font-size:1.15rem; font-weight:600; color:#37474f; line-height:2.4;}
+.sentence .snum{
+  display:inline-flex; min-width:30px; height:30px; border-radius:50%; background:var(--coral); color:#fff;
+  align-items:center; justify-content:center; font-weight:800; margin-right:6px;
+}
+.blank{
+  display:inline-block; min-width:110px; text-align:center; border-bottom:3px dashed var(--coral);
+  background:#fffde7; border-radius:8px 8px 0 0; padding:2px 10px; cursor:pointer;
+  font-weight:800; color:var(--blue); transition:all .2s;
+}
+.blank:hover{background:#ffecb3;}
+.blank.correct{border-bottom-color:var(--green); background:#c8e6c9; color:var(--green); animation:bounce .5s;}
+.blank.wrong{border-bottom-color:var(--red); background:#ffcdd2; color:var(--red); animation:shake .45s;}
+@keyframes bounce{0%,100%{transform:scale(1);}40%{transform:scale(1.25);}}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-7px);}75%{transform:translateX(7px);}}
+
+/* ===== project / writing guide ===== */
+.poster-img{
+  display:block; width:min(560px,100%); margin:0 auto 22px; border-radius:20px;
+  border:5px solid #fff; box-shadow:0 10px 26px rgba(0,0,0,.2); transition:transform .3s;
+}
+.poster-img:hover{transform:scale(1.02) rotate(-.6deg);}
+.guide-box{
+  background:linear-gradient(135deg,#fff3e0,#fce4ec); border:3px solid #ffab91; border-radius:20px;
+  padding:18px 20px; margin-bottom:20px;
+}
+.guide-box h4{color:var(--coral-d); font-size:1.2rem; margin-bottom:10px;}
+.mindmap{
+  display:flex; flex-direction:column; align-items:center; gap:12px; margin:16px 0;
+}
+.mind-center{
+  background:#fff; border:3px solid var(--plum); color:var(--plum); font-weight:800;
+  border-radius:50px; padding:12px 26px; text-align:center; font-size:1.05rem;
+  box-shadow:0 6px 16px rgba(123,31,162,.2); animation:toolFloat 4s ease-in-out infinite;
+}
+.mind-qs{display:flex; flex-wrap:wrap; gap:12px; justify-content:center;}
+.mind-q{
+  font-family:'Baloo 2'; direction:ltr; background:#fff; border:2.5px solid #ce93d8; color:#6a1b9a;
+  font-weight:700; border-radius:30px; padding:8px 18px; cursor:pointer; transition:all .2s; border-style:dashed;
+}
+.mind-q:hover{background:#ce93d8; color:#fff; transform:scale(1.07);}
+.steps{list-style:none; display:grid; gap:10px; margin-top:8px;}
+.step{
+  display:flex; align-items:flex-start; gap:12px; background:#fff; border-radius:14px;
+  padding:12px 14px; border:2px solid #ffcc80; font-weight:700; color:#37474f; cursor:pointer;
+  transition:all .25s;
+}
+.step:hover{transform:translateX(-5px);}
+.step .box{
+  min-width:30px; height:30px; border-radius:9px; border:3px solid var(--coral); background:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:1rem; color:transparent;
+  transition:all .2s; flex-shrink:0; margin-top:2px;
+}
+.step.done{background:#e8f5e9; border-color:#a5d6a7; color:var(--green);}
+.step.done .box{background:var(--green); border-color:var(--green); color:#fff;}
+.starters{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:12px 0;}
+.h-chip{
+  font-family:'Baloo 2'; direction:ltr; font-weight:700; font-size:.98rem; cursor:pointer;
+  background:#fff; color:#0277bd; border:2.5px solid #4fc3f7; padding:7px 16px; border-radius:30px;
+  transition:all .2s;
+}
+.h-chip:hover{background:#4fc3f7; color:#fff; transform:scale(1.07);}
+.write-area{
+  width:100%; min-height:170px; resize:vertical; direction:ltr; text-align:left;
+  font-family:'Baloo 2'; font-size:1.1rem; font-weight:600; color:#37474f; line-height:2;
+  border:3px solid #ffab91; border-radius:16px; padding:14px 16px; outline:none;
+  background:repeating-linear-gradient(#fff 0 38px, #fbe9e7 38px 40px);
+}
+.write-area:focus{border-color:var(--coral); box-shadow:0 0 0 4px rgba(255,112,67,.15);}
+.count-note{font-weight:700; color:#666; margin-top:8px;}
+.check-btn{
+  font-family:inherit; font-weight:800; font-size:.95rem; border:none; cursor:pointer;
+  padding:10px 26px; border-radius:30px; margin-top:10px; transition:transform .15s;
+  background:linear-gradient(135deg,var(--green-l),var(--green)); color:#fff; box-shadow:0 4px 0 #1b5e20;
+}
+.check-btn:hover{transform:translateY(-3px);}
+.note-tip{
+  background:#fff8e1; border-right:6px solid var(--orange); border-radius:12px;
+  padding:10px 14px; font-weight:700; color:#5d4037; line-height:1.9; margin-top:14px;
+}
+
+/* score */
+.scorebar{
+  position:sticky; top:8px; z-index:50; display:flex; align-items:center; gap:12px;
+  background:#fff; border-radius:40px; padding:8px 18px; margin:18px auto 0; width:fit-content;
+  box-shadow:0 6px 18px rgba(0,0,0,.15); border:3px solid var(--coral); font-weight:800; color:var(--coral-d);
+}
+.scorebar .stars-earned{font-size:1.25rem; letter-spacing:2px;}
+
+/* toast */
+#toast{
+  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(120px);
+  background:var(--green); color:#fff; font-weight:800; padding:13px 30px; border-radius:40px;
+  box-shadow:0 10px 26px rgba(0,0,0,.3); transition:transform .4s cubic-bezier(.34,1.56,.64,1); z-index:99; font-size:1.05rem;
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
+#toast.bad{background:var(--red);}
+
+/* confetti */
+.confetti{position:fixed; top:-12px; border-radius:3px; z-index:98; pointer-events:none; animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);}}
+
+/* footer */
+footer{
+  margin-top:40px; background:linear-gradient(135deg,#4527a0,#7b1fa2);
+  color:#fff; text-align:center; padding:30px 16px; border-top:8px solid var(--coral);
+}
+footer .designer{font-size:1.25rem; font-weight:800;}
+footer .designer span{
+  color:#ffd54f; font-family:'Baloo 2'; direction:ltr; display:inline-block;
+  animation:toolFloat 3.5s ease-in-out infinite;
+}
+footer .small{margin-top:8px; color:#ce93d8; font-weight:700; font-size:.9rem;}
+
+/* ============ MOBILE ============ */
+@media(max-width:600px){
+  header{height:300px;}
+  .header-title{padding-top:140px;}
+  .header-title .badge{font-size:.8rem; padding:5px 16px;}
+  .header-title p{font-size:.85rem; padding:0 12px;}
+  .rope{top:50px; height:70px;}
+  .polaroid{width:58px; padding:5px 5px 13px;}
+  .polaroid .ph{height:42px; font-size:1.3rem;}
+  .polaroid .cap{font-size:.42rem;}
+  .polaroid::before{width:9px; height:13px; top:-10px;}
+  .tool{font-size:1.3rem;}
+  .brush{font-size:2.2rem;}
+  .stroke{width:110px; height:11px; bottom:36px;}
+  .splat{transform:scale(.7) !important;}
+  .wrap{padding:16px 10px 44px;}
+  .objectives{padding:16px 14px; border-width:3px;}
+  .objectives h2{font-size:1.15rem;}
+  .objectives li{font-size:.92rem; padding:9px 11px;}
+  .scorebar{font-size:.85rem; padding:7px 14px; max-width:96%;}
+  .scorebar .stars-earned{font-size:.95rem; letter-spacing:0;}
+  .tabs{gap:6px;}
+  .tab-btn{font-size:.85rem; padding:10px 12px; border-radius:14px 14px 0 0; flex:1 1 auto; min-width:0;}
+  .panel{padding:18px 12px; border-radius:0 0 18px 18px;}
+  .panel h3{font-size:1.08rem;}
+  .panel .instr{font-size:.9rem;}
+  .bank{gap:7px; padding:10px; top:58px;}
+  .chip{font-size:.88rem; padding:6px 12px;}
+  .q1-item{padding:12px; gap:12px;}
+  .sentence{font-size:1rem; line-height:2.3;}
+  .blank{min-width:88px;}
+  .guide-box{padding:14px 12px;}
+  .mind-center{font-size:.92rem; padding:10px 18px;}
+  .mind-q{font-size:.88rem; padding:7px 13px;}
+  .step{font-size:.92rem; padding:10px 11px;}
+  .h-chip{font-size:.88rem; padding:6px 12px;}
+  .write-area{font-size:1rem;}
+  .start-btn{font-size:1rem; padding:12px 28px;}
+  footer .designer{font-size:1.05rem;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="rope">
+    <svg viewBox="0 0 1000 90" preserveAspectRatio="none">
+      <path d="M0 18 Q 500 88 1000 14"/>
+    </svg>
+  </div>
+
+  <div class="polaroid" style="left:9%; top:74px; animation-duration:4.2s;">
+    <div class="ph" style="background:linear-gradient(135deg,#80deea,#4dd0e1);">🏖️</div>
+    <div class="cap">the beach</div>
+  </div>
+  <div class="polaroid" style="left:31%; top:96px; animation-duration:5s; animation-delay:-1.4s;">
+    <div class="ph" style="background:linear-gradient(135deg,#a5d6a7,#66bb6a);">🏕️</div>
+    <div class="cap">summer camp</div>
+  </div>
+  <div class="polaroid" style="right:32%; top:98px; animation-duration:4.6s; animation-delay:-2.2s;">
+    <div class="ph" style="background:linear-gradient(135deg,#ffe082,#ffca28);">🏙️</div>
+    <div class="cap">Gaza</div>
+  </div>
+  <div class="polaroid" style="right:10%; top:70px; animation-duration:5.4s; animation-delay:-.8s;">
+    <div class="ph" style="background:linear-gradient(135deg,#ef9a9a,#e57373);">🤕</div>
+    <div class="cap">my accident!</div>
+  </div>
+
+  <div class="splat" style="top:36px; left:4%; width:46px; height:40px; background:#ffd54f;"></div>
+  <div class="splat" style="top:150px; left:22%; width:30px; height:27px; background:#4dd0e1; animation-delay:-1.5s;"></div>
+  <div class="splat" style="top:44px; right:24%; width:36px; height:32px; background:#aed581; animation-delay:-2.5s;"></div>
+  <div class="splat" style="top:160px; right:5%; width:42px; height:38px; background:#f48fb1; animation-delay:-3s;"></div>
+
+  <div class="tool" style="bottom:90px; left:7%; animation-delay:-1s;">✂️</div>
+  <div class="tool" style="bottom:120px; left:20%; animation-delay:-3s;">🖍️</div>
+  <div class="tool" style="bottom:100px; right:28%; animation-delay:-2s;">📌</div>
+
+  <div class="stroke"></div>
+  <div class="brush-wrap"><span class="brush">🖌️</span></div>
+
+  <div class="header-title">
+    <span class="badge en">Unit 1 • Period 8 • Grade 6</span>
+    <h1 class="en"><span class="wave">🎨</span> Poster Project Day! <span class="wave">📌</span></h1>
+    <p>أكمل الجمل، دقق إملاءك، ثم اصنع ملصق قصتك مع فريقك! 🖌️</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="scorebar">
+    ⭐ نجومك: <span class="stars-earned" id="stars"></span>
+  </div>
+
+  <!-- TABS -->
+  <nav class="tabs en">
+    <button class="tab-btn en" data-tab="t0">🎯 Objectives</button>
+    <button class="tab-btn en" data-tab="t1">✏️ Exercise 1</button>
+    <button class="tab-btn en" data-tab="t2">🎨 Exercise 2</button>
+  </nav>
+
+  <!-- ===== TAB 0 : OBJECTIVES ===== -->
+  <section class="panel show" id="t0">
+    <div class="objectives">
+      <h2><span class="target">🎯</span> أهداف الدرس | Lesson Objectives</h2>
+      <ul>
+        <li>أن يقرأ الطالب الجمل الناقصة ويكملها بمفردات الوحدة الصحيحة</li>
+        <li>أن يتحقق الطالب من إملاء الكلمات ويصحح أخطاءه بنفسه</li>
+        <li>أن يكتب الطالب قصةً عن عطلةٍ صيفية أو حادثٍ على ملصق ضمن مجموعة</li>
+        <li>أن يستخدم الطالب الفعل الماضي وخطه الأجمل في كتابة الملصق</li>
+      </ul>
+      <button class="start-btn" id="startBtn">🚀 هيا نبدأ المغامرة!</button>
+    </div>
+  </section>
+
+  <!-- ===== TAB 1 : read and complete ===== -->
+  <section class="panel" id="t1">
+    <h3 class="en">1️⃣ Read and complete the sentences. Check your spelling.</h3>
+    <p class="instr">انظر إلى الصورة واقرأ الجملة، ثم اختر الكلمة من الصندوق واضغط على الفراغ المناسب 👇 (الصندوق يبقى معك أثناء التمرير!)</p>
+
+    <div class="bank" id="bank">
+      <button class="chip" data-word="back">back</button>
+      <button class="chip" data-word="missed">missed</button>
+      <button class="chip" data-word="summer camp">summer camp</button>
+      <button class="chip" data-word="banged">banged</button>
+      <button class="chip" data-word="awful">awful</button>
+      <button class="chip" data-word="tired">tired</button>
+      <button class="chip" data-word="crashed">crashed</button>
+      <button class="chip" data-word="called">called</button>
+      <button class="chip" data-word="accident">accident</button>
+      <button class="chip" data-word="still">still</button>
+      <button class="chip" data-word="stairs">stairs</button>
+      <button class="chip" data-word="fell">fell</button>
+    </div>
+
+    <div class="q1-item">
+      <img src="https://i.ibb.co/fVNyCFck/Gemini-Generated-Image-vwia06vwia06vwia.png" alt="A boy welcomed back from summer camp">
+      <p class="sentence"><span class="snum">1</span> Welcome <span class="blank" data-ans="back">______</span>. We <span class="blank" data-ans="missed">______</span> you. Did you enjoy the <span class="blank" data-ans="summer camp">______</span>?</p>
+    </div>
+
+    <div class="q1-item">
+      <img src="https://i.ibb.co/VcrCTzSk/Gemini-Generated-Image-mpdbyompdbyompdb.png" alt="A boy banging his head on a glass door">
+      <p class="sentence"><span class="snum">2</span> The boy ran fast and didn't see the glass door. He <span class="blank" data-ans="banged">______</span> his head. His mother cried 'Oh no, how <span class="blank" data-ans="awful">______</span>!'</p>
+    </div>
+
+    <div class="q1-item">
+      <img src="https://i.ibb.co/bRvjRNrZ/Gemini-Generated-Image-clg94bclg94bclg9.png" alt="A tired driver crashing into a car">
+      <p class="sentence"><span class="snum">3</span> The driver was very <span class="blank" data-ans="tired">______</span>. He did not see the car and they <span class="blank" data-ans="crashed">______</span>.</p>
+    </div>
+
+    <div class="q1-item">
+      <img src="https://i.ibb.co/Lzg2Hxpz/Gemini-Generated-Image-8762j38762j38762.png" alt="A man calling the police after an accident">
+      <p class="sentence"><span class="snum">4</span> The man <span class="blank" data-ans="called">______</span> the police. 'There was an <span class="blank" data-ans="accident">______</span>', he said.</p>
+    </div>
+
+    <div class="q1-item">
+      <img src="https://i.ibb.co/kgPB28WK/Gemini-Generated-Image-55pcvp55pcvp55pc.png" alt="A doctor talking to a patient">
+      <p class="sentence"><span class="snum">5</span> 'How do you feel?' said the doctor. 'My head <span class="blank" data-ans="still">______</span> hurts', said the man.</p>
+    </div>
+
+    <div class="q1-item">
+      <img src="https://i.ibb.co/My5fDbLG/Gemini-Generated-Image-z1b493z1b493z1b4.png" alt="Kittens climbing the stairs, one falling">
+      <p class="sentence"><span class="snum">6</span> The kittens tried to climb the <span class="blank" data-ans="stairs">______</span>. One <span class="blank" data-ans="fell">______</span> down.</p>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : project ===== -->
+  <section class="panel" id="t2">
+    <h3 class="en">2️⃣ Work in groups of three or four. Write a story on a poster.</h3>
+    <p class="instr">اعملوا في مجموعات من ثلاثة أو أربعة، واكتبوا قصتكم على ملصق جميل — هكذا يبدو الملصق النموذجي 👇</p>
+
+    <img class="poster-img" src="https://i.ibb.co/5gRVtd00/Gemini-Generated-Image-2mldce2mldce2mld.png" alt="Model poster: Our favourite summer holiday">
+
+    <div class="guide-box">
+      <h4>🧠 أولاً: فكّروا معاً — خريطة الأفكار</h4>
+      <p style="font-weight:700; color:#37474f;">اختاروا موضوعكم ثم أجيبوا عن الأسئلة الثلاثة حوله (اضغط السؤال لتسمعه):</p>
+      <div class="mindmap">
+        <div class="mind-qs">
+          <button class="mind-q" data-say="Where did you go? Where did it happen?">Where go / happen? 📍</button>
+          <button class="mind-q" data-say="What did you do? What happened?">What do / happen? 🎯</button>
+        </div>
+        <div class="mind-center">My favourite summer holiday /<br>an accident in my summer holiday</div>
+        <div class="mind-qs">
+          <button class="mind-q" data-say="Who did you go with? Who was with you?">Who go / with? 👨‍👩‍👧</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-box">
+      <h4>✍️ ثانياً: اكتبوا مسودة قصتكم</h4>
+      <p style="font-weight:700; color:#37474f; margin-bottom:8px;">استعينوا ببدايات الجمل — اضغطوا أيّ واحدة لإضافتها، وعودوا لجملكم من حصة الكتابة السابقة وأضيفوا عليها:</p>
+      <div class="starters">
+        <button class="h-chip">Last summer we went to …</button>
+        <button class="h-chip">I had an accident on the …</button>
+        <button class="h-chip">I stood on some glass.</button>
+        <button class="h-chip">I went to hospital.</button>
+        <button class="h-chip">I was there for … days.</button>
+        <button class="h-chip">It was awful!</button>
+      </div>
+      <textarea class="write-area" id="writeArea" placeholder="Our favourite summer holiday ..."></textarea>
+      <p class="count-note" id="countNote">عدد الكلمات: 0 — اكتبوا أربع جمل على الأقل 💪</p>
+      <button class="check-btn" id="doneWriting">انتهينا من المسودة 🎉</button>
+      <p class="note-tip">💡 <b>تذكروا:</b> الأحداث وقعت في الماضي، فاستخدموا الفعل الماضي <span class="en" style="color:var(--blue);">(went, had, stood, fell…)</span> — وليتأكد كلٌّ منكم من جمل زميله قبل الكتابة النهائية!</p>
+    </div>
+
+    <div class="guide-box">
+      <h4>📋 ثالثاً: خطوات صنع الملصق — علّموا ✔ على كل خطوة تنجزونها</h4>
+      <ul class="steps" id="steps">
+        <li class="step"><span class="box">✔</span> اخترنا موضوعنا: عطلة صيفية مفضلة أو حادث في العطلة</li>
+        <li class="step"><span class="box">✔</span> أجبنا عن أسئلة خريطة الأفكار (أين؟ ماذا؟ مع من؟)</li>
+        <li class="step"><span class="box">✔</span> كتبنا مسودة الجمل بالفعل الماضي</li>
+        <li class="step"><span class="box">✔</span> تبادلنا المسودات ودقق كلٌّ منا جمل زميله (الإملاء، الحرف الكبير، النقطة)</li>
+        <li class="step"><span class="box">✔</span> ألصقنا الصور والرسومات وكتبنا الجمل تحتها بأجمل خط</li>
+        <li class="step"><span class="box">✔</span> علّقنا ملصقنا على حبل العرض وقدمنا قصتنا للمجموعات الأخرى 🎉</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<div id="toast">أحسنت! 🎉</div>
+
+<footer>
+  <div class="designer">✨ تصميم المعلمة <span>T. Wad Refae</span> ✨</div>
+  <p class="small en">Unit 1 – Period 8 • English for Palestine • Grade 6 🇵🇸</p>
+</footer>
+
+<script>
+/* ===== sounds ===== */
+let AC;
+function tone(f,d,t=0,type='sine',v=.25){
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  const o=AC.createOscillator(),g=AC.createGain();
+  o.type=type;o.frequency.value=f;o.connect(g);g.connect(AC.destination);
+  g.gain.setValueAtTime(v,AC.currentTime+t);
+  g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t+d);
+  o.start(AC.currentTime+t);o.stop(AC.currentTime+t+d);
+}
+const sndGood=()=>{tone(523,.15);tone(659,.15,.1);tone(784,.25,.2);};
+const sndBad=()=>{tone(220,.25,0,'square',.12);tone(180,.3,.12,'square',.12);};
+const sndWin=()=>{[523,659,784,1047,1319].forEach((f,i)=>tone(f,.3,i*.12,'triangle'));};
+
+/* ===== toast ===== */
+const toast=document.getElementById('toast');
+let toastTimer;
+function showToast(msg,bad=false){
+  toast.textContent=msg; toast.classList.toggle('bad',bad); toast.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>toast.classList.remove('show'),1800);
+}
+const praise=['أحسنت! 🎉','رائع جداً! 🌟','ممتاز! 👏','عمل جميل! 💪','أنت بطل! 🏆'];
+const oops=['حاول مرة أخرى 💪','ليست الكلمة الصحيحة 🤔','اقرأ الجملة جيداً وأعد المحاولة 🔍'];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+
+/* ===== confetti ===== */
+function confetti(n=60){
+  const colors=['#ff7043','#66bb6a','#42a5f5','#ef5350','#ffd54f','#ab47bc'];
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.cssText=`left:${Math.random()*100}vw;width:${Math.random()*8+6}px;height:${Math.random()*8+6}px;background:${colors[i%colors.length]};animation-duration:${Math.random()*1.6+1.6}s;animation-delay:${Math.random()*.4}s;`;
+    document.body.appendChild(c); setTimeout(()=>c.remove(),3600);
+  }
+}
+
+/* ===== stars ===== */
+let earned=0;
+const starsEl=document.getElementById('stars');
+const totalTasks=12; // 12 blanks
+function addStar(){
+  earned++;
+  starsEl.textContent='⭐'.repeat(earned)+'☆'.repeat(Math.max(totalTasks-earned,0));
+  if(earned===totalTasks){sndWin();confetti(140);showToast('🏆 أكملت كل الجمل! إملاؤك رائع! 🎨');}
+}
+starsEl.textContent='☆'.repeat(totalTasks);
+
+/* ===== tabs ===== */
+function openTab(id){
+  document.querySelectorAll('.tab-btn').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('show',p.id===id));
+}
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click',()=>{openTab(b.dataset.tab); tone(660,.08,0,'triangle',.12);});
+});
+document.getElementById('startBtn').addEventListener('click',()=>{
+  openTab('t1'); sndGood(); confetti(35);
+  document.querySelector('.tabs').scrollIntoView({behavior:'smooth'});
+});
+
+/* ===== Exercise 1 : word bank fill ===== */
+let selectedChip=null;
+document.querySelectorAll('.chip').forEach(ch=>{
+  ch.addEventListener('click',()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
+    selectedChip=ch; ch.classList.add('selected');
+    tone(880,.07,0,'triangle',.12);
+  });
+});
+document.querySelectorAll('.blank').forEach(bl=>{
+  bl.addEventListener('click',()=>{
+    if(bl.classList.contains('correct'))return;
+    if(!selectedChip){showToast('اختر كلمة من الصندوق أولاً ☝️',true);return;}
+    const word=selectedChip.dataset.word;
+    if(word===bl.dataset.ans){
+      bl.textContent=word; bl.classList.remove('wrong'); bl.classList.add('correct');
+      selectedChip.classList.add('used'); selectedChip.classList.remove('selected'); selectedChip=null;
+      sndGood(); showToast(rnd(praise)); confetti(22); addStar();
+    }else{
+      bl.classList.add('wrong'); setTimeout(()=>bl.classList.remove('wrong'),600);
+      selectedChip.classList.remove('selected'); selectedChip=null;
+      sndBad(); showToast(rnd(oops),true);
+    }
+  });
+});
+
+/* ===== Exercise 2 : project helpers ===== */
+function say(text){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=.82; u.pitch=1.05;
+  speechSynthesis.speak(u);
+}
+document.querySelectorAll('.mind-q').forEach(q=>{
+  q.addEventListener('click',()=>{say(q.dataset.say); tone(740,.07,0,'triangle',.12);});
+});
+const area=document.getElementById('writeArea'), note=document.getElementById('countNote');
+document.querySelectorAll('.h-chip').forEach(ch=>{
+  ch.addEventListener('click',()=>{
+    area.value=(area.value?area.value.replace(/\s+$/,'')+'\n':'')+ch.textContent+' ';
+    area.focus(); tone(740,.07,0,'triangle',.12);
+    area.dispatchEvent(new Event('input'));
+  });
+});
+area.addEventListener('input',()=>{
+  const n=area.value.trim()?area.value.trim().split(/\s+/).length:0;
+  note.textContent=`عدد الكلمات: ${n} — ${n>=20?'مسودة ممتازة! 🌟':'اكتبوا أربع جمل على الأقل 💪'}`;
+});
+let celebrated=false;
+document.getElementById('doneWriting').addEventListener('click',()=>{
+  const n=area.value.trim()?area.value.trim().split(/\s+/).length:0;
+  if(n<10){showToast('أضيفوا المزيد من الجمل أولاً ✍️',true); sndBad(); return;}
+  if(!celebrated){celebrated=true; sndWin(); confetti(90);}
+  showToast('مسودة رائعة! الآن دققوا الإملاء معاً ثم انقلوها للملصق 🖌️');
+});
+/* steps checklist */
+let stepsDone=0;
+document.querySelectorAll('.step').forEach(st=>{
+  st.addEventListener('click',()=>{
+    if(st.classList.contains('done'))return;
+    st.classList.add('done'); stepsDone++;
+    tone(523,.12,0,'triangle',.18); tone(659,.15,.08,'triangle',.18);
+    if(stepsDone===6){sndWin(); confetti(120); showToast('🏆 ملصقكم جاهز للعرض — علقوه على الحبل! 📌');}
+    else showToast('خطوة منجزة! '+stepsDone+'/6 ✔');
+  });
+});
+</script>
+</body>
+</html>
