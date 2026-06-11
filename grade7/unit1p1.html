@@ -93,9 +93,9 @@ nav::-webkit-scrollbar{display:none}
 .panel{display:none;animation:fadeUp .45s}
 .panel.on{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative;overflow:hidden}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
 .card .ribbon{
-  position:absolute;top:0;right:0;left:0;height:8px;
+  position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
   background:repeating-linear-gradient(90deg,var(--red) 0 26px,var(--paper) 26px 40px,var(--navy-2) 40px 66px,var(--paper) 66px 80px);
 }
 .card h2{font-size:1.3rem;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
@@ -178,9 +178,15 @@ nav::-webkit-scrollbar{display:none}
 .reveal-btn:hover{background:var(--blue)}
 
 /* ====== listening segments ====== */
-.seg{border:2px solid var(--line);border-radius:18px;margin-top:16px;overflow:hidden;background:#fff;transition:.3s}
+.seg{border:2px solid var(--line);border-radius:18px;margin-top:16px;background:#fff;transition:.3s}
 .seg.done-seg{border-color:#bfe8d2}
-.seg-head{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#f4f8ff;flex-wrap:wrap}
+.seg-head{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#f4f8ff;flex-wrap:wrap;border-radius:16px 16px 0 0}
+.seg-tts{
+  margin-left:auto;border:0;background:var(--red);color:#fff;font-family:inherit;font-weight:600;
+  border-radius:999px;padding:8px 18px;cursor:pointer;font-size:.92rem;display:flex;align-items:center;gap:7px;transition:.2s;
+}
+.seg-tts:hover{background:var(--red-deep)}
+.seg-tts.playing{background:var(--ok)}
 .seg-head .seg-num{
   background:var(--navy);color:#fff;width:38px;height:38px;border-radius:12px;
   display:grid;place-items:center;font-weight:600;flex-shrink:0;
@@ -224,7 +230,7 @@ nav::-webkit-scrollbar{display:none}
 .legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
 
 /* questions dropdown */
-.qdrop{border-top:2px dashed var(--line);background:#fffdf6}
+.qdrop{border-top:2px dashed var(--line);background:#fffdf6;border-radius:0 0 16px 16px}
 .qdrop summary{
   cursor:pointer;list-style:none;padding:12px 18px;font-weight:600;color:var(--navy);
   display:flex;align-items:center;gap:8px;transition:.2s;
@@ -329,6 +335,7 @@ nav::-webkit-scrollbar{display:none}
 
 @media (max-width:560px){
   .pass{margin-top:64px}
+  .seg-tts{margin-left:0;width:100%;justify-content:center}
 }
 </style>
 </head>
@@ -438,7 +445,7 @@ nav::-webkit-scrollbar{display:none}
 <section class="panel" id="p3">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">GATE 3</span>🎧 Activities 3 &amp; 4: Listen and understand</h2>
-    <p class="hint ar">شغّل التسجيل من المشغل وتابع قراءة النص مقطعاً مقطعاً. بعد كل مقطع افتح قائمة «Questions» وأجب عن الأسئلة. أجب عن كل الأسئلة بشكل صحيح لتحصل على الختم!</p>
+    <p class="hint ar">شغّل التسجيل الكامل من المشغل، أو اضغط زر 🔊 بجانب كل مقطع لسماعه وحده. بعد كل مقطع افتح قائمة «Questions» وأجب عن الأسئلة. أجب عن كل الأسئلة بشكل صحيح لتحصل على الختم!</p>
     <div class="gplayer">
       <b>🎧 Audio 2 · The conversation</b>
       <iframe src="https://drive.google.com/file/d/18ek8NWq79V9veiSCT9dncAKgvcS0ZfD-/preview" allow="autoplay"></iframe>
@@ -555,6 +562,7 @@ tabs.forEach(t=>t.addEventListener('click',()=>{
   tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
   t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
   window.scrollTo({top:0,behavior:'smooth'});
+  stopSegTTS();
 }));
 
 /* ---------- stamps / progress ---------- */
@@ -598,6 +606,7 @@ renderStamps();
 /* ---------- speech (TTS) ---------- */
 function speak(txt){
   if(!('speechSynthesis' in window))return;
+  stopSegTTS();
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(txt);
   u.lang='en-US';u.rate=.85;
@@ -737,6 +746,11 @@ const SEGMENTS=[
 ];
 
 const segBox=document.getElementById('segments');
+let ttsBtn=null;
+function stopSegTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML='🔊 Listen';ttsBtn=null;}
+}
 let totalQs=0,correctQs=0;
 SEGMENTS.forEach(s=>totalQs+=s.qs.length);
 
@@ -746,9 +760,23 @@ SEGMENTS.forEach((s,si)=>{
     '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
   ).join('');
   seg.innerHTML=
-    '<div class="seg-head"><span class="seg-num">'+(si+1)+'</span><div><b>'+s.title+'</b><small class="ar">'+s.sub+'</small></div></div>'+
+    '<div class="seg-head"><span class="seg-num">'+(si+1)+'</span><div><b>'+s.title+'</b><small class="ar">'+s.sub+'</small></div>'+
+    '<button class="seg-tts">🔊 Listen</button></div>'+
     '<div class="script">'+lines+'</div>'+
     '<details class="qdrop"><summary>📋 Questions ('+s.qs.length+') <span class="ar" style="font-size:.85rem;color:#5f6f93">أسئلة الفهم</span><span class="chev">▼</span></summary><div class="q-area"></div></details>';
+  const ttsB=seg.querySelector('.seg-tts');
+  ttsB.addEventListener('click',()=>{
+    if(ttsBtn===ttsB){stopSegTTS();return;}
+    stopSegTTS();
+    if(!('speechSynthesis' in window))return;
+    const text=s.lines.map(l=>l[2].replace(/<[^>]+>/g,'')).join(' ');
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';u.rate=.85;
+    u.onend=()=>{if(ttsBtn===ttsB)stopSegTTS();};
+    ttsBtn=ttsB;
+    ttsB.classList.add('playing');ttsB.innerHTML='⏹ Stop';
+    speechSynthesis.speak(u);
+  });
   const qsBox=seg.querySelector('.q-area');
   let segLeft=s.qs.length;
   s.qs.forEach((q,qi)=>{
