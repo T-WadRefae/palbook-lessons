@@ -2,1596 +2,850 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Greetings & Friends — Interactive Lesson</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Oh, hello! | Grade 7 · Period 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#FAF6EE;
-  --paper-2:#F2EBD9;
-  --ink:#2C2C2C;
-  --ink-soft:#4A4A4A;
-  --accent:#E85D4B;
-  --accent-2:#3B7A8C;
-  --accent-3:#D4A24C;
-  --accent-4:#6B8E4E;
-  --line:#2C2C2C;
-  --shadow-sketch: 3px 3px 0 var(--ink);
-  --shadow-sketch-lg: 6px 6px 0 var(--ink);
-  --shadow-soft: 4px 4px 14px rgba(44,44,44,.12);
+  --navy:#0e2a52;
+  --navy-2:#16407c;
+  --blue:#1d5aa8;
+  --sky:#9ed3ff;
+  --red:#e8554f;
+  --red-deep:#c43d38;
+  --gold:#ffce54;
+  --gold-deep:#e0a82e;
+  --purple:#5b46d6;
+  --paper:#ffffff;
+  --cream:#fff8ef;
+  --ink:#1c2b4a;
+  --ink-soft:#5f6f93;
+  --line:#dde6f5;
+  --ok:#27c275;
+  --no:#ff6b6b;
+  --r:20px;
+  --shadow:0 16px 40px rgba(14,42,82,.25);
+  --shadow-sm:0 8px 20px rgba(14,42,82,.15);
 }
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
 body{
-  font-family:'Nunito','Cairo',sans-serif;
-  background:var(--paper);
-  background-image:
-    /* paper grain noise */
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.17  0 0 0 0 0.17  0 0 0 0 0.17  0 0 0 0.08 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>"),
-    /* notebook lines suggestion */
-    radial-gradient(circle at 20% 30%, rgba(232,93,75,.06) 0, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(59,122,140,.06) 0, transparent 50%),
-    linear-gradient(180deg, #FAF6EE 0%, #F5EFE0 100%);
+  font-family:'Fredoka','Nunito',sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#0e2a52 0%,#16407c 28%,#3d7cc9 55%,#bfe3ff 100%) fixed;
   min-height:100vh;
-  color:var(--ink);
-  padding:14px;
   overflow-x:hidden;
-  position:relative;
 }
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
 
-/* Floating bubbles & particles */
-.particles{
-  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
-}
-.bubble{
-  position:absolute;border-radius:50%;
-  background:rgba(232,93,75,.08);
-  border:1.5px solid rgba(44,44,44,.15);
-  animation:rise 14s linear infinite;
-}
-.bubble.b2{background:rgba(59,122,140,.1);border-color:rgba(59,122,140,.2);}
-.bubble.b3{background:rgba(212,162,76,.1);border-color:rgba(212,162,76,.2);}
-.bubble.b4{background:rgba(107,142,78,.08);border-color:rgba(107,142,78,.2);}
-@keyframes rise{
-  0%{transform:translateY(110vh) translateX(0) scale(.6);opacity:0;}
-  10%{opacity:1;}
-  90%{opacity:1;}
-  100%{transform:translateY(-15vh) translateX(40px) scale(1.1);opacity:0;}
-}
-.dot{
-  position:absolute;width:6px;height:6px;border-radius:50%;
-  background:var(--ink);opacity:.35;
-  animation:drift 12s ease-in-out infinite;
-}
-@keyframes drift{
-  0%,100%{transform:translate(0,0);}
-  25%{transform:translate(30px,-40px);}
-  50%{transform:translate(-20px,-80px);}
-  75%{transform:translate(40px,-50px);}
-}
+/* ====== sky decorations ====== */
+.sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.sky .cloud{position:absolute;font-size:52px;opacity:.22;animation:drift linear infinite}
+@keyframes drift{from{left:-90px}to{left:106%}}
+.sky .star{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;opacity:.5;animation:twinkle 2.4s infinite}
+@keyframes twinkle{0%,100%{opacity:.5}50%{opacity:.08}}
 
-.wrap{
-  max-width:920px;margin:0 auto;position:relative;z-index:1;
+/* ====== header : airport departures board ====== */
+header{position:relative;padding:30px 0 8px;text-align:center;color:#fff}
+.hero-plane{position:absolute;top:26px;font-size:40px;z-index:1;animation:fly 12s linear infinite;filter:drop-shadow(0 5px 10px rgba(0,0,0,.35))}
+@keyframes fly{from{left:-70px;transform:translateY(0)}50%{transform:translateY(-16px)}to{left:106%;transform:translateY(0)}}
+.dboard{
+  max-width:620px;margin:34px auto 0;background:#091c38;border:3px solid #1f4d8f;border-radius:18px;
+  box-shadow:var(--shadow),inset 0 0 40px rgba(30,90,170,.25);padding:0 0 18px;position:relative;overflow:hidden;
 }
+.dboard .scan{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 0%,rgba(158,211,255,.10) 50%,transparent 100%);
+  background-size:100% 90px;animation:scan 4.5s linear infinite;
+}
+@keyframes scan{from{background-position:0 -90px}to{background-position:0 480px}}
+.db-top{
+  display:flex;justify-content:space-between;align-items:center;background:#0c2447;
+  padding:9px 16px;border-bottom:2px solid #1f4d8f;font-weight:600;font-size:.82rem;
+  letter-spacing:2px;color:var(--sky);
+}
+.db-top .live{color:var(--gold)}
+.db-grid{
+  display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:12px 16px 0;
+  font-size:.78rem;letter-spacing:1.5px;font-weight:600;
+}
+.db-grid div{color:#6f8fc0}
+.db-grid b{display:block;color:#ffd97a;font-size:1rem;letter-spacing:2px;margin-top:2px}
+.dboard h1{
+  font-size:clamp(2rem,6vw,2.8rem);margin:10px 0 0;color:#fff;
+  text-shadow:0 0 18px rgba(158,211,255,.6);
+}
+.dboard .sub{color:var(--sky);font-weight:600;font-size:1rem;margin-top:2px}
+.status{
+  display:inline-flex;align-items:center;gap:8px;margin-top:12px;background:rgba(39,194,117,.15);
+  border:2px solid var(--ok);color:#7df0b4;border-radius:999px;padding:5px 18px;
+  font-weight:600;letter-spacing:2px;font-size:.85rem;
+}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--ok);animation:blink 1.1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.flags{margin:14px 0 4px;font-size:24px;letter-spacing:8px}
 
-/* ============ HEADER ============ */
-.header{
-  background:#FFFDF7;
-  border:3px solid var(--ink);
-  border-radius:24px;
-  padding:24px 22px;
-  position:relative;
-  box-shadow:var(--shadow-sketch-lg);
-  margin-bottom:20px;
-  transform:rotate(-.3deg);
+/* ====== tabs ====== */
+nav{
+  display:flex;gap:8px;overflow-x:auto;padding:18px 4px 14px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(14,42,82,.92),rgba(14,42,82,.75) 70%,transparent);
+  backdrop-filter:blur(6px);scrollbar-width:none;
 }
-.header::before{
-  content:'';position:absolute;top:-12px;right:30px;
-  width:80px;height:24px;
-  background:repeating-linear-gradient(90deg, rgba(232,93,75,.4) 0 8px, transparent 8px 16px);
-  border:2px solid var(--ink);border-radius:4px;
-  transform:rotate(-4deg);
-}
-.teacher-tag{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--accent);
-  color:#fff;
-  padding:5px 14px;
-  border-radius:20px;
-  font-family:'Fredoka',sans-serif;
-  font-size:.95rem;font-weight:600;
-  border:2px solid var(--ink);
-  box-shadow:var(--shadow-sketch);
-  margin-bottom:14px;
-  transform:rotate(-2deg);
-}
-.teacher-tag .star{display:inline-block;animation:spin 3s linear infinite;}
-@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
-
-.lesson-title{
-  font-family:'Fredoka',sans-serif;
-  font-size:clamp(1.7rem,5.5vw,2.5rem);
-  font-weight:700;
-  line-height:1.15;
-  color:var(--ink);
-  margin-bottom:8px;
-  letter-spacing:-.5px;
-}
-.lesson-title .underline{
-  position:relative;display:inline-block;
-}
-.lesson-title .underline::after{
-  content:'';position:absolute;bottom:-2px;left:0;right:0;
-  height:8px;
-  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8'><path d='M0,4 Q25,0 50,4 T100,4' stroke='%23E85D4B' stroke-width='3' fill='none' stroke-linecap='round'/></svg>") no-repeat;
-  background-size:100% 100%;
-}
-.lesson-title .emoji{display:inline-block;animation:wave 2.5s ease-in-out infinite;transform-origin:70% 70%;}
-@keyframes wave{0%,100%{transform:rotate(0);}25%{transform:rotate(20deg);}75%{transform:rotate(-15deg);}}
-
-.lesson-sub{
-  font-family:'Nunito',sans-serif;
-  font-size:1.15rem;color:var(--ink-soft);
-}
-.lesson-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
-.meta-pill{
-  background:#fff;border:2px solid var(--ink);
-  padding:4px 12px;border-radius:16px;
-  font-size:.9rem;font-weight:700;
-  box-shadow:2px 2px 0 var(--ink);
-  transform:rotate(-1deg);
-}
-.meta-pill:nth-child(2){transform:rotate(1deg);}
-
-/* Hand drawn corner */
-.corner-doodle{
-  position:absolute;font-size:.95rem;
-  font-family:'Fredoka',sans-serif;font-weight:600;color:var(--accent-2);
-}
-.corner-doodle.tr{top:18px;right:18px;transform:rotate(8deg);}
-
-/* ============ TABS ============ */
-.tabs{
-  display:flex;flex-wrap:wrap;gap:8px;
-  justify-content:center;
-  margin-bottom:18px;
-  padding:10px;
-  background:#FFFDF7;
-  border:3px solid var(--ink);
-  border-radius:20px;
-  box-shadow:var(--shadow-sketch);
-  position:sticky;top:8px;z-index:50;
-  backdrop-filter:blur(8px);
-}
+nav::-webkit-scrollbar{display:none}
 .tab{
-  flex:0 0 auto;
-  background:#fff;
-  border:2px solid var(--ink);
-  border-radius:14px;
-  padding:8px 14px;
-  font-family:'Nunito',sans-serif;
-  font-size:.92rem;font-weight:700;
-  color:var(--ink);
-  cursor:pointer;
-  display:flex;flex-direction:row;align-items:center;gap:6px;
-  transition:all .2s ease;
-  position:relative;
-  white-space:nowrap;
+  flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;
+  background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.3);
+  padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
 }
-.tab:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--ink);}
-.tab.active{
-  background:var(--accent);
-  color:#fff;
-  box-shadow:3px 3px 0 var(--ink);
-  transform:translateY(-1px);
-}
-.tab.active::after{
-  content:'';position:absolute;bottom:-13px;left:50%;
-  transform:translateX(-50%);
-  width:0;height:0;
-  border-left:8px solid transparent;
-  border-right:8px solid transparent;
-  border-top:8px solid var(--ink);
-}
-.tab .tab-num{
-  font-family:'Fredoka',sans-serif;
-  font-size:1.05rem;font-weight:700;line-height:1;
-}
-.tab .tab-label{font-size:.85rem;line-height:1;}
+.tab:hover{background:rgba(255,255,255,.26)}
+.tab.on{background:var(--paper);color:var(--navy);border-color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.25);transform:translateY(-2px)}
+.tab .done-mark{display:none;color:var(--ok);font-size:1rem}
+.tab.done .done-mark{display:inline}
 
-.tab-content{display:none;animation:fadeIn .4s ease;}
-.tab-content.active{display:block;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{
+  position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
+  background:repeating-linear-gradient(90deg,var(--red) 0 26px,var(--paper) 26px 40px,var(--navy-2) 40px 66px,var(--paper) 66px 80px);
+}
+.card h2{font-size:1.3rem;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{
+  font-size:.7rem;background:var(--navy);color:#fff;
+  padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
+}
+.hint{
+  color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
+  background:#f6f9ff;border-radius:12px;padding:8px 14px;border-right:4px solid var(--sky);
+}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
 
-/* ============ CARDS ============ */
-.card{
-  background:#FFFDF7;
-  border:3px solid var(--ink);
-  border-radius:22px;
-  padding:22px 20px;
-  margin-bottom:18px;
-  box-shadow:var(--shadow-sketch-lg);
-  position:relative;
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{
+  background:var(--cream);border:2px solid #f4e3c8;border-radius:16px;padding:16px 14px;
+  display:flex;gap:12px;align-items:flex-start;transition:.25s;
 }
-.card.tilt-l{transform:rotate(-.4deg);}
-.card.tilt-r{transform:rotate(.4deg);}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--navy);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.kw{background:#eaf2ff;color:var(--navy-2);border:1.5px solid #cfe0f8;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
 
-/* Tape/stickers */
-.tape{
-  position:absolute;
-  width:70px;height:22px;
-  background:rgba(212,162,76,.6);
-  border:1.5px dashed rgba(44,44,44,.4);
-  top:-10px;left:30px;
-  transform:rotate(-6deg);
+/* ====== Drive audio player (compact, the only player) ====== */
+.gplayer{
+  background:#f4f8ff;border:2px solid var(--line);border-radius:14px;
+  padding:9px 12px 10px;margin:10px 0 6px;max-width:480px;
 }
-.tape.right{left:auto;right:30px;transform:rotate(5deg);background:rgba(59,122,140,.55);}
+.gplayer b{color:var(--navy);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
 
-.card-head{
-  display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;
+/* ====== A1 : listen & circle ====== */
+.wordbox{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:var(--cream);
+  border:2px solid #f4e3c8;border-radius:16px;padding:16px;margin-top:12px;
 }
-.card-num{
-  min-width:48px;height:48px;
-  background:var(--accent);
-  color:#fff;
-  border:3px solid var(--ink);
-  border-radius:50%;
-  display:grid;place-items:center;
-  font-family:'Fredoka',sans-serif;
-  font-size:1.5rem;font-weight:700;
-  box-shadow:var(--shadow-sketch);
-  transform:rotate(-5deg);
+.wchip{
+  border:2.5px solid var(--line);background:#fff;color:var(--navy);border-radius:999px;
+  padding:8px 20px;font-family:inherit;font-weight:600;font-size:1.05rem;cursor:pointer;transition:.2s;
 }
-.card-num.c2{background:var(--accent-2);}
-.card-num.c3{background:var(--accent-3);}
-.card-num.c4{background:var(--accent-4);}
-.card-num.c5{background:var(--accent);}
-.card-title{
-  font-family:'Fredoka',sans-serif;
-  font-size:1.25rem;font-weight:700;
-  color:var(--ink);line-height:1.3;
+.wchip:hover{border-color:var(--sky);transform:translateY(-2px)}
+.wchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.wchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.wchip:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.bigq{
+  text-align:center;font-size:1.1rem;font-weight:600;color:var(--navy);margin-top:16px;
+  background:#fff8e0;border:2px dashed var(--gold-deep);border-radius:14px;padding:12px;
 }
-.card-hint{
-  font-family:'Cairo',sans-serif;
-  font-size:.85rem;color:var(--ink-soft);
-  direction:rtl;text-align:right;
-  margin-top:4px;font-weight:600;
-}
+.feedback{display:none;margin-top:10px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
 
-/* ============ OBJECTIVES ============ */
-.obj-list{list-style:none;display:grid;gap:10px;}
-.obj-list li{
-  display:flex;align-items:flex-start;gap:12px;
-  background:#fff;
-  border:2px solid var(--ink);
-  border-radius:14px;
-  padding:12px 14px;
-  font-family:'Nunito',sans-serif;
-  font-weight:600;
-  font-size:.95rem;
-  box-shadow:3px 3px 0 var(--ink);
-  position:relative;
+/* ====== A2 : circle correct word ====== */
+.sline{
+  border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:2.1;transition:.3s;
 }
-.obj-list li:nth-child(odd){transform:rotate(-.5deg);}
-.obj-list li:nth-child(even){transform:rotate(.5deg);}
-.obj-list li .check{
-  min-width:26px;height:26px;border-radius:6px;
-  background:var(--accent-4);
-  border:2px solid var(--ink);
-  display:grid;place-items:center;
-  color:#fff;font-weight:700;font-size:1rem;
-  flex-shrink:0;
-  margin-top:2px;
+.sline.done{border-color:#bfe8d2;background:#f6fffa}
+.num{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--navy);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
 }
-.obj-text{flex:1;}
-.obj-en{
-  font-family:'Nunito',sans-serif;
-  font-weight:700;
-  font-size:1rem;
-  color:var(--ink);
-  line-height:1.4;
+.pick{
+  border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:3px 14px;margin:0 3px;
+  font-family:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:.2s;color:var(--navy);
 }
-.obj-ar{
-  font-family:'Cairo',sans-serif;
-  font-size:.85rem;
-  color:var(--ink-soft);
-  font-weight:600;
-  direction:rtl;
-  text-align:right;
-  margin-top:4px;
-  padding-top:4px;
-  border-top:1.5px dashed rgba(44,44,44,.25);
-}
+.pick:hover{border-color:var(--sky)}
+.pick.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.pick.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s;text-decoration:line-through}
+.pick:disabled{cursor:default}
 
-/* ============ AUDIO BUTTON ============ */
-.audio-btn{
-  display:inline-flex;align-items:center;gap:10px;
-  background:var(--accent-2);
-  color:#fff;
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:1rem;
-  padding:10px 22px;
-  border:3px solid var(--ink);
-  border-radius:50px;
-  cursor:pointer;
-  box-shadow:var(--shadow-sketch);
-  transition:all .2s ease;
-  margin:8px 0 16px;
+/* ====== A3 : complete & match ====== */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px}
+.bword{
+  border:2.5px solid var(--gold-deep);background:#fff8e0;color:#8a6500;border-radius:999px;
+  padding:6px 18px;font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s;
 }
-.audio-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
-.audio-btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
-.audio-btn .icon{
-  width:30px;height:30px;border-radius:50%;
-  background:#fff;color:var(--accent-2);
-  display:grid;place-items:center;font-size:1rem;
-  border:2px solid var(--ink);
+.bword:hover{transform:translateY(-2px)}
+.bword.sel{background:var(--gold);border-color:var(--gold-deep);color:var(--navy);transform:scale(1.08);box-shadow:var(--shadow-sm)}
+.bword.used{opacity:.35;cursor:default;text-decoration:line-through}
+.mimg{margin:14px auto 4px;max-width:560px}
+.mimg img{width:100%;height:auto;display:block;border-radius:16px;border:2px solid #f4e3c8}
+.msent{
+  border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:2;transition:.3s;
 }
-.audio-btn.playing .icon{animation:pulse 1s ease-in-out infinite;}
-@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+.msent.done{border-color:#bfe8d2;background:#f6fffa}
+.blank{
+  display:inline-block;min-width:120px;border-bottom:3px dashed var(--gold-deep);text-align:center;
+  font-weight:600;color:var(--gold-deep);cursor:pointer;border-radius:8px 8px 0 0;padding:0 8px;transition:.2s;
+}
+.blank:hover{background:#fff8e0}
+.blank.filled{color:#168a55;border-bottom-color:var(--ok);cursor:default}
+.blank.no{animation:shake .4s;background:#fff0f0}
+.match-row{margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.match-row span.lbl{font-size:.85rem;font-weight:600;color:var(--ink-soft)}
+.letter{
+  border:2.5px solid var(--line);background:#fff;width:38px;height:38px;border-radius:12px;
+  font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s;color:var(--navy);
+}
+.letter:hover{border-color:var(--sky)}
+.letter.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.letter.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.letter:disabled{cursor:default}
 
-/* ============ WORD CHIPS ============ */
-.word-bank{
-  display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
-  padding:18px 14px;
-  background:#fff;
-  border:2.5px dashed var(--ink);
-  border-radius:18px;
-  margin-bottom:14px;
+/* ====== A4 : check sentences ====== */
+.chk{
+  border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:1.9;display:flex;gap:10px;align-items:flex-start;
 }
-.word-chip{
-  background:#fff;
-  color:var(--ink);
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:1.1rem;
-  padding:8px 18px;
-  border:2.5px solid var(--ink);
-  border-radius:30px;
-  cursor:pointer;
-  transition:all .22s ease;
-  box-shadow:3px 3px 0 var(--ink);
-  user-select:none;
-  position:relative;
+.chk .num{flex-shrink:0;margin-top:4px}
+.chk .ans{color:#168a55;font-weight:600;background:#e9fbf2;border-radius:8px;padding:0 8px;filter:blur(6px);transition:.3s;cursor:pointer}
+.chk .ans.rev{filter:none;cursor:default}
+.reveal-btn{
+  border:0;background:var(--navy);color:#fff;font-family:inherit;font-weight:600;border-radius:12px;
+  padding:9px 18px;cursor:pointer;font-size:.9rem;transition:.2s;margin-top:14px;
 }
-.word-chip:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink);}
-.word-chip.circled{
-  background:var(--accent);
-  color:#fff;
-  position:relative;
-}
-/* Hand-drawn circle SVG behind */
-.word-chip.circled::before{
-  content:'';position:absolute;inset:-8px -10px;
-  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50'><ellipse cx='50' cy='25' rx='45' ry='20' stroke='%23E85D4B' stroke-width='3' fill='none' stroke-dasharray='3,2' stroke-linecap='round' transform='rotate(-3 50 25)'/></svg>") no-repeat center/contain;
-  pointer-events:none;
-  animation:drawIn .4s ease;
-}
-@keyframes drawIn{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+.reveal-btn:hover{background:var(--blue)}
 
-.question-box{
-  background:#fff;
-  border:2.5px solid var(--ink);
-  border-radius:16px;
-  padding:14px 16px;
-  font-family:'Nunito',sans-serif;
-  font-weight:700;
-  font-size:1rem;
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  box-shadow:3px 3px 0 var(--ink);
+/* ====== A5 : conversation + questions ====== */
+.story{
+  background:var(--cream);border:2px solid #f4e3c8;border-radius:18px;padding:18px 20px;margin-top:12px;
+  font-weight:500;line-height:2.1;font-size:1.02rem;color:var(--ink);
 }
-.q-mark{
-  width:34px;height:34px;border-radius:50%;
-  background:var(--accent-3);color:var(--ink);
-  border:2.5px solid var(--ink);
-  display:grid;place-items:center;
-  font-family:'Fredoka',sans-serif;font-weight:700;font-size:1.2rem;
-  flex-shrink:0;
+.story .ln{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start}
+.story .who{
+  flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
+  background:var(--blue);border-radius:8px;padding:2px 9px;margin-top:6px;min-width:68px;text-align:center;
 }
-.answer-slot{
-  background:#fff;
-  padding:5px 16px;border-radius:20px;
-  font-family:'Fredoka',sans-serif;
-  font-weight:700;font-size:1.15rem;
-  color:var(--accent);
-  border:2.5px dashed var(--ink);
-  min-width:100px;text-align:center;
-}
-.answer-slot.revealed{
-  background:var(--accent-4);color:#fff;
-  border-style:solid;
-  animation:popIn .5s ease;
-}
-@keyframes popIn{0%{transform:scale(.5) rotate(-10deg);}60%{transform:scale(1.1) rotate(3deg);}100%{transform:scale(1) rotate(0);}}
+.story .who.nar{background:#8a6fd8}
+.story .txt{flex:1;line-height:2}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--gold-deep)}
+.legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
 
-/* ============ ACTIVITY 2 ============ */
-.sentence-card{
-  background:#fff;
-  border:2.5px solid var(--ink);
-  border-radius:16px;
-  padding:14px 16px;
-  margin-bottom:12px;
-  font-family:'Nunito',sans-serif;
-  font-weight:600;
-  font-size:1rem;line-height:1.9;
-  box-shadow:3px 3px 0 var(--ink);
+/* glossary + pronoun hover tooltips */
+.g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
+.g{background:#fff3c4;border-bottom:2px dashed var(--gold-deep);color:#8a6500}
+.p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
+.g::after,.p::after{
+  content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);
+  background:var(--navy);color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;
+  padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3);
 }
-.sentence-card:nth-child(odd){transform:rotate(-.3deg);}
-.sentence-card:nth-child(even){transform:rotate(.3deg);}
-.sentence-num{
-  display:inline-grid;place-items:center;
-  width:28px;height:28px;border-radius:50%;
-  background:var(--accent-3);color:var(--ink);
-  border:2px solid var(--ink);
-  font-family:'Fredoka',sans-serif;font-weight:700;
-  font-size:.95rem;margin-right:6px;
+.g::before,.p::before{
+  content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);
+  border:6px solid transparent;border-top-color:var(--navy);
+  opacity:0;visibility:hidden;transition:.18s;z-index:60;
 }
-.choice{
-  display:inline-block;
-  padding:4px 14px;border-radius:14px;
-  background:#FFFDF7;
-  border:2px solid var(--ink);
-  cursor:pointer;
-  font-family:'Fredoka',sans-serif;font-weight:600;font-size:1rem;
-  color:var(--ink);
-  margin:0 3px;
-  box-shadow:2px 2px 0 var(--ink);
-  transition:all .2s ease;
-}
-.choice:hover:not(.locked){transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink);}
-.choice.correct{background:var(--accent-4);color:#fff;}
-.choice.wrong{background:#E85D4B;color:#fff;animation:shake .4s;}
-.choice.locked{cursor:default;}
-@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
-
-.feedback{
-  margin-top:10px;
-  font-family:'Cairo',sans-serif;
-  font-size:.95rem;font-weight:700;
-  padding:10px 14px;border-radius:12px;
-  display:none;
-  direction:rtl;text-align:right;
-  border:2px solid var(--ink);
-}
-.feedback.show{display:block;animation:slideDown .3s ease;}
-.feedback.ok{background:#E3F0D5;color:#3F5E1F;}
-.feedback.err{background:#FCE0DC;color:#8B2E22;}
-@keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-
-/* ============ ACTIVITY 3 ============ */
-.real-pic-frame{
-  background:#fff;
-  border:3px solid var(--ink);
-  border-radius:18px;
-  padding:10px;
-  margin-bottom:14px;
-  box-shadow:var(--shadow-sketch);
-  position:relative;
-  transform:rotate(-.4deg);
-}
-.real-pic-frame::before, .real-pic-frame::after{
-  content:'';position:absolute;
-  width:50px;height:18px;
-  background:rgba(212,162,76,.65);
-  border:1.5px dashed rgba(44,44,44,.5);
-}
-.real-pic-frame::before{top:-9px;left:20px;transform:rotate(-6deg);}
-.real-pic-frame::after{top:-9px;right:20px;transform:rotate(6deg);}
-.real-pic-frame img{
-  width:100%;height:auto;display:block;
-  border-radius:12px;
+.p::after{background:var(--purple)}
+.p::before{border-top-color:var(--purple)}
+.g:hover::after,.p:hover::after,.g.ton::after,.p.ton::after,
+.g:hover::before,.p:hover::before,.g.ton::before,.p.ton::before{
+  opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
 }
 
-.dnd-helper{
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;
-  font-size:1rem;
-  color:var(--accent);
-  text-align:center;
-  margin:6px 0 8px;
-  display:flex;align-items:center;justify-content:center;gap:8px;
+/* questions dropdown */
+.qdrop{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fffdf6}
+.qdrop summary{
+  cursor:pointer;list-style:none;padding:13px 18px;font-weight:600;color:var(--navy);
+  display:flex;align-items:center;gap:8px;transition:.2s;border-radius:14px;
 }
-.dnd-helper .arrow{display:inline-block;animation:bounce 1.2s infinite;}
-@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
-
-.dnd-bank{
-  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
-  background:#fff;
-  padding:14px;
-  border:2.5px dashed var(--ink);
-  border-radius:16px;
-  margin-bottom:16px;
-  min-height:60px;
+.qdrop summary::-webkit-details-marker{display:none}
+.qdrop summary:hover{background:#fff7e0}
+.qdrop summary .chev{margin-left:auto;transition:.3s}
+.qdrop[open] summary .chev{transform:rotate(180deg)}
+.qdrop .q-area{padding:0 18px 16px}
+.q{margin-top:12px}
+.q .q-txt{font-weight:600;color:var(--navy);margin-bottom:8px}
+.q .q-txt .qn{color:var(--red)}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
+  font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
 }
-.drag-word{
-  background:var(--accent-3);
-  color:var(--ink);
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:1.05rem;
-  padding:7px 18px;
-  border:2.5px solid var(--ink);
-  border-radius:20px;
-  cursor:grab;
-  box-shadow:3px 3px 0 var(--ink);
-  user-select:none;
-  touch-action:none;
-  transition:transform .15s ease;
-}
-.drag-word:active{cursor:grabbing;transform:scale(1.08);}
-.drag-word.used{opacity:.3;pointer-events:none;}
-.drag-word.dragging{opacity:.5;}
-
-.dnd-sentence{
-  background:#fff;
-  border:2.5px solid var(--ink);
-  border-radius:14px;
-  padding:12px 14px;
-  margin-bottom:10px;
-  font-family:'Nunito',sans-serif;
-  font-weight:600;
-  font-size:1rem;line-height:1.9;
-  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
-  box-shadow:3px 3px 0 var(--ink);
-}
-.drop-zone{
-  display:inline-block;
-  min-width:110px;padding:5px 14px;
-  background:#FAF6EE;
-  border:2.5px dashed var(--ink);
-  border-radius:18px;
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:1.05rem;
-  color:var(--accent);
-  text-align:center;
-  min-height:36px;
-}
-.drop-zone.over{background:#FFE9C8;border-style:solid;}
-.drop-zone.filled{background:var(--accent-4);color:#fff;border-style:solid;}
-.pic-select{
-  padding:6px 12px;border-radius:14px;
-  border:2.5px solid var(--ink);background:#fff;
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:.95rem;color:var(--ink);
-  cursor:pointer;
-  box-shadow:2px 2px 0 var(--ink);
-}
-.pic-select.correct{background:var(--accent-4);color:#fff;}
-.pic-select.wrong{background:#E85D4B;color:#fff;}
-
-.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
-.btn{
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:1rem;
-  padding:10px 22px;
-  border:3px solid var(--ink);
-  border-radius:30px;
-  cursor:pointer;
-  box-shadow:var(--shadow-sketch);
-  transition:all .2s ease;
-}
-.btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
-.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
-.btn-primary{background:var(--accent);color:#fff;}
-.btn-secondary{background:#fff;color:var(--ink);}
-
-/* ============ CONVERSATION ============ */
-.conv-box{
-  background:#fff;
-  border:2.5px solid var(--ink);
-  border-radius:18px;
-  padding:18px 16px;
-  margin-bottom:16px;
-  box-shadow:var(--shadow-sketch);
-}
-.conv-line{
-  display:flex;gap:10px;align-items:flex-start;
-  margin-bottom:12px;
-  font-family:'Nunito',sans-serif;
-  font-weight:600;
-  font-size:.98rem;line-height:1.5;
-}
-.speaker{
-  min-width:78px;
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:.92rem;color:var(--ink);
-  background:#FFFDF7;
-  border:2px solid var(--ink);
-  padding:3px 10px;border-radius:14px;
-  text-align:center;
-  box-shadow:2px 2px 0 var(--ink);
-  flex-shrink:0;
-}
-.speaker.narr{background:var(--ink);color:#fff;}
-.speaker.jane{background:#FFD4B8;}
-.speaker.anne{background:#F8C7D8;}
-.speaker.paul{background:#C8E6F5;}
-.speaker.jake{background:#D6F5E5;}
-.speaker.evan{background:#FFF0B3;}
-.speaker.clara{background:#E5D9F2;}
-.conv-text{flex:1;color:var(--ink);}
-
-.qa-card{
-  background:#fff;
-  border:2.5px solid var(--ink);
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:10px;
-  box-shadow:3px 3px 0 var(--ink);
-}
-.qa-q{
-  font-family:'Nunito',sans-serif;
-  font-weight:700;font-size:1rem;
-  color:var(--ink);margin-bottom:10px;
-  display:flex;gap:10px;
-}
-.qa-q .qnum{
-  min-width:26px;height:26px;border-radius:50%;
-  background:var(--accent-2);color:#fff;
-  border:2px solid var(--ink);
-  display:grid;place-items:center;
-  font-family:'Fredoka',sans-serif;font-weight:700;font-size:.88rem;
-  flex-shrink:0;
-}
-details.answer{
-  background:#FFFDF7;
-  border:2px dashed var(--ink);
-  border-radius:12px;
-  padding:8px 12px;
-  cursor:pointer;
-}
-details.answer summary{
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:1rem;
-  color:var(--accent);
-  list-style:none;
-  display:flex;align-items:center;gap:8px;
-}
-details.answer summary::-webkit-details-marker{display:none;}
-details.answer summary::after{content:'▼';font-size:.7rem;margin-left:auto;transition:transform .2s;}
-details.answer[open] summary::after{transform:rotate(180deg);}
-details.answer .ans-content{
-  margin-top:10px;
-  font-family:'Nunito',sans-serif;
-  font-size:1rem;color:var(--ink);
-  padding:10px 12px;
-  background:#fff;border:2px solid var(--ink);border-radius:10px;
-}
-.ans-en{
-  font-family:'Nunito',sans-serif;
-  font-weight:700;
-  color:var(--ink);
-  font-size:1rem;
-  line-height:1.4;
-}
-.ans-ar{
-  font-family:'Cairo',sans-serif;
-  font-size:.88rem;
-  color:var(--ink-soft);
-  font-weight:600;
-  direction:rtl;
-  text-align:right;
-  margin-top:6px;
-  padding-top:6px;
-  border-top:1.5px dashed rgba(44,44,44,.25);
+.opt:hover{border-color:var(--sky)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.open-q{
+  border:2px dashed #cfc4e8;border-radius:12px;background:#faf8ff;padding:10px 14px;margin-top:10px;
+  font-weight:600;color:var(--purple);font-size:.95rem;line-height:1.9;
 }
 
-/* ============ QUIZ ============ */
-.quiz{
-  background:#FFFDF7;
-  border:3px solid var(--ink);
-  border-radius:24px;
-  padding:24px 20px;
-  margin-bottom:18px;
-  box-shadow:var(--shadow-sketch-lg);
-  position:relative;
-  transform:rotate(-.2deg);
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--navy);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{
+  display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--navy);color:#fff;font-size:.85rem;margin-right:8px;
 }
-.quiz-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-.quiz-icon{
-  width:54px;height:54px;border-radius:16px;
-  background:var(--accent-3);
-  color:var(--ink);
-  border:3px solid var(--ink);
-  display:grid;place-items:center;
-  font-size:1.7rem;
-  box-shadow:var(--shadow-sketch);
-  transform:rotate(-8deg);
+.score-box{
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;
+  border-radius:18px;padding:20px;text-align:center;
 }
-.quiz-title{
-  font-family:'Fredoka',sans-serif;
-  font-size:1.4rem;font-weight:700;color:var(--ink);
-  line-height:1.1;
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:var(--gold)}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{
+  margin-top:16px;border:0;background:var(--gold);color:var(--navy);font-family:inherit;font-weight:700;
+  font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
 }
-.quiz-sub{
-  font-family:'Nunito',sans-serif;
-  font-weight:600;
-  font-size:.9rem;color:var(--ink-soft);
-  margin-top:4px;
-}
-.q-item{
-  background:#fff;
-  border:2.5px solid var(--ink);
-  border-radius:14px;
-  padding:14px;
-  margin-bottom:12px;
-  box-shadow:3px 3px 0 var(--ink);
-}
-.q-text{
-  font-family:'Nunito',sans-serif;
-  font-weight:700;font-size:1rem;
-  margin-bottom:10px;color:var(--ink);
-}
-.q-opts{display:grid;gap:8px;}
-.q-opt{
-  background:#FFFDF7;
-  color:var(--ink);
-  border:2px solid var(--ink);
-  padding:9px 14px;border-radius:12px;
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:1rem;
-  cursor:pointer;
-  transition:all .2s;
-  text-align:left;
-  box-shadow:2px 2px 0 var(--ink);
-}
-.q-opt:hover:not(.locked){transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink);}
-.q-opt.correct{background:var(--accent-4);color:#fff;}
-.q-opt.wrong{background:#E85D4B;color:#fff;}
-.q-opt.locked{cursor:default;}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
 
-.score-display{
-  text-align:center;
-  padding:22px;margin-top:16px;
-  background:#fff;
-  border:3px solid var(--ink);
-  border-radius:18px;
-  box-shadow:var(--shadow-sketch);
-  display:none;
+/* ====== passport ====== */
+.passport{
+  background:linear-gradient(160deg,#163a6e,#0e2a52);border-radius:22px;padding:26px 22px;color:#fff;margin-top:16px;
+  border:3px solid var(--gold);box-shadow:var(--shadow);text-align:center;
 }
-.score-display.show{display:block;animation:popIn .5s ease;}
-.score-num{
-  font-family:'Fredoka',sans-serif;
-  font-size:2.8rem;font-weight:700;
-  color:var(--accent);
-  line-height:1;
+.passport h3{letter-spacing:3px;color:var(--gold);font-size:1.1rem;font-weight:600}
+.passport .owner{margin-top:4px;font-weight:700;opacity:.9}
+.stamps{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.stamp-slot{
+  border:2.5px dashed rgba(255,255,255,.35);border-radius:14px;padding:14px 8px;min-height:104px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
 }
-.score-msg{
-  font-family:'Cairo',sans-serif;
-  font-size:1rem;font-weight:700;
-  margin-top:10px;color:var(--ink);
-  direction:rtl;
+.stamp-slot .s-name{font-size:.78rem;font-weight:700;opacity:.75}
+.stamp-slot .s-mark{
+  font-weight:600;border:3px solid rgba(255,255,255,.25);color:rgba(255,255,255,.25);
+  border-radius:10px;padding:3px 12px;transform:rotate(-10deg);font-size:.92rem;transition:.3s;
 }
+.stamp-slot.earned{border-style:solid;border-color:var(--gold)}
+.stamp-slot.earned .s-mark{border-color:var(--gold);color:var(--gold);animation:stampPop .7s}
+@keyframes stampPop{0%{transform:rotate(-10deg) scale(2.2);opacity:0}60%{transform:rotate(-10deg) scale(.92);opacity:1}100%{transform:rotate(-10deg) scale(1)}}
+.final-msg{display:none;margin-top:18px;background:rgba(255,255,255,.12);border-radius:14px;padding:14px;font-weight:600;line-height:1.9}
+.final-msg.show{display:block;animation:fadeUp .5s}
 
-/* ============ CONFETTI ============ */
-.confetti{
-  position:fixed;width:12px;height:12px;
-  pointer-events:none;z-index:9999;
-  border:1.5px solid var(--ink);
-  animation:confettiFall 3s linear forwards;
-}
-@keyframes confettiFall{
-  0%{transform:translateY(-100px) rotate(0);opacity:1;}
-  100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
-}
-
-/* ============ FOOTER ============ */
-.footer{
-  text-align:center;
-  padding:18px;
-  font-family:'Fredoka',sans-serif;
-  font-weight:600;font-size:1rem;
-  color:var(--ink);
-  background:#FFFDF7;
-  border:3px solid var(--ink);
-  border-radius:20px;
-  box-shadow:var(--shadow-sketch);
-  margin-top:18px;
-  transform:rotate(.3deg);
-}
-.footer .heart{color:var(--accent);display:inline-block;animation:beat 1.2s ease-in-out infinite;}
-@keyframes beat{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
-
-/* Section navigation between tabs */
-.tab-nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px;}
-
-/* Responsive */
-@media(min-width:700px){
-  body{padding:24px;}
-  .card{padding:28px 26px;}
-  .quiz{padding:30px 28px;}
-}
-@media(max-width:520px){
-  .speaker{min-width:62px;font-size:.92rem;}
-  .conv-line{font-size:.92rem;}
-  .lesson-title{font-size:1.7rem;}
-  .tabs{gap:6px;padding:8px;}
-  .tab{padding:7px 11px;font-size:.85rem;gap:5px;}
-  .tab .tab-num{font-size:.95rem;}
-  .tab .tab-label{font-size:.8rem;}
-  .card-title{font-size:1.15rem;}
-  .word-chip{font-size:1.05rem;padding:6px 14px;}
+@media (max-width:560px){
+  .db-grid{gap:10px}
 }
 </style>
 </head>
 <body>
 
-<!-- Floating particles -->
-<div class="particles" id="particles"></div>
+<div class="sky" id="sky"></div>
 
 <div class="wrap">
-
-  <!-- HEADER -->
-  <div class="header">
-    <span class="corner-doodle tr">✦ Let's learn! ✦</span>
-    <div class="teacher-tag">
-      <span class="star">✦</span>
-      <span>T. Wad Refae</span>
-      <span class="star">✦</span>
+<header>
+  <span class="hero-plane">✈️</span>
+  <div class="dboard">
+    <div class="scan"></div>
+    <div class="db-top"><span>🛫 DEPARTURES</span><span class="live">● LIVE</span><span>TERMINAL 7</span></div>
+    <div class="db-grid">
+      <div>FLIGHT<b>EN-102</b></div>
+      <div>GATE<b>P2</b></div>
+      <div>DESTINATION<b>WORD CITY</b></div>
+      <div>CLASS<b>GRADE 7</b></div>
     </div>
-    <h1 class="lesson-title">
-      <span class="emoji">👋</span>
-      <span class="underline">Greetings</span> &amp; Friends
-    </h1>
-    <p class="lesson-sub">Unit 1 · Period 2 · Grade 7</p>
-    <div class="lesson-meta">
-      <span class="meta-pill">📚 English for Palestine</span>
-      <span class="meta-pill">🎯 Interactive Lesson</span>
+    <h1>Oh, hello!</h1>
+    <div class="sub">Word Practice · Period 2 · PB page 5</div>
+    <div class="status"><i></i> NOW BOARDING</div>
+  </div>
+  <div class="flags">🇵🇸 🇫🇷 🇬🇧 🇯🇵 🇧🇷</div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">👂 Listen &amp; Circle <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p2">⭕ Circle Words <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p3">✍️ Complete &amp; Match <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p4">🎧 Check</button>
+  <button class="tab" data-p="p5">💬 Questions <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p6">🏁 Quiz <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p7">🛂 Passport</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">GATE A</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">رحلة اليوم: نتدرب على كلمات الدرس الجديدة ونستخدمها في جمل. أنجز الأنشطة لتجمع الأختام في جواز سفرك! 🛂</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">👂</div><div><b>Listening</b><span class="ar">أستمع وأميّز كلمات الدرس وألاحظ الكلمة الناقصة.</span></div></div>
+      <div class="goal"><div class="ico">⭕</div><div><b>Word Choice</b><span class="ar">أختار الكلمة الصحيحة المناسبة لمعنى الجملة.</span></div></div>
+      <div class="goal"><div class="ico">✍️</div><div><b>Complete Sentences</b><span class="ar">أكمل الجمل بكلمات الدرس وأطابقها مع الصور.</span></div></div>
+      <div class="goal"><div class="ico">💬</div><div><b>Comprehension</b><span class="ar">أقرأ المحادثة مرة أخرى وأجيب عن أسئلة الفهم.</span></div></div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">🧳 Word Bag</h2>
+    <div class="keywords">
+      <span class="kw">ages</span><span class="kw">hug</span><span class="kw">kiss</span><span class="kw">often</span>
+      <span class="kw">perhaps</span><span class="kw">pleased</span><span class="kw">smile</span><span class="kw">surprised</span>
     </div>
   </div>
+</section>
 
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab active" data-tab="t0"><span class="tab-num">🎯</span><span class="tab-label">Objectives</span></button>
-    <button class="tab" data-tab="t1"><span class="tab-num">1</span><span class="tab-label">Listen</span></button>
-    <button class="tab" data-tab="t2"><span class="tab-num">2</span><span class="tab-label">Choose</span></button>
-    <button class="tab" data-tab="t3"><span class="tab-num">3</span><span class="tab-label">Match</span></button>
-    <button class="tab" data-tab="t4"><span class="tab-num">5</span><span class="tab-label">Conversation</span></button>
-    <button class="tab" data-tab="t5"><span class="tab-num">🏆</span><span class="tab-label">Quiz</span></button>
+<!-- ============ A1 : LISTEN & CIRCLE ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">GATE 1</span>👂 Activity 1: Listen and circle the words you hear</h2>
+    <p class="hint ar">شغّل التسجيل واستمع جيداً للكلمات، ثم أجب: <b>أي كلمة لم تسمعها في التسجيل؟</b> اضغط عليها!</p>
+    <div class="gplayer">
+      <b>🎧 Audio 3 · The words</b>
+      <iframe src="https://drive.google.com/file/d/1Azh572ekYFyBURG92LNvq75f98IDj3MZ/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="bigq">Which word didn't you hear? 🤔</div>
+    <div class="wordbox" id="a1box"></div>
+    <div class="feedback good" id="a1fb">🎉 Correct! The word <b>hug</b> was not in the recording. <span class="ar">أحسنت! كلمة hug لم تُذكر في التسجيل.</span></div>
   </div>
+</section>
 
-  <!-- OBJECTIVES -->
-  <div class="tab-content active" id="t0">
-    <section class="card tilt-l">
-      <span class="tape"></span>
-      <div class="card-head">
-        <div class="card-num c4">🎯</div>
-        <div>
-          <div class="card-title">Lesson Objectives</div>
-          <div class="card-hint">أهداف الدرس</div>
-        </div>
-      </div>
-      <ul class="obj-list">
-        <li>
-          <span class="check">✓</span>
-          <div class="obj-text">
-            <div class="obj-en">Listen to and recognize new words about greetings.</div>
-            <div class="obj-ar">أن أستمع إلى مفردات التحية الجديدة وأميّزها.</div>
-          </div>
-        </li>
-        <li>
-          <span class="check">✓</span>
-          <div class="obj-text">
-            <div class="obj-en">Read and choose the correct word in a sentence.</div>
-            <div class="obj-ar">أن أقرأ الجملة وأختار الكلمة الصحيحة المناسبة لها.</div>
-          </div>
-        </li>
-        <li>
-          <span class="check">✓</span>
-          <div class="obj-text">
-            <div class="obj-en">Complete sentences and match them with pictures.</div>
-            <div class="obj-ar">أن أكمل الجمل بالكلمات المناسبة وأطابقها مع الصور الصحيحة.</div>
-          </div>
-        </li>
-        <li>
-          <span class="check">✓</span>
-          <div class="obj-text">
-            <div class="obj-en">Read a conversation and answer questions about it.</div>
-            <div class="obj-ar">أن أقرأ المحادثة وأجيب عن الأسئلة الخاصة بها.</div>
-          </div>
-        </li>
-        <li>
-          <span class="check">✓</span>
-          <div class="obj-text">
-            <div class="obj-en">Talk about how we greet friends and new people.</div>
-            <div class="obj-ar">أن أتحدث عن كيفية تحيتنا للأصدقاء والأشخاص الجدد.</div>
-          </div>
-        </li>
-      </ul>
-    </section>
+<!-- ============ A2 : CIRCLE CORRECT WORDS ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">GATE 2</span>⭕ Activity 2: Read and circle the correct words</h2>
+    <p class="hint ar">اقرأ كل جملة بصمت ثم اضغط على الكلمة الصحيحة من الكلمتين.</p>
+    <div id="a2box"></div>
   </div>
+</section>
 
-  <!-- ACTIVITY 1 -->
-  <div class="tab-content" id="t1">
-    <section class="card tilt-r">
-      <span class="tape right"></span>
-      <div class="card-head">
-        <div class="card-num c1">1</div>
-        <div>
-          <div class="card-title">Listen and circle the words you hear 🎧</div>
-          <div class="card-hint">استمع وضع دائرة حول الكلمات التي تسمعها</div>
-        </div>
-      </div>
-
-      <button class="audio-btn" id="audio1Btn">
-        <span class="icon">▶</span>
-        <span>Play the words</span>
-      </button>
-
-      <div class="word-bank" id="wordBank">
-        <div class="word-chip" data-word="ages">ages</div>
-        <div class="word-chip" data-word="hug">hug</div>
-        <div class="word-chip" data-word="kiss">kiss</div>
-        <div class="word-chip" data-word="often">often</div>
-        <div class="word-chip" data-word="perhaps">perhaps</div>
-        <div class="word-chip" data-word="pleased">pleased</div>
-        <div class="word-chip" data-word="smile">smile</div>
-        <div class="word-chip" data-word="surprised">surprised</div>
-      </div>
-
-      <div class="question-box">
-        <span class="q-mark">?</span>
-        <span>Which word didn't you hear?</span>
-        <span class="answer-slot" id="missingWord">— ? —</span>
-      </div>
-    </section>
+<!-- ============ A3 : COMPLETE & MATCH ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">GATE 3</span>✍️ Activity 3: Complete the sentences, then match them with the pictures</h2>
+    <p class="hint ar">أولاً: اضغط كلمة من البنك الذهبي ثم اضغط الفراغ المناسب لها. ثانياً: اختر حرف الصورة المناسبة (a–d) لكل جملة.</p>
+    <div class="bank" id="bank"></div>
+    <div class="mimg"><img src="https://i.ibb.co/dsRPt5ds/Gemini-Generated-Image-si0p1ksi0p1ksi0p.png" alt="Pictures a, b, c and d"></div>
+    <div id="a3box"></div>
   </div>
+</section>
 
-  <!-- ACTIVITY 2 -->
-  <div class="tab-content" id="t2">
-    <section class="card tilt-l">
-      <span class="tape"></span>
-      <div class="card-head">
-        <div class="card-num c2">2</div>
-        <div>
-          <div class="card-title">Read and circle the correct word ✏️</div>
-          <div class="card-hint">اقرأ واختر الكلمة الصحيحة</div>
-        </div>
-      </div>
-      <div id="act2Container"></div>
-    </section>
+<!-- ============ A4 : LISTEN & CHECK ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">GATE 4</span>🎧 Activity 4: Listen and check your sentences</h2>
+    <p class="hint ar">استمع إلى التسجيل وتأكد من إجاباتك في النشاط السابق. اضغط على أي إجابة مموّهة لكشفها بعد الاستماع.</p>
+    <div class="gplayer">
+      <b>🎧 Audio 4 · Check your sentences</b>
+      <iframe src="https://drive.google.com/file/d/1BLdqfqN38YbfxIRw1qt3_9VEf2wZytSP/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="chk"><span class="num">1</span><span>I'm really <span class="ans">surprised</span> to see you here! → picture <span class="ans">d</span></span></div>
+    <div class="chk"><span class="num">2</span><span>When I meet my best friend I always give her a <span class="ans">hug</span>. → picture <span class="ans">a</span></span></div>
+    <div class="chk"><span class="num">3</span><span>Hassan is a happy person. He always has a big <span class="ans">smile</span>. → picture <span class="ans">b</span></span></div>
+    <div class="chk"><span class="num">4</span><span>I like it when my little girl gives me a <span class="ans">kiss</span>. → picture <span class="ans">c</span></span></div>
+    <button class="reveal-btn" id="revAll">🔍 Reveal all answers</button>
   </div>
+</section>
 
-  <!-- ACTIVITY 3 -->
-  <div class="tab-content" id="t3">
-    <section class="card tilt-r">
-      <span class="tape right"></span>
-      <div class="card-head">
-        <div class="card-num c3">3</div>
-        <div>
-          <div class="card-title">Complete &amp; match with pictures 🧩</div>
-          <div class="card-hint">أكمل الجمل وطابقها مع الصور</div>
-        </div>
-      </div>
-
-      <!-- Real picture -->
-      <div class="real-pic-frame">
-        <img src="https://i.ibb.co/mFvsYnGC/1779286049794.png" alt="Pictures a, b, c, d" loading="lazy">
-      </div>
-
-      <div class="dnd-helper">
-        <span class="arrow">↓</span>
-        <span>Drag the words to complete the sentences</span>
-        <span class="arrow">↓</span>
-      </div>
-
-      <div class="dnd-bank" id="dndBank">
-        <div class="drag-word" draggable="true" data-w="surprised">surprised</div>
-        <div class="drag-word" draggable="true" data-w="hug">hug</div>
-        <div class="drag-word" draggable="true" data-w="smile">smile</div>
-        <div class="drag-word" draggable="true" data-w="kiss">kiss</div>
-      </div>
-
-      <div id="dndSentences"></div>
-
-      <div class="btn-row">
-        <button class="btn btn-primary" id="checkA3">Check ✓</button>
-        <button class="btn btn-secondary" id="resetA3">Reset 🔄</button>
-      </div>
-
-      <!-- Listen to full sentences -->
-      <div style="margin-top:22px;padding-top:18px;border-top:2.5px dashed var(--ink);">
-        <div class="card-head" style="margin-bottom:10px;">
-          <div class="card-num c4" style="width:42px;height:42px;font-size:1.5rem;">4</div>
-          <div>
-            <div class="card-title" style="font-size:1.35rem;">Listen and check 🎧</div>
-            <div class="card-hint">استمع وتحقق من إجاباتك</div>
-          </div>
-        </div>
-        <button class="audio-btn" id="audio4Btn">
-          <span class="icon">▶</span>
-          <span>Play the full sentences</span>
-        </button>
-      </div>
-    </section>
+<!-- ============ A5 : READ AGAIN & ANSWER ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">GATE 5</span>💬 Activity 5: Read the conversation again and answer</h2>
+    <p class="hint ar">اقرأ محادثة الدرس السابق مرة أخرى، ثم افتح قائمة «Questions» وأجب عن الأسئلة. مرّر فوق الكلمات الملونة لرؤية المعاني ومرجع الضمائر.</p>
+    <div class="legend">
+      <span class="lg-g">كلمة جديدة — مرّر أو اضغط لترى معناها 🟡</span>
+      <span class="lg-p">ضمير — مرّر أو اضغط لتعرف على من يعود 🟣</span>
+    </div>
+    <div class="story" id="story"></div>
+    <details class="qdrop">
+      <summary>📋 Questions (5) <span class="ar" style="font-size:.85rem;color:#5f6f93">أسئلة الفهم</span><span class="chev">▼</span></summary>
+      <div class="q-area" id="a5box"></div>
+    </details>
   </div>
+</section>
 
-  <!-- ACTIVITY 5 — CONVERSATION -->
-  <div class="tab-content" id="t4">
-    <section class="card tilt-l">
-      <span class="tape"></span>
-      <div class="card-head">
-        <div class="card-num c5">5</div>
-        <div>
-          <div class="card-title">Read the conversation 💬</div>
-          <div class="card-hint">اقرأ المحادثة وأجب عن الأسئلة</div>
-        </div>
-      </div>
-
-      <div class="conv-box">
-        <div class="conv-line">
-          <span class="speaker narr">Narrator</span>
-          <span class="conv-text">Every day we meet people. We meet friends in the street or at school and sometimes we meet new people. What do you usually do when you meet friends? Do you kiss and hug them? Perhaps you never do that. But in some countries people always kiss and hug their friends.</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker jane">Jane</span>
-          <span class="conv-text">Hi! How are you?! I haven't seen you for ages! How's your family?</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker anne">Anne</span>
-          <span class="conv-text">Hello! How are you? You look great! We're all fine. How are your parents?</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker jane">Jane</span>
-          <span class="conv-text">They're very well, thank you! Oh, I'm so surprised to see you here!</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker narr">Narrator</span>
-          <span class="conv-text">What do you do when you meet new people? Are you friendly? Do you often smile?</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker paul">Paul</span>
-          <span class="conv-text">Jake, this is Evan. He's my cousin.</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker jake">Jake</span>
-          <span class="conv-text">Hi, Evan. I'm pleased to meet you.</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker evan">Evan</span>
-          <span class="conv-text">How do you do, Jake. Good to meet you too. I've heard a lot about you.</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker paul">Paul</span>
-          <span class="conv-text">And this is my cousin, Clara.</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker jake">Jake</span>
-          <span class="conv-text">Hi, Clara.</span>
-        </div>
-        <div class="conv-line">
-          <span class="speaker clara">Clara</span>
-          <span class="conv-text">Hello.</span>
-        </div>
-      </div>
-
-      <div class="qa-card">
-        <div class="qa-q"><span class="qnum">1</span>What do people do in some countries when they meet a friend?</div>
-        <details class="answer"><summary>✨ اعرض الإجابة</summary>
-          <div class="ans-content">
-            <div class="ans-en">They kiss and hug their friends.</div>
-            <div class="ans-ar">يُقبّلون ويعانقون أصدقاءهم.</div>
-          </div>
-        </details>
-      </div>
-
-      <div class="qa-card">
-        <div class="qa-q"><span class="qnum">2</span>Do Anne and Jane know each other?</div>
-        <details class="answer"><summary>✨ اعرض الإجابة</summary>
-          <div class="ans-content">
-            <div class="ans-en">Yes, they are friends.</div>
-            <div class="ans-ar">نعم، هما صديقتان.</div>
-          </div>
-        </details>
-      </div>
-
-      <div class="qa-card">
-        <div class="qa-q"><span class="qnum">3</span>Who is Evan?</div>
-        <details class="answer"><summary>✨ اعرض الإجابة</summary>
-          <div class="ans-content">
-            <div class="ans-en">Evan is Paul's cousin.</div>
-            <div class="ans-ar">إيفان هو ابن عم بول.</div>
-          </div>
-        </details>
-      </div>
-
-      <div class="qa-card">
-        <div class="qa-q"><span class="qnum">4</span>What do you do when you meet a friend?</div>
-        <details class="answer"><summary>✨ إجابة مقترحة</summary>
-          <div class="ans-content">
-            <div class="ans-en">(Open answer) For example: I smile and say hi. Sometimes I hug my best friend.</div>
-            <div class="ans-ar">(إجابة مفتوحة) مثال: أبتسم وأقول "مرحباً"، وأحياناً أعانق صديقي المفضّل.</div>
-          </div>
-        </details>
-      </div>
-
-      <div class="qa-card">
-        <div class="qa-q"><span class="qnum">5</span>What do you do when you meet a new person?</div>
-        <details class="answer"><summary>✨ إجابة مقترحة</summary>
-          <div class="ans-content">
-            <div class="ans-en">(Open answer) For example: I smile and say "Pleased to meet you."</div>
-            <div class="ans-ar">(إجابة مفتوحة) مثال: أبتسم وأقول "سررت بلقائك".</div>
-          </div>
-        </details>
-      </div>
-    </section>
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الرحلة! 5 أسئلة تغطي الدرس كاملاً. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>✈️ Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
   </div>
+</section>
 
-  <!-- QUIZ -->
-  <div class="tab-content" id="t5">
-    <section class="quiz">
-      <span class="tape right"></span>
-      <div class="quiz-head">
-        <div class="quiz-icon">🏆</div>
-        <div>
-          <div class="quiz-title">Final Quiz</div>
-          <div class="quiz-sub">5 questions · هيا نختبر ما تعلمناه!</div>
-        </div>
+<!-- ============ PASSPORT ============ -->
+<section class="panel" id="p7">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">GATE F</span>🛂 Travel Passport</h2>
+    <p class="hint ar">هنا تُجمع أختامك. أكمل الأنشطة الخمسة لتختم جوازك بالكامل!</p>
+    <div class="passport">
+      <h3>✦ TRAVEL PASSPORT ✦</h3>
+      <div class="owner ar">المسافر: طالب/طالبة الصف السابع 🎒</div>
+      <div class="stamps" id="stampsBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! أكملت رحلة كلمات <b>Oh, hello!</b> بنجاح!<br>
+        أصبحت تستخدم كلمات الدرس في جمل صحيحة. إلى اللقاء في الرحلة القادمة! 🌍✈️
       </div>
-
-      <div id="quizContainer"></div>
-
-      <div class="score-display" id="scoreDisplay">
-        <div class="score-num"><span id="scoreNum">0</span>/5</div>
-        <div class="score-msg" id="scoreMsg">!أحسنت</div>
-        <button class="btn btn-primary" style="margin-top:14px;" onclick="resetQuiz()">حاول مرة أخرى 🔄</button>
-      </div>
-    </section>
+      <button class="big-btn" onclick="resetTrip()">🔄 New journey (reset)</button>
+    </div>
   </div>
-
-  <!-- FOOTER -->
-  <div class="footer">
-    Made with <span class="heart">♥</span> by T. Wad Refae
-  </div>
-
+</section>
 </div>
 
 <script>
-/* ============ PARTICLES (bubbles + dots) ============ */
-const particles = document.getElementById('particles');
-for(let i=0;i<14;i++){
-  const b = document.createElement('div');
-  b.className = 'bubble b' + (1 + (i%4));
-  const size = 30 + Math.random()*60;
-  b.style.width = size + 'px';
-  b.style.height = size + 'px';
-  b.style.left = Math.random()*100 + 'vw';
-  b.style.animationDuration = (10 + Math.random()*10) + 's';
-  b.style.animationDelay = (-Math.random()*14) + 's';
-  particles.appendChild(b);
-}
-for(let i=0;i<10;i++){
-  const d = document.createElement('div');
-  d.className = 'dot';
-  d.style.left = Math.random()*100 + 'vw';
-  d.style.top = Math.random()*100 + 'vh';
-  d.style.animationDuration = (8 + Math.random()*8) + 's';
-  d.style.animationDelay = (-Math.random()*10) + 's';
-  particles.appendChild(d);
-}
+/* =========================================================
+   Unit 1 – Period 2 : Oh, hello! (Grade 7) — Word practice
+   Departures-board header ✈️ — same travel theme as Period 1
+========================================================= */
 
-/* ============ TABS ============ */
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById(t.dataset.tab).classList.add('active');
-    window.scrollTo({top:0, behavior:'smooth'});
-  });
-});
-
-/* ============ AUDIO HELPERS ============ */
-const synth = window.speechSynthesis;
-function speak(text, rate=0.85, onend=null){
-  if(!synth) return;
-  synth.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US';
-  u.rate = rate;
-  u.pitch = 1.05;
-  if(onend) u.onend = onend;
-  synth.speak(u);
-}
-function speakSequence(words, delay=700, btn=null){
-  if(btn) btn.classList.add('playing');
-  let i = 0;
-  function next(){
-    if(i >= words.length){
-      if(btn) btn.classList.remove('playing');
-      return;
-    }
-    speak(words[i], 0.75, ()=>{
-      setTimeout(next, delay);
-    });
-    i++;
+/* ---------- sky decorations ---------- */
+(function(){
+  const sky=document.getElementById('sky');
+  for(let i=0;i<3;i++){
+    const c=document.createElement('span');c.className='cloud';c.textContent='☁️';
+    c.style.top=(20+i*120)+'px';c.style.fontSize=(40+i*16)+'px';
+    c.style.animationDuration=(16+i*7)+'s';c.style.animationDelay=(-i*8)+'s';
+    sky.appendChild(c);
   }
-  next();
-}
-
-/* ============ ACTIVITY 1 ============ */
-const heardWords = ['often','perhaps','surprised','ages','kiss','pleased','smile'];
-const missingWord = 'hug';
-let circledSet = new Set();
-
-document.getElementById('audio1Btn').addEventListener('click', (e)=>{
-  speakSequence(heardWords, 600, e.currentTarget);
-});
-
-document.querySelectorAll('#wordBank .word-chip').forEach(chip=>{
-  chip.addEventListener('click', ()=>{
-    const w = chip.dataset.word;
-    if(chip.classList.contains('circled')){
-      chip.classList.remove('circled');
-      circledSet.delete(w);
-    } else {
-      chip.classList.add('circled');
-      circledSet.add(w);
-    }
-    checkMissing();
-  });
-});
-
-function checkMissing(){
-  const slot = document.getElementById('missingWord');
-  const allHeard = heardWords.every(w=>circledSet.has(w));
-  const missingNotCircled = !circledSet.has(missingWord);
-  if(allHeard && missingNotCircled){
-    slot.textContent = '🎉 hug';
-    slot.classList.add('revealed');
-    miniConfetti();
-  } else {
-    slot.textContent = '— ? —';
-    slot.classList.remove('revealed');
+  for(let i=0;i<14;i++){
+    const s=document.createElement('span');s.className='star';
+    s.style.top=(Math.random()*40)+'%';s.style.left=(Math.random()*100)+'%';
+    s.style.animationDelay=(Math.random()*2)+'s';
+    sky.appendChild(s);
   }
-}
+})();
 
-/* ============ ACTIVITY 2 ============ */
-const act2Questions = [
-  {sentence:'Some people always ___ their friends.', options:['kiss','smile'], correct:'kiss',
-   expl:'في بعض البلاد، الناس يُقبّلون أصدقاءهم كنوع من التحية. كلمة kiss تعني "يُقبّل".'},
-  {sentence:'Anne says her friend looks ___.', options:['perhaps','great'], correct:'great',
-   expl:'كلمة great تعني "رائع". نستخدمها لمدح شخص يبدو بحالة ممتازة.'},
-  {sentence:'Jane is ___ to see her friend Anne.', options:['hug','surprised'], correct:'surprised',
-   expl:'كلمة surprised تصف الشعور بالاندهاش. جين لم تكن تتوقع رؤية آن.'},
-  {sentence:'You can say ___ or good to meet you.', options:['pleased','surprised'], correct:'pleased',
-   expl:'عبارة pleased to meet you تعني "سررت بلقائك"، وهي تحية مهذبة عند التعارف.'},
-  {sentence:'People usually ___ when they meet someone new.', options:['smile','perhaps'], correct:'smile',
-   expl:'الابتسامة (smile) هي أبسط تحية ودودة عند مقابلة شخص جديد.'}
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- stamps / progress ---------- */
+const STAMPS=[
+  {id:'listen', name:'Listen & Circle', mark:'HEAR ✓'},
+  {id:'circle', name:'Circle Words',    mark:'WORDS ✓'},
+  {id:'match',  name:'Complete & Match',mark:'MATCH ✓'},
+  {id:'compr',  name:'Questions',       mark:'READ ✓'},
+  {id:'quiz',   name:'Quiz',            mark:'QUIZ ✓'},
 ];
+const TAB_OF={listen:'p1',circle:'p2',match:'p3',compr:'p5',quiz:'p6'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('u1p2trip')||'{}')}catch(e){earned={}}
 
-const act2Container = document.getElementById('act2Container');
-act2Questions.forEach((q, idx)=>{
-  const parts = q.sentence.split('___');
-  const card = document.createElement('div');
-  card.className = 'sentence-card';
-  card.innerHTML = `
-    <span class="sentence-num">${idx+1}</span>
-    ${parts[0]}
-    <span class="choice" data-q="${idx}" data-v="${q.options[0]}">${q.options[0]}</span>
-    <span style="color:#999;">/</span>
-    <span class="choice" data-q="${idx}" data-v="${q.options[1]}">${q.options[1]}</span>
-    ${parts[1]}
-    <div class="feedback" id="fb-${idx}"></div>
-  `;
-  act2Container.appendChild(card);
-});
+const board=document.getElementById('stampsBoard');
+function renderStamps(){
+  board.innerHTML='';
+  let n=0;
+  STAMPS.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='stamp-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="s-mark">'+s.mark+'</span><span class="s-name">'+s.name+'</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===STAMPS.length);
+}
+function award(id){
+  if(earned[id])return;
+  earned[id]=true;
+  localStorage.setItem('u1p2trip',JSON.stringify(earned));
+  renderStamps();
+}
+function resetTrip(){
+  localStorage.removeItem('u1p2trip');location.reload();
+}
+renderStamps();
 
-act2Container.querySelectorAll('.choice').forEach(ch=>{
-  ch.addEventListener('click', ()=>{
-    if(ch.classList.contains('locked')) return;
-    const qIdx = parseInt(ch.dataset.q);
-    const val = ch.dataset.v;
-    const q = act2Questions[qIdx];
-    const fb = document.getElementById('fb-'+qIdx);
-    const allChoices = act2Container.querySelectorAll(`.choice[data-q="${qIdx}"]`);
-
-    if(val === q.correct){
-      ch.classList.add('correct');
-      allChoices.forEach(c=>c.classList.add('locked'));
-      fb.className = 'feedback show ok';
-      fb.innerHTML = `✨ ممتاز! ${q.expl}`;
-      miniConfetti();
-    } else {
-      ch.classList.add('wrong');
-      fb.className = 'feedback show err';
-      fb.innerHTML = `💡 حاول مرة أخرى! فكّر بتمعّن في معنى الجملة...`;
-      setTimeout(()=>{
-        ch.classList.remove('wrong');
-        fb.classList.remove('show');
-      }, 2000);
+/* =========================================================
+   A1 : which word didn't you hear? (answer: hug)
+========================================================= */
+const A1WORDS=['ages','hug','kiss','often','perhaps','pleased','smile','surprised'];
+const a1box=document.getElementById('a1box');
+A1WORDS.forEach(w=>{
+  const b=document.createElement('button');
+  b.className='wchip';b.textContent=w;
+  b.addEventListener('click',()=>{
+    if(w==='hug'){
+      b.classList.add('ok');
+      a1box.querySelectorAll('.wchip').forEach(x=>x.disabled=true);
+      document.getElementById('a1fb').classList.add('show');
+      award('listen');
+    }else{
+      b.classList.add('no');
+      setTimeout(()=>b.classList.remove('no'),500);
     }
   });
+  a1box.appendChild(b);
 });
 
-/* ============ ACTIVITY 3 — DRAG & DROP ============ */
-const act3Data = [
-  {id:1, before:"I'm really ", after:" to see you here!", answer:'surprised', pic:'d'},
-  {id:2, before:"When I meet my best friend I always give her a ", after:".", answer:'hug', pic:'a'},
-  {id:3, before:"Hassan is a happy person. He always has a big ", after:".", answer:'smile', pic:'b'},
-  {id:4, before:"I like it when my little girl gives me a ", after:".", answer:'kiss', pic:'c'}
+/* =========================================================
+   A2 : read and circle the correct words
+========================================================= */
+const A2=[
+  {pre:'Some people always ',        a:'kiss',     b:'smile',     ok:'kiss',     post:' their friends.'},
+  {pre:'Anne says her friend looks ',a:'perhaps',  b:'great',     ok:'great',    post:'.'},
+  {pre:'Jane is ',                   a:'hug',      b:'surprised', ok:'surprised',post:' to see her friend Anne.'},
+  {pre:'You can say ',               a:'pleased',  b:'surprised', ok:'pleased',  post:' or good to meet you.'},
+  {pre:'People usually ',            a:'smile',    b:'perhaps',   ok:'smile',    post:' when they meet someone new.'},
 ];
-
-const dndSentences = document.getElementById('dndSentences');
-function renderSentences(){
-  dndSentences.innerHTML = '';
-  act3Data.forEach(s=>{
-    const div = document.createElement('div');
-    div.className = 'dnd-sentence';
-    div.innerHTML = `
-      <span class="sentence-num">${s.id}</span>
-      <span>${s.before}</span>
-      <span class="drop-zone" data-id="${s.id}" data-ans="${s.answer}"></span>
-      <span>${s.after}</span>
-      <select class="pic-select" data-id="${s.id}" data-ans="${s.pic}">
-        <option value="">📷 pic ?</option>
-        <option value="a">picture a</option>
-        <option value="b">picture b</option>
-        <option value="c">picture c</option>
-        <option value="d">picture d</option>
-      </select>
-    `;
-    dndSentences.appendChild(div);
-  });
-  attachDnD();
-}
-renderSentences();
-
-function attachDnD(){
-  document.querySelectorAll('.drag-word').forEach(dw=>{
-    dw.addEventListener('dragstart', e=>{
-      if(dw.classList.contains('used')){ e.preventDefault(); return; }
-      e.dataTransfer.setData('text/plain', dw.dataset.w);
-      dw.classList.add('dragging');
-    });
-    dw.addEventListener('dragend', ()=> dw.classList.remove('dragging'));
-
-    // Touch support
-    let touchClone = null;
-    let touchData = null;
-    dw.addEventListener('touchstart', e=>{
-      if(dw.classList.contains('used')) return;
-      touchData = dw.dataset.w;
-      touchClone = dw.cloneNode(true);
-      touchClone.style.position = 'fixed';
-      touchClone.style.zIndex = 9999;
-      touchClone.style.pointerEvents = 'none';
-      touchClone.style.opacity = '.85';
-      document.body.appendChild(touchClone);
-      const t = e.touches[0];
-      touchClone.style.left = (t.clientX - 50) + 'px';
-      touchClone.style.top = (t.clientY - 20) + 'px';
-    });
-    dw.addEventListener('touchmove', e=>{
-      if(!touchClone) return;
-      e.preventDefault();
-      const t = e.touches[0];
-      touchClone.style.left = (t.clientX - 50) + 'px';
-      touchClone.style.top = (t.clientY - 20) + 'px';
-      document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('over'));
-      const el = document.elementFromPoint(t.clientX, t.clientY);
-      if(el && el.classList.contains('drop-zone')) el.classList.add('over');
-    }, {passive:false});
-    dw.addEventListener('touchend', e=>{
-      if(!touchClone) return;
-      const t = e.changedTouches[0];
-      const el = document.elementFromPoint(t.clientX, t.clientY);
-      document.body.removeChild(touchClone);
-      touchClone = null;
-      document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('over'));
-      if(el && el.classList.contains('drop-zone') && !el.classList.contains('filled')){
-        dropWordOnZone(touchData, el);
-      }
-      touchData = null;
-    });
-  });
-
-  document.querySelectorAll('.drop-zone').forEach(zone=>{
-    zone.addEventListener('dragover', e=>{
-      e.preventDefault();
-      if(!zone.classList.contains('filled')) zone.classList.add('over');
-    });
-    zone.addEventListener('dragleave', ()=> zone.classList.remove('over'));
-    zone.addEventListener('drop', e=>{
-      e.preventDefault();
-      zone.classList.remove('over');
-      const w = e.dataTransfer.getData('text/plain');
-      dropWordOnZone(w, zone);
-    });
-    zone.addEventListener('click', ()=>{
-      if(zone.classList.contains('filled')){
-        const word = zone.textContent.trim();
-        zone.textContent = '';
-        zone.classList.remove('filled');
-        zone.style.background = '';
-        zone.style.color = '';
-        zone.style.borderColor = '';
-        const dw = document.querySelector(`.drag-word[data-w="${word}"]`);
-        if(dw) dw.classList.remove('used');
+const a2box=document.getElementById('a2box');
+let a2left=A2.length;
+A2.forEach((s,i)=>{
+  const d=document.createElement('div');d.className='sline';
+  d.innerHTML='<span class="num">'+(i+1)+'</span>'+s.pre;
+  [s.a,s.b].forEach((w,wi)=>{
+    const b=document.createElement('button');
+    b.className='pick';b.textContent=w;
+    b.addEventListener('click',()=>{
+      if(w===s.ok){
+        b.classList.add('ok');
+        d.querySelectorAll('.pick').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        if(--a2left===0)award('circle');
+      }else{
+        b.classList.add('no');b.disabled=true;
       }
     });
+    d.appendChild(b);
+    if(wi===0)d.appendChild(document.createTextNode(' / '));
   });
-}
+  d.appendChild(document.createTextNode(s.post));
+  a2box.appendChild(d);
+});
 
-function dropWordOnZone(word, zone){
-  if(!word || zone.classList.contains('filled')) return;
-  zone.textContent = word;
-  zone.classList.add('filled');
-  const dw = document.querySelector(`.drag-word[data-w="${word}"]`);
-  if(dw) dw.classList.add('used');
-}
-
-document.getElementById('checkA3').addEventListener('click', ()=>{
-  let allRight = true;
-  let mistakes = [];
-  document.querySelectorAll('.drop-zone').forEach(z=>{
-    const correct = z.textContent.trim() === z.dataset.ans;
-    if(correct){
-      z.style.background = 'var(--accent-4)';
-      z.style.color = '#fff';
-      z.style.borderColor = 'var(--ink)';
-      z.style.borderStyle = 'solid';
-    } else {
-      z.style.background = '#FCE0DC';
-      z.style.color = '#8B2E22';
-      z.style.borderColor = 'var(--ink)';
-      allRight = false;
-      mistakes.push('الجملة ' + z.dataset.id);
+/* =========================================================
+   A3 : complete with Activity-1 words + match pictures
+   answers: 1d surprised · 2a hug · 3b smile · 4c kiss
+========================================================= */
+const A3=[
+  {pre:"I'm really ",                                    post:' to see you here!', w:'surprised',pic:'d'},
+  {pre:'When I meet my best friend I always give her a ',post:'.',                 w:'hug',      pic:'a'},
+  {pre:'Hassan is a happy person. He always has a big ', post:'.',                 w:'smile',    pic:'b'},
+  {pre:'I like it when my little girl gives me a ',      post:'.',                 w:'kiss',     pic:'c'},
+];
+const BANK=['hug','surprised','kiss','smile'];
+const bank=document.getElementById('bank');
+let selWord=null;
+BANK.forEach(w=>{
+  const b=document.createElement('button');
+  b.className='bword';b.textContent=w;
+  b.addEventListener('click',()=>{
+    if(b.classList.contains('used'))return;
+    bank.querySelectorAll('.bword').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');selWord=b;
+  });
+  bank.appendChild(b);
+});
+const a3box=document.getElementById('a3box');
+let a3words=A3.length,a3pics=A3.length;
+function a3check(){if(a3words===0&&a3pics===0)award('match');}
+A3.forEach((s,i)=>{
+  const d=document.createElement('div');d.className='msent';
+  d.innerHTML='<span class="num">'+(i+1)+'</span>'+s.pre;
+  const blank=document.createElement('span');
+  blank.className='blank';blank.textContent='........';
+  blank.addEventListener('click',()=>{
+    if(blank.classList.contains('filled')||!selWord)return;
+    if(selWord.textContent===s.w){
+      blank.textContent=s.w;blank.classList.add('filled');
+      selWord.classList.remove('sel');selWord.classList.add('used');
+      selWord=null;a3words--;
+      a3check();
+    }else{
+      blank.classList.add('no');
+      setTimeout(()=>blank.classList.remove('no'),450);
+      selWord.classList.remove('sel');selWord=null;
     }
   });
-  document.querySelectorAll('.pic-select').forEach(sel=>{
-    if(sel.value === sel.dataset.ans){
-      sel.classList.add('correct');
-      sel.classList.remove('wrong');
-    } else {
-      sel.classList.add('wrong');
-      sel.classList.remove('correct');
-      allRight = false;
-    }
-  });
-  if(allRight){
-    bigConfetti();
-    setTimeout(()=> alert('🎉 ممتاز! كل الجمل والصور صحيحة! أنت رائع!'), 300);
-  } else {
-    setTimeout(()=> alert('💡 راجع إجاباتك! بعض الإجابات بحاجة لتصحيح. لا تيأس وحاول مرة أخرى!'), 200);
-  }
-});
-
-document.getElementById('resetA3').addEventListener('click', ()=>{
-  document.querySelectorAll('.drop-zone').forEach(z=>{
-    z.textContent='';z.classList.remove('filled');
-    z.style.background='';z.style.color='';z.style.borderColor='';z.style.borderStyle='';
-  });
-  document.querySelectorAll('.drag-word').forEach(dw=> dw.classList.remove('used'));
-  document.querySelectorAll('.pic-select').forEach(sel=>{
-    sel.value=''; sel.classList.remove('correct','wrong');
-  });
-});
-
-/* ============ ACTIVITY 4 — FULL SENTENCES ============ */
-const fullSentences = [
-  "I'm really surprised to see you here!",
-  "When I meet my best friend I always give her a hug.",
-  "Hassan is a happy person. He always has a big smile.",
-  "I like it when my little girl gives me a kiss."
-];
-document.getElementById('audio4Btn').addEventListener('click', e=>{
-  speakSequence(fullSentences, 800, e.currentTarget);
-});
-
-/* ============ QUIZ ============ */
-const quizQs = [
-  {
-    q:'1. Which word means "to put your arms around someone"?',
-    opts:['hug','smile','perhaps'],
-    correct:0,
-    expl:'كلمة hug تعني "يحتضن" — وضع الذراعين حول شخص ما.'
-  },
-  {
-    q:'2. "I haven\'t seen you for ___" means a long time.',
-    opts:['kiss','ages','pleased'],
-    correct:1,
-    expl:'كلمة ages تعني "وقت طويل جداً" أو "من زمان".'
-  },
-  {
-    q:'3. When you meet someone new, you can say:',
-    opts:['Pleased to meet you','Goodbye','See you later'],
-    correct:0,
-    expl:'عبارة Pleased to meet you تستخدم عند التعارف لأول مرة.'
-  },
-  {
-    q:'4. "Surprised" means you feel something:',
-    opts:['expected','unexpected','boring'],
-    correct:1,
-    expl:'كلمة surprised تعني الشعور بشيء غير متوقع.'
-  },
-  {
-    q:'5. When happy, people usually have a big ___ on their face.',
-    opts:['kiss','hug','smile'],
-    correct:2,
-    expl:'كلمة smile تعني "ابتسامة" — علامة السعادة على الوجه.'
-  }
-];
-
-let quizAnswers = {};
-const quizContainer = document.getElementById('quizContainer');
-function renderQuiz(){
-  quizContainer.innerHTML = '';
-  quizQs.forEach((q,i)=>{
-    const item = document.createElement('div');
-    item.className = 'q-item';
-    item.innerHTML = `
-      <div class="q-text">${q.q}</div>
-      <div class="q-opts">
-        ${q.opts.map((opt,j)=>`<button class="q-opt" data-q="${i}" data-j="${j}">${opt}</button>`).join('')}
-      </div>
-      <div class="feedback" id="qfb-${i}"></div>
-    `;
-    quizContainer.appendChild(item);
-  });
-  quizContainer.querySelectorAll('.q-opt').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const qi = parseInt(btn.dataset.q);
-      const ji = parseInt(btn.dataset.j);
-      if(quizAnswers[qi] !== undefined) return;
-      quizAnswers[qi] = ji;
-      const correct = quizQs[qi].correct;
-      const allOpts = quizContainer.querySelectorAll(`.q-opt[data-q="${qi}"]`);
-      allOpts.forEach((o,idx)=>{
-        o.classList.add('locked');
-        if(idx === correct) o.classList.add('correct');
-        else if(idx === ji) o.classList.add('wrong');
-      });
-      const fb = document.getElementById('qfb-'+qi);
-      if(ji === correct){
-        fb.className = 'feedback show ok';
-        fb.innerHTML = `✨ صحيح! ${quizQs[qi].expl}`;
-        miniConfetti();
-      } else {
-        fb.className = 'feedback show err';
-        fb.innerHTML = `💡 الإجابة الصحيحة موضحة باللون الأخضر. ${quizQs[qi].expl}`;
-      }
-      if(Object.keys(quizAnswers).length === quizQs.length){
-        setTimeout(showScore, 800);
+  d.appendChild(blank);
+  d.appendChild(document.createTextNode(s.post));
+  const row=document.createElement('div');row.className='match-row';
+  row.innerHTML='<span class="lbl">Picture: </span>';
+  ['a','b','c','d'].forEach(L=>{
+    const b=document.createElement('button');
+    b.className='letter';b.textContent=L;
+    b.addEventListener('click',()=>{
+      if(L===s.pic){
+        b.classList.add('ok');
+        row.querySelectorAll('.letter').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        a3pics--;a3check();
+      }else{
+        b.classList.add('no');b.disabled=true;
       }
     });
+    row.appendChild(b);
   });
-}
-renderQuiz();
+  d.appendChild(row);
+  a3box.appendChild(d);
+});
 
-function showScore(){
-  let score = 0;
-  quizQs.forEach((q,i)=>{ if(quizAnswers[i] === q.correct) score++; });
-  document.getElementById('scoreNum').textContent = score;
-  const msg = document.getElementById('scoreMsg');
-  if(score === 5) { msg.innerHTML = '🏆 ممتاز! درجة كاملة! أنت نجم متألق! استمر هكذا ✨'; bigConfetti(); }
-  else if(score >= 4) msg.innerHTML = '🌟 رائع جداً! اقتربت من الكمال! حاول مرة أخرى للحصول على الدرجة الكاملة!';
-  else if(score >= 3) msg.innerHTML = '💪 أداء جيد! أنت تتقدم بشكل ممتاز — استمر في الممارسة!';
-  else if(score >= 2) msg.innerHTML = '🌱 بداية جيدة! راجع الدرس وحاول مرة أخرى — أنت قادر على ذلك!';
-  else msg.innerHTML = '🌈 لا تستسلم! اقرأ الدرس مرة أخرى — كل نجم بدأ من الصفر، وأنت ستنجح بإذن الله!';
-  document.getElementById('scoreDisplay').classList.add('show');
-  document.getElementById('scoreDisplay').scrollIntoView({behavior:'smooth',block:'center'});
-}
+/* =========================================================
+   A4 : blurred answers reveal
+========================================================= */
+document.querySelectorAll('.ans').forEach(a=>a.addEventListener('click',()=>a.classList.add('rev')));
+document.getElementById('revAll').addEventListener('click',()=>{
+  document.querySelectorAll('.ans').forEach(a=>a.classList.add('rev'));
+});
 
-function resetQuiz(){
-  quizAnswers = {};
-  document.getElementById('scoreDisplay').classList.remove('show');
-  renderQuiz();
-}
+/* =========================================================
+   A5 : conversation (with tooltips) + 5 questions
+========================================================= */
+const LINES=[
+  ['Narrator','nar',
+   "Every day we meet people. We meet friends in the <i class='g' data-t='الشارع'>street</i> or at school and sometimes we meet new people. What do you <i class='g' data-t='عادةً'>usually</i> do when you meet friends? Do you <i class='g' data-t='تُقبّل'>kiss</i> and <i class='g' data-t='تعانق'>hug</i> <i class='p' data-t='تعود على الأصدقاء (friends)'>them</i>? <i class='g' data-t='ربما'>Perhaps</i> you never do that. But in some <i class='g' data-t='بلدان / دول'>countries</i> people always kiss and hug <i class='p' data-t='تعود على الناس (people)'>their</i> friends."],
+  ['Jane','',
+   "Hi! How are <i class='p' data-t='تعود على Anne'>you</i>?! <i class='p' data-t='تعود على Jane المتحدثة'>I</i> haven't seen you for <i class='g' data-t='منذ زمن طويل'>ages</i>! How's <i class='p' data-t='عائلة Anne'>your</i> family?"],
+  ['Anne','',
+   "Hello! How are you? You look <i class='g' data-t='رائعة'>great</i>! <i class='p' data-t='تعود على Anne وعائلتها'>We</i>'re all fine. How are your <i class='g' data-t='الوالدان'>parents</i>?"],
+  ['Jane','',
+   "<i class='p' data-t='تعود على والدَي Jane (parents)'>They</i>'re very well, thank you! Oh, I'm so <i class='g' data-t='متفاجئة'>surprised</i> to see you here!"],
+  ['Narrator','nar',
+   "What do you do when you meet new people? Are you <i class='g' data-t='ودود'>friendly</i>? Do you <i class='g' data-t='غالباً'>often</i> <i class='g' data-t='تبتسم'>smile</i>?"],
+  ['Paul','',
+   "Jake, <i class='p' data-t='يشير إلى Evan'>this</i> is Evan. <i class='p' data-t='تعود على Evan'>He</i>'s my <i class='g' data-t='ابن العم / ابن الخال'>cousin</i>."],
+  ['Jake','',
+   "Hi, Evan. <i class='p' data-t='تعود على Jake المتحدث'>I</i>'m <i class='g' data-t='مسرور'>pleased</i> to meet <i class='p' data-t='تعود على Evan'>you</i>."],
+  ['Evan','',
+   "<i class='g' data-t='كيف حالك؟ (تحية رسمية عند أول لقاء)'>How do you do</i>, Jake? Good to meet you too. I've <i class='g' data-t='سمعتُ'>heard</i> a lot about <i class='p' data-t='تعود على Jake'>you</i>."],
+  ['Paul','',
+   "And <i class='p' data-t='تشير إلى Clara'>this</i> is my cousin, Clara."],
+  ['Jake','',"Hi, Clara."],
+  ['Clara','',"Hello."],
+];
+const story=document.getElementById('story');
+story.innerHTML=LINES.map(l=>
+  '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
+).join('');
 
-/* ============ CONFETTI ============ */
-function miniConfetti(){ for(let i=0;i<20;i++) makeConfetti(); }
-function bigConfetti(){ for(let i=0;i<80;i++) setTimeout(makeConfetti, i*15); }
-function makeConfetti(){
-  const c = document.createElement('div');
-  c.className = 'confetti';
-  const colors = ['#E85D4B','#3B7A8C','#D4A24C','#6B8E4E','#FFFDF7','#2C2C2C'];
-  c.style.background = colors[Math.floor(Math.random()*colors.length)];
-  c.style.left = Math.random()*100 + 'vw';
-  c.style.animationDuration = (2 + Math.random()*2) + 's';
-  c.style.borderRadius = Math.random()>.5 ? '50%' : '2px';
-  document.body.appendChild(c);
-  setTimeout(()=> c.remove(), 4000);
-}
+/* tooltips on tap (mobile) */
+document.querySelectorAll('.g,.p').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    const was=el.classList.contains('ton');
+    document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+    if(!was)el.classList.add('ton');
+  });
+});
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+});
+
+/* A5 questions: 3 MCQ + 2 open */
+const A5Q=[
+  {t:'What do people do in some countries when they meet a friend?',
+   o:['They kiss and hug','They only shake hands','They say nothing'],a:0},
+  {t:'Do Anne and Jane know each other?',
+   o:['No, they are strangers','Yes, they are friends','They are sisters'],a:1},
+  {t:'Who is Evan?',
+   o:["Jake's friend","Anne's brother","Paul's cousin"],a:2},
+];
+const A5OPEN=[
+  'What do you do when you meet a friend? 💭',
+  'What do you do when you meet a new person? 💭',
+];
+const a5box=document.getElementById('a5box');
+let a5left=A5Q.length;
+A5Q.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">Q'+(qi+1)+':</span> '+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(oi===q.a){
+        b.classList.add('ok');
+        opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        if(--a5left===0)award('compr');
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);a5box.appendChild(qd);
+});
+A5OPEN.forEach((t,i)=>{
+  const d=document.createElement('div');d.className='open-q';
+  d.innerHTML='<b>Q'+(i+4)+':</b> '+t+'<br><span class="ar" style="font-size:.85rem">سؤال مفتوح — أجب بصوتك أمام زميلك أو معلمك، لا توجد إجابة واحدة صحيحة.</span>';
+  a5box.appendChild(d);
+});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'Which word was NOT in the recording of Activity 1?',
+   o:['hug','kiss','often'],a:0},
+  {t:'Anne says her friend looks ____.',
+   o:['perhaps','great','ages'],a:1},
+  {t:'"When I meet my best friend I always give her a ____."',
+   o:['smile','kiss','hug'],a:2},
+  {t:'Hassan is a happy person. He always has a big ____.',
+   o:['smile','surprise','hug'],a:0},
+  {t:'You can say "____ to meet you."',
+   o:['Surprised','Perhaps','Pleased'],a:2},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');
+      quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    const btns=qd.querySelectorAll('.opt');
+    btns.forEach((b,oi)=>{
+      b.disabled=true;
+      b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You are a word champion! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the lesson to get 5/5. <span class="ar">أحسنت! راجع الدرس لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Go back and review the words. <span class="ar">حاول مرة أخرى! عد وراجع الكلمات.</span>';
+  box.classList.add('show');
+  award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
 </script>
-
 </body>
 </html>
