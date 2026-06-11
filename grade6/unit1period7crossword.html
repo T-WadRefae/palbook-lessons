@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Period 7 | Writing & Crossword 🧩</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#2e7d32; --green-l:#66bb6a; --orange:#ff8f00; --orange-d:#ef6c00;
+  --cream:#fff8e1; --teal:#00897b; --teal-d:#00695c; --indigo:#3949ab;
+  --red:#e53935; --blue:#1565c0;
+}
+*{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+body{
+  font-family:'Cairo','Baloo 2',sans-serif;
+  background:linear-gradient(180deg,#e0f7fa 0%, #fffde7 100%);
+  min-height:100vh; overflow-x:hidden;
+}
+.en{font-family:'Baloo 2','Cairo',sans-serif; direction:ltr;}
+
+/* ============ HEADER (word-camp puzzle scene) ============ */
+header{
+  position:relative; height:345px; overflow:hidden;
+  background:linear-gradient(180deg,#006064 0%, #00838f 35%, #4dd0e1 70%, #aed581 70.5%, #558b2f 100%);
+  border-bottom:8px solid var(--teal);
+}
+/* floating letter cubes */
+.cube{
+  position:absolute; z-index:3; font-family:'Baloo 2'; font-weight:800; color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:12px; border:3px solid rgba(0,0,0,.25);
+  box-shadow:inset -6px -8px 0 rgba(0,0,0,.18), 0 10px 20px rgba(0,0,0,.25);
+  animation:cubeFloat ease-in-out infinite;
+}
+@keyframes cubeFloat{
+  0%,100%{transform:translateY(0) rotate(-6deg);}
+  50%{transform:translateY(-20px) rotate(7deg);}
+}
+/* puzzle pieces */
+.puz{
+  position:absolute; font-size:1.9rem; z-index:2; opacity:.9;
+  animation:puzSpin linear infinite;
+}
+@keyframes puzSpin{
+  0%{transform:translateY(0) rotate(0);}
+  50%{transform:translateY(-26px) rotate(180deg);}
+  100%{transform:translateY(0) rotate(360deg);}
+}
+/* owl on branch */
+.branch{
+  position:absolute; top:96px; right:-12px; width:150px; height:14px; z-index:3;
+  background:linear-gradient(90deg,#5d4037,#795548); border-radius:10px 0 0 10px;
+  transform:rotate(-4deg);
+}
+.branch .leaf{position:absolute; font-size:1.1rem; top:-14px;}
+.owl{
+  position:absolute; top:44px; right:34px; font-size:3.2rem; z-index:4;
+  animation:owlBob 3s ease-in-out infinite; transform-origin:bottom center;
+}
+@keyframes owlBob{0%,100%{transform:rotate(-4deg);}50%{transform:rotate(5deg) translateY(-6px);}}
+/* clouds */
+.cloud{
+  position:absolute; background:rgba(255,255,255,.85); border-radius:50px; height:28px; z-index:1;
+  animation:drift linear infinite;
+}
+.cloud::before{content:""; position:absolute; top:-14px; left:18px; width:36px; height:36px; background:inherit; border-radius:50%; box-shadow:24px 6px 0 -6px rgba(255,255,255,.85);}
+@keyframes drift{from{transform:translateX(-160px);}to{transform:translateX(110vw);}}
+/* crayons standing in the grass */
+.crayon{
+  position:absolute; bottom:26px; width:26px; height:84px; z-index:4; border-radius:6px 6px 8px 8px;
+  animation:craySway 3.2s ease-in-out infinite; transform-origin:bottom center;
+  box-shadow:inset -6px 0 0 rgba(0,0,0,.15), 0 6px 12px rgba(0,0,0,.2);
+}
+.crayon::before{ /* tip */
+  content:""; position:absolute; top:-20px; left:0; width:0; height:0;
+  border-left:13px solid transparent; border-right:13px solid transparent;
+  border-bottom:22px solid; border-bottom-color:inherit;
+}
+.crayon::after{ /* label band */
+  content:""; position:absolute; top:16px; left:0; right:0; height:14px;
+  background:rgba(255,255,255,.55); border-radius:3px;
+}
+@keyframes craySway{0%,100%{transform:rotate(-4deg);}50%{transform:rotate(5deg);}}
+/* pencil writing squiggle */
+.squiggle{
+  position:absolute; bottom:40px; left:8%; width:170px; height:60px; z-index:3; opacity:.9;
+}
+.squiggle path{
+  fill:none; stroke:#fff; stroke-width:4; stroke-linecap:round; stroke-dasharray:300;
+  animation:draw 4s ease-in-out infinite;
+}
+@keyframes draw{0%{stroke-dashoffset:300;}55%{stroke-dashoffset:0;}100%{stroke-dashoffset:-300;}}
+/* butterflies */
+.butterfly{
+  position:absolute; font-size:1.4rem; z-index:4;
+  animation:flutter 7s ease-in-out infinite;
+}
+@keyframes flutter{
+  0%,100%{transform:translate(0,0) rotate(-8deg);}
+  25%{transform:translate(26px,-20px) rotate(8deg);}
+  50%{transform:translate(-12px,-34px) rotate(-6deg);}
+  75%{transform:translate(20px,-10px) rotate(10deg);}
+}
+@keyframes popIn{from{transform:translateY(60px) scale(.6); opacity:0;}to{transform:translateY(0) scale(1); opacity:1;}}
+
+.header-title{
+  position:relative; z-index:6; text-align:center; padding-top:40px; color:#fff;
+}
+.header-title .badge{
+  display:inline-block; background:var(--orange); padding:6px 26px; border-radius:30px;
+  font-weight:800; font-size:1rem; box-shadow:0 4px 0 var(--orange-d); letter-spacing:.5px;
+  animation:popIn .7s both;
+}
+.header-title h1{
+  font-family:'Baloo 2',cursive; font-size:clamp(1.7rem,5.4vw,3rem); margin-top:12px;
+  text-shadow:0 4px 0 rgba(0,0,0,.35);
+  animation:popIn .7s .15s both;
+}
+.header-title h1 .wave{display:inline-block; animation:wiggle 1.7s ease-in-out infinite;}
+@keyframes wiggle{0%,100%{transform:rotate(0) scale(1);}30%{transform:rotate(12deg) scale(1.15);}60%{transform:rotate(-10deg) scale(1.05);}}
+.header-title p{margin-top:8px; font-size:1.05rem; color:#b2ebf2; font-weight:700; animation:popIn .7s .3s both;}
+
+/* ============ LAYOUT ============ */
+.wrap{max-width:1000px; margin:0 auto; padding:24px 16px 60px;}
+.objectives{
+  background:#fff; border:4px dashed var(--green-l); border-radius:24px;
+  padding:22px 26px; animation:popIn .6s both;
+}
+.start-btn{
+  display:block; margin:22px auto 4px; border:none; cursor:pointer; font-family:inherit;
+  font-weight:800; font-size:1.15rem; color:#fff; padding:14px 38px; border-radius:40px;
+  background:linear-gradient(135deg,var(--teal),#26a69a); box-shadow:0 5px 0 var(--teal-d);
+  transition:transform .2s; animation:pulse 2s infinite;
+}
+.start-btn:hover{transform:scale(1.08);}
+.start-btn:active{transform:translateY(3px);}
+.objectives h2{color:var(--green); font-size:1.5rem; display:flex; align-items:center; gap:10px;}
+.objectives h2 .target{font-size:1.9rem; animation:owlBob 3s ease-in-out infinite;}
+.objectives ul{list-style:none; margin-top:14px; display:grid; gap:10px;}
+@media(min-width:700px){.objectives ul{grid-template-columns:1fr 1fr;}}
+.objectives li{
+  background:var(--cream); border-radius:14px; padding:10px 14px; font-weight:700;
+  border-right:6px solid var(--teal); display:flex; gap:8px; align-items:flex-start;
+  transition:transform .25s;
+}
+.objectives li:hover{transform:translateX(-6px) scale(1.02);}
+.objectives li::before{content:"✔️";}
+
+/* tabs (LTR English) */
+.tabs{display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 0; justify-content:center; direction:ltr;}
+.tab-btn{
+  border:none; cursor:pointer; font-family:'Baloo 2','Cairo',sans-serif; font-weight:800; font-size:1rem;
+  padding:13px 20px; border-radius:18px 18px 0 0; background:#cfd8dc; color:#455a64;
+  box-shadow:0 -3px 0 rgba(0,0,0,.06) inset; transition:all .25s; position:relative; top:4px;
+}
+.tab-btn:hover{background:#b2dfdb; transform:translateY(-4px);}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--teal),#26a69a); color:#fff; top:0;
+  box-shadow:0 6px 16px rgba(0,137,123,.45); transform:scale(1.06);
+}
+.panel{
+  display:none; background:#fff; border-radius:0 0 24px 24px; border-top:6px solid var(--teal);
+  padding:28px 22px; box-shadow:0 14px 34px rgba(0,0,0,.1);
+  animation:fadeUp .45s both;
+}
+.panel.show{display:block;}
+@keyframes fadeUp{from{opacity:0; transform:translateY(24px);}to{opacity:1; transform:translateY(0);}}
+.panel h3{color:var(--blue); font-size:1.35rem; margin-bottom:6px;}
+.panel .instr{color:#666; font-weight:700; margin-bottom:18px;}
+
+/* ===== crossword ===== */
+.cw-scroll{overflow-x:auto; padding-bottom:8px;}
+.cw-grid{
+  --cell:36px;
+  direction:ltr; display:grid; gap:3px; width:max-content; margin:0 auto 20px;
+  background:#e0f2f1; padding:10px; border-radius:16px; border:3px solid #80cbc4;
+}
+.cw-cell{position:relative; width:var(--cell); height:var(--cell);}
+.cw-cell input{
+  width:100%; height:100%; border:2.5px solid #4db6ac; border-radius:7px; background:#fff;
+  text-align:center; font-family:'Baloo 2'; font-weight:800; font-size:calc(var(--cell)*.5);
+  color:var(--indigo); text-transform:uppercase; outline:none; caret-color:var(--teal);
+  transition:all .15s; padding:0;
+}
+.cw-cell input:focus{border-color:var(--orange); background:#fff8e1; transform:scale(1.08); z-index:2; position:relative;}
+.cw-cell .cw-num{
+  position:absolute; top:1px; left:3px; font-size:calc(var(--cell)*.28); font-weight:800;
+  color:#00695c; z-index:3; pointer-events:none; font-family:'Baloo 2';
+}
+.cw-cell input.ok{border-color:var(--green); background:#c8e6c9; color:var(--green); pointer-events:none; animation:bounce .5s;}
+.cw-cell input.bad{border-color:var(--red); background:#ffcdd2; color:var(--red); animation:shake .4s;}
+.cw-cell input.hl{box-shadow:0 0 0 3px #ffd54f;}
+@keyframes bounce{0%,100%{transform:scale(1);}40%{transform:scale(1.22);}}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+
+.clues{display:grid; gap:16px;}
+@media(min-width:760px){.clues{grid-template-columns:1fr 1fr;}}
+.clue-box{background:#e0f2f1; border:3px solid #80cbc4; border-radius:18px; padding:14px 16px;}
+.clue-box h4{direction:ltr; text-align:left; font-family:'Baloo 2'; color:var(--teal-d); font-size:1.15rem; margin-bottom:8px;}
+.clue{
+  direction:ltr; text-align:left; font-family:'Baloo 2'; font-weight:600; font-size:1rem; color:#37474f;
+  padding:7px 10px; border-radius:10px; cursor:pointer; transition:background .2s; display:flex; gap:8px;
+}
+.clue:hover{background:#b2dfdb;}
+.clue.solved{color:var(--green); text-decoration:line-through; text-decoration-thickness:2px;}
+.clue.solved::after{content:"✅"; margin-left:auto;}
+.clue b{color:var(--teal-d); min-width:24px;}
+
+/* grammar box */
+.grammar-box{
+  background:linear-gradient(135deg,#e0f2f1,#fff8e1); border:3px solid #80cbc4; border-radius:20px;
+  padding:18px 20px; margin:14px 0 20px; animation:fadeUp .5s both;
+}
+.grammar-box h4{color:var(--teal-d); font-size:1.2rem; margin-bottom:8px;}
+.grammar-box>p{font-weight:700; color:#37474f; line-height:1.9;}
+.en-inline{font-family:'Baloo 2'; direction:ltr; unicode-bidi:isolate; color:var(--blue); font-weight:700;}
+.rule-cards{display:grid; gap:12px; margin:12px 0;}
+@media(min-width:680px){.rule-cards{grid-template-columns:1fr 1fr 1fr;}}
+.rule-card{
+  background:#fff; border-radius:14px; padding:12px 14px; border:2px solid #b2dfdb;
+  font-weight:700; color:#37474f; transition:transform .25s;
+}
+.rule-card:hover{transform:scale(1.03);}
+.rule-tag{
+  display:inline-block; background:var(--teal); color:#fff; font-size:.85rem; font-weight:800;
+  padding:3px 14px; border-radius:20px; margin-bottom:8px;
+}
+.rule-card .ex{
+  display:block; background:var(--cream); border-radius:10px; padding:6px 10px; margin-top:8px;
+  text-align:center; font-size:1rem;
+}
+.grammar-box .why{
+  background:#fff8e1; border-right:6px solid var(--orange); border-radius:12px;
+  padding:10px 14px; font-weight:700; color:#5d4037; line-height:1.9;
+}
+.tip-img{
+  display:block; width:min(420px,100%); margin:0 auto 18px; border-radius:18px;
+  border:5px solid #fff; box-shadow:0 10px 24px rgba(0,0,0,.18); transition:transform .3s;
+}
+.tip-img:hover{transform:scale(1.03) rotate(-.6deg);}
+
+/* sentence rewrite */
+.rw-item{
+  background:#f1f8e9; border:3px solid #c5e1a5; border-radius:20px; padding:16px 18px; margin-bottom:16px;
+}
+.rw-item.done{border-color:var(--green-l); background:#e8f5e9;}
+.rw-prompt{
+  direction:ltr; text-align:left; font-family:'Baloo 2'; font-size:1.12rem; font-weight:600;
+  color:#37474f; display:flex; align-items:center; gap:10px; margin-bottom:10px;
+}
+.rw-prompt .rnum{
+  min-width:34px; height:34px; border-radius:50%; background:var(--teal); color:#fff; flex-shrink:0;
+  display:inline-flex; align-items:center; justify-content:center; font-weight:800;
+}
+.rw-prompt .wrong-sent{background:#ffebee; border:2px dashed #ef9a9a; border-radius:10px; padding:3px 12px; color:#b71c1c;}
+.rw-input{
+  font-family:'Baloo 2'; font-size:1.05rem; font-weight:600; direction:ltr; text-align:left;
+  border:3px solid #a5d6a7; border-radius:12px; padding:9px 12px; width:100%;
+  outline:none; transition:border-color .2s; color:var(--blue); background:#fff;
+}
+.rw-input:focus{border-color:var(--teal); box-shadow:0 0 0 4px rgba(0,137,123,.15);}
+.rw-input.correct{border-color:var(--green); background:#c8e6c9; pointer-events:none;}
+.rw-input.wrong{border-color:var(--red); background:#ffcdd2; animation:shake .45s;}
+.check-btn,.reveal-btn{
+  font-family:inherit; font-weight:800; font-size:.95rem; border:none; cursor:pointer;
+  padding:9px 24px; border-radius:30px; margin:10px 4px 0; transition:transform .15s;
+}
+.check-btn{background:linear-gradient(135deg,var(--green-l),var(--green)); color:#fff; box-shadow:0 4px 0 #1b5e20;}
+.reveal-btn{background:#eceff1; color:#546e7a; box-shadow:0 4px 0 #b0bec5;}
+.check-btn:hover,.reveal-btn:hover{transform:translateY(-3px);}
+.model-ans{
+  direction:ltr; text-align:left; margin-top:10px; font-family:'Baloo 2'; font-weight:600;
+  background:#fff; border-radius:12px; padding:10px 14px; color:var(--green); border:2px solid #c8e6c9;
+  display:none; animation:fadeUp .4s both;
+}
+.model-ans.show{display:block;}
+
+/* free writing */
+.helper-bubble{
+  background:#e1f5fe; border:3px solid #81d4fa; border-radius:20px; padding:16px 18px; margin-bottom:18px;
+}
+.helper-bubble h4{color:#01579b; margin-bottom:10px;}
+.helper-chips{display:flex; flex-wrap:wrap; gap:10px; direction:ltr; justify-content:center;}
+.h-chip{
+  font-family:'Baloo 2'; direction:ltr; font-weight:700; font-size:.98rem; cursor:pointer; border:none;
+  background:#fff; color:#0277bd; border:2.5px solid #4fc3f7; padding:7px 16px; border-radius:30px;
+  transition:all .2s;
+}
+.h-chip:hover{background:#4fc3f7; color:#fff; transform:scale(1.07);}
+.write-area{
+  width:100%; min-height:160px; resize:vertical; direction:ltr; text-align:left;
+  font-family:'Baloo 2'; font-size:1.1rem; font-weight:600; color:#37474f; line-height:2;
+  border:3px solid #80cbc4; border-radius:16px; padding:14px 16px; outline:none;
+  background:repeating-linear-gradient(#fff 0 38px, #e0f2f1 38px 40px);
+}
+.write-area:focus{border-color:var(--teal); box-shadow:0 0 0 4px rgba(0,137,123,.15);}
+.count-note{font-weight:700; color:#666; margin-top:8px;}
+
+/* handwriting */
+.hw-bank{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; background:var(--cream); border-radius:16px; padding:14px; margin-bottom:20px; border:3px solid #ffe082;}
+.hw-chip{
+  font-family:'Baloo 2'; direction:ltr; font-weight:700; font-size:1.02rem; cursor:pointer; border:none;
+  background:linear-gradient(135deg,#26c6da,#00acc1); color:#fff; padding:8px 18px; border-radius:30px;
+  box-shadow:0 4px 0 #00838f; transition:transform .15s;
+}
+.hw-chip:hover{transform:translateY(-3px) scale(1.07);}
+.hw-chip.activeW{background:linear-gradient(135deg,#ffb300,#ff8f00); box-shadow:0 4px 0 var(--orange-d);}
+.hw-board{
+  direction:ltr; background:#fff; border:3px solid #80cbc4; border-radius:20px; padding:24px 18px;
+  text-align:center; position:relative; overflow:hidden;
+}
+.hw-line{
+  position:relative; margin:0 auto; max-width:560px; padding:10px 0 14px;
+  border-bottom:3px solid #4db6ac;
+  background:linear-gradient(to bottom, transparent 49%, #b2dfdb 49%, #b2dfdb 51%, transparent 51%);
+}
+.hw-word{
+  font-family:'Baloo 2'; font-size:clamp(2.2rem,8vw,3.4rem); font-weight:700; letter-spacing:4px;
+  color:transparent; -webkit-text-stroke:2px #90a4ae;
+  text-decoration:underline dotted #90a4ae 2px; text-underline-offset:8px;
+}
+.hw-note{font-weight:700; color:#666; margin-top:12px;}
+.hw-speak{
+  border:none; cursor:pointer; width:52px; height:52px; border-radius:50%; font-size:1.4rem;
+  background:linear-gradient(135deg,var(--teal),#26a69a); color:#fff; box-shadow:0 4px 0 var(--teal-d);
+  transition:transform .15s; margin-top:14px;
+}
+.hw-speak:hover{transform:scale(1.15);}
+
+/* score */
+.scorebar{
+  position:sticky; top:8px; z-index:50; display:flex; align-items:center; gap:12px;
+  background:#fff; border-radius:40px; padding:8px 18px; margin:18px auto 0; width:fit-content;
+  box-shadow:0 6px 18px rgba(0,0,0,.15); border:3px solid var(--teal); font-weight:800; color:var(--teal-d);
+}
+.scorebar .stars-earned{font-size:1.25rem; letter-spacing:2px;}
+
+/* toast */
+#toast{
+  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(120px);
+  background:var(--green); color:#fff; font-weight:800; padding:13px 30px; border-radius:40px;
+  box-shadow:0 10px 26px rgba(0,0,0,.3); transition:transform .4s cubic-bezier(.34,1.56,.64,1); z-index:99; font-size:1.05rem;
+}
+#toast.show{transform:translateX(-50%) translateY(0);}
+#toast.bad{background:var(--red);}
+
+/* confetti */
+.confetti{position:fixed; top:-12px; border-radius:3px; z-index:98; pointer-events:none; animation:fall linear forwards;}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);}}
+
+/* pulse for buttons */
+@keyframes pulse{0%,100%{box-shadow:0 5px 0 var(--teal-d),0 0 0 0 rgba(0,137,123,.45);}50%{box-shadow:0 5px 0 var(--teal-d),0 0 0 14px rgba(0,137,123,0);}}
+
+/* footer */
+footer{
+  margin-top:40px; background:linear-gradient(135deg,#004d40,#00695c);
+  color:#fff; text-align:center; padding:30px 16px; border-top:8px solid var(--orange);
+}
+footer .designer{font-size:1.25rem; font-weight:800;}
+footer .designer span{
+  color:#ffd54f; font-family:'Baloo 2'; direction:ltr; display:inline-block;
+  animation:owlBob 3.5s ease-in-out infinite;
+}
+footer .small{margin-top:8px; color:#80cbc4; font-weight:700; font-size:.9rem;}
+
+/* ============ MOBILE ============ */
+@media(max-width:600px){
+  header{height:285px;}
+  .header-title{padding-top:26px;}
+  .header-title .badge{font-size:.82rem; padding:5px 18px;}
+  .header-title p{font-size:.88rem; padding:0 12px;}
+  .owl{font-size:2.2rem; top:40px; right:22px;}
+  .branch{width:100px; top:80px;}
+  .cube{transform:scale(.75) !important;}
+  .crayon{width:18px; height:58px;}
+  .crayon::before{border-left-width:9px; border-right-width:9px; border-bottom-width:16px; top:-14px;}
+  .squiggle{width:110px; bottom:32px;}
+  .puz{font-size:1.3rem;}
+  .wrap{padding:16px 10px 44px;}
+  .objectives{padding:16px 14px; border-width:3px;}
+  .objectives h2{font-size:1.15rem;}
+  .objectives li{font-size:.92rem; padding:9px 11px;}
+  .scorebar{font-size:.85rem; padding:7px 14px; max-width:96%;}
+  .scorebar .stars-earned{font-size:.92rem; letter-spacing:0;}
+  .tabs{gap:5px;}
+  .tab-btn{font-size:.8rem; padding:10px 8px; border-radius:14px 14px 0 0; flex:1 1 auto; min-width:0;}
+  .panel{padding:18px 10px; border-radius:0 0 18px 18px;}
+  .panel h3{font-size:1.05rem;}
+  .panel .instr{font-size:.9rem;}
+  .cw-grid{--cell:24px; gap:2px; padding:6px;}
+  .cw-cell input{border-width:2px; border-radius:5px;}
+  .clue{font-size:.9rem; padding:6px 8px;}
+  .grammar-box{padding:14px 12px;}
+  .grammar-box h4{font-size:1.05rem;}
+  .grammar-box>p,.rule-card,.grammar-box .why{font-size:.92rem;}
+  .rw-prompt{font-size:.98rem; flex-wrap:wrap;}
+  .rw-input{font-size:.98rem;}
+  .check-btn,.reveal-btn{font-size:.85rem; padding:8px 16px;}
+  .write-area{font-size:1rem;}
+  .h-chip{font-size:.88rem; padding:6px 12px;}
+  .hw-chip{font-size:.9rem; padding:7px 13px;}
+  .hw-word{letter-spacing:2px;}
+  .start-btn{font-size:1rem; padding:12px 28px;}
+  footer .designer{font-size:1.05rem;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="cloud" style="top:36px; width:90px; animation-duration:46s;"></div>
+  <div class="cloud" style="top:96px; width:120px; animation-duration:62s; animation-delay:-28s;"></div>
+
+  <div class="cube" style="top:54px; left:6%; width:54px; height:54px; font-size:1.7rem; background:#ef5350; animation-duration:5s;">W</div>
+  <div class="cube" style="top:120px; left:14%; width:44px; height:44px; font-size:1.4rem; background:#ab47bc; animation-duration:6s; animation-delay:-2s;">O</div>
+  <div class="cube" style="top:60px; left:23%; width:48px; height:48px; font-size:1.5rem; background:#ffa726; animation-duration:5.4s; animation-delay:-1s;">R</div>
+  <div class="cube" style="top:130px; left:31%; width:42px; height:42px; font-size:1.3rem; background:#66bb6a; animation-duration:6.4s; animation-delay:-3s;">D</div>
+  <div class="cube" style="top:70px; right:30%; width:46px; height:46px; font-size:1.45rem; background:#42a5f5; animation-duration:5.8s; animation-delay:-2.4s;">S</div>
+
+  <div class="puz" style="top:150px; left:42%; animation-duration:8s;">🧩</div>
+  <div class="puz" style="top:90px; right:22%; animation-duration:10s; animation-delay:-4s;">🧩</div>
+  <div class="puz" style="top:170px; right:40%; animation-duration:9s; animation-delay:-2s;">🧩</div>
+
+  <div class="branch"><span class="leaf" style="left:14px;">🍃</span><span class="leaf" style="left:64px;">🍃</span></div>
+  <div class="owl">🦉</div>
+
+  <svg class="squiggle" viewBox="0 0 170 60">
+    <path d="M5 45 Q 25 10 45 40 T 85 35 T 125 40 T 165 25"/>
+  </svg>
+
+  <div class="crayon" style="left:30%; background:#ef5350; border-bottom-color:#ef5350; color:#ef5350;"></div>
+  <div class="crayon" style="left:36%; background:#ffa726; border-bottom-color:#ffa726; color:#ffa726; animation-delay:-.8s;"></div>
+  <div class="crayon" style="left:42%; background:#66bb6a; border-bottom-color:#66bb6a; color:#66bb6a; animation-delay:-1.6s;"></div>
+  <div class="crayon" style="left:48%; background:#42a5f5; border-bottom-color:#42a5f5; color:#42a5f5; animation-delay:-2.4s;"></div>
+  <div class="crayon" style="left:54%; background:#ab47bc; border-bottom-color:#ab47bc; color:#ab47bc; animation-delay:-1.2s;"></div>
+
+  <div class="butterfly" style="bottom:110px; left:18%;">🦋</div>
+  <div class="butterfly" style="bottom:90px; right:14%; animation-delay:-3.5s; font-size:1.15rem;">🦋</div>
+
+  <div class="header-title">
+    <span class="badge en">Unit 1 • Period 7 • Grade 6</span>
+    <h1 class="en"><span class="wave">🧩</span> Word Camp Challenge! <span class="wave">✏️</span></h1>
+    <p>كلمات متقاطعة، جمل صحيحة، وخط جميل — هيا نكتب! 🌟</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="scorebar">
+    ⭐ نجومك: <span class="stars-earned" id="stars"></span>
+  </div>
+
+  <!-- TABS -->
+  <nav class="tabs en">
+    <button class="tab-btn en" data-tab="t0">🎯 Objectives</button>
+    <button class="tab-btn en" data-tab="t1">🧩 Exercise 1</button>
+    <button class="tab-btn en" data-tab="t2">✏️ Exercise 2</button>
+    <button class="tab-btn en" data-tab="t3">📝 Exercise 3</button>
+    <button class="tab-btn en" data-tab="t4">🖊️ Exercise 4</button>
+  </nav>
+
+  <!-- ===== TAB 0 : OBJECTIVES ===== -->
+  <section class="panel show" id="t0">
+    <div class="objectives">
+      <h2><span class="target">🎯</span> أهداف الدرس | Lesson Objectives</h2>
+      <ul>
+        <li>أن يقرأ الطالب التلميحات ويكمل الكلمات المتقاطعة بمفردات الوحدة</li>
+        <li>أن يعيد الطالب كتابة الجمل كتابةً صحيحة (حرف كبير، فعل ماضٍ، نقطة)</li>
+        <li>أن يكتب الطالب جملاً عن عطلته الصيفية أو أماكن يودّ زيارتها</li>
+        <li>أن يتدرب الطالب على الكتابة بخطٍّ جميل وواضح</li>
+      </ul>
+      <button class="start-btn" id="startBtn">🚀 هيا نبدأ المغامرة!</button>
+    </div>
+  </section>
+
+  <!-- ===== TAB 1 : crossword ===== -->
+  <section class="panel" id="t1">
+    <h3 class="en">1️⃣ Read the clues and complete the crossword.</h3>
+    <p class="instr">اقرأ التلميح، ثم اكتب الكلمة حرفاً حرفاً في المربعات. اضغط على أي تلميح لإضاءة مكان كلمته في الشبكة 💡</p>
+
+    <div class="cw-scroll"><div class="cw-grid" id="cwGrid"></div></div>
+
+    <div class="clues">
+      <div class="clue-box">
+        <h4>Across ➡️</h4>
+        <div id="cluesA"></div>
+      </div>
+      <div class="clue-box">
+        <h4>Down ⬇️</h4>
+        <div id="cluesD"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : correct sentences ===== -->
+  <section class="panel" id="t2">
+    <h3 class="en">2️⃣ Think and write the correct sentences.</h3>
+
+    <img class="tip-img" src="https://i.ibb.co/HfcHXBL9/Screenshot-2026-06-11-124618.png" alt="Remember: use a capital letter and a full stop">
+
+    <div class="grammar-box">
+      <h4>📖 كيف نكتب جملةً صحيحة؟</h4>
+      <p>الجمل في الأسفل مكتوبة بطريقة خاطئة، وعلينا إصلاحها باتباع ثلاث قواعد بسيطة:</p>
+      <div class="rule-cards">
+        <div class="rule-card">
+          <span class="rule-tag">1. الحرف الكبير</span>
+          <p>نبدأ الجملة وأسماء الأشخاص بحرفٍ كبير <span class="en-inline">(Capital Letter)</span></p>
+          <p class="en-inline ex">amy ➜ <b>A</b>my</p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-tag">2. الفعل الماضي</span>
+          <p>الأحداث وقعت في الصيف الماضي، فنحوّل الفعل إلى صيغة الماضي</p>
+          <p class="en-inline ex">break ➜ <b>broke</b> • go ➜ <b>went</b></p>
+        </div>
+        <div class="rule-card">
+          <span class="rule-tag">3. النقطة</span>
+          <p>نختم الجملة بنقطةٍ في نهايتها <span class="en-inline">(Full Stop)</span></p>
+          <p class="en-inline ex">…her arm ➜ …her arm<b>.</b></p>
+        </div>
+      </div>
+      <p class="why">💡 <b>تذكّر:</b> الجملة الصحيحة تبدأ بحرفٍ كبير، وفعلُها في الزمن المناسب، وتنتهي بنقطة — تماماً كما ينصحنا الولد في الصورة!</p>
+    </div>
+
+    <p class="instr en" style="text-align:left;">Last summer …</p>
+
+    <div class="rw-item">
+      <p class="rw-prompt"><span class="rnum">1</span><span class="wrong-sent">amy break her arm</span></p>
+      <input class="rw-input" data-ans="Last summer Amy broke her arm.|Amy broke her arm." placeholder="Write the correct sentence...">
+      <button class="check-btn" onclick="checkRW(this)">تحقق ✅</button>
+      <button class="reveal-btn" onclick="revealRW(this)">ساعدني 💡</button>
+      <p class="model-ans">Last summer Amy broke her arm.</p>
+    </div>
+
+    <div class="rw-item">
+      <p class="rw-prompt"><span class="rnum">2</span><span class="wrong-sent">she fall down the stairs</span></p>
+      <input class="rw-input" data-ans="She fell down the stairs." placeholder="Write the correct sentence...">
+      <button class="check-btn" onclick="checkRW(this)">تحقق ✅</button>
+      <button class="reveal-btn" onclick="revealRW(this)">ساعدني 💡</button>
+      <p class="model-ans">She fell down the stairs.</p>
+    </div>
+
+    <div class="rw-item">
+      <p class="rw-prompt"><span class="rnum">3</span><span class="wrong-sent">amy crash down in the flowers</span></p>
+      <input class="rw-input" data-ans="Amy crashed down in the flowers." placeholder="Write the correct sentence...">
+      <button class="check-btn" onclick="checkRW(this)">تحقق ✅</button>
+      <button class="reveal-btn" onclick="revealRW(this)">ساعدني 💡</button>
+      <p class="model-ans">Amy crashed down in the flowers.</p>
+    </div>
+
+    <div class="rw-item">
+      <p class="rw-prompt"><span class="rnum">4</span><span class="wrong-sent">amy go to the hospital</span></p>
+      <input class="rw-input" data-ans="Amy went to the hospital." placeholder="Write the correct sentence...">
+      <button class="check-btn" onclick="checkRW(this)">تحقق ✅</button>
+      <button class="reveal-btn" onclick="revealRW(this)">ساعدني 💡</button>
+      <p class="model-ans">Amy went to the hospital.</p>
+    </div>
+  </section>
+
+  <!-- ===== TAB 3 : free writing ===== -->
+  <section class="panel" id="t3">
+    <h3 class="en">3️⃣ Think and write sentences about a summer holiday or places you would like to visit.</h3>
+    <p class="instr">فكّر في عطلتك الصيفية أو مكانٍ تحب زيارته، واستعن ببدايات الجمل ثم اكتب في الدفتر أدناه ✍️</p>
+
+    <div class="helper-bubble">
+      <h4>🪄 بدايات تساعدك — اضغط أيّ واحدة لإضافتها:</h4>
+      <div class="helper-chips">
+        <button class="h-chip">Last summer I went to …</button>
+        <button class="h-chip">I was there for … days.</button>
+        <button class="h-chip">I went with my …</button>
+        <button class="h-chip">I went swimming.</button>
+        <button class="h-chip">I would like to visit …</button>
+      </div>
+      <h4 style="margin-top:14px;">❓ أسئلة تساعدك على التفكير:</h4>
+      <div class="helper-chips">
+        <button class="h-chip" data-say="Where did you go?">Where? 📍</button>
+        <button class="h-chip" data-say="When did you go?">When? 📅</button>
+        <button class="h-chip" data-say="Who did you go with?">Who with? 👨‍👩‍👧</button>
+        <button class="h-chip" data-say="What did you do?">What did you do? 🏊</button>
+      </div>
+    </div>
+
+    <textarea class="write-area" id="writeArea" placeholder="Last summer I went to ..."></textarea>
+    <p class="count-note" id="countNote">عدد الكلمات: 0 — اكتب جملتين على الأقل 💪</p>
+    <button class="check-btn" id="doneWriting">انتهيت من الكتابة 🎉</button>
+  </section>
+
+  <!-- ===== TAB 4 : handwriting ===== -->
+  <section class="panel" id="t4">
+    <h3 class="en">4️⃣ Write the words. Practise your handwriting.</h3>
+    <p class="instr">اضغط على أي كلمة لتظهر كبيرةً على السطر، استمع لنطقها 🔊 ثم انسخها بخطك الجميل في دفترك 🖊️</p>
+
+    <div class="hw-bank" id="hwBank"></div>
+
+    <div class="hw-board">
+      <div class="hw-line"><span class="hw-word" id="hwWord">accident</span></div>
+      <button class="hw-speak" id="hwSpeak">🔊</button>
+      <p class="hw-note">انسخ الكلمة في دفترك ثلاث مرات بأجمل خط ✨ — ستتدرب على إملائها في الحصة القادمة!</p>
+    </div>
+  </section>
+
+</div>
+
+<div id="toast">أحسنت! 🎉</div>
+
+<footer>
+  <div class="designer">✨ تصميم المعلمة <span>T. Wad Refae</span> ✨</div>
+  <p class="small en">Unit 1 – Period 7 • English for Palestine • Grade 6 🇵🇸</p>
+</footer>
+
+<script>
+/* ===== sounds ===== */
+let AC;
+function tone(f,d,t=0,type='sine',v=.25){
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  const o=AC.createOscillator(),g=AC.createGain();
+  o.type=type;o.frequency.value=f;o.connect(g);g.connect(AC.destination);
+  g.gain.setValueAtTime(v,AC.currentTime+t);
+  g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t+d);
+  o.start(AC.currentTime+t);o.stop(AC.currentTime+t+d);
+}
+const sndGood=()=>{tone(523,.15);tone(659,.15,.1);tone(784,.25,.2);};
+const sndBad=()=>{tone(220,.25,0,'square',.12);tone(180,.3,.12,'square',.12);};
+const sndWin=()=>{[523,659,784,1047,1319].forEach((f,i)=>tone(f,.3,i*.12,'triangle'));};
+
+/* ===== toast ===== */
+const toast=document.getElementById('toast');
+let toastTimer;
+function showToast(msg,bad=false){
+  toast.textContent=msg; toast.classList.toggle('bad',bad); toast.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>toast.classList.remove('show'),1800);
+}
+const praise=['أحسنت! 🎉','رائع جداً! 🌟','ممتاز! 👏','عمل جميل! 💪','أنت بطل! 🏆'];
+const oops=['حاول مرة أخرى 💪','ليست الإجابة الصحيحة 🤔','فكر جيداً وأعد المحاولة 🔍'];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+
+/* ===== confetti ===== */
+function confetti(n=60){
+  const colors=['#00897b','#66bb6a','#42a5f5','#ef5350','#ffd54f','#ab47bc'];
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.cssText=`left:${Math.random()*100}vw;width:${Math.random()*8+6}px;height:${Math.random()*8+6}px;background:${colors[i%colors.length]};animation-duration:${Math.random()*1.6+1.6}s;animation-delay:${Math.random()*.4}s;`;
+    document.body.appendChild(c); setTimeout(()=>c.remove(),3600);
+  }
+}
+
+/* ===== stars ===== */
+let earned=0;
+const starsEl=document.getElementById('stars');
+const totalTasks=14; // 10 crossword + 4 sentences
+function addStar(){
+  earned++;
+  starsEl.textContent='⭐'.repeat(earned)+'☆'.repeat(Math.max(totalTasks-earned,0));
+  if(earned===totalTasks){sndWin();confetti(140);showToast('🏆 أنهيت كل التمارين! أنت بطل الكلمات! 🧩');}
+}
+starsEl.textContent='☆'.repeat(totalTasks);
+
+/* ===== tabs ===== */
+function openTab(id){
+  document.querySelectorAll('.tab-btn').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('show',p.id===id));
+}
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click',()=>{openTab(b.dataset.tab); tone(660,.08,0,'triangle',.12);});
+});
+document.getElementById('startBtn').addEventListener('click',()=>{
+  openTab('t1'); sndGood(); confetti(35);
+  document.querySelector('.tabs').scrollIntoView({behavior:'smooth'});
+});
+
+/* ===================================================
+   Exercise 1 : CROSSWORD
+=================================================== */
+const WORDS=[
+  {num:1, dir:'A', r:0,  c:4,  ans:'STAIRS',     clue:'way to go up high'},
+  {num:1, dir:'D', r:0,  c:4,  ans:'STILL',      clue:'be the same'},
+  {num:2, dir:'D', r:0,  c:6,  ans:'AWFUL',      clue:'very very bad'},
+  {num:3, dir:'D', r:0,  c:9,  ans:'SUMMERCAMP', clue:'a holiday in the summer time (2 words)'},
+  {num:4, dir:'A', r:2,  c:9,  ans:'MISS',       clue:'sad not to see someone'},
+  {num:5, dir:'D', r:3,  c:2,  ans:'CALL',       clue:'use the phone'},
+  {num:6, dir:'A', r:5,  c:0,  ans:'FALL',       clue:'not stand up'},
+  {num:7, dir:'A', r:5,  c:7,  ans:'TIRED',      clue:'need to sleep'},
+  {num:8, dir:'A', r:7,  c:11, ans:'BACK',       clue:'to come again'},
+  {num:8, dir:'D', r:7,  c:11, ans:'BANG',       clue:'a loud noise'},
+  {num:9, dir:'A', r:9,  c:0,  ans:'ACCIDENT',   clue:'something bad that was not planned'},
+  {num:10,dir:'D', r:9,  c:2,  ans:'CRASH',      clue:'fall very fast'}
+];
+const ROWS=14, COLS=15;
+const cellMap={}; // "r,c" -> {letter, words:[indices], num}
+WORDS.forEach((w,wi)=>{
+  for(let i=0;i<w.ans.length;i++){
+    const r=w.dir==='A'?w.r:w.r+i, c=w.dir==='A'?w.c+i:w.c, key=r+','+c;
+    cellMap[key]=cellMap[key]||{letter:w.ans[i], words:[], num:null};
+    cellMap[key].words.push(wi);
+    if(i===0)cellMap[key].num=cellMap[key].num??w.num;
+  }
+});
+const grid=document.getElementById('cwGrid');
+grid.style.gridTemplateColumns=`repeat(${COLS}, var(--cell))`;
+grid.style.gridTemplateRows=`repeat(${ROWS}, var(--cell))`;
+const inputs={};
+for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+  const key=r+','+c, cellData=cellMap[key];
+  if(!cellData)continue;
+  const cell=document.createElement('div');
+  cell.className='cw-cell';
+  cell.style.gridRowStart=r+1; cell.style.gridColumnStart=c+1;
+  if(cellData.num!==null){
+    const n=document.createElement('span'); n.className='cw-num'; n.textContent=cellData.num;
+    cell.appendChild(n);
+  }
+  const inp=document.createElement('input');
+  inp.maxLength=1; inp.autocomplete='off'; inp.dataset.key=key;
+  inp.setAttribute('inputmode','latin');
+  cell.appendChild(inp);
+  grid.appendChild(cell);
+  inputs[key]=inp;
+  inp.addEventListener('input',()=>{
+    inp.value=inp.value.replace(/[^a-zA-Z]/g,'').toUpperCase();
+    if(inp.value){
+      moveNext(key);
+      cellData.words.forEach(wi=>checkWord(wi));
+    }
+  });
+  inp.addEventListener('focus',()=>highlightWords(cellData.words));
+}
+let lastDir='A';
+function moveNext(key){
+  const [r,c]=key.split(',').map(Number);
+  const cand=lastDir==='A'?[(r)+','+(c+1),(r+1)+','+c]:[(r+1)+','+c,(r)+','+(c+1)];
+  for(const k of cand){
+    if(inputs[k]&&!inputs[k].classList.contains('ok')){inputs[k].focus();return;}
+  }
+}
+const solved=new Set();
+function wordCells(wi){
+  const w=WORDS[wi],arr=[];
+  for(let i=0;i<w.ans.length;i++)
+    arr.push((w.dir==='A'?w.r:w.r+i)+','+(w.dir==='A'?w.c+i:w.c));
+  return arr;
+}
+function checkWord(wi){
+  if(solved.has(wi))return;
+  const w=WORDS[wi], cells=wordCells(wi);
+  const val=cells.map(k=>inputs[k].value).join('');
+  if(val.length<w.ans.length)return;
+  if(val===w.ans){
+    solved.add(wi);
+    cells.forEach(k=>inputs[k].classList.add('ok'));
+    document.querySelector(`.clue[data-wi="${wi}"]`).classList.add('solved');
+    sndGood(); showToast(rnd(praise)); confetti(22); addStar();
+  }else{
+    cells.forEach(k=>{if(!inputs[k].classList.contains('ok'))inputs[k].classList.add('bad');});
+    sndBad(); showToast('الكلمة غير صحيحة — دقق الحروف 🔍',true);
+    setTimeout(()=>cells.forEach(k=>inputs[k].classList.remove('bad')),700);
+  }
+}
+function highlightWords(wis){
+  document.querySelectorAll('.cw-cell input').forEach(i=>i.classList.remove('hl'));
+  wis.forEach(wi=>wordCells(wi).forEach(k=>inputs[k].classList.add('hl')));
+}
+/* clues list */
+const cluesA=document.getElementById('cluesA'), cluesD=document.getElementById('cluesD');
+WORDS.forEach((w,wi)=>{
+  const d=document.createElement('div');
+  d.className='clue'; d.dataset.wi=wi;
+  d.innerHTML=`<b>${w.num}</b> ${w.clue}`;
+  d.addEventListener('click',()=>{
+    lastDir=w.dir;
+    highlightWords([wi]);
+    const first=wordCells(wi).find(k=>!inputs[k].classList.contains('ok'));
+    if(first)inputs[first].focus();
+    grid.scrollIntoView({behavior:'smooth', block:'center'});
+    tone(880,.07,0,'triangle',.12);
+  });
+  (w.dir==='A'?cluesA:cluesD).appendChild(d);
+});
+
+/* ===================================================
+   Exercise 2 : rewrite sentences
+=================================================== */
+function normSp(s){return s.replace(/\s+/g,' ').trim();}
+function checkRW(btn){
+  const item=btn.closest('.rw-item'), inp=item.querySelector('.rw-input');
+  if(inp.classList.contains('correct'))return;
+  const ok=inp.dataset.ans.split('|').some(a=>normSp(inp.value)===a);
+  if(ok){
+    inp.classList.remove('wrong'); inp.classList.add('correct'); item.classList.add('done');
+    sndGood(); showToast(rnd(praise)); confetti(22); addStar();
+  }else{
+    inp.classList.add('wrong'); setTimeout(()=>inp.classList.remove('wrong'),700);
+    sndBad();
+    const v=normSp(inp.value);
+    let hint=rnd(oops);
+    if(v&&v[0]!==v[0].toUpperCase())hint='تذكر: ابدأ بحرفٍ كبير! 🔠';
+    else if(v&&!v.endsWith('.'))hint='تذكر: ضع نقطة في نهاية الجملة! ⏺️';
+    else if(v)hint='دقق في الفعل — هل هو في الماضي؟ ⏳';
+    showToast(hint,true);
+  }
+}
+function revealRW(btn){
+  const item=btn.closest('.rw-item');
+  item.querySelector('.model-ans').classList.add('show');
+  tone(523,.2,0,'triangle',.15);
+}
+
+/* ===================================================
+   Exercise 3 : free writing
+=================================================== */
+const area=document.getElementById('writeArea'), note=document.getElementById('countNote');
+document.querySelectorAll('.h-chip').forEach(ch=>{
+  ch.addEventListener('click',()=>{
+    if(ch.dataset.say){say(ch.dataset.say);return;}
+    area.value=(area.value?area.value.replace(/\s+$/,'')+'\n':'')+ch.textContent+' ';
+    area.focus(); tone(740,.07,0,'triangle',.12);
+    area.dispatchEvent(new Event('input'));
+  });
+});
+area.addEventListener('input',()=>{
+  const n=area.value.trim()?area.value.trim().split(/\s+/).length:0;
+  note.textContent=`عدد الكلمات: ${n} — ${n>=12?'رائع، استمر! 🌟':'اكتب جملتين على الأقل 💪'}`;
+});
+let celebrated=false;
+document.getElementById('doneWriting').addEventListener('click',()=>{
+  const n=area.value.trim()?area.value.trim().split(/\s+/).length:0;
+  if(n<6){showToast('اكتب المزيد أولاً — جملتين على الأقل ✍️',true); sndBad(); return;}
+  if(!celebrated){celebrated=true; sndWin(); confetti(90);}
+  showToast('كاتب مبدع! اقرأ جملك لزميلك الآن 🗣️🌟');
+});
+
+/* ===================================================
+   Exercise 4 : handwriting
+=================================================== */
+const hwWords=['accident','bang','miss','call','back','summer camp','tired','stairs','fall','awful','still','crash'];
+const hwBank=document.getElementById('hwBank'), hwWord=document.getElementById('hwWord');
+hwWords.forEach((w,i)=>{
+  const b=document.createElement('button');
+  b.className='hw-chip'+(i===0?' activeW':''); b.textContent=w;
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.hw-chip').forEach(x=>x.classList.remove('activeW'));
+    b.classList.add('activeW'); hwWord.textContent=w;
+    say(w); tone(880,.06,0,'triangle',.1);
+  });
+  hwBank.appendChild(b);
+});
+document.getElementById('hwSpeak').addEventListener('click',()=>say(hwWord.textContent));
+
+/* ===== speech ===== */
+function say(text){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=.8; u.pitch=1.05;
+  speechSynthesis.speak(u);
+}
+</script>
+</body>
+</html>
