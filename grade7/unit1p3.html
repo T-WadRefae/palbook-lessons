@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Oh, hello! | Grade 7 · Period 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#ff6f61;
+  --coral-deep:#d94f43;
+  --teal:#14b8a6;
+  --teal-deep:#0d9488;
+  --sun:#ffc94d;
+  --sun-deep:#e0a82e;
+  --purple:#5b46d6;
+  --paper:#ffffff;
+  --cream:#fff8ef;
+  --ink:#33415c;
+  --ink-soft:#7b8794;
+  --line:#ffe3d6;
+  --ok:#27c275;
+  --no:#ff6b6b;
+  --r:20px;
+  --shadow:0 16px 40px rgba(217,79,67,.16);
+  --shadow-sm:0 8px 20px rgba(217,79,67,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(700px 420px at 92% 6%, #ffe3da, transparent 60%),
+    radial-gradient(640px 400px at 4% 28%, #d8f7f2, transparent 60%),
+    radial-gradient(700px 420px at 70% 80%, #fff3d4, transparent 55%),
+    linear-gradient(180deg,#fff4ea 0%,#fff9f1 50%,#effbf8 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating greeting gestures ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fe{position:absolute;bottom:-60px;font-size:30px;opacity:0;animation:floatUp linear infinite}
+@keyframes floatUp{
+  0%{transform:translateY(0) translateX(0) rotate(-6deg);opacity:0}
+  10%{opacity:.4}
+  88%{opacity:.4}
+  100%{transform:translateY(-115vh) translateX(40px) rotate(8deg);opacity:0}
+}
+
+/* ====== header : greetings around the world (orbiting globe) ====== */
+header{position:relative;padding:26px 0 8px;text-align:center}
+.worldcard{
+  max-width:640px;margin:0 auto;position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(165deg,#0d9488 0%,#14b8a6 45%,#3ed3c0 100%);
+  border-radius:32px;border:3px solid #fff;box-shadow:var(--shadow);
+  padding:24px 22px 26px;
+}
+.worldcard .glow{
+  position:absolute;width:340px;height:340px;border-radius:50%;
+  background:rgba(255,255,255,.14);filter:blur(8px);top:-150px;right:-110px;
+}
+.orbit-zone{position:relative;width:230px;height:230px;margin:4px auto 0}
+.globe{
+  position:absolute;inset:0;display:grid;place-items:center;font-size:96px;
+  animation:globespin 9s ease-in-out infinite;filter:drop-shadow(0 10px 18px rgba(0,0,0,.25));
+}
+@keyframes globespin{0%,100%{transform:rotate(-6deg) scale(1)}50%{transform:rotate(6deg) scale(1.05)}}
+.ring{
+  position:absolute;inset:14px;border:2.5px dashed rgba(255,255,255,.5);border-radius:50%;
+  animation:ringspin 26s linear infinite;
+}
+@keyframes ringspin{to{transform:rotate(360deg)}}
+.orb{
+  position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;
+  background:#fff;border-radius:50%;display:grid;place-items:center;font-size:24px;
+  box-shadow:0 6px 14px rgba(0,0,0,.22);
+  animation:orbit 14s linear infinite;
+}
+.orb:nth-child(3){animation-delay:-3.5s}
+.orb:nth-child(4){animation-delay:-7s}
+.orb:nth-child(5){animation-delay:-10.5s}
+@keyframes orbit{
+  from{transform:rotate(0deg) translateX(112px) rotate(0deg)}
+  to{transform:rotate(360deg) translateX(112px) rotate(-360deg)}
+}
+.worldcard h1{
+  font-size:clamp(2.1rem,6vw,3rem);margin-top:10px;
+  text-shadow:0 3px 0 rgba(13,116,103,.6),0 8px 22px rgba(0,0,0,.2);
+}
+.worldcard .sub{font-weight:600;font-size:1rem;opacity:.95;margin-top:2px}
+.worldcard .tag{
+  display:inline-block;margin-top:12px;background:#fff;color:var(--teal-deep);
+  font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:5px 18px;
+}
+.hello-strip{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:13px}
+.hs{
+  background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.55);border-radius:999px;
+  padding:4px 14px;font-weight:600;font-size:.85rem;animation:hsglow 3.6s infinite;
+}
+.hs:nth-child(2){animation-delay:.9s}
+.hs:nth-child(3){animation-delay:1.8s}
+.hs:nth-child(4){animation-delay:2.7s}
+@keyframes hsglow{0%,100%{background:rgba(255,255,255,.18)}50%{background:rgba(255,255,255,.4)}}
+
+/* ====== tabs (LTR, English) ====== */
+nav{
+  display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(255,244,234,.95),rgba(255,244,234,.8) 70%,transparent);
+  backdrop-filter:blur(6px);scrollbar-width:none;
+}
+nav::-webkit-scrollbar{display:none}
+.tab{
+  flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;
+  background:#fff;color:var(--ink);border:2px solid var(--line);
+  padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
+}
+.tab:hover{border-color:var(--coral);transform:translateY(-2px)}
+.tab.on{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;color:var(--ok);font-size:1rem}
+.tab.on .done-mark{color:#d6ffe9}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{
+  position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
+  background:repeating-linear-gradient(90deg,var(--coral) 0 26px,var(--sun) 26px 48px,var(--teal) 48px 72px);
+}
+.card h2{font-size:1.3rem;color:var(--coral-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{
+  font-size:.7rem;background:var(--teal);color:#fff;
+  padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
+}
+.hint{
+  color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
+  background:#f2fbf9;border-radius:12px;padding:8px 14px;border-right:4px solid var(--teal);
+}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:16px;padding:16px 14px;
+  display:flex;gap:12px;align-items:flex-start;transition:.25s;
+}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--coral-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.kw{background:#e7f8f5;color:var(--teal-deep);border:1.5px solid #bdeae3;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+
+/* ====== Drive audio player (compact, the only player) ====== */
+.gplayer{
+  background:#f2fbf9;border:2px solid #bdeae3;border-radius:14px;
+  padding:9px 12px 10px;margin:10px 0 6px;max-width:480px;
+}
+.gplayer b{color:var(--teal-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
+
+/* ====== words : flashcards ====== */
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:14px}
+.wcard{perspective:800px;cursor:pointer;height:170px;position:relative}
+.wcard .in{position:absolute;inset:0;transition:transform .55s;transform-style:preserve-3d}
+.wcard.flip .in{transform:rotateY(180deg)}
+.wface{
+  position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6px;font-weight:600;box-shadow:var(--shadow-sm);padding:10px;
+}
+.wface.front{background:#fff;border:2.5px solid var(--line);color:var(--ink)}
+.wface.front .emo{font-size:42px;line-height:1}
+.wface.front .w-en{font-size:1.18rem;color:var(--coral-deep);text-align:center}
+.spk{
+  border:0;background:#e7f8f5;color:var(--teal-deep);border-radius:999px;padding:5px 16px;cursor:pointer;
+  font-family:inherit;font-weight:600;font-size:.85rem;transition:.2s;display:flex;align-items:center;gap:5px;
+}
+.spk:hover{background:#c9efe8}
+.spk:active{transform:scale(.93)}
+.wface.back{background:linear-gradient(135deg,var(--coral),#ff9a6b);color:#fff;transform:rotateY(180deg)}
+.wface.back .w-ar{font-size:1.15rem;font-weight:800;text-align:center}
+.wface.back .syn,.wface.back .ant{font-size:.8rem;background:rgba(255,255,255,.22);border-radius:99px;padding:2px 12px}
+.flip-note{font-size:.85rem;color:var(--ink-soft);font-weight:600;margin-top:10px}
+
+/* ====== pair questions ====== */
+.pairq{
+  border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:1.9;
+}
+.pairq .num{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
+}
+.reveal-btn{
+  border:0;background:var(--teal);color:#fff;font-family:inherit;font-weight:600;border-radius:12px;
+  padding:8px 16px;cursor:pointer;font-size:.88rem;transition:.2s;margin-top:10px;display:block;
+}
+.reveal-btn:hover{background:var(--teal-deep)}
+.feedback{display:none;margin-top:10px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.8}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+.wform{
+  background:#f4f0ff;border:2px solid #ddd3f8;border-radius:14px;padding:12px 16px;margin-top:14px;
+  font-weight:600;color:var(--purple);
+}
+.wform b{font-size:1.02rem}
+
+/* ====== reading passage segments ====== */
+.seg{border:2px solid var(--line);border-radius:18px;margin-top:16px;background:#fff;transition:.3s}
+.seg-head{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#fff6ee;flex-wrap:wrap;border-radius:16px 16px 0 0}
+.seg-head .seg-num{
+  background:var(--coral);color:#fff;width:38px;height:38px;border-radius:12px;
+  display:grid;place-items:center;font-weight:600;flex-shrink:0;
+}
+.seg-head b{color:var(--coral-deep);font-size:1rem}
+.seg-head small{display:block;color:var(--ink-soft);font-weight:600}
+.seg-tts{
+  margin-left:auto;border:0;background:var(--teal);color:#fff;font-family:inherit;font-weight:600;
+  border-radius:999px;padding:8px 18px;cursor:pointer;font-size:.92rem;display:flex;align-items:center;gap:7px;transition:.2s;
+}
+.seg-tts:hover{background:var(--teal-deep)}
+.seg-tts.playing{background:var(--coral)}
+.script{padding:14px 18px;border-top:2px dashed var(--line)}
+.script .ln{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start}
+.script .who{
+  flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
+  background:var(--teal);border-radius:8px;padding:2px 9px;margin-top:3px;min-width:68px;text-align:center;
+}
+.script .who.nar{background:#8a6fd8}
+.script .txt{font-weight:500;color:var(--ink);line-height:1.9;flex:1}
+.seg-img{padding:0 18px 14px}
+.seg-img img{width:100%;height:auto;display:block;border-radius:14px;border:2px solid #ffe9c9}
+
+/* glossary + pronoun hover tooltips */
+.g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
+.g{background:#fff3c4;border-bottom:2px dashed var(--sun-deep);color:#8a6500}
+.p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
+.g::after,.p::after{
+  content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);
+  background:#33415c;color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;
+  padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3);
+}
+.g::before,.p::before{
+  content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);
+  border:6px solid transparent;border-top-color:#33415c;
+  opacity:0;visibility:hidden;transition:.18s;z-index:60;
+}
+.p::after{background:var(--purple)}
+.p::before{border-top-color:var(--purple)}
+.g:hover::after,.p:hover::after,.g.ton::after,.p.ton::after,
+.g:hover::before,.p:hover::before,.g.ton::before,.p.ton::before{
+  opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
+}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--sun-deep)}
+.legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
+
+/* questions dropdown */
+.qdrop{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fffdf6}
+.qdrop summary{
+  cursor:pointer;list-style:none;padding:13px 18px;font-weight:600;color:var(--coral-deep);
+  display:flex;align-items:center;gap:8px;transition:.2s;border-radius:14px;
+}
+.qdrop summary::-webkit-details-marker{display:none}
+.qdrop summary:hover{background:#fff7e0}
+.qdrop summary .chev{margin-left:auto;transition:.3s}
+.qdrop[open] summary .chev{transform:rotate(180deg)}
+.qdrop .q-area{padding:0 18px 16px}
+.q{margin-top:12px}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.q .q-txt .qn{color:var(--coral)}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
+  font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
+}
+.opt:hover{border-color:var(--teal)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ====== true / false ====== */
+.tfline{
+  border:2px solid var(--line);border-radius:14px;padding:13px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:1.9;transition:.3s;
+}
+.tfline.done{border-color:#bfe8d2;background:#f6fffa}
+.tfline .num{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
+}
+.tf-row{display:flex;gap:8px;margin-top:10px}
+.tfbtn{
+  border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 22px;
+  font-family:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:.2s;color:var(--ink);
+}
+.tfbtn:hover{border-color:var(--teal)}
+.tfbtn.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.tfbtn.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.tfbtn:disabled{cursor:default}
+.correction{display:none;margin-top:10px;background:#fff8e0;border:2px dashed var(--sun-deep);border-radius:12px;padding:9px 13px;font-weight:600;color:#8a6500;line-height:1.8}
+.correction.show{display:block;animation:fadeUp .35s}
+
+/* ====== read aloud ====== */
+.aloud{
+  border:2px solid var(--line);border-radius:14px;padding:13px 16px;margin-top:12px;background:#fff;
+  display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;
+}
+.aloud .who-tag{
+  flex-shrink:0;font-weight:600;color:#fff;border-radius:10px;padding:4px 12px;font-size:.85rem;margin-top:3px;
+}
+.aloud .who-tag.sa{background:var(--coral)}
+.aloud .who-tag.sb{background:var(--teal)}
+.aloud p{flex:1;min-width:200px;font-weight:500;line-height:1.9}
+.aloud .spk{flex-shrink:0}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{
+  display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.85rem;margin-right:8px;
+}
+.score-box{
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--coral),#ff9a6b);color:#fff;
+  border-radius:18px;padding:20px;text-align:center;
+}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#fff3c4}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{
+  margin-top:16px;border:0;background:var(--coral);color:#fff;font-family:inherit;font-weight:700;
+  font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
+}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== hello badges board ====== */
+.badge-board{
+  background:linear-gradient(160deg,#fff4ea,#ffe9dd);border-radius:22px;padding:26px 22px;margin-top:16px;
+  border:3px solid var(--coral);box-shadow:var(--shadow);text-align:center;
+}
+.badge-board h3{letter-spacing:3px;color:var(--coral-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{
+  border:2.5px dashed #f3c4b8;border-radius:16px;padding:14px 8px;min-height:112px;background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot.earned{border-style:solid;border-color:var(--teal);background:#f2fbf9}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--teal)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+
+@media (max-width:560px){
+  .seg-tts{margin-left:0;width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="worldcard">
+    <div class="glow"></div>
+    <div class="orbit-zone">
+      <div class="ring"></div>
+      <div class="globe">🌍</div>
+      <span class="orb">🤝</span><span class="orb">🙇</span><span class="orb">👋</span><span class="orb">😊</span>
+    </div>
+    <h1>Oh, hello!</h1>
+    <div class="sub">Greetings Around the World · Body Language · PB page 6</div>
+    <div class="hello-strip">
+      <span class="hs">🇬🇧 Shake hands</span><span class="hs">🇯🇵 Bow</span><span class="hs">🌏 Nod</span><span class="hs">🌍 Smile!</span>
+    </div>
+    <span class="tag">UNIT 1 · PERIOD 3 · GRADE 7</span>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">🔤 Words <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p2">💬 Pair Talk</button>
+  <button class="tab" data-p="p3">📖 Listen &amp; Read <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p4">✅ True or False <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p5">❓ Questions <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p6">🗣️ Read Aloud</button>
+  <button class="tab" data-p="p7">🏁 Quiz <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p8">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">اليوم نسافر بأعيننا حول العالم: كيف يحيّي الناس بعضهم في بلدان مختلفة؟ وما هي لغة الجسد؟ أنجز الأنشطة لتجمع أوسمة الترحيب الخمسة! 🏅</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">🔤</div><div><b>New Words</b><span class="ar">أنطق وأفهم كلمات وعبارات الدرس الجديدة.</span></div></div>
+      <div class="goal"><div class="ico">🌍</div><div><b>World Greetings</b><span class="ar">أتعرف على طرق التحية في بلدان مختلفة.</span></div></div>
+      <div class="goal"><div class="ico">📖</div><div><b>Reading</b><span class="ar">أقرأ نصاً عن لغة الجسد وأختار العنوان الأنسب له.</span></div></div>
+      <div class="goal"><div class="ico">✅</div><div><b>Comprehension</b><span class="ar">أميّز الجمل الصحيحة والخاطئة وأصحح الخاطئة.</span></div></div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">💬 Word Bag</h2>
+    <div class="keywords">
+      <span class="kw">bored</span><span class="kw">bow</span><span class="kw">fold arms</span><span class="kw">important</span>
+      <span class="kw">nod</span><span class="kw">shake hands</span><span class="kw">upset</span><span class="kw">way</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : WORDS ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>🔤 Activity 1: Listen and repeat the words and expressions</h2>
+    <p class="hint ar">استمع إلى التسجيل وردّد الكلمات. اضغط زر 🔊 لسماع نطق الكلمة، واضغط البطاقة نفسها لقلبها ورؤية المعنى والمرادف والضد. اقلب البطاقات الثماني لتحصل على الوسام!</p>
+    <div class="gplayer">
+      <b>🎧 Audio 5 · The words</b>
+      <iframe src="https://drive.google.com/file/d/1Blw09Dq05g7r-sX2Re9sgUCZMyrfwFnK/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="words" id="words"></div>
+    <p class="flip-note ar">💡 syn = مرادف (كلمة بنفس المعنى) · ant = ضد (كلمة بعكس المعنى)</p>
+  </div>
+</section>
+
+<!-- ============ A2 : PAIR TALK ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>💬 Activity 2: Work in pairs and answer the questions</h2>
+    <p class="hint ar">اعمل مع زميلك وأجيبا شفوياً عن الأسئلة الثلاثة. بعد المحاولة يمكنك الضغط على «Show ideas» لرؤية أمثلة.</p>
+    <div class="pairq"><span class="num">1</span>Name some countries you know in English.
+      <button class="reveal-btn" data-rev="rv1">🔍 Show ideas</button>
+      <div class="feedback good" id="rv1">Palestine 🇵🇸 · France 🇫🇷 · Japan 🇯🇵 · Brazil 🇧🇷 · Spain 🇪🇸 · China 🇨🇳 · Egypt 🇪🇬</div>
+    </div>
+    <div class="pairq"><span class="num">2</span>How do they say 'Hello' in those countries?
+      <button class="reveal-btn" data-rev="rv2">🔍 Show ideas</button>
+      <div class="feedback good" id="rv2">France: <b>Bonjour!</b> · Japan: <b>Konnichiwa!</b> · Spain: <b>¡Hola!</b> · China: <b>Nǐ hǎo!</b> · Palestine: <b>مرحباً!</b></div>
+    </div>
+    <div class="pairq"><span class="num">3</span>How can you say 'Hello' without words?
+      <button class="reveal-btn" data-rev="rv3">🔍 Show ideas</button>
+      <div class="feedback good" id="rv3">Wave 👋 · Smile 😊 · Shake hands 🤝 · Bow 🙇 · Nod 👍</div>
+    </div>
+    <div class="wform">📐 Word formation: <b>man → men</b> · <b>woman → women</b>
+      <span class="ar" style="display:block;font-size:.85rem;color:#7b8794">لاحظ صيغة الجمع الشاذة لهاتين الكلمتين.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A3 : LISTEN & READ ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>📖 Activity 3: Listen and read, then choose the best title</h2>
+    <p class="hint ar">شغّل التسجيل الكامل من المشغل أو اضغط 🔊 بجانب كل فقرة لسماعها وحدها. اقرأ النص جيداً ثم افتح «Choose the best title» واختر العنوان الأنسب. مرّر فوق الكلمات الملونة لرؤية المعاني ومرجع الضمائر.</p>
+    <div class="gplayer">
+      <b>🎧 Audio 6 · The passage</b>
+      <iframe src="https://drive.google.com/file/d/1CTl8d1_An19ixtV9JStDQ0dkB0-MHB8H/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="legend">
+      <span class="lg-g">كلمة جديدة — مرّر أو اضغط لترى معناها 🟡</span>
+      <span class="lg-p">ضمير — مرّر أو اضغط لتعرف على من يعود 🟣</span>
+    </div>
+    <div id="segments"></div>
+    <details class="qdrop">
+      <summary>📋 Choose the best title <span class="ar" style="font-size:.85rem;color:#7b8794">اختر العنوان الأنسب</span><span class="chev">▼</span></summary>
+      <div class="q-area">
+        <div class="q">
+          <div class="q-txt"><span class="qn">Q:</span> Which is the best title for the passage?</div>
+          <div class="opts" id="titleOpts"></div>
+          <div class="feedback good" id="titleFb">✅ Correct! "Shake hands and smile" covers <b>all</b> parts of the passage: shaking hands, other greetings, and the smile. <span class="ar">أحسنت! هذا العنوان يغطي كل أجزاء النص.</span></div>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ A4 : TRUE OR FALSE ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>✅ Activity 4: Tick the true sentences, correct the false ones</h2>
+    <p class="hint ar">اقرأ كل جملة وقرر: صحيحة (True) أم خاطئة (False)؟ عند اكتشاف جملة خاطئة سيظهر لك تصحيحها من النص.</p>
+    <div id="tfBox"></div>
+  </div>
+</section>
+
+<!-- ============ A5 : QUESTIONS ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 5</span>❓ Activity 5: Read and answer the questions</h2>
+    <p class="hint ar">عد إلى النص في تبويب «Listen &amp; Read» إذا احتجت، ثم افتح قائمة الأسئلة وأجب.</p>
+    <details class="qdrop" open>
+      <summary>📋 Questions (2) <span class="ar" style="font-size:.85rem;color:#7b8794">أسئلة الفهم</span><span class="chev">▼</span></summary>
+      <div class="q-area" id="a5box"></div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ A6 : READ ALOUD ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 6</span>🗣️ Activity 6: Work in pairs, read the passage aloud</h2>
+    <p class="hint ar">اعمل مع زميلك: اقرآ النص بصوت عالٍ بالتناوب — أنت فقرة وزميلك فقرة. اضغط 🔊 لسماع النطق النموذجي قبل القراءة.</p>
+    <div id="aloudBox"></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p7">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة تغطي الدرس كاملاً. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p8">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 Hello Badges</h2>
+    <p class="hint ar">هنا تُجمع أوسمتك. أكمل الأنشطة الخمسة لتحصل على كل أوسمة الترحيب!</p>
+    <div class="badge-board">
+      <h3>✦ MY HELLO BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف السابع 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! جمعت كل أوسمة درس <b>لغة الجسد والتحيات حول العالم</b>!<br>
+        أصبحت تعرف كيف يحيّي الناس بعضهم في كل مكان. والآن... ابتسم! 😊 فهي أفضل تحية بأي لغة.
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 3 : Oh, hello!  (Grade 7)
+   Greetings unit theme 👋 — "greetings around the world" globe header
+========================================================= */
+
+/* ---------- floating greeting gestures ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const EMOJIS=['🙇','🤝','👋','😊','🌍','👍','🙇'];
+  EMOJIS.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fe';b.textContent=g;
+    b.style.left=(4+i*14)%90+'%';
+    b.style.animationDuration=(13+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*3.5)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  stopSegTTS();
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'words', name:'Words',        emo:'🔤'},
+  {id:'title', name:'Best Title',   emo:'📖'},
+  {id:'tf',    name:'True or False',emo:'✅'},
+  {id:'answer',name:'Questions',    emo:'❓'},
+  {id:'quiz',  name:'Quiz',         emo:'🏆'},
+];
+const TAB_OF={words:'p1',title:'p3',tf:'p4',answer:'p5',quiz:'p7'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('u1p3hello')||'{}')}catch(e){earned={}}
+
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';
+  let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){
+  if(earned[id])return;
+  earned[id]=true;
+  localStorage.setItem('u1p3hello',JSON.stringify(earned));
+  renderBadges();
+}
+function resetLesson(){
+  localStorage.removeItem('u1p3hello');location.reload();
+}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+function speak(txt){
+  if(!('speechSynthesis' in window))return;
+  stopSegTTS();
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='en-US';u.rate=.85;
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : flashcards (front: EN + emoji + 🔊 / back: AR + syn/ant)
+========================================================= */
+const WORDS=[
+  {en:'bored',      emo:'🥱',ar:'ضجِر / ملول',        syn:'uninterested',ant:'excited'},
+  {en:'bow',        emo:'🙇',ar:'ينحني (للتحية)',     syn:null,          ant:null},
+  {en:'fold arms',  emo:'🙅',ar:'يعقد ذراعيه',        syn:'cross arms',  ant:null},
+  {en:'important',  emo:'⭐',ar:'مهم',                syn:'essential',   ant:'unimportant'},
+  {en:'nod',        emo:'👍',ar:'يومئ برأسه',         syn:null,          ant:null},
+  {en:'shake hands',emo:'🤝',ar:'يصافح / يتصافح',     syn:null,          ant:null},
+  {en:'upset',      emo:'😟',ar:'منزعج',              syn:'unhappy',     ant:'pleased'},
+  {en:'way',        emo:'🛤️',ar:'طريقة',             syn:'method',      ant:null},
+];
+const wordsBox=document.getElementById('words');
+const flipped=new Set();
+WORDS.forEach(w=>{
+  const c=document.createElement('div');
+  c.className='wcard';
+  let back='<div class="w-ar ar">'+w.ar+'</div>';
+  if(w.syn)back+='<div class="syn">syn: '+w.syn+'</div>';
+  if(w.ant)back+='<div class="ant">ant: '+w.ant+'</div>';
+  c.innerHTML=
+    '<div class="in">'+
+    '<div class="wface front"><span class="emo">'+w.emo+'</span><span class="w-en">'+w.en+'</span>'+
+    '<button class="spk">🔊 Listen</button></div>'+
+    '<div class="wface back">'+back+'</div></div>';
+  c.querySelector('.spk').addEventListener('click',e=>{e.stopPropagation();speak(w.en);});
+  c.addEventListener('click',()=>{
+    c.classList.toggle('flip');
+    flipped.add(w.en);
+    if(flipped.size===WORDS.length)award('words');
+  });
+  wordsBox.appendChild(c);
+});
+
+/* =========================================================
+   A2 : reveal ideas
+========================================================= */
+document.querySelectorAll('.reveal-btn').forEach(b=>{
+  b.addEventListener('click',()=>document.getElementById(b.dataset.rev).classList.add('show'));
+});
+
+/* =========================================================
+   A3 : the passage (with hover tooltips) + best title
+========================================================= */
+const SEGMENTS=[
+  {
+    title:'Part 1: Shaking hands',
+    sub:'المصافحة',
+    img:null,
+    lines:[
+      ['Narrator','nar',
+       "Men often <i class='g' data-t='يتصافحون'>shake hands</i> and women sometimes do too. In the <i class='g' data-t='بريطانيا'>UK</i>, men don't often shake hands when <i class='p' data-t='تعود على الرجال في بريطانيا'>they</i> meet friends but they always do when they meet new people. Do <i class='p' data-t='أنت — القارئ'>you</i> sometimes shake hands with new people?"],
+    ]
+  },
+  {
+    title:'Part 2: Bowing and nodding',
+    sub:'الانحناء والإيماء',
+    img:'https://i.ibb.co/zhNsxb3W/Gemini-Generated-Image-mff9w6mff9w6mff9.png',
+    lines:[
+      ['Narrator','nar',
+       "In some countries, <i class='p' data-t='تعود على الناس في تلك البلدان'>they</i> never shake hands. They don't usually <i class='g' data-t='يلمسون'>touch</i> and they can be <i class='g' data-t='منزعجين'>upset</i> if you touch <i class='p' data-t='تعود على الناس الذين لا يحبون اللمس'>them</i>. In those countries, people often <i class='g' data-t='ينحنون'>bow</i> or <i class='g' data-t='يومئون برؤوسهم'>nod</i> when they meet new people."],
+    ]
+  },
+  {
+    title:'Part 3: Mr. Lee meets Mr. Angchuang',
+    sub:'تحية رسمية بين صديقين',
+    img:null,
+    lines:[
+      ['Mr. Lee','',
+       "Mr. Angchuang! Nice to see <i class='p' data-t='تعود على Mr. Angchuang'>you</i> again! How are you?"],
+      ['Mr. Angchuang','',
+       "It's great to see you again, too. <i class='p' data-t='تعود على Mr. Angchuang المتحدث'>I</i>'m <i class='g' data-t='لست سيئاً — أنا بخير'>not too bad</i>. How are you?"],
+      ['Mr. Lee','',
+       "Very well, thank you. You must come and <i class='g' data-t='تزور'>visit</i> some time."],
+      ['Mr. Angchuang','',
+       "I'd like <i class='p' data-t='تشير إلى الزيارة'>that</i>, thank you."],
+    ]
+  },
+  {
+    title:'Part 4: Body language',
+    sub:'لغة الجسد',
+    img:'https://i.ibb.co/tM8FFSFj/Gemini-Generated-Image-76rwyg76rwyg76rw.png',
+    lines:[
+      ['Narrator','nar',
+       "<i class='g' data-t='لغة الجسد'>Body language</i> is <i class='g' data-t='مهمة'>important</i> when you meet someone. <i class='g' data-t='عقد / طيّ ذراعيك'>Folding your arms</i> or not smiling will make you look <i class='g' data-t='ضجِراً / ملولاً'>bored</i>. Not looking at the other person can make you look bored too. A smile is always very important. <i class='p' data-t='تعود على الابتسامة (a smile)'>It</i>'s the best <i class='g' data-t='طريقة'>way</i> to say hello in any language!"],
+    ]
+  },
+];
+
+const segBox=document.getElementById('segments');
+let ttsBtn=null;
+function stopSegTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML='🔊 Listen';ttsBtn=null;}
+}
+SEGMENTS.forEach((s,si)=>{
+  const seg=document.createElement('div');seg.className='seg';
+  const lines=s.lines.map(l=>
+    '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
+  ).join('');
+  seg.innerHTML=
+    '<div class="seg-head"><span class="seg-num">'+(si+1)+'</span><div><b>'+s.title+'</b><small class="ar">'+s.sub+'</small></div>'+
+    '<button class="seg-tts">🔊 Listen</button></div>'+
+    '<div class="script">'+lines+'</div>'+
+    (s.img?'<div class="seg-img"><img src="'+s.img+'" alt="'+s.title+'"></div>':'');
+  const ttsB=seg.querySelector('.seg-tts');
+  ttsB.addEventListener('click',()=>{
+    if(ttsBtn===ttsB){stopSegTTS();return;}
+    stopSegTTS();
+    if(!('speechSynthesis' in window))return;
+    const text=s.lines.map(l=>l[2].replace(/<[^>]+>/g,'')).join(' ');
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';u.rate=.85;
+    u.onend=()=>{if(ttsBtn===ttsB)stopSegTTS();};
+    ttsBtn=ttsB;
+    ttsB.classList.add('playing');ttsB.innerHTML='⏹ Stop';
+    speechSynthesis.speak(u);
+  });
+  segBox.appendChild(seg);
+});
+
+/* best title question (answer: 3) */
+const TITLES=['The best way to say hello.',"Don't touch!",'Shake hands and smile.'];
+const titleOpts=document.getElementById('titleOpts');
+TITLES.forEach((t,ti)=>{
+  const b=document.createElement('button');b.className='opt';b.textContent=(ti+1)+'. '+t;
+  b.addEventListener('click',()=>{
+    if(ti===2){
+      b.classList.add('ok');
+      titleOpts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      document.getElementById('titleFb').classList.add('show');
+      award('title');
+    }else{
+      b.classList.add('no');b.disabled=true;
+    }
+  });
+  titleOpts.appendChild(b);
+});
+
+/* tooltips on tap (mobile) */
+document.querySelectorAll('.g,.p').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    const was=el.classList.contains('ton');
+    document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+    if(!was)el.classList.add('ton');
+  });
+});
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+});
+
+/* =========================================================
+   A4 : true / false with corrections
+========================================================= */
+const TF=[
+  {s:'Some men and women always shake hands.',ans:false,
+   fix:'Men <b>often</b> shake hands and women <b>sometimes</b> do too.'},
+  {s:'In the UK, men always shake hands when they meet friends.',ans:false,
+   fix:"In the UK, men <b>don't often</b> shake hands when they meet friends — they always do when they meet <b>new people</b>."},
+  {s:"In some countries, people don't like shaking hands.",ans:true,fix:null},
+];
+const tfBox=document.getElementById('tfBox');
+let tfLeft=TF.length;
+TF.forEach((t,i)=>{
+  const d=document.createElement('div');d.className='tfline';
+  d.innerHTML='<span class="num">'+(i+1)+'</span>'+t.s;
+  const row=document.createElement('div');row.className='tf-row';
+  [['True ✓',true],['False ✗',false]].forEach(([lbl,val])=>{
+    const b=document.createElement('button');b.className='tfbtn';b.textContent=lbl;
+    b.addEventListener('click',()=>{
+      if(val===t.ans){
+        b.classList.add('ok');
+        row.querySelectorAll('.tfbtn').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        if(t.fix){
+          const c=document.createElement('div');c.className='correction show';
+          c.innerHTML='✏️ Correction: '+t.fix;
+          d.appendChild(c);
+        }
+        if(--tfLeft===0)award('tf');
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    row.appendChild(b);
+  });
+  d.appendChild(row);
+  tfBox.appendChild(d);
+});
+
+/* =========================================================
+   A5 : read and answer
+========================================================= */
+const A5Q=[
+  {t:'When do people fold their arms?',
+   o:['When they are bored','When they are happy','When they meet new people'],a:0},
+  {t:'What is the best way to say hello in any language?',
+   o:['A bow','A smile','A handshake'],a:1},
+];
+const a5box=document.getElementById('a5box');
+let a5left=A5Q.length;
+A5Q.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">Q'+(qi+1)+':</span> '+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(oi===q.a){
+        b.classList.add('ok');
+        opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        if(--a5left===0)award('answer');
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);a5box.appendChild(qd);
+});
+
+/* =========================================================
+   A6 : read aloud in pairs (A/B paragraphs + model TTS)
+========================================================= */
+const ALOUD=[
+  ['A',"Men often shake hands and women sometimes do too. In the UK, men don't often shake hands when they meet friends but they always do when they meet new people. Do you sometimes shake hands with new people?"],
+  ['B',"In some countries, they never shake hands. They don't usually touch and they can be upset if you touch them. In those countries, people often bow or nod when they meet new people."],
+  ['A',"Mr. Angchuang! Nice to see you again! How are you? — It's great to see you again, too. I'm not too bad. How are you?"],
+  ['B',"Very well, thank you. You must come and visit some time. — I'd like that, thank you."],
+  ['A',"Body language is important when you meet someone. Folding your arms or not smiling will make you look bored."],
+  ['B',"Not looking at the other person can make you look bored too. A smile is always very important. It's the best way to say hello in any language!"],
+];
+const aloudBox=document.getElementById('aloudBox');
+ALOUD.forEach(([who,text])=>{
+  const d=document.createElement('div');d.className='aloud';
+  d.innerHTML='<span class="who-tag '+(who==='A'?'sa':'sb')+'">Student '+who+'</span><p>'+text+'</p>';
+  const b=document.createElement('button');b.className='spk';b.textContent='🔊';
+  b.addEventListener('click',()=>speak(text));
+  d.appendChild(b);
+  aloudBox.appendChild(d);
+});
+
+/* =========================================================
+   QUIZ : 5 points covering the whole lesson
+========================================================= */
+const QUIZ=[
+  {t:'In the UK, when do men always shake hands?',
+   o:['When they meet new people','When they meet friends','They never shake hands'],a:0},
+  {t:'Which word means "ينحني"?',
+   o:['nod','bow','way'],a:1},
+  {t:'In some countries, people can be ____ if you touch them.',
+   o:['pleased','bored','upset'],a:2},
+  {t:'Folding your arms makes you look ____.',
+   o:['bored','important','great'],a:0},
+  {t:'The best way to say hello in any language is ____.',
+   o:['a bow','folding your arms','a smile'],a:2},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');
+      quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    const btns=qd.querySelectorAll('.opt');
+    btns.forEach((b,oi)=>{
+      b.disabled=true;
+      b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You are a world greetings expert! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the passage to get 5/5. <span class="ar">أحسنت! راجع النص لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Go back and read the passage again. <span class="ar">حاول مرة أخرى! عد واقرأ النص مجدداً.</span>';
+  box.classList.add('show');
+  award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
