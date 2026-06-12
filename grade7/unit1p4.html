@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Oh, hello! | Grade 7 · Period 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#ff6f61;
+  --coral-deep:#d94f43;
+  --teal:#14b8a6;
+  --teal-deep:#0d9488;
+  --sun:#ffc94d;
+  --sun-deep:#e0a82e;
+  --purple:#5b46d6;
+  --paper:#ffffff;
+  --cream:#fff8ef;
+  --ink:#33415c;
+  --ink-soft:#7b8794;
+  --line:#ffe3d6;
+  --ok:#27c275;
+  --no:#ff6b6b;
+  --r:20px;
+  --shadow:0 16px 40px rgba(217,79,67,.16);
+  --shadow-sm:0 8px 20px rgba(217,79,67,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(700px 420px at 92% 6%, #ffe3da, transparent 60%),
+    radial-gradient(640px 400px at 4% 28%, #d8f7f2, transparent 60%),
+    radial-gradient(700px 420px at 70% 80%, #fff3d4, transparent 55%),
+    linear-gradient(180deg,#fff4ea 0%,#fff9f1 50%,#effbf8 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating musical greeting notes ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fe{position:absolute;bottom:-60px;font-size:28px;opacity:0;animation:floatUp linear infinite}
+@keyframes floatUp{
+  0%{transform:translateY(0) translateX(0) rotate(-6deg);opacity:0}
+  10%{opacity:.4}
+  88%{opacity:.4}
+  100%{transform:translateY(-115vh) translateX(40px) rotate(8deg);opacity:0}
+}
+
+/* ====== header : poetry stage 🎭 ====== */
+header{position:relative;padding:26px 0 8px;text-align:center}
+.stagecard{
+  max-width:640px;margin:0 auto;position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(180deg,#8e2f44 0%,#b13a4a 55%,#d94f43 100%);
+  border-radius:32px;border:3px solid #fff;box-shadow:var(--shadow);
+  padding:26px 70px 22px;
+}
+.curtain{
+  position:absolute;top:0;bottom:0;width:62px;z-index:3;
+  background:repeating-linear-gradient(90deg,#7c2334 0 14px,#a02e42 14px 28px);
+  box-shadow:inset -8px 0 14px rgba(0,0,0,.35);
+  animation:sway 6s ease-in-out infinite;transform-origin:top;
+}
+.curtain.l{left:0;border-radius:28px 0 50% 0}
+.curtain.r{right:0;border-radius:0 28px 0 50%;animation-delay:1.4s;box-shadow:inset 8px 0 14px rgba(0,0,0,.35)}
+@keyframes sway{0%,100%{transform:skewX(0)}50%{transform:skewX(1.6deg)}}
+.spot{
+  position:absolute;top:-30px;width:170px;height:330px;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,240,180,.4),transparent 75%);
+  clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);
+  animation:spotsway 7s ease-in-out infinite;transform-origin:top center;
+}
+.spot.s1{left:6%;transform:rotate(16deg)}
+.spot.s2{right:6%;transform:rotate(-16deg);animation-delay:2s}
+@keyframes spotsway{0%,100%{opacity:.85}50%{opacity:.45}}
+.stage-top{
+  position:relative;z-index:4;display:inline-block;background:rgba(0,0,0,.25);
+  border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:4px 18px;
+  font-weight:600;font-size:.8rem;letter-spacing:2px;
+}
+.mic-row{position:relative;z-index:4;display:flex;justify-content:center;align-items:flex-end;gap:14px;margin-top:8px}
+.mic-row .mic{font-size:58px;animation:micbob 3s ease-in-out infinite;filter:drop-shadow(0 8px 12px rgba(0,0,0,.3))}
+.mic-row .shy{font-size:44px;animation:micbob 3s ease-in-out infinite;animation-delay:.8s}
+@keyframes micbob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+.stagecard h1{
+  position:relative;z-index:4;font-size:clamp(2.1rem,6vw,3rem);margin-top:6px;
+  text-shadow:0 3px 0 rgba(124,35,52,.7),0 8px 22px rgba(0,0,0,.25);
+}
+.stagecard .sub{position:relative;z-index:4;font-weight:600;font-size:1rem;opacity:.95;margin-top:2px}
+.foots{position:relative;z-index:4;display:flex;justify-content:center;gap:13px;margin-top:15px;flex-wrap:wrap}
+.fl2{
+  width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:22px;
+  box-shadow:0 0 16px 5px rgba(255,217,122,.75);animation:glowp 2.2s infinite;
+}
+.fl2:nth-child(2){animation-delay:.55s}
+.fl2:nth-child(3){animation-delay:1.1s}
+.fl2:nth-child(4){animation-delay:1.65s}
+@keyframes glowp{0%,100%{box-shadow:0 0 16px 5px rgba(255,217,122,.75)}50%{box-shadow:0 0 5px 1px rgba(255,217,122,.3)}}
+.stagecard .tag{
+  position:relative;z-index:4;display:inline-block;margin-top:13px;background:#fff;color:#a02e42;
+  font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:5px 18px;
+}
+
+/* ====== tabs (LTR, English) ====== */
+nav{
+  display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(255,244,234,.95),rgba(255,244,234,.8) 70%,transparent);
+  backdrop-filter:blur(6px);scrollbar-width:none;
+}
+nav::-webkit-scrollbar{display:none}
+.tab{
+  flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;
+  background:#fff;color:var(--ink);border:2px solid var(--line);
+  padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
+}
+.tab:hover{border-color:var(--coral);transform:translateY(-2px)}
+.tab.on{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;color:var(--ok);font-size:1rem}
+.tab.on .done-mark{color:#d6ffe9}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{
+  position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
+  background:repeating-linear-gradient(90deg,var(--coral) 0 26px,var(--sun) 26px 48px,var(--teal) 48px 72px);
+}
+.card h2{font-size:1.3rem;color:var(--coral-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{
+  font-size:.7rem;background:var(--teal);color:#fff;
+  padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
+}
+.hint{
+  color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
+  background:#f2fbf9;border-radius:12px;padding:8px 14px;border-right:4px solid var(--teal);
+}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:16px;padding:16px 14px;
+  display:flex;gap:12px;align-items:flex-start;transition:.25s;
+}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--coral-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.kw{background:#e7f8f5;color:var(--teal-deep);border:1.5px solid #bdeae3;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+
+/* ====== Drive audio player (compact, the only player) ====== */
+.gplayer{
+  background:#f2fbf9;border:2px solid #bdeae3;border-radius:14px;
+  padding:9px 12px 10px;margin:10px 0 6px;max-width:480px;
+}
+.gplayer b{color:var(--teal-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
+
+/* ====== A1 : listen & number ====== */
+.stepbox{
+  text-align:center;font-size:1.05rem;font-weight:600;color:var(--ink);margin-top:16px;
+  background:#fff8e0;border:2px dashed var(--sun-deep);border-radius:14px;padding:12px;line-height:1.9;
+}
+.stepbox .stp{
+  display:inline-block;background:var(--sun);color:#7a5800;border-radius:999px;
+  padding:2px 14px;font-size:.82rem;letter-spacing:1px;margin-bottom:4px;
+}
+.stepbox.teal{background:#eafaf7;border-color:var(--teal)}
+.stepbox.teal .stp{background:var(--teal);color:#fff}
+.wordbox{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:var(--cream);
+  border:2px solid #ffe9c9;border-radius:16px;padding:16px;margin-top:12px;
+}
+.wchip{
+  position:relative;border:2.5px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;
+  padding:8px 20px;font-family:inherit;font-weight:600;font-size:1.05rem;cursor:pointer;transition:.2s;
+}
+.wchip:hover{border-color:var(--teal);transform:translateY(-2px)}
+.wchip.numbered{border-color:var(--teal);background:#eafaf7;color:var(--teal-deep);cursor:default}
+.wchip.missing{border-color:var(--sun-deep);background:var(--sun);color:#7a5800;box-shadow:var(--shadow-sm);cursor:default}
+.wchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.wchip.pulse{animation:pulse 1.2s infinite}
+.wchip .ord{
+  position:absolute;top:-12px;right:-8px;width:26px;height:26px;border-radius:50%;
+  background:var(--teal);color:#fff;display:grid;place-items:center;font-size:.8rem;font-weight:700;
+  box-shadow:var(--shadow-sm);
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.hearbar{
+  display:flex;align-items:center;gap:12px;margin-top:12px;background:var(--teal);color:#fff;
+  border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap;
+}
+.hearbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.hearbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.feedback{display:none;margin-top:10px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== A2 : circle correct word ====== */
+.sline{
+  border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:2.1;transition:.3s;
+}
+.sline.done{border-color:#bfe8d2;background:#f6fffa}
+.num{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
+}
+.pick{
+  border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:3px 14px;margin:0 3px;
+  font-family:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:.2s;color:var(--ink);
+}
+.pick:hover{border-color:var(--teal)}
+.pick.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.pick.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s;text-decoration:line-through}
+.pick:disabled{cursor:default}
+
+/* ====== A3 : complete & match ====== */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px}
+.bword{
+  border:2.5px solid var(--sun-deep);background:#fff8e0;color:#8a6500;border-radius:999px;
+  padding:6px 18px;font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s;
+}
+.bword:hover{transform:translateY(-2px)}
+.bword.sel{background:var(--sun);border-color:var(--sun-deep);color:var(--ink);transform:scale(1.08);box-shadow:var(--shadow-sm)}
+.bword.used{opacity:.35;cursor:default;text-decoration:line-through}
+.mimg{margin:14px auto 4px;max-width:640px}
+.mimg img{width:100%;height:auto;display:block;border-radius:16px;border:2px solid #ffe9c9}
+.msent{
+  border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:2;transition:.3s;
+}
+.msent.done{border-color:#bfe8d2;background:#f6fffa}
+.blank{
+  display:inline-block;min-width:110px;border-bottom:3px dashed var(--sun-deep);text-align:center;
+  font-weight:600;color:var(--sun-deep);cursor:pointer;border-radius:8px 8px 0 0;padding:0 8px;transition:.2s;
+}
+.blank:hover{background:#fff8e0}
+.blank.filled{color:#168a55;border-bottom-color:var(--ok);cursor:default}
+.blank.no{animation:shake .4s;background:#fff0f0}
+.match-row{margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.match-row span.lbl{font-size:.85rem;font-weight:600;color:var(--ink-soft)}
+.letter{
+  border:2.5px solid var(--line);background:#fff;width:38px;height:38px;border-radius:12px;
+  font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s;color:var(--ink);
+}
+.letter:hover{border-color:var(--teal)}
+.letter.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.letter.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.letter:disabled{cursor:default}
+
+/* ====== A4 : the poem ====== */
+.poem{
+  background:linear-gradient(165deg,#fff8ef,#fff3e0);border:2px solid #ffe9c9;border-radius:18px;
+  padding:20px 22px;margin-top:12px;position:relative;
+}
+.poem:before{
+  content:"❝";position:absolute;top:4px;left:14px;font-size:3rem;color:var(--coral);opacity:.25;
+}
+.pline{
+  display:flex;align-items:center;gap:10px;font-weight:500;font-size:1.06rem;line-height:2.1;
+  padding-left:14px;
+}
+.pline .txt{flex:1}
+.pline .lspk{
+  border:0;background:transparent;font-size:1rem;cursor:pointer;opacity:.45;transition:.2s;flex-shrink:0;
+}
+.pline .lspk:hover{opacity:1;transform:scale(1.2)}
+
+/* glossary + pronoun hover tooltips */
+.g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
+.g{background:#fff3c4;border-bottom:2px dashed var(--sun-deep);color:#8a6500}
+.p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
+.g::after,.p::after{
+  content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);
+  background:#33415c;color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;
+  padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3);
+}
+.g::before,.p::before{
+  content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);
+  border:6px solid transparent;border-top-color:#33415c;
+  opacity:0;visibility:hidden;transition:.18s;z-index:60;
+}
+.p::after{background:var(--purple)}
+.p::before{border-top-color:var(--purple)}
+.g:hover::after,.p:hover::after,.g.ton::after,.p.ton::after,
+.g:hover::before,.p:hover::before,.g.ton::before,.p.ton::before{
+  opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
+}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--sun-deep)}
+.legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
+
+/* ====== A5 : pronunciation ====== */
+.pron-note{
+  background:#f4f0ff;border:2px solid #ddd3f8;border-radius:14px;padding:13px 16px;margin-top:12px;
+  font-weight:600;color:var(--purple);line-height:1.9;font-size:.95rem;
+}
+.pron-line{
+  border:2px solid var(--line);border-radius:14px;padding:11px 16px;margin-top:10px;background:#fff;
+  font-size:1.05rem;font-weight:500;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.pron-line .num{flex-shrink:0}
+.pron-line .txt{flex:1;min-width:180px}
+.pron-line .and{background:#ffe2f0;color:#c2186b;border-bottom:2.5px solid #c2186b;border-radius:5px;padding:0 4px;font-weight:700}
+.pron-line .ipa{
+  flex-shrink:0;background:#f4f0ff;color:var(--purple);border-radius:999px;padding:2px 12px;
+  font-weight:700;font-size:.85rem;
+}
+.spk{
+  border:0;background:#e7f8f5;color:var(--teal-deep);border-radius:999px;padding:5px 16px;cursor:pointer;
+  font-family:inherit;font-weight:600;font-size:.85rem;transition:.2s;display:flex;align-items:center;gap:5px;flex-shrink:0;
+}
+.spk:hover{background:#c9efe8}
+.spk:active{transform:scale(.93)}
+.spk.played{background:#d6f5d6;color:#168a55}
+
+/* ====== A6 : group reading ====== */
+.aloud{
+  border:2px solid var(--line);border-radius:14px;padding:13px 16px;margin-top:12px;background:#fff;
+  display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;
+}
+.aloud .who-tag{
+  flex-shrink:0;font-weight:600;color:#fff;border-radius:10px;padding:4px 12px;font-size:.85rem;margin-top:3px;
+}
+.aloud .who-tag.g1{background:var(--coral)}
+.aloud .who-tag.g2{background:var(--teal)}
+.aloud .who-tag.g3{background:var(--purple)}
+.aloud p{flex:1;min-width:200px;font-weight:500;line-height:1.9;white-space:pre-line}
+.steps{margin:10px 22px 0;color:var(--ink);font-weight:600;line-height:2.1;font-size:.95rem}
+
+/* ====== quiz ====== */
+.qdrop{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fffdf6}
+.q{margin-top:12px}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
+  font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
+}
+.opt:hover{border-color:var(--teal)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{
+  display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.85rem;margin-right:8px;
+}
+.score-box{
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--coral),#ff9a6b);color:#fff;
+  border-radius:18px;padding:20px;text-align:center;
+}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#fff3c4}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{
+  margin-top:16px;border:0;background:var(--coral);color:#fff;font-family:inherit;font-weight:700;
+  font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
+}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== hello badges board ====== */
+.badge-board{
+  background:linear-gradient(160deg,#fff4ea,#ffe9dd);border-radius:22px;padding:26px 22px;margin-top:16px;
+  border:3px solid var(--coral);box-shadow:var(--shadow);text-align:center;
+}
+.badge-board h3{letter-spacing:3px;color:var(--coral-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{
+  border:2.5px dashed #f3c4b8;border-radius:16px;padding:14px 8px;min-height:112px;background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot.earned{border-style:solid;border-color:var(--teal);background:#f2fbf9}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--teal)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+
+@media (max-width:560px){
+  .stagecard{padding:26px 50px 22px}
+  .curtain{width:40px}
+}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="stagecard">
+    <div class="spot s1"></div><div class="spot s2"></div>
+    <div class="curtain l"></div><div class="curtain r"></div>
+    <span class="stage-top">🎭 POETRY TIME</span>
+    <div class="mic-row"><span class="shy">🙈</span><span class="mic">🎤</span><span class="shy" style="animation-delay:1.6s">😊</span></div>
+    <h1>Oh, hello!</h1>
+    <div class="sub">The Greeting Poem · Body Language Words · PB page 7</div>
+    <div class="foots"><span class="fl2">👋</span><span class="fl2">🤝</span><span class="fl2">🙇</span><span class="fl2">😊</span></div>
+    <span class="tag">UNIT 1 · PERIOD 4 · GRADE 7</span>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">🔢 Listen &amp; Number <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p2">⭕ Circle Words <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p3">✍️ Complete &amp; Match <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p4">🎤 The Poem</button>
+  <button class="tab" data-p="p5">🗣️ Say "and" <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p6">👥 Read Aloud</button>
+  <button class="tab" data-p="p7">🏁 Quiz <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p8">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">اليوم نتدرب على كلمات لغة الجسد ثم نقرأ قصيدة عن شخص خجول لا يحب التحيات! أنجز الأنشطة لتجمع أوسمة الترحيب الخمسة! 🏅</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">🔢</div><div><b>Listening</b><span class="ar">أستمع وأرقّم الكلمات حسب ترتيب سماعها.</span></div></div>
+      <div class="goal"><div class="ico">✍️</div><div><b>Vocabulary</b><span class="ar">أستخدم كلمات الدرس في جمل وأطابقها مع الصور.</span></div></div>
+      <div class="goal"><div class="ico">🎤</div><div><b>The Poem</b><span class="ar">أقرأ قصيدة وأفهمها وألقيها بإيقاع صحيح.</span></div></div>
+      <div class="goal"><div class="ico">🗣️</div><div><b>Pronunciation</b><span class="ar">أنطق كلمة and بشكلها المخفف /n/ داخل الجمل.</span></div></div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">💬 Word Bag</h2>
+    <div class="keywords">
+      <span class="kw">bored</span><span class="kw">bow</span><span class="kw">fold arms</span><span class="kw">important</span>
+      <span class="kw">nod</span><span class="kw">perhaps</span><span class="kw">shake hands</span><span class="kw">upset</span><span class="kw">way</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : LISTEN & NUMBER ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>🔢 Activity 1: Listen and number the words in order</h2>
+    <p class="hint ar">شغّل التسجيل واستمع جيداً. <b>أولاً:</b> اضغط الكلمات <b>بترتيب سماعها</b> — سيظهر رقم على كل كلمة. <b>ثانياً:</b> اضغط الكلمة التي لم تسمعها أبداً!</p>
+    <div class="gplayer">
+      <b>🎧 Audio 7 · The words in a text</b>
+      <iframe src="https://drive.google.com/file/d/18cFjUoMj8eY9MGamN-nS0dqnsfxdBfVZ/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="stepbox" id="step1box"><span class="stp">STEP 1</span><br>Tap the words <b>in the order you hear them</b> 👂 (8 words)</div>
+    <div class="wordbox" id="a1box"></div>
+    <div class="hearbar">
+      <span id="hearTxt">Numbered: 0 / 8</span>
+      <div class="bar"><i id="hearBar"></i></div>
+      <span>🔢</span>
+    </div>
+    <div class="stepbox teal" id="step2box" style="display:none"><span class="stp">STEP 2</span><br>Which word didn't you hear? 🤔 Tap it!</div>
+    <div class="feedback good" id="a1fb">🎉 Correct! The word <b>nod</b> was not in the recording. <span class="ar">أحسنت! كلمة nod لم تُذكر في التسجيل.</span></div>
+  </div>
+</section>
+
+<!-- ============ A2 : CIRCLE CORRECT WORDS ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>⭕ Activity 2: Read and circle the correct words</h2>
+    <p class="hint ar">اقرأ كل جملة بصمت ثم اضغط على الكلمة الصحيحة من الكلمتين.</p>
+    <div id="a2box"></div>
+  </div>
+</section>
+
+<!-- ============ A3 : COMPLETE & MATCH ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>✍️ Activity 3: Complete the sentences, then match them with the pictures</h2>
+    <p class="hint ar">أولاً: اضغط كلمة من البنك الذهبي ثم اضغط الفراغ المناسب لها. ثانياً: اختر حرف الصورة المناسبة (a–e) لكل جملة.</p>
+    <div class="bank" id="bank"></div>
+    <div class="mimg"><img src="https://i.ibb.co/CKL2c1fc/Gemini-Generated-Image-8ihueh8ihueh8ihu.png" alt="Pictures a, b, c, d and e"></div>
+    <div id="a3box"></div>
+  </div>
+</section>
+
+<!-- ============ A4 : THE POEM ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>🎤 Activity 4: Listen and repeat — The Greeting Poem</h2>
+    <p class="hint ar">شغّل التسجيل واستمع للقصيدة، ثم استمع وردّد. اضغط 🔊 بجانب أي سطر لسماعه وحده. مرّر فوق الكلمات الملونة لرؤية المعاني ومرجع الضمائر.</p>
+    <div class="gplayer">
+      <b>🎧 Audio 8 · The poem</b>
+      <iframe src="https://drive.google.com/file/d/1BsDDE86yujprWWVt1ylPOzn7olfxt9p2/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="legend">
+      <span class="lg-g">كلمة جديدة — مرّر أو اضغط لترى معناها 🟡</span>
+      <span class="lg-p">ضمير — مرّر أو اضغط لتعرف على من يعود 🟣</span>
+    </div>
+    <div class="poem" id="poem"></div>
+  </div>
+</section>
+
+<!-- ============ A5 : PRONUNCIATION ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 5</span>🗣️ Activity 5: Listen to the word <em>and</em></h2>
+    <p class="hint ar">استمع للجمل الأربع وانتبه لنطق كلمة and، ثم استمع وردّد. اضغط 🔊 لكل جملة — استمع للجمل الأربع كلها لتحصل على الوسام!</p>
+    <div class="gplayer">
+      <b>🎧 Audio 9 · Pronunciation: and</b>
+      <iframe src="https://drive.google.com/file/d/1AsqxFVIcgy7MZrdWmvLNNn1dzblXiFc2/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="pron-note ar">
+      💡 في الجمل 1–3 تُنطق <b>and</b> مخففة <b>/n/</b> (مثل: kiss'n'hug). أما في الجملة 4 فتُنطق كاملة <b>/ænd/</b> لأنها في بداية الجملة، ويرتبط صوت <b>/d/</b> بحرف العلة في الكلمة التالية.
+    </div>
+    <div id="pronBox"></div>
+  </div>
+</section>
+
+<!-- ============ A6 : READ ALOUD ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 6</span>👥 Activity 6: Work in groups, read the poem aloud</h2>
+    <p class="hint ar">اعملوا في مجموعات: كل مجموعة تقرأ مقطعاً من القصيدة بالتناوب، ثم تؤدي مجموعة القصيدة كاملة أمام الصف. اضغط 🔊 لسماع النطق النموذجي.</p>
+    <ol class="steps ar">
+      <li>اقسموا القصيدة بينكم — كل طالب سطران.</li>
+      <li>تدرّبوا على الإيقاع والنبرة الصحيحة.</li>
+      <li>أدّوا القصيدة بحركات الجسد: عقد الذراعين 🙅، النظر للأسفل 👇، الابتسامة 😊.</li>
+    </ol>
+    <div id="aloudBox"></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p7">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة تغطي الدرس كاملاً. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p8">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 Hello Badges</h2>
+    <p class="hint ar">هنا تُجمع أوسمتك. أكمل الأنشطة الخمسة لتحصل على كل أوسمة الترحيب!</p>
+    <div class="badge-board">
+      <h3>✦ MY HELLO BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف السابع 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! جمعت كل أوسمة درس <b>قصيدة التحية</b>!<br>
+        أصبحت تستخدم كلمات لغة الجسد وتنطق and كالمتحدثين الأصليين. تصفيق حار! 👏🎤
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 4 : Oh, hello!  (Grade 7)
+   Greetings unit theme 👋 — poetry stage header 🎭
+========================================================= */
+
+/* ---------- floating notes & greetings ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const EMOJIS=['🎵','👋','🎶','😊','🎤','🤝','🎵'];
+  EMOJIS.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fe';b.textContent=g;
+    b.style.left=(4+i*14)%90+'%';
+    b.style.animationDuration=(13+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*3.5)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'order', name:'Listen & Number',emo:'🔢'},
+  {id:'circle',name:'Circle Words',  emo:'⭕'},
+  {id:'match', name:'Complete & Match',emo:'✍️'},
+  {id:'pron',  name:'Say "and"',     emo:'🗣️'},
+  {id:'quiz',  name:'Quiz',          emo:'🏆'},
+];
+const TAB_OF={order:'p1',circle:'p2',match:'p3',pron:'p5',quiz:'p7'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('u1p4hello')||'{}')}catch(e){earned={}}
+
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';
+  let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){
+  if(earned[id])return;
+  earned[id]=true;
+  localStorage.setItem('u1p4hello',JSON.stringify(earned));
+  renderBadges();
+}
+function resetLesson(){
+  localStorage.removeItem('u1p4hello');location.reload();
+}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+function speak(txt){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='en-US';u.rate=.85;
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : number the words in the order you hear them
+   order: bored, fold arms, important, way, upset, perhaps,
+          shake hands, bow — missing: nod
+========================================================= */
+const A1WORDS=['bored','bow','fold arms','important','nod','perhaps','shake hands','upset','way'];
+const ORDER=['bored','fold arms','important','way','upset','perhaps','shake hands','bow'];
+const MISSING='nod';
+const a1box=document.getElementById('a1box');
+let pos=0,phase=1;
+A1WORDS.forEach(w=>{
+  const b=document.createElement('button');
+  b.className='wchip';b.textContent=w;
+  b.addEventListener('click',()=>{
+    if(b.classList.contains('numbered')||b.classList.contains('missing'))return;
+    if(phase===1){
+      if(w===ORDER[pos]){
+        pos++;
+        b.classList.add('numbered');
+        const o=document.createElement('span');o.className='ord';o.textContent=pos;
+        b.appendChild(o);
+        document.getElementById('hearTxt').textContent='Numbered: '+pos+' / '+ORDER.length;
+        document.getElementById('hearBar').style.width=(pos/ORDER.length*100)+'%';
+        if(pos===ORDER.length){
+          phase=2;
+          document.getElementById('step2box').style.display='block';
+          a1box.querySelectorAll('.wchip').forEach(x=>{
+            if(!x.classList.contains('numbered'))x.classList.add('pulse');
+          });
+        }
+      }else{
+        b.classList.add('no');
+        setTimeout(()=>b.classList.remove('no'),500);
+      }
+    }else{
+      if(w===MISSING){
+        b.classList.remove('pulse');
+        b.classList.add('missing');
+        document.getElementById('a1fb').classList.add('show');
+        award('order');
+      }
+    }
+  });
+  a1box.appendChild(b);
+});
+
+/* =========================================================
+   A2 : read and circle the correct words
+========================================================= */
+const A2=[
+  {pre:'In some countries, people never ',a:'nod',      b:'shake',    ok:'shake',    post:' hands.'},
+  {pre:'She looks very ',                 a:'upset',    b:'important',ok:'upset',    post:'. Is she crying?'},
+  {pre:"Don't ",                          a:'nod',      b:'fold',     ok:'nod',      post:' your head!'},
+  {pre:'The best ',                       a:'bow',      b:'way',      ok:'way',      post:' to say hello is to smile.'},
+  {pre:"It's ",                           a:'important',b:'bored',    ok:'important',post:' to understand body language.'},
+];
+const a2box=document.getElementById('a2box');
+let a2left=A2.length;
+A2.forEach((s,i)=>{
+  const d=document.createElement('div');d.className='sline';
+  d.innerHTML='<span class="num">'+(i+1)+'</span>'+s.pre;
+  [s.a,s.b].forEach((w,wi)=>{
+    const b=document.createElement('button');
+    b.className='pick';b.textContent=w;
+    b.addEventListener('click',()=>{
+      if(w===s.ok){
+        b.classList.add('ok');
+        d.querySelectorAll('.pick').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        if(--a2left===0)award('circle');
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    d.appendChild(b);
+    if(wi===0)d.appendChild(document.createTextNode(' / '));
+  });
+  d.appendChild(document.createTextNode(s.post));
+  a2box.appendChild(d);
+});
+
+/* =========================================================
+   A3 : complete + match pictures
+   answers: 1d fold · 2e shake hands · 3b bored · 4a upset · 5c bow
+========================================================= */
+const A3=[
+  {pre:'If you ',post:' your arms, you look angry.',w:'fold',pic:'d'},
+  {pre:'Some people ',post:" when they meet new people, but children don't usually do it.",w:'shake hands',pic:'e'},
+  {pre:"I finished my story. I'm ",post:". Where's my friend?",w:'bored',pic:'b'},
+  {pre:'That child is ',post:" because he doesn't want his aunt to kiss him.",w:'upset',pic:'a'},
+  {pre:'In some countries, people ',post:' to older people.',w:'bow',pic:'c'},
+];
+const BANK=['bored','fold','bow','shake hands','upset'];
+const bank=document.getElementById('bank');
+let selWord=null;
+BANK.forEach(w=>{
+  const b=document.createElement('button');
+  b.className='bword';b.textContent=w;
+  b.addEventListener('click',()=>{
+    if(b.classList.contains('used'))return;
+    bank.querySelectorAll('.bword').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');selWord=b;
+  });
+  bank.appendChild(b);
+});
+const a3box=document.getElementById('a3box');
+let a3words=A3.length,a3pics=A3.length;
+function a3check(){if(a3words===0&&a3pics===0)award('match');}
+A3.forEach((s,i)=>{
+  const d=document.createElement('div');d.className='msent';
+  d.innerHTML='<span class="num">'+(i+1)+'</span>'+s.pre;
+  const blank=document.createElement('span');
+  blank.className='blank';blank.textContent='........';
+  blank.addEventListener('click',()=>{
+    if(blank.classList.contains('filled')||!selWord)return;
+    if(selWord.textContent===s.w){
+      blank.textContent=s.w;blank.classList.add('filled');
+      selWord.classList.remove('sel');selWord.classList.add('used');
+      selWord=null;a3words--;
+      a3check();
+    }else{
+      blank.classList.add('no');
+      setTimeout(()=>blank.classList.remove('no'),450);
+      selWord.classList.remove('sel');selWord=null;
+    }
+  });
+  d.appendChild(blank);
+  d.appendChild(document.createTextNode(s.post));
+  const row=document.createElement('div');row.className='match-row';
+  row.innerHTML='<span class="lbl">Picture: </span>';
+  ['a','b','c','d','e'].forEach(L=>{
+    const b=document.createElement('button');
+    b.className='letter';b.textContent=L;
+    b.addEventListener('click',()=>{
+      if(L===s.pic){
+        b.classList.add('ok');
+        row.querySelectorAll('.letter').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        a3pics--;a3check();
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    row.appendChild(b);
+  });
+  d.appendChild(row);
+  a3box.appendChild(d);
+});
+
+/* =========================================================
+   A4 : the poem (with hover tooltips + per-line TTS)
+========================================================= */
+const POEM=[
+  "<i class='p' data-t='تعود على الشاعر الخجول المتحدث'>I</i> don't like <i class='g' data-t='مقابلة الناس'>meeting people</i>,",
+  "I don't like <i class='p' data-t='تعود على مقابلة الناس (meeting people)'>it</i> <i class='g' data-t='إطلاقاً / أبداً'>at all</i>.",
+  "To kiss and hug and shake <i class='p' data-t='تشير إلى أيدي الناس الذين يقابلهم'>those</i> hands,",
+  "To smile and sometimes <i class='g' data-t='أنحني'>bow</i>.",
+  "I often <i class='g' data-t='أعقد / أطوي'>fold</i> my arms and <i class='g' data-t='أومئ برأسي'>nod</i>",
+  "and people are <i class='g' data-t='منزعجون'>upset</i>.",
+  "I know a smile's <i class='g' data-t='مهمة'>important</i>,",
+  "And I usually <i class='g' data-t='أحاول'>try</i>,",
+  "But I always <i class='g' data-t='أنظر إلى الأسفل'>look down</i> at my <i class='g' data-t='قدميّ'>feet</i>",
+  "I'm sorry, but I just can't do <i class='p' data-t='تعود على التحية والابتسام للناس'>it</i>.",
+];
+const poemBox=document.getElementById('poem');
+POEM.forEach(line=>{
+  const d=document.createElement('div');d.className='pline';
+  d.innerHTML='<span class="txt">'+line+'</span>';
+  const b=document.createElement('button');b.className='lspk';b.textContent='🔊';
+  b.addEventListener('click',()=>speak(line.replace(/<[^>]+>/g,'')));
+  d.appendChild(b);
+  poemBox.appendChild(d);
+});
+
+/* tooltips on tap (mobile) */
+document.querySelectorAll('.g,.p').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    const was=el.classList.contains('ton');
+    document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+    if(!was)el.classList.add('ton');
+  });
+});
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+});
+
+/* =========================================================
+   A5 : pronunciation of "and" — listen to all 4 to earn badge
+========================================================= */
+const PRON=[
+  {pre:'Some people kiss ',post:' hug.',          ipa:'/n/'},
+  {pre:'We smile ',        post:' sometimes bow.',ipa:'/n/'},
+  {pre:'I often fold my arms ',post:' nod.',      ipa:'/n/'},
+  {pre:'',                 post:" I'm often surprised.",ipa:'/ænd/',first:true},
+];
+const pronBox=document.getElementById('pronBox');
+const played=new Set();
+PRON.forEach((s,i)=>{
+  const d=document.createElement('div');d.className='pron-line';
+  const sentence=(s.first?'And':s.pre+'and')+s.post;
+  d.innerHTML='<span class="num">'+(i+1)+'</span>'+
+    '<span class="txt">'+(s.first?'<span class="and">And</span>':s.pre+'<span class="and">and</span>')+s.post+'</span>'+
+    '<span class="ipa">and = '+s.ipa+'</span>';
+  const b=document.createElement('button');b.className='spk';b.textContent='🔊 Listen';
+  b.addEventListener('click',()=>{
+    speak(sentence);
+    b.classList.add('played');b.textContent='🔊 ✓';
+    played.add(i);
+    if(played.size===PRON.length)award('pron');
+  });
+  d.appendChild(b);
+  pronBox.appendChild(d);
+});
+
+/* =========================================================
+   A6 : group reading
+========================================================= */
+const ALOUD=[
+  ['Group 1','g1',"I don't like meeting people,\nI don't like it at all."],
+  ['Group 2','g2',"To kiss and hug and shake those hands,\nTo smile and sometimes bow."],
+  ['Group 3','g3',"I often fold my arms and nod\nand people are upset."],
+  ['Group 1','g1',"I know a smile's important,\nAnd I usually try,"],
+  ['Group 2','g2',"But I always look down at my feet\nI'm sorry, but I just can't do it."],
+];
+const aloudBox=document.getElementById('aloudBox');
+ALOUD.forEach(([who,cls,text])=>{
+  const d=document.createElement('div');d.className='aloud';
+  d.innerHTML='<span class="who-tag '+cls+'">'+who+'</span><p>'+text+'</p>';
+  const b=document.createElement('button');b.className='spk';b.textContent='🔊';
+  b.addEventListener('click',()=>speak(text.replace(/\n/g,' ')));
+  d.appendChild(b);
+  aloudBox.appendChild(d);
+});
+
+/* =========================================================
+   QUIZ : 5 points covering the whole lesson
+========================================================= */
+const QUIZ=[
+  {t:"Which word didn't you hear in Activity 1?",
+   o:['bow','nod','perhaps'],a:1},
+  {t:'"She looks very ____. Is she crying?"',
+   o:['important','bored','upset'],a:2},
+  {t:'If you fold your arms, you look ____.',
+   o:['angry','happy','pleased'],a:0},
+  {t:'In the poem, what does the speaker always do?',
+   o:['He smiles a lot','He looks down at his feet','He shakes hands'],a:1},
+  {t:'In "Some people kiss and hug", the word "and" sounds like ____.',
+   o:['/ænd/','/d/','/n/'],a:2},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');
+      quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    const btns=qd.querySelectorAll('.opt');
+    btns.forEach((b,oi)=>{
+      b.disabled=true;
+      b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You are a poetry star! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the lesson to get 5/5. <span class="ar">أحسنت! راجع الدرس لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Read the poem again. <span class="ar">حاول مرة أخرى! اقرأ القصيدة مجدداً.</span>';
+  box.classList.add('show');
+  award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
