@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Oh, hello! | Grade 7 · Period 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#ff6f61;
+  --coral-deep:#d94f43;
+  --teal:#14b8a6;
+  --teal-deep:#0d9488;
+  --sun:#ffc94d;
+  --sun-deep:#e0a82e;
+  --purple:#5b46d6;
+  --paper:#ffffff;
+  --cream:#fff8ef;
+  --ink:#33415c;
+  --ink-soft:#7b8794;
+  --line:#ffe3d6;
+  --ok:#27c275;
+  --no:#ff6b6b;
+  --r:20px;
+  --shadow:0 16px 40px rgba(217,79,67,.16);
+  --shadow-sm:0 8px 20px rgba(217,79,67,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(700px 420px at 92% 6%, #ffe3da, transparent 60%),
+    radial-gradient(640px 400px at 4% 28%, #d8f7f2, transparent 60%),
+    radial-gradient(700px 420px at 70% 80%, #fff3d4, transparent 55%),
+    linear-gradient(180deg,#fff4ea 0%,#fff9f1 50%,#effbf8 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 50px;position:relative;z-index:2}
+
+/* ====== floating clocks & greetings ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fe{position:absolute;bottom:-60px;font-size:28px;opacity:0;animation:floatUp linear infinite}
+@keyframes floatUp{
+  0%{transform:translateY(0) translateX(0) rotate(-6deg);opacity:0}
+  10%{opacity:.4}
+  88%{opacity:.4}
+  100%{transform:translateY(-115vh) translateX(40px) rotate(8deg);opacity:0}
+}
+
+/* ====== header : frequency staircase ⏰ ====== */
+header{position:relative;padding:26px 0 8px;text-align:center}
+.freqcard{
+  max-width:640px;margin:0 auto;position:relative;overflow:hidden;color:var(--ink);
+  background:linear-gradient(165deg,#fff7e0 0%,#ffeec9 55%,#ffe2b8 100%);
+  border-radius:32px;border:3px solid var(--sun);box-shadow:var(--shadow);
+  padding:24px 22px 24px;
+}
+.freqcard .clock{
+  position:absolute;top:18px;left:20px;font-size:46px;
+  animation:tick 2.4s ease-in-out infinite;transform-origin:top center;
+}
+.freqcard .clock.r{left:auto;right:20px;animation-delay:1.2s}
+@keyframes tick{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+.freqcard h1{
+  font-size:clamp(2rem,5.5vw,2.7rem);color:var(--coral-deep);
+  text-shadow:0 3px 0 #fff;
+}
+.freqcard .sub{font-weight:600;font-size:1rem;color:var(--teal-deep);margin-top:2px}
+.stairs{max-width:420px;margin:16px auto 0;display:flex;flex-direction:column;gap:7px;position:relative}
+.step{
+  display:flex;align-items:center;gap:10px;border-radius:12px;padding:6px 16px;color:#fff;
+  font-weight:600;width:64%;box-shadow:var(--shadow-sm);animation:stepin .6s both;
+}
+.step b{font-size:1rem}
+.step .ar-w{margin-left:auto;font-size:.85rem;opacity:.95}
+.step .pct{font-size:.75rem;background:rgba(255,255,255,.25);border-radius:99px;padding:1px 9px}
+.step:nth-child(1){background:var(--teal);margin-left:0;animation-delay:.05s}
+.step:nth-child(2){background:#58c98b;margin-left:9%;animation-delay:.15s}
+.step:nth-child(3){background:var(--sun-deep);margin-left:18%;animation-delay:.25s}
+.step:nth-child(4){background:#ff9a6b;margin-left:27%;animation-delay:.35s}
+.step:nth-child(5){background:var(--coral);margin-left:36%;animation-delay:.45s}
+@keyframes stepin{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:translateX(0)}}
+.walker{position:absolute;top:-34px;left:6%;font-size:32px;animation:walkhop 2.2s ease-in-out infinite}
+@keyframes walkhop{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px) rotate(6deg)}}
+.freqcard .tag{
+  display:inline-block;margin-top:16px;background:var(--coral);color:#fff;
+  font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:5px 18px;
+}
+
+/* ====== tabs (LTR, English) ====== */
+nav{
+  display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(255,244,234,.95),rgba(255,244,234,.8) 70%,transparent);
+  backdrop-filter:blur(6px);scrollbar-width:none;
+}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{
+  flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;
+  background:#fff;color:var(--ink);border:2px solid var(--line);
+  padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
+}
+.tab:hover{border-color:var(--coral);transform:translateY(-2px)}
+.tab.on{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;color:var(--ok);font-size:1rem}
+.tab.on .done-mark{color:#d6ffe9}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{
+  position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
+  background:repeating-linear-gradient(90deg,var(--coral) 0 26px,var(--sun) 26px 48px,var(--teal) 48px 72px);
+}
+.card h2{font-size:1.3rem;color:var(--coral-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{
+  font-size:.7rem;background:var(--teal);color:#fff;
+  padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
+}
+.hint{
+  color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
+  background:#f2fbf9;border-radius:12px;padding:8px 14px;border-right:4px solid var(--teal);
+}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:16px;padding:16px 14px;
+  display:flex;gap:12px;align-items:flex-start;transition:.25s;
+}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--coral-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.kw{background:#e7f8f5;color:var(--teal-deep);border:1.5px solid #bdeae3;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+
+/* ====== THE RULE tab (infographic style) ====== */
+.rule-hero{
+  text-align:center;background:linear-gradient(165deg,#fff7e0,#ffeec9);border:2px solid var(--sun);
+  border-radius:18px;padding:18px 16px;margin-top:12px;
+}
+.rule-hero h3{color:var(--coral-deep);font-size:1.25rem}
+.rule-hero p{color:var(--ink-soft);font-weight:700;margin-top:4px}
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin-top:14px}
+.rule-card{
+  background:#fff;border:2.5px solid var(--line);border-radius:18px;padding:16px;position:relative;
+}
+.rule-card .rc-label{
+  position:absolute;top:-14px;right:14px;background:var(--sun);color:#7a5800;
+  font-weight:800;font-size:.85rem;border-radius:999px;padding:3px 16px;box-shadow:var(--shadow-sm);
+}
+.rule-card .rc-emo{font-size:44px;text-align:center;margin-top:6px}
+.rule-card .rc-emo .bob{display:inline-block;animation:bobby 2.6s ease-in-out infinite}
+@keyframes bobby{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.rule-card h4{color:var(--ink);font-size:1.05rem;text-align:center;margin-top:6px;line-height:1.8}
+.rule-card .ex{
+  text-align:center;font-size:1.25rem;font-weight:600;margin-top:10px;background:var(--cream);
+  border-radius:12px;padding:9px;border:2px dashed #ffe9c9;
+}
+.rule-card .ex .adv{color:var(--ok)}
+.rule-card .ex .adv.red{color:var(--coral)}
+.rule-card .ex .vb{color:var(--teal-deep)}
+.adv-blocks{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.advb{
+  color:#fff;border-radius:10px;padding:7px 10px;text-align:center;font-weight:600;min-width:84px;
+  box-shadow:var(--shadow-sm);transition:.25s;cursor:pointer;
+}
+.advb:hover{transform:translateY(-4px) scale(1.05)}
+.advb small{display:block;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.8rem;opacity:.95}
+.advb i{display:block;font-style:normal;font-size:.7rem;background:rgba(255,255,255,.25);border-radius:99px;margin-top:3px}
+.advb.b1{background:var(--teal)}
+.advb.b2{background:#58c98b}
+.advb.b3{background:var(--sun-deep)}
+.advb.b4{background:#ff9a6b}
+.advb.b5{background:var(--coral)}
+.rule-q{
+  background:#f4f0ff;border:2px solid #ddd3f8;border-radius:14px;padding:11px 15px;margin-top:12px;
+  font-weight:700;color:var(--purple);line-height:1.9;text-align:center;
+}
+
+/* ====== A1 : read & think ====== */
+.exbox{
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:18px;padding:16px 20px;margin-top:12px;
+  font-weight:500;line-height:2.2;font-size:1.02rem;
+}
+.exbox .adv{background:#e7f8f5;color:var(--teal-deep);border-radius:6px;padding:0 5px;font-weight:700;border-bottom:2.5px solid var(--teal)}
+.rline{
+  border:2px solid var(--line);border-radius:14px;padding:13px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:2.2;transition:.3s;
+}
+.rline.done{border-color:#bfe8d2;background:#f6fffa}
+.num{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
+}
+.pick{
+  border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:3px 14px;margin:0 3px;
+  font-family:inherit;font-weight:600;font-size:.95rem;cursor:pointer;transition:.2s;color:var(--ink);
+}
+.pick:hover{border-color:var(--teal)}
+.pick.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.pick.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s;text-decoration:line-through}
+.pick:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ====== A2 : place the adverb ====== */
+.psent{
+  border:2px solid var(--line);border-radius:14px;padding:13px 16px;margin-top:12px;background:#fff;
+  font-size:1.05rem;font-weight:500;line-height:2.4;transition:.3s;
+}
+.psent.done{border-color:#bfe8d2;background:#f6fffa}
+.psent .adv-chip{
+  display:inline-block;background:var(--sun);color:#7a5800;border-radius:999px;padding:1px 13px;
+  font-weight:700;margin-left:6px;
+}
+.psent .wd{font-weight:500}
+.slot{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;vertical-align:middle;
+  border:2px dashed var(--sun-deep);background:#fff8e0;color:var(--sun-deep);cursor:pointer;
+  font-weight:800;font-size:.95rem;margin:0 4px;transition:.2s;
+}
+.slot:hover{transform:scale(1.2);background:var(--sun)}
+.slot.no{animation:shake .4s;border-color:var(--no);color:var(--no);background:#fff0f0}
+.placed{background:#e9fbf2;color:#168a55;border-radius:6px;padding:0 6px;font-weight:700;border-bottom:2.5px solid var(--ok)}
+
+/* ====== A3 : word order builders ====== */
+.builder{
+  border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff;transition:.3s;
+}
+.builder.done{border-color:#bfe8d2;background:#f6fffa}
+.builder .b-label{
+  font-weight:700;color:var(--coral-deep);margin-bottom:8px;display:flex;align-items:center;gap:8px;
+}
+.builder .b-label .bn{
+  display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:50%;
+  background:var(--purple);color:#fff;font-size:.8rem;font-weight:600;padding:0 4px;
+}
+.built{
+  min-height:42px;border:2px dashed #bdeae3;border-radius:12px;background:#f2fbf9;
+  padding:7px 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+}
+.built .bw{background:#e7f8f5;color:var(--teal-deep);font-weight:700;border-radius:9px;padding:3px 11px;animation:fadeUp .3s}
+.built .cursor{color:#bdeae3;font-weight:800}
+.frags{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.frag{
+  border:2.5px solid var(--sun-deep);background:#fff8e0;color:#8a6500;border-radius:999px;
+  padding:5px 15px;font-family:inherit;font-weight:600;font-size:.98rem;cursor:pointer;transition:.2s;
+}
+.frag:hover{transform:translateY(-2px)}
+.frag.used{opacity:.25;cursor:default;text-decoration:line-through}
+.frag.no{animation:shake .4s;border-color:var(--no);color:var(--no);background:#fff0f0}
+.b-ok{display:none;margin-top:8px;font-weight:700;color:#168a55}
+.builder.done .b-ok{display:block}
+
+/* matching */
+.match-row{margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.match-row span.lbl{font-size:.88rem;font-weight:600;color:var(--ink-soft)}
+.letter{
+  border:2.5px solid var(--line);background:#fff;width:38px;height:38px;border-radius:12px;
+  font-family:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:.2s;color:var(--ink);
+}
+.letter:hover{border-color:var(--teal)}
+.letter.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.letter.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.letter:disabled{cursor:default}
+.mq{
+  border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;
+  font-weight:500;font-size:1rem;line-height:1.9;transition:.3s;
+}
+.mq.done{border-color:#bfe8d2;background:#f6fffa}
+
+/* ====== A4 : pairs ====== */
+.steps{margin:10px 22px 0;color:var(--ink);font-weight:600;line-height:2.1;font-size:.95rem}
+.qa-line{
+  border:2px solid var(--line);border-radius:14px;padding:11px 16px;margin-top:10px;background:#fff;
+  font-size:1rem;font-weight:500;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.qa-line .who-tag{flex-shrink:0;font-weight:600;color:#fff;border-radius:10px;padding:3px 12px;font-size:.82rem}
+.qa-line .who-tag.qq{background:var(--purple)}
+.qa-line .who-tag.aa{background:var(--teal)}
+.qa-line .txt{flex:1;min-width:180px}
+.spk{
+  border:0;background:#e7f8f5;color:var(--teal-deep);border-radius:999px;padding:5px 16px;cursor:pointer;
+  font-family:inherit;font-weight:600;font-size:.85rem;transition:.2s;display:flex;align-items:center;gap:5px;flex-shrink:0;
+}
+.spk:hover{background:#c9efe8}
+.spk:active{transform:scale(.93)}
+.gbox{
+  background:#f4f0ff;border:2px solid #ddd3f8;border-radius:14px;padding:13px 16px;margin-top:14px;
+  font-weight:600;color:var(--purple);line-height:2;font-size:.97rem;
+}
+
+/* ====== quiz ====== */
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
+  font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
+}
+.opt:hover{border-color:var(--teal)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{
+  display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.85rem;margin-right:8px;
+}
+.score-box{
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--coral),#ff9a6b);color:#fff;
+  border-radius:18px;padding:20px;text-align:center;
+}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#fff3c4}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{
+  margin-top:16px;border:0;background:var(--coral);color:#fff;font-family:inherit;font-weight:700;
+  font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
+}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== hello badges board ====== */
+.badge-board{
+  background:linear-gradient(160deg,#fff4ea,#ffe9dd);border-radius:22px;padding:26px 22px;margin-top:16px;
+  border:3px solid var(--coral);box-shadow:var(--shadow);text-align:center;
+}
+.badge-board h3{letter-spacing:3px;color:var(--coral-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{
+  border:2.5px dashed #f3c4b8;border-radius:16px;padding:14px 8px;min-height:112px;background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot.earned{border-style:solid;border-color:var(--teal);background:#f2fbf9}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--teal)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+
+/* ====== footer credit ====== */
+.credit{
+  text-align:center;margin-top:40px;font-weight:600;color:var(--ink-soft);font-size:.95rem;
+}
+.credit b{color:var(--coral-deep)}
+.credit .hb{display:inline-block;animation:heart 1.6s ease-in-out infinite}
+@keyframes heart{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="freqcard">
+    <span class="clock">⏰</span><span class="clock r">⏱️</span>
+    <h1>Oh, hello!</h1>
+    <div class="sub">Grammar: Adverbs of Frequency · PB page 8</div>
+    <div class="stairs">
+      <span class="walker">🚶‍♂️</span>
+      <div class="step"><b>always</b><span class="pct">100%</span><span class="ar-w ar">دائماً</span></div>
+      <div class="step"><b>usually</b><span class="pct">80%</span><span class="ar-w ar">عادةً</span></div>
+      <div class="step"><b>often</b><span class="pct">60%</span><span class="ar-w ar">غالباً</span></div>
+      <div class="step"><b>sometimes</b><span class="pct">40%</span><span class="ar-w ar">أحياناً</span></div>
+      <div class="step"><b>never</b><span class="pct">0%</span><span class="ar-w ar">أبداً</span></div>
+    </div>
+    <span class="tag">UNIT 1 · PERIOD 5 · GRADE 7</span>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">📐 The Rule</button>
+  <button class="tab" data-p="p2">🧠 Read &amp; Think <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p3">📍 Place the Adverb <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p4">🔀 Make Questions <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p5">👥 Ask &amp; Answer</button>
+  <button class="tab" data-p="p6">🏁 Quiz <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p7">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">درس قواعد اليوم: ظروف التكرار (Adverbs of Frequency) — متى نستخدمها وأين نضعها في الجملة. أنجز الأنشطة لتجمع أوسمة الترحيب الخمسة! 🏅</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">📐</div><div><b>The Rule</b><span class="ar">أفهم قاعدة ظروف التكرار ومكانها في الجملة.</span></div></div>
+      <div class="goal"><div class="ico">🧠</div><div><b>Discover</b><span class="ar">أكتشف القاعدة بنفسي من الجمل والأمثلة.</span></div></div>
+      <div class="goal"><div class="ico">📍</div><div><b>Word Position</b><span class="ar">أضع ظرف التكرار في مكانه الصحيح داخل الجملة.</span></div></div>
+      <div class="goal"><div class="ico">🔀</div><div><b>Questions</b><span class="ar">أرتب الكلمات لأكوّن أسئلة وإجابات وأطابق بينها.</span></div></div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">💬 Word Bag</h2>
+    <div class="keywords">
+      <span class="kw">always</span><span class="kw">usually</span><span class="kw">often</span>
+      <span class="kw">sometimes</span><span class="kw">never</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE RULE ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">RULE</span>📐 Adverbs of Frequency</h2>
+    <div class="rule-hero">
+      <h3 class="ar">دليلك لاستخدام ظروف التكرار (Adverbs of Frequency)</h3>
+      <p class="ar">فهم متى وأين نضع ظروف التكرار في الجملة الإنجليزية بشكل صحيح</p>
+    </div>
+
+    <div class="rule-grid">
+      <div class="rule-card">
+        <span class="rc-label ar">ما هي؟ 🕰️</span>
+        <div class="rc-emo"><span class="bob">⏰</span></div>
+        <h4 class="ar">تخبرنا عن <b style="color:var(--coral-deep)">"معدل تكرار"</b> الفعل —<br>أي تجيب عن سؤال <b style="color:var(--purple)">"كم مرة؟"</b> 💭</h4>
+        <div class="adv-blocks">
+          <div class="advb b1" data-w="always">always<small>دائماً</small><i>100%</i></div>
+          <div class="advb b2" data-w="usually">usually<small>عادةً</small><i>80%</i></div>
+          <div class="advb b3" data-w="often">often<small>غالباً</small><i>60%</i></div>
+          <div class="advb b4" data-w="sometimes">sometimes<small>أحياناً</small><i>40%</i></div>
+          <div class="advb b5" data-w="never">never<small>أبداً</small><i>0%</i></div>
+        </div>
+        <p class="ar" style="margin-top:8px;font-size:.85rem;color:var(--ink-soft);font-weight:600;text-align:center">🔊 اضغط أي كلمة لتسمع نطقها</p>
+      </div>
+
+      <div>
+        <div class="rule-card">
+          <span class="rc-label ar">المكان 1: قبل الفعل الأساسي</span>
+          <div class="rc-emo"><span class="bob">🤖</span></div>
+          <h4 class="ar">مكانها <b style="color:var(--teal-deep)">قبل</b> الأفعال الأساسية</h4>
+          <div class="ex">I <span class="adv">always</span> <span class="vb">smile</span>. 😊</div>
+        </div>
+        <div class="rule-card" style="margin-top:22px">
+          <span class="rc-label ar">المكان 2: بعد (am, is, are)</span>
+          <div class="rc-emo"><span class="bob">😴☁️</span></div>
+          <h4 class="ar">مكانها <b style="color:var(--coral-deep)">بعد</b> الفعل To Be<br>(am · is · are · aren't · isn't)</h4>
+          <div class="ex">He <span class="vb">is</span> <span class="adv red">never</span> bored. 😴</div>
+        </div>
+      </div>
+    </div>
+    <div class="rule-q ar">⭐ تذكّر: قبل الفعل العادي... وبعد فعل الكينونة (verb to be)!</div>
+  </div>
+</section>
+
+<!-- ============ A1 : READ & THINK ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>🧠 Activity 1: Read and think, then complete the rules</h2>
+    <p class="hint ar">اقرأ الجمل التالية وانتبه لمكان الكلمات الملونة، ثم اختر الكلمة الصحيحة لإكمال القاعدتين في الأسفل.</p>
+    <div class="exbox" id="exbox"></div>
+    <div class="rline" id="rule1">
+      <span class="num">1</span>We use <i>always, usually, often, sometimes</i> and <i>never</i> to tell us
+      <button class="pick" data-r="1" data-ok="0">when</button> /
+      <button class="pick" data-r="1" data-ok="1">how often</button>
+      something happens.
+    </div>
+    <div class="rline" id="rule2">
+      <span class="num">2</span>We put <i>always, usually, often, sometimes</i> and <i>never</i>
+      <button class="pick" data-r="2" data-ok="0">before</button> /
+      <button class="pick" data-r="2" data-ok="1">after</button>
+      <i>am, are, is, 'm not, aren't, isn't</i> — but you put them
+      <button class="pick" data-r="3" data-ok="1">before</button> /
+      <button class="pick" data-r="3" data-ok="0">after</button>
+      other verbs.
+    </div>
+  </div>
+</section>
+
+<!-- ============ A2 : PLACE THE ADVERB ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>📍 Activity 2: Put the words in brackets in the correct place</h2>
+    <p class="hint ar">أين يجب أن يقع ظرف التكرار؟ اضغط على دائرة <b>+</b> في المكان الصحيح داخل كل جملة لإسقاط الكلمة فيه.</p>
+    <div id="a2box"></div>
+  </div>
+</section>
+
+<!-- ============ A3 : MAKE QUESTIONS ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>🔀 Activity 3: Order the words, then match questions and answers</h2>
+    <p class="hint ar"><b>أولاً:</b> اضغط الكلمات بالترتيب الصحيح لتكوين كل سؤال وكل إجابة. <b>ثانياً:</b> طابق كل سؤال مع إجابته بالحرف المناسب.</p>
+    <h2 style="font-size:1.05rem;margin-top:14px">❓ The Questions</h2>
+    <div id="qBuilders"></div>
+    <h2 style="font-size:1.05rem;margin-top:18px">💬 The Answers</h2>
+    <div id="aBuilders"></div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">🔗 Match the questions with the answers</h2>
+    <div id="matchBox"></div>
+  </div>
+</section>
+
+<!-- ============ A4 : ASK & ANSWER ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>👥 Activity 4: Work in pairs — ask and answer</h2>
+    <p class="hint ar">اعمل مع زميلك: اسأله أسئلة النشاط السابق وليجب عنها بإجابات حقيقية عن نفسه، ثم تبادلا الأدوار. اضغط 🔊 لسماع النطق النموذجي.</p>
+    <div id="qaBox"></div>
+    <div class="gbox">
+      📌 Grammar: adverbs of frequency<br>
+      • We use <b>always, usually, often, sometimes</b> and <b>never</b> to tell us <b>how often</b>.<br>
+      • We put them <b>before</b> most verbs but <b>after</b> <i>am, are, is, 'm not, aren't, isn't</i>.
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة تغطي القاعدة كاملة. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p7">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 Hello Badges</h2>
+    <p class="hint ar">هنا تُجمع أوسمتك. أكمل الأنشطة الخمسة لتحصل على كل أوسمة الترحيب!</p>
+    <div class="badge-board">
+      <h3>✦ MY HELLO BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف السابع 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! جمعت كل أوسمة درس <b>ظروف التكرار</b>!<br>
+        I <b>always</b> learn... I am <b>never</b> bored! أصبحت خبيراً في القاعدة. 👏
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+
+<footer class="credit">Designed with love <span class="hb">💗</span> by <b>T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 5 : Oh, hello!  (Grade 7)
+   Grammar: adverbs of frequency — frequency staircase header ⏰
+========================================================= */
+
+/* ---------- floating clocks & greetings ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const EMOJIS=['⏰','👋','🕐','😊','⏱️','🤝','🕑'];
+  EMOJIS.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fe';b.textContent=g;
+    b.style.left=(4+i*14)%90+'%';
+    b.style.animationDuration=(13+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*3.5)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'rules', name:'Read & Think', emo:'🧠'},
+  {id:'place', name:'Place the Adverb', emo:'📍'},
+  {id:'order', name:'Word Order',  emo:'🔀'},
+  {id:'match', name:'Match Q&A',   emo:'🔗'},
+  {id:'quiz',  name:'Quiz',        emo:'🏆'},
+];
+const TAB_OF={rules:'p2',place:'p3',order:'p4',match:'p4',quiz:'p6'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('u1p5hello')||'{}')}catch(e){earned={}}
+
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';
+  let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){
+  if(earned[id])return;
+  earned[id]=true;
+  localStorage.setItem('u1p5hello',JSON.stringify(earned));
+  renderBadges();
+}
+function resetLesson(){
+  localStorage.removeItem('u1p5hello');location.reload();
+}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+function speak(txt){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='en-US';u.rate=.85;
+  speechSynthesis.speak(u);
+}
+document.querySelectorAll('.advb').forEach(b=>b.addEventListener('click',()=>speak(b.dataset.w)));
+
+/* =========================================================
+   A1 : example sentences + complete the rules
+   answers: 1 how often · 2 after; before
+========================================================= */
+const EXAMPLES=[
+  'In some countries people <span class="adv">always</span> kiss and hug their friends.',
+  'I <span class="adv">always</span> look down at my feet.',
+  'I <span class="adv">usually</span> smile when I meet new people.',
+  'What do you <span class="adv">usually</span> do when you meet a friend?',
+  "Young people don't <span class=\"adv\">often</span> shake hands.",
+  'I am <span class="adv">often</span> quiet when I meet new people.',
+  'She <span class="adv">sometimes</span> hugs her friends.',
+  'Do you <span class="adv">sometimes</span> shake hands with new people?',
+  'I <span class="adv">never</span> smile.',
+  "They aren't <span class=\"adv\">usually</span> happy to meet new people.",
+];
+document.getElementById('exbox').innerHTML=EXAMPLES.map(e=>'• '+e).join('<br>');
+
+const ruleDone={};
+document.querySelectorAll('.pick[data-r]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const r=b.dataset.r;
+    const group=document.querySelectorAll('.pick[data-r="'+r+'"]');
+    if(b.dataset.ok==='1'){
+      b.classList.add('ok');
+      group.forEach(x=>x.disabled=true);
+      ruleDone[r]=true;
+      b.closest('.rline').querySelectorAll('.pick').forEach(()=>{});
+      if(ruleDone['1'])document.getElementById('rule1').classList.add('done');
+      if(ruleDone['2']&&ruleDone['3'])document.getElementById('rule2').classList.add('done');
+      if(ruleDone['1']&&ruleDone['2']&&ruleDone['3'])award('rules');
+    }else{
+      b.classList.add('no');b.disabled=true;
+    }
+  });
+});
+
+/* =========================================================
+   A2 : place the adverb (tap the correct + slot)
+========================================================= */
+const A2=[
+  {words:['I','smile','when','I','meet','a','new','classmate.'],adv:'always',  slot:1},
+  {words:['He','meets','Amir','near','the','market.'],          adv:'sometimes',slot:1},
+  {words:['He',"doesn't",'win','at','football.'],               adv:'often',   slot:2},
+  {words:['He','is','bored.'],                                  adv:'never',   slot:2},
+  {words:['We',"aren't",'surprised.'],                          adv:'usually', slot:2},
+];
+const a2box=document.getElementById('a2box');
+let a2left=A2.length;
+A2.forEach((s,i)=>{
+  const d=document.createElement('div');d.className='psent';
+  const head=document.createElement('span');
+  head.innerHTML='<span class="num">'+(i+1)+'</span>';
+  d.appendChild(head);
+  s.words.forEach((w,wi)=>{
+    const slot=document.createElement('button');
+    slot.className='slot';slot.textContent='+';
+    slot.addEventListener('click',()=>{
+      if(wi===s.slot){
+        const adv=document.createElement('span');
+        adv.className='placed';adv.textContent=s.adv;
+        d.insertBefore(adv,slot);
+        d.insertBefore(document.createTextNode(' '),slot);
+        d.querySelectorAll('.slot').forEach(x=>x.remove());
+        d.classList.add('done');
+        speak(s.words.slice(0,s.slot).join(' ')+' '+s.adv+' '+s.words.slice(s.slot).join(' '));
+        if(--a2left===0)award('place');
+      }else{
+        slot.classList.add('no');
+        setTimeout(()=>slot.classList.remove('no'),450);
+      }
+    });
+    d.appendChild(slot);
+    const word=document.createElement('span');
+    word.className='wd';word.textContent=w;
+    d.appendChild(word);
+    d.appendChild(document.createTextNode(' '));
+  });
+  const chip=document.createElement('span');
+  chip.className='adv-chip';chip.textContent='('+s.adv+')';
+  d.appendChild(chip);
+  a2box.appendChild(d);
+});
+
+/* =========================================================
+   A3 : word-order builders + matching
+   1→c · 2→a · 3→b
+========================================================= */
+const BUILDERS_Q=[
+  {label:'1',frags:['go to','often','the beach','you','Do'],target:['Do','you','often','go to','the beach'],end:'?'},
+  {label:'2',frags:['your cousin','you','Do','see','often'],target:['Do','you','often','see','your cousin'],end:'?'},
+  {label:'3',frags:['How','go to','you','do','school','usually'],target:['How','do','you','usually','go to','school'],end:'?'},
+];
+const BUILDERS_A=[
+  {label:'a',frags:['Yes,','with him','I','in the summer','stay','always'],target:['Yes,','I','always','stay','with him','in the summer'],end:'.'},
+  {label:'b',frags:['go','usually','by bus','I'],target:['I','usually','go','by bus'],end:'.'},
+  {label:'c',frags:['No,','never','I','go','there'],target:['No,','I','never','go','there'],end:'.'},
+];
+let buildersLeft=BUILDERS_Q.length+BUILDERS_A.length;
+function makeBuilder(b,host){
+  const d=document.createElement('div');d.className='builder';
+  d.innerHTML='<div class="b-label"><span class="bn">'+b.label+'</span>Put the words in order:</div>';
+  const built=document.createElement('div');built.className='built';
+  built.innerHTML='<span class="cursor">✍️ ...</span>';
+  const frBox=document.createElement('div');frBox.className='frags';
+  let pos=0;
+  b.frags.forEach(f=>{
+    const fb=document.createElement('button');fb.className='frag';fb.textContent=f;
+    fb.addEventListener('click',()=>{
+      if(fb.classList.contains('used'))return;
+      if(f===b.target[pos]){
+        pos++;
+        fb.classList.add('used');
+        if(pos===1)built.innerHTML='';
+        const w=document.createElement('span');w.className='bw';w.textContent=f;
+        built.appendChild(w);
+        if(pos===b.target.length){
+          const w2=document.createElement('span');w2.className='bw';w2.textContent=b.end;
+          built.appendChild(w2);
+          d.classList.add('done');
+          const sentence=b.target.join(' ')+b.end;
+          d.insertAdjacentHTML('beforeend','<div class="b-ok">✓ '+sentence+'</div>');
+          speak(sentence);
+          if(--buildersLeft===0)award('order');
+        }
+      }else{
+        fb.classList.add('no');
+        setTimeout(()=>fb.classList.remove('no'),450);
+      }
+    });
+    frBox.appendChild(fb);
+  });
+  d.appendChild(built);d.appendChild(frBox);
+  host.appendChild(d);
+}
+BUILDERS_Q.forEach(b=>makeBuilder(b,document.getElementById('qBuilders')));
+BUILDERS_A.forEach(b=>makeBuilder(b,document.getElementById('aBuilders')));
+
+/* matching */
+const MATCH=[
+  {q:'1. Do you often go to the beach?',ans:'c'},
+  {q:'2. Do you often see your cousin?',ans:'a'},
+  {q:'3. How do you usually go to school?',ans:'b'},
+];
+const matchBox=document.getElementById('matchBox');
+let matchLeft=MATCH.length;
+MATCH.forEach(m=>{
+  const d=document.createElement('div');d.className='mq';
+  d.textContent=m.q;
+  const row=document.createElement('div');row.className='match-row';
+  row.innerHTML='<span class="lbl">Answer: </span>';
+  ['a','b','c'].forEach(L=>{
+    const b=document.createElement('button');b.className='letter';b.textContent=L;
+    b.addEventListener('click',()=>{
+      if(L===m.ans){
+        b.classList.add('ok');
+        row.querySelectorAll('.letter').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        if(--matchLeft===0)award('match');
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    row.appendChild(b);
+  });
+  d.appendChild(row);
+  matchBox.appendChild(d);
+});
+
+/* =========================================================
+   A4 : ask & answer (models with TTS)
+========================================================= */
+const QA=[
+  ['Q','Do you often go to the beach?'],
+  ['A','No, I never go there.'],
+  ['Q','Do you often see your cousin?'],
+  ['A','Yes, I always stay with him in the summer.'],
+  ['Q','How do you usually go to school?'],
+  ['A','I usually go by bus.'],
+];
+const qaBox=document.getElementById('qaBox');
+QA.forEach(([t,txt])=>{
+  const d=document.createElement('div');d.className='qa-line';
+  d.innerHTML='<span class="who-tag '+(t==='Q'?'qq':'aa')+'">'+(t==='Q'?'❓ Ask':'💬 Answer')+'</span><span class="txt">'+txt+'</span>';
+  const b=document.createElement('button');b.className='spk';b.textContent='🔊';
+  b.addEventListener('click',()=>speak(txt));
+  d.appendChild(b);
+  qaBox.appendChild(d);
+});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'Adverbs of frequency tell us ____.',
+   o:['where something happens','how often something happens','why something happens'],a:1},
+  {t:'Choose the correct sentence:',
+   o:['He never is bored.','He is bored never.','He is never bored.'],a:2},
+  {t:'Choose the correct sentence:',
+   o:['I always smile.','I smile always.','Always smile I.'],a:0},
+  {t:'Which adverb means "أحياناً"?',
+   o:['usually','sometimes','never'],a:1},
+  {t:'Complete: "We aren\'t ____ surprised."',
+   o:['usually','use','usual'],a:0},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');
+      quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    const btns=qd.querySelectorAll('.opt');
+    btns.forEach((b,oi)=>{
+      b.disabled=true;
+      b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You ALWAYS get it right! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the rule to get 5/5. <span class="ar">أحسنت! راجع القاعدة لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Go back to The Rule tab. <span class="ar">حاول مرة أخرى! عد إلى تبويب القاعدة.</span>';
+  box.classList.add('show');
+  award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>

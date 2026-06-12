@@ -28,3 +28,4 @@ Each lesson is a single self-contained HTML file: `grade<N>/unit<U>p<P>*.html`.
 - Tooltips/popovers must not be clipped: any container that holds hover tooltips must NOT use `overflow:hidden`.
 - Workflow: the teacher gave explicit permission to commit and push **directly to `main`** — no feature branches, no PRs. She views the site from `main`, so push there right after finishing each lesson.
 - Tab bar: horizontally scrollable on mobile, but MUST wrap to multiple lines on wider screens (`@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}`) — hidden scrollbars make overflowing tabs unreachable on laptops.
+- Footer: every lesson page ends with a small centered credit footer, alternating "Designed with love 💗 by T. Wad Refae" / "Prepared with care 🌸 by T. Wad Refae".
