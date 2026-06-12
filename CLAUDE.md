@@ -27,3 +27,4 @@ Each lesson is a single self-contained HTML file: `grade<N>/unit<U>p<P>*.html`.
 - Listening conversations: split the transcript into segments; after each segment put its comprehension questions (inside a `<details>` dropdown, per rule 3). The Drive player plays the whole recording; per-segment listening is a 🔊 TTS button that reads the segment transcript aloud. NEVER add a segment-timing adjustment panel.
 - Tooltips/popovers must not be clipped: any container that holds hover tooltips must NOT use `overflow:hidden`.
 - Workflow: the teacher gave explicit permission to commit and push **directly to `main`** — no feature branches, no PRs. She views the site from `main`, so push there right after finishing each lesson.
+- Tab bar: horizontally scrollable on mobile, but MUST wrap to multiple lines on wider screens (`@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}`) — hidden scrollbars make overflowing tabs unreachable on laptops.
