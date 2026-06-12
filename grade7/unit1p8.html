@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 – Oh, hello! | Grade 7 · Period 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#ff6f61;
+  --coral-deep:#d94f43;
+  --teal:#14b8a6;
+  --teal-deep:#0d9488;
+  --sun:#ffc94d;
+  --sun-deep:#e0a82e;
+  --purple:#5b46d6;
+  --paper:#ffffff;
+  --cream:#fff8ef;
+  --ink:#33415c;
+  --ink-soft:#7b8794;
+  --line:#ffe3d6;
+  --ok:#27c275;
+  --no:#ff6b6b;
+  --r:20px;
+  --shadow:0 16px 40px rgba(217,79,67,.16);
+  --shadow-sm:0 8px 20px rgba(217,79,67,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(700px 420px at 92% 6%, #ffe3da, transparent 60%),
+    radial-gradient(640px 400px at 4% 28%, #d8f7f2, transparent 60%),
+    radial-gradient(700px 420px at 70% 80%, #fff3d4, transparent 55%),
+    linear-gradient(180deg,#fff4ea 0%,#fff9f1 50%,#effbf8 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 50px;position:relative;z-index:2}
+
+/* ====== floating welcome ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fe{position:absolute;bottom:-60px;font-size:28px;opacity:0;animation:floatUp linear infinite}
+@keyframes floatUp{
+  0%{transform:translateY(0) translateX(0) rotate(-6deg);opacity:0}
+  10%{opacity:.4}
+  88%{opacity:.4}
+  100%{transform:translateY(-115vh) translateX(40px) rotate(8deg);opacity:0}
+}
+
+/* ====== header : hanging Welcome-to-Palestine poster 🇵🇸 ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.hang-zone{max-width:640px;margin:0 auto;position:relative}
+.rope{
+  position:absolute;top:-16px;left:8%;right:8%;height:38px;
+  border-top:3px dashed #b89368;border-radius:50%;
+}
+.pin{position:absolute;top:-25px;font-size:26px;z-index:5;filter:drop-shadow(0 3px 4px rgba(0,0,0,.25))}
+.pin.l{left:7%}
+.pin.r{right:7%}
+.postercard{
+  position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(180deg,#7ec8f7 0%,#a9ddff 52%,#8fd07a 52%,#5cb85c 100%);
+  border-radius:18px;border:6px solid #fff;box-shadow:var(--shadow);
+  padding:26px 22px 20px;
+  transform-origin:top center;animation:posterswing 7s ease-in-out infinite;
+}
+@keyframes posterswing{0%,100%{transform:rotate(-.7deg)}50%{transform:rotate(.7deg)}}
+.postercard .psun{position:absolute;top:12px;right:16px;font-size:42px;animation:sunpulse 4s infinite}
+@keyframes sunpulse{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.15) rotate(12deg)}}
+.postercard .dove{position:absolute;top:20px;left:14px;font-size:30px;animation:dovefly 6s ease-in-out infinite}
+@keyframes dovefly{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px) rotate(-6deg)}}
+.postercard h1{
+  font-size:clamp(2rem,5.6vw,2.8rem);line-height:1.25;
+  text-shadow:0 3px 0 rgba(20,90,150,.5),0 8px 20px rgba(0,0,0,.25);
+}
+.postercard h1 .pal{color:#fff3c4}
+.postercard .sub{font-weight:600;font-size:1rem;margin-top:2px;text-shadow:0 2px 6px rgba(0,0,0,.3)}
+.greet-pals{display:flex;justify-content:center;gap:16px;margin-top:10px;font-size:42px}
+.greet-pals span{animation:palbob 3s ease-in-out infinite;filter:drop-shadow(0 6px 8px rgba(0,0,0,.2))}
+.greet-pals span:nth-child(2){animation-delay:.7s}
+.greet-pals span:nth-child(3){animation-delay:1.4s}
+@keyframes palbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.postercard .tag{
+  display:inline-block;margin-top:12px;background:#fff;color:#2f7d32;
+  font-weight:700;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:5px 18px;
+}
+
+/* ====== tabs (LTR, English) ====== */
+nav{
+  display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(255,244,234,.95),rgba(255,244,234,.8) 70%,transparent);
+  backdrop-filter:blur(6px);scrollbar-width:none;
+}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{
+  flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;
+  background:#fff;color:var(--ink);border:2px solid var(--line);
+  padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
+}
+.tab:hover{border-color:var(--coral);transform:translateY(-2px)}
+.tab.on{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;color:var(--ok);font-size:1rem}
+.tab.on .done-mark{color:#d6ffe9}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{
+  position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
+  background:repeating-linear-gradient(90deg,var(--coral) 0 26px,var(--sun) 26px 48px,var(--teal) 48px 72px);
+}
+.card h2{font-size:1.3rem;color:var(--coral-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{
+  font-size:.7rem;background:var(--teal);color:#fff;
+  padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
+}
+.hint{
+  color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
+  background:#f2fbf9;border-radius:12px;padding:8px 14px;border-right:4px solid var(--teal);
+}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{
+  background:var(--cream);border:2px solid #ffe9c9;border-radius:16px;padding:16px 14px;
+  display:flex;gap:12px;align-items:flex-start;transition:.25s;
+}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--coral-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.taskbox{
+  background:#f4f0ff;border:2px solid #ddd3f8;border-radius:16px;padding:14px 18px;margin-top:14px;
+  font-weight:600;color:var(--purple);line-height:2;
+}
+.taskbox b{color:#4534b8}
+
+/* ====== A1 : pair questions ====== */
+.pairq{
+  border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:12px;background:#fff;
+  font-size:1.02rem;font-weight:500;line-height:1.9;
+}
+.pairq .num{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
+}
+.reveal-btn{
+  border:0;background:var(--teal);color:#fff;font-family:inherit;font-weight:600;border-radius:12px;
+  padding:8px 16px;cursor:pointer;font-size:.88rem;transition:.2s;margin-top:10px;display:block;
+}
+.reveal-btn:hover{background:var(--teal-deep)}
+.feedback{display:none;margin-top:10px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.8}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== A2 : listen, complete & spell ====== */
+.sline{
+  border:2px solid var(--line);border-radius:14px;padding:13px 16px;margin-top:12px;background:#fff;
+  font-size:1.04rem;font-weight:500;line-height:2.5;transition:.3s;
+}
+.sline.done{border-color:#bfe8d2;background:#f6fffa}
+.num{
+  display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.8rem;margin-right:8px;font-weight:600;
+}
+.gap{
+  border:0;border-bottom:3px dashed var(--sun-deep);background:#fffdf4;border-radius:8px 8px 0 0;
+  font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:1rem;color:var(--teal-deep);
+  text-align:center;padding:2px 6px;margin:0 3px;transition:.2s;
+}
+.gap:focus{outline:0;background:#fff8e0}
+.gap.right{border-bottom-color:var(--ok);background:#e9fbf2;color:#168a55}
+.gap.wrong{animation:shake .4s;border-bottom-color:var(--no);background:#fff0f0;color:var(--no)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.spk{
+  border:0;background:#e7f8f5;color:var(--teal-deep);border-radius:999px;padding:5px 16px;cursor:pointer;
+  font-family:inherit;font-weight:600;font-size:.85rem;transition:.2s;display:inline-flex;align-items:center;gap:5px;
+  vertical-align:middle;margin-right:6px;
+}
+.spk:hover{background:#c9efe8}
+.spk:active{transform:scale(.93)}
+.spk.played{background:#d6f5d6;color:#168a55}
+.checkline{
+  border:0;background:var(--teal);color:#fff;font-family:inherit;font-weight:700;border-radius:999px;
+  padding:6px 18px;cursor:pointer;font-size:.88rem;transition:.2s;margin-left:8px;vertical-align:middle;
+}
+.checkline:hover{background:var(--teal-deep)}
+.sline.done .checkline{display:none}
+.ttsnote{
+  background:#fff8e0;border:2px dashed var(--sun-deep);border-radius:14px;padding:10px 14px;margin-top:10px;
+  font-weight:600;color:#8a6500;font-size:.92rem;line-height:1.8;
+}
+
+/* ====== A3 : repeat ====== */
+.rep-line{
+  border:2px solid var(--line);border-radius:14px;padding:11px 16px;margin-top:10px;background:#fff;
+  font-size:1.05rem;font-weight:500;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.rep-line .num{flex-shrink:0}
+.rep-line .txt{flex:1;min-width:180px}
+
+/* ====== A4 : my pictures & sentences ====== */
+.wq{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.wq .q-head{font-weight:600;color:var(--purple);display:flex;gap:8px;align-items:flex-start;line-height:1.8}
+.wq .q-head .qn2{
+  flex-shrink:0;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--purple);color:#fff;font-size:.8rem;font-weight:600;margin-top:3px;
+}
+.wq textarea{
+  width:100%;margin-top:10px;border:2px solid #e6ebf5;border-radius:12px;padding:10px 13px;
+  font-family:'Fredoka','Nunito',sans-serif;font-weight:500;font-size:1rem;min-height:54px;resize:vertical;
+  color:var(--ink);transition:.2s;
+}
+.wq textarea:focus{outline:0;border-color:var(--teal)}
+.exa{display:none;margin-top:9px;background:#fff8e0;border:2px dashed var(--sun-deep);border-radius:12px;padding:8px 13px;font-weight:600;color:#8a6500;font-size:.93rem;line-height:1.8}
+.exa.show{display:block;animation:fadeUp .3s}
+.exa-btn{
+  background:#fff8e0;color:#8a6500;border:2px solid var(--sun-deep);font-family:inherit;font-weight:700;
+  border-radius:999px;padding:5px 14px;cursor:pointer;font-size:.82rem;transition:.2s;margin-top:9px;
+}
+.exa-btn:hover{background:var(--sun)}
+
+/* ====== A5 : poster maker ====== */
+.maker{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-top:12px}
+.maker-form label{display:block;font-weight:700;color:var(--purple);margin:12px 0 5px}
+.maker-form input[type=text]{
+  width:100%;border:2px solid #e6ebf5;border-radius:12px;padding:9px 13px;
+  font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:1rem;color:var(--ink);
+}
+.maker-form input[type=text]:focus{outline:0;border-color:var(--teal)}
+.maker-form textarea{
+  width:100%;border:2px solid #e6ebf5;border-radius:12px;padding:10px 13px;
+  font-family:'Fredoka','Nunito',sans-serif;font-weight:500;font-size:1rem;min-height:96px;resize:vertical;
+  color:var(--ink);
+}
+.maker-form textarea:focus{outline:0;border-color:var(--teal)}
+.emoji-row{display:flex;gap:8px;flex-wrap:wrap}
+.emoji-pick{
+  width:46px;height:46px;border-radius:13px;border:2.5px solid var(--line);background:#fff;
+  font-size:1.4rem;cursor:pointer;transition:.2s;
+}
+.emoji-pick:hover{transform:translateY(-3px)}
+.emoji-pick.sel{border-color:var(--teal);background:#e7f8f5;box-shadow:var(--shadow-sm)}
+.poster-prev{
+  position:relative;overflow:hidden;color:#fff;text-align:center;
+  background:linear-gradient(180deg,#7ec8f7 0%,#a9ddff 55%,#8fd07a 55%,#5cb85c 100%);
+  border-radius:16px;border:5px solid #fff;box-shadow:var(--shadow);
+  padding:28px 18px;min-height:280px;display:flex;flex-direction:column;justify-content:center;gap:10px;
+}
+.poster-prev .pv-title{
+  font-size:clamp(1.6rem,4.5vw,2.3rem);font-weight:700;line-height:1.3;
+  text-shadow:0 3px 0 rgba(20,90,150,.5),0 8px 18px rgba(0,0,0,.25);
+}
+.poster-prev .pv-body{font-weight:600;font-size:1.05rem;line-height:1.9;text-shadow:0 2px 6px rgba(0,0,0,.35);white-space:pre-line}
+.poster-prev .pv-emojis{font-size:34px;letter-spacing:10px}
+.mimg{margin:14px auto 4px;max-width:560px}
+.mimg img{width:100%;height:auto;display:block;border-radius:16px;border:2px solid #ffe9c9}
+.steps{margin:10px 22px 0;color:var(--ink);font-weight:600;line-height:2.1;font-size:.95rem}
+.wstat{margin-top:10px;font-weight:700;color:var(--ink-soft)}
+.wstat.good{color:#168a55}
+
+/* ====== quiz ====== */
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
+  font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
+}
+.opt:hover{border-color:var(--teal)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{
+  display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:.85rem;margin-right:8px;
+}
+.score-box{
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--coral),#ff9a6b);color:#fff;
+  border-radius:18px;padding:20px;text-align:center;
+}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#fff3c4}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{
+  margin-top:16px;border:0;background:var(--coral);color:#fff;font-family:inherit;font-weight:700;
+  font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
+}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== hello badges board ====== */
+.badge-board{
+  background:linear-gradient(160deg,#fff4ea,#ffe9dd);border-radius:22px;padding:26px 22px;margin-top:16px;
+  border:3px solid var(--coral);box-shadow:var(--shadow);text-align:center;
+}
+.badge-board h3{letter-spacing:3px;color:var(--coral-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{
+  border:2.5px dashed #f3c4b8;border-radius:16px;padding:14px 8px;min-height:112px;background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot.earned{border-style:solid;border-color:var(--teal);background:#f2fbf9}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--teal)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+
+/* ====== footer credit ====== */
+.credit{text-align:center;margin-top:40px;font-weight:600;color:var(--ink-soft);font-size:.95rem}
+.credit b{color:var(--coral-deep)}
+.credit .hb{display:inline-block;animation:heart 1.6s ease-in-out infinite}
+@keyframes heart{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="hang-zone">
+    <div class="rope"></div>
+    <span class="pin l">📌</span><span class="pin r">📌</span>
+    <div class="postercard">
+      <span class="psun">☀️</span>
+      <span class="dove">🕊️</span>
+      <h1>Welcome to <span class="pal">Palestine!</span></h1>
+      <div class="sub">Oh, hello! · Unit Task: Making a Welcome Poster · PB page 11</div>
+      <div class="greet-pals"><span>🤝</span><span>🇵🇸</span><span>🤗</span></div>
+      <span class="tag">UNIT 1 · PERIOD 8 · GRADE 7</span>
+    </div>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">💬 The Task</button>
+  <button class="tab" data-p="p2">👂 Listen &amp; Complete <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p3">🗣️ Repeat <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p4">🖍️ My Pictures <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p5">🎨 Poster Maker <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p6">🏆 Show &amp; Vote</button>
+  <button class="tab" data-p="p7">🏁 Quiz <span class="done-mark">✔</span></button>
+  <button class="tab" data-p="p8">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">درس اليوم هو مهمة الوحدة الكبرى: سنصنع بوستر «أهلاً بكم في فلسطين» للزوار! أنجز الأنشطة لتجمع أوسمة الترحيب الخمسة! 🏅</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">👂</div><div><b>Listening</b><span class="ar">أستمع وأكمل جمل الترحيب وأتأكد من تهجئتها.</span></div></div>
+      <div class="goal"><div class="ico">🗣️</div><div><b>Speaking</b><span class="ar">أردد جمل الترحيب بنطق صحيح.</span></div></div>
+      <div class="goal"><div class="ico">✍️</div><div><b>Writing</b><span class="ar">أكتب جملاً تصف التحية في فلسطين.</span></div></div>
+      <div class="goal"><div class="ico">🎨</div><div><b>The Poster</b><span class="ar">أصمم بوستر ترحيب بالزوار مع مجموعتي وأعرضه.</span></div></div>
+    </div>
+    <div class="taskbox">
+      ⭐ <b>Unit task:</b> making a <b>'Welcome to Palestine'</b> poster for visitors.
+      <span class="ar" style="display:block;font-size:.9rem;color:#8a6fd8">مهمة الوحدة: صناعة بوستر «أهلاً بكم في فلسطين» للزوار — سنجمع فيه كل ما تعلمناه عن التحيات!</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : THE TASK ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>💬 Activity 1: Answer the questions with your partner</h2>
+    <p class="hint ar">اعمل مع زميلك: ناقشا السؤالين ثم اضغطا «Show ideas» لمقارنة أفكاركما.</p>
+    <div class="pairq"><span class="num">1</span>What do you <b>say</b> when you greet someone?
+      <button class="reveal-btn" data-rev="rv1">🔍 Show ideas</button>
+      <div class="feedback good" id="rv1">Hello! · Hi! · How are you? · It's good to see you! · Pleased to meet you! · Welcome!</div>
+    </div>
+    <div class="pairq"><span class="num">2</span>What do you <b>do</b> when you greet someone?
+      <button class="reveal-btn" data-rev="rv2">🔍 Show ideas</button>
+      <div class="feedback good" id="rv2">Shake hands 🤝 · Smile 😊 · Hug old friends 🤗 · Wave 👋 · Say welcome to visitors 🏡</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A2 : LISTEN & COMPLETE ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>👂 Activity 2: Listen and complete the sentences — check your spelling</h2>
+    <p class="hint ar">اضغط 🔊 لسماع الجملة كاملة، ثم <b>اكتب</b> الكلمات الناقصة في الفراغات بتهجئة صحيحة، واضغط Check. انتبه للتهجئة — هذا هو التحدي!</p>
+    <div class="ttsnote ar">🎧 ملاحظة: الاستماع هنا بزر 🔊 (قراءة آلية). عند توفر تسجيل Audio 11 الأصلي سيُضاف مشغل Drive هنا.</div>
+    <div id="a2box"></div>
+  </div>
+</section>
+
+<!-- ============ A3 : REPEAT ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>🗣️ Activity 3: Listen and repeat the sentences</h2>
+    <p class="hint ar">استمع لكل جملة وردّدها بصوت واضح — هذه الجمل ستستخدمها في البوستر! استمع للجمل الخمس كلها لتحصل على الوسام.</p>
+    <div id="a3box"></div>
+  </div>
+</section>
+
+<!-- ============ A4 : MY PICTURES ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>🖍️ Activity 4: Draw or find pictures, then write about them</h2>
+    <p class="hint ar">اعمل وحدك: ارسم صورة أو صورتين لأشخاص يتبادلون التحية في فلسطين (أو اجمع صوراً من المجلات)، ثم اكتب هنا جملة تصف كل صورة وجملة تقولها عند التحية. (تُحفظ في جهازك)</p>
+    <div class="wq">
+      <div class="q-head"><span class="qn2">1</span><span>Write a sentence describing each picture. Say how you greet people.</span></div>
+      <textarea id="w1" placeholder="Write your sentence… اكتب جملتك"></textarea>
+      <button class="exa-btn" data-ex="ex1">💡 Example</button>
+      <div class="exa" id="ex1">In Palestine, men usually shake hands, and they often hug old friends.</div>
+    </div>
+    <div class="wq">
+      <div class="q-head"><span class="qn2">2</span><span>Write what you usually say.</span></div>
+      <textarea id="w2" placeholder="Write your sentence… اكتب جملتك"></textarea>
+      <button class="exa-btn" data-ex="ex2">💡 Example</button>
+      <div class="exa" id="ex2">It's good to see you! How are you?</div>
+    </div>
+    <div class="wstat" id="w4stat">✍️ اكتب الجملتين لتحصل على الوسام</div>
+  </div>
+</section>
+
+<!-- ============ A5 : POSTER MAKER ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 5</span>🎨 Activity 5: Make your poster — write 2 or 3 sentences</h2>
+    <p class="hint ar">اعملوا في مجموعات من 4 أو 5: اكتبوا جملتين أو ثلاثاً لبوستركم بخط كبير وواضح. عدّلوا الحقول وشاهدوا البوستر يتكوّن أمامكم مباشرة! (يُحفظ في جهازك)</p>
+    <div class="maker">
+      <div class="maker-form">
+        <label>📝 Poster title — عنوان البوستر</label>
+        <input type="text" id="pTitle" maxlength="40" value="Welcome to Palestine!">
+        <label>✍️ Your sentences — جملك (2–3 جمل)</label>
+        <textarea id="pBody" placeholder="It's good to see you!&#10;Here we usually shake hands and often hug people."></textarea>
+        <label>🎉 Decorations — اختر الزينة</label>
+        <div class="emoji-row" id="emojiRow"></div>
+        <div class="wstat" id="w5stat">✍️ Words: 0</div>
+      </div>
+      <div class="poster-prev" id="posterPrev">
+        <div class="pv-title" id="pvTitle">Welcome to Palestine!</div>
+        <div class="pv-body" id="pvBody"></div>
+        <div class="pv-emojis" id="pvEmojis"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A6 : SHOW & VOTE ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 6</span>🏆 Activity 6: Show your poster — which is the best?</h2>
+    <p class="hint ar">اعرضوا بوستراتكم على الحائط أو الشاشة. كل مجموعة تقدّم بوسترها بكلمات قليلة وتجيب عن أسئلة الصف، ثم صوّتوا: أي بوستر هو الأفضل ولماذا؟</p>
+    <ol class="steps ar">
+      <li>قدّموا بوستركم: اقرؤوا الجمل بصوت واضح. 📢</li>
+      <li>أجيبوا عن سؤال واحد على الأقل من الصف.</li>
+      <li>صوّتوا للبوستر الأفضل — ولا تنسوا أن تشرحوا السبب!</li>
+    </ol>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">🖼️ Example poster</h2>
+    <p class="hint ar">هذا مثال لبوستر ترحيب — لاحظ الخط الكبير والصور المعبرة:</p>
+    <div class="mimg"><img src="https://i.ibb.co/WpVrkv4m/Chat-GPT-Image-Jun-12-2026-09-10-41-AM.png" alt="Welcome to Palestine example poster"></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p7">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة تغطي الدرس كاملاً. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p8">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 Hello Badges</h2>
+    <p class="hint ar">هنا تُجمع أوسمتك. أكمل الأنشطة الخمسة لتحصل على كل أوسمة الترحيب!</p>
+    <div class="badge-board">
+      <h3>✦ MY HELLO BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف السابع 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! أكملت مهمة الوحدة وجمعت كل الأوسمة!<br>
+        Welcome to Palestine! 🇵🇸 أتممت وحدة <b>Oh, hello!</b> كاملة — أنت الآن بطل التحيات! 👏
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+
+<footer class="credit">Prepared with care <span class="hb">🌸</span> by <b>T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 8 : Oh, hello!  (Grade 7)
+   Unit task: Welcome to Palestine poster — hanging poster header 🇵🇸
+========================================================= */
+
+/* ---------- floating welcome ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const EMOJIS=['🇵🇸','👋','🕊️','😊','🤝','🫒','🎨'];
+  EMOJIS.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fe';b.textContent=g;
+    b.style.left=(4+i*14)%90+'%';
+    b.style.animationDuration=(13+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*3.5)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'spell', name:'Listen & Spell', emo:'👂'},
+  {id:'repeat',name:'Repeat',         emo:'🗣️'},
+  {id:'write', name:'My Sentences',   emo:'🖍️'},
+  {id:'poster',name:'Poster Maker',   emo:'🎨'},
+  {id:'quiz',  name:'Quiz',           emo:'🏆'},
+];
+const TAB_OF={spell:'p2',repeat:'p3',write:'p4',poster:'p5',quiz:'p7'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('u1p8hello')||'{}')}catch(e){earned={}}
+
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';
+  let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){
+  if(earned[id])return;
+  earned[id]=true;
+  localStorage.setItem('u1p8hello',JSON.stringify(earned));
+  renderBadges();
+}
+function resetLesson(){
+  localStorage.removeItem('u1p8hello');
+  localStorage.removeItem('u1p8drafts');
+  location.reload();
+}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+function speak(txt){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='en-US';u.rate=.85;
+  speechSynthesis.speak(u);
+}
+
+/* ---------- drafts ---------- */
+let drafts={};
+try{drafts=JSON.parse(localStorage.getItem('u1p8drafts')||'{}')}catch(e){drafts={}}
+function saveDrafts(){localStorage.setItem('u1p8drafts',JSON.stringify(drafts));}
+
+/* ---------- reveal ideas / examples ---------- */
+document.querySelectorAll('.reveal-btn').forEach(b=>{
+  b.addEventListener('click',()=>document.getElementById(b.dataset.rev).classList.add('show'));
+});
+document.querySelectorAll('.exa-btn').forEach(b=>{
+  b.addEventListener('click',()=>document.getElementById(b.dataset.ex).classList.add('show'));
+});
+
+/* =========================================================
+   A2 : listen (TTS), type the missing words, check spelling
+   Audio 11 sentences — answers underlined in the book
+========================================================= */
+const A2=[
+  {parts:['Welcome to ',0,". It's ",1,' ',2,' ',3,' ',4,'.'],ans:['Palestine','good','to','see','you']},
+  {parts:['In Palestine, men usually ',0,' ',1,'.'],ans:['shake','hands']},
+  {parts:['Good friends ',0,' and ',1,' when they meet.'],ans:['hug','kiss']},
+  {parts:["It's ",0,' ',1,' ',2,' you again.'],ans:['great','to','see']},
+  {parts:['You must ',0,' ',1,' ',2,' some time.'],ans:['come','and','visit']},
+];
+const a2box=document.getElementById('a2box');
+let a2left=A2.length;
+A2.forEach((s,i)=>{
+  const full=s.parts.map(p=>typeof p==='number'?s.ans[p]:p).join('');
+  const d=document.createElement('div');d.className='sline';
+  d.innerHTML='<span class="num">'+(i+1)+'</span>';
+  const sp=document.createElement('button');sp.className='spk';sp.textContent='🔊 Listen';
+  sp.addEventListener('click',()=>speak(full));
+  d.appendChild(sp);
+  const inputs=[];
+  s.parts.forEach(p=>{
+    if(typeof p==='number'){
+      const inp=document.createElement('input');
+      inp.className='gap';inp.dataset.a=s.ans[p];
+      inp.size=Math.max(4,s.ans[p].length);
+      inp.autocapitalize='off';inp.autocomplete='off';inp.spellcheck=false;
+      inputs.push(inp);d.appendChild(inp);
+    }else{
+      d.appendChild(document.createTextNode(p));
+    }
+  });
+  const chk=document.createElement('button');chk.className='checkline';chk.textContent='Check ✓';
+  chk.addEventListener('click',()=>{
+    let good=true;
+    inputs.forEach(inp=>{
+      const okv=inp.value.trim().toLowerCase()===inp.dataset.a.toLowerCase();
+      inp.classList.remove('wrong','right');
+      inp.classList.add(okv?'right':'wrong');
+      if(okv)inp.disabled=true;else good=false;
+    });
+    if(good){
+      d.classList.add('done');
+      speak(full);
+      if(--a2left===0)award('spell');
+    }
+  });
+  d.appendChild(chk);
+  a2box.appendChild(d);
+});
+
+/* =========================================================
+   A3 : listen and repeat — play all 5 for the badge
+========================================================= */
+const SENTS=[
+  "Welcome to Palestine. It's good to see you.",
+  'In Palestine, men usually shake hands.',
+  'Good friends hug and kiss when they meet.',
+  "It's great to see you again.",
+  'You must come and visit some time.',
+];
+const a3box=document.getElementById('a3box');
+const played=new Set();
+SENTS.forEach((t,i)=>{
+  const d=document.createElement('div');d.className='rep-line';
+  d.innerHTML='<span class="num">'+(i+1)+'</span><span class="txt">'+t+'</span>';
+  const b=document.createElement('button');b.className='spk';b.textContent='🔊 Listen & repeat';
+  b.addEventListener('click',()=>{
+    speak(t);
+    b.classList.add('played');b.textContent='🔊 ✓';
+    played.add(i);
+    if(played.size===SENTS.length)award('repeat');
+  });
+  d.appendChild(b);
+  a3box.appendChild(d);
+});
+
+/* =========================================================
+   A4 : my sentences (saved drafts)
+========================================================= */
+const w1=document.getElementById('w1'),w2=document.getElementById('w2');
+w1.value=drafts['w1']||'';w2.value=drafts['w2']||'';
+function checkW4(){
+  const ok=w1.value.trim().split(/\s+/).filter(Boolean).length>=4
+        && w2.value.trim().split(/\s+/).filter(Boolean).length>=3;
+  const st=document.getElementById('w4stat');
+  if(ok){
+    st.classList.add('good');
+    st.textContent='✍️ Great sentences! 🎉';
+    award('write');
+  }
+}
+w1.addEventListener('input',()=>{drafts['w1']=w1.value;saveDrafts();checkW4();});
+w2.addEventListener('input',()=>{drafts['w2']=w2.value;saveDrafts();checkW4();});
+checkW4();
+
+/* =========================================================
+   A5 : poster maker (live preview, saved)
+========================================================= */
+const EMOJIS5=['🤝','🤗','👋','😊','🇵🇸','🕊️','🫒','☀️'];
+const emojiRow=document.getElementById('emojiRow');
+let chosen=new Set(drafts['emojis']||['🤝','🇵🇸','🤗']);
+EMOJIS5.forEach(e=>{
+  const b=document.createElement('button');
+  b.className='emoji-pick'+(chosen.has(e)?' sel':'');b.textContent=e;
+  b.addEventListener('click',()=>{
+    if(chosen.has(e)){chosen.delete(e);b.classList.remove('sel');}
+    else{chosen.add(e);b.classList.add('sel');}
+    drafts['emojis']=[...chosen];saveDrafts();paintPoster();
+  });
+  emojiRow.appendChild(b);
+});
+const pTitle=document.getElementById('pTitle'),pBody=document.getElementById('pBody');
+if(drafts['ptitle'])pTitle.value=drafts['ptitle'];
+if(drafts['pbody'])pBody.value=drafts['pbody'];
+function paintPoster(){
+  document.getElementById('pvTitle').textContent=pTitle.value.trim()||'Welcome to Palestine!';
+  document.getElementById('pvBody').textContent=pBody.value.trim()||"It's good to see you!";
+  document.getElementById('pvEmojis').textContent=[...chosen].join(' ');
+  const words=pBody.value.trim().split(/\s+/).filter(Boolean).length;
+  const st=document.getElementById('w5stat');
+  st.textContent='✍️ Words: '+words;
+  if(words>=8){
+    st.classList.add('good');
+    st.textContent='✍️ Words: '+words+' — Beautiful poster! 🎉';
+    award('poster');
+  }else{
+    st.classList.remove('good');
+  }
+}
+pTitle.addEventListener('input',()=>{drafts['ptitle']=pTitle.value;saveDrafts();paintPoster();});
+pBody.addEventListener('input',()=>{drafts['pbody']=pBody.value;saveDrafts();paintPoster();});
+paintPoster();
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'Complete: "Welcome to ____. It\'s good to see you."',
+   o:['Oxford','Palestine','school'],a:1},
+  {t:'In Palestine, men usually ____.',
+   o:['bow','fold their arms','shake hands'],a:2},
+  {t:'Good friends ____ when they meet.',
+   o:['hug and kiss','run away','say nothing'],a:0},
+  {t:'Complete: "You must ____ some time."',
+   o:['come and visit','go and sleep','sit and watch'],a:0},
+  {t:'What is the Unit task?',
+   o:['Writing a test','Making a Welcome to Palestine poster for visitors','Drawing a map of Oxford'],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');
+      quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    const btns=qd.querySelectorAll('.opt');
+    btns.forEach((b,oi)=>{
+      b.disabled=true;
+      b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! Welcome to the champions club! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the sentences to get 5/5. <span class="ar">أحسنت! راجع الجمل لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Listen to the sentences again. <span class="ar">حاول مرة أخرى! استمع للجمل مجدداً.</span>';
+  box.classList.add('show');
+  award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
