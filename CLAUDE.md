@@ -23,5 +23,6 @@ Each lesson is a single self-contained HTML file: `grade<N>/unit<U>p<P>*.html`.
 - Single-file pages: all CSS/JS inline, Google Fonts (Fredoka/Nunito for English, Baloo Bhaijaan 2 for Arabic).
 - Audio hosted on Google Drive (embed via `/preview` iframe, see rule 4). Images hotlinked (e.g. i.ibb.co). The sandbox network blocks downloading these hosts, so link, don't vendor.
 - Gamification: progress badges/stamps saved to `localStorage` — theme them after the **lesson topic** (e.g., hello badges for a greetings lesson). The teacher does NOT want travel/airport metaphors (boarding pass, passport, flights) — pick themes tied to the lesson subject.
+- **Headers**: every period/lesson page gets a **completely different header design**, but all headers of a unit stay tied to the **unit's theme** (e.g., Unit 1 greetings: P1 = sunrise greeting, P2 = speech bubble...). Never reuse the same header layout across periods.
 - Listening conversations: split the transcript into segments; after each segment put its comprehension questions (inside a `<details>` dropdown, per rule 3). The Drive player plays the whole recording; per-segment listening is a 🔊 TTS button that reads the segment transcript aloud. NEVER add a segment-timing adjustment panel.
 - Tooltips/popovers must not be clipped: any container that holds hover tooltips must NOT use `overflow:hidden`.
