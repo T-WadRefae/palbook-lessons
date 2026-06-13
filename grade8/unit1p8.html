@@ -167,6 +167,26 @@ nav::-webkit-scrollbar{display:none}
 .vchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
 .vchip:disabled{cursor:default}
 
+/* ====== two-column connect matching (توصيل) ====== */
+.match{position:relative;margin-top:14px}
+.match .cols{display:flex;justify-content:space-between;gap:clamp(26px,8vw,60px);position:relative;z-index:2}
+.match .col{display:flex;flex-direction:column;gap:12px;flex:1;min-width:0}
+.match .mitem{position:relative;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;font-weight:600;font-size:.95rem;color:var(--ink);cursor:pointer;transition:.2s;line-height:1.5}
+.match .col.left .mitem{padding-right:24px}
+.match .col.right .mitem{padding-left:24px}
+.match .mitem:hover{border-color:var(--wave)}
+.match .mitem.sel{border-color:var(--gold);background:var(--gold-soft)}
+.match .mitem.done{border-color:var(--ok);background:#e9fbf2;cursor:default}
+.match .mitem.no{animation:shake .4s;border-color:var(--no)}
+.match .mitem .dot{position:absolute;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid var(--wave);top:50%;transform:translateY(-50%)}
+.match .col.left .mitem .dot{right:6px}
+.match .col.right .mitem .dot{left:6px}
+.match .mitem.sel .dot{border-color:var(--gold);background:var(--gold)}
+.match .mitem.done .dot{background:var(--ok);border-color:var(--ok)}
+.match .vc{background:var(--tel-soft);color:var(--tel-deep);border-radius:5px;padding:0 5px;font-weight:700}
+.match .mn-tag{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;background:var(--tel);color:#fff;font-size:.78rem;font-weight:700;margin-right:7px;vertical-align:1px}
+.match svg.lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+
 /* ====== A5 speaking ====== */
 .s5-img{max-width:480px;margin:4px auto 14px;border-radius:16px;overflow:hidden;border:2px solid var(--line)}
 .s5-img img{width:100%;height:auto;display:block}
@@ -316,9 +336,9 @@ nav::-webkit-scrollbar{display:none}
 <section class="panel" id="p3">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">STEP 3</span>🔗 Activity 4: Match and write the verbs</h2>
-    <p class="hint ar">لكل جملة: اختر الفعل بالشكل الصحيح (المضارع المستمر)، ثم اختر النصف المناسب (a / b / c) — وسيظهر لك مع فعله لتكمله.</p>
+    <p class="hint ar"><b>صِل</b> كل جملة في العمود الأيسر بنصفها المناسب في العمود الأيمن: اضغط جملة ثم نصفها الصحيح. لاحظ أن الأفعال كلها في <b>المضارع المستمر</b> (مظللة).</p>
     <div class="fillbar">
-      <span id="mwTxt">Done: 0 / 9</span>
+      <span id="mwTxt">Connected: 0 / 3</span>
       <div class="bar"><i id="mwBar"></i></div>
       <span>🔗</span>
     </div>
@@ -402,11 +422,66 @@ nav::-webkit-scrollbar{display:none}
   });
 })();
 
+/* ---------- two-column connect matching (توصيل) ---------- */
+const MATCH_INSTANCES=[];
+function connectMatch(host,panelId,pairs,opt){
+  opt=opt||{};host.classList.add('match');
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','lines');
+  const cols=document.createElement('div');cols.className='cols';
+  const colL=document.createElement('div');colL.className='col left';
+  const colR=document.createElement('div');colR.className='col right';
+  cols.appendChild(colL);cols.appendChild(colR);host.appendChild(svg);host.appendChild(cols);
+  const leftEls={},rightEls={};let selLeft=null,doneCount=0;const total=pairs.length;const linesData=[];
+  function mk(html){const d=document.createElement('div');d.className='mitem';d.innerHTML=html;
+    const dot=document.createElement('span');dot.className='dot';d.appendChild(dot);return {d,dot};}
+  pairs.forEach((p,i)=>{const it=mk(p[0]);leftEls[i]=it;colL.appendChild(it.d);
+    it.d.addEventListener('click',()=>{
+      if(it.d.classList.contains('done'))return;
+      colL.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));
+      it.d.classList.add('sel');selLeft=i;
+    });
+  });
+  pairs.map((p,i)=>({html:p[1],idx:i})).sort(()=>Math.random()-.5).forEach(o=>{
+    const it=mk(o.html);rightEls[o.idx]=it;colR.appendChild(it.d);
+    it.d.addEventListener('click',()=>{
+      if(it.d.classList.contains('done')||selLeft===null)return;
+      if(o.idx===selLeft){
+        leftEls[selLeft].d.classList.remove('sel');leftEls[selLeft].d.classList.add('done');
+        it.d.classList.add('done');linesData.push([selLeft,o.idx]);drawLines();
+        selLeft=null;doneCount++;
+        if(opt.onProgress)opt.onProgress(doneCount,total);
+        if(doneCount===total&&opt.onComplete)opt.onComplete();
+      }else{it.d.classList.add('no');setTimeout(()=>it.d.classList.remove('no'),420);}
+    });
+  });
+  function center(dot){const r=dot.getBoundingClientRect(),h=host.getBoundingClientRect();
+    return [r.left+r.width/2-h.left,r.top+r.height/2-h.top];}
+  function drawLines(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    linesData.forEach(([li,ri])=>{
+      const a=center(leftEls[li].dot),b=center(rightEls[ri].dot);
+      const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',a[0]);ln.setAttribute('y1',a[1]);ln.setAttribute('x2',b[0]);ln.setAttribute('y2',b[1]);
+      ln.setAttribute('stroke','#22b573');ln.setAttribute('stroke-width','3.5');ln.setAttribute('stroke-linecap','round');
+      svg.appendChild(ln);
+    });
+  }
+  if(opt.preDone!=null){
+    leftEls[opt.preDone].d.classList.add('done');rightEls[opt.preDone].d.classList.add('done');
+    linesData.push([opt.preDone,opt.preDone]);doneCount++;
+    if(opt.onProgress)opt.onProgress(doneCount,total);
+  }
+  MATCH_INSTANCES.push({panel:panelId,redraw:drawLines});
+  window.addEventListener('resize',drawLines);
+  requestAnimationFrame(drawLines);
+}
+
 /* ---------- tabs ---------- */
 const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
 tabs.forEach(t=>t.addEventListener('click',()=>{
   tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
   t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  requestAnimationFrame(()=>MATCH_INSTANCES.forEach(m=>{if(m.panel===t.dataset.p)m.redraw();}));
   window.scrollTo({top:0,behavior:'smooth'});
 }));
 
@@ -549,67 +624,17 @@ function updMeanings(){if(meaningsCorrect===meaningsTotal)award('meanings');}
 /* =========================================================
    A4 : match & write
 ========================================================= */
-const HALVES={
-  a:{rl:'a',pre:'At the same time, they ',v:{ok:'are getting',opts:['are getting','is getting','get']},post:' faster.'},
-  b:{rl:'b',pre:'Wind speeds ',v:{ok:'are growing',opts:['are growing','is growing','grow']},post:', too.'},
-  c:{rl:'c',pre:'However, the number of landlines ',v:{ok:'is falling',opts:['is falling','are falling','falls']},post:'.'},
-};
-const LEFT=[
-  {n:1,pre:'Hurricanes ',v:{ok:'are growing',opts:['are growing','is growing','grow']},post:' bigger.',match:'b'},
-  {n:2,pre:'The number of mobile phones ',v:{ok:'is rising',opts:['is rising','are rising','rises']},post:'.',match:'c'},
-  {n:3,pre:'Computers ',v:{ok:'are getting',opts:['are getting','is getting','get']},post:' smaller.',match:'a'},
+const MW_PAIRS=[
+  ['<span class="mn-tag">1</span>Hurricanes <b class="vc">are growing</b> bigger.','Wind speeds <b class="vc">are growing</b>, too.'],
+  ['<span class="mn-tag">2</span>The number of mobile phones <b class="vc">is rising</b>.','However, the number of landlines <b class="vc">is falling</b>.'],
+  ['<span class="mn-tag">3</span>Computers <b class="vc">are getting</b> smaller.','At the same time, they <b class="vc">are getting</b> faster.'],
 ];
-const MW_TOTAL=9;
-let mwDone=0;
-function updMW(){
-  document.getElementById('mwTxt').textContent='Done: '+mwDone+' / '+MW_TOTAL;
-  document.getElementById('mwBar').style.width=(mwDone/MW_TOTAL*100)+'%';
-  if(mwDone===MW_TOTAL)award('match');
-}
-function verbPicker(v,onok){
-  const sp=document.createElement('span');sp.className='vpick';
-  v.opts.slice().sort(()=>Math.random()-.5).forEach(o=>{
-    const b=document.createElement('button');b.className='vchip';b.textContent=o;
-    b.addEventListener('click',()=>{
-      if(o===v.ok){b.classList.add('ok');sp.querySelectorAll('.vchip').forEach(x=>x.disabled=true);onok();}
-      else{b.classList.add('no');b.disabled=true;}
-    });
-    sp.appendChild(b);
-  });
-  return sp;
-}
-const mwBox=document.getElementById('mwBox');
-LEFT.forEach(L=>{
-  const card=document.createElement('div');card.className='mw-card';
-  const head=document.createElement('div');head.className='mw-head';
-  head.innerHTML='<span class="mn">'+L.n+'</span>'+L.pre;
-  head.appendChild(verbPicker(L.v,()=>{mwDone++;updMW();}));
-  head.appendChild(document.createTextNode(L.post));
-  card.appendChild(head);
-  // match a/b/c
-  const m=document.createElement('div');m.className='mw-match';
-  m.innerHTML='<span class="lbl ar">يُطابق:</span>';
-  ['a','b','c'].forEach(L2=>{
-    const b=document.createElement('button');b.className='mchip';b.textContent=L2;
-    b.addEventListener('click',()=>{
-      if(L2===L.match){
-        b.classList.add('ok');m.querySelectorAll('.mchip').forEach(x=>x.disabled=true);
-        mwDone++;updMW();
-        // reveal right half
-        const H=HALVES[L.match];
-        const r=card.querySelector('.mw-right');
-        r.innerHTML='<span class="rl">'+H.rl+')</span>'+H.pre;
-        r.appendChild(verbPicker(H.v,()=>{mwDone++;updMW();}));
-        r.appendChild(document.createTextNode(H.post));
-        r.classList.add('show');
-      }else{b.classList.add('no');b.disabled=true;}
-    });
-    m.appendChild(b);
-  });
-  card.appendChild(m);
-  const r=document.createElement('div');r.className='mw-right';
-  card.appendChild(r);
-  mwBox.appendChild(card);
+connectMatch(document.getElementById('mwBox'),'p3',MW_PAIRS,{
+  onProgress:(d,t)=>{
+    document.getElementById('mwTxt').textContent='Connected: '+d+' / '+t;
+    document.getElementById('mwBar').style.width=(d/t*100)+'%';
+  },
+  onComplete:()=>award('match'),
 });
 
 /* =========================================================

@@ -99,6 +99,24 @@ nav::-webkit-scrollbar{display:none}
 .ochip:disabled{cursor:default}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 
+/* ====== two-column connect matching (توصيل) ====== */
+.match{position:relative;margin-top:14px}
+.match .cols{display:flex;justify-content:space-between;gap:clamp(28px,11vw,80px);position:relative;z-index:2}
+.match .col{display:flex;flex-direction:column;gap:10px;flex:1;min-width:0}
+.match .mitem{position:relative;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:600;font-size:.95rem;color:var(--ink);cursor:pointer;transition:.2s;line-height:1.45}
+.match .col.left .mitem{padding-right:24px}
+.match .col.right .mitem{padding-left:24px}
+.match .mitem:hover{border-color:var(--wave)}
+.match .mitem.sel{border-color:var(--gold);background:var(--gold-soft)}
+.match .mitem.done{border-color:var(--ok);background:#e9fbf2;color:#168a55;cursor:default}
+.match .mitem.no{animation:shake .4s;border-color:var(--no)}
+.match .mitem .dot{position:absolute;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid var(--wave);top:50%;transform:translateY(-50%)}
+.match .col.left .mitem .dot{right:6px}
+.match .col.right .mitem .dot{left:6px}
+.match .mitem.sel .dot{border-color:var(--gold);background:var(--gold)}
+.match .mitem.done .dot{background:var(--ok);border-color:var(--ok)}
+.match svg.lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+
 /* ====== A2 : complete dialogues ====== */
 .bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:14px}
 .bword{border:2.5px solid var(--gold);background:var(--gold-soft);color:#8a6500;border-radius:999px;padding:6px 16px;font-family:inherit;font-weight:600;font-size:.96rem;cursor:pointer;transition:.2s}
@@ -260,9 +278,9 @@ nav::-webkit-scrollbar{display:none}
 <section class="panel" id="p1">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">STEP 1</span>🔄 Activity 1: Read again and find the opposites</h2>
-    <p class="hint ar">هذه الكلمات وردت في مقال <i>Young World</i>. لكل كلمة، اضغط على عكسها الصحيح. (الكلمة الأولى محلولة: عكس old هو young.)</p>
+    <p class="hint ar">هذه الكلمات وردت في مقال <i>Young World</i>. <b>صِل</b> كل كلمة بعكسها: اضغط كلمة من العمود الأيسر ثم عكسها من العمود الأيمن. (الزوج الأول محلول: old ⇄ young.)</p>
     <div class="fillbar">
-      <span id="oppTxt">Found: 1 / 8</span>
+      <span id="oppTxt">Matched: 1 / 8</span>
       <div class="bar"><i id="oppBar" style="width:12.5%"></i></div>
       <span>🔄</span>
     </div>
@@ -382,11 +400,66 @@ nav::-webkit-scrollbar{display:none}
   setInterval(()=>{i=(i+1)%PAIRS.length;wA.textContent=PAIRS[i][0];wB.textContent=PAIRS[i][1];},2000);
 })();
 
+/* ---------- two-column connect matching (توصيل) ---------- */
+const MATCH_INSTANCES=[];
+function connectMatch(host,panelId,pairs,opt){
+  opt=opt||{};host.classList.add('match');
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','lines');
+  const cols=document.createElement('div');cols.className='cols';
+  const colL=document.createElement('div');colL.className='col left';
+  const colR=document.createElement('div');colR.className='col right';
+  cols.appendChild(colL);cols.appendChild(colR);host.appendChild(svg);host.appendChild(cols);
+  const leftEls={},rightEls={};let selLeft=null,doneCount=0;const total=pairs.length;const linesData=[];
+  function mk(html){const d=document.createElement('div');d.className='mitem';d.innerHTML=html;
+    const dot=document.createElement('span');dot.className='dot';d.appendChild(dot);return {d,dot};}
+  pairs.forEach((p,i)=>{const it=mk(p[0]);leftEls[i]=it;colL.appendChild(it.d);
+    it.d.addEventListener('click',()=>{
+      if(it.d.classList.contains('done'))return;
+      colL.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));
+      it.d.classList.add('sel');selLeft=i;
+    });
+  });
+  pairs.map((p,i)=>({html:p[1],idx:i})).sort(()=>Math.random()-.5).forEach(o=>{
+    const it=mk(o.html);rightEls[o.idx]=it;colR.appendChild(it.d);
+    it.d.addEventListener('click',()=>{
+      if(it.d.classList.contains('done')||selLeft===null)return;
+      if(o.idx===selLeft){
+        leftEls[selLeft].d.classList.remove('sel');leftEls[selLeft].d.classList.add('done');
+        it.d.classList.add('done');linesData.push([selLeft,o.idx]);drawLines();
+        selLeft=null;doneCount++;
+        if(opt.onProgress)opt.onProgress(doneCount,total);
+        if(doneCount===total&&opt.onComplete)opt.onComplete();
+      }else{it.d.classList.add('no');setTimeout(()=>it.d.classList.remove('no'),420);}
+    });
+  });
+  function center(dot){const r=dot.getBoundingClientRect(),h=host.getBoundingClientRect();
+    return [r.left+r.width/2-h.left,r.top+r.height/2-h.top];}
+  function drawLines(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    linesData.forEach(([li,ri])=>{
+      const a=center(leftEls[li].dot),b=center(rightEls[ri].dot);
+      const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',a[0]);ln.setAttribute('y1',a[1]);ln.setAttribute('x2',b[0]);ln.setAttribute('y2',b[1]);
+      ln.setAttribute('stroke','#22b573');ln.setAttribute('stroke-width','3.5');ln.setAttribute('stroke-linecap','round');
+      svg.appendChild(ln);
+    });
+  }
+  if(opt.preDone!=null){
+    leftEls[opt.preDone].d.classList.add('done');rightEls[opt.preDone].d.classList.add('done');
+    linesData.push([opt.preDone,opt.preDone]);doneCount++;
+    if(opt.onProgress)opt.onProgress(doneCount,total);
+  }
+  MATCH_INSTANCES.push({panel:panelId,redraw:drawLines});
+  window.addEventListener('resize',drawLines);
+  requestAnimationFrame(drawLines);
+}
+
 /* ---------- tabs ---------- */
 const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
 tabs.forEach(t=>t.addEventListener('click',()=>{
   tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
   t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  requestAnimationFrame(()=>MATCH_INSTANCES.forEach(m=>{if(m.panel===t.dataset.p)m.redraw();}));
   window.scrollTo({top:0,behavior:'smooth'});
 }));
 
@@ -435,40 +508,23 @@ function speakBtn(btn,txt,stopLabel){
 /* =========================================================
    A1 : find the opposites
 ========================================================= */
-const OPP=[
-  {w:'old',       a:'young',     done:true,  opts:['young','small','tall']},
-  {w:'answer(ing)',a:'asking',   done:false, opts:['asking','telling','saying']},
-  {w:'ancient',   a:'modern',    done:false, opts:['modern','old','broken']},
-  {w:'better',    a:'worse',     done:false, opts:['worse','best','good']},
-  {w:'leave',     a:'arrive',    done:false, opts:['arrive','go','stay']},
-  {w:'funny',     a:'serious',   done:false, opts:['serious','happy','silly']},
-  {w:'cheap',     a:'expensive', done:false, opts:['expensive','free','small']},
-  {w:'never',     a:'always',    done:false, opts:['always','sometimes','soon']},
+const OPP_PAIRS=[
+  ['old','young'],
+  ['answer(ing)','asking'],
+  ['ancient','modern'],
+  ['better','worse'],
+  ['leave','arrive'],
+  ['funny','serious'],
+  ['cheap','expensive'],
+  ['never','always'],
 ];
-const oppBox=document.getElementById('oppBox');
-let oppN=1;
-OPP.forEach(o=>{
-  const row=document.createElement('div');row.className='opp-row'+(o.done?' done':'');
-  row.innerHTML='<span class="word-a">'+o.w+' <b>⇄</b></span>';
-  const chips=document.createElement('div');chips.className='ochips';
-  if(o.done){
-    const s=document.createElement('span');s.className='ochip ok';s.textContent=o.a;chips.appendChild(s);
-  }else{
-    o.opts.slice().sort(()=>Math.random()-.5).forEach(op=>{
-      const b=document.createElement('button');b.className='ochip';b.textContent=op;
-      b.addEventListener('click',()=>{
-        if(op===o.a){
-          b.classList.add('ok');chips.querySelectorAll('.ochip').forEach(x=>x.disabled=true);row.classList.add('done');
-          oppN++;
-          document.getElementById('oppTxt').textContent='Found: '+oppN+' / 8';
-          document.getElementById('oppBar').style.width=(oppN/8*100)+'%';
-          if(oppN===8)award('opposites');
-        }else{b.classList.add('no');b.disabled=true;}
-      });
-      chips.appendChild(b);
-    });
-  }
-  row.appendChild(chips);oppBox.appendChild(row);
+connectMatch(document.getElementById('oppBox'),'p1',OPP_PAIRS,{
+  preDone:0,
+  onProgress:(d,t)=>{
+    document.getElementById('oppTxt').textContent='Matched: '+d+' / '+t;
+    document.getElementById('oppBar').style.width=(d/t*100)+'%';
+  },
+  onComplete:()=>award('opposites'),
 });
 
 /* =========================================================
