@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tel:#e85d3d;
+  --tel-deep:#c64a2c;
+  --tel-soft:#ffe3da;
+  --wave:#0891b2;
+  --wave-deep:#0e7490;
+  --wave-soft:#d8f3fb;
+  --gold:#f59e0b;
+  --gold-soft:#fef3c7;
+  --purple:#7c5cd6;
+  --paper:#ffffff;
+  --ink:#243042;
+  --ink-soft:#74839a;
+  --line:#fbdfd4;
+  --ok:#22b573;
+  --no:#ef5b5b;
+  --r:20px;
+  --shadow:0 16px 40px rgba(198,74,44,.15);
+  --shadow-sm:0 8px 20px rgba(198,74,44,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 88% 5%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 6% 28%, #d8f3fb, transparent 60%),
+    radial-gradient(700px 420px at 62% 88%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating signal tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{
+  position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;
+  background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;
+  padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0) rotate(-2deg);opacity:0}
+  8%{opacity:.5}
+  92%{opacity:.5}
+  100%{transform:translateY(-115vh) rotate(3deg);opacity:0}
+}
+
+/* ====== header : satellite orbiting Earth (different from P1-P4) ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--wave);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--tel-deep);margin-top:8px;text-shadow:0 3px 0 #ffe3da}
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:8px}
+.orbit{position:relative;width:230px;height:230px;margin:6px auto 0}
+.orbit .ring{position:absolute;inset:8px;border:2px dashed var(--wave);border-radius:50%;opacity:.55}
+.orbit .pulse{position:absolute;inset:0;margin:auto;width:120px;height:120px;border-radius:50%;border:3px solid var(--tel);opacity:0;animation:opulse 2.6s ease-out infinite}
+.orbit .pulse.p2{animation-delay:1.3s}
+@keyframes opulse{0%{transform:scale(.8);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+.orbit .earth{position:absolute;inset:0;margin:auto;width:128px;height:128px;border-radius:50%;display:grid;place-items:center;font-size:92px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.2));z-index:2;animation:spin 16s linear infinite}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.orbit .spin{position:absolute;inset:8px;animation:revolve 7s linear infinite;z-index:3}
+@keyframes revolve{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.orbit .sat{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:34px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+.flagrow{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.flagrow span{background:#fff;border:2px solid var(--line);border-radius:999px;padding:5px 14px;font-weight:600;font-size:.85rem;color:var(--wave-deep)}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--tel) 0 26px,var(--wave) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--wave);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.kw{background:var(--wave-soft);color:var(--wave-deep);border:1.5px solid #a7e0f1;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+
+/* ====== Drive audio player ====== */
+.gplayer{background:#e9f7fc;border:2px solid #a7e0f1;border-radius:14px;padding:9px 12px 10px;margin:10px 0 6px;max-width:480px}
+.gplayer b{color:var(--wave-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
+
+/* ====== reading image : one-third of page width ====== */
+.read-img{width:34%;min-width:190px;margin:0 auto 16px;border-radius:16px;overflow:hidden;border:2px solid var(--line);box-shadow:var(--shadow-sm)}
+.read-img img{width:100%;height:auto;display:block}
+@media(max-width:600px){.read-img{width:60%}}
+
+/* ====== text cards (A–D) with tooltips ====== */
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--gold)}
+.legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
+.tcard{border:2px solid var(--line);border-radius:18px;margin-top:14px;background:#fff;transition:.3s;overflow:visible}
+.tcard.done{border-color:#bfe8d2;background:#f8fffb}
+.tcard .t-head{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff6f1;border-radius:16px 16px 0 0;flex-wrap:wrap}
+.tcard.done .t-head{background:#e9fbf2}
+.tcard .t-letter{width:38px;height:38px;border-radius:11px;background:var(--tel);color:#fff;display:grid;place-items:center;font-weight:700;font-size:1.1rem;flex-shrink:0}
+.tcard .t-q{font-weight:700;color:var(--tel-deep);font-size:.95rem}
+.tcard .t-spk{margin-left:auto;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:6px 14px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.82rem;transition:.2s}
+.tcard .t-spk:hover{background:#c7e9f5}
+.tcard .t-spk.playing{background:var(--no);color:#fff}
+.tcard .t-body{padding:14px 18px;font-weight:500;line-height:2.2;font-size:1.02rem;color:var(--ink)}
+.tcard .picks{display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 16px}
+.ppick{border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 16px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink);transition:.2s}
+.ppick:hover{border-color:var(--wave)}
+.ppick.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.ppick.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s;text-decoration:line-through}
+.ppick:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.matchbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.matchbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.matchbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.irrbox{background:var(--gold-soft);border:2px dashed var(--gold);border-radius:16px;padding:13px 16px;margin-top:16px;font-weight:600;line-height:1.9}
+.irrbox b{color:#92600a}
+.irrbox .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.irrbox .chips span{background:#fff;border:1.5px solid var(--gold);border-radius:999px;padding:3px 13px;color:#8a6500;font-weight:700}
+
+/* glossary + pronoun hover tooltips */
+.g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
+.g{background:#fff3c4;border-bottom:2px dashed var(--gold);color:#8a6500}
+.p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
+.g::after,.p::after{
+  content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);
+  background:#243042;color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;
+  padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3);
+}
+.g::before,.p::before{
+  content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);
+  border:6px solid transparent;border-top-color:#243042;opacity:0;visibility:hidden;transition:.18s;z-index:60;
+}
+.p::after{background:var(--purple)}
+.p::before{border-top-color:var(--purple)}
+.g:hover::after,.p:hover::after,.g.ton::after,.p.ton::after,
+.g:hover::before,.p:hover::before,.g.ton::before,.p.ton::before{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* ====== true / false ====== */
+.tfrow{border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;transition:.3s}
+.tfrow.done{border-color:#bfe8d2;background:#f8fffb}
+.tfrow .tf-top{display:flex;gap:10px;align-items:flex-start}
+.tfrow .tnum{flex-shrink:0;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--tel);color:#fff;font-size:.8rem;font-weight:600;margin-top:2px}
+.tfrow .tf-txt{flex:1;font-weight:500;line-height:1.7}
+.tfbtns{display:flex;gap:8px;margin-top:10px}
+.tfb{border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.95rem;color:var(--ink);transition:.2s}
+.tfb.t:hover{border-color:var(--ok)}
+.tfb.f:hover{border-color:var(--no)}
+.tfb.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.tfb.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.tfb:disabled{cursor:default}
+.tffix{display:none;margin-top:10px;font-weight:600;font-size:.9rem;color:#168a55;background:#e9fbf2;border-radius:10px;padding:8px 13px;line-height:1.7}
+.tffix.show{display:block;animation:fadeUp .35s}
+
+/* ====== article (A3) ====== */
+.art{border:2px solid var(--line);border-radius:16px;margin-top:12px;background:#fff;transition:.3s}
+.art .a-head{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff6f1;border-radius:14px 14px 0 0}
+.art .who{font-weight:700;font-size:.82rem;color:#fff;background:var(--tel);border-radius:8px;padding:3px 11px;min-width:64px;text-align:center}
+.art .who.pres{background:var(--purple)}
+.art .a-spk{margin-left:auto;border:0;background:var(--wave);color:#fff;border-radius:999px;padding:6px 15px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem;transition:.2s;display:flex;align-items:center;gap:6px}
+.art .a-spk:hover{background:var(--wave-deep)}
+.art .a-spk.playing{background:var(--no)}
+.art .a-spk.played-once{box-shadow:0 0 0 2.5px #bfe8d2}
+.art .a-body{padding:12px 16px;font-weight:500;line-height:2;color:var(--ink)}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--wave)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== call badges board ====== */
+.badge-board{background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 5 · GRADE 8</span>
+    <h1>Hello World!</h1>
+    <div class="sub">Reading: <i>Young World</i> magazine · PB page 8</div>
+  </div>
+  <div class="orbit">
+    <span class="ring"></span>
+    <span class="pulse"></span><span class="pulse p2"></span>
+    <div class="earth">🌍</div>
+    <div class="spin"><span class="sat">🛰️</span></div>
+  </div>
+  <div class="flagrow"><span>🇲🇦 Morocco</span><span>🇺🇸 the USA</span><span>🇦🇺 Australia</span><span>🇵🇸 Palestine</span></div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">📖 Read &amp; Match <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">✔️ True / False <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">🎧 Listen &amp; Read <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في الحصة الخامسة نقرأ مقالاً من مجلة <i>Young World</i> يسأل أشخاصاً من جنسيات مختلفة: «كيف تغيّر وسائل الاتصال الحديثة حياتنا؟» نطابق كل نص بصاحبه، نحكم على الجُمل صح/خطأ، ثم نستمع ونقرأ بصوت عالٍ. أنجز الأنشطة لتضيء أعمدة إشارتك! 📶</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">📖</div><div><b>Read &amp; Match</b><span class="ar">أقرأ النصوص A–D وأطابق كل نص بصاحبه وجنسيته (مرّر فوق الكلمات الملونة للمعنى).</span></div></div>
+      <div class="goal"><div class="ico">✔️</div><div><b>True / False</b><span class="ar">أحكم على خمس جُمل: صح أم خطأ، وأصحّح الخاطئة.</span></div></div>
+      <div class="goal"><div class="ico">🎧</div><div><b>Listen &amp; Read</b><span class="ar">أستمع إلى المقال كاملاً وأقرأه بصوت عالٍ.</span></div></div>
+      <div class="goal"><div class="ico">🏁</div><div><b>Quiz</b><span class="ar">كويز من 5 نقاط على فهم المقال.</span></div></div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">💬 Word Bag</h2>
+    <div class="keywords">
+      <span class="kw">satellites</span><span class="kw">forecast</span><span class="kw">hurricanes</span>
+      <span class="kw">channels</span><span class="kw">documentaries</span><span class="kw">fishing</span>
+      <span class="kw">markets</span><span class="kw">stay in contact</span><span class="kw">texting</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : READ & MATCH ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>📖 Activity 1: Match the texts with the people</h2>
+    <p class="hint ar">اقرأ نصوص <i>Young World</i> الأربعة (A–D) بسرعة وابحث عن كلمة الجنسية في كل نص. مرّر فوق الكلمات الصفراء لرؤية معناها، والضمائر البنفسجية لمعرفة من تعود عليه. ثم اختر صاحب كل نص.</p>
+    <div class="read-img"><img src="https://i.ibb.co/bchZR8h/Gemini-Generated-Image-qfqxa1qfqxa1qfqx.png" alt="People of different nationalities answering the Young World magazine"></div>
+    <div class="legend">
+      <span class="lg-g">كلمة جديدة — مرّر أو اضغط لترى معناها 🟡</span>
+      <span class="lg-p">ضمير — مرّر أو اضغط لتعرف على من يعود 🟣</span>
+    </div>
+    <div class="matchbar">
+      <span id="matchTxt">Matched: 0 / 4</span>
+      <div class="bar"><i id="matchBar"></i></div>
+      <span>🔗</span>
+    </div>
+    <div id="textsBox"></div>
+    <div class="irrbox ar">
+      <b>🌍 جنسيات غير منتظمة (irregular):</b> بعض الجنسيات لا تتبع القاعدة وتُحفظ كما هي:
+      <div class="chips"><span>French 🇫🇷</span><span>Greek 🇬🇷</span><span>Swiss 🇨🇭</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A2 : TRUE / FALSE ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>✔️ Activity 2: Read and mark true or false</h2>
+    <p class="hint ar">اقرأ كل جملة واحكم: صح ✔ أم خطأ ✘؟ عند اختيار الإجابة الصحيحة للجُمل الخاطئة سيظهر التصحيح. (اعمل مع زميلك وصحّحا الجُمل الخاطئة.)</p>
+    <div id="tfBox"></div>
+  </div>
+</section>
+
+<!-- ============ A3 : LISTEN & READ ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>🎧 Activity 3: Listen and read aloud</h2>
+    <p class="hint ar">شغّل التسجيل واستمع إلى المقال كاملاً. ثم اضغط 🔊 على كل فقرة لتسمعها واقرأها بصوت عالٍ خلفها. استمع إلى الفقرات الخمس كلها لتحصل على الوسام!</p>
+    <div class="gplayer">
+      <b>🎧 CD1 Audio 8 · Listen and read aloud</b>
+      <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztR2tQemRaTUg2bW8/preview?resourcekey=0-iEA-U-hYy47H-J3oSmIs-A" allow="autoplay"></iframe>
+    </div>
+    <div id="artBox"></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة على فهم مقال <i>Young World</i>. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! مع كل نشاط تنجزه يضيء عمود إشارة جديد 📶 حتى تكتمل شبكتك.</p>
+    <div class="badge-board">
+      <h3>✦ MY CALL BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! إشارتك مكتملة 📶<br>
+        قرأت مقال <i>Young World</i> وفهمت كيف تغيّر وسائل الاتصال حياة الناس حول العالم. أحسنت! 🛰️🌍
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Designed with love <span style="display:inline-block">💗</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 5 : Hello World! (Grade 8) — Reading
+   Phone-lines theme 📶 — satellite-orbit header, call badges
+========================================================= */
+
+/* ---------- floating signal tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['🛰️ satellite','📡 signal','🌍 different nationalities','📺 Young World','🌀 forecast','📞 staying in contact','📶 connected'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';
+    b.style.animationDuration=(15+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'match',name:'Read & Match',emo:'📖'},
+  {id:'tf',   name:'True / False',emo:'✔️'},
+  {id:'read', name:'Read Aloud',  emo:'🎧'},
+  {id:'quiz', name:'Quiz',        emo:'🏆'},
+];
+const TAB_OF={match:'p1',tf:'p2',read:'p3',quiz:'p4'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p5read')||'{}')}catch(e){earned={}}
+
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';
+  let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){
+  if(earned[id])return;
+  earned[id]=true;
+  localStorage.setItem('g8u1p5read',JSON.stringify(earned));
+  renderBadges();
+}
+function resetLesson(){localStorage.removeItem('g8u1p5read');location.reload();}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+let ttsBtn=null;
+const stripTags=h=>h.replace(/<[^>]+>/g,'');
+function stopTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊 Listen';ttsBtn=null;}
+}
+function speak(txt){
+  if(!('speechSynthesis' in window))return;
+  stopTTS();
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;
+  speechSynthesis.speak(u);
+}
+function speakBtn(btn,txt,stopLabel){
+  if(ttsBtn===btn){stopTTS();return;}
+  stopTTS();
+  if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;
+  u.onend=()=>{if(ttsBtn===btn)stopTTS();};
+  ttsBtn=btn;btn.classList.add('playing');btn.innerHTML=stopLabel||'⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   Texts A–D  (with tooltips) + who said each
+========================================================= */
+const TEXTS=[
+  {letter:'A', who:'Anna', flag:'🇺🇸', nat:'American', country:'the USA',
+   html:"There are lots of bad TV programmes, but the weather <i class='g' data-t='نشرات / توقّعات الطقس'>forecasts</i> are good. We get bad <i class='g' data-t='أعاصير'>hurricanes</i> here in America, and <i class='p' data-t='تعود على الأعاصير (hurricanes)'>they</i>'re getting worse. But modern <i class='g' data-t='أقمار صناعية'>satellites</i> are collecting better <i class='g' data-t='معلومات'>information</i> on <i class='p' data-t='تعود على الأعاصير'>their</i> speed and direction, and forecasts are getting better. So we understand hurricanes better now, and we now know when and where <i class='p' data-t='إعصار واحد'>one</i> will arrive."},
+  {letter:'B', who:'Sameer', flag:'🇵🇸', nat:'Palestinian', country:'Palestine',
+   html:"We get Palestinian TV and hundreds of other <i class='g' data-t='قنوات فضائية'>satellite channels</i>, too. <i class='p' data-t='سمير المتحدث وأخته حنان'>Hanan and I</i> love watching <i class='g' data-t='أفلام كرتون'>cartoons</i> all day! That's bad, I know. But now Mum and Dad say <i class='p' data-t='تعود على سمير وحنان'>we</i> can only watch <i class='g' data-t='جادّة'>serious</i> programmes <i class='g' data-t='مثل (such as)'>like</i> <i class='g' data-t='أفلام وثائقية'>documentaries</i>. We think that's bad, too!"},
+  {letter:'C', who:'Ali', flag:'🇲🇦', nat:'Moroccan', country:'Morocco',
+   html:"Like a lot of Moroccan people, <i class='p' data-t='تعود على علي'>my</i> job is <i class='g' data-t='صيد السمك'>fishing</i>, and my mobile is very important in my work. <i class='p' data-t='يعود على الهاتف المحمول'>It</i>'s <i class='g' data-t='مكلف / غالي الثمن'>expensive</i>, but I can now call different <i class='g' data-t='أسواق'>markets</i> from my <i class='g' data-t='قارب'>boat</i>. That means I can find the best market for my fish and take <i class='p' data-t='تعود على الأسماك (fish)'>them</i> there. My mobile is giving my family a better life."},
+  {letter:'D', who:'Lyn', flag:'🇦🇺', nat:'Australian', country:'Australia',
+   html:"Australian <i class='g' data-t='مزارع'>farms</i> are big, and <i class='p' data-t='تعود على لين ومارك'>our</i> parents like to <i class='g' data-t='يبقون على تواصل'>stay in contact</i>, so <i class='p' data-t='تعود على الوالدين'>they</i>'ve given <i class='p' data-t='تعود على لين ومارك'>us</i> mobiles. But now we're calling and <i class='g' data-t='نراسل برسائل نصية'>texting</i> friends more and more, and Mum and Dad are getting <i class='g' data-t='غاضبين'>angry</i>. <i class='p' data-t='تعود على الوالدين'>They</i> say we're always <i class='g' data-t='على الهاتف'>on the phone</i> when they want to talk – and we shouldn't be! … Oh, someone's calling now. Excuse me!"},
+];
+const PEOPLE=[
+  {who:'Anna',flag:'🇺🇸'},{who:'Sameer',flag:'🇵🇸'},{who:'Ali',flag:'🇲🇦'},{who:'Lyn',flag:'🇦🇺'},
+];
+const textsBox=document.getElementById('textsBox');
+let matchN=0;
+TEXTS.forEach(t=>{
+  const d=document.createElement('div');d.className='tcard';
+  d.innerHTML='<div class="t-head"><span class="t-letter">'+t.letter+'</span>'+
+    '<span class="t-q ar">مَن صاحب هذا النص؟</span>'+
+    '<button class="t-spk" data-label="🔊 Listen">🔊 Listen</button></div>'+
+    '<div class="t-body">'+t.html+'</div>';
+  const spk=d.querySelector('.t-spk');
+  spk.addEventListener('click',()=>speakBtn(spk,stripTags(t.html),'⏹ Stop'));
+  const picks=document.createElement('div');picks.className='picks';
+  PEOPLE.slice().sort(()=>Math.random()-.5).forEach(p=>{
+    const b=document.createElement('button');b.className='ppick';b.textContent=p.flag+' '+p.who;
+    b.addEventListener('click',()=>{
+      if(p.who===t.who){
+        b.classList.add('ok');
+        picks.querySelectorAll('.ppick').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        speak(t.who+' is '+t.nat+'. '+t.who+' is from '+t.country+'.');
+        matchN++;
+        document.getElementById('matchTxt').textContent='Matched: '+matchN+' / 4';
+        document.getElementById('matchBar').style.width=(matchN/4*100)+'%';
+        if(matchN===4)award('match');
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    picks.appendChild(b);
+  });
+  d.appendChild(picks);
+  textsBox.appendChild(d);
+});
+
+/* tooltips on tap (mobile) */
+document.querySelectorAll('.g,.p').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    const was=el.classList.contains('ton');
+    document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+    if(!was)el.classList.add('ton');
+  });
+});
+document.addEventListener('click',()=>{document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));});
+
+/* =========================================================
+   A2 : true / false
+========================================================= */
+const TF=[
+  {t:"This week <i>Young World</i> is about the ways we communicate in today's world.",a:true,fix:null},
+  {t:"We know more about the weather than we did before we had satellites.",a:true,fix:null},
+  {t:"Mr and Mrs Qudsi think their children should watch cartoons, sports and serious programmes, too.",a:false,
+   fix:"✅ They think their children should watch <b>only serious programmes like documentaries</b>."},
+  {t:"Ali gives his mobile to his family when he goes fishing.",a:false,
+   fix:"✅ Ali <b>takes his phone on the boat</b> and calls different markets for his fish."},
+  {t:"Lyn and Mark's mobiles are always busy because Mum and Dad are calling them more and more.",a:false,
+   fix:"✅ Their mobiles are always busy because <b>they call and text their friends a lot</b>."},
+];
+const tfBox=document.getElementById('tfBox');
+let tfLeft=TF.length;
+TF.forEach((q,qi)=>{
+  const d=document.createElement('div');d.className='tfrow';
+  d.innerHTML='<div class="tf-top"><span class="tnum">'+(qi+1)+'</span><span class="tf-txt">'+q.t+'</span></div>';
+  const btns=document.createElement('div');btns.className='tfbtns';
+  [['t','True ✔',true],['f','False ✘',false]].forEach(([cls,label,val])=>{
+    const b=document.createElement('button');b.className='tfb '+cls;b.textContent=label;
+    b.addEventListener('click',()=>{
+      if(val===q.a){
+        b.classList.add('ok');
+        btns.querySelectorAll('.tfb').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        if(q.fix){const f=d.querySelector('.tffix');f.innerHTML=q.fix;f.classList.add('show');}
+        if(--tfLeft===0)award('tf');
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    btns.appendChild(b);
+  });
+  d.appendChild(btns);
+  const fix=document.createElement('div');fix.className='tffix';
+  d.appendChild(fix);
+  tfBox.appendChild(d);
+});
+
+/* =========================================================
+   A3 : the full article (presenter + 4 speakers) read aloud
+========================================================= */
+const PRESENTER="Welcome to Young World, and this week we're asking people of different <i class='g' data-t='جنسيات'>nationalities</i>, 'How are modern <i class='g' data-t='وسائل الاتصال'>communications</i> changing our lives?'";
+const ARTICLE=[{who:'Presenter',cls:'pres',html:PRESENTER}].concat(
+  TEXTS.map(t=>({who:t.who,cls:'',html:t.html}))
+);
+const artBox=document.getElementById('artBox');
+const playedSet=new Set();
+ARTICLE.forEach((a,ai)=>{
+  const d=document.createElement('div');d.className='art';
+  d.innerHTML='<div class="a-head"><span class="who '+a.cls+'">'+a.who+'</span>'+
+    '<button class="a-spk" data-label="🔊 Read aloud">🔊 Read aloud</button></div>'+
+    '<div class="a-body">'+a.html+'</div>';
+  const spk=d.querySelector('.a-spk');
+  spk.addEventListener('click',()=>{
+    speakBtn(spk,stripTags(a.html),'⏹ Stop');
+    if(!playedSet.has(ai)){
+      playedSet.add(ai);spk.classList.add('played-once');
+      if(playedSet.size===ARTICLE.length)award('read');
+    }
+  });
+  artBox.appendChild(d);
+});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'This week <i>Young World</i> asks how modern ____ are changing our lives.',
+   o:['farms','communications','hurricanes'],a:1},
+  {t:'Anna says modern satellites help us understand ____ better.',
+   o:['hurricanes','cartoons','markets'],a:0},
+  {t:'What does Ali use his mobile for?',
+   o:['Texting his friends all day','Calling different markets for his fish','Watching documentaries'],a:1},
+  {t:"Why are Lyn and Mark's parents getting angry?",
+   o:['The children are always on the phone with friends','The farms are too big','The mobiles are too expensive'],a:0},
+  {t:"Sameer and Hanan's parents say they can only watch ____.",
+   o:['cartoons all day','serious programmes like documentaries','sports programmes'],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach((b,oi)=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You understood every text! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Read the texts again to get 5/5. <span class="ar">أحسنت! اقرأ النصوص مرة أخرى لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Read the article again. <span class="ar">حاول مرة أخرى! اقرأ المقال من جديد.</span>';
+  box.classList.add('show');
+  award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
