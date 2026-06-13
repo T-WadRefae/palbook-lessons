@@ -150,6 +150,18 @@ nav::-webkit-scrollbar{display:none}
 .irrbox .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .irrbox .chips span{background:#fff;border:1.5px solid var(--gold);border-radius:999px;padding:3px 13px;color:#8a6500;font-weight:700}
 
+/* questions dropdown (comprehension after each text) */
+.qdrop{border:2px solid var(--line);border-radius:14px;margin:14px 0 4px;background:#fffdf9}
+.qdrop summary{cursor:pointer;list-style:none;padding:11px 16px;font-weight:600;color:var(--tel-deep);display:flex;align-items:center;gap:8px;transition:.2s;border-radius:12px}
+.qdrop summary::-webkit-details-marker{display:none}
+.qdrop summary:hover{background:#fff1ea}
+.qdrop summary .chev{margin-left:auto;transition:.3s}
+.qdrop[open] summary .chev{transform:rotate(180deg)}
+.qdrop .q-area{padding:0 16px 14px}
+.q{margin-top:12px}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.q .q-txt .qn{color:var(--wave)}
+
 /* glossary + pronoun hover tooltips */
 .g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
 .g{background:#fff3c4;border-bottom:2px dashed var(--gold);color:#8a6500}
@@ -286,14 +298,14 @@ nav::-webkit-scrollbar{display:none}
 <section class="panel" id="p1">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">STEP 1</span>📖 Activity 1: Match the texts with the people</h2>
-    <p class="hint ar">اقرأ نصوص <i>Young World</i> الأربعة (A–D) بسرعة وابحث عن كلمة الجنسية في كل نص. مرّر فوق الكلمات الصفراء لرؤية معناها، والضمائر البنفسجية لمعرفة من تعود عليه. ثم اختر صاحب كل نص.</p>
+    <p class="hint ar">اقرأ نصوص <i>Young World</i> الأربعة (A–D) بسرعة وابحث عن كلمة الجنسية في كل نص. مرّر فوق الكلمات الصفراء لرؤية معناها، والضمائر البنفسجية لمعرفة من تعود عليه. ثم اختر صاحب كل نص، وافتح «Comprehension» وأجب عن أسئلة الفهم بعد كل نص.</p>
     <div class="read-img"><img src="https://i.ibb.co/bchZR8h/Gemini-Generated-Image-qfqxa1qfqxa1qfqx.png" alt="People of different nationalities answering the Young World magazine"></div>
     <div class="legend">
       <span class="lg-g">كلمة جديدة — مرّر أو اضغط لترى معناها 🟡</span>
       <span class="lg-p">ضمير — مرّر أو اضغط لتعرف على من يعود 🟣</span>
     </div>
     <div class="matchbar">
-      <span id="matchTxt">Matched: 0 / 4</span>
+      <span id="matchTxt">Read &amp; understood: 0 / 12</span>
       <div class="bar"><i id="matchBar"></i></div>
       <span>🔗</span>
     </div>
@@ -461,8 +473,35 @@ const TEXTS=[
 const PEOPLE=[
   {who:'Anna',flag:'🇺🇸'},{who:'Sameer',flag:'🇵🇸'},{who:'Ali',flag:'🇲🇦'},{who:'Lyn',flag:'🇦🇺'},
 ];
+/* comprehension questions after each text (per agreed convention) */
+const COMP={
+  A:[
+    {t:'What are modern satellites collecting better information about?',o:['The speed and direction of hurricanes','The best TV programmes','The price of fish'],a:0},
+    {t:'How are the weather forecasts these days?',o:['They are getting better','They are getting worse','They have stopped'],a:0},
+  ],
+  B:[
+    {t:'What do Hanan and Sameer love watching all day?',o:['Cartoons','Documentaries','The news'],a:0},
+    {t:'What do Mum and Dad say the children can only watch now?',o:['Serious programmes like documentaries','Cartoons','Sports'],a:0},
+  ],
+  C:[
+    {t:'How does Ali use his mobile in his work?',o:['He calls different markets from his boat','He watches documentaries','He plays games'],a:0},
+    {t:'What does Ali say his mobile is doing for his family?',o:['Giving them a better life','Making them angry','Wasting their money'],a:0},
+  ],
+  D:[
+    {t:'Why did their parents give Lyn and Mark mobiles?',o:['To stay in contact','To play games','To watch films'],a:0},
+    {t:'Why are Mum and Dad getting angry?',o:['The children are always on the phone with friends','The farm is too small','The mobiles are broken'],a:0},
+  ],
+};
 const textsBox=document.getElementById('textsBox');
-let matchN=0;
+let compTotal=0;Object.values(COMP).forEach(a=>compTotal+=a.length);
+const READ_TOTAL=TEXTS.length+compTotal;
+let matchN=0,compCorrect=0;
+function updProg(){
+  const prog=matchN+compCorrect;
+  document.getElementById('matchTxt').textContent='Read & understood: '+prog+' / '+READ_TOTAL;
+  document.getElementById('matchBar').style.width=(prog/READ_TOTAL*100)+'%';
+  if(matchN===TEXTS.length&&compCorrect===compTotal)award('match');
+}
 TEXTS.forEach(t=>{
   const d=document.createElement('div');d.className='tcard';
   d.innerHTML='<div class="t-head"><span class="t-letter">'+t.letter+'</span>'+
@@ -480,10 +519,7 @@ TEXTS.forEach(t=>{
         picks.querySelectorAll('.ppick').forEach(x=>x.disabled=true);
         d.classList.add('done');
         speak(t.who+' is '+t.nat+'. '+t.who+' is from '+t.country+'.');
-        matchN++;
-        document.getElementById('matchTxt').textContent='Matched: '+matchN+' / 4';
-        document.getElementById('matchBar').style.width=(matchN/4*100)+'%';
-        if(matchN===4)award('match');
+        matchN++;updProg();
       }else{
         b.classList.add('no');b.disabled=true;
       }
@@ -491,6 +527,31 @@ TEXTS.forEach(t=>{
     picks.appendChild(b);
   });
   d.appendChild(picks);
+  const qs=COMP[t.letter];
+  const det=document.createElement('details');det.className='qdrop';
+  det.innerHTML='<summary>📋 Comprehension ('+qs.length+') <span class="ar" style="font-size:.85rem;color:#74839a">أسئلة الفهم على النص '+t.letter+'</span><span class="chev">▼</span></summary>';
+  const qa=document.createElement('div');qa.className='q-area';
+  qs.forEach((q,qi)=>{
+    const qd=document.createElement('div');qd.className='q';
+    qd.innerHTML='<div class="q-txt"><span class="qn">Q'+(qi+1)+':</span> '+q.t+'</div>';
+    const opts=document.createElement('div');opts.className='opts';
+    q.o.forEach((o,oi)=>{
+      const b=document.createElement('button');b.className='opt';b.textContent=o;
+      b.addEventListener('click',()=>{
+        if(oi===q.a){
+          b.classList.add('ok');
+          opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+          compCorrect++;updProg();
+        }else{
+          b.classList.add('no');b.disabled=true;
+        }
+      });
+      opts.appendChild(b);
+    });
+    qd.appendChild(opts);qa.appendChild(qd);
+  });
+  det.appendChild(qa);
+  d.appendChild(det);
   textsBox.appendChild(d);
 });
 
