@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tel:#e85d3d;--tel-deep:#c64a2c;--tel-soft:#ffe3da;
+  --wave:#0891b2;--wave-deep:#0e7490;--wave-soft:#d8f3fb;
+  --gold:#f59e0b;--gold-soft:#fef3c7;--purple:#7c5cd6;
+  --paper:#ffffff;--ink:#243042;--ink-soft:#74839a;--line:#fbdfd4;
+  --ok:#22b573;--no:#ef5b5b;--r:20px;
+  --shadow:0 16px 40px rgba(198,74,44,.15);--shadow-sm:0 8px 20px rgba(198,74,44,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 90% 5%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 5% 28%, #d8f3fb, transparent 60%),
+    radial-gradient(700px 420px at 64% 88%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
+  background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating signal tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-115vh) rotate(3deg);opacity:0}}
+
+/* ====== header : writing notepad typing (different from P1-P10) ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--wave);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--tel-deep);margin-top:8px;text-shadow:0 3px 0 #ffe3da}
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:14px}
+.pad{width:min(420px,94vw);margin:0 auto;background:#fff;border:3px solid var(--tel);border-radius:18px;box-shadow:var(--shadow);padding:14px 18px 16px;text-align:left;position:relative;overflow:hidden}
+.pad:before{content:"";position:absolute;left:34px;top:0;bottom:0;width:2px;background:#ffd0c2}
+.pad .pt{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--tel-deep);font-size:1rem;border-bottom:2px dashed var(--line);padding-bottom:8px;margin-bottom:10px}
+.pad .pt .marks{margin-left:auto;display:flex;gap:5px}
+.pad .pt .marks span{background:var(--gold-soft);color:#8a6500;border-radius:6px;padding:1px 8px;font-weight:800;font-size:.85rem}
+.pad .pline{min-height:48px;padding-left:14px;font-weight:600;color:var(--ink);font-size:1.05rem;line-height:1.6;background:repeating-linear-gradient(180deg,transparent 0 22px,var(--wave-soft) 22px 24px);padding-top:2px}
+.pad .pline .cur{display:inline-block;width:2px;height:1.1em;background:var(--tel);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.pad .pencil{position:absolute;right:14px;bottom:10px;font-size:26px;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-4px) rotate(2deg)}}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--tel) 0 26px,var(--wave) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--wave);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+
+/* ====== Drive audio player ====== */
+.gplayer{background:#e9f7fc;border:2px solid #a7e0f1;border-radius:14px;padding:9px 12px 10px;margin:10px 0 6px;max-width:480px}
+.gplayer b{color:var(--wave-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
+
+/* ====== A1 punctuation ====== */
+.scrambled{background:#fff6f1;border:2px dashed var(--tel);border-radius:14px;padding:12px 16px;margin-top:10px;font-weight:700;color:var(--tel-deep);letter-spacing:.5px;word-break:break-all;font-size:1.05rem;text-align:center}
+.psent{background:#fff;border:2px solid var(--line);border-radius:14px;padding:16px;margin-top:14px;font-weight:600;font-size:1.12rem;line-height:2.2;color:var(--ink)}
+.gpick{display:inline-flex;gap:4px;flex-wrap:wrap;vertical-align:middle}
+.gchip{border:2px solid var(--line);background:#fff;border-radius:8px;padding:2px 9px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.95rem;color:var(--ink);transition:.2s;min-width:30px}
+.gchip:hover{border-color:var(--wave)}
+.gchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.gchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.gchip:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.solved{display:none;margin-top:12px;background:#e9fbf2;border:2px solid #bfe8d2;border-radius:14px;padding:12px 16px;font-weight:700;color:#168a55;line-height:1.7}
+.solved.show{display:block;animation:fadeUp .4s}
+
+/* ====== A2 dictation / fill ====== */
+.fillbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.dline{border:2px solid var(--line);border-radius:14px;padding:12px 16px;margin-top:12px;background:#fff;font-size:1.04rem;font-weight:500;line-height:2.4;transition:.3s}
+.dline.done{border-color:#bfe8d2;background:#f8fffb}
+.dnum{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--tel);color:#fff;font-size:.8rem;font-weight:600;margin-right:8px}
+.dpick{display:inline-flex;gap:5px;flex-wrap:wrap;vertical-align:middle}
+.dchip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:2px 11px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.86rem;color:var(--ink);transition:.2s}
+.dchip:hover{border-color:var(--wave)}
+.dchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.dchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.dchip:disabled{cursor:default}
+
+/* ====== A3 paragraph info ====== */
+.pbox{background:#f6f2ff;border:2px solid #e2d8fb;border-radius:16px;padding:14px 16px;margin-top:12px}
+.pbox h3{color:var(--purple);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.pbox ul{margin:0 0 0 18px;padding:0}
+.pbox li{font-weight:600;color:var(--ink);line-height:1.8;margin-bottom:4px;font-size:.95rem}
+.pbox .ex{background:#fff;border-radius:10px;padding:7px 12px;margin-top:6px;font-weight:600;font-style:italic;color:var(--ink-soft)}
+
+/* ====== A4 order sentences ====== */
+.ord-hint{display:flex;align-items:center;gap:10px;margin-top:12px;background:var(--wave);color:#fff;border-radius:14px;padding:9px 16px;font-weight:600;flex-wrap:wrap}
+.scard{display:flex;gap:10px;align-items:flex-start;border:2.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:11px;background:#fff;cursor:pointer;transition:.2s;font-weight:500;line-height:1.6}
+.scard:hover{border-color:var(--wave);transform:translateY(-2px)}
+.scard .onum{flex-shrink:0;width:30px;height:30px;border-radius:50%;border:2px dashed var(--ink-soft);display:grid;place-items:center;font-weight:700;color:var(--ink-soft);font-size:.9rem}
+.scard.done{border-color:var(--ok);background:#e9fbf2;cursor:default}
+.scard.done .onum{border-style:solid;border-color:var(--ok);background:var(--ok);color:#fff}
+.scard.no{animation:shake .4s;border-color:var(--no)}
+.para-out{display:none;margin-top:16px;background:#fffdf6;border:2px solid var(--gold);border-radius:16px;padding:16px 18px;line-height:2;font-weight:500;color:var(--ink)}
+.para-out.show{display:block;animation:fadeUp .5s}
+.para-out h3{color:#8a6500;font-size:1rem;margin-bottom:8px}
+
+/* ====== A6 reference matching (توصيل) ====== */
+.legendr{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legendr span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px;background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
+.match{position:relative;margin-top:14px}
+.match .cols{display:flex;justify-content:space-between;gap:clamp(28px,11vw,80px);position:relative;z-index:2}
+.match .col{display:flex;flex-direction:column;gap:11px;flex:1;min-width:0}
+.match .mitem{position:relative;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:600;font-size:.95rem;color:var(--ink);cursor:pointer;transition:.2s;line-height:1.45}
+.match .col.left .mitem{padding-right:24px}
+.match .col.right .mitem{padding-left:24px}
+.match .mitem:hover{border-color:var(--wave)}
+.match .mitem.sel{border-color:var(--gold);background:var(--gold-soft)}
+.match .mitem.done{border-color:var(--ok);background:#e9fbf2;color:#168a55;cursor:default}
+.match .mitem.no{animation:shake .4s;border-color:var(--no)}
+.match .mitem .sn{font-size:.7rem;color:var(--ink-soft);font-weight:700;margin-left:5px}
+.match .mitem.done .sn{color:#7bbf9b}
+.match .mitem .dot{position:absolute;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid var(--wave);top:50%;transform:translateY(-50%)}
+.match .col.left .mitem .dot{right:6px}
+.match .col.right .mitem .dot{left:6px}
+.match .mitem.sel .dot{border-color:var(--gold);background:var(--gold)}
+.match .mitem.done .dot{background:var(--ok);border-color:var(--ok)}
+.match svg.lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--wave)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== call badges board ====== */
+.badge-board{background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 11 · GRADE 8</span>
+    <h1>Hello World!</h1>
+    <div class="sub">Writing: punctuation &amp; paragraphs · PB page 14</div>
+  </div>
+  <div class="pad">
+    <div class="pt">📝 Writing time <span class="marks"><span>A</span><span>,</span><span>.</span></span></div>
+    <div class="pline"><span id="typed"></span><span class="cur"></span></div>
+    <span class="pencil">✏️</span>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">✏️ Punctuation <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">🎧 Dictation <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">🔢 Build a Paragraph <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">🔗 Reference Words <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p6">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في هذه الحصة نتعلّم مهارات الكتابة: <b>علامات الترقيم</b> والحروف الكبيرة، الإملاء بالاستماع، ثم نفهم <b>الفقرة</b> ونرتّب جُملها، ونعرف إلى مَن تعود الكلمات (الضمائر). أنجز الأنشطة لتضيء أعمدة إشارتك! 📶</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">✏️</div><div><b>Punctuation</b><span class="ar">أعيد كتابة الجملة بحروف كبيرة وفاصلة ونقطة ومسافات.</span></div></div>
+      <div class="goal"><div class="ico">🎧</div><div><b>Dictation</b><span class="ar">أستمع وأكمل الجُمل بالكلمات الصحيحة.</span></div></div>
+      <div class="goal"><div class="ico">🔢</div><div><b>Build a Paragraph</b><span class="ar">أرتّب خمس جُمل لتكوين فقرة مترابطة عن سامي ونادية.</span></div></div>
+      <div class="goal"><div class="ico">🔗</div><div><b>Reference Words</b><span class="ar">أربط كل كلمة بما تعود عليه (He, she, they...).</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : PUNCTUATION ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>✏️ Activity 1: Rewrite with correct punctuation</h2>
+    <p class="hint ar">هذه الكلمات ملتصقة بلا مسافات أو ترقيم. اختر الشكل الصحيح لكل خانة: حرف كبير في بداية الجملة والأسماء، فاصلة في التعداد، ونقطة في النهاية.</p>
+    <div class="scrambled">nadiasamiandtheirparentsarefrompalestine</div>
+    <div class="psent" id="psent"></div>
+    <div class="solved" id="solved">✅ Nadia, Sami and their parents are from Palestine.</div>
+  </div>
+</section>
+
+<!-- ============ A2 : DICTATION ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>🎧 Activity 2: Listen and write down what you hear</h2>
+    <p class="hint ar">شغّل التسجيل واستمع جيداً، ثم اختر الكلمة الصحيحة لكل فراغ في الجُمل الثلاث.</p>
+    <div class="gplayer">
+      <b>🎧 CD1 Audio 11 · Listen and write</b>
+      <iframe src="https://drive.google.com/file/d/1fMnnuMnTz9LmxBDCyCOMuKZ5xu3Vmhqq/preview" allow="autoplay"></iframe>
+    </div>
+    <div class="fillbar">
+      <span id="dictTxt">Completed: 0 / 10</span>
+      <div class="bar"><i id="dictBar"></i></div>
+      <span>🎧</span>
+    </div>
+    <div id="dictBox"></div>
+  </div>
+</section>
+
+<!-- ============ A3+A4+A5 : BUILD A PARAGRAPH ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>🔢 Activities 3–5: Build a paragraph</h2>
+    <div class="pbox">
+      <h3>📑 What is a paragraph?</h3>
+      <ul>
+        <li>يتكوّن النص من عدّة <b>فقرات</b>، وكل فقرة تبدأ في سطر جديد.</li>
+        <li>كل فقرة جديدة عن <b>فكرة جديدة</b>.</li>
+        <li>الفقرة فيها عدّة جُمل مترابطة لأنها عن الفكرة نفسها.</li>
+        <li>كثيراً ما توجد كلمات تعود إلى كلمات سابقة، مثل:</li>
+      </ul>
+      <div class="ex">Nadia is not British. <b>She's</b> Palestinian.</div>
+    </div>
+    <p class="hint ar" style="margin-top:14px">النص في صفحة 15 مكوّن من <b>5 فقرات</b>. الآن رتّب الجُمل الخمس التالية لتكوّن فقرة واحدة مترابطة — اضغط الجُمل بالترتيب الصحيح (الأولى مكتوبة لك).</p>
+    <div class="ord-hint"><span id="ordTxt">Ordered: 1 / 5</span><span>🔢 اضغط الجملة التالية في الترتيب</span></div>
+    <div id="ordBox"></div>
+    <div class="para-out" id="paraOut">
+      <h3>📝 Your paragraph about Sami and Nadia:</h3>
+      <span id="paraText"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A6 : REFERENCE WORDS ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>🔗 Activity 6: What do the words refer to?</h2>
+    <p class="hint ar">في الفقرة، كل كلمة ملوّنة تعود على شيء سابق. <b>صِل</b> كل كلمة بما تعود عليه. (المثال محلول: <b>He</b> في الجملة الثانية تعني <b>Sami</b>.)</p>
+    <div class="legendr"><span>🟣 كلمة تعود على شيء سابق — صِلها بمرجعها</span></div>
+    <div class="ord-hint"><span id="refTxt">Matched: 1 / 6</span><span>🔗</span></div>
+    <div id="refBox"></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة على الترقيم والفقرات والكلمات المرجعية. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! مع كل نشاط تنجزه يضيء عمود إشارة جديد 📶 حتى تكتمل شبكتك.</p>
+    <div class="badge-board">
+      <h3>✦ MY CALL BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! إشارتك مكتملة 📶<br>
+        أتقنت الترقيم وبناء الفقرة والكلمات المرجعية. أحسنت! ✏️📑
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Designed with love <span style="display:inline-block">💗</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 11 : Hello World! (Grade 8) — Writing
+   Phone-lines theme 📶 — writing-pad header, call badges
+========================================================= */
+
+/* ---------- floating signal tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['✏️ capital letter',', comma','. full stop','📑 paragraph','🔗 refers to…','✉️ writing','📶 connected'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';b.style.animationDuration=(15+(i%4)*5)+'s';b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- header typing ---------- */
+(function(){
+  const el=document.getElementById('typed');const full='Nadia, Sami and their parents are from Palestine.';
+  let i=0;
+  function step(){
+    if(i<=full.length){el.textContent=full.slice(0,i);i++;setTimeout(step,90);}
+    else{setTimeout(()=>{i=0;el.textContent='';step();},2200);}
+  }
+  step();
+})();
+
+/* ---------- two-column connect matching (توصيل) ---------- */
+const MATCH_INSTANCES=[];
+function connectMatch(host,panelId,pairs,opt){
+  opt=opt||{};host.classList.add('match');
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','lines');
+  const cols=document.createElement('div');cols.className='cols';
+  const colL=document.createElement('div');colL.className='col left';
+  const colR=document.createElement('div');colR.className='col right';
+  cols.appendChild(colL);cols.appendChild(colR);host.appendChild(svg);host.appendChild(cols);
+  const leftEls={},rightEls={};let selLeft=null,doneCount=0;const total=pairs.length;const linesData=[];
+  function mk(html){const d=document.createElement('div');d.className='mitem';d.innerHTML=html;
+    const dot=document.createElement('span');dot.className='dot';d.appendChild(dot);return {d,dot};}
+  pairs.forEach((p,i)=>{const it=mk(p[0]);leftEls[i]=it;colL.appendChild(it.d);
+    it.d.addEventListener('click',()=>{
+      if(it.d.classList.contains('done'))return;
+      colL.querySelectorAll('.mitem').forEach(x=>x.classList.remove('sel'));
+      it.d.classList.add('sel');selLeft=i;
+    });
+  });
+  pairs.map((p,i)=>({html:p[1],idx:i})).sort(()=>Math.random()-.5).forEach(o=>{
+    const it=mk(o.html);rightEls[o.idx]=it;colR.appendChild(it.d);
+    it.d.addEventListener('click',()=>{
+      if(it.d.classList.contains('done')||selLeft===null)return;
+      if(o.idx===selLeft){
+        leftEls[selLeft].d.classList.remove('sel');leftEls[selLeft].d.classList.add('done');
+        it.d.classList.add('done');linesData.push([selLeft,o.idx]);drawLines();
+        selLeft=null;doneCount++;
+        if(opt.onProgress)opt.onProgress(doneCount,total);
+        if(doneCount===total&&opt.onComplete)opt.onComplete();
+      }else{it.d.classList.add('no');setTimeout(()=>it.d.classList.remove('no'),420);}
+    });
+  });
+  function center(dot){const r=dot.getBoundingClientRect(),h=host.getBoundingClientRect();return [r.left+r.width/2-h.left,r.top+r.height/2-h.top];}
+  function drawLines(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    linesData.forEach(([li,ri])=>{
+      const a=center(leftEls[li].dot),b=center(rightEls[ri].dot);
+      const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',a[0]);ln.setAttribute('y1',a[1]);ln.setAttribute('x2',b[0]);ln.setAttribute('y2',b[1]);
+      ln.setAttribute('stroke','#22b573');ln.setAttribute('stroke-width','3.5');ln.setAttribute('stroke-linecap','round');
+      svg.appendChild(ln);
+    });
+  }
+  if(opt.preDone!=null){
+    leftEls[opt.preDone].d.classList.add('done');rightEls[opt.preDone].d.classList.add('done');
+    linesData.push([opt.preDone,opt.preDone]);doneCount++;
+    if(opt.onProgress)opt.onProgress(doneCount,total);
+  }
+  MATCH_INSTANCES.push({panel:panelId,redraw:drawLines});
+  window.addEventListener('resize',drawLines);
+  requestAnimationFrame(drawLines);
+}
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  requestAnimationFrame(()=>MATCH_INSTANCES.forEach(m=>{if(m.panel===t.dataset.p)m.redraw();}));
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'punct',    name:'Punctuation', emo:'✏️'},
+  {id:'dictation',name:'Dictation',   emo:'🎧'},
+  {id:'order',    name:'Paragraph',   emo:'🔢'},
+  {id:'reference',name:'Reference',   emo:'🔗'},
+  {id:'quiz',     name:'Quiz',        emo:'🏆'},
+];
+const TAB_OF={punct:'p1',dictation:'p2',order:'p3',reference:'p4',quiz:'p5'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p11write')||'{}')}catch(e){earned={}}
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){if(earned[id])return;earned[id]=true;localStorage.setItem('g8u1p11write',JSON.stringify(earned));renderBadges();}
+function resetLesson(){localStorage.removeItem('g8u1p11write');location.reload();}
+renderBadges();
+
+/* =========================================================
+   A1 : punctuation pickers
+========================================================= */
+const PSENT=[
+  {ok:'N',opts:['n','N']},"adia",{ok:',',opts:[',','(none)']}," ",
+  {ok:'S',opts:['s','S']},"ami and their parents are from ",
+  {ok:'P',opts:['p','P']},"alestine",{ok:'.',opts:['.','(none)']},
+];
+const psent=document.getElementById('psent');
+let punctTotal=PSENT.filter(p=>typeof p!=='string').length,punctN=0;
+PSENT.forEach(p=>{
+  if(typeof p==='string'){psent.appendChild(document.createTextNode(p));return;}
+  const pick=document.createElement('span');pick.className='gpick';
+  p.opts.slice().sort(()=>Math.random()-.5).forEach(o=>{
+    const b=document.createElement('button');b.className='gchip';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(o===p.ok){
+        b.classList.add('ok');pick.querySelectorAll('.gchip').forEach(x=>x.disabled=true);
+        pick.dataset.solved=(o==='(none)'?'':o);
+        punctN++;
+        if(punctN===punctTotal){document.getElementById('solved').classList.add('show');award('punct');}
+      }else{b.classList.add('no');b.disabled=true;}
+    });
+    pick.appendChild(b);
+  });
+  psent.appendChild(pick);
+});
+
+/* =========================================================
+   A2 : dictation fill
+========================================================= */
+const DICT=[
+  {parts:["In the ",{ok:'evening',o:['evening','morning','afternoon']},", I often ",{ok:'email',o:['email','call','text']}," my ",{ok:'friends',o:['friends','family','cousins']},"."]},
+  {parts:["We ",{ok:'always',o:['always','often','never']}," ",{ok:'watch',o:['watch','see','look']}," the ",{ok:'news',o:['news','sport','films']}," on TV."]},
+  {parts:["Hanan is ",{ok:'talking',o:['talking','speaking','writing']}," to her cousin on the ",{ok:'phone',o:['phone','mobile','laptop']}," in the ",{ok:'kitchen',o:['kitchen','bedroom','garden']}," at the ",{ok:'moment',o:['moment','weekend','evening']},"."]},
+];
+const dictBox=document.getElementById('dictBox');
+let dictTotal=0;DICT.forEach(d=>d.parts.forEach(p=>{if(typeof p!=='string')dictTotal++;}));
+let dictN=0;
+DICT.forEach((d,di)=>{
+  const line=document.createElement('div');line.className='dline';
+  line.innerHTML='<span class="dnum">'+(di+1)+'</span>';
+  const wrap=document.createElement('span');
+  d.parts.forEach(p=>{
+    if(typeof p==='string'){wrap.appendChild(document.createTextNode(p));return;}
+    const pk=document.createElement('span');pk.className='dpick';
+    p.o.slice().sort(()=>Math.random()-.5).forEach(o=>{
+      const b=document.createElement('button');b.className='dchip';b.textContent=o;
+      b.addEventListener('click',()=>{
+        if(o===p.ok){
+          b.classList.add('ok');pk.querySelectorAll('.dchip').forEach(x=>x.disabled=true);
+          dictN++;
+          document.getElementById('dictTxt').textContent='Completed: '+dictN+' / '+dictTotal;
+          document.getElementById('dictBar').style.width=(dictN/dictTotal*100)+'%';
+          if(line.querySelectorAll('.dpick').length===line.querySelectorAll('.dchip.ok').length)line.classList.add('done');
+          if(dictN===dictTotal)award('dictation');
+        }else{b.classList.add('no');b.disabled=true;}
+      });
+      pk.appendChild(b);
+    });
+    wrap.appendChild(pk);
+  });
+  line.appendChild(wrap);
+  dictBox.appendChild(line);
+});
+
+/* =========================================================
+   A4+A5 : order the sentences -> paragraph
+========================================================= */
+const SENTS=[
+  "Sami and Nadia Kamal are brother and sister.",
+  "He is 14 and she is 13, but they are in the same year at Westhill School.",
+  "They started there a year ago when they first arrived in Britain.",
+  "Life there was difficult at that time because their English was not very good.",
+  "But they speak the language well now, and so life is much easier.",
+];
+const ordBox=document.getElementById('ordBox');
+let expected=1; // sentence 0 is given as first
+const shuffled=SENTS.map((t,i)=>({t,i})).sort(()=>Math.random()-.5);
+const cardOf={};
+function renderOrdProgress(){document.getElementById('ordTxt').textContent='Ordered: '+expected+' / 5';}
+// pre-place sentence 0
+shuffled.forEach(s=>{
+  const c=document.createElement('div');c.className='scard'+(s.i===0?' done':'');
+  c.innerHTML='<span class="onum">'+(s.i===0?'1':'?')+'</span><span class="stxt">'+s.t+'</span>';
+  cardOf[s.i]=c;
+  if(s.i!==0){
+    c.addEventListener('click',()=>{
+      if(c.classList.contains('done'))return;
+      if(s.i===expected){
+        c.classList.add('done');c.querySelector('.onum').textContent=expected+1;
+        expected++;renderOrdProgress();
+        if(expected===5){
+          document.getElementById('paraText').textContent=SENTS.join(' ');
+          document.getElementById('paraOut').classList.add('show');
+          award('order');
+        }
+      }else{c.classList.add('no');setTimeout(()=>c.classList.remove('no'),420);}
+    });
+  }
+  ordBox.appendChild(c);
+});
+renderOrdProgress();
+
+/* =========================================================
+   A6 : reference words matching (توصيل)
+========================================================= */
+const REF=[
+  ["He <span class='sn'>(s.2)</span>","Sami"],
+  ["she <span class='sn'>(s.2)</span>","Nadia"],
+  ["they <span class='sn'>(s.2)</span>","Sami and Nadia"],
+  ["there <span class='sn'>(s.3)</span>","Westhill School"],
+  ["the language <span class='sn'>(s.5)</span>","English"],
+  ["their <span class='sn'>(s.4)</span>","Sami and Nadia's"],
+];
+connectMatch(document.getElementById('refBox'),'p4',REF,{
+  preDone:0,
+  onProgress:(d,t)=>{document.getElementById('refTxt').textContent='Matched: '+d+' / '+t;},
+  onComplete:()=>award('reference'),
+});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'Which sentence has the correct punctuation?',o:['nadia sami and their parents are from palestine','Nadia, Sami and their parents are from Palestine.','nadia, sami and their parents are from palestine'],a:1},
+  {t:'How many paragraphs are there in the text on page 15?',o:['Three','Five','Seven'],a:1},
+  {t:'Which sentence should come FIRST in the paragraph?',o:['But they speak the language well now…','Sami and Nadia Kamal are brother and sister.','Life there was difficult at that time…'],a:1},
+  {t:'In "He is 14", the word <b>He</b> refers to ____.',o:['Nadia','Sami','their parents'],a:1},
+  {t:'In "they speak the language well", <b>the language</b> means ____.',o:['Arabic','English','French'],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach((b,oi)=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You are a great writer! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the lesson to get 5/5. <span class="ar">أحسنت! راجع الدرس لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Read about paragraphs again. <span class="ar">حاول مرة أخرى! راجع قواعد الفقرة.</span>';
+  box.classList.add('show');award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
