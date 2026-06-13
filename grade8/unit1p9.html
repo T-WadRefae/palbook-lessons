@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tel:#e85d3d;--tel-deep:#c64a2c;--tel-soft:#ffe3da;
+  --wave:#0891b2;--wave-deep:#0e7490;--wave-soft:#d8f3fb;
+  --gold:#f59e0b;--gold-soft:#fef3c7;--purple:#7c5cd6;
+  --paper:#ffffff;--ink:#243042;--ink-soft:#74839a;--line:#fbdfd4;
+  --ok:#22b573;--no:#ef5b5b;--r:20px;
+  --shadow:0 16px 40px rgba(198,74,44,.15);--shadow-sm:0 8px 20px rgba(198,74,44,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 90% 5%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 5% 28%, #d8f3fb, transparent 60%),
+    radial-gradient(700px 420px at 64% 88%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
+  background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating signal tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-115vh) rotate(3deg);opacity:0}}
+
+/* ====== header : long-distance call between two handsets (different from P1-P8) ====== */
+header{position:relative;padding:34px 0 22px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--wave);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--tel-deep);margin-top:8px;text-shadow:0 3px 0 #ffe3da}
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:18px}
+.callline{display:flex;align-items:center;justify-content:center}
+.phone-end{width:84px;height:84px;border-radius:22px;background:#fff;border:3px solid var(--tel);display:grid;place-items:center;font-size:40px;box-shadow:var(--shadow-sm);position:relative;flex-shrink:0;animation:nudge 2.6s ease-in-out infinite}
+.phone-end.r{border-color:var(--wave);animation-delay:1.3s}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.phone-end .nm{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:.72rem;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+.line{position:relative;width:clamp(70px,26vw,170px);height:4px;background:var(--line);border-radius:99px;margin:0 6px}
+.line .dot{position:absolute;top:50%;width:9px;height:9px;border-radius:50%;background:var(--wave);transform:translateY(-50%);animation:travel 2s linear infinite}
+.line .dot.d2{animation-delay:.66s}
+.line .dot.d3{animation-delay:1.33s}
+@keyframes travel{from{left:-4px;opacity:0}10%{opacity:1}90%{opacity:1}to{left:100%;opacity:0}}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--tel) 0 26px,var(--wave) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--wave);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.rulehint{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+.rh{border-radius:14px;padding:13px 15px;border:2px solid;font-weight:600;line-height:1.7}
+.rh.s{background:var(--wave-soft);border-color:var(--wave)}
+.rh.c{background:var(--tel-soft);border-color:var(--tel)}
+.rh b{font-size:1rem}.rh.s b{color:var(--wave-deep)}.rh.c b{color:var(--tel-deep)}
+.rh .ar{font-size:.85rem;color:var(--ink-soft);font-weight:600}
+
+/* ====== conversation (A1 fill) ====== */
+.conv-img{max-width:540px;margin:4px auto 14px;border-radius:16px;overflow:hidden;border:2px solid var(--line)}
+.conv-img img{width:100%;height:auto;display:block}
+.fillbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.conv{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:14px}
+.conv .ln{display:flex;gap:10px;align-items:flex-start;margin-bottom:13px}
+.conv .who{flex-shrink:0;font-weight:700;font-size:.78rem;color:#fff;background:var(--tel);border-radius:8px;padding:3px 10px;margin-top:5px;min-width:66px;text-align:center}
+.conv .who.m{background:var(--wave)}
+.conv .txt{flex:1;font-weight:500;line-height:2.3;font-size:1rem}
+.gpick{display:inline-flex;gap:5px;flex-wrap:wrap;vertical-align:middle}
+.gnum{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:5px;background:var(--gold);color:#fff;font-size:.7rem;font-weight:700;margin-right:3px;vertical-align:1px}
+.gchip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:2px 11px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.86rem;color:var(--ink);transition:.2s}
+.gchip:hover{border-color:var(--wave)}
+.gchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.gchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.gchip:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ====== A3 write replies ====== */
+.rep{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fff;transition:.3s}
+.rep.done{border-color:#bfe8d2;background:#f8fffb}
+.rep .cue{background:#fff6f1;padding:11px 14px;border-radius:14px 14px 0 0;font-weight:600;color:var(--ink-soft);font-size:.92rem}
+.rep.done .cue{background:#e9fbf2}
+.rep .cue .who{font-weight:700;color:var(--tel-deep);margin-right:6px}
+.rep .cue .br{color:var(--purple);font-weight:700}
+.rep .opts{display:flex;flex-direction:column;gap:7px;padding:12px 14px}
+.given{border:2px solid #bfe8d2;background:#f6fffb;border-radius:16px;margin-top:14px;padding:12px 14px;font-weight:600;line-height:1.7}
+.given .who{font-weight:700;color:var(--tel-deep);margin-right:6px}
+.given .ex{color:#168a55}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--wave)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+
+/* ====== Act it out ====== */
+.pickrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;align-items:center}
+.pickrow .lbl{font-weight:700;font-size:.85rem;color:var(--ink-soft)}
+.selbtn{border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem;color:var(--ink);transition:.2s}
+.selbtn:hover{transform:translateY(-2px)}
+.selbtn.on-c{border-color:var(--tel);background:var(--tel-soft);color:var(--tel-deep)}
+.selbtn.on-r{border-color:var(--wave);background:var(--wave-soft);color:var(--wave-deep)}
+.rp-line{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;padding:10px 14px;margin-top:10px;background:#fff}
+.rp-line .who{flex-shrink:0;font-weight:700;font-size:.78rem;color:#fff;background:var(--tel);border-radius:8px;padding:2px 10px;margin-top:4px;min-width:66px;text-align:center}
+.rp-line .who.m{background:var(--wave)}
+.rp-line .txt{flex:1;font-weight:500;line-height:1.9}
+.rp-line.mine{border-color:var(--gold);background:#fffdf2}
+.rp-line .mine-tag{display:inline-block;background:var(--gold);color:#fff;font-size:.72rem;font-weight:700;border-radius:99px;padding:1px 10px;margin-left:8px;vertical-align:2px}
+.rp-line .l-tts{flex-shrink:0;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:5px 13px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.8rem;transition:.2s}
+.rp-line .l-tts.playing{background:var(--no);color:#fff}
+.done-btn{margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;font-size:.95rem;border-radius:999px;padding:10px 22px;cursor:pointer;transition:.2s}
+.done-btn:hover{transform:scale(1.04)}
+.feedback{display:none;margin-top:12px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== call badges board ====== */
+.badge-board{background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 9 · GRADE 8</span>
+    <h1>Hello World!</h1>
+    <div class="sub">Grammar: present simple vs continuous · PB page 12</div>
+  </div>
+  <div class="callline">
+    <div class="phone-end"><span>📞</span><span class="nm">Mum · London</span></div>
+    <div class="line"><span class="dot"></span><span class="dot d2"></span><span class="dot d3"></span></div>
+    <div class="phone-end r"><span>☎️</span><span class="nm">Grandma · Jenin</span></div>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">✍️ Fill the Verbs <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">📝 Write the Replies <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">🎭 Act It Out <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في هذه الحصة نطبّق <b>المضارع البسيط</b> و<b>المضارع المستمر</b> معاً في مكالمة بين الجدّة (في جنين) والأم (في لندن) عن سامي ونادية — مع الأسئلة والنفي وأفعال الحالة. أنجز الأنشطة لتضيء أعمدة إشارتك! 📶</p>
+    <div class="rulehint">
+      <div class="rh s"><b>🔁 Present Simple</b><br><span class="ar">عادات وحقائق وأفعال الحالة: <b>likes, love, prefers, often writes, does</b>.</span></div>
+      <div class="rh c"><b>⏩ Present Continuous</b><br><span class="ar">الآن أو يتغيّر: <b>is sitting, are getting, am using, isn't doing</b>.</span></div>
+    </div>
+    <div class="goals">
+      <div class="goal"><div class="ico">✍️</div><div><b>Fill the Verbs</b><span class="ar">أكتب الأفعال بين القوسين بالشكل الصحيح في مكالمة سامي.</span></div></div>
+      <div class="goal"><div class="ico">📝</div><div><b>Write the Replies</b><span class="ar">أكوّن جُمل المكالمة الثانية عن نادية بالزمن الصحيح.</span></div></div>
+      <div class="goal"><div class="ico">🎭</div><div><b>Act It Out</b><span class="ar">أمثّل المكالمتين مع زميلي (الجدّة / الأم).</span></div></div>
+      <div class="goal"><div class="ico">🏁</div><div><b>Quiz</b><span class="ar">كويز من 5 نقاط على الزمنين.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : FILL THE VERBS ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>✍️ Activity 1: Write the verbs in the correct form</h2>
+    <p class="hint ar">اقرأ مكالمة الجدّة والأم عن سامي. لكل فعل بين القوسين، اختر الشكل الصحيح: <b>مضارع بسيط</b> أم <b>مستمر</b>؟ (انتبه لأفعال الحالة مثل like, love وللنفي.)</p>
+    <div class="conv-img"><img src="https://i.ibb.co/BVB2csPX/Gemini-Generated-Image-tyjwy9tyjwy9tyjw.png" alt="Mum on the phone in London talking to Grandma in Jenin"></div>
+    <div class="fillbar">
+      <span id="fillTxt">Completed: 0 / 10</span>
+      <div class="bar"><i id="fillBar"></i></div>
+      <span>✍️</span>
+    </div>
+    <div class="conv" id="convBox"></div>
+  </div>
+</section>
+
+<!-- ============ A3 : WRITE THE REPLIES ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>📝 Activity 3: Write the conversation — correct tense</h2>
+    <p class="hint ar">كوّن مكالمة الجدّة والأم عن نادية من الكلمات بين القوسين. الجملة الأولى محلولة كمثال — اختر الجملة الصحيحة لكل رقم.</p>
+    <div id="repBox"></div>
+  </div>
+</section>
+
+<!-- ============ A2+A4 : ACT IT OUT ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>🎭 Activities 2 &amp; 4: Act out the conversations</h2>
+    <p class="hint ar">اختر المكالمة ودورك. سطورك مُعلّمة <b>YOUR LINE</b> اقرأها بصوت عالٍ، وسطور زميلك لها زر 🔊. ثم تبادلا الأدوار.</p>
+    <div class="pickrow">
+      <span class="lbl ar">المكالمة:</span>
+      <button class="selbtn on-c" id="convA" data-c="0">1 · About Sami</button>
+      <button class="selbtn" id="convB" data-c="1">2 · About Nadia</button>
+    </div>
+    <div class="pickrow">
+      <span class="lbl ar">دورك:</span>
+      <button class="selbtn" id="roleG" data-r="Grandma">👵 Grandma</button>
+      <button class="selbtn" id="roleM" data-r="Mum">👩 Mum</button>
+    </div>
+    <div id="rpBox"></div>
+    <div style="text-align:center"><button class="done-btn" id="actDone" style="display:none">🎉 We acted it out!</button></div>
+    <div class="feedback good" id="actFb">👏 Wonderful acting! Now swap roles, or try the other conversation. <span class="ar">رائع! تبادلا الأدوار أو جرّبا المكالمة الأخرى.</span></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة على المضارع البسيط والمستمر. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! مع كل نشاط تنجزه يضيء عمود إشارة جديد 📶 حتى تكتمل شبكتك.</p>
+    <div class="badge-board">
+      <h3>✦ MY CALL BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! إشارتك مكتملة 📶<br>
+        أتقنت اختيار المضارع البسيط أو المستمر في مكالمة حقيقية. أحسنت! 📞☎️
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Designed with love <span style="display:inline-block">💗</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 9 : Hello World! (Grade 8) — Grammar
+   Phone-lines theme 📶 — long-distance-call header, call badges
+========================================================= */
+
+/* ---------- floating signal tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['📞 calling Jenin…','☎️ Grandma','🔁 present simple','⏩ present continuous','💬 acting out','📶 connected','🗣️ now or always?'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';b.style.animationDuration=(15+(i%4)*5)+'s';b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'fill', name:'Fill the Verbs', emo:'✍️'},
+  {id:'write',name:'Write Replies',  emo:'📝'},
+  {id:'act',  name:'Act It Out',     emo:'🎭'},
+  {id:'quiz', name:'Quiz',           emo:'🏆'},
+];
+const TAB_OF={fill:'p1',write:'p2',act:'p3',quiz:'p4'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p9verbs')||'{}')}catch(e){earned={}}
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){if(earned[id])return;earned[id]=true;localStorage.setItem('g8u1p9verbs',JSON.stringify(earned));renderBadges();}
+function resetLesson(){localStorage.removeItem('g8u1p9verbs');location.reload();}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+let ttsBtn=null;
+const stripTags=h=>h.replace(/<[^>]+>/g,'');
+function stopTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊';ttsBtn=null;}
+}
+function speakBtn(btn,txt,stopLabel){
+  if(ttsBtn===btn){stopTTS();return;}
+  stopTTS();if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;
+  u.onend=()=>{if(ttsBtn===btn)stopTTS();};
+  ttsBtn=btn;btn.classList.add('playing');btn.innerHTML=stopLabel||'⏹';
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : fill the verbs in conversation 1
+========================================================= */
+const CONV1=[
+  {who:'Grandma',cls:'',parts:["Tell me about Sami. He was having some problems at school, wasn't he? Is he enjoying it more now?"]},
+  {who:'Mum',cls:'m',parts:["Yes, things ",{ok:'are getting',opts:['are getting','is getting','get']}," much better now. He ",{ok:'likes',opts:['likes','is liking','like']}," life here in London."]},
+  {who:'Grandma',cls:'',parts:["What is he doing at the moment?"]},
+  {who:'Mum',cls:'m',parts:["He ",{ok:'is sitting',opts:['is sitting','sits','sit']}," at the computer. This year, he ",{ok:'is spending',opts:['is spending','spends','spend']}," more and more time with that thing."]},
+  {who:'Grandma',cls:'',parts:["Does he go on Facebook every day like his cousins here in Palestine? They ",{ok:'love',opts:['love','are loving','loves']}," doing that!"]},
+  {who:'Mum',cls:'m',parts:["Yes, he ",{ok:'does',opts:['does','is doing','do']},", too, but he ",{ok:"isn't doing",opts:["isn't doing","doesn't do","not doing"]}," that now."]},
+  {who:'Grandma',cls:'',parts:["Oh, so what is he doing now? Is he sending emails to people?"]},
+  {who:'Mum',cls:'m',parts:["Yes, he ",{ok:'is',opts:['is','are','be']},". He ",{ok:"doesn't always use",opts:["doesn't always use","isn't always using","not use"]}," Facebook. He often ",{ok:'writes',opts:['writes','is writing','write']}," emails, too."]},
+];
+const convBox=document.getElementById('convBox');
+let fillTotal=0;CONV1.forEach(l=>l.parts.forEach(p=>{if(typeof p!=='string')fillTotal++;}));
+let filledN=0,blankNo=0;
+CONV1.forEach(l=>{
+  const ln=document.createElement('div');ln.className='ln';
+  ln.innerHTML='<span class="who '+l.cls+'">'+l.who+'</span>';
+  const txt=document.createElement('span');txt.className='txt';
+  l.parts.forEach(p=>{
+    if(typeof p==='string'){txt.appendChild(document.createTextNode(p));return;}
+    blankNo++;const myNo=blankNo;
+    const pick=document.createElement('span');pick.className='gpick';
+    const num=document.createElement('span');num.className='gnum';num.textContent=myNo;pick.appendChild(num);
+    p.opts.slice().sort(()=>Math.random()-.5).forEach(o=>{
+      const b=document.createElement('button');b.className='gchip';b.textContent=o;
+      b.addEventListener('click',()=>{
+        if(o===p.ok){
+          b.classList.add('ok');pick.querySelectorAll('.gchip').forEach(x=>x.disabled=true);
+          filledN++;
+          document.getElementById('fillTxt').textContent='Completed: '+filledN+' / '+fillTotal;
+          document.getElementById('fillBar').style.width=(filledN/fillTotal*100)+'%';
+          if(filledN===fillTotal)award('fill');
+        }else{b.classList.add('no');b.disabled=true;}
+      });
+      pick.appendChild(b);
+    });
+    txt.appendChild(pick);
+  });
+  ln.appendChild(txt);convBox.appendChild(ln);
+});
+
+/* =========================================================
+   A3 : write the replies (choose correct sentence)
+========================================================= */
+const REPLIES=[
+  {who:'Mum',cls:'m',cue:"No, she (do not). / (prefer) to call them.",
+   o:["No, she doesn't. She prefers to call them.","No, she isn't. She is preferring to call them.","No, she don't. She prefer to call them."],a:0},
+  {who:'Mum',cls:'m',cue:"She (talk to) a friend on / mobile in / living room now.",
+   o:["She is talking to a friend on her mobile in the living room now.","She talks to a friend on her mobile in the living room now.","She talk to a friend on her mobile in the living room now."],a:0},
+  {who:'Grandma',cls:'',cue:"She / always (phone) people / her mobile even / home?",
+   o:["Does she always phone people on her mobile even at home?","Is she always phoning people on her mobile even at home?","Does she always phones people on her mobile even at home?"],a:0},
+  {who:'Mum',cls:'m',cue:"No, / she / usually (talk) on this phone / home.",
+   o:["No, she usually talks on this phone at home.","No, she is usually talking on this phone at home.","No, she usually talk on this phone at home."],a:0},
+  {who:'Mum',cls:'m',cue:"But she can't do that now because I (use) it!",
+   o:["But she can't do that now because I am using it!","But she can't do that now because I use it!","But she can't do that now because I uses it!"],a:0},
+];
+const repBox=document.getElementById('repBox');
+const given=document.createElement('div');given.className='given';
+given.innerHTML='<span class="who">Grandma:</span><span class="ex">✅ Does Nadia often email her friends, too? <span class="ar" style="color:#74839a;font-weight:600">(مثال محلول)</span></span>';
+repBox.appendChild(given);
+let repLeft=REPLIES.length;
+REPLIES.forEach((q,qi)=>{
+  const d=document.createElement('div');d.className='rep';
+  d.innerHTML='<div class="cue"><span class="who">'+q.who+':</span> <span class="br">'+(qi+2)+')</span> '+q.cue+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.map((o,oi)=>({o,oi})).sort(()=>Math.random()-.5).forEach(({o,oi})=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(oi===q.a){b.classList.add('ok');opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);d.classList.add('done');if(--repLeft===0)award('write');}
+      else{b.classList.add('no');b.disabled=true;}
+    });
+    opts.appendChild(b);
+  });
+  d.appendChild(opts);repBox.appendChild(d);
+});
+
+/* =========================================================
+   A2 + A4 : act out (role play)
+========================================================= */
+const ACT=[
+  [
+    ['Grandma','',"Tell me about Sami. He was having some problems at school, wasn't he? Is he enjoying it more now?"],
+    ['Mum','m',"Yes, things are getting much better now. He likes life here in London."],
+    ['Grandma','',"What is he doing at the moment?"],
+    ['Mum','m',"He is sitting at the computer. This year, he is spending more and more time with that thing."],
+    ['Grandma','',"Does he go on Facebook every day like his cousins here in Palestine? They love doing that!"],
+    ['Mum','m',"Yes, he does, too, but he isn't doing that now."],
+    ['Grandma','',"Oh, so what is he doing now? Is he sending emails to people?"],
+    ['Mum','m',"Yes, he is. He doesn't always use Facebook. He often writes emails, too."],
+  ],
+  [
+    ['Grandma','',"Does Nadia often email her friends, too?"],
+    ['Mum','m',"No, she doesn't. She prefers to call them. She is talking to a friend on her mobile in the living room now."],
+    ['Grandma','',"Does she always phone people on her mobile even at home?"],
+    ['Mum','m',"No, she usually talks on this phone at home. But she can't do that now because I am using it!"],
+  ],
+];
+let curConv=0, curRole=null;
+const rpBox=document.getElementById('rpBox'), actDone=document.getElementById('actDone');
+function renderAct(){
+  rpBox.innerHTML='';
+  if(curRole===null){actDone.style.display='none';return;}
+  ACT[curConv].forEach(l=>{
+    const isMine=(l[0]===curRole);
+    const d=document.createElement('div');d.className='rp-line'+(isMine?' mine':'');
+    d.innerHTML='<span class="who '+l[1]+'">'+l[0]+'</span>'+
+      '<span class="txt">'+l[2]+(isMine?'<span class="mine-tag">🗣️ YOUR LINE</span>':'')+'</span>'+
+      (isMine?'':'<button class="l-tts" data-label="🔊">🔊</button>');
+    if(!isMine){const b=d.querySelector('.l-tts');b.addEventListener('click',()=>speakBtn(b,l[2],'⏹'));}
+    rpBox.appendChild(d);
+  });
+  actDone.style.display='inline-block';
+}
+function setConv(i,btnOn,btnOff){curConv=i;btnOn.classList.add('on-c');btnOff.classList.remove('on-c');renderAct();}
+document.getElementById('convA').addEventListener('click',function(){setConv(0,this,document.getElementById('convB'));});
+document.getElementById('convB').addEventListener('click',function(){setConv(1,this,document.getElementById('convA'));});
+document.getElementById('roleG').addEventListener('click',function(){curRole='Grandma';this.classList.add('on-r');document.getElementById('roleM').classList.remove('on-r');renderAct();});
+document.getElementById('roleM').addEventListener('click',function(){curRole='Mum';this.classList.add('on-r');document.getElementById('roleG').classList.remove('on-r');renderAct();});
+actDone.addEventListener('click',()=>{document.getElementById('actFb').classList.add('show');award('act');});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'"Things ____ much better now." (get — changing over time)',o:['are getting','get','is getting'],a:0},
+  {t:'"He ____ life here in London." (like — a state verb)',o:['is liking','likes','like'],a:1},
+  {t:'"He ____ at the computer at the moment." (sit)',o:['sits','is sitting','sit'],a:1},
+  {t:'"No, she ____ to call them." (prefer — a state verb)',o:['prefers','is preferring','prefer'],a:0},
+  {t:'"She can\'t talk now because I ____ the phone." (use — happening now)',o:['use','am using','uses'],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach((b,oi)=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You chose every tense correctly! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the conversation to get 5/5. <span class="ar">أحسنت! راجع المكالمة لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Read the rule again. <span class="ar">حاول مرة أخرى! راجع القاعدة.</span>';
+  box.classList.add('show');award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
