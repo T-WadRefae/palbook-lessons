@@ -9,24 +9,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --green:#16a34a;
-  --green-deep:#15803d;
-  --mint:#dcfce7;
-  --blue:#3b82f6;
-  --blue-deep:#2563eb;
-  --sky:#dbeafe;
+  --tel:#e85d3d;
+  --tel-deep:#c64a2c;
+  --tel-soft:#ffe3da;
+  --wave:#0891b2;
+  --wave-deep:#0e7490;
+  --wave-soft:#d8f3fb;
   --gold:#f59e0b;
   --gold-soft:#fef3c7;
   --purple:#7c5cd6;
   --paper:#ffffff;
   --ink:#243042;
   --ink-soft:#74839a;
-  --line:#d7ecdf;
+  --line:#fbdfd4;
   --ok:#22b573;
   --no:#ef5b5b;
   --r:20px;
-  --shadow:0 16px 40px rgba(21,128,61,.15);
-  --shadow-sm:0 8px 20px rgba(21,128,61,.12);
+  --shadow:0 16px 40px rgba(198,74,44,.15);
+  --shadow-sm:0 8px 20px rgba(198,74,44,.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
@@ -34,10 +34,10 @@ body{
   font-family:'Fredoka','Nunito',sans-serif;
   color:var(--ink);
   background:
-    radial-gradient(680px 420px at 8% 4%, #d9f3e4, transparent 60%),
-    radial-gradient(620px 400px at 94% 30%, #dbeafe, transparent 60%),
+    radial-gradient(680px 420px at 8% 4%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 94% 30%, #d8f3fb, transparent 60%),
     radial-gradient(700px 420px at 30% 85%, #fef3c7, transparent 55%),
-    linear-gradient(180deg,#f0faf4 0%,#f4fbf7 50%,#eef5fd 100%);
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
   background-attachment:fixed;
   min-height:100vh;
   overflow-x:hidden;
@@ -50,7 +50,7 @@ body{
 .fl{
   position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;
   background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;
-  padding:6px 14px;color:var(--green-deep);box-shadow:var(--shadow-sm);opacity:0;
+  padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;
   animation:rise linear infinite;
 }
 @keyframes rise{
@@ -60,54 +60,45 @@ body{
   100%{transform:translateY(-115vh) rotate(3deg);opacity:0}
 }
 
-/* ====== header : contacts-app list (different from P1 chat screen) ====== */
+/* ====== header : incoming call screen (phone lines & signals theme) ====== */
 header{position:relative;padding:34px 0 8px;display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:center}
 .htitle{text-align:center;min-width:260px}
 .htitle .tag{
-  display:inline-block;background:var(--green);color:#fff;font-weight:600;font-size:.8rem;
+  display:inline-block;background:var(--tel);color:#fff;font-weight:600;font-size:.8rem;
   letter-spacing:2px;border-radius:999px;padding:4px 16px;
 }
 .htitle h1{
-  font-size:clamp(2rem,5.5vw,2.8rem);color:var(--green-deep);margin-top:10px;
-  text-shadow:0 3px 0 #d9f3e4;
+  font-size:clamp(2rem,5.5vw,2.8rem);color:var(--tel-deep);margin-top:10px;
+  text-shadow:0 3px 0 #ffe3da;
 }
 .htitle h1 .ring{display:inline-block;animation:ringring 2.4s ease-in-out infinite;transform-origin:50% 0}
 @keyframes ringring{0%,55%,100%{transform:rotate(0)}60%{transform:rotate(14deg)}70%{transform:rotate(-12deg)}80%{transform:rotate(9deg)}90%{transform:rotate(-5deg)}}
-.htitle .sub{color:var(--blue-deep);font-weight:600;font-size:1rem;margin-top:4px}
-.contacts{
-  width:min(360px,94vw);background:var(--paper);border:3px solid var(--blue);
-  border-radius:26px;box-shadow:var(--shadow);overflow:hidden;text-align:left;
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:4px}
+.callscreen{
+  width:min(330px,92vw);background:linear-gradient(170deg,#2b3247,#414b69);border:3px solid var(--tel);
+  border-radius:30px;box-shadow:var(--shadow);padding:24px 18px 22px;text-align:center;color:#fff;position:relative;
 }
-.ct-top{
-  background:linear-gradient(135deg,var(--blue),#2f6fe4);color:#fff;padding:12px 16px 14px;
+.callscreen .cs-status{font-size:.76rem;font-weight:600;letter-spacing:2px;color:#aeb8d4}
+.cs-avawrap{position:relative;width:120px;height:120px;margin:12px auto 6px}
+.cs-wave{position:absolute;inset:0;margin:auto;width:90px;height:90px;border:2.5px solid var(--gold);border-radius:50%;opacity:0;animation:csw 2.4s ease-out infinite}
+.cs-wave.w2{animation-delay:.8s}
+@keyframes csw{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.55);opacity:0}}
+.cs-ava{
+  position:absolute;inset:0;margin:auto;width:88px;height:88px;border-radius:50%;background:#fff;display:grid;place-items:center;
+  font-size:46px;border:3px solid var(--gold);z-index:2;
 }
-.ct-top b{font-size:1.05rem;letter-spacing:1px}
-.ct-search{
-  margin-top:9px;background:rgba(255,255,255,.25);border-radius:999px;padding:6px 14px;
-  font-size:.82rem;font-weight:600;color:#eaf2ff;display:flex;align-items:center;gap:8px;
-}
-.ct-row{
-  display:flex;align-items:center;gap:11px;padding:10px 14px;border-bottom:1.5px solid #eef5f0;
-  animation:slideIn .5s both;
-}
-.ct-row:nth-child(2){animation-delay:.18s}
-.ct-row:nth-child(3){animation-delay:.36s}
-.ct-row:nth-child(4){animation-delay:.54s}
-@keyframes slideIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
-.ct-row .c-ava{
-  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:21px;flex-shrink:0;
-  background:var(--mint);border:2px solid var(--line);
-}
-.ct-row:nth-child(odd) .c-ava{background:var(--sky);border-color:#bcd7fb}
-.ct-row b{font-size:.95rem;display:block;color:var(--ink)}
-.ct-row small{color:var(--ink-soft);font-weight:600;font-size:.74rem;display:block}
-.ct-row .c-ico{margin-left:auto;font-size:1.05rem}
-.ct-row .on-dot{color:var(--ok);font-size:.7rem;font-weight:700}
+.callscreen b{font-size:1.35rem;display:block}
+.callscreen .cs-from{color:#aeb8d4;font-weight:600;font-size:.85rem;margin-top:3px}
+.cs-btns{display:flex;justify-content:center;gap:46px;margin-top:18px}
+.cs-btn{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:24px;box-shadow:0 6px 14px rgba(0,0,0,.35)}
+.cs-btn.acc{background:#22b573;animation:accpulse 1.6s infinite}
+.cs-btn.dec{background:var(--no)}
+@keyframes accpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
 
 /* ====== tabs (LTR, English) ====== */
 nav{
   display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;
-  background:linear-gradient(180deg,rgba(240,250,244,.95),rgba(240,250,244,.8) 70%,transparent);
+  background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);
   backdrop-filter:blur(6px);scrollbar-width:none;
 }
 nav::-webkit-scrollbar{display:none}
@@ -117,10 +108,10 @@ nav::-webkit-scrollbar{display:none}
   background:#fff;color:var(--ink);border:2px solid var(--line);
   padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
 }
-.tab:hover{border-color:var(--green);transform:translateY(-2px)}
-.tab.on{background:var(--green);color:#fff;border-color:var(--green);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
-.tab .done-mark{display:none;color:var(--blue);font-size:.85rem;font-weight:700;letter-spacing:-2px}
-.tab.on .done-mark{color:#d6ffe9}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
 .tab.done .done-mark{display:inline}
 
 /* ====== panels / cards ====== */
@@ -130,42 +121,42 @@ nav::-webkit-scrollbar{display:none}
 .card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
 .card .ribbon{
   position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
-  background:repeating-linear-gradient(90deg,var(--blue) 0 26px,var(--green) 26px 48px,var(--gold) 48px 72px);
+  background:repeating-linear-gradient(90deg,var(--wave) 0 26px,var(--tel) 26px 48px,var(--gold) 48px 72px);
 }
-.card h2{font-size:1.3rem;color:var(--green-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
 .card h2 .gate{
-  font-size:.7rem;background:var(--blue);color:#fff;
+  font-size:.7rem;background:var(--wave);color:#fff;
   padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
 }
 .hint{
   color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
-  background:#eef6ff;border-radius:12px;padding:8px 14px;border-right:4px solid var(--blue);
+  background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave);
 }
 .divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
 
 /* ====== objectives ====== */
 .goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
 .goal{
-  background:#f2faf5;border:2px solid var(--line);border-radius:16px;padding:16px 14px;
+  background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;
   display:flex;gap:12px;align-items:flex-start;transition:.25s;
 }
 .goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
 .goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
-.goal b{display:block;color:var(--green-deep);font-size:1rem}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
 .goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
 .keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.kw{background:var(--sky);color:var(--blue-deep);border:1.5px solid #bcd7fb;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+.kw{background:var(--wave-soft);color:var(--wave-deep);border:1.5px solid #a7e0f1;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
 
 /* ====== Drive audio player (compact, the only player) ====== */
 .gplayer{
-  background:#eef6ff;border:2px solid #bcd7fb;border-radius:14px;
+  background:#e9f7fc;border:2px solid #a7e0f1;border-radius:14px;
   padding:9px 12px 10px;margin:10px 0 6px;max-width:480px;
 }
-.gplayer b{color:var(--blue-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer b{color:var(--wave-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
 .gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
 
 /* ====== A1 : word bank + fill blanks ====== */
-.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;background:#f2faf5;border:2px solid var(--line);border-radius:16px;padding:14px}
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:14px}
 .bword{
   border:2.5px solid var(--gold);background:var(--gold-soft);color:#8a6500;border-radius:999px;
   padding:6px 18px;font-family:inherit;font-weight:600;font-size:.98rem;cursor:pointer;transition:.2s;
@@ -178,17 +169,17 @@ nav::-webkit-scrollbar{display:none}
 }
 .mini.done{border-color:#bfe8d2;background:#f6fffa}
 .mini .m-head{
-  display:flex;align-items:center;gap:10px;padding:9px 14px;background:#f2faf5;border-radius:14px 14px 0 0;
-  font-weight:600;color:var(--green-deep);font-size:.88rem;
+  display:flex;align-items:center;gap:10px;padding:9px 14px;background:#fff6f1;border-radius:14px 14px 0 0;
+  font-weight:600;color:var(--tel-deep);font-size:.88rem;
 }
 .mini.done .m-head{background:#e9fbf2}
 .mini .m-num{
-  background:var(--blue);color:#fff;width:30px;height:30px;border-radius:10px;
+  background:var(--wave);color:#fff;width:30px;height:30px;border-radius:10px;
   display:grid;place-items:center;font-weight:600;font-size:.85rem;flex-shrink:0;
 }
 .mini .m-body{padding:10px 16px 13px;line-height:2.2;font-weight:500;font-size:1rem}
-.mini .sp{font-weight:700;font-size:.78rem;border-radius:7px;padding:1px 8px;margin-right:6px;color:#fff;background:var(--green)}
-.mini .sp.b{background:var(--blue)}
+.mini .sp{font-weight:700;font-size:.78rem;border-radius:7px;padding:1px 8px;margin-right:6px;color:#fff;background:var(--tel)}
+.mini .sp.b{background:var(--wave)}
 .blank{
   display:inline-block;min-width:110px;border-bottom:3px dashed var(--gold);text-align:center;
   font-weight:600;color:var(--gold);cursor:pointer;border-radius:8px 8px 0 0;padding:0 8px;transition:.2s;
@@ -198,7 +189,7 @@ nav::-webkit-scrollbar{display:none}
 .blank.no{animation:shake .4s;background:#fff0f0}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 .fillbar{
-  display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--blue);color:#fff;
+  display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;
   border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap;
 }
 .fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
@@ -206,33 +197,33 @@ nav::-webkit-scrollbar{display:none}
 
 /* ====== A2 : listen & check + choral TTS ====== */
 .mini .m-tts{
-  margin-left:auto;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:600;
+  margin-left:auto;border:0;background:var(--wave);color:#fff;font-family:inherit;font-weight:600;
   border-radius:999px;padding:6px 15px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;gap:6px;transition:.2s;
 }
-.mini .m-tts:hover{background:var(--blue-deep)}
+.mini .m-tts:hover{background:var(--wave-deep)}
 .mini .m-tts.playing{background:var(--no)}
 .mini .m-tts.played-once{box-shadow:0 0 0 2.5px #bfe8d2}
 
 /* questions dropdown */
-.qdrop{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fbfffc}
+.qdrop{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fffdf9}
 .qdrop summary{
-  cursor:pointer;list-style:none;padding:13px 18px;font-weight:600;color:var(--green-deep);
+  cursor:pointer;list-style:none;padding:13px 18px;font-weight:600;color:var(--tel-deep);
   display:flex;align-items:center;gap:8px;transition:.2s;border-radius:14px;
 }
 .qdrop summary::-webkit-details-marker{display:none}
-.qdrop summary:hover{background:#effaf3}
+.qdrop summary:hover{background:#fdf2ec}
 .qdrop summary .chev{margin-left:auto;transition:.3s}
 .qdrop[open] summary .chev{transform:rotate(180deg)}
 .qdrop .q-area{padding:0 18px 16px}
 .q{margin-top:12px}
 .q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
-.q .q-txt .qn{color:var(--blue)}
+.q .q-txt .qn{color:var(--wave)}
 .opts{display:flex;flex-direction:column;gap:7px}
 .opt{
   text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
   font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
 }
-.opt:hover{border-color:var(--blue)}
+.opt:hover{border-color:var(--wave)}
 .opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
 .opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
 .opt:disabled{cursor:default}
@@ -244,9 +235,9 @@ nav::-webkit-scrollbar{display:none}
 .script-card .ln{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
 .script-card .who{
   flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
-  background:var(--green);border-radius:8px;padding:2px 9px;margin-top:5px;min-width:64px;text-align:center;
+  background:var(--tel);border-radius:8px;padding:2px 9px;margin-top:5px;min-width:64px;text-align:center;
 }
-.script-card .who.t{background:var(--blue)}
+.script-card .who.t{background:var(--wave)}
 .script-card .txt{font-weight:500;color:var(--ink);line-height:2.1;flex:1;font-size:1rem}
 .narr{
   background:#f6f2ff;border:2px solid #e2d8fb;border-radius:16px;padding:13px 16px;margin-top:12px;
@@ -290,8 +281,8 @@ nav::-webkit-scrollbar{display:none}
 }
 .role-btn .r-emo{font-size:28px}
 .role-btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
-.role-btn.sel-n{border-color:var(--green);background:var(--mint);color:var(--green-deep)}
-.role-btn.sel-t{border-color:var(--blue);background:var(--sky);color:var(--blue-deep)}
+.role-btn.sel-n{border-color:var(--tel);background:var(--tel-soft);color:var(--tel-deep)}
+.role-btn.sel-t{border-color:var(--wave);background:var(--wave-soft);color:var(--wave-deep)}
 .rp-box{display:none;margin-top:16px}
 .rp-box.show{display:block;animation:fadeUp .4s}
 .rp-line{
@@ -300,9 +291,9 @@ nav::-webkit-scrollbar{display:none}
 }
 .rp-line .who{
   flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
-  background:var(--green);border-radius:8px;padding:2px 9px;margin-top:4px;min-width:64px;text-align:center;
+  background:var(--tel);border-radius:8px;padding:2px 9px;margin-top:4px;min-width:64px;text-align:center;
 }
-.rp-line .who.t{background:var(--blue)}
+.rp-line .who.t{background:var(--wave)}
 .rp-line .txt{flex:1;font-weight:500;line-height:1.9}
 .rp-line.mine{border-color:var(--gold);background:#fffdf2}
 .rp-line.mine .mine-tag{
@@ -310,10 +301,10 @@ nav::-webkit-scrollbar{display:none}
   border-radius:99px;padding:1px 10px;margin-left:8px;vertical-align:2px;
 }
 .rp-line .l-tts{
-  flex-shrink:0;border:0;background:var(--sky);color:var(--blue-deep);border-radius:999px;
+  flex-shrink:0;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;
   padding:5px 13px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.8rem;transition:.2s;
 }
-.rp-line .l-tts:hover{background:#c4dcfc}
+.rp-line .l-tts:hover{background:#bfeaf7}
 .rp-line .l-tts.playing{background:var(--no);color:#fff}
 .practised-btn{
   margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;
@@ -329,17 +320,17 @@ nav::-webkit-scrollbar{display:none}
 .quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
 .quiz-q .q-txt .qn{
   display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
-  background:var(--green);color:#fff;font-size:.85rem;margin-right:8px;
+  background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px;
 }
 .score-box{
-  display:none;margin-top:18px;background:linear-gradient(135deg,var(--green),#0e9f6e);color:#fff;
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;
   border-radius:18px;padding:20px;text-align:center;
 }
 .score-box.show{display:block;animation:fadeUp .5s}
-.score-box .sc{font-size:2.6rem;font-weight:700;color:#d9f99d}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
 .score-box p{font-weight:600;margin-top:6px;line-height:1.8}
 .big-btn{
-  margin-top:16px;border:0;background:var(--green);color:#fff;font-family:inherit;font-weight:700;
+  margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;
   font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
 }
 .big-btn:hover{transform:scale(1.05)}
@@ -347,24 +338,24 @@ nav::-webkit-scrollbar{display:none}
 
 /* ====== chat stickers board ====== */
 .badge-board{
-  background:linear-gradient(160deg,#f0faf4,#dcfce7);border-radius:22px;padding:26px 22px;margin-top:16px;
-  border:3px solid var(--green);box-shadow:var(--shadow);text-align:center;
+  background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;
+  border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center;
 }
-.badge-board h3{letter-spacing:3px;color:var(--green-deep);font-size:1.15rem;font-weight:600}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
 .badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
 .badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
 .badge-slot{
-  border:2.5px dashed #b5dcc4;border-radius:16px 16px 16px 4px;padding:14px 8px;min-height:118px;background:#fff;
+  border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative;
 }
 .badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
 .badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
-.badge-slot .b-tick{font-size:.72rem;font-weight:700;color:#c3cedd;letter-spacing:-2px}
-.badge-slot.earned{border-style:solid;border-color:var(--green);background:var(--mint)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
 .badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
-.badge-slot.earned .b-tick{color:var(--blue)}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
 @keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
-.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--green)}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
 .final-msg.show{display:block;animation:fadeUp .5s}
 </style>
 </head>
@@ -379,33 +370,33 @@ nav::-webkit-scrollbar{display:none}
     <h1><span class="ring">📞</span> Hello World!</h1>
     <div class="sub">New words in action · PB page 5</div>
   </div>
-  <div class="contacts">
-    <div class="ct-top">
-      <b>📒 Contacts</b>
-      <div class="ct-search">🔍 Search contacts…</div>
+  <div class="callscreen">
+    <div class="cs-status">INCOMING CALL ✦ FROM JENIN</div>
+    <div class="cs-avawrap">
+      <span class="cs-wave"></span><span class="cs-wave w2"></span>
+      <div class="cs-ava">👵</div>
     </div>
-    <div class="ct-row"><span class="c-ava">👵</span><div><b>Grandma</b><small>Jenin · calls every week</small></div><span class="c-ico">☎️</span></div>
-    <div class="ct-row"><span class="c-ava">👧</span><div><b>Majeda</b><small>at home · try the landline</small></div><span class="c-ico">📱</span></div>
-    <div class="ct-row"><span class="c-ava">👨‍💻</span><div><b>Ali</b><small><span class="on-dot">●</span> going online…</small></div><span class="c-ico">🌐</span></div>
-    <div class="ct-row"><span class="c-ava">👦</span><div><b>Tariq</b><small>busy · on the phone</small></div><span class="c-ico">🔴</span></div>
+    <b>Grandma</b>
+    <div class="cs-from">☎️ landline · calls every week</div>
+    <div class="cs-btns"><span class="cs-btn acc">📞</span><span class="cs-btn dec">📵</span></div>
   </div>
 </header>
 
 <nav id="tabs">
   <button class="tab on" data-p="p0">🎯 Objectives</button>
-  <button class="tab" data-p="p1">✍️ Add Words <span class="done-mark">✓✓</span></button>
-  <button class="tab" data-p="p2">🎧 Listen &amp; Check <span class="done-mark">✓✓</span></button>
-  <button class="tab" data-p="p3">📖 Read &amp; Answer <span class="done-mark">✓✓</span></button>
-  <button class="tab" data-p="p4">🎭 Pair Practice <span class="done-mark">✓✓</span></button>
-  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">✓✓</span></button>
-  <button class="tab" data-p="p6">🏅 Stickers</button>
+  <button class="tab" data-p="p1">✍️ Add Words <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">🎧 Listen &amp; Check <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">📖 Read &amp; Answer <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">🎭 Pair Practice <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p6">🏅 Badges</button>
 </nav>
 
 <!-- ============ OBJECTIVES ============ -->
 <section class="panel on" id="p0">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
-    <p class="hint ar">في الحصة الثانية نستخدم كلمات الحصة الأولى في حوارات قصيرة جديدة، ونعود إلى محادثة ناديا وتينا لنجيب عن أسئلة أعمق، ثم نتدرب على المحادثة في أزواج. اجمع ملصقات الدردشة الخمسة! 💬</p>
+    <p class="hint ar">في الحصة الثانية نستخدم كلمات الحصة الأولى في حوارات قصيرة جديدة، ونعود إلى محادثة ناديا وتينا لنجيب عن أسئلة أعمق، ثم نتدرب على المحادثة في أزواج. اجمع أوسمة الإشارة الخمسة! 📶</p>
     <div class="goals">
       <div class="goal"><div class="ico">✍️</div><div><b>Use the New Words</b><span class="ar">أكمل 7 حوارات قصيرة بكلمات الحصة الأولى مع التغييرات اللازمة.</span></div></div>
       <div class="goal"><div class="ico">🎧</div><div><b>Listen &amp; Check</b><span class="ar">أستمع إلى التسجيل وأتحقق من إجاباتي.</span></div></div>
@@ -441,7 +432,7 @@ nav::-webkit-scrollbar{display:none}
 <section class="panel" id="p2">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">STEP 2</span>🎧 Activity 2: Listen and check. Then practise in pairs</h2>
-    <p class="hint ar">شغّل التسجيل وتحقق من إجاباتك في النشاط السابق. ثم استمع لكل حوار بزر 🔊 وردّده مع زميلك — أحدكما (A) والآخر (B). استمع إلى الحوارات السبعة كلها لتحصل على الملصق!</p>
+    <p class="hint ar">شغّل التسجيل وتحقق من إجاباتك في النشاط السابق. ثم استمع لكل حوار بزر 🔊 وردّده مع زميلك — أحدكما (A) والآخر (B). استمع إلى الحوارات السبعة كلها لتحصل على الوسام!</p>
     <div class="gplayer">
       <b>🎧 CD1 Audio 4 · Listen and check</b>
       <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztbGZNN2VZUG9QUEk/preview?resourcekey=0-Q3C1oWZYtKD89myygtWCXQ" allow="autoplay"></iframe>
@@ -500,27 +491,27 @@ nav::-webkit-scrollbar{display:none}
 <!-- ============ STICKERS ============ -->
 <section class="panel" id="p6">
   <div class="card"><div class="ribbon"></div>
-    <h2><span class="gate">AWARDS</span>🏅 My Chat Stickers</h2>
-    <p class="hint ar">هنا تُجمع ملصقاتك! أكمل الأنشطة الخمسة لتحصل على كل ملصقات الدردشة وتظهر علامتا الاستلام ✓✓ بالأزرق.</p>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! مع كل نشاط تنجزه يضيء عمود إشارة جديد 📶 حتى تكتمل شبكتك.</p>
     <div class="badge-board">
-      <h3>✦ MY CHAT STICKERS ✦</h3>
+      <h3>✦ MY CALL BADGES ✦</h3>
       <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
       <div class="badges" id="badgesBoard"></div>
       <div class="final-msg ar" id="finalMsg">
-        🎉 مبروك! جمعت كل ملصقات الحصة الثانية بنجاح!<br>
+        🎉 مبروك! إشارة الحصة الثانية مكتملة 📶<br>
         أصبحت تستخدم كلمات الاتصال في حوارات جديدة وتتقن محادثة ناديا وتينا. أحسنت! 💬📞
       </div>
       <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
     </div>
   </div>
 </section>
-<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Prepared with care <span style="display:inline-block">🌸</span> by <b style="color:#15803d">T. Wad Refae</b></footer>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Prepared with care <span style="display:inline-block">🌸</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
 </div>
 
 <script>
 /* =========================================================
    Unit 1 – Period 2 : Hello World! (Grade 8)
-   Chat-app theme 💬 — contacts-list header, chat stickers
+   Phone-lines theme 📶 — incoming-call header, call badges
 ========================================================= */
 
 /* ---------- floating chat notifications ---------- */
@@ -564,7 +555,7 @@ function renderBadges(){
   BADGES.forEach(s=>{
     const d=document.createElement('div');
     d.className='badge-slot'+(earned[s.id]?' earned':'');
-    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">✓✓</span>';
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
     board.appendChild(d);
     if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
   });
