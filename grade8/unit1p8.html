@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tel:#e85d3d;--tel-deep:#c64a2c;--tel-soft:#ffe3da;
+  --wave:#0891b2;--wave-deep:#0e7490;--wave-soft:#d8f3fb;
+  --gold:#f59e0b;--gold-soft:#fef3c7;--purple:#7c5cd6;
+  --paper:#ffffff;--ink:#243042;--ink-soft:#74839a;--line:#fbdfd4;
+  --ok:#22b573;--no:#ef5b5b;--r:20px;
+  --shadow:0 16px 40px rgba(198,74,44,.15);--shadow-sm:0 8px 20px rgba(198,74,44,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 90% 5%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 5% 28%, #d8f3fb, transparent 60%),
+    radial-gradient(700px 420px at 64% 88%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
+  background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating signal tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-115vh) rotate(3deg);opacity:0}}
+
+/* ====== header : rising/falling trend charts (different from P1-P7) ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--wave);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--tel-deep);margin-top:8px;text-shadow:0 3px 0 #ffe3da}
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:14px}
+.trends{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.trend{background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px 18px 12px;box-shadow:var(--shadow-sm);text-align:center}
+.bars{display:flex;align-items:flex-end;gap:6px;height:84px;justify-content:center}
+.bars i{width:15px;border-radius:4px 4px 0 0;display:block;animation:pulseb 2.4s ease-in-out infinite}
+.trend.up .bars i{background:linear-gradient(180deg,#34d27f,var(--ok))}
+.trend.down .bars i{background:linear-gradient(180deg,#ff9b9b,var(--no))}
+@keyframes pulseb{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.88)}}
+.trend .lab{margin-top:8px;font-weight:700;font-size:.86rem;display:flex;align-items:center;gap:6px;justify-content:center}
+.trend.up .lab{color:#168a55}
+.trend.down .lab{color:var(--no)}
+.trend .lab .ar{font-size:1.3rem;line-height:1}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--tel) 0 26px,var(--wave) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--wave);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+
+/* ====== rule cards ====== */
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:12px}
+.rule-card{border-radius:16px;padding:16px;border:2px solid}
+.rule-card.cont{background:var(--tel-soft);border-color:var(--tel)}
+.rule-card.simp{background:var(--wave-soft);border-color:var(--wave)}
+.rule-card h3{font-size:1.05rem;display:flex;align-items:center;gap:8px}
+.rule-card.cont h3{color:var(--tel-deep)}
+.rule-card.simp h3{color:var(--wave-deep)}
+.rule-card .rrow{display:flex;gap:9px;margin-top:9px;align-items:flex-start}
+.rule-card .rlbl{flex-shrink:0;width:72px;font-size:.7rem;font-weight:700;border-radius:8px;padding:5px 6px;text-align:center;line-height:1.35;font-family:'Baloo Bhaijaan 2',sans-serif}
+.rule-card.cont .rlbl{background:var(--tel);color:#fff}
+.rule-card.simp .rlbl{background:var(--wave);color:#fff}
+.rule-card .rval{flex:1;font-weight:600;font-size:.9rem;line-height:1.6;color:var(--ink)}
+.rule-card .rval.ar{direction:rtl;text-align:right}
+.rule-card .eg{margin-top:10px;background:rgba(255,255,255,.6);border-radius:10px;padding:7px 12px;font-weight:600;font-size:.9rem}
+.svchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.svchips span{background:rgba(255,255,255,.75);border-radius:99px;padding:2px 11px;font-size:.82rem;font-weight:700;color:var(--wave-deep)}
+
+/* ====== find state verbs (A1) ====== */
+.fillbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.sv-row{border:2px solid var(--line);border-radius:14px;padding:11px 14px;margin-top:11px;background:#fff;transition:.3s}
+.sv-row.done{border-color:#bfe8d2;background:#f8fffb}
+.sv-row .sv-txt{font-weight:500;line-height:1.7;font-size:1.02rem;margin-bottom:8px}
+.sv-row .ochips{display:flex;gap:7px;flex-wrap:wrap}
+.ochip{border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 16px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink);transition:.2s}
+.ochip:hover{border-color:var(--wave)}
+.ochip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.ochip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.ochip:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ====== A2 example sentences + ticks ====== */
+.ex-row{display:flex;align-items:center;gap:14px;border:2px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:12px;background:#fff;flex-wrap:wrap}
+.ex-img{width:110px;flex-shrink:0;border-radius:12px;overflow:hidden;border:2px solid var(--line)}
+.ex-img img{width:100%;height:auto;display:block}
+.ex-row .ex-txt{flex:1;min-width:180px;font-weight:600;font-size:1.05rem;line-height:1.6}
+.ex-row .ex-n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--tel);color:#fff;font-size:.8rem;font-weight:600;margin-right:8px}
+.ex-row .vc{background:var(--tel-soft);color:var(--tel-deep);border-radius:6px;padding:0 5px;font-weight:700}
+.q{margin-top:14px}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.q .q-txt .qn{color:var(--wave)}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--wave)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+
+/* ====== A3 classify ====== */
+.cl-row{border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:11px;background:#fff;transition:.3s}
+.cl-row.done{border-color:#bfe8d2;background:#f8fffb}
+.cl-row .cl-txt{font-weight:500;line-height:1.6;margin-bottom:9px}
+.cl-btns{display:flex;gap:8px;flex-wrap:wrap}
+.clbtn{border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 15px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.86rem;color:var(--ink);transition:.2s}
+.clbtn.now:hover{border-color:var(--tel)}
+.clbtn.change:hover{border-color:var(--wave)}
+.clbtn.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.clbtn.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.clbtn:disabled{cursor:default}
+
+/* ====== A4 match & write ====== */
+.mw-card{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fff;transition:.3s;overflow:hidden}
+.mw-card.done{border-color:#bfe8d2;background:#f8fffb}
+.mw-head{background:#fff6f1;padding:11px 14px;font-weight:600;color:var(--ink);font-size:1rem;line-height:2}
+.mw-card.done .mw-head{background:#e9fbf2}
+.mw-head .mn{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--tel);color:#fff;font-size:.8rem;font-weight:600;margin-right:6px}
+.mw-match{padding:10px 14px;border-top:1px dashed var(--line)}
+.mw-match .lbl{font-weight:700;font-size:.8rem;color:var(--wave-deep);margin-right:6px}
+.mchip{border:2.5px solid var(--line);background:#fff;border-radius:10px;width:38px;height:38px;cursor:pointer;font-family:inherit;font-weight:700;font-size:1rem;color:var(--ink);transition:.2s;margin:0 3px}
+.mchip:hover{border-color:var(--wave)}
+.mchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.mchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.mchip:disabled{cursor:default}
+.mw-right{display:none;padding:10px 14px;border-top:1px dashed var(--line);background:#fafffc;font-weight:600;line-height:2}
+.mw-right.show{display:block;animation:fadeUp .35s}
+.mw-right .rl{font-weight:700;color:var(--wave-deep);margin-right:6px}
+.vpick{display:inline-flex;gap:5px;flex-wrap:wrap;vertical-align:middle}
+.vchip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:3px 11px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem;color:var(--ink);transition:.2s}
+.vchip:hover{border-color:var(--wave)}
+.vchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.vchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.vchip:disabled{cursor:default}
+
+/* ====== A5 speaking ====== */
+.s5-img{max-width:480px;margin:4px auto 14px;border-radius:16px;overflow:hidden;border:2px solid var(--line)}
+.s5-img img{width:100%;height:auto;display:block}
+.model{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:12px}
+.model .ln{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px}
+.model .who{flex-shrink:0;font-weight:700;font-size:.85rem;color:#fff;background:var(--tel);border-radius:8px;padding:2px 11px;margin-top:4px;min-width:30px;text-align:center}
+.model .who.b{background:var(--wave)}
+.model .txt{flex:1;font-weight:500;line-height:1.9}
+.model .cue{background:var(--gold-soft);color:#8a6500;border-radius:6px;padding:0 6px;font-weight:700}
+.model-tts{border:0;background:var(--wave);color:#fff;font-family:inherit;font-weight:600;border-radius:999px;padding:10px 22px;cursor:pointer;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;transition:.2s;margin-top:6px}
+.model-tts:hover{background:var(--wave-deep)}
+.model-tts.playing{background:var(--no)}
+.builder{background:#fff6f1;border:2px dashed var(--tel);border-radius:16px;padding:16px;margin-top:16px}
+.builder h3{color:var(--tel-deep);font-size:1.02rem;margin-bottom:6px}
+.builder .b-row{margin-top:10px;font-weight:600;line-height:2.2}
+.bsel{font-family:inherit;font-weight:600;font-size:.95rem;border:2px solid var(--tel);border-radius:10px;padding:4px 8px;background:#fff;color:var(--tel-deep);cursor:pointer}
+.b-out{margin-top:14px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:600;color:var(--ink);line-height:1.8}
+.out-tts{margin-top:10px;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:7px 16px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem}
+.out-tts.playing{background:var(--no);color:#fff}
+.done-btn{margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;font-size:.95rem;border-radius:999px;padding:10px 22px;cursor:pointer;transition:.2s}
+.done-btn:hover{transform:scale(1.04)}
+.feedback{display:none;margin-top:12px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== call badges board ====== */
+.badge-board{background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 8 · GRADE 8</span>
+    <h1>Hello World!</h1>
+    <div class="sub">Grammar: things that are changing · PB page 11</div>
+  </div>
+  <div class="trends">
+    <div class="trend up">
+      <div class="bars"><i style="height:22px"></i><i style="height:36px;animation-delay:.2s"></i><i style="height:52px;animation-delay:.4s"></i><i style="height:68px;animation-delay:.6s"></i><i style="height:82px;animation-delay:.8s"></i></div>
+      <div class="lab"><span class="ar">📈</span>📱 mobiles rising</div>
+    </div>
+    <div class="trend down">
+      <div class="bars"><i style="height:82px"></i><i style="height:66px;animation-delay:.2s"></i><i style="height:50px;animation-delay:.4s"></i><i style="height:34px;animation-delay:.6s"></i><i style="height:20px;animation-delay:.8s"></i></div>
+      <div class="lab"><span class="ar">📉</span>☎️ landlines falling</div>
+    </div>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">📐 The Rule <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">✓ Two Meanings <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">🔗 Match &amp; Write <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">🗣️ Speaking <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p6">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في هذه الحصة نتعمّق في <b>المضارع المستمر</b>: نستخدمه لشيء يحدث <b>الآن</b>، ولشيء <b>يتغيّر مع الوقت</b> (يكبر، يرتفع، يزداد...). ونتعلّم أن بعض الأفعال (love, like, want...) تبقى في <b>المضارع البسيط</b> دائماً. أنجز الأنشطة لتضيء أعمدة إشارتك! 📶</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">📐</div><div><b>The Rule</b><span class="ar">أفهم متى يكون المضارع المستمر، وأي أفعال تبقى في البسيط، وأجدها في النص.</span></div></div>
+      <div class="goal"><div class="ico">✓</div><div><b>Two Meanings</b><span class="ar">أميّز: هل المعنى «الآن» أم «يتغيّر مع الوقت»؟</span></div></div>
+      <div class="goal"><div class="ico">🔗</div><div><b>Match &amp; Write</b><span class="ar">أطابق نصفي الجملة وأكتب الفعل في المضارع المستمر.</span></div></div>
+      <div class="goal"><div class="ico">🗣️</div><div><b>Speaking</b><span class="ar">أتحدّث عمّا يتغيّر في حياتي.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : THE RULE ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">RULE</span>📐 Activity 1: Read the explanation</h2>
+    <p class="hint ar">المضارع المستمر (am/is/are + verb-ing) له معنيان. ولكن بعض الأفعال «الحالة» لا نضعها في المستمر أبداً — تبقى في البسيط.</p>
+    <div class="rule-grid">
+      <div class="rule-card cont">
+        <h3>⏩ Present Continuous</h3>
+        <div class="rrow"><span class="rlbl">الآن now</span><span class="rval ar">شيء يحدث الآن: <b>Someone is calling now.</b></span></div>
+        <div class="rrow"><span class="rlbl">يتغيّر change</span><span class="rval ar">شيء يتغيّر مع الوقت: <b>The hurricanes are getting worse.</b></span></div>
+      </div>
+      <div class="rule-card simp">
+        <h3>🛑 State verbs — present simple</h3>
+        <div class="rval ar">هذه الأفعال نضعها في <b>المضارع البسيط</b> وليس المستمر:</div>
+        <div class="svchips"><span>love</span><span>like</span><span>dislike</span><span>hate</span><span>know</span><span>prefer</span><span>mean</span><span>need</span><span>understand</span><span>want</span></div>
+        <div class="eg">✅ We <b>understand</b> hurricanes better now. <span style="color:var(--no)">(NOT</span> <s>are understanding</s><span style="color:var(--no)">)</span></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.1rem"><span class="gate">FIND</span>🔎 Find the state verbs in the text</h2>
+    <p class="hint ar">في كل جملة من نصوص <i>Young World</i>، اضغط على فعل الحالة (الذي يبقى في البسيط).</p>
+    <div class="fillbar">
+      <span id="svTxt">Found: 0 / 4</span>
+      <div class="bar"><i id="svBar"></i></div>
+      <span>🛑</span>
+    </div>
+    <div id="svBox"></div>
+  </div>
+</section>
+
+<!-- ============ A2+A3 : TWO MEANINGS ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>✓ Activity 2: Read the sentences. Tick the best answer</h2>
+    <p class="hint ar">اقرأ الجمل الثلاث وانظر إلى الصور، ثم اختر أفضل إكمال لكل عبارة.</p>
+    <div id="exBox"></div>
+    <div id="tickBox"></div>
+    <hr class="divider">
+    <h2 style="font-size:1.1rem"><span class="gate">STEP 2</span>🔍 Activity 3: Find more — now or changing over time?</h2>
+    <p class="hint ar">كل هذه الجمل في المضارع المستمر. قرّر معنى كل واحدة: هل تحدث <b>الآن</b> أم <b>تتغيّر مع الوقت</b>؟</p>
+    <div id="clBox"></div>
+  </div>
+</section>
+
+<!-- ============ A4 : MATCH & WRITE ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>🔗 Activity 4: Match and write the verbs</h2>
+    <p class="hint ar">لكل جملة: اختر الفعل بالشكل الصحيح (المضارع المستمر)، ثم اختر النصف المناسب (a / b / c) — وسيظهر لك مع فعله لتكمله.</p>
+    <div class="fillbar">
+      <span id="mwTxt">Done: 0 / 9</span>
+      <div class="bar"><i id="mwBar"></i></div>
+      <span>🔗</span>
+    </div>
+    <div id="mwBox"></div>
+  </div>
+</section>
+
+<!-- ============ A5 : SPEAKING ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>🗣️ Activity 5: Say what is changing in your life</h2>
+    <p class="hint ar">اقرأ النموذج واستمع بزر 🔊. ثم استخدم «باني الجملة» لتقول ما يتغيّر في حياتك، وتحدّث مع زميلك.</p>
+    <div class="s5-img"><img src="https://i.ibb.co/232wHfqS/Gemini-Generated-Image-e5dhybe5dhybe5dh.png" alt="Two students talking about what is changing in their lives"></div>
+    <div class="model" id="modelBox"></div>
+    <div style="text-align:center"><button class="model-tts" id="modelTTS">🔊 Listen to the model</button></div>
+    <div class="builder">
+      <h3>🛠️ Say what is changing</h3>
+      <p class="ar" style="font-weight:600;color:var(--ink-soft);font-size:.9rem">اختر من القوائم لتكوّن جملة بالمضارع المستمر.</p>
+      <div class="b-row">My
+        <select class="bsel" id="bThing"><option>school work</option><option>English</option><option>town</option><option>family</option><option>free time</option></select>
+        is getting
+        <select class="bsel" id="bChange"><option>more difficult</option><option>better</option><option>bigger</option><option>more interesting</option><option>busier</option></select>
+        now.
+      </div>
+      <div class="b-out" id="bOut"></div>
+      <button class="out-tts" id="outTTS">🔊 Listen to my sentence</button>
+    </div>
+    <div style="text-align:center"><button class="done-btn" id="speakDone">🎉 We talked about our lives!</button></div>
+    <div class="feedback good" id="speakFb">👏 Great speaking! Tell your partner one more thing that is changing. <span class="ar">أحسنت! أخبر زميلك بشيء آخر يتغيّر.</span></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة على المضارع المستمر وأفعال الحالة. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! مع كل نشاط تنجزه يضيء عمود إشارة جديد 📶 حتى تكتمل شبكتك.</p>
+    <div class="badge-board">
+      <h3>✦ MY CALL BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! إشارتك مكتملة 📶<br>
+        أتقنت استخدام المضارع المستمر للتغيّر مع الوقت، وعرفت أفعال الحالة. أحسنت! 📈📉
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Prepared with care <span style="display:inline-block">🌸</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 8 : Hello World! (Grade 8) — Grammar
+   Phone-lines theme 📶 — trend-chart header, call badges
+========================================================= */
+
+/* ---------- floating signal tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['📈 rising','📉 falling','⏩ getting bigger','📱 more and more','🛑 state verbs','📊 changing','📶 connected'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';b.style.animationDuration=(15+(i%4)*5)+'s';b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'rule',    name:'The Rule',    emo:'📐'},
+  {id:'meanings',name:'Two Meanings',emo:'✓'},
+  {id:'match',   name:'Match & Write',emo:'🔗'},
+  {id:'speak',   name:'Speaking',    emo:'🗣️'},
+  {id:'quiz',    name:'Quiz',        emo:'🏆'},
+];
+const TAB_OF={rule:'p1',meanings:'p2',match:'p3',speak:'p4',quiz:'p5'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p8gram')||'{}')}catch(e){earned={}}
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){if(earned[id])return;earned[id]=true;localStorage.setItem('g8u1p8gram',JSON.stringify(earned));renderBadges();}
+function resetLesson(){localStorage.removeItem('g8u1p8gram');location.reload();}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+let ttsBtn=null;
+const stripTags=h=>h.replace(/<[^>]+>/g,'').replace(/[()]/g,'');
+function stopTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊 Listen';ttsBtn=null;}
+}
+function speakBtn(btn,txt,stopLabel){
+  if(ttsBtn===btn){stopTTS();return;}
+  stopTTS();if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;
+  u.onend=()=>{if(ttsBtn===btn)stopTTS();};
+  ttsBtn=btn;btn.classList.add('playing');btn.innerHTML=stopLabel||'⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : find the state verbs
+========================================================= */
+const SV=[
+  {full:'Hanan and I love watching cartoons.', a:'love', opts:['love','watching']},
+  {full:"We think that's bad.", a:'think', opts:['think','bad']},
+  {full:'Our parents like to stay in contact.', a:'like', opts:['like','stay']},
+  {full:'… when they want to talk.', a:'want', opts:['want','talk']},
+];
+const svBox=document.getElementById('svBox');
+let svN=0;
+SV.forEach(s=>{
+  const row=document.createElement('div');row.className='sv-row';
+  row.innerHTML='<div class="sv-txt">'+s.full+'</div>';
+  const chips=document.createElement('div');chips.className='ochips';
+  s.opts.slice().sort(()=>Math.random()-.5).forEach(o=>{
+    const b=document.createElement('button');b.className='ochip';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(o===s.a){
+        b.classList.add('ok');chips.querySelectorAll('.ochip').forEach(x=>x.disabled=true);row.classList.add('done');
+        svN++;document.getElementById('svTxt').textContent='Found: '+svN+' / 4';
+        document.getElementById('svBar').style.width=(svN/4*100)+'%';
+        if(svN===4)award('rule');
+      }else{b.classList.add('no');b.disabled=true;}
+    });
+    chips.appendChild(b);
+  });
+  row.appendChild(chips);svBox.appendChild(row);
+});
+
+/* =========================================================
+   A2 : example sentences + tick questions
+========================================================= */
+const EX=[
+  {img:'https://i.ibb.co/Ps5FsWDs/Gemini-Generated-Image-9ifldm9ifldm9ifl.png', pre:'The hurricanes ', vc:'are getting', post:' worse.'},
+  {img:'https://i.ibb.co/23j2LHGG/Gemini-Generated-Image-m29efjm29efjm29e.png', pre:'The forecasts ', vc:'are getting', post:' better.'},
+  {img:'https://i.ibb.co/F4wCHbnr/Gemini-Generated-Image-sit2njsit2njsit2.png', pre:'Oh, someone ', vc:'is calling', post:' now. Excuse me!'},
+];
+const exBox=document.getElementById('exBox');
+EX.forEach((e,i)=>{
+  const d=document.createElement('div');d.className='ex-row';
+  d.innerHTML='<div class="ex-img"><img src="'+e.img+'" alt="sentence '+(i+1)+'"></div>'+
+    '<div class="ex-txt"><span class="ex-n">'+(i+1)+'</span>'+e.pre+'<span class="vc">'+e.vc+'</span>'+e.post+'</div>';
+  exBox.appendChild(d);
+});
+const TICK=[
+  {t:'The verbs in sentences 1–3 are all in the …',o:['present simple','present continuous'],a:1},
+  {t:'The tense in sentences 1 and 2 means something is …',o:['happening now','changing over a longer time'],a:1},
+  {t:'The tense in sentence 3 means something is …',o:['happening now','changing over a longer time'],a:0},
+];
+let meaningsTotal=TICK.length, meaningsCorrect=0;
+const tickBox=document.getElementById('tickBox');
+TICK.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">Q'+(qi+1)+':</span> '+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=(oi===0?'a) ':'b) ')+o;
+    b.addEventListener('click',()=>{
+      if(oi===q.a){b.classList.add('ok');opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);meaningsCorrect++;updMeanings();}
+      else{b.classList.add('no');b.disabled=true;}
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);tickBox.appendChild(qd);
+});
+
+/* A3 : classify now / changing */
+const CLASS=[
+  {t:'Modern satellites are collecting better information.', a:'change'},
+  {t:'My mobile is giving my family a better life.', a:'change'},
+  {t:'We are calling and texting friends more and more.', a:'change'},
+  {t:'Mum and Dad are getting angry.', a:'change'},
+  {t:'Oh, someone is calling now.', a:'now'},
+  {t:'This week we are asking people of different nationalities.', a:'now'},
+];
+meaningsTotal+=CLASS.length;
+const clBox=document.getElementById('clBox');
+CLASS.forEach(c=>{
+  const d=document.createElement('div');d.className='cl-row';
+  d.innerHTML='<div class="cl-txt">'+c.t+'</div>';
+  const btns=document.createElement('div');btns.className='cl-btns';
+  [['now','📞 Happening now'],['change','📈 Changing over time']].forEach(([val,label])=>{
+    const b=document.createElement('button');b.className='clbtn '+val;b.textContent=label;
+    b.addEventListener('click',()=>{
+      if(val===c.a){b.classList.add('ok');btns.querySelectorAll('.clbtn').forEach(x=>x.disabled=true);d.classList.add('done');meaningsCorrect++;updMeanings();}
+      else{b.classList.add('no');b.disabled=true;}
+    });
+    btns.appendChild(b);
+  });
+  d.appendChild(btns);clBox.appendChild(d);
+});
+function updMeanings(){if(meaningsCorrect===meaningsTotal)award('meanings');}
+
+/* =========================================================
+   A4 : match & write
+========================================================= */
+const HALVES={
+  a:{rl:'a',pre:'At the same time, they ',v:{ok:'are getting',opts:['are getting','is getting','get']},post:' faster.'},
+  b:{rl:'b',pre:'Wind speeds ',v:{ok:'are growing',opts:['are growing','is growing','grow']},post:', too.'},
+  c:{rl:'c',pre:'However, the number of landlines ',v:{ok:'is falling',opts:['is falling','are falling','falls']},post:'.'},
+};
+const LEFT=[
+  {n:1,pre:'Hurricanes ',v:{ok:'are growing',opts:['are growing','is growing','grow']},post:' bigger.',match:'b'},
+  {n:2,pre:'The number of mobile phones ',v:{ok:'is rising',opts:['is rising','are rising','rises']},post:'.',match:'c'},
+  {n:3,pre:'Computers ',v:{ok:'are getting',opts:['are getting','is getting','get']},post:' smaller.',match:'a'},
+];
+const MW_TOTAL=9;
+let mwDone=0;
+function updMW(){
+  document.getElementById('mwTxt').textContent='Done: '+mwDone+' / '+MW_TOTAL;
+  document.getElementById('mwBar').style.width=(mwDone/MW_TOTAL*100)+'%';
+  if(mwDone===MW_TOTAL)award('match');
+}
+function verbPicker(v,onok){
+  const sp=document.createElement('span');sp.className='vpick';
+  v.opts.slice().sort(()=>Math.random()-.5).forEach(o=>{
+    const b=document.createElement('button');b.className='vchip';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(o===v.ok){b.classList.add('ok');sp.querySelectorAll('.vchip').forEach(x=>x.disabled=true);onok();}
+      else{b.classList.add('no');b.disabled=true;}
+    });
+    sp.appendChild(b);
+  });
+  return sp;
+}
+const mwBox=document.getElementById('mwBox');
+LEFT.forEach(L=>{
+  const card=document.createElement('div');card.className='mw-card';
+  const head=document.createElement('div');head.className='mw-head';
+  head.innerHTML='<span class="mn">'+L.n+'</span>'+L.pre;
+  head.appendChild(verbPicker(L.v,()=>{mwDone++;updMW();}));
+  head.appendChild(document.createTextNode(L.post));
+  card.appendChild(head);
+  // match a/b/c
+  const m=document.createElement('div');m.className='mw-match';
+  m.innerHTML='<span class="lbl ar">يُطابق:</span>';
+  ['a','b','c'].forEach(L2=>{
+    const b=document.createElement('button');b.className='mchip';b.textContent=L2;
+    b.addEventListener('click',()=>{
+      if(L2===L.match){
+        b.classList.add('ok');m.querySelectorAll('.mchip').forEach(x=>x.disabled=true);
+        mwDone++;updMW();
+        // reveal right half
+        const H=HALVES[L.match];
+        const r=card.querySelector('.mw-right');
+        r.innerHTML='<span class="rl">'+H.rl+')</span>'+H.pre;
+        r.appendChild(verbPicker(H.v,()=>{mwDone++;updMW();}));
+        r.appendChild(document.createTextNode(H.post));
+        r.classList.add('show');
+      }else{b.classList.add('no');b.disabled=true;}
+    });
+    m.appendChild(b);
+  });
+  card.appendChild(m);
+  const r=document.createElement('div');r.className='mw-right';
+  card.appendChild(r);
+  mwBox.appendChild(card);
+});
+
+/* =========================================================
+   A5 : speaking
+========================================================= */
+const MODEL=[
+  ['A','',"What is changing in your life?"],
+  ['B','b',"<span class='cue'>(School work)</span> is getting <span class='cue'>(more difficult)</span> now."],
+  ['A','',"Yes, and I'm spending more and more time on <span class='cue'>(homework)</span>."],
+];
+document.getElementById('modelBox').innerHTML=MODEL.map(l=>
+  '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
+).join('');
+const modelBtn=document.getElementById('modelTTS');
+modelBtn.dataset.label='🔊 Listen to the model';
+modelBtn.addEventListener('click',()=>speakBtn(modelBtn,MODEL.map(l=>l[0]+'. '+stripTags(l[2])).join(' '),'⏹ Stop'));
+const bThing=document.getElementById('bThing'),bChange=document.getElementById('bChange'),bOut=document.getElementById('bOut');
+function buildOut(){bOut.textContent='💬 My '+bThing.value+' is getting '+bChange.value+' now.';}
+[bThing,bChange].forEach(s=>s.addEventListener('change',buildOut));buildOut();
+const outBtn=document.getElementById('outTTS');
+outBtn.dataset.label='🔊 Listen to my sentence';
+outBtn.addEventListener('click',()=>speakBtn(outBtn,bOut.textContent.replace('💬',''),'⏹ Stop'));
+document.getElementById('speakDone').addEventListener('click',()=>{document.getElementById('speakFb').classList.add('show');award('speak');});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'Choose the correct sentence (state verb):',o:['We are understanding hurricanes better now.','We understand hurricanes better now.','We understands hurricanes better now.'],a:1},
+  {t:'"The number of mobile phones ____ (rise)."',o:['are rising','rises','is rising'],a:2},
+  {t:'"Computers ____ smaller and smaller." (changing over time)',o:['are getting','is getting','get'],a:0},
+  {t:'"Oh, someone ____ now. Excuse me!" (happening now)',o:['calls','is calling','call'],a:1},
+  {t:'Which verb is a <b>state</b> verb (stays in present simple)?',o:['grow','want','rise'],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach((b,oi)=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You are a grammar champion! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the rule to get 5/5. <span class="ar">أحسنت! راجع القاعدة لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Read the explanation again. <span class="ar">حاول مرة أخرى! اقرأ الشرح من جديد.</span>';
+  box.classList.add('show');award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
