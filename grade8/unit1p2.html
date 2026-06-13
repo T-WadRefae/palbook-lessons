@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#16a34a;
+  --green-deep:#15803d;
+  --mint:#dcfce7;
+  --blue:#3b82f6;
+  --blue-deep:#2563eb;
+  --sky:#dbeafe;
+  --gold:#f59e0b;
+  --gold-soft:#fef3c7;
+  --purple:#7c5cd6;
+  --paper:#ffffff;
+  --ink:#243042;
+  --ink-soft:#74839a;
+  --line:#d7ecdf;
+  --ok:#22b573;
+  --no:#ef5b5b;
+  --r:20px;
+  --shadow:0 16px 40px rgba(21,128,61,.15);
+  --shadow-sm:0 8px 20px rgba(21,128,61,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 8% 4%, #d9f3e4, transparent 60%),
+    radial-gradient(620px 400px at 94% 30%, #dbeafe, transparent 60%),
+    radial-gradient(700px 420px at 30% 85%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#f0faf4 0%,#f4fbf7 50%,#eef5fd 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating chat notifications ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{
+  position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;
+  background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;
+  padding:6px 14px;color:var(--green-deep);box-shadow:var(--shadow-sm);opacity:0;
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0) rotate(-2deg);opacity:0}
+  8%{opacity:.5}
+  92%{opacity:.5}
+  100%{transform:translateY(-115vh) rotate(3deg);opacity:0}
+}
+
+/* ====== header : contacts-app list (different from P1 chat screen) ====== */
+header{position:relative;padding:34px 0 8px;display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:center}
+.htitle{text-align:center;min-width:260px}
+.htitle .tag{
+  display:inline-block;background:var(--green);color:#fff;font-weight:600;font-size:.8rem;
+  letter-spacing:2px;border-radius:999px;padding:4px 16px;
+}
+.htitle h1{
+  font-size:clamp(2rem,5.5vw,2.8rem);color:var(--green-deep);margin-top:10px;
+  text-shadow:0 3px 0 #d9f3e4;
+}
+.htitle h1 .ring{display:inline-block;animation:ringring 2.4s ease-in-out infinite;transform-origin:50% 0}
+@keyframes ringring{0%,55%,100%{transform:rotate(0)}60%{transform:rotate(14deg)}70%{transform:rotate(-12deg)}80%{transform:rotate(9deg)}90%{transform:rotate(-5deg)}}
+.htitle .sub{color:var(--blue-deep);font-weight:600;font-size:1rem;margin-top:4px}
+.contacts{
+  width:min(360px,94vw);background:var(--paper);border:3px solid var(--blue);
+  border-radius:26px;box-shadow:var(--shadow);overflow:hidden;text-align:left;
+}
+.ct-top{
+  background:linear-gradient(135deg,var(--blue),#2f6fe4);color:#fff;padding:12px 16px 14px;
+}
+.ct-top b{font-size:1.05rem;letter-spacing:1px}
+.ct-search{
+  margin-top:9px;background:rgba(255,255,255,.25);border-radius:999px;padding:6px 14px;
+  font-size:.82rem;font-weight:600;color:#eaf2ff;display:flex;align-items:center;gap:8px;
+}
+.ct-row{
+  display:flex;align-items:center;gap:11px;padding:10px 14px;border-bottom:1.5px solid #eef5f0;
+  animation:slideIn .5s both;
+}
+.ct-row:nth-child(2){animation-delay:.18s}
+.ct-row:nth-child(3){animation-delay:.36s}
+.ct-row:nth-child(4){animation-delay:.54s}
+@keyframes slideIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+.ct-row .c-ava{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:21px;flex-shrink:0;
+  background:var(--mint);border:2px solid var(--line);
+}
+.ct-row:nth-child(odd) .c-ava{background:var(--sky);border-color:#bcd7fb}
+.ct-row b{font-size:.95rem;display:block;color:var(--ink)}
+.ct-row small{color:var(--ink-soft);font-weight:600;font-size:.74rem;display:block}
+.ct-row .c-ico{margin-left:auto;font-size:1.05rem}
+.ct-row .on-dot{color:var(--ok);font-size:.7rem;font-weight:700}
+
+/* ====== tabs (LTR, English) ====== */
+nav{
+  display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,rgba(240,250,244,.95),rgba(240,250,244,.8) 70%,transparent);
+  backdrop-filter:blur(6px);scrollbar-width:none;
+}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{
+  flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;
+  background:#fff;color:var(--ink);border:2px solid var(--line);
+  padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px;
+}
+.tab:hover{border-color:var(--green);transform:translateY(-2px)}
+.tab.on{background:var(--green);color:#fff;border-color:var(--green);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;color:var(--blue);font-size:.85rem;font-weight:700;letter-spacing:-2px}
+.tab.on .done-mark{color:#d6ffe9}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{
+  position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;
+  background:repeating-linear-gradient(90deg,var(--blue) 0 26px,var(--green) 26px 48px,var(--gold) 48px 72px);
+}
+.card h2{font-size:1.3rem;color:var(--green-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{
+  font-size:.7rem;background:var(--blue);color:#fff;
+  padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600;
+}
+.hint{
+  color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;
+  background:#eef6ff;border-radius:12px;padding:8px 14px;border-right:4px solid var(--blue);
+}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{
+  background:#f2faf5;border:2px solid var(--line);border-radius:16px;padding:16px 14px;
+  display:flex;gap:12px;align-items:flex-start;transition:.25s;
+}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--green-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.kw{background:var(--sky);color:var(--blue-deep);border:1.5px solid #bcd7fb;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+
+/* ====== Drive audio player (compact, the only player) ====== */
+.gplayer{
+  background:#eef6ff;border:2px solid #bcd7fb;border-radius:14px;
+  padding:9px 12px 10px;margin:10px 0 6px;max-width:480px;
+}
+.gplayer b{color:var(--blue-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
+
+/* ====== A1 : word bank + fill blanks ====== */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;background:#f2faf5;border:2px solid var(--line);border-radius:16px;padding:14px}
+.bword{
+  border:2.5px solid var(--gold);background:var(--gold-soft);color:#8a6500;border-radius:999px;
+  padding:6px 18px;font-family:inherit;font-weight:600;font-size:.98rem;cursor:pointer;transition:.2s;
+}
+.bword:hover{transform:translateY(-2px)}
+.bword.sel{background:var(--gold);color:#fff;transform:scale(1.08);box-shadow:var(--shadow-sm)}
+.bword.used{opacity:.35;cursor:default;text-decoration:line-through}
+.mini{
+  border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fff;overflow:visible;transition:.3s;
+}
+.mini.done{border-color:#bfe8d2;background:#f6fffa}
+.mini .m-head{
+  display:flex;align-items:center;gap:10px;padding:9px 14px;background:#f2faf5;border-radius:14px 14px 0 0;
+  font-weight:600;color:var(--green-deep);font-size:.88rem;
+}
+.mini.done .m-head{background:#e9fbf2}
+.mini .m-num{
+  background:var(--blue);color:#fff;width:30px;height:30px;border-radius:10px;
+  display:grid;place-items:center;font-weight:600;font-size:.85rem;flex-shrink:0;
+}
+.mini .m-body{padding:10px 16px 13px;line-height:2.2;font-weight:500;font-size:1rem}
+.mini .sp{font-weight:700;font-size:.78rem;border-radius:7px;padding:1px 8px;margin-right:6px;color:#fff;background:var(--green)}
+.mini .sp.b{background:var(--blue)}
+.blank{
+  display:inline-block;min-width:110px;border-bottom:3px dashed var(--gold);text-align:center;
+  font-weight:600;color:var(--gold);cursor:pointer;border-radius:8px 8px 0 0;padding:0 8px;transition:.2s;
+}
+.blank:hover{background:var(--gold-soft)}
+.blank.filled{color:#168a55;border-bottom-color:var(--ok);cursor:default}
+.blank.no{animation:shake .4s;background:#fff0f0}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.fillbar{
+  display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--blue);color:#fff;
+  border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap;
+}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+
+/* ====== A2 : listen & check + choral TTS ====== */
+.mini .m-tts{
+  margin-left:auto;border:0;background:var(--blue);color:#fff;font-family:inherit;font-weight:600;
+  border-radius:999px;padding:6px 15px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;gap:6px;transition:.2s;
+}
+.mini .m-tts:hover{background:var(--blue-deep)}
+.mini .m-tts.playing{background:var(--no)}
+.mini .m-tts.played-once{box-shadow:0 0 0 2.5px #bfe8d2}
+
+/* questions dropdown */
+.qdrop{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fbfffc}
+.qdrop summary{
+  cursor:pointer;list-style:none;padding:13px 18px;font-weight:600;color:var(--green-deep);
+  display:flex;align-items:center;gap:8px;transition:.2s;border-radius:14px;
+}
+.qdrop summary::-webkit-details-marker{display:none}
+.qdrop summary:hover{background:#effaf3}
+.qdrop summary .chev{margin-left:auto;transition:.3s}
+.qdrop[open] summary .chev{transform:rotate(180deg)}
+.qdrop .q-area{padding:0 18px 16px}
+.q{margin-top:12px}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.q .q-txt .qn{color:var(--blue)}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;
+  font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink);
+}
+.opt:hover{border-color:var(--blue)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+
+/* ====== A3 : conversation transcript ====== */
+.script-card{
+  background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:12px;
+}
+.script-card .ln{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+.script-card .who{
+  flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
+  background:var(--green);border-radius:8px;padding:2px 9px;margin-top:5px;min-width:64px;text-align:center;
+}
+.script-card .who.t{background:var(--blue)}
+.script-card .txt{font-weight:500;color:var(--ink);line-height:2.1;flex:1;font-size:1rem}
+.narr{
+  background:#f6f2ff;border:2px solid #e2d8fb;border-radius:16px;padding:13px 16px;margin-top:12px;
+  font-weight:500;line-height:2.1;
+}
+.narr .who-n{font-weight:700;color:var(--purple);font-size:.85rem;margin-right:6px}
+
+/* glossary + pronoun hover tooltips */
+.g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
+.g{background:#fff3c4;border-bottom:2px dashed var(--gold);color:#8a6500}
+.p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
+.g::after,.p::after{
+  content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);
+  background:#243042;color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;
+  padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3);
+}
+.g::before,.p::before{
+  content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);
+  border:6px solid transparent;border-top-color:#243042;
+  opacity:0;visibility:hidden;transition:.18s;z-index:60;
+}
+.p::after{background:var(--purple)}
+.p::before{border-top-color:var(--purple)}
+.g:hover::after,.p:hover::after,.g.ton::after,.p.ton::after,
+.g:hover::before,.p:hover::before,.g.ton::before,.p.ton::before{
+  opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
+}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--gold)}
+.legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
+
+/* ====== A4 : role-play practice ====== */
+.role-pick{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.role-btn{
+  border:3px solid var(--line);background:#fff;border-radius:18px;padding:14px 26px;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:1.05rem;color:var(--ink);transition:.25s;
+  display:flex;align-items:center;gap:10px;
+}
+.role-btn .r-emo{font-size:28px}
+.role-btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+.role-btn.sel-n{border-color:var(--green);background:var(--mint);color:var(--green-deep)}
+.role-btn.sel-t{border-color:var(--blue);background:var(--sky);color:var(--blue-deep)}
+.rp-box{display:none;margin-top:16px}
+.rp-box.show{display:block;animation:fadeUp .4s}
+.rp-line{
+  display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;
+  padding:10px 14px;margin-top:10px;background:#fff;transition:.3s;
+}
+.rp-line .who{
+  flex-shrink:0;font-weight:600;font-size:.78rem;color:#fff;
+  background:var(--green);border-radius:8px;padding:2px 9px;margin-top:4px;min-width:64px;text-align:center;
+}
+.rp-line .who.t{background:var(--blue)}
+.rp-line .txt{flex:1;font-weight:500;line-height:1.9}
+.rp-line.mine{border-color:var(--gold);background:#fffdf2}
+.rp-line.mine .mine-tag{
+  display:inline-block;background:var(--gold);color:#fff;font-size:.72rem;font-weight:700;
+  border-radius:99px;padding:1px 10px;margin-left:8px;vertical-align:2px;
+}
+.rp-line .l-tts{
+  flex-shrink:0;border:0;background:var(--sky);color:var(--blue-deep);border-radius:999px;
+  padding:5px 13px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.8rem;transition:.2s;
+}
+.rp-line .l-tts:hover{background:#c4dcfc}
+.rp-line .l-tts.playing{background:var(--no);color:#fff}
+.practised-btn{
+  margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;
+  font-size:.98rem;border-radius:999px;padding:11px 24px;cursor:pointer;transition:.2s;
+}
+.practised-btn:hover{transform:scale(1.04)}
+.feedback{display:none;margin-top:12px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{
+  display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--green);color:#fff;font-size:.85rem;margin-right:8px;
+}
+.score-box{
+  display:none;margin-top:18px;background:linear-gradient(135deg,var(--green),#0e9f6e);color:#fff;
+  border-radius:18px;padding:20px;text-align:center;
+}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#d9f99d}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{
+  margin-top:16px;border:0;background:var(--green);color:#fff;font-family:inherit;font-weight:700;
+  font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s;
+}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== chat stickers board ====== */
+.badge-board{
+  background:linear-gradient(160deg,#f0faf4,#dcfce7);border-radius:22px;padding:26px 22px;margin-top:16px;
+  border:3px solid var(--green);box-shadow:var(--shadow);text-align:center;
+}
+.badge-board h3{letter-spacing:3px;color:var(--green-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{
+  border:2.5px dashed #b5dcc4;border-radius:16px 16px 16px 4px;padding:14px 8px;min-height:118px;background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative;
+}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.72rem;font-weight:700;color:#c3cedd;letter-spacing:-2px}
+.badge-slot.earned{border-style:solid;border-color:var(--green);background:var(--mint)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{color:var(--blue)}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--green)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 2 · GRADE 8</span>
+    <h1><span class="ring">📞</span> Hello World!</h1>
+    <div class="sub">New words in action · PB page 5</div>
+  </div>
+  <div class="contacts">
+    <div class="ct-top">
+      <b>📒 Contacts</b>
+      <div class="ct-search">🔍 Search contacts…</div>
+    </div>
+    <div class="ct-row"><span class="c-ava">👵</span><div><b>Grandma</b><small>Jenin · calls every week</small></div><span class="c-ico">☎️</span></div>
+    <div class="ct-row"><span class="c-ava">👧</span><div><b>Majeda</b><small>at home · try the landline</small></div><span class="c-ico">📱</span></div>
+    <div class="ct-row"><span class="c-ava">👨‍💻</span><div><b>Ali</b><small><span class="on-dot">●</span> going online…</small></div><span class="c-ico">🌐</span></div>
+    <div class="ct-row"><span class="c-ava">👦</span><div><b>Tariq</b><small>busy · on the phone</small></div><span class="c-ico">🔴</span></div>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">✍️ Add Words <span class="done-mark">✓✓</span></button>
+  <button class="tab" data-p="p2">🎧 Listen &amp; Check <span class="done-mark">✓✓</span></button>
+  <button class="tab" data-p="p3">📖 Read &amp; Answer <span class="done-mark">✓✓</span></button>
+  <button class="tab" data-p="p4">🎭 Pair Practice <span class="done-mark">✓✓</span></button>
+  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">✓✓</span></button>
+  <button class="tab" data-p="p6">🏅 Stickers</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في الحصة الثانية نستخدم كلمات الحصة الأولى في حوارات قصيرة جديدة، ونعود إلى محادثة ناديا وتينا لنجيب عن أسئلة أعمق، ثم نتدرب على المحادثة في أزواج. اجمع ملصقات الدردشة الخمسة! 💬</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">✍️</div><div><b>Use the New Words</b><span class="ar">أكمل 7 حوارات قصيرة بكلمات الحصة الأولى مع التغييرات اللازمة.</span></div></div>
+      <div class="goal"><div class="ico">🎧</div><div><b>Listen &amp; Check</b><span class="ar">أستمع إلى التسجيل وأتحقق من إجاباتي.</span></div></div>
+      <div class="goal"><div class="ico">📖</div><div><b>Read Again &amp; Answer</b><span class="ar">أقرأ محادثة ناديا وتينا مرة أخرى وأجيب عن 8 أسئلة.</span></div></div>
+      <div class="goal"><div class="ico">🎭</div><div><b>Practise in Pairs</b><span class="ar">أتدرب على المحادثة مع زميلي بتبادل الأدوار.</span></div></div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">💬 Words from Period 1</h2>
+    <div class="keywords">
+      <span class="kw">at the moment</span><span class="kw">family</span><span class="kw">go online</span>
+      <span class="kw">Grandma</span><span class="kw">landline</span><span class="kw">Mrs</span>
+      <span class="kw">on the phone</span><span class="kw">project</span><span class="kw">so</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : READ. ADD NEW WORDS ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>✍️ Activity 1: Read. Add new words from Period 1</h2>
+    <p class="hint ar">اضغط كلمة من البنك الذهبي ثم اضغط الفراغ المناسب لها في الحوارات. انتبه: بعض الكلمات تغيّر شكلها (go online ← <b>going online</b>) — Make any changes needed!</p>
+    <div class="bank" id="bank"></div>
+    <div class="fillbar">
+      <span id="fillTxt">Completed: 0 / 9</span>
+      <div class="bar"><i id="fillBar"></i></div>
+      <span>✍️</span>
+    </div>
+    <div id="a1box"></div>
+  </div>
+</section>
+
+<!-- ============ A2 : LISTEN & CHECK ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>🎧 Activity 2: Listen and check. Then practise in pairs</h2>
+    <p class="hint ar">شغّل التسجيل وتحقق من إجاباتك في النشاط السابق. ثم استمع لكل حوار بزر 🔊 وردّده مع زميلك — أحدكما (A) والآخر (B). استمع إلى الحوارات السبعة كلها لتحصل على الملصق!</p>
+    <div class="gplayer">
+      <b>🎧 CD1 Audio 4 · Listen and check</b>
+      <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztbGZNN2VZUG9QUEk/preview?resourcekey=0-Q3C1oWZYtKD89myygtWCXQ" allow="autoplay"></iframe>
+    </div>
+    <div id="a2box"></div>
+  </div>
+</section>
+
+<!-- ============ A3 : READ AGAIN & ANSWER ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>📖 Activity 3: Read again and answer the questions</h2>
+    <p class="hint ar">اقرأ محادثة ناديا وتينا من الحصة الأولى مرة أخرى. مرّر فوق الكلمات الملونة لرؤية المعاني ومرجع الضمائر، ثم افتح قائمة «Questions» وأجب عن الأسئلة الثمانية.</p>
+    <div class="legend">
+      <span class="lg-g">كلمة جديدة — مرّر أو اضغط لترى معناها 🟡</span>
+      <span class="lg-p">ضمير — مرّر أو اضغط لتعرف على من يعود 🟣</span>
+    </div>
+    <div class="narr" id="narrBox"></div>
+    <div class="script-card" id="convBox"></div>
+    <details class="qdrop">
+      <summary>📋 Questions (8) <span class="ar" style="font-size:.85rem;color:#74839a">أسئلة الفهم</span><span class="chev">▼</span></summary>
+      <div class="q-area" id="a3box"></div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ A4 : PAIR PRACTICE (role play) ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>🎭 Activity 4: Work in pairs — practise the conversation</h2>
+    <p class="hint ar">اختر دورك: ناديا أم تينا؟ سطور زميلك لها زر 🔊 لتسمعها، وسطورك أنت عليها علامة <b>YOUR LINE</b> — اقرأها بصوت عالٍ! ثم تبادلا الأدوار. عند الانتهاء اضغطا «We practised!».</p>
+    <div class="role-pick">
+      <button class="role-btn" id="roleN"><span class="r-emo">👧🏻</span> I am Nadia</button>
+      <button class="role-btn" id="roleT"><span class="r-emo">👧</span> I am Tina</button>
+    </div>
+    <div class="rp-box" id="rpBox"></div>
+    <div style="text-align:center"><button class="practised-btn" id="practisedBtn" style="display:none">🎉 We practised the conversation!</button></div>
+    <div class="feedback good" id="rpFb">👏 Wonderful! Now swap roles and practise again. <span class="ar">رائع! الآن تبادلا الأدوار وتدربا مرة أخرى.</span></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة تغطي حوارات اليوم. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STICKERS ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Chat Stickers</h2>
+    <p class="hint ar">هنا تُجمع ملصقاتك! أكمل الأنشطة الخمسة لتحصل على كل ملصقات الدردشة وتظهر علامتا الاستلام ✓✓ بالأزرق.</p>
+    <div class="badge-board">
+      <h3>✦ MY CHAT STICKERS ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! جمعت كل ملصقات الحصة الثانية بنجاح!<br>
+        أصبحت تستخدم كلمات الاتصال في حوارات جديدة وتتقن محادثة ناديا وتينا. أحسنت! 💬📞
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Prepared with care <span style="display:inline-block">🌸</span> by <b style="color:#15803d">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 2 : Hello World! (Grade 8)
+   Chat-app theme 💬 — contacts-list header, chat stickers
+========================================================= */
+
+/* ---------- floating chat notifications ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['📞 Calling…','💬 New message','☎️ landline','📱 mobile','🌐 going online','✉️ 1 new email','🔔 Grandma is calling'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fl';b.textContent=g;
+    b.style.left=(8+i*13)%86+'%';
+    b.style.animationDuration=(15+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- stickers / progress ---------- */
+const BADGES=[
+  {id:'fill',    name:'Add Words',     emo:'✍️'},
+  {id:'check',   name:'Listen & Check',emo:'🎧'},
+  {id:'read',    name:'Read & Answer', emo:'📖'},
+  {id:'practice',name:'Pair Practice', emo:'🎭'},
+  {id:'quiz',    name:'Quiz',          emo:'🏆'},
+];
+const TAB_OF={fill:'p1',check:'p2',read:'p3',practice:'p4',quiz:'p5'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p2chat')||'{}')}catch(e){earned={}}
+
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';
+  let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">✓✓</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){
+  if(earned[id])return;
+  earned[id]=true;
+  localStorage.setItem('g8u1p2chat',JSON.stringify(earned));
+  renderBadges();
+}
+function resetLesson(){
+  localStorage.removeItem('g8u1p2chat');location.reload();
+}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+let ttsBtn=null;
+function stopTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){
+    ttsBtn.classList.remove('playing');
+    ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊 Listen';
+    ttsBtn=null;
+  }
+}
+function speakBtn(btn,txt,stopLabel){
+  if(ttsBtn===btn){stopTTS();return;}
+  stopTTS();
+  if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='en-US';u.rate=.85;
+  u.onend=()=>{if(ttsBtn===btn)stopTTS();};
+  ttsBtn=btn;
+  btn.classList.add('playing');btn.innerHTML=stopLabel||'⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : the 7 mini-dialogues with blanks
+   answers: 1 project · 2 going online · 3 Grandma · 4 so
+            5 landline · 6 family + Mrs · 7 at the moment + on the phone
+========================================================= */
+const DIALOGUES=[
+  {parts:[
+    {sp:'A',chunks:["What's your history ",{w:'project'}," about?"]},
+    {sp:'B',chunks:["It's about our town 100 years ago."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["What's Ali doing at the computer?"]},
+    {sp:'B',chunks:["He's ",{w:'going online'}," to send an email."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["This is a photo of ",{w:'Grandma'},"."]},
+    {sp:'B',chunks:["Is she your mother's mum or your father's?"]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["Could you quickly email a family photo to me, please?"]},
+    {sp:'B',chunks:["Well, Huda is using the computer, ",{w:'so'}," I can't. I'll send one later."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["I'll call Majeda on her mobile."]},
+    {sp:'B',chunks:["She's at home, so you can call her on the ",{w:'landline'}," phone."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["How big is the Kamal ",{w:'family'},"?"]},
+    {sp:'B',chunks:["There are four of them. Mr and ",{w:'Mrs'}," Kamal, Sami and Nadia."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["Is Tariq watching TV ",{w:'at the moment'},"?"]},
+    {sp:'B',chunks:["No, not now. He's ",{w:'on the phone'}," with one of his friends."]},
+  ]},
+];
+const BANK=['project','going online','Grandma','so','landline','family','Mrs','at the moment','on the phone'];
+const TOTAL_BLANKS=9;
+const bank=document.getElementById('bank');
+let selWord=null;
+BANK.slice().sort(()=>Math.random()-.5).forEach(w=>{
+  const b=document.createElement('button');
+  b.className='bword';b.textContent=w;
+  b.addEventListener('click',()=>{
+    if(b.classList.contains('used'))return;
+    bank.querySelectorAll('.bword').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');selWord=b;
+  });
+  bank.appendChild(b);
+});
+const a1box=document.getElementById('a1box');
+let filledN=0;
+DIALOGUES.forEach((dg,di)=>{
+  const d=document.createElement('div');d.className='mini';
+  d.innerHTML='<div class="m-head"><span class="m-num">'+(di+1)+'</span>Dialogue '+(di+1)+'</div>';
+  const body=document.createElement('div');body.className='m-body';
+  dg.parts.forEach(pt=>{
+    const lineWrap=document.createElement('div');
+    const sp=document.createElement('span');
+    sp.className='sp'+(pt.sp==='B'?' b':'');sp.textContent=pt.sp;
+    lineWrap.appendChild(sp);
+    pt.chunks.forEach(ch=>{
+      if(typeof ch==='string'){
+        lineWrap.appendChild(document.createTextNode(ch));
+      }else{
+        const blank=document.createElement('span');
+        blank.className='blank';blank.textContent='........';
+        blank.addEventListener('click',()=>{
+          if(blank.classList.contains('filled')||!selWord)return;
+          if(selWord.textContent===ch.w){
+            blank.textContent=ch.w;blank.classList.add('filled');
+            selWord.classList.remove('sel');selWord.classList.add('used');
+            selWord=null;
+            filledN++;
+            document.getElementById('fillTxt').textContent='Completed: '+filledN+' / '+TOTAL_BLANKS;
+            document.getElementById('fillBar').style.width=(filledN/TOTAL_BLANKS*100)+'%';
+            if(!d.querySelector('.blank:not(.filled)'))d.classList.add('done');
+            if(filledN===TOTAL_BLANKS)award('fill');
+          }else{
+            blank.classList.add('no');
+            setTimeout(()=>blank.classList.remove('no'),450);
+            selWord.classList.remove('sel');selWord=null;
+          }
+        });
+        lineWrap.appendChild(blank);
+      }
+    });
+    body.appendChild(lineWrap);
+  });
+  d.appendChild(body);
+  a1box.appendChild(d);
+});
+
+/* =========================================================
+   A2 : the 7 complete dialogues with choral 🔊 TTS
+========================================================= */
+const a2box=document.getElementById('a2box');
+const playedSet=new Set();
+DIALOGUES.forEach((dg,di)=>{
+  const full=dg.parts.map(pt=>
+    pt.chunks.map(ch=>typeof ch==='string'?ch:ch.w).join('')
+  );
+  const d=document.createElement('div');d.className='mini';
+  d.innerHTML='<div class="m-head"><span class="m-num">'+(di+1)+'</span>Dialogue '+(di+1)+
+    '<button class="m-tts" data-label="🔊 Listen">🔊 Listen</button></div>';
+  const body=document.createElement('div');body.className='m-body';
+  dg.parts.forEach((pt,pi)=>{
+    const lineWrap=document.createElement('div');
+    const sp=document.createElement('span');
+    sp.className='sp'+(pt.sp==='B'?' b':'');sp.textContent=pt.sp;
+    lineWrap.appendChild(sp);
+    lineWrap.appendChild(document.createTextNode(full[pi]));
+    body.appendChild(lineWrap);
+  });
+  d.appendChild(body);
+  const ttsB=d.querySelector('.m-tts');
+  ttsB.addEventListener('click',e=>{
+    e.stopPropagation();
+    speakBtn(ttsB,full.join(' '));
+    if(!playedSet.has(di)){
+      playedSet.add(di);
+      ttsB.classList.add('played-once');
+      if(playedSet.size===DIALOGUES.length)award('check');
+    }
+  });
+  a2box.appendChild(d);
+});
+
+/* =========================================================
+   A3 : the Period-1 conversation + 8 questions
+========================================================= */
+const NARR="Nadia's family are from Palestine, but <i class='p' data-t='تعود على عائلة ناديا'>they</i> are living in London at the moment. Tina is <i class='p' data-t='تعود على ناديا'>her</i> friend.";
+const CONV=[
+  ['Nadia','', "Hello. Nadia <i class='g' data-t='ناديا تتكلم — هكذا نرد على الهاتف بالإنجليزية'>speaking</i>."],
+  ['Tina','t', "Hi, Nadia. <i class='p' data-t='تعود على المتصلة تينا'>It</i>'s Tina. How are you?"],
+  ['Nadia','', "Fine, thanks. And you?"],
+  ['Tina','t', "I'm fine, too. Listen, <i class='p' data-t='تعود على ناديا وتينا'>we</i> need to <i class='g' data-t='نخطط لـ'>plan</i> our school project."],
+  ['Nadia','', "Right. But why are you calling my mobile? <i class='p' data-t='يشير إلى الاتصال على المحمول'>That</i>'s <i class='g' data-t='مكلف / غالي الثمن'>expensive</i>."],
+  ['Tina','t', "I <i class='g' data-t='حاولت / جرّبت'>tried</i> your landline, but <i class='p' data-t='يعود على الخط الأرضي'>it</i> was <i class='g' data-t='مشغول'>busy</i>."],
+  ['Nadia','', "Ah, yes. Mum's using the phone in the kitchen to call <i class='p' data-t='تعود على ماما (أم ناديا)'>her</i> mother. Grandma lives in Jenin, and <i class='p' data-t='تعود على ماما والجدة'>they</i> talk on the phone every week."],
+  ['Tina','t', "Well, let's email each other."],
+  ['Nadia','', "Sorry, but <i class='p' data-t='تعود على ناديا وتينا'>we</i> can't at the moment. My brother Sami is using the computer. <i class='p' data-t='يعود على سامي'>He</i>'s <i class='g' data-t='يدردش'>chatting</i> to his friends online."],
+  ['Tina','t', "Oh, no!"],
+  ['Nadia','', "Sami always goes online in the evening."],
+  ['Tina','t', "So let's <i class='g' data-t='نكمل / نستمر'>carry on</i> with your mobile."],
+  ['Nadia','', "Yes, but not here. Dad's watching the sport on TV."],
+  ['Tina','t', "Ah, so are you <i class='g' data-t='تنتقلين'>moving</i> to the next room?"],
+  ['Nadia','', "Yes … But <i class='g' data-t='خمّني ماذا! — قبل خبر مفاجئ'>guess what</i>! Mum's <i class='g' data-t='تُنهي المكالمة'>finishing</i>."],
+  ['Tina','t', "So we can <i class='g' data-t='ننتقل / نغيّر إلى'>change</i> to the landline. Great!"],
+];
+document.getElementById('narrBox').innerHTML='<span class="who-n">Narrator</span>'+NARR;
+document.getElementById('convBox').innerHTML=CONV.map(l=>
+  '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
+).join('');
+
+/* tooltips on tap (mobile) */
+document.querySelectorAll('.g,.p').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    const was=el.classList.contains('ton');
+    document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+    if(!was)el.classList.add('ton');
+  });
+});
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+});
+
+/* the 8 questions */
+const A3Q=[
+  {t:'What is Tina calling Nadia about?',
+   o:['About their school project','About a TV programme','About a family photo'],a:0},
+  {t:"How often does Nadia's mother call Grandma?",
+   o:['Every day','Every week','Every month'],a:1},
+  {t:'What is Sami doing?',
+   o:["He's watching TV","He's doing his homework","He's chatting to his friends online"],a:2},
+  {t:'When does he always do this?',
+   o:['In the morning','In the evening','At school'],a:1},
+  {t:'Why does Nadia need to move to the next room?',
+   o:["Because Dad's watching the sport on TV","Because Mum is in the kitchen","Because Sami is using the computer there"],a:0},
+  {t:"Why does Tina say 'Great!'?",
+   o:['Because the project is finished','Because they can change to the landline','Because Sami goes offline'],a:1},
+  {t:'Why can they speak on the landline now?',
+   o:['Because Dad bought a new phone',"Because Nadia's mother is finishing her call",'Because the mobile is broken'],a:1},
+  {t:'What is going to happen next?',
+   o:['Nadia is going to watch TV','Tina is going to visit Nadia','Tina and Nadia are going to talk on the landline'],a:2},
+];
+const a3box=document.getElementById('a3box');
+let a3left=A3Q.length;
+A3Q.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">Q'+(qi+1)+':</span> '+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(oi===q.a){
+        b.classList.add('ok');
+        opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        if(--a3left===0)award('read');
+      }else{
+        b.classList.add('no');b.disabled=true;
+      }
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);a3box.appendChild(qd);
+});
+
+/* =========================================================
+   A4 : role-play practice
+========================================================= */
+const stripTags=h=>h.replace(/<[^>]+>/g,'');
+const rpBox=document.getElementById('rpBox');
+const practisedBtn=document.getElementById('practisedBtn');
+function renderRolePlay(myRole){
+  rpBox.innerHTML='';
+  CONV.forEach(l=>{
+    const isMine=(l[0]==='Nadia')===(myRole==='Nadia');
+    const d=document.createElement('div');
+    d.className='rp-line'+(isMine?' mine':'');
+    const plain=stripTags(l[2]);
+    d.innerHTML='<span class="who '+l[1]+'">'+l[0]+'</span>'+
+      '<span class="txt">'+plain+(isMine?'<span class="mine-tag">🗣️ YOUR LINE</span>':'')+'</span>'+
+      (isMine?'':'<button class="l-tts" data-label="🔊">🔊</button>');
+    if(!isMine){
+      const b=d.querySelector('.l-tts');
+      b.addEventListener('click',()=>speakBtn(b,plain,'⏹'));
+    }
+    rpBox.appendChild(d);
+  });
+  rpBox.classList.add('show');
+  practisedBtn.style.display='inline-block';
+}
+document.getElementById('roleN').addEventListener('click',function(){
+  this.classList.add('sel-n');document.getElementById('roleT').classList.remove('sel-t');
+  renderRolePlay('Nadia');
+});
+document.getElementById('roleT').addEventListener('click',function(){
+  this.classList.add('sel-t');document.getElementById('roleN').classList.remove('sel-n');
+  renderRolePlay('Tina');
+});
+practisedBtn.addEventListener('click',()=>{
+  document.getElementById('rpFb').classList.add('show');
+  award('practice');
+});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'"What\'s your history ____ about?" — "It\'s about our town 100 years ago."',
+   o:['family','project','landline'],a:1},
+  {t:'"He\'s ____ to send an email."',
+   o:['going online','go online','on the phone'],a:0},
+  {t:'"Huda is using the computer, ____ I can\'t. I\'ll send one later."',
+   o:['but','because','so'],a:2},
+  {t:'How big is the Kamal family?',
+   o:['There are three of them','There are four of them','There are five of them'],a:1},
+  {t:'Is Tariq watching TV at the moment?',
+   o:["Yes, he's watching the sport","No, he's on the phone with one of his friends","No, he's going online"],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');
+      quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    const btns=qd.querySelectorAll('.opt');
+    btns.forEach((b,oi)=>{
+      b.disabled=true;
+      b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You are a communication champion! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the dialogues to get 5/5. <span class="ar">أحسنت! راجع الحوارات لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Read the dialogues again. <span class="ar">حاول مرة أخرى! اقرأ الحوارات من جديد.</span>';
+  box.classList.add('show');
+  award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
