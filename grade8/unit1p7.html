@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tel:#e85d3d;--tel-deep:#c64a2c;--tel-soft:#ffe3da;
+  --wave:#0891b2;--wave-deep:#0e7490;--wave-soft:#d8f3fb;
+  --gold:#f59e0b;--gold-soft:#fef3c7;--purple:#7c5cd6;
+  --paper:#ffffff;--ink:#243042;--ink-soft:#74839a;--line:#fbdfd4;
+  --ok:#22b573;--no:#ef5b5b;--r:20px;
+  --shadow:0 16px 40px rgba(198,74,44,.15);--shadow-sm:0 8px 20px rgba(198,74,44,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 90% 5%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 5% 28%, #d8f3fb, transparent 60%),
+    radial-gradient(700px 420px at 64% 88%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
+  background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating signal tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-115vh) rotate(3deg);opacity:0}}
+
+/* ====== header : opposites flipper (different from P1-P6) ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--wave);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--tel-deep);margin-top:8px;text-shadow:0 3px 0 #ffe3da}
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:14px}
+.oppbox{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap}
+.oppbox .word{background:#fff;border:3px solid var(--tel);border-radius:16px;padding:12px 20px;font-weight:700;font-size:clamp(1.1rem,4vw,1.5rem);color:var(--tel-deep);min-width:150px;text-align:center;box-shadow:var(--shadow-sm);transition:.4s}
+.oppbox .word.b{border-color:var(--wave);color:var(--wave-deep)}
+.oppbox .swap{font-size:1.8rem;color:var(--gold);animation:swap 1.8s ease-in-out infinite}
+@keyframes swap{0%,100%{transform:translateX(-5px) rotate(0)}50%{transform:translateX(5px) rotate(10deg)}}
+.opprow{display:flex;justify-content:center;gap:9px;margin-top:16px;flex-wrap:wrap}
+.opprow span{background:#fff;border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:600;font-size:.85rem;color:var(--ink-soft)}
+.opprow span b{color:var(--tel-deep)}
+.opprow span i{color:var(--wave-deep);font-style:normal}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--tel) 0 26px,var(--wave) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--wave);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.kw{background:var(--wave-soft);color:var(--wave-deep);border:1.5px solid #a7e0f1;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+
+/* ====== A1 : find opposites (word + opposite chips) ====== */
+.fillbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.opp-row{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:11px 14px;margin-top:11px;background:#fff;flex-wrap:wrap;transition:.3s}
+.opp-row.done{border-color:#bfe8d2;background:#f8fffb}
+.opp-row .word-a{font-weight:700;font-size:1.05rem;color:var(--ink);min-width:120px}
+.opp-row .word-a b{color:var(--tel);font-size:.8rem;font-weight:700}
+.opp-row .arrow{color:var(--gold);font-weight:700;font-size:1.2rem}
+.opp-row .ochips{display:flex;gap:7px;flex-wrap:wrap}
+.ochip{border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink);transition:.2s}
+.ochip:hover{border-color:var(--wave)}
+.ochip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.ochip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.ochip:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ====== A2 : complete dialogues ====== */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:14px}
+.bword{border:2.5px solid var(--gold);background:var(--gold-soft);color:#8a6500;border-radius:999px;padding:6px 16px;font-family:inherit;font-weight:600;font-size:.96rem;cursor:pointer;transition:.2s}
+.bword:hover{transform:translateY(-2px)}
+.bword.sel{background:var(--gold);color:#fff;transform:scale(1.08);box-shadow:var(--shadow-sm)}
+.bword.used{opacity:.35;cursor:default;text-decoration:line-through}
+.mini{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fff;transition:.3s}
+.mini.done{border-color:#bfe8d2;background:#f8fffb}
+.mini .m-head{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#fff6f1;border-radius:14px 14px 0 0;font-weight:600;color:var(--tel-deep);font-size:.88rem}
+.mini.done .m-head{background:#e9fbf2}
+.mini .m-num{background:var(--wave);color:#fff;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-weight:600;font-size:.85rem;flex-shrink:0}
+.mini .m-tts{margin-left:auto;border:0;background:var(--wave);color:#fff;font-family:inherit;font-weight:600;border-radius:999px;padding:6px 15px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;gap:6px;transition:.2s}
+.mini .m-tts:hover{background:var(--wave-deep)}
+.mini .m-tts.playing{background:var(--no)}
+.mini .m-body{padding:10px 16px 13px;line-height:2.3;font-weight:500;font-size:1rem}
+.mini .sp{font-weight:700;font-size:.78rem;border-radius:7px;padding:1px 8px;margin-right:6px;color:#fff;background:var(--tel)}
+.mini .sp.b{background:var(--wave)}
+.blank{display:inline-block;min-width:104px;border-bottom:3px dashed var(--gold);text-align:center;font-weight:600;color:var(--gold);cursor:pointer;border-radius:8px 8px 0 0;padding:0 8px;transition:.2s}
+.blank:hover{background:var(--gold-soft)}
+.blank.filled{color:#168a55;border-bottom-color:var(--ok);cursor:default}
+.blank.no{animation:shake .4s;background:#fff0f0}
+
+/* ====== A4 : TV programmes matching ====== */
+.prog-row{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:11px 14px;margin-top:11px;background:#fff;flex-wrap:wrap;transition:.3s}
+.prog-row.done{border-color:#bfe8d2;background:#f8fffb}
+.prog-row .pgname{font-weight:700;font-size:1rem;color:var(--ink);min-width:160px;display:flex;align-items:center;gap:8px}
+.prog-row .pgname .em{font-size:1.3rem}
+.prog-row .tpicks{display:flex;gap:7px;flex-wrap:wrap}
+.tpick{border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.88rem;color:var(--ink);transition:.2s}
+.tpick:hover{border-color:var(--wave)}
+.tpick.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.tpick.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.tpick:disabled{cursor:default}
+.examples{background:var(--gold-soft);border:2px dashed var(--gold);border-radius:14px;padding:13px 16px;margin-top:16px;font-weight:600;line-height:1.9}
+.examples b{color:#92600a}
+.examples .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+.examples .chips span{background:#fff;border:1.5px solid var(--gold);border-radius:999px;padding:3px 12px;color:#8a6500;font-weight:700;font-size:.85rem}
+
+/* ====== A5 : speaking ====== */
+.model{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:12px}
+.model .ln{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px}
+.model .who{flex-shrink:0;font-weight:700;font-size:.85rem;color:#fff;background:var(--tel);border-radius:8px;padding:2px 11px;margin-top:4px;min-width:30px;text-align:center}
+.model .who.b{background:var(--wave)}
+.model .txt{flex:1;font-weight:500;line-height:1.9}
+.model .cue{background:var(--gold-soft);color:#8a6500;border-radius:6px;padding:0 6px;font-weight:700}
+.model-tts{border:0;background:var(--wave);color:#fff;font-family:inherit;font-weight:600;border-radius:999px;padding:10px 22px;cursor:pointer;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;transition:.2s;margin-top:6px}
+.model-tts:hover{background:var(--wave-deep)}
+.model-tts.playing{background:var(--no)}
+.sort2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+@media(max-width:560px){.sort2{grid-template-columns:1fr}}
+.bucket{border:2px solid var(--line);border-radius:16px;padding:12px;min-height:90px;background:#fff}
+.bucket h3{font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.bucket.like{border-color:var(--ok)}.bucket.like h3{color:#168a55}
+.bucket.dislike{border-color:var(--no)}.bucket.dislike h3{color:var(--no)}
+.bucket .drop{display:flex;flex-wrap:wrap;gap:7px;min-height:34px}
+.progpool{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;justify-content:center}
+.ptag{border:2px solid var(--wave);background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:6px 14px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.9rem;transition:.2s}
+.ptag.sel{outline:3px solid var(--gold);outline-offset:1px}
+.ptag.placed{background:#fff;cursor:default}
+.s5btns{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.s5btn{border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 18px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.9rem;transition:.2s}
+.s5btn.like{color:#168a55}.s5btn.like:hover{border-color:var(--ok);background:#e9fbf2}
+.s5btn.dislike{color:var(--no)}.s5btn.dislike:hover{border-color:var(--no);background:#fff0f0}
+.done-btn{margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;font-size:.95rem;border-radius:999px;padding:10px 22px;cursor:pointer;transition:.2s}
+.done-btn:hover{transform:scale(1.04)}
+.feedback{display:none;margin-top:12px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--wave)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== call badges board ====== */
+.badge-board{background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 7 · GRADE 8</span>
+    <h1>Hello World!</h1>
+    <div class="sub">Opposites &amp; TV programmes · PB page 10</div>
+  </div>
+  <div class="oppbox">
+    <span class="word" id="wA">old</span>
+    <span class="swap">⇄</span>
+    <span class="word b" id="wB">young</span>
+  </div>
+  <div class="opprow">
+    <span><b>expensive</b> ⇄ <i>cheap</i></span><span><b>modern</b> ⇄ <i>ancient</i></span>
+    <span><b>funny</b> ⇄ <i>serious</i></span><span><b>never</b> ⇄ <i>always</i></span>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">🔄 Opposites <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">✍️ Complete <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">📺 TV Programmes <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">🗣️ Speaking <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p6">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في هذه الحصة نتعلّم <b>الأضداد</b> (الكلمة وعكسها) ونستخدمها في حوارات قصيرة، ثم نتعرّف على <b>أنواع البرامج التلفزيونية</b> ونتحدّث عمّا نحب ولا نحب مشاهدته. أنجز الأنشطة لتضيء أعمدة إشارتك! 📶</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">🔄</div><div><b>Find Opposites</b><span class="ar">أجد عكس كل كلمة (8 أزواج من الأضداد).</span></div></div>
+      <div class="goal"><div class="ico">✍️</div><div><b>Complete &amp; Practise</b><span class="ar">أكمل الحوارات بأزواج الأضداد، ثم أتدرب عليها بزر 🔊.</span></div></div>
+      <div class="goal"><div class="ico">📺</div><div><b>TV Programmes</b><span class="ar">أطابق اسم البرنامج بنوعه (كرتون، أخبار، وثائقي...).</span></div></div>
+      <div class="goal"><div class="ico">🗣️</div><div><b>Speaking</b><span class="ar">أتحدّث عن البرامج التي أحبها ولا أحبها مع أمثلة.</span></div></div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">🔄 Opposite pairs</h2>
+    <div class="keywords">
+      <span class="kw">old ⇄ young</span><span class="kw">ask ⇄ answer</span><span class="kw">ancient ⇄ modern</span>
+      <span class="kw">better ⇄ worse</span><span class="kw">leave ⇄ arrive</span><span class="kw">funny ⇄ serious</span>
+      <span class="kw">cheap ⇄ expensive</span><span class="kw">never ⇄ always</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : FIND OPPOSITES ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>🔄 Activity 1: Read again and find the opposites</h2>
+    <p class="hint ar">هذه الكلمات وردت في مقال <i>Young World</i>. لكل كلمة، اضغط على عكسها الصحيح. (الكلمة الأولى محلولة: عكس old هو young.)</p>
+    <div class="fillbar">
+      <span id="oppTxt">Found: 1 / 8</span>
+      <div class="bar"><i id="oppBar" style="width:12.5%"></i></div>
+      <span>🔄</span>
+    </div>
+    <div id="oppBox"></div>
+  </div>
+</section>
+
+<!-- ============ A2 : COMPLETE ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>✍️ Activity 2: Complete the conversations</h2>
+    <p class="hint ar">استخدم أزواج الأضداد من النشاط الأول. اضغط كلمة من البنك ثم اضغط الفراغ المناسب — انتبه للتغييرات (مثل ask / answer). ثم اضغط 🔊 لتتدرب على الحوار مع زميلك (نشاط 3).</p>
+    <div class="bank" id="bank"></div>
+    <div class="fillbar">
+      <span id="fillTxt">Completed: 0 / 16</span>
+      <div class="bar"><i id="fillBar"></i></div>
+      <span>✍️</span>
+    </div>
+    <div id="a2box"></div>
+  </div>
+</section>
+
+<!-- ============ A4 : TV PROGRAMMES ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>📺 Activity 4: Match the names and kinds of TV programme</h2>
+    <p class="hint ar">اختر نوع كل برنامج تلفزيوني. ثم انظر إلى أمثلة من التلفزيون الفلسطيني في الأسفل.</p>
+    <div class="fillbar">
+      <span id="progTxt">Matched: 0 / 6</span>
+      <div class="bar"><i id="progBar"></i></div>
+      <span>📺</span>
+    </div>
+    <div id="progBox"></div>
+    <div class="examples ar">
+      <b>📡 أمثلة من التلفزيون الفلسطيني — Give more examples:</b>
+      <div class="chips"><span>news 📰</span><span>cartoons 🐭</span><span>documentaries 🎥</span><span>sports ⚽</span><span>music 🎵</span><span>films 🎬</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A5 : SPEAKING ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>🗣️ Activity 5: Ask and answer — programmes you like</h2>
+    <p class="hint ar">اقرأ النموذج واستمع بزر 🔊. ثم صنّف أنواع البرامج: ما الذي <b>تحبه 👍</b> وما الذي <b>لا تحبه 👎</b>؟ (لا توجد إجابة خاطئة — هذا رأيك أنت!) وأعطِ أمثلة لزميلك.</p>
+    <div class="model" id="modelBox"></div>
+    <div style="text-align:center"><button class="model-tts" id="modelTTS">🔊 Listen to the model</button></div>
+    <div class="progpool" id="pool"></div>
+    <div class="sort2">
+      <div class="bucket like"><h3>👍 I like…</h3><div class="drop" id="dropLike"></div></div>
+      <div class="bucket dislike"><h3>👎 I don't like…</h3><div class="drop" id="dropDislike"></div></div>
+    </div>
+    <div class="s5btns">
+      <button class="s5btn like" id="putLike">👍 Put in “I like”</button>
+      <button class="s5btn dislike" id="putDislike">👎 Put in “I don't like”</button>
+    </div>
+    <div style="text-align:center"><button class="done-btn" id="speakDone">🎉 We asked and answered!</button></div>
+    <div class="feedback good" id="speakFb">👏 Great speaking! Tell your partner an example for each one. <span class="ar">أحسنت! أعطِ زميلك مثالاً لكل نوع.</span></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة على الأضداد وأنواع البرامج. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! مع كل نشاط تنجزه يضيء عمود إشارة جديد 📶 حتى تكتمل شبكتك.</p>
+    <div class="badge-board">
+      <h3>✦ MY CALL BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! إشارتك مكتملة 📶<br>
+        أتقنت الأضداد وأنواع البرامج التلفزيونية وتحدّثت عن تفضيلاتك. أحسنت! 🔄📺
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Designed with love <span style="display:inline-block">💗</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 7 : Hello World! (Grade 8) — Opposites & TV
+   Phone-lines theme 📶 — opposites-flipper header, call badges
+========================================================= */
+
+/* ---------- floating signal tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['🔄 opposites','📺 cartoon','📰 the news','⚽ sports','🎬 film','🎵 music','📶 connected'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';b.style.animationDuration=(15+(i%4)*5)+'s';b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- header opposites cycler ---------- */
+(function(){
+  const PAIRS=[['old','young'],['expensive','cheap'],['modern','ancient'],['funny','serious'],['never','always'],['leave','arrive'],['better','worse'],['ask','answer']];
+  let i=0;const wA=document.getElementById('wA'),wB=document.getElementById('wB');
+  setInterval(()=>{i=(i+1)%PAIRS.length;wA.textContent=PAIRS[i][0];wB.textContent=PAIRS[i][1];},2000);
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'opposites',name:'Opposites',  emo:'🔄'},
+  {id:'complete', name:'Complete',   emo:'✍️'},
+  {id:'tv',       name:'TV Programmes',emo:'📺'},
+  {id:'speaking', name:'Speaking',   emo:'🗣️'},
+  {id:'quiz',     name:'Quiz',       emo:'🏆'},
+];
+const TAB_OF={opposites:'p1',complete:'p2',tv:'p3',speaking:'p4',quiz:'p5'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p7opp')||'{}')}catch(e){earned={}}
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){if(earned[id])return;earned[id]=true;localStorage.setItem('g8u1p7opp',JSON.stringify(earned));renderBadges();}
+function resetLesson(){localStorage.removeItem('g8u1p7opp');location.reload();}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+let ttsBtn=null;
+const stripTags=h=>h.replace(/<[^>]+>/g,'');
+function stopTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊 Listen';ttsBtn=null;}
+}
+function speakBtn(btn,txt,stopLabel){
+  if(ttsBtn===btn){stopTTS();return;}
+  stopTTS();if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;
+  u.onend=()=>{if(ttsBtn===btn)stopTTS();};
+  ttsBtn=btn;btn.classList.add('playing');btn.innerHTML=stopLabel||'⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : find the opposites
+========================================================= */
+const OPP=[
+  {w:'old',       a:'young',     done:true,  opts:['young','small','tall']},
+  {w:'answer(ing)',a:'asking',   done:false, opts:['asking','telling','saying']},
+  {w:'ancient',   a:'modern',    done:false, opts:['modern','old','broken']},
+  {w:'better',    a:'worse',     done:false, opts:['worse','best','good']},
+  {w:'leave',     a:'arrive',    done:false, opts:['arrive','go','stay']},
+  {w:'funny',     a:'serious',   done:false, opts:['serious','happy','silly']},
+  {w:'cheap',     a:'expensive', done:false, opts:['expensive','free','small']},
+  {w:'never',     a:'always',    done:false, opts:['always','sometimes','soon']},
+];
+const oppBox=document.getElementById('oppBox');
+let oppN=1;
+OPP.forEach(o=>{
+  const row=document.createElement('div');row.className='opp-row'+(o.done?' done':'');
+  row.innerHTML='<span class="word-a">'+o.w+' <b>⇄</b></span>';
+  const chips=document.createElement('div');chips.className='ochips';
+  if(o.done){
+    const s=document.createElement('span');s.className='ochip ok';s.textContent=o.a;chips.appendChild(s);
+  }else{
+    o.opts.slice().sort(()=>Math.random()-.5).forEach(op=>{
+      const b=document.createElement('button');b.className='ochip';b.textContent=op;
+      b.addEventListener('click',()=>{
+        if(op===o.a){
+          b.classList.add('ok');chips.querySelectorAll('.ochip').forEach(x=>x.disabled=true);row.classList.add('done');
+          oppN++;
+          document.getElementById('oppTxt').textContent='Found: '+oppN+' / 8';
+          document.getElementById('oppBar').style.width=(oppN/8*100)+'%';
+          if(oppN===8)award('opposites');
+        }else{b.classList.add('no');b.disabled=true;}
+      });
+      chips.appendChild(b);
+    });
+  }
+  row.appendChild(chips);oppBox.appendChild(row);
+});
+
+/* =========================================================
+   A2 : complete conversations (pairs of opposites)
+========================================================= */
+const DIALOGUES=[
+  {parts:[
+    {sp:'A',chunks:["This documentary is good but it's very ",{w:'serious'},". I'm bored!"]},
+    {sp:'B',chunks:["We can change and watch some cartoons. They'll be ",{w:'funny'},"."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["What time do you ",{w:'leave'}," home to go to school?"]},
+    {sp:'B',chunks:["At about 7:20, and I always ",{w:'arrive'}," at school at about 7:45."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["Rania wasn't very well yesterday. I hope she's feeling ",{w:'better'}," today."]},
+    {sp:'B',chunks:["No, she's getting ",{w:'worse'},", I'm sorry to say. She's very sick."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["Your little brother isn't very ",{w:'old'},", is he?"]},
+    {sp:'B',chunks:["No, he's only five. He's still very ",{w:'young'},"."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["I'd like to buy those shoes, but they're very ",{w:'expensive'},"."]},
+    {sp:'B',chunks:["But look at these ones. They're ",{w:'cheap'}," – and they're nice. Buy them!"]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["Can I ",{w:'ask'}," a question about computers, please?"]},
+    {sp:'B',chunks:["Well, I'll try to ",{w:'answer'}," it, but I don't know much about computers."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["News travels round the world very fast in the ",{w:'modern'}," world."]},
+    {sp:'B',chunks:["But in ",{w:'ancient'}," times, news took months to travel a long way."]},
+  ]},
+  {parts:[
+    {sp:'A',chunks:["I hate wearing lots of things, so I ",{w:'never'}," wear a coat."]},
+    {sp:'B',chunks:["That's strange. I ",{w:'always'}," wear a coat in winter. I hate being cold!"]},
+  ]},
+];
+const BANK=['serious','funny','leave','arrive','better','worse','old','young','expensive','cheap','ask','answer','modern','ancient','never','always'];
+const TOTAL_BLANKS=16;
+const bank=document.getElementById('bank');
+let selWord=null;
+BANK.slice().sort(()=>Math.random()-.5).forEach(w=>{
+  const b=document.createElement('button');b.className='bword';b.textContent=w;
+  b.addEventListener('click',()=>{
+    if(b.classList.contains('used'))return;
+    bank.querySelectorAll('.bword').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');selWord=b;
+  });
+  bank.appendChild(b);
+});
+const a2box=document.getElementById('a2box');
+let filledN=0;
+DIALOGUES.forEach((dg,di)=>{
+  const full=dg.parts.map(pt=>pt.chunks.map(ch=>typeof ch==='string'?ch:ch.w).join(''));
+  const d=document.createElement('div');d.className='mini';
+  d.innerHTML='<div class="m-head"><span class="m-num">'+(di+1)+'</span>Conversation '+(di+1)+
+    '<button class="m-tts" data-label="🔊 Practise">🔊 Practise</button></div>';
+  const body=document.createElement('div');body.className='m-body';
+  dg.parts.forEach(pt=>{
+    const lineWrap=document.createElement('div');
+    const sp=document.createElement('span');sp.className='sp'+(pt.sp==='B'?' b':'');sp.textContent=pt.sp;
+    lineWrap.appendChild(sp);
+    pt.chunks.forEach(ch=>{
+      if(typeof ch==='string'){lineWrap.appendChild(document.createTextNode(ch));return;}
+      const blank=document.createElement('span');blank.className='blank';blank.textContent='........';
+      blank.addEventListener('click',()=>{
+        if(blank.classList.contains('filled')||!selWord)return;
+        if(selWord.textContent===ch.w){
+          blank.textContent=ch.w;blank.classList.add('filled');
+          selWord.classList.remove('sel');selWord.classList.add('used');selWord=null;
+          filledN++;
+          document.getElementById('fillTxt').textContent='Completed: '+filledN+' / '+TOTAL_BLANKS;
+          document.getElementById('fillBar').style.width=(filledN/TOTAL_BLANKS*100)+'%';
+          if(!d.querySelector('.blank:not(.filled)'))d.classList.add('done');
+          if(filledN===TOTAL_BLANKS)award('complete');
+        }else{
+          blank.classList.add('no');setTimeout(()=>blank.classList.remove('no'),450);
+          selWord.classList.remove('sel');selWord=null;
+        }
+      });
+      lineWrap.appendChild(blank);
+    });
+    body.appendChild(lineWrap);
+  });
+  d.appendChild(body);
+  const ttsB=d.querySelector('.m-tts');
+  ttsB.addEventListener('click',e=>{e.stopPropagation();speakBtn(ttsB,dg.parts.map((pt,pi)=>full[pi]).join(' '),'⏹ Stop');});
+  a2box.appendChild(d);
+});
+
+/* =========================================================
+   A4 : match TV programmes to kinds
+========================================================= */
+const PROG=[
+  {em:'🐭',name:'Tom and Jerry',a:'cartoon'},
+  {em:'⚽',name:'Football Special',a:'sports programme'},
+  {em:'📰',name:'The World Tonight',a:'the news'},
+  {em:'🎵',name:'Sing, Sing, Sing!',a:'music programme'},
+  {em:'🎬',name:'Batman Flies Again',a:'film'},
+  {em:'🎥',name:'The Birds of Palestine',a:'documentary'},
+];
+const TYPES=['cartoon','sports programme','the news','music programme','film','documentary'];
+const progBox=document.getElementById('progBox');
+let progLeft=PROG.length;
+PROG.forEach(p=>{
+  const row=document.createElement('div');row.className='prog-row';
+  row.innerHTML='<span class="pgname"><span class="em">'+p.em+'</span>'+p.name+'</span>';
+  const picks=document.createElement('div');picks.className='tpicks';
+  TYPES.slice().sort(()=>Math.random()-.5).forEach(t=>{
+    const b=document.createElement('button');b.className='tpick';b.textContent=t;
+    b.addEventListener('click',()=>{
+      if(t===p.a){
+        b.classList.add('ok');picks.querySelectorAll('.tpick').forEach(x=>x.disabled=true);row.classList.add('done');
+        progLeft--;
+        document.getElementById('progTxt').textContent='Matched: '+(PROG.length-progLeft)+' / '+PROG.length;
+        document.getElementById('progBar').style.width=((PROG.length-progLeft)/PROG.length*100)+'%';
+        if(progLeft===0)award('tv');
+      }else{b.classList.add('no');b.disabled=true;}
+    });
+    picks.appendChild(b);
+  });
+  row.appendChild(picks);progBox.appendChild(row);
+});
+
+/* =========================================================
+   A5 : speaking — model + sort like/dislike
+========================================================= */
+const MODEL=[
+  ['Q','',"What kinds of programmes do you like? Can you give some examples?"],
+  ['A','b',"I like <span class='cue'>(cartoons)</span>, for example <span class='cue'>(Tom and Jerry)</span>."],
+  ['Q','',"What kinds of programmes don't you like? Can you give some examples?"],
+  ['A','b',"I don't like <span class='cue'>(the news)</span>. It's a bit <span class='cue'>(serious)</span> for me!"],
+];
+document.getElementById('modelBox').innerHTML=MODEL.map(l=>
+  '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
+).join('');
+const modelBtn=document.getElementById('modelTTS');
+modelBtn.dataset.label='🔊 Listen to the model';
+modelBtn.addEventListener('click',()=>speakBtn(modelBtn,MODEL.map(l=>l[0]+'. '+stripTags(l[2]).replace(/[()]/g,'')).join(' '),'⏹ Stop'));
+
+const POOL=['cartoons','the news','sports programmes','music programmes','films','documentaries'];
+const pool=document.getElementById('pool');
+let selTag=null;
+POOL.forEach(p=>{
+  const b=document.createElement('button');b.className='ptag';b.textContent=p;
+  b.addEventListener('click',()=>{
+    if(b.classList.contains('placed'))return;
+    pool.querySelectorAll('.ptag').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');selTag=b;
+  });
+  pool.appendChild(b);
+});
+function place(where){
+  if(!selTag)return;
+  selTag.classList.remove('sel');selTag.classList.add('placed');
+  document.getElementById(where).appendChild(selTag);
+  selTag=null;
+}
+document.getElementById('putLike').addEventListener('click',()=>place('dropLike'));
+document.getElementById('putDislike').addEventListener('click',()=>place('dropDislike'));
+document.getElementById('speakDone').addEventListener('click',()=>{
+  document.getElementById('speakFb').classList.add('show');award('speaking');
+});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'The opposite of <b>old</b> is ____.',o:['young','tall','new'],a:0},
+  {t:'The opposite of <b>expensive</b> is ____.',o:['cheap','rich','big'],a:0},
+  {t:'"Can I <b>ask</b> a question?" — "I\'ll try to ____ it."',o:['answer','leave','arrive'],a:0},
+  {t:'<b>Tom and Jerry</b> is a ____.',o:['cartoon','documentary','the news'],a:0},
+  {t:'<b>The World Tonight</b> is ____.',o:['a music programme','the news','a film'],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach((b,oi)=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You know your opposites! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the pairs to get 5/5. <span class="ar">أحسنت! راجع الأضداد لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Look at the opposite pairs again. <span class="ar">حاول مرة أخرى! راجع أزواج الأضداد.</span>';
+  box.classList.add('show');award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
