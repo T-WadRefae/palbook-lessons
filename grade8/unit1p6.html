@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tel:#e85d3d;--tel-deep:#c64a2c;--tel-soft:#ffe3da;
+  --wave:#0891b2;--wave-deep:#0e7490;--wave-soft:#d8f3fb;
+  --gold:#f59e0b;--gold-soft:#fef3c7;--purple:#7c5cd6;
+  --paper:#ffffff;--ink:#243042;--ink-soft:#74839a;--line:#fbdfd4;
+  --ok:#22b573;--no:#ef5b5b;--r:20px;
+  --shadow:0 16px 40px rgba(198,74,44,.15);--shadow-sm:0 8px 20px rgba(198,74,44,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 90% 5%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 5% 28%, #d8f3fb, transparent 60%),
+    radial-gradient(700px 420px at 64% 88%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
+  background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating signal tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-115vh) rotate(3deg);opacity:0}}
+
+/* ====== header : balance scale weighing TV vs mobile (good/bad) ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--wave);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--tel-deep);margin-top:8px;text-shadow:0 3px 0 #ffe3da}
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:6px}
+.scale{position:relative;width:280px;height:175px;margin:8px auto 0}
+.scale .base{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:96px;height:13px;background:var(--tel-deep);border-radius:99px}
+.scale .stand{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);width:11px;height:118px;background:var(--tel-deep);border-radius:6px}
+.scale .knob{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,158,11,.25);z-index:4}
+.scale .tilt{position:absolute;left:50%;top:28px;transform:translateX(-50%) rotate(-6deg);width:218px;height:9px;transform-origin:center;animation:tip 4.5s ease-in-out infinite}
+@keyframes tip{0%,100%{transform:translateX(-50%) rotate(-6deg)}50%{transform:translateX(-50%) rotate(6deg)}}
+.scale .beam{position:absolute;inset:0;background:var(--wave);border-radius:99px}
+.scale .pan{position:absolute;top:6px;width:80px;height:50px;background:#fff;border:2.5px solid var(--gold);border-top:none;border-radius:0 0 44px 44px;display:grid;place-items:center;font-size:30px;box-shadow:var(--shadow-sm)}
+.scale .pan.l{left:-32px}
+.scale .pan.r{right:-32px}
+.scale .pan:before{content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:60px;height:7px;border-top:2px solid #b9c5d4;border-radius:60px 60px 0 0}
+.gbrow{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.gbrow span{border-radius:999px;padding:5px 16px;font-weight:700;font-size:.85rem;border:2px solid}
+.gb-good{background:#e9fbf2;color:#168a55;border-color:var(--ok)}
+.gb-bad{background:#fff0f0;color:var(--no);border-color:var(--no)}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--tel) 0 26px,var(--wave) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--wave);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.kw{background:var(--wave-soft);color:var(--wave-deep);border:1.5px solid #a7e0f1;padding:4px 13px;border-radius:999px;font-weight:600;font-size:.9rem}
+
+/* ====== table completion (A1) ====== */
+.fillbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.tbl-card{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fff;overflow:hidden;transition:.3s}
+.tbl-card.done{border-color:#bfe8d2;background:#f8fffb}
+.tbl-head{background:#fff6f1;padding:10px 14px;font-weight:700;color:var(--tel-deep);display:flex;align-items:center;gap:10px}
+.tbl-card.done .tbl-head{background:#e9fbf2}
+.tbl-head .pn{width:30px;height:30px;border-radius:9px;background:var(--tel);color:#fff;display:grid;place-items:center;font-weight:700;flex-shrink:0}
+.trow{display:flex;gap:10px;padding:10px 14px;border-top:1px solid #f3e6df;align-items:flex-start;flex-wrap:wrap}
+.trow .tlabel{flex-shrink:0;width:104px;font-weight:700;font-size:.8rem;color:var(--wave-deep);padding-top:4px}
+.trow .tval{flex:1;min-width:190px}
+.tval .fixed{font-weight:600;color:#168a55;background:#e9fbf2;border-radius:8px;padding:4px 11px;display:inline-block}
+.tpick{display:flex;gap:7px;flex-wrap:wrap}
+.tchip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem;color:var(--ink);transition:.2s}
+.tchip:hover{border-color:var(--wave)}
+.tchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.tchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.tchip:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ====== interview (A2) ====== */
+.model{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:12px}
+.model .ln{display:flex;gap:10px;align-items:flex-start;margin-bottom:9px}
+.model .who{flex-shrink:0;font-weight:700;font-size:.85rem;color:#fff;background:var(--tel);border-radius:8px;padding:2px 11px;margin-top:4px;min-width:30px;text-align:center}
+.model .who.b{background:var(--wave)}
+.model .txt{flex:1;font-weight:500;line-height:1.9}
+.model .cue{background:var(--gold-soft);color:#8a6500;border-radius:6px;padding:0 6px;font-weight:700;font-style:normal}
+.model-tts{border:0;background:var(--wave);color:#fff;font-family:inherit;font-weight:600;border-radius:999px;padding:10px 22px;cursor:pointer;font-size:.95rem;display:inline-flex;align-items:center;gap:8px;transition:.2s;margin-top:6px}
+.model-tts:hover{background:var(--wave-deep)}
+.model-tts.playing{background:var(--no)}
+.builder{background:#fff6f1;border:2px dashed var(--tel);border-radius:16px;padding:16px;margin-top:16px}
+.builder h3{color:var(--tel-deep);font-size:1.02rem;margin-bottom:6px}
+.builder .b-row{margin-top:10px;font-weight:600;line-height:2.2}
+.bsel{font-family:inherit;font-weight:600;font-size:.95rem;border:2px solid var(--tel);border-radius:10px;padding:4px 8px;background:#fff;color:var(--tel-deep);cursor:pointer}
+.b-out{margin-top:14px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:500;color:var(--ink);line-height:2}
+.b-out .who{font-weight:700;color:var(--wave-deep);margin-right:6px}
+.b-out .qy{color:var(--tel-deep);font-weight:700;margin-right:6px}
+.out-tts{margin-top:10px;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:7px 16px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem}
+.out-tts.playing{background:var(--no);color:#fff}
+.done-btn{margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;font-size:.95rem;border-radius:999px;padding:10px 22px;cursor:pointer;transition:.2s}
+.done-btn:hover{transform:scale(1.04)}
+.feedback{display:none;margin-top:12px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== read & answer (A3) text cards + tooltips ====== */
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--gold)}
+.legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
+.tcard{border:2px solid var(--line);border-radius:18px;margin-top:14px;background:#fff;transition:.3s;overflow:visible}
+.tcard.done{border-color:#bfe8d2;background:#f8fffb}
+.tcard .t-head{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff6f1;border-radius:16px 16px 0 0;flex-wrap:wrap}
+.tcard.done .t-head{background:#e9fbf2}
+.tcard .t-letter{width:38px;height:38px;border-radius:11px;background:var(--tel);color:#fff;display:grid;place-items:center;font-weight:700;font-size:1.1rem;flex-shrink:0}
+.tcard .t-name{font-weight:700;color:var(--tel-deep);font-size:.95rem}
+.tcard .t-spk{margin-left:auto;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:6px 14px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.82rem;transition:.2s}
+.tcard .t-spk:hover{background:#c7e9f5}
+.tcard .t-spk.playing{background:var(--no);color:#fff}
+.tcard .t-body{padding:14px 18px;font-weight:500;line-height:2.2;font-size:1.02rem;color:var(--ink)}
+
+/* glossary + pronoun hover tooltips */
+.g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
+.g{background:#fff3c4;border-bottom:2px dashed var(--gold);color:#8a6500}
+.p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
+.g::after,.p::after{content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);background:#243042;color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3)}
+.g::before,.p::before{content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);border:6px solid transparent;border-top-color:#243042;opacity:0;visibility:hidden;transition:.18s;z-index:60}
+.p::after{background:var(--purple)}
+.p::before{border-top-color:var(--purple)}
+.g:hover::after,.p:hover::after,.g.ton::after,.p.ton::after,.g:hover::before,.p:hover::before,.g.ton::before,.p.ton::before{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* questions dropdown (comprehension after each text) */
+.qdrop{border:2px solid var(--line);border-radius:14px;margin:0 16px 16px;background:#fffdf9}
+.qdrop summary{cursor:pointer;list-style:none;padding:11px 16px;font-weight:600;color:var(--tel-deep);display:flex;align-items:center;gap:8px;transition:.2s;border-radius:12px}
+.qdrop summary::-webkit-details-marker{display:none}
+.qdrop summary:hover{background:#fff1ea}
+.qdrop summary .chev{margin-left:auto;transition:.3s}
+.qdrop[open] summary .chev{transform:rotate(180deg)}
+.qdrop .q-area{padding:0 16px 14px}
+.q{margin-top:12px}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.q .q-txt .qn{color:var(--wave)}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--wave)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+
+/* ====== discuss (A4) good/bad sorting ====== */
+.disc-img{max-width:520px;margin:4px auto 14px;border-radius:16px;overflow:hidden;border:2px solid var(--line)}
+.disc-img img{width:100%;height:auto;display:block}
+.scard{border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:12px;background:#fff;transition:.3s}
+.scard.done{border-color:#bfe8d2;background:#f8fffb}
+.scard .s-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.scard .s-topic{font-weight:700;font-size:.78rem;border-radius:8px;padding:3px 10px;flex-shrink:0;color:#fff}
+.scard .s-topic.tv{background:var(--purple)}
+.scard .s-topic.mob{background:var(--wave)}
+.scard .s-txt{flex:1;font-weight:500;line-height:1.6;min-width:160px}
+.scard .s-btns{display:flex;gap:8px;margin-top:10px}
+.gbtn{border:2.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 16px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.9rem;color:var(--ink);transition:.2s}
+.gbtn.g:hover{border-color:var(--ok)}
+.gbtn.bd:hover{border-color:var(--no)}
+.gbtn.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.gbtn.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.gbtn:disabled{cursor:default}
+.own{background:var(--gold-soft);border:2px dashed var(--gold);border-radius:14px;padding:13px 16px;margin-top:16px;font-weight:600;line-height:1.9}
+.own b{color:#92600a}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== call badges board ====== */
+.badge-board{background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 6 · GRADE 8</span>
+    <h1>Hello World!</h1>
+    <div class="sub">Review: good &amp; bad things · <i>Young World</i> · PB page 9</div>
+  </div>
+  <div class="scale">
+    <span class="base"></span><span class="stand"></span><span class="knob"></span>
+    <div class="tilt">
+      <span class="beam"></span>
+      <span class="pan l">📺</span>
+      <span class="pan r">📱</span>
+    </div>
+  </div>
+  <div class="gbrow"><span class="gb-good">👍 Good things</span><span class="gb-bad">👎 Bad things</span></div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">📊 The Table <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">🗣️ Interview <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">📖 Read &amp; Answer <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">💬 Discuss <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p6">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في الحصة الأخيرة من الوحدة نراجع مقال <i>Young World</i>: نكمل جدول المعلومات عن الأشخاص الأربعة، نجري مقابلة صحفية في أزواج، نعيد القراءة ونجيب عن أسئلة الفهم، ثم نوازن بين <b>الحسنات والسيئات</b> للتلفاز والهواتف. أنجز الأنشطة لتضيء أعمدة إشارتك! 📶</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">📊</div><div><b>Complete the Table</b><span class="ar">أكمل جدول: الاسم، البلد، يتحدث عن، حسنة، سيئة لكل شخص.</span></div></div>
+      <div class="goal"><div class="ico">🗣️</div><div><b>Interview</b><span class="ar">أسأل وأجيب كصحفي <i>Young World</i> عن كل شخص مع زميلي.</span></div></div>
+      <div class="goal"><div class="ico">📖</div><div><b>Read &amp; Answer</b><span class="ar">أعيد قراءة النصوص وأجيب عن أسئلة الفهم بعد كل نص.</span></div></div>
+      <div class="goal"><div class="ico">💬</div><div><b>Discuss</b><span class="ar">أوازن بين حسنات وسيئات التلفاز والهواتف المحمولة.</span></div></div>
+    </div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">👥 The four people</h2>
+    <div class="keywords">
+      <span class="kw">🇺🇸 Anna — TV</span><span class="kw">🇵🇸 Sameer &amp; Hanan — TV</span>
+      <span class="kw">🇲🇦 Ali — mobile</span><span class="kw">🇦🇺 Lyn &amp; Mark — mobile</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : THE TABLE ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>📊 Activity 1: Read and complete the table</h2>
+    <p class="hint ar">لكل شخص: اختر القيمة الصحيحة للخانات الفارغة (الاسم، البلد، يتحدث عن، الحسنة، السيئة). يمكنك مراجعة النصوص في تبويب «Read &amp; Answer».</p>
+    <div class="fillbar">
+      <span id="fillTxt">Completed: 0 / 15</span>
+      <div class="bar"><i id="fillBar"></i></div>
+      <span>📊</span>
+    </div>
+    <div id="tableBox"></div>
+  </div>
+</section>
+
+<!-- ============ A2 : INTERVIEW ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>🗣️ Activity 2: Ask and answer questions for <i>Young World</i></h2>
+    <p class="hint ar">اقرأ المقابلة النموذجية مع زميلك واستمع إليها بزر 🔊. الكلمات بين القوسين <span class="cue">( )</span> غيّرها حسب الشخص. ثم اختر شخصاً من «باني المقابلة» ليُكوّن لك المقابلة كاملة!</p>
+    <div class="model" id="modelBox"></div>
+    <div style="text-align:center"><button class="model-tts" id="modelTTS">🔊 Listen to the model</button></div>
+    <div class="builder">
+      <h3>🛠️ Interview builder</h3>
+      <p class="ar" style="font-weight:600;color:var(--ink-soft);font-size:.9rem">اختر شخصاً لتظهر مقابلته كاملة، ثم تدرّب عليها مع زميلك.</p>
+      <div class="b-row">Interview:
+        <select class="bsel" id="bWho">
+          <option value="0">Anna Torres 🇺🇸</option>
+          <option value="1">Sameer &amp; Hanan 🇵🇸</option>
+          <option value="2">Ali Magrabi 🇲🇦</option>
+          <option value="3">Lyn &amp; Mark 🇦🇺</option>
+        </select>
+      </div>
+      <div class="b-out" id="bOut"></div>
+      <button class="out-tts" id="outTTS">🔊 Listen to this interview</button>
+    </div>
+    <div style="text-align:center"><button class="done-btn" id="talkDone">🎉 We practised the interview!</button></div>
+    <div class="feedback good" id="talkFb">👏 Great interviewing! Now swap roles and choose another person. <span class="ar">أحسنت! تبادلا الأدوار واختارا شخصاً آخر.</span></div>
+  </div>
+</section>
+
+<!-- ============ A3 : READ & ANSWER ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>📖 Activity 3: Read again and answer the questions</h2>
+    <p class="hint ar">أعد قراءة النصوص الأربعة. مرّر فوق الكلمات الصفراء للمعنى والضمائر البنفسجية لمرجعها، ثم افتح «Comprehension» بعد كل نص وأجب عن أسئلته.</p>
+    <div class="legend">
+      <span class="lg-g">كلمة جديدة 🟡</span>
+      <span class="lg-p">ضمير 🟣</span>
+    </div>
+    <div id="textsBox"></div>
+  </div>
+</section>
+
+<!-- ============ A4 : DISCUSS ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>💬 Activity 4: Good and bad things — TV &amp; mobile phones</h2>
+    <p class="hint ar">استخدم أفكار النصوص: هل كل جملة <b>حسنة 👍</b> أم <b>سيئة 👎</b>؟ صنّفها، ثم ناقش مع زميلك وأضف أفكارك الخاصة.</p>
+    <div class="disc-img"><img src="https://i.ibb.co/jvgTFLWk/Screenshot-2026-06-13-112025.png" alt="Two students discussing good and bad things about television and mobile phones"></div>
+    <div id="discBox"></div>
+    <div class="own ar">
+      <b>🗣️ تحدّث مع زميلك:</b> ما رأيك أنت؟ أضف حسنة وسيئة من عندك للتلفاز، وحسنة وسيئة للهاتف المحمول — استخدم: <i>One good thing is… / One bad thing is…</i>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الوحدة! 5 أسئلة على مقال <i>Young World</i>. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! مع كل نشاط تنجزه يضيء عمود إشارة جديد 📶 حتى تكتمل شبكتك وتُتمّ الوحدة الأولى!</p>
+    <div class="badge-board">
+      <h3>✦ MY CALL BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! أتممت الوحدة الأولى <b>Hello World!</b> 📶<br>
+        تعلّمت عن وسائل الاتصال الحديثة وحسناتها وسيئاتها حول العالم. عمل رائع! 📺📱🌍
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Prepared with care <span style="display:inline-block">🌸</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 6 : Hello World! (Grade 8) — Review
+   Phone-lines theme 📶 — balance-scale header, call badges
+========================================================= */
+
+/* ---------- floating signal tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['👍 good thing','👎 bad thing','📺 television','📱 mobile phones','⚖️ good vs bad','🌍 Young World','📶 connected'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');
+    b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';
+    b.style.animationDuration=(15+(i%4)*5)+'s';
+    b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'table',    name:'The Table',    emo:'📊'},
+  {id:'interview',name:'Interview',    emo:'🗣️'},
+  {id:'read',     name:'Read & Answer',emo:'📖'},
+  {id:'discuss',  name:'Discuss',      emo:'💬'},
+  {id:'quiz',     name:'Quiz',         emo:'🏆'},
+];
+const TAB_OF={table:'p1',interview:'p2',read:'p3',discuss:'p4',quiz:'p5'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p6review')||'{}')}catch(e){earned={}}
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){if(earned[id])return;earned[id]=true;localStorage.setItem('g8u1p6review',JSON.stringify(earned));renderBadges();}
+function resetLesson(){localStorage.removeItem('g8u1p6review');location.reload();}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+let ttsBtn=null;
+const stripTags=h=>h.replace(/<[^>]+>/g,'').replace(/[()]/g,'');
+function stopTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊 Listen';ttsBtn=null;}
+}
+function speak(txt){
+  if(!('speechSynthesis' in window))return;
+  stopTTS();const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;speechSynthesis.speak(u);
+}
+function speakBtn(btn,txt,stopLabel){
+  if(ttsBtn===btn){stopTTS();return;}
+  stopTTS();
+  if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;
+  u.onend=()=>{if(ttsBtn===btn)stopTTS();};
+  ttsBtn=btn;btn.classList.add('playing');btn.innerHTML=stopLabel||'⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : complete the table
+========================================================= */
+const TABLE=[
+  {n:1, fields:{
+    name:{fixed:'Anna'},
+    from:{a:'the USA',opts:['the USA','Palestine','Morocco','Australia']},
+    about:{a:'television',opts:['television','mobile phones']},
+    good:{a:'The weather forecasts are good',opts:['The weather forecasts are good','It gives the family a better life','They can stay in contact']},
+    bad:{a:'Lots of bad TV programmes',opts:['Lots of bad TV programmes',"It's expensive",'Parents get angry']},
+  }},
+  {n:2, fields:{
+    name:{a:'Sameer and Hanan Qudsi',opts:['Sameer and Hanan Qudsi','Anna','Ali','Lyn and Mark Lomax']},
+    from:{fixed:'Palestine'},
+    about:{a:'TV',opts:['TV','mobile phones']},
+    good:{a:'Serious programmes like documentaries',opts:['Serious programmes like documentaries','Good weather forecasts','Finding the best fish market']},
+    bad:{fixed:'Watching cartoons / TV on all the time'},
+  }},
+  {n:3, fields:{
+    name:{a:'Ali',opts:['Ali','Anna','Sameer and Hanan Qudsi','Lyn and Mark Lomax']},
+    from:{a:'Morocco',opts:['the USA','Palestine','Morocco','Australia']},
+    about:{fixed:'mobile phones'},
+    good:{a:'Finds the best market for his fish',opts:['Finds the best market for his fish','Good weather forecasts','Watching documentaries']},
+    bad:{a:"It's expensive",opts:["It's expensive",'Lots of bad TV programmes','Watching cartoons all day']},
+  }},
+  {n:4, fields:{
+    name:{a:'Lyn and Mark Lomax',opts:['Lyn and Mark Lomax','Anna','Ali','Sameer and Hanan Qudsi']},
+    from:{a:'Australia',opts:['the USA','Palestine','Morocco','Australia']},
+    about:{a:'mobile phones',opts:['television','mobile phones']},
+    good:{fixed:'They can stay in contact'},
+    bad:{a:'Parents get angry — always on the phone',opts:['Parents get angry — always on the phone',"It's expensive",'Lots of bad TV programmes']},
+  }},
+];
+const ROWS=[['name','Name(s)'],['from','From'],['about','Talking about'],['good','Good thing'],['bad','Bad thing']];
+const tableBox=document.getElementById('tableBox');
+let blanksTotal=0;
+TABLE.forEach(p=>ROWS.forEach(([k])=>{if(!p.fields[k].fixed)blanksTotal++;}));
+let filledN=0;
+function updFill(){
+  document.getElementById('fillTxt').textContent='Completed: '+filledN+' / '+blanksTotal;
+  document.getElementById('fillBar').style.width=(filledN/blanksTotal*100)+'%';
+  if(filledN===blanksTotal)award('table');
+}
+TABLE.forEach(p=>{
+  const card=document.createElement('div');card.className='tbl-card';
+  const anchor=p.fields.name.fixed||p.fields.from.fixed||p.fields.about.fixed||('Person '+p.n);
+  card.innerHTML='<div class="tbl-head"><span class="pn">'+p.n+'</span>'+anchor+'</div>';
+  let blanksInCard=0,doneInCard=0;
+  ROWS.forEach(([k,label])=>{
+    const f=p.fields[k];
+    const row=document.createElement('div');row.className='trow';
+    row.innerHTML='<span class="tlabel">'+label+'</span>';
+    const val=document.createElement('div');val.className='tval';
+    if(f.fixed){
+      val.innerHTML='<span class="fixed">'+f.fixed+'</span>';
+    }else{
+      blanksInCard++;
+      const pick=document.createElement('div');pick.className='tpick';
+      f.opts.slice().sort(()=>Math.random()-.5).forEach(o=>{
+        const b=document.createElement('button');b.className='tchip';b.textContent=o;
+        b.addEventListener('click',()=>{
+          if(o===f.a){
+            b.classList.add('ok');
+            pick.querySelectorAll('.tchip').forEach(x=>x.disabled=true);
+            filledN++;doneInCard++;updFill();
+            if(doneInCard===blanksInCard)card.classList.add('done');
+          }else{b.classList.add('no');b.disabled=true;}
+        });
+        pick.appendChild(b);
+      });
+      val.appendChild(pick);
+    }
+    row.appendChild(val);
+    card.appendChild(row);
+  });
+  tableBox.appendChild(card);
+});
+
+/* =========================================================
+   A2 : interview model + builder
+========================================================= */
+const MODEL=[
+  ['Q','',"Excuse me. Is your name <span class='cue'>(Anna Torres)</span>?"],
+  ['A','b',"<span class='cue'>(Yes, it is.)</span>"],
+  ['Q','',"And are you from <span class='cue'>(the USA)</span>?"],
+  ['A','b',"<span class='cue'>(Yes, I am.)</span>"],
+  ['Q','',"Tell me, how do you feel about <span class='cue'>(TV)</span>?"],
+  ['A','b',"Well, one good thing is this: <span class='cue'>(We can get good weather forecasts every day.)</span>"],
+  ['Q','',"What about bad things?"],
+  ['A','b',"Well, one bad thing is this: <span class='cue'>(There's lots of terrible TV!)</span>"],
+];
+document.getElementById('modelBox').innerHTML=MODEL.map(l=>
+  '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
+).join('');
+const modelBtn=document.getElementById('modelTTS');
+modelBtn.dataset.label='🔊 Listen to the model';
+modelBtn.addEventListener('click',()=>speakBtn(modelBtn,MODEL.map(l=>l[0]+'. '+stripTags(l[2])).join(' '),'⏹ Stop'));
+
+const INTPEOPLE=[
+  {name:'Anna Torres',from:'the USA',topic:'TV',good:'We can get good weather forecasts every day',bad:"There's lots of terrible TV"},
+  {name:'Sameer and Hanan Qudsi',from:'Palestine',topic:'TV',good:'We can watch documentaries and learn a lot',bad:'Our parents only let us watch serious programmes now'},
+  {name:'Ali Magrabi',from:'Morocco',topic:'his mobile phone',good:'I can find the best market for my fish',bad:"My mobile is expensive"},
+  {name:'Lyn and Mark Lomax',from:'Australia',topic:'mobile phones',good:'We can stay in contact with our parents',bad:'Our parents get angry because we are always on the phone'},
+];
+const bOut=document.getElementById('bOut');
+function buildInterview(){
+  const p=INTPEOPLE[+document.getElementById('bWho').value];
+  bOut.innerHTML=
+    '<div><span class="qy">Q:</span>Excuse me. Is your name '+p.name+'?</div>'+
+    '<div><span class="who">A:</span>Yes, it is.</div>'+
+    '<div><span class="qy">Q:</span>And are you from '+p.from+'?</div>'+
+    '<div><span class="who">A:</span>Yes, I am.</div>'+
+    '<div><span class="qy">Q:</span>Tell me, how do you feel about '+p.topic+'?</div>'+
+    '<div><span class="who">A:</span>Well, one good thing is this: '+p.good+'.</div>'+
+    '<div><span class="qy">Q:</span>What about bad things?</div>'+
+    '<div><span class="who">A:</span>Well, one bad thing is this: '+p.bad+'.</div>';
+}
+document.getElementById('bWho').addEventListener('change',buildInterview);
+buildInterview();
+const outBtn=document.getElementById('outTTS');
+outBtn.dataset.label='🔊 Listen to this interview';
+outBtn.addEventListener('click',()=>speakBtn(outBtn,bOut.textContent.replace(/Q:|A:/g,' '),'⏹ Stop'));
+document.getElementById('talkDone').addEventListener('click',()=>{
+  document.getElementById('talkFb').classList.add('show');award('interview');
+});
+
+/* =========================================================
+   A3 : texts A–D (tooltips) + comprehension after each
+========================================================= */
+const TEXTS=[
+  {letter:'A', who:'Anna 🇺🇸',
+   html:"There are lots of bad TV programmes, but the weather <i class='g' data-t='نشرات / توقّعات الطقس'>forecasts</i> are good. We get bad <i class='g' data-t='أعاصير'>hurricanes</i> here in America, and <i class='p' data-t='تعود على الأعاصير (hurricanes)'>they</i>'re getting worse. But modern <i class='g' data-t='أقمار صناعية'>satellites</i> are collecting better <i class='g' data-t='معلومات'>information</i> on <i class='p' data-t='تعود على الأعاصير'>their</i> speed and direction, and forecasts are getting better. So we understand hurricanes better now, and we now know when and where <i class='p' data-t='إعصار واحد'>one</i> will arrive.",
+   qs:[
+     {t:'What is happening to hurricanes?',o:["They're getting worse","They're getting fewer","They have stopped"],a:0},
+     {t:'What is happening to weather forecasts, and why?',o:['They are getting better, because satellites collect better information','They are getting worse','They never change'],a:0},
+   ]},
+  {letter:'B', who:'Sameer &amp; Hanan 🇵🇸',
+   html:"We get Palestinian TV and hundreds of other <i class='g' data-t='قنوات فضائية'>satellite channels</i>, too. <i class='p' data-t='سمير وأخته حنان'>Hanan and I</i> love watching <i class='g' data-t='أفلام كرتون'>cartoons</i> all day! That's bad, I know. But now Mum and Dad say <i class='p' data-t='تعود على سمير وحنان'>we</i> can only watch <i class='g' data-t='جادّة'>serious</i> programmes <i class='g' data-t='مثل (such as)'>like</i> <i class='g' data-t='أفلام وثائقية'>documentaries</i>. We think that's bad, too!",
+   qs:[
+     {t:'Which do Sameer and Hanan like — cartoons or documentaries?',o:['Cartoons','Documentaries','The news'],a:0},
+     {t:'What do their parents prefer?',o:['Documentaries (serious programmes)','Cartoons','Sports'],a:0},
+   ]},
+  {letter:'C', who:'Ali 🇲🇦',
+   html:"Like a lot of Moroccan people, <i class='p' data-t='تعود على علي'>my</i> job is <i class='g' data-t='صيد السمك'>fishing</i>, and my mobile is very important in my work. <i class='p' data-t='يعود على الهاتف المحمول'>It</i>'s <i class='g' data-t='مكلف / غالي الثمن'>expensive</i>, but I can now call different <i class='g' data-t='أسواق'>markets</i> from my <i class='g' data-t='قارب'>boat</i>. That means I can find the best market for my fish and take <i class='p' data-t='تعود على الأسماك (fish)'>them</i> there. My mobile is giving my family a better life.",
+   qs:[
+     {t:'Does Ali always take his fish to the same market?',o:["No — he calls different markets to find the best one","Yes, always the same market","He does not sell fish"],a:0},
+     {t:'How is his mobile giving his family a better life?',o:['He finds the best market and sells his fish there','He watches documentaries on it','He plays games on it'],a:0},
+   ]},
+  {letter:'D', who:'Lyn &amp; Mark 🇦🇺',
+   html:"Australian <i class='g' data-t='مزارع'>farms</i> are big, and <i class='p' data-t='تعود على لين ومارك'>our</i> parents like to <i class='g' data-t='يبقون على تواصل'>stay in contact</i>, so <i class='p' data-t='تعود على الوالدين'>they</i>'ve given <i class='p' data-t='تعود على لين ومارك'>us</i> mobiles. But now we're calling and <i class='g' data-t='نراسل برسائل نصية'>texting</i> friends more and more, and Mum and Dad are getting <i class='g' data-t='غاضبين'>angry</i>. <i class='p' data-t='تعود على الوالدين'>They</i> say we're always <i class='g' data-t='على الهاتف'>on the phone</i> when they want to talk – and we shouldn't be! … Oh, someone's calling now. Excuse me!",
+   qs:[
+     {t:'Do Lyn and Mark live in a big town?',o:['No, they live on a farm','Yes, in a big city','Yes, by the sea'],a:0},
+     {t:'Are they using their phones for the right thing?',o:['No — they call and text their friends too much','Yes, only to call their parents','They never use them'],a:0},
+   ]},
+];
+const textsBox=document.getElementById('textsBox');
+let compTotal=0;TEXTS.forEach(t=>compTotal+=t.qs.length);
+let compCorrect=0;
+function updRead(){if(compCorrect===compTotal)award('read');}
+TEXTS.forEach(t=>{
+  const d=document.createElement('div');d.className='tcard';
+  d.innerHTML='<div class="t-head"><span class="t-letter">'+t.letter+'</span>'+
+    '<span class="t-name">'+t.who+'</span>'+
+    '<button class="t-spk" data-label="🔊 Listen">🔊 Listen</button></div>'+
+    '<div class="t-body">'+t.html+'</div>';
+  const spk=d.querySelector('.t-spk');
+  spk.addEventListener('click',()=>speakBtn(spk,stripTags(t.html),'⏹ Stop'));
+  const det=document.createElement('details');det.className='qdrop';
+  det.innerHTML='<summary>📋 Comprehension ('+t.qs.length+') <span class="ar" style="font-size:.85rem;color:#74839a">أسئلة الفهم على النص '+t.letter+'</span><span class="chev">▼</span></summary>';
+  const qa=document.createElement('div');qa.className='q-area';
+  t.qs.forEach((q,qi)=>{
+    const qd=document.createElement('div');qd.className='q';
+    qd.innerHTML='<div class="q-txt"><span class="qn">Q'+(qi+1)+':</span> '+q.t+'</div>';
+    const opts=document.createElement('div');opts.className='opts';
+    q.o.forEach((o,oi)=>{
+      const b=document.createElement('button');b.className='opt';b.textContent=o;
+      b.addEventListener('click',()=>{
+        if(oi===q.a){
+          b.classList.add('ok');
+          opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+          compCorrect++;
+          if(!qa.querySelector('.opt:not(.ok):not([disabled])')&&qa.querySelectorAll('.opt.ok').length===t.qs.length)d.classList.add('done');
+          updRead();
+        }else{b.classList.add('no');b.disabled=true;}
+      });
+      opts.appendChild(b);
+    });
+    qd.appendChild(opts);qa.appendChild(qd);
+  });
+  det.appendChild(qa);d.appendChild(det);
+  textsBox.appendChild(d);
+});
+
+/* tooltips on tap (mobile) */
+document.querySelectorAll('.g,.p').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    const was=el.classList.contains('ton');
+    document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+    if(!was)el.classList.add('ton');
+  });
+});
+document.addEventListener('click',()=>{document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));});
+
+/* =========================================================
+   A4 : discuss — sort good / bad
+========================================================= */
+const STATE=[
+  {topic:'tv', label:'📺 TV', txt:'We can get good weather forecasts.', good:true},
+  {topic:'tv', label:'📺 TV', txt:'We can learn a lot from documentaries.', good:true},
+  {topic:'tv', label:'📺 TV', txt:'There are lots of bad TV programmes.', good:false},
+  {topic:'tv', label:'📺 TV', txt:'Some children watch cartoons all day.', good:false},
+  {topic:'mob',label:'📱 Mobile', txt:'You can stay in contact with your family.', good:true},
+  {topic:'mob',label:'📱 Mobile', txt:'Ali can find the best market for his fish.', good:true},
+  {topic:'mob',label:'📱 Mobile', txt:'Mobile phones can be expensive.', good:false},
+  {topic:'mob',label:'📱 Mobile', txt:'People are always on the phone instead of talking.', good:false},
+];
+const discBox=document.getElementById('discBox');
+let discLeft=STATE.length;
+STATE.forEach(s=>{
+  const d=document.createElement('div');d.className='scard';
+  d.innerHTML='<div class="s-top"><span class="s-topic '+s.topic+'">'+s.label+'</span><span class="s-txt">'+s.txt+'</span></div>';
+  const btns=document.createElement('div');btns.className='s-btns';
+  [['g','👍 Good thing',true],['bd','👎 Bad thing',false]].forEach(([cls,label,val])=>{
+    const b=document.createElement('button');b.className='gbtn '+cls;b.textContent=label;
+    b.addEventListener('click',()=>{
+      if(val===s.good){
+        b.classList.add('ok');
+        btns.querySelectorAll('.gbtn').forEach(x=>x.disabled=true);
+        d.classList.add('done');
+        if(--discLeft===0)award('discuss');
+      }else{b.classList.add('no');b.disabled=true;}
+    });
+    btns.appendChild(b);
+  });
+  d.appendChild(btns);discBox.appendChild(d);
+});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'Anna is from the USA and talks about ____.',o:['television','mobile phones','fishing'],a:0},
+  {t:'What is happening to hurricanes in America?',o:["They're getting worse","They're stopping","They're getting fewer"],a:0},
+  {t:"How does Ali's mobile help him?",o:['He finds the best market for his fish','He watches documentaries','He plays games'],a:0},
+  {t:'Where do Lyn and Mark live?',o:['In a big town','On a farm','By the sea'],a:1},
+  {t:"What do Sameer and Hanan's parents prefer they watch?",o:['Cartoons','Documentaries','Sports'],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach((b,oi)=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You finished Unit 1! <span class="ar">ممتاز! أتممت الوحدة الأولى!</span>':
+    score>=3 ?'⭐ Well done! Review the texts to get 5/5. <span class="ar">أحسنت! راجع النصوص لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Read the article again. <span class="ar">حاول مرة أخرى! اقرأ المقال من جديد.</span>';
+  box.classList.add('show');award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
