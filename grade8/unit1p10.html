@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tel:#e85d3d;--tel-deep:#c64a2c;--tel-soft:#ffe3da;
+  --wave:#0891b2;--wave-deep:#0e7490;--wave-soft:#d8f3fb;
+  --gold:#f59e0b;--gold-soft:#fef3c7;--purple:#7c5cd6;
+  --paper:#ffffff;--ink:#243042;--ink-soft:#74839a;--line:#fbdfd4;
+  --ok:#22b573;--no:#ef5b5b;--r:20px;
+  --shadow:0 16px 40px rgba(198,74,44,.15);--shadow-sm:0 8px 20px rgba(198,74,44,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 90% 5%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 5% 28%, #d8f3fb, transparent 60%),
+    radial-gradient(700px 420px at 64% 88%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
+  background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating signal tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-115vh) rotate(3deg);opacity:0}}
+
+/* ====== header : project plan checklist (different from P1-P9) ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--wave);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--tel-deep);margin-top:8px;text-shadow:0 3px 0 #ffe3da}
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:14px}
+.plan{width:min(380px,94vw);margin:0 auto;background:#fff;border:3px solid var(--tel);border-radius:20px;box-shadow:var(--shadow);padding:14px 18px 16px;text-align:left}
+.plan .ph{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--tel-deep);font-size:1.08rem;border-bottom:2px dashed var(--line);padding-bottom:8px;margin-bottom:6px}
+.plan .ph .pin{margin-left:auto;font-size:.95rem;animation:swing 2.6s ease-in-out infinite;transform-origin:top center}
+@keyframes swing{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+.plan .pi{display:flex;align-items:center;gap:10px;padding:6px 0;font-weight:600;color:var(--ink);font-size:.92rem;transition:.3s}
+.plan .pi .ck{width:22px;height:22px;border-radius:6px;border:2.5px solid var(--wave);display:grid;place-items:center;flex-shrink:0;color:#fff;font-size:.78rem;transition:.3s}
+.plan .pi.done .ck{background:var(--ok);border-color:var(--ok)}
+.plan .pi.done .ptx{color:var(--ink-soft);text-decoration:line-through}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--tel) 0 26px,var(--wave) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--wave);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+
+/* ====== Drive audio player ====== */
+.gplayer{background:#e9f7fc;border:2px solid #a7e0f1;border-radius:14px;padding:9px 12px 10px;margin:10px 0 6px;max-width:480px}
+.gplayer b{color:var(--wave-deep);font-size:.88rem;display:flex;align-items:center;gap:6px}
+.gplayer iframe{width:100%;height:58px;border:0;border-radius:10px;margin-top:6px;background:#fff}
+.ttsbtn{border:0;background:var(--wave);color:#fff;font-family:inherit;font-weight:600;border-radius:999px;padding:9px 20px;cursor:pointer;font-size:.92rem;display:inline-flex;align-items:center;gap:8px;transition:.2s;margin:6px 0}
+.ttsbtn:hover{background:var(--wave-deep)}
+.ttsbtn.playing{background:var(--no)}
+
+/* ====== conversation transcript + tooltips ====== */
+.conv-img{max-width:540px;margin:4px auto 14px;border-radius:16px;overflow:hidden;border:2px solid var(--line)}
+.conv-img img{width:100%;height:auto;display:block}
+.conv{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:12px}
+.conv .ln{display:flex;gap:10px;align-items:flex-start;margin-bottom:11px}
+.conv .who{flex-shrink:0;font-weight:700;font-size:.78rem;color:#fff;background:var(--tel);border-radius:8px;padding:3px 10px;margin-top:4px;min-width:54px;text-align:center}
+.conv .who.k{background:var(--wave)}
+.conv .txt{flex:1;font-weight:500;line-height:2;font-size:1rem}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 2px}
+.legend span{font-size:.85rem;font-weight:700;border-radius:99px;padding:4px 14px}
+.legend .lg-g{background:#fff3c4;color:#8a6500;border:1.5px dashed var(--gold)}
+.legend .lg-p{background:#e8e2ff;color:var(--purple);border:1.5px dashed #8a6fd8}
+.g,.p{position:relative;font-style:normal;cursor:help;border-radius:5px;padding:0 3px;font-weight:600}
+.g{background:#fff3c4;border-bottom:2px dashed var(--gold);color:#8a6500}
+.p{background:#e8e2ff;border-bottom:2px dashed #8a6fd8;color:var(--purple)}
+.g::after,.p::after{content:attr(data-t);position:absolute;bottom:135%;left:50%;transform:translateX(-50%) translateY(4px);background:#243042;color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;width:max-content;max-width:230px;white-space:normal;text-align:center;line-height:1.6;padding:5px 13px;border-radius:10px;font-size:.85rem;font-weight:600;opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;box-shadow:0 8px 18px rgba(0,0,0,.3)}
+.g::before,.p::before{content:"";position:absolute;bottom:calc(135% - 6px);left:50%;transform:translateX(-50%) translateY(4px);border:6px solid transparent;border-top-color:#243042;opacity:0;visibility:hidden;transition:.18s;z-index:60}
+.p::after{background:var(--purple)}.p::before{border-top-color:var(--purple)}
+.g:hover::after,.p:hover::after,.g.ton::after,.p.ton::after,.g:hover::before,.p:hover::before,.g.ton::before,.p.ton::before{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* questions dropdown */
+.qdrop{border:2px solid var(--line);border-radius:16px;margin-top:14px;background:#fffdf9}
+.qdrop summary{cursor:pointer;list-style:none;padding:13px 18px;font-weight:600;color:var(--tel-deep);display:flex;align-items:center;gap:8px;transition:.2s;border-radius:14px}
+.qdrop summary::-webkit-details-marker{display:none}
+.qdrop summary:hover{background:#fff1ea}
+.qdrop summary .chev{margin-left:auto;transition:.3s}
+.qdrop[open] summary .chev{transform:rotate(180deg)}
+.qdrop .q-area{padding:0 18px 16px}
+.q{margin-top:12px}
+.q .q-txt{font-weight:600;color:var(--ink);margin-bottom:8px}
+.q .q-txt .qn{color:var(--wave)}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--wave)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ====== A2 table ====== */
+.fillbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.trow{border:2px solid var(--line);border-radius:16px;margin-top:13px;background:#fff;transition:.3s;overflow:hidden}
+.trow.done{border-color:#bfe8d2;background:#f8fffb}
+.trow .t-task{display:flex;align-items:center;gap:10px;background:#fff6f1;padding:10px 14px;font-weight:700;color:var(--tel-deep);font-size:.95rem}
+.trow.done .t-task{background:#e9fbf2}
+.trow .t-task .em{font-size:1.3rem}
+.trow .t-task .t-tts{margin-left:auto;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:5px 13px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.8rem;transition:.2s}
+.trow .t-task .t-tts.playing{background:var(--no);color:#fff}
+.trow .t-cells{display:flex;gap:10px;padding:11px 14px;flex-wrap:wrap}
+.tcell{flex:1;min-width:180px}
+.tcell .cl{font-size:.74rem;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.tpick{display:flex;gap:6px;flex-wrap:wrap}
+.tchip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.84rem;color:var(--ink);transition:.2s}
+.tchip:hover{border-color:var(--wave)}
+.tchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.tchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.tchip:disabled{cursor:default}
+
+/* ====== A3 pronunciation ====== */
+.pgroup{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:12px}
+.pcol{border:2px solid var(--line);border-radius:16px;padding:14px;background:#fff}
+.pcol h3{display:flex;align-items:center;gap:8px;font-size:1rem;color:var(--tel-deep);margin-bottom:8px}
+.pcol h3 .sndtts{margin-left:auto;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:4px 12px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.78rem}
+.pcol h3 .snd{background:var(--gold-soft);color:#8a6500;border-radius:7px;padding:1px 8px;font-weight:800}
+.pword{display:flex;flex-wrap:wrap;gap:7px}
+.pw{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 13px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink);transition:.2s;display:flex;align-items:center;gap:5px}
+.pw:hover{border-color:var(--wave);background:#f3fbfd}
+.pw .em{font-size:.85rem}
+.pw b{color:var(--tel-deep)}
+.twist{background:var(--gold-soft);border:2px dashed var(--gold);border-radius:16px;padding:13px 16px;margin-top:13px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.twist .tw-txt{flex:1;min-width:180px;font-weight:700;color:#8a6500;line-height:1.6;font-size:1rem}
+.twist .tw-tts{border:0;background:var(--gold);color:#fff;border-radius:999px;padding:7px 16px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem}
+.twist .tw-tts.playing{background:var(--no)}
+
+/* ====== role play ====== */
+.rp-line{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;padding:10px 14px;margin-top:10px;background:#fff}
+.rp-line .who{flex-shrink:0;font-weight:700;font-size:.78rem;color:#fff;background:var(--tel);border-radius:8px;padding:2px 10px;margin-top:4px;min-width:54px;text-align:center}
+.rp-line .who.k{background:var(--wave)}
+.rp-line .txt{flex:1;font-weight:500;line-height:1.9}
+.rp-line.mine{border-color:var(--gold);background:#fffdf2}
+.rp-line .mine-tag{display:inline-block;background:var(--gold);color:#fff;font-size:.72rem;font-weight:700;border-radius:99px;padding:1px 10px;margin-left:8px;vertical-align:2px}
+.rp-line .l-tts{flex-shrink:0;border:0;background:var(--wave-soft);color:var(--wave-deep);border-radius:999px;padding:5px 13px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.8rem}
+.rp-line .l-tts.playing{background:var(--no);color:#fff}
+.pickrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;align-items:center}
+.pickrow .lbl{font-weight:700;font-size:.85rem;color:var(--ink-soft)}
+.selbtn{border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem;color:var(--ink);transition:.2s}
+.selbtn:hover{transform:translateY(-2px)}
+.selbtn.on-r{border-color:var(--wave);background:var(--wave-soft);color:var(--wave-deep)}
+
+/* ====== A5 project ====== */
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.ptag{border:2px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink);transition:.2s}
+.ptag:hover{border-color:var(--wave)}
+.ptag.sel{border-color:var(--tel);background:var(--tel-soft);color:var(--tel-deep)}
+.ptag.selb{border-color:var(--wave);background:var(--wave-soft);color:var(--wave-deep)}
+.pj-out{margin-top:14px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:600;color:var(--ink);line-height:1.9;min-height:48px}
+.pj-out .em{color:var(--tel-deep);font-weight:700}
+
+/* ====== shared buttons ====== */
+.done-btn{margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;font-size:.95rem;border-radius:999px;padding:10px 22px;cursor:pointer;transition:.2s}
+.done-btn:hover{transform:scale(1.04)}
+.feedback{display:none;margin-top:12px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== call badges board ====== */
+.badge-board{background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 10 · GRADE 8</span>
+    <h1>Hello World!</h1>
+    <div class="sub">Listening: planning a project · PB page 13</div>
+  </div>
+  <div class="plan">
+    <div class="ph">📋 Sami &amp; Mike's Plan <span class="pin">📌</span></div>
+    <div class="pi" data-i="0"><span class="ck">✓</span><span class="ptx">📺 Watch the documentary</span></div>
+    <div class="pi" data-i="1"><span class="ck">✓</span><span class="ptx">✉️ Send an email</span></div>
+    <div class="pi" data-i="2"><span class="ck">✓</span><span class="ptx">📚 Borrow some books</span></div>
+    <div class="pi" data-i="3"><span class="ck">✓</span><span class="ptx">🌐 Get info online</span></div>
+    <div class="pi" data-i="4"><span class="ck">✓</span><span class="ptx">🤝 Meet &amp; share</span></div>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">🎧 Part 1 <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">📊 The Plan <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">🗣️ Pronunciation <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">💬 Your Project <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p6">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في هذه الحصة نستمع إلى مكالمة بين سامي ومايك وهما يخطّطان لمشروع المدرسة عن <b>القدس</b>: من يعمل كل مهمّة ومتى. ثم نتدرّب على نطق حرف <b>p</b>، ونتحدّث عن مشروعنا الخاص. أنجز الأنشطة لتضيء أعمدة إشارتك! 📶</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">🎧</div><div><b>Part 1 — Listen &amp; Answer</b><span class="ar">أستمع إلى الجزء الأول وأعرف من المتحدثان وعمّ سيتحدثان، ثم أمثّله.</span></div></div>
+      <div class="goal"><div class="ico">📊</div><div><b>The Plan — Table</b><span class="ar">أكمل جدول الخطة: من يعمل كل مهمّة ومتى.</span></div></div>
+      <div class="goal"><div class="ico">🗣️</div><div><b>Pronunciation /p/</b><span class="ar">أتدرّب على نطق p في sp / pl / pr مع جمل سريعة.</span></div></div>
+      <div class="goal"><div class="ico">💬</div><div><b>Your Project</b><span class="ar">أتحدّث عن موضوع مشروعي ومصادر معلوماتي.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : PART 1 ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>🎧 Activity 1: Listen to part 1 and answer</h2>
+    <p class="hint ar">شغّل التسجيل واستمع إلى الجزء الأول. مرّر فوق الكلمات الملوّنة للمعنى، ثم افتح «Questions» وأجب. بعدها مثّل الجزء الأول مع زميلك (النشاط الرابع).</p>
+    <div class="gplayer">
+      <b>🎧 CD1 Audio 9 · The conversation</b>
+      <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztZU91cG9YUmJab2s/preview?resourcekey=0-i9GHq2PTUlA0Tnvsi6d5xw" allow="autoplay"></iframe>
+    </div>
+    <div class="conv-img"><img src="https://i.ibb.co/BVB2csPX/Gemini-Generated-Image-tyjwy9tyjwy9tyjw.png" alt="Sami and Mike talking on the phone about their school project"></div>
+    <div class="legend">
+      <span class="lg-g">كلمة جديدة 🟡</span>
+      <span class="lg-p">ضمير 🟣</span>
+    </div>
+    <div class="conv" id="conv1"></div>
+    <details class="qdrop">
+      <summary>📋 Comprehension (2) <span class="ar" style="font-size:.85rem;color:#74839a">أسئلة الفهم — الجزء 1</span><span class="chev">▼</span></summary>
+      <div class="q-area" id="q1box"></div>
+    </details>
+    <hr class="divider">
+    <h2 style="font-size:1.1rem"><span class="gate">ACT</span>🎭 Activity 4: Read and act out part 1</h2>
+    <p class="hint ar">اختر دورك ومثّل الجزء الأول. سطورك مُعلّمة <b>YOUR LINE</b>، وسطور زميلك لها زر 🔊.</p>
+    <div class="pickrow">
+      <span class="lbl ar">دورك:</span>
+      <button class="selbtn" id="roleS" data-r="Sami">👦 Sami</button>
+      <button class="selbtn" id="roleM" data-r="Mike">🧑 Mike</button>
+    </div>
+    <div id="rpBox"></div>
+  </div>
+</section>
+
+<!-- ============ A2 : THE PLAN TABLE ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>📊 Activity 2: Listen to part 2 and complete the table</h2>
+    <p class="hint ar">لكل مهمّة في الخطة: اضغط 🔊 لتسمع الجزء الخاص بها، ثم اختر <b>مَن</b> سيعملها و<b>متى</b>.</p>
+    <div class="fillbar">
+      <span id="tblTxt">Completed: 0 / 10</span>
+      <div class="bar"><i id="tblBar"></i></div>
+      <span>📊</span>
+    </div>
+    <div id="tableBox"></div>
+  </div>
+</section>
+
+<!-- ============ A3 : PRONUNCIATION ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>🗣️ Activity 3: Pronunciation — /p/ in pairs of letters</h2>
+    <p class="hint ar">اضغط 🔊 على كل كلمة لتسمع نطق حرف p. لاحظ صوت p في <b>sp</b> و<b>pl</b> و<b>pr</b>. ثم تدرّب على الجمل السريعة!</p>
+    <div class="pgroup" id="pgroup"></div>
+    <hr class="divider">
+    <h2 style="font-size:1.05rem">⚡ Tongue twisters — say them fast 3 times!</h2>
+    <div id="twistBox"></div>
+    <div style="text-align:center"><button class="done-btn" id="pronDone">🎉 I practised my pronunciation!</button></div>
+    <div class="feedback good" id="pronFb">👏 Great pronunciation! Say the tongue twisters faster each time. <span class="ar">أحسنت! كرّر الجمل أسرع في كل مرة.</span></div>
+  </div>
+</section>
+
+<!-- ============ A5 : YOUR PROJECT ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>💬 Activity 5: Talk about your own project</h2>
+    <p class="hint ar">اختر موضوع مشروعك ومصادر معلوماتك، ثم تحدّث مع زميلك مستخدماً الجُمل في الأسفل.</p>
+    <div style="font-weight:700;color:var(--tel-deep);margin-top:6px">1) What would you like to do your project about?</div>
+    <div class="chiprow" id="topicRow"></div>
+    <div style="font-weight:700;color:var(--wave-deep);margin-top:14px">2) Where could you get information?</div>
+    <div class="chiprow" id="sourceRow"></div>
+    <div class="pj-out" id="pjOut">👆 اختر موضوعاً ومصدراً أو أكثر.</div>
+    <div style="text-align:center"><button class="done-btn" id="pjDone">🎉 We talked about our projects!</button></div>
+    <div class="feedback good" id="pjFb">👏 Wonderful! Now ask your partner about their project. <span class="ar">رائع! اسأل زميلك عن مشروعه.</span></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة على المكالمة والخطة والنطق. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! مع كل نشاط تنجزه يضيء عمود إشارة جديد 📶 حتى تكتمل شبكتك.</p>
+    <div class="badge-board">
+      <h3>✦ MY CALL BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! إشارتك مكتملة 📶<br>
+        تابعت خطة سامي ومايك للمشروع، وتدرّبت على نطق p، وخطّطت لمشروعك. أحسنت! 📋✏️
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Prepared with care <span style="display:inline-block">🌸</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 10 : Hello World! (Grade 8) — Listening
+   Phone-lines theme 📶 — project-plan header, call badges
+========================================================= */
+
+/* ---------- floating signal tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['📋 making a plan','📺 documentary','✉️ send email','📚 borrow books','🌐 internet','🤝 meet & share','📶 connected'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';b.style.animationDuration=(15+(i%4)*5)+'s';b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- header plan ticking ---------- */
+(function(){
+  const items=[...document.querySelectorAll('.plan .pi')];let i=0;
+  setInterval(()=>{
+    if(i<items.length){items[i].classList.add('done');i++;}
+    else{items.forEach(x=>x.classList.remove('done'));i=0;}
+  },900);
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'listen1',name:'Part 1',     emo:'🎧'},
+  {id:'table',  name:'The Plan',   emo:'📊'},
+  {id:'pron',   name:'Pronunciation',emo:'🗣️'},
+  {id:'project',name:'Your Project',emo:'💬'},
+  {id:'quiz',   name:'Quiz',       emo:'🏆'},
+];
+const TAB_OF={listen1:'p1',table:'p2',pron:'p3',project:'p4',quiz:'p5'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p10plan')||'{}')}catch(e){earned={}}
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){if(earned[id])return;earned[id]=true;localStorage.setItem('g8u1p10plan',JSON.stringify(earned));renderBadges();}
+function resetLesson(){localStorage.removeItem('g8u1p10plan');location.reload();}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+let ttsBtn=null;
+const stripTags=h=>h.replace(/<[^>]+>/g,'');
+function stopTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊';ttsBtn=null;}
+}
+function speak(txt){if(!('speechSynthesis' in window))return;stopTTS();const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;speechSynthesis.speak(u);}
+function speakBtn(btn,txt,stopLabel){
+  if(ttsBtn===btn){stopTTS();return;}
+  stopTTS();if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;
+  u.onend=()=>{if(ttsBtn===btn)stopTTS();};
+  ttsBtn=btn;btn.classList.add('playing');btn.innerHTML=stopLabel||'⏹';
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : part 1 transcript + 2 questions
+========================================================= */
+const PART1=[
+  ['Sami','',"Hello. Sami Kamal <i class='g' data-t='سامي يتكلم — هكذا نرد على الهاتف'>speaking</i>."],
+  ['Mike','k',"Hi, Sami. <i class='p' data-t='تعود على المتصل مايك'>It</i>'s Mike. Listen, we need to talk about our school <i class='g' data-t='مشروع'>project</i> on Jerusalem."],
+  ['Sami','',"You're right. <i class='g' data-t='الوقت يضيق / لم يبقَ كثير'>Time is getting short</i>. Let's make a <i class='g' data-t='خطة'>plan</i>."],
+  ['Mike','k',"Yes, let's make a plan."],
+];
+document.getElementById('conv1').innerHTML=PART1.map(l=>
+  '<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+'</span></div>'
+).join('');
+const Q1=[
+  {t:'Who are the two people?',o:['Sami and Mike','Nadia and Tina','Mum and Grandma'],a:0},
+  {t:'What are they going to talk about?',o:['Their holiday','Their school project on Jerusalem','A football match'],a:1},
+];
+const q1box=document.getElementById('q1box');
+let q1left=Q1.length;
+Q1.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">Q'+(qi+1)+':</span> '+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(oi===q.a){b.classList.add('ok');opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);if(--q1left===0)award('listen1');}
+      else{b.classList.add('no');b.disabled=true;}
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);q1box.appendChild(qd);
+});
+
+/* tooltips on tap */
+document.querySelectorAll('.g,.p').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();const was=el.classList.contains('ton');
+    document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));
+    if(!was)el.classList.add('ton');
+  });
+});
+document.addEventListener('click',()=>{document.querySelectorAll('.g.ton,.p.ton').forEach(x=>x.classList.remove('ton'));});
+
+/* A4 : act out part 1 */
+const ACT1=[
+  ['Sami','',"Hello. Sami Kamal speaking."],
+  ['Mike','k',"Hi, Sami. It's Mike. Listen, we need to talk about our school project on Jerusalem."],
+  ['Sami','',"You're right. Time is getting short."],
+  ['Mike','k',"Yes, let's make a plan."],
+];
+let myRole=null;const rpBox=document.getElementById('rpBox');
+function renderAct(){
+  rpBox.innerHTML='';if(myRole===null)return;
+  ACT1.forEach(l=>{
+    const mine=(l[0]===myRole);
+    const d=document.createElement('div');d.className='rp-line'+(mine?' mine':'');
+    d.innerHTML='<span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+(mine?'<span class="mine-tag">🗣️ YOUR LINE</span>':'')+'</span>'+(mine?'':'<button class="l-tts" data-label="🔊">🔊</button>');
+    if(!mine){const b=d.querySelector('.l-tts');b.addEventListener('click',()=>speakBtn(b,l[2],'⏹'));}
+    rpBox.appendChild(d);
+  });
+}
+document.getElementById('roleS').addEventListener('click',function(){myRole='Sami';this.classList.add('on-r');document.getElementById('roleM').classList.remove('on-r');renderAct();});
+document.getElementById('roleM').addEventListener('click',function(){myRole='Mike';this.classList.add('on-r');document.getElementById('roleS').classList.remove('on-r');renderAct();});
+
+/* =========================================================
+   A2 : the plan table
+========================================================= */
+const WHO=['Sami','Mike','Sami and Mike'];
+const WHEN=['at 11.30 tomorrow morning','at one o\'clock','on Sunday evening','at any time','Tuesday afternoon'];
+const TASKS=[
+  {em:'📺',task:'Watch the TV documentary',who:'Sami and Mike',when:'at 11.30 tomorrow morning',
+   say:"There's a documentary about Jerusalem tomorrow. It's on at 11.30 in the morning. The two of us are going to watch it."},
+  {em:'✉️',task:'Send an email and ask for information',who:'Sami',when:'at one o\'clock',
+   say:"I've got cousins in Jerusalem. I can send an email and ask them for information. I'll do that at one o'clock tomorrow."},
+  {em:'📚',task:'Borrow some books from an uncle',who:'Mike',when:'on Sunday evening',
+   say:"I can borrow some books from my uncle. I'm going to see him on Sunday evening."},
+  {em:'🌐',task:'Go on the internet for more information',who:'Sami and Mike',when:'at any time',
+   say:"We can get information from the internet, too. We can do that at any time."},
+  {em:'🤝',task:'Meet and share our information',who:'Sami and Mike',when:'Tuesday afternoon',
+   say:"We need to meet and share our information. Let's meet after school on Tuesday."},
+];
+const tableBox=document.getElementById('tableBox');
+const TBL_TOTAL=TASKS.length*2;
+let tblN=0;
+function updTbl(){
+  document.getElementById('tblTxt').textContent='Completed: '+tblN+' / '+TBL_TOTAL;
+  document.getElementById('tblBar').style.width=(tblN/TBL_TOTAL*100)+'%';
+  if(tblN===TBL_TOTAL)award('table');
+}
+function cellPicker(correct,opts,row){
+  const wrap=document.createElement('div');wrap.className='tpick';
+  opts.slice().sort(()=>Math.random()-.5).forEach(o=>{
+    const b=document.createElement('button');b.className='tchip';b.textContent=o;
+    b.addEventListener('click',()=>{
+      if(o===correct){
+        b.classList.add('ok');wrap.querySelectorAll('.tchip').forEach(x=>x.disabled=true);
+        tblN++;updTbl();
+        if(row.querySelectorAll('.tchip.ok').length===2)row.classList.add('done');
+      }else{b.classList.add('no');b.disabled=true;}
+    });
+    wrap.appendChild(b);
+  });
+  return wrap;
+}
+TASKS.forEach(t=>{
+  const row=document.createElement('div');row.className='trow';
+  const head=document.createElement('div');head.className='t-task';
+  head.innerHTML='<span class="em">'+t.em+'</span>'+t.task+'<button class="t-tts" data-label="🔊 Listen">🔊 Listen</button>';
+  head.querySelector('.t-tts').addEventListener('click',function(){speakBtn(this,t.say,'⏹ Stop');});
+  row.appendChild(head);
+  const cells=document.createElement('div');cells.className='t-cells';
+  const c1=document.createElement('div');c1.className='tcell';c1.innerHTML='<div class="cl">Who?</div>';
+  c1.appendChild(cellPicker(t.who,WHO,row));
+  const c2=document.createElement('div');c2.className='tcell';c2.innerHTML='<div class="cl">When?</div>';
+  c2.appendChild(cellPicker(t.when,WHEN,row));
+  cells.appendChild(c1);cells.appendChild(c2);row.appendChild(cells);
+  tableBox.appendChild(row);
+});
+
+/* =========================================================
+   A3 : pronunciation
+========================================================= */
+const PGROUPS=[
+  {snd:'sp',words:['sport','speak','spell','spend','speaking']},
+  {snd:'pl',words:['plan','place','please','play','plastic']},
+  {snd:'pr',words:['project','programme','prefer','present','promise']},
+];
+const pgroup=document.getElementById('pgroup');
+PGROUPS.forEach(g=>{
+  const col=document.createElement('div');col.className='pcol';
+  col.innerHTML='<h3>🔤 <span class="snd">'+g.snd+'</span> sound <button class="sndtts" data-label="🔊 all">🔊 all</button></h3>';
+  col.querySelector('.sndtts').addEventListener('click',function(){speakBtn(this,g.words.join(', '),'⏹');});
+  const wb=document.createElement('div');wb.className='pword';
+  g.words.forEach(w=>{
+    const b=document.createElement('button');b.className='pw';
+    b.innerHTML='🔊 <b>'+g.snd+'</b>'+w.slice(g.snd.length);
+    b.addEventListener('click',()=>speak(w));
+    wb.appendChild(b);
+  });
+  col.appendChild(wb);pgroup.appendChild(col);
+});
+const TWISTS=["Let's plan the sports programme.","Please promise to speak to the project leader."];
+const twistBox=document.getElementById('twistBox');
+TWISTS.forEach(t=>{
+  const d=document.createElement('div');d.className='twist';
+  d.innerHTML='<span class="tw-txt">⚡ '+t+'</span><button class="tw-tts" data-label="🔊 Say it">🔊 Say it</button>';
+  d.querySelector('.tw-tts').addEventListener('click',function(){speakBtn(this,t,'⏹ Stop');});
+  twistBox.appendChild(d);
+});
+document.getElementById('pronDone').addEventListener('click',()=>{document.getElementById('pronFb').classList.add('show');award('pron');});
+
+/* =========================================================
+   A5 : your project
+========================================================= */
+const TOPICS=['Jerusalem','Palestine\'s history','my town','famous people','the sea','animals'];
+const SOURCES=['the internet','books','a documentary','my family','the library'];
+let selTopic=null;const selSources=new Set();
+const topicRow=document.getElementById('topicRow'),sourceRow=document.getElementById('sourceRow'),pjOut=document.getElementById('pjOut');
+function updPj(){
+  if(!selTopic){pjOut.innerHTML='👆 اختر موضوعاً ومصدراً أو أكثر.';return;}
+  let s='💬 I\'d like to do my project about <span class="em">'+selTopic+'</span>.';
+  if(selSources.size)s+='<br>💬 I could get information from <span class="em">'+[...selSources].join(', ')+'</span>.';
+  pjOut.innerHTML=s;
+}
+TOPICS.forEach(t=>{
+  const b=document.createElement('button');b.className='ptag';b.textContent=t;
+  b.addEventListener('click',()=>{
+    topicRow.querySelectorAll('.ptag').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');selTopic=t;updPj();
+  });
+  topicRow.appendChild(b);
+});
+SOURCES.forEach(s=>{
+  const b=document.createElement('button');b.className='ptag';b.textContent=s;
+  b.addEventListener('click',()=>{
+    if(selSources.has(s)){selSources.delete(s);b.classList.remove('selb');}
+    else{selSources.add(s);b.classList.add('selb');}
+    updPj();
+  });
+  sourceRow.appendChild(b);
+});
+document.getElementById('pjDone').addEventListener('click',()=>{document.getElementById('pjFb').classList.add('show');award('project');});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'Who are the two friends making a plan?',o:['Sami and Mike','Nadia and Tina','Ali and Anna'],a:0},
+  {t:'What is their school project about?',o:['Football','Jerusalem','The weather'],a:1},
+  {t:'When are they going to watch the documentary?',o:['at 11.30 tomorrow morning','on Sunday evening','Tuesday afternoon'],a:0},
+  {t:'Who is going to send an email to cousins in Jerusalem?',o:['Mike','Sami','Both of them'],a:1},
+  {t:'"sport, speak, spell" all begin with the sound ____.',o:['pl','pr','sp'],a:2},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach((b,oi)=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You followed the whole plan! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Listen again to get 5/5. <span class="ar">أحسنت! استمع مرة أخرى لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Listen to the plan again. <span class="ar">حاول مرة أخرى! استمع إلى الخطة من جديد.</span>';
+  box.classList.add('show');award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
