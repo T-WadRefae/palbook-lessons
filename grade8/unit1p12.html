@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Hello World! | Grade 8 · Period 12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tel:#e85d3d;--tel-deep:#c64a2c;--tel-soft:#ffe3da;
+  --wave:#0891b2;--wave-deep:#0e7490;--wave-soft:#d8f3fb;
+  --gold:#f59e0b;--gold-soft:#fef3c7;--purple:#7c5cd6;
+  --paper:#ffffff;--ink:#243042;--ink-soft:#74839a;--line:#fbdfd4;
+  --ok:#22b573;--no:#ef5b5b;--r:20px;
+  --shadow:0 16px 40px rgba(198,74,44,.15);--shadow-sm:0 8px 20px rgba(198,74,44,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 90% 5%, #ffe3da, transparent 60%),
+    radial-gradient(620px 400px at 5% 28%, #d8f3fb, transparent 60%),
+    radial-gradient(700px 420px at 64% 88%, #fef3c7, transparent 55%),
+    linear-gradient(180deg,#fff5f0 0%,#fff9f5 50%,#f3fbfd 100%);
+  background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating signal tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;padding:6px 14px;color:var(--tel-deep);box-shadow:var(--shadow-sm);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-115vh) rotate(3deg);opacity:0}}
+
+/* ====== header : email to a new pen friend (different from P1-P11) ====== */
+header{position:relative;padding:34px 0 8px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--wave);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--tel-deep);margin-top:8px;text-shadow:0 3px 0 #ffe3da}
+.htitle .sub{color:var(--wave-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:14px}
+.mail{width:min(420px,94vw);margin:0 auto;background:#fff;border:3px solid var(--tel);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;text-align:left}
+.mail .mh{background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;padding:11px 16px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.02rem}
+.mail .mh .at{margin-left:auto;font-size:1.4rem;animation:spin 6s linear infinite}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.mail .mb{padding:10px 16px 14px}
+.mail .row{display:flex;gap:8px;font-size:.9rem;font-weight:600;color:var(--ink-soft);padding:5px 0;border-bottom:1px dashed var(--line)}
+.mail .row b{color:var(--ink)}
+.mail .friends{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.mail .pf{border:2px solid var(--line);background:var(--wave-soft);border-radius:14px;padding:7px 14px;font-weight:700;font-size:.85rem;color:var(--wave-deep);animation:pfp 3s infinite}
+.mail .pf:last-child{animation-delay:1.5s}
+@keyframes pfp{0%,100%{transform:scale(1)}10%{transform:scale(1.07)}20%{transform:scale(1)}}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:26px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,245,240,.95),rgba(255,245,240,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--tel);transform:translateY(-2px)}
+.tab.on{background:var(--tel);color:#fff;border-color:var(--tel);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.on .done-mark{color:#ffe9e0}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--tel) 0 26px,var(--wave) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--tel-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--wave);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.8;background:#e9f7fc;border-radius:12px;padding:8px 14px;border-right:4px solid var(--wave)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fff6f1;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:28px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--tel-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.6;display:block}
+.unit-task{margin-top:14px;background:var(--gold-soft);border:2px dashed var(--gold);border-radius:14px;padding:12px 16px;font-weight:700;color:#92600a;display:flex;align-items:center;gap:10px}
+
+/* ====== info cards (A1) ====== */
+.pfcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:12px}
+.pfcard{border:2px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
+.pfcard .pfh{display:flex;align-items:center;gap:10px;background:#fff6f1;padding:10px 14px;font-weight:700;color:var(--tel-deep)}
+.pfcard .pfh .av{font-size:26px}
+.pfcard ul{list-style:none;padding:10px 14px;margin:0}
+.pfcard li{font-size:.9rem;font-weight:600;color:var(--ink-soft);padding:3px 0;line-height:1.5}
+.pfcard li b{color:var(--ink)}
+.choicerow{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.choicebtn{border:3px solid var(--line);background:#fff;border-radius:16px;padding:12px 22px;cursor:pointer;font-family:inherit;font-weight:700;font-size:1.02rem;color:var(--ink);transition:.25s;display:flex;align-items:center;gap:8px}
+.choicebtn:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+.choicebtn.on{border-color:var(--tel);background:var(--tel-soft);color:var(--tel-deep)}
+.fillbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--wave);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.email{background:#fffdf7;border:2px solid var(--line);border-radius:16px;padding:18px;margin-top:14px;font-weight:500;line-height:2.3;font-size:1rem;color:var(--ink)}
+.email .yn{background:#e8e2ff;color:var(--purple);border-radius:6px;padding:0 6px;font-weight:700;font-style:italic}
+.gpick{display:inline-flex;gap:5px;flex-wrap:wrap;vertical-align:middle}
+.gchip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:2px 11px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem;color:var(--ink);transition:.2s}
+.gchip:hover{border-color:var(--wave)}
+.gchip.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.gchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.gchip:disabled{cursor:default}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* ====== A2 my card ====== */
+.myform{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+.fld{display:flex;flex-direction:column;gap:5px}
+.fld label{font-weight:700;font-size:.85rem;color:var(--wave-deep)}
+.fld input{font-family:inherit;font-weight:600;font-size:.95rem;border:2px solid var(--line);border-radius:12px;padding:9px 12px;background:#fff;color:var(--ink)}
+.fld input:focus{outline:none;border-color:var(--wave)}
+.qbox{background:#f6f2ff;border:2px solid #e2d8fb;border-radius:14px;padding:13px 16px;margin-top:14px}
+.qbox h3{color:var(--purple);font-size:1rem;margin-bottom:6px}
+.qbox p{font-weight:600;color:var(--ink);line-height:1.9;font-size:.95rem}
+.savebtn{margin-top:14px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;font-size:.95rem;border-radius:999px;padding:10px 22px;cursor:pointer;transition:.2s}
+.savebtn:hover{transform:scale(1.04)}
+
+/* ====== A3+A4 write ====== */
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+.pcard{border:2px solid var(--line);border-radius:16px;padding:14px;background:#fff;transition:.3s}
+.pcard.done{border-color:var(--ok);background:#e9fbf2}
+.pcard h3{font-size:.95rem;color:var(--tel-deep);display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.pcard .pnum{width:24px;height:24px;border-radius:50%;background:var(--tel);color:#fff;display:grid;place-items:center;font-size:.8rem;font-weight:700;flex-shrink:0}
+.pcard ul{margin:0 0 8px 16px;padding:0}
+.pcard li{font-size:.85rem;font-weight:600;color:var(--ink-soft);line-height:1.6}
+.pcard .pchk{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.82rem;color:var(--ink-soft);transition:.2s;width:100%}
+.pcard .pchk:hover{border-color:var(--ok)}
+.pcard.done .pchk{border-color:var(--ok);background:var(--ok);color:#fff;cursor:default}
+.starter{background:var(--gold-soft);border:2px dashed var(--gold);border-radius:14px;padding:13px 16px;margin-top:16px;font-weight:600;color:#8a6500;line-height:2;font-style:italic}
+.composer{margin-top:14px}
+.composer textarea{width:100%;min-height:240px;font-family:inherit;font-weight:500;font-size:1rem;line-height:1.8;border:2px solid var(--line);border-radius:16px;padding:16px;background:#fffdf7;color:var(--ink);resize:vertical}
+.composer textarea:focus{outline:none;border-color:var(--wave)}
+.cbtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.cbtn{border:0;font-family:inherit;font-weight:700;font-size:.92rem;border-radius:999px;padding:10px 20px;cursor:pointer;transition:.2s;color:#fff}
+.cbtn.save{background:var(--gold)}.cbtn.copy{background:var(--wave)}.cbtn.clear{background:#b9c5d4}
+.cbtn:hover{transform:scale(1.04)}
+.saved-note{display:none;margin-top:10px;font-weight:600;color:#168a55;background:#e9fbf2;border-radius:10px;padding:8px 13px}
+.saved-note.show{display:block;animation:fadeUp .35s}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--tel);color:#fff;font-size:.85rem;margin-right:8px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--wave)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--tel),#ff8a5c);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#ffd9a8}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--tel);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== call badges board ====== */
+.badge-board{background:linear-gradient(160deg,#fff5f0,#ffe3da);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--tel);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--tel-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #f3c4b3;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:34px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.78rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.88rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--tel);background:var(--tel-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--tel)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 12 · GRADE 8</span>
+    <h1>Hello World!</h1>
+    <div class="sub">Unit task: contacting a new pen friend · PB page 15</div>
+  </div>
+  <div class="mail">
+    <div class="mh">✉️ New email <span class="at">@</span></div>
+    <div class="mb">
+      <div class="row">To: <b>a new pen friend 🌍</b></div>
+      <div class="row">Subject: <b>Hello from Palestine! 👋</b></div>
+      <div class="friends"><span class="pf">🇨🇦 Jack</span><span class="pf">🇦🇺 Jo</span></div>
+    </div>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">📧 Their Email <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p2">🪪 My Info Card <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p3">✍️ Write Your Reply <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p4">🏁 Quiz <span class="done-mark">📶</span></button>
+  <button class="tab" data-p="p5">🏅 Badges</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">مهمّة الوحدة: <b>التواصل مع صديق مراسلة جديد!</b> نختار صديقاً (جاك من كندا أو جو من أستراليا)، نكمل رسالته من بطاقة معلوماته، نملأ بطاقتنا، نخطّط ردّنا في ثلاث فقرات، ثم نكتب الإيميل. أنجز الأنشطة لتضيء أعمدة إشارتك! 📶</p>
+    <div class="unit-task">📌 <span>Unit task: Contacting a new pen friend ✉️🌍</span></div>
+    <div class="goals">
+      <div class="goal"><div class="ico">📧</div><div><b>Their Email</b><span class="ar">أكمل رسالة صديق المراسلة بالمعلومات الصحيحة من بطاقته.</span></div></div>
+      <div class="goal"><div class="ico">🪪</div><div><b>My Info Card</b><span class="ar">أملأ بطاقة معلوماتي لأجيب عن أسئلة صديقي.</span></div></div>
+      <div class="goal"><div class="ico">🗂️</div><div><b>Plan in 3 paragraphs</b><span class="ar">أخطّط ردّي: عنّي، عائلتي، هواياتي.</span></div></div>
+      <div class="goal"><div class="ico">✍️</div><div><b>Write the email</b><span class="ar">أكتب ردّي على رسالة صديقي وأحفظه.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : THEIR EMAIL ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>📧 Activity 1: Complete your pen friend's email</h2>
+    <p class="hint ar">اقرأ بطاقتَي المعلومات، ثم اختر صديق مراسلتك، وأكمل رسالته باختيار المعلومة الصحيحة <b>من بطاقته</b> (احذر معلومات الصديق الآخر!).</p>
+    <div class="pfcards">
+      <div class="pfcard">
+        <div class="pfh"><span class="av">🧑🏼</span>Jack Kline 🇨🇦</div>
+        <ul>
+          <li><b>How old:</b> 13 · <b>School Year:</b> 8</li>
+          <li><b>From:</b> Toronto, Canada</li>
+          <li><b>Brothers:</b> 1 older – Tom, 16</li>
+          <li><b>Sisters:</b> 2 younger – Liz, 9, and Ann, 11</li>
+          <li><b>Likes:</b> basketball, camping</li>
+          <li><b>Learning:</b> play the piano – very difficult</li>
+        </ul>
+      </div>
+      <div class="pfcard">
+        <div class="pfh"><span class="av">👧🏼</span>Jo Peel 🇦🇺</div>
+        <ul>
+          <li><b>How old:</b> 14 · <b>School Year:</b> 8</li>
+          <li><b>From:</b> Perth, Australia</li>
+          <li><b>Brothers:</b> 2 younger – Ben, 10, and Tom, 8</li>
+          <li><b>Sisters:</b> 1 older – Sue, 15</li>
+          <li><b>Likes:</b> volleyball, drawing</li>
+          <li><b>Learning:</b> play table tennis – good fun</li>
+        </ul>
+      </div>
+    </div>
+    <div class="choicerow">
+      <button class="choicebtn" id="chJack" data-f="jack">🇨🇦 Write as Jack</button>
+      <button class="choicebtn" id="chJo" data-f="jo">🇦🇺 Write as Jo</button>
+    </div>
+    <div class="fillbar" id="emailBar" style="display:none">
+      <span id="emTxt">Completed: 0 / 12</span>
+      <div class="bar"><i id="emBar"></i></div>
+      <span>📧</span>
+    </div>
+    <div class="email" id="emailBox" style="display:none"></div>
+  </div>
+</section>
+
+<!-- ============ A2 : MY INFO CARD ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>🪪 Activity 2: Complete your information card</h2>
+    <p class="hint ar">املأ بطاقتك بمعلوماتك أنت (تُحفظ في المتصفّح). ستحتاجها لتجيب عن أسئلة صديقك في الرد. ثم اعمل مع زميلك: اسألا وأجيبا.</p>
+    <div class="myform">
+      <div class="fld"><label>Name</label><input id="f_name" data-k="name" placeholder="e.g. Lana"></div>
+      <div class="fld"><label>How old</label><input id="f_age" data-k="age" placeholder="e.g. 13"></div>
+      <div class="fld"><label>School Year</label><input id="f_year" data-k="year" placeholder="e.g. 8"></div>
+      <div class="fld"><label>From</label><input id="f_from" data-k="from" placeholder="e.g. Nablus, Palestine"></div>
+      <div class="fld"><label>Brothers</label><input id="f_bro" data-k="bro" placeholder="e.g. 1 older – Omar"></div>
+      <div class="fld"><label>Sisters</label><input id="f_sis" data-k="sis" placeholder="e.g. 2 younger"></div>
+      <div class="fld"><label>Likes</label><input id="f_likes" data-k="likes" placeholder="e.g. reading, football"></div>
+      <div class="fld"><label>Learning</label><input id="f_learn" data-k="learn" placeholder="e.g. play the guitar"></div>
+    </div>
+    <div class="qbox ar">
+      <h3>❓ أسئلة صديقك — أجب عنها (مع زميلك):</h3>
+      <p>• Can you tell me about yourself?<br>• And what about your family?<br>• What do you like doing?<br>• Are you learning anything new at the moment?</p>
+    </div>
+    <button class="savebtn" id="cardSave">💾 Save my card</button>
+    <span class="saved-note" id="cardNote">✅ تم حفظ بطاقتك!</span>
+  </div>
+</section>
+
+<!-- ============ A3+A4 : WRITE YOUR REPLY ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>✍️ Activities 3 &amp; 4: Plan &amp; write your reply</h2>
+    <p class="hint ar"><b>أولاً:</b> خطّط ردّك في ثلاث فقرات — اضغط ✓ على كل فقرة عندما تجهّز أفكارها. <b>ثانياً:</b> اكتب إيميلك في الصندوق واحفظه (أو انسخه لإرساله كإيميل حقيقي).</p>
+    <div class="plan-grid" id="planGrid"></div>
+    <div class="starter">
+      ✍️ Start like this:<br>
+      Dear … ,<br>
+      I'm very happy to be your new pen friend, too. You already know that my name is … , and that I'm from … in … I'm … old, and I'm in … , too.
+    </div>
+    <div class="composer">
+      <textarea id="composer" spellcheck="true"></textarea>
+      <div class="cbtns">
+        <button class="cbtn save" id="emailSave">💾 Save my email</button>
+        <button class="cbtn copy" id="emailCopy">📋 Copy</button>
+        <button class="cbtn clear" id="emailReset">↩️ Reset frame</button>
+      </div>
+      <span class="saved-note" id="emailNote">✅ تم حفظ إيميلك! يمكنك نسخه وإرساله.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الوحدة! 5 أسئلة عن أصدقاء المراسلة وكتابة الإيميل. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BADGES ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Call Badges</h2>
+    <p class="hint ar">هنا أوسمة اتصالك! أكمل مهمّة الوحدة لتُضيء كل أعمدة الإشارة 📶 وتُنهي الوحدة الأولى!</p>
+    <div class="badge-board">
+      <h3>✦ MY CALL BADGES ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف الثامن 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! أنهيت مهمّة الوحدة الأولى <b>Hello World!</b> 📶<br>
+        كتبت إيميلاً لصديق مراسلة جديد حول العالم. عمل رائع — لقد أصبحت تتواصل بالإنجليزية! ✉️🌍
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+<footer style="text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem">Prepared with care <span style="display:inline-block">🌸</span> by <b style="color:#c64a2c">T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Unit 1 – Period 12 : Hello World! (Grade 8) — Unit task
+   Phone-lines theme 📶 — pen-friend email header, call badges
+========================================================= */
+
+/* ---------- floating signal tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const NOTES=['✉️ new email','🌍 pen friend','🇨🇦 Canada','🇦🇺 Australia','@ writing','💌 Hello!','📶 connected'];
+  NOTES.forEach((g,i)=>{
+    const b=document.createElement('span');b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';b.style.animationDuration=(15+(i%4)*5)+'s';b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'email', name:'Their Email', emo:'📧'},
+  {id:'mycard',name:'My Card',     emo:'🪪'},
+  {id:'plan',  name:'Plan',        emo:'🗂️'},
+  {id:'write', name:'Write Email', emo:'✍️'},
+  {id:'quiz',  name:'Quiz',        emo:'🏆'},
+];
+const TAB_OF={email:'p1',mycard:'p2',plan:'p3',write:'p3',quiz:'p4'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g8u1p12pen')||'{}')}catch(e){earned={}}
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">📶</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;const tb=document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]');if(tb)tb.classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){if(earned[id])return;earned[id]=true;localStorage.setItem('g8u1p12pen',JSON.stringify(earned));renderBadges();}
+function resetLesson(){localStorage.removeItem('g8u1p12pen');location.reload();}
+renderBadges();
+
+/* =========================================================
+   A1 : complete the pen friend's email
+========================================================= */
+const FRIENDS={
+  jack:{flag:'🇨🇦',name:'Jack',city:'Toronto',country:'Canada',age:'13',year:'8',
+    brothers:'one older brother, Tom (16)',sisters:'two younger sisters, Liz (9) and Ann (11)',
+    like1:'basketball',like2:'camping',learn:'play the piano',opin:'very difficult'},
+  jo:{flag:'🇦🇺',name:'Jo',city:'Perth',country:'Australia',age:'14',year:'8',
+    brothers:'two younger brothers, Ben (10) and Tom (8)',sisters:'one older sister, Sue (15)',
+    like1:'volleyball',like2:'drawing',learn:'play table tennis',opin:'good fun'},
+};
+const emailBox=document.getElementById('emailBox');
+function buildEmail(fk){
+  const f=FRIENDS[fk], o=FRIENDS[fk==='jack'?'jo':'jack'];
+  const blanks=[
+    {k:'name',ok:f.name,opts:[f.name,o.name]},
+    {k:'city',ok:f.city,opts:[f.city,o.city]},
+    {k:'country',ok:f.country,opts:[f.country,o.country]},
+    {k:'age',ok:f.age,opts:[f.age,o.age]},
+    {k:'year',ok:f.year,opts:['7','8','9']},
+    {k:'brothers',ok:f.brothers,opts:[f.brothers,o.brothers]},
+    {k:'sisters',ok:f.sisters,opts:[f.sisters,o.sisters]},
+    {k:'like1',ok:f.like1,opts:[f.like1,o.like1]},
+    {k:'like2',ok:f.like2,opts:[f.like2,o.like2]},
+    {k:'learn',ok:f.learn,opts:[f.learn,o.learn]},
+    {k:'opin',ok:f.opin,opts:[f.opin,o.opin]},
+    {k:'name2',ok:f.name,opts:[f.name,o.name]},
+  ];
+  const B={};blanks.forEach(b=>B[b.k]=b);
+  emailBox.innerHTML='';
+  function add(txt){emailBox.appendChild(document.createTextNode(txt));}
+  function yn(){const s=document.createElement('span');s.className='yn';s.textContent='(your name)';emailBox.appendChild(s);}
+  let total=blanks.length,done=0;
+  function pick(b){
+    const sp=document.createElement('span');sp.className='gpick';
+    b.opts.slice().sort(()=>Math.random()-.5).forEach(opt=>{
+      const btn=document.createElement('button');btn.className='gchip';btn.textContent=opt;
+      btn.addEventListener('click',()=>{
+        if(opt===b.ok){
+          btn.classList.add('ok');sp.querySelectorAll('.gchip').forEach(x=>x.disabled=true);
+          done++;
+          document.getElementById('emTxt').textContent='Completed: '+done+' / '+total;
+          document.getElementById('emBar').style.width=(done/total*100)+'%';
+          if(done===total)award('email');
+        }else{btn.classList.add('no');btn.disabled=true;}
+      });
+      sp.appendChild(btn);
+    });
+    emailBox.appendChild(sp);
+  }
+  add('Dear ');yn();add(',\n\n');
+  add("I'm very happy to be your new pen friend. My name is ");pick(B.name);
+  add(", and I'm from ");pick(B.city);add(' in ');pick(B.country);
+  add(". I'm ");pick(B.age);add(" years old, and I'm in Year ");pick(B.year);add(' at school.\n\n');
+  add("We're a family. I have ");pick(B.brothers);add('. I also have ');pick(B.sisters);add('.\n\n');
+  add('I like ');pick(B.like1);add(', and I enjoy ');pick(B.like2);
+  add(", too. At the moment, I'm learning to ");pick(B.learn);add(", and it's ");pick(B.opin);add('!\n\n');
+  add('Can you tell me about yourself? And what about your family? What do you like doing? Are you learning anything new at the moment?\n\n');
+  add('Please write back soon.\nBest wishes,\n');pick(B.name2);
+  emailBox.style.whiteSpace='pre-wrap';
+  emailBox.style.display='block';
+  document.getElementById('emailBar').style.display='flex';
+  document.getElementById('emTxt').textContent='Completed: 0 / '+total;
+  document.getElementById('emBar').style.width='0%';
+}
+document.getElementById('chJack').addEventListener('click',function(){this.classList.add('on');document.getElementById('chJo').classList.remove('on');buildEmail('jack');});
+document.getElementById('chJo').addEventListener('click',function(){this.classList.add('on');document.getElementById('chJack').classList.remove('on');buildEmail('jo');});
+
+/* =========================================================
+   A2 : my info card (saved to localStorage)
+========================================================= */
+const CARD_KEY='g8u1p12card';
+let card={};try{card=JSON.parse(localStorage.getItem(CARD_KEY)||'{}')}catch(e){card={}}
+document.querySelectorAll('.myform input').forEach(inp=>{
+  const k=inp.dataset.k;if(card[k])inp.value=card[k];
+  inp.addEventListener('input',()=>{card[k]=inp.value;localStorage.setItem(CARD_KEY,JSON.stringify(card));});
+});
+document.getElementById('cardSave').addEventListener('click',()=>{
+  const need=['name','age','from'];
+  const ok=need.every(k=>(card[k]||'').trim().length);
+  const note=document.getElementById('cardNote');
+  if(ok){note.textContent='✅ تم حفظ بطاقتك!';note.style.color='#168a55';note.classList.add('show');award('mycard');}
+  else{note.textContent='✋ اكتب على الأقل الاسم والعمر والبلد.';note.style.color='#c64a2c';note.classList.add('show');}
+});
+
+/* =========================================================
+   A3 : plan in 3 paragraphs
+========================================================= */
+const PLAN=[
+  {t:'About me',items:['my name','where I\'m from','how old I am','my school year']},
+  {t:'My family',items:['my brothers','my sisters','their names and ages']},
+  {t:'Likes & learning',items:['what I like','what I enjoy','what I\'m learning now']},
+];
+const planGrid=document.getElementById('planGrid');
+let planDone=0;
+PLAN.forEach((p,i)=>{
+  const d=document.createElement('div');d.className='pcard';
+  d.innerHTML='<h3><span class="pnum">'+(i+1)+'</span>Paragraph '+(i+1)+': '+p.t+'</h3><ul>'+
+    p.items.map(x=>'<li>• '+x+'</li>').join('')+'</ul>';
+  const btn=document.createElement('button');btn.className='pchk';btn.textContent='✓ My ideas are ready';
+  btn.addEventListener('click',()=>{
+    if(d.classList.contains('done'))return;
+    d.classList.add('done');btn.textContent='✅ Ready!';
+    if(++planDone===PLAN.length)award('plan');
+  });
+  d.appendChild(btn);planGrid.appendChild(d);
+});
+
+/* =========================================================
+   A4 : compose & save the email
+========================================================= */
+const REPLY_KEY='g8u1p12reply';
+const FRAME="Dear … ,\n\nI'm very happy to be your new pen friend, too. You already know that my name is … , and that I'm from … in … I'm … old, and I'm in … , too.\n\n(Paragraph 2 — my family) …\n\n(Paragraph 3 — what I like and what I'm learning) …\n\nPlease write back soon.\n\nBest wishes,\n…";
+const composer=document.getElementById('composer');
+composer.value=localStorage.getItem(REPLY_KEY)||FRAME;
+composer.addEventListener('input',()=>localStorage.setItem(REPLY_KEY,composer.value));
+document.getElementById('emailSave').addEventListener('click',()=>{
+  localStorage.setItem(REPLY_KEY,composer.value);
+  const note=document.getElementById('emailNote');
+  if(composer.value.trim().length>40 && composer.value.trim()!==FRAME.trim()){
+    note.textContent='✅ تم حفظ إيميلك! يمكنك نسخه وإرساله.';note.style.color='#168a55';note.classList.add('show');award('write');
+  }else{
+    note.textContent='✋ اكتب ردّك الخاص أولاً (غيّر النقاط … بمعلوماتك).';note.style.color='#c64a2c';note.classList.add('show');
+  }
+});
+document.getElementById('emailCopy').addEventListener('click',()=>{
+  const note=document.getElementById('emailNote');
+  const txt=composer.value;
+  function done(){note.textContent='📋 تم نسخ الإيميل!';note.style.color='#0e7490';note.classList.add('show');}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,()=>{composer.select();done();});}
+  else{composer.select();try{document.execCommand('copy')}catch(e){}done();}
+});
+document.getElementById('emailReset').addEventListener('click',()=>{composer.value=FRAME;localStorage.setItem(REPLY_KEY,FRAME);});
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'How old is Jack?',o:['13','14','16'],a:0},
+  {t:'Where is Jo from?',o:['Toronto, Canada','Perth, Australia','London, Britain'],a:1},
+  {t:'What is Jack learning to do?',o:['play table tennis','play the piano','play volleyball'],a:1},
+  {t:'How many sisters does Jo have?',o:['One (Sue)','Two (Liz and Ann)','Three'],a:0},
+  {t:'How do we usually finish a friendly email?',o:['"Goodbye forever"','"Best wishes"','"The end"'],a:1},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.forEach((o,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach((b,oi)=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(oi===QUIZ[qi].a)b.classList.add('ok');
+      else if(quizAns[qi]===oi)b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You finished Unit 1! <span class="ar">ممتاز! أتممت الوحدة الأولى!</span>':
+    score>=3 ?'⭐ Well done! Check the info cards to get 5/5. <span class="ar">أحسنت! راجع بطاقات المعلومات لتحصل على العلامة الكاملة.</span>':
+              '💪 Keep trying! Read the pen friends\' cards again. <span class="ar">حاول مرة أخرى! اقرأ بطاقات الأصدقاء من جديد.</span>';
+  box.classList.add('show');award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
