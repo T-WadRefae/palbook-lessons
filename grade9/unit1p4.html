@@ -137,6 +137,18 @@ nav::-webkit-scrollbar{display:none}
 .feedback.show{display:block;animation:fadeUp .35s}
 .feedback.good{background:#e9fbf2;color:#168a55}
 
+/* ====== word bank (Activity 2) ====== */
+.wordbank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;background:var(--gold-soft);border:2px dashed var(--gold);border-radius:14px;padding:13px 14px;margin-top:12px}
+.wbchip{border:2px solid var(--gold);background:#fff;border-radius:999px;padding:6px 15px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;color:var(--ink);transition:.2s}
+.wbchip:hover{border-color:var(--olive);transform:translateY(-2px)}
+.wbchip.sel{background:var(--olive);color:#fff;border-color:var(--olive);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.wbchip.used{opacity:.32;text-decoration:line-through;pointer-events:none}
+.blank{display:inline-block;min-width:92px;border-bottom:2.5px dashed var(--olive);padding:1px 8px;margin:0 3px;cursor:pointer;text-align:center;font-weight:700;color:var(--olive-deep);transition:.2s;vertical-align:middle}
+.blank:hover{background:var(--olive-soft);border-radius:6px 6px 0 0}
+.blank.active{background:var(--gold-soft);border-bottom-style:solid;border-color:var(--gold-deep);border-radius:6px 6px 0 0}
+.blank.filled{border-bottom:2.5px solid var(--ok);color:#168a55;cursor:default;background:#e9fbf2;border-radius:6px}
+.blank.wrong{animation:shake .4s;border-color:var(--no);color:var(--no)}
+
 /* ====== pair-practice dialogues (Activity 3) ====== */
 .dlg{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 10px;margin-top:12px}
 .dlg .num-tag{font-weight:700;color:var(--red-deep);font-size:.82rem;padding:4px 6px}
@@ -150,19 +162,7 @@ nav::-webkit-scrollbar{display:none}
 .done-btn{margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;font-size:.95rem;border-radius:999px;padding:10px 22px;cursor:pointer;transition:.2s}
 .done-btn:hover{transform:scale(1.04)}
 
-/* ====== transcript + tooltips (Activity 4) ====== */
-details.tx{margin-top:14px;border:2px solid var(--line);border-radius:14px;background:#fff;overflow:visible}
-details.tx>summary{cursor:pointer;font-weight:700;color:var(--olive-deep);padding:12px 16px;list-style:none;display:flex;align-items:center;gap:8px}
-details.tx>summary::-webkit-details-marker{display:none}
-details.tx[open]>summary{border-bottom:2px dashed var(--line)}
-.script{padding:6px 16px 16px}
-.script .sl{display:flex;gap:8px;padding:5px 0;line-height:2}
-.script .sp{flex-shrink:0;font-weight:700;color:var(--red-deep);min-width:58px;font-size:.9rem}
-.tip,.pro{position:relative;cursor:help;border-radius:4px;padding:0 3px;font-weight:600}
-.tip{background:var(--gold-soft);border-bottom:2px dotted var(--gold-deep)}
-.pro{background:#e9e2fb;border-bottom:2px dotted var(--purple)}
-.tip::after,.pro::after{content:attr(data-tip);position:absolute;left:50%;bottom:138%;transform:translateX(-50%);background:var(--ink);color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.82rem;font-weight:600;width:max-content;max-width:200px;white-space:normal;text-align:center;padding:6px 11px;border-radius:9px;opacity:0;pointer-events:none;transition:.18s;z-index:30;box-shadow:var(--shadow-sm)}
-.tip:hover::after,.pro:hover::after,.tip.show::after,.pro.show::after{opacity:1}
+/* ====== image (Activity 4) ====== */
 .imgwrap{margin-top:6px;border-radius:16px;overflow:hidden;border:2px solid var(--line);box-shadow:var(--shadow-sm)}
 .imgwrap img{width:100%;height:auto;display:block}
 
@@ -308,11 +308,13 @@ footer b{color:var(--red-deep)}
 <section class="panel" id="p2">
   <div class="card"><div class="ribbon"></div>
     <h2><span class="gate">STEP 2</span>📝 Activity 2: Listen. Add the new words</h2>
-    <p class="hint ar">استمع للمحادثات وأكمل كل فراغ بالكلمة المناسبة من النشاط الأول (مع تغيير الصيغة إذا لزم). اختر الكلمة الصحيحة لكل فراغ.</p>
+    <p class="hint ar">استمع للمحادثات وأكمل الفراغات بالكلمات من <b>صندوق الكلمات</b> في الأسفل. اضغط على الكلمة لتحديدها ثم اضغط على الفراغ المناسب لوضعها (كل كلمة تُستخدم مرة واحدة).</p>
     <div class="audio">
       <div class="audio-lbl ar">🎧 استمع وأكمل (CD 1 · Audio 5):</div>
       <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztYXpucTZDR3JMY0U/preview" allow="autoplay" allowfullscreen></iframe>
     </div>
+    <div class="subttl ar" style="text-align:right">📦 صندوق الكلمات:</div>
+    <div class="wordbank" id="wordBank"></div>
     <div class="fillbar"><span id="aTxt">Completed: 0 / 12</span><div class="bar"><i id="aBar"></i></div><span>📝</span></div>
     <div id="addBox"></div>
     <div class="feedback good" id="aFb">🎉 Brilliant! All the words are in the right place. <span class="ar">رائع! كل الكلمات في مكانها الصحيح.</span></div>
@@ -347,28 +349,7 @@ footer b{color:var(--red-deep)}
       <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztTkltaGNNWXktUGc/preview" allow="autoplay" allowfullscreen></iframe>
     </div>
 
-    <details class="tx">
-      <summary>📜 Listen &amp; read the transcript <span class="ar" style="font-weight:600;color:var(--ink-soft)">— الكلمات الصعبة 🟡 والضمائر 🟣 عليها تلميح بالعربية (مرّر أو اضغط)</span> <button class="l-tts" id="txTts" style="margin-left:auto" data-label="🔊">🔊</button></summary>
-      <div class="script" id="scriptBox">
-        <div class="sl"><span class="sp">Uncle:</span><span>We've got a little <span class="tip" data-tip="مفاجأة">surprise</span> for you, Hadeel and Nidal.</span></div>
-        <div class="sl"><span class="sp">Hadeel:</span><span>Really? What's that?</span></div>
-        <div class="sl"><span class="sp">Aunt:</span><span>Next week, <span class="pro" data-tip="نحن = العائلة">we</span>'re going on a <span class="tip" data-tip="جولة / رحلة سياحية">tour</span> – a tour of Jerusalem and other cities in Palestine.</span></div>
-        <div class="sl"><span class="sp">Nidal:</span><span>That sounds really great! Thank you very much!</span></div>
-        <div class="sl"><span class="sp">Uncle:</span><span>We have a very busy <span class="tip" data-tip="جدول مواعيد">schedule</span>. First, we're going to Jerusalem, and our tour is starting there.</span></div>
-        <div class="sl"><span class="sp">Aunt:</span><span>As I'm sure you know, <span class="pro" data-tip="it = القدس Jerusalem">it</span>'s one of the world's great <span class="tip" data-tip="دينية">religious</span> <span class="tip" data-tip="مراكز">centres</span>. And the Old City is very beautiful.</span></div>
-        <div class="sl"><span class="sp">Uncle:</span><span>A <span class="tip" data-tip="مرشد سياحي">guide</span> is going to take <span class="pro" data-tip="us = العائلة">us</span> round the Old City, starting from the <span class="tip" data-tip="باب العامود (في القدس)">Damascus Gate</span>, so that'll be very interesting.</span></div>
-        <div class="sl"><span class="sp">Rami:</span><span>And then we're going on to Nablus – our second stop.</span></div>
-        <div class="sl"><span class="sp">Uncle:</span><span>That's an important <span class="tip" data-tip="مركز تجاري">centre of business</span>. It's famous for its <span class="tip" data-tip="زيت الزيتون">olive oil</span> and the excellent <span class="tip" data-tip="صابون">soap</span> that <span class="pro" data-tip="they = أهل نابلس / صانعو الصابون">they</span> make from the olive oil.</span></div>
-        <div class="sl"><span class="sp">Aunt:</span><span>And then we're coming south again to our third place: Jericho.</span></div>
-        <div class="sl"><span class="sp">Rami:</span><span><span class="pro" data-tip="It = أريحا Jericho">It</span>'s very famous because it's the oldest city in the world.</span></div>
-        <div class="sl"><span class="sp">Uncle:</span><span>And it's also the lowest because it's at the bottom of the <span class="tip" data-tip="وادي البحر الميت">Dead Sea Valley</span>. There are various <span class="tip" data-tip="محلّية">local</span> places to see there like the <span class="tip" data-tip="قديمة">ancient</span> city walls and the museum, and Hisham's Palace.</span></div>
-        <div class="sl"><span class="sp">Aunt:</span><span>And then we're going to the far south, to our fourth city – the city of Hebron. It's a place with lots of <span class="tip" data-tip="الفنون والحِرَف اليدوية">arts and crafts</span>.</span></div>
-        <div class="sl"><span class="sp">Rami:</span><span>They make beautiful glass, for example.</span></div>
-        <div class="sl"><span class="sp">Uncle:</span><span>It's also the <span class="tip" data-tip="موقع">site</span> of the great <span class="tip" data-tip="المسجد الإبراهيمي">Al Ibrahimi Mosque</span>.</span></div>
-        <div class="sl"><span class="sp">Aunt:</span><span>And finally, city number five: Bethlehem. That's just a short way south of Jerusalem. And it's the site of the very important <span class="tip" data-tip="كنيسة المهد">Church of the Nativity</span>.</span></div>
-        <div class="sl"><span class="sp">Rami:</span><span>And that's the end of our tour!</span></div>
-      </div>
-    </details>
+    <p class="hint ar">🎧 هذا تمرين <b>استماع وفهم</b> — أنصت جيدًا للتسجيل (يمكنك إعادته) ثم أكمل المعلومات بالأسفل دون قراءة النص.</p>
 
     <hr class="divider">
     <div class="subttl">أ) Put the cities in the order you hear them (1–5):</div>
@@ -577,32 +558,65 @@ function buildFill(boxId,txtId,barId,sentences,onComplete){
   });
 }
 
-/* A2 : add the words */
-buildFill('addBox','aTxt','aBar',[
-  {n:1,parts:["<span class='ab'>A</span> Let's visit the ",
-    {opts:['museum','village','gate'],a:0}," and see the things they found in the ancient city.<br>",
-    "<span class='ab'>B</span> Well, we've got a busy ",
-    {opts:['schedule','guide','site'],a:0},", but we can go for an hour tomorrow."]},
-  {n:2,parts:["<span class='ab'>A</span> Mona's Palestinian ",
-    {opts:['cooking','community','religious'],a:0}," is delicious! I'd like to learn from her.<br>",
-    "<span class='ab'>B</span> Well, you can because she teaches at the ",
-    {opts:['community','museum','village'],a:0}," centre in town."]},
-  {n:3,parts:["<span class='ab'>A</span> Do you think it's all right to open this ",
-    {opts:['gate','site','through'],a:0}," and go into the garden?<br>",
-    "<span class='ab'>B</span> Yes, please do, and you can go straight ",
-    {opts:['through','gate','local'],a:0}," the garden to the house."]},
-  {n:4,parts:["<span class='ab'>A</span> There's the ",
-    {opts:['site','museum','village'],a:0}," of an ancient palace near here, but where is it?<br>",
-    "<span class='ab'>B</span> We have to drive along this road through the next ",
-    {opts:['village','community','gate'],a:0}," to get to it."]},
-  {n:5,parts:["<span class='ab'>A</span> We're going to go to the ancient site by ",
-    {opts:['mini-bus','guide','schedule'],a:0},", aren't we?<br>",
-    "<span class='ab'>B</span> Yes, and there'll be a ",
-    {opts:['guide','mini-bus','local'],a:0}," to show us round when we get there."]},
-  {n:6,parts:["<span class='ab'>A</span> I'm looking for a ",
-    {opts:['local','religious','site'],a:0}," mosque. Is there one near here?<br>",
-    "<span class='ab'>B</span> There are several. People here are very ",
-    {opts:['religious','local','community'],a:0},"."]},
+/* A2 : word-bank fill — choose from one shared bank (book-style) */
+function buildWordBank(bankId,boxId,txtId,barId,sentences,onComplete){
+  const bank=document.getElementById(bankId),box=document.getElementById(boxId);
+  const answers=[];sentences.forEach(s=>s.ans.forEach(a=>answers.push(a)));
+  const total=answers.length;let done=0,selWord=null,selChip=null,actBlank=null;
+  function upd(){
+    document.getElementById(txtId).textContent='Completed: '+done+' / '+total;
+    document.getElementById(barId).style.width=(done/total*100)+'%';
+    if(done===total&&onComplete)onComplete();
+  }
+  function tryFill(blank){
+    if(!selWord||blank.dataset.done)return;
+    if(selWord===blank.dataset.ans){
+      blank.textContent=selWord;blank.classList.remove('active','wrong');blank.classList.add('filled');blank.dataset.done='1';
+      selChip.classList.add('used');selChip.classList.remove('sel');
+      selWord=null;selChip=null;actBlank=null;done++;upd();
+    }else{
+      blank.classList.add('wrong');setTimeout(()=>blank.classList.remove('wrong'),460);
+    }
+  }
+  sentences.forEach(s=>{
+    const row=document.createElement('div');row.className='gsent';
+    const g=document.createElement('span');g.className='gn';g.textContent=s.n;row.appendChild(g);row.appendChild(document.createTextNode(' '));
+    let i=0;const frag=s.html.split('[b]');
+    frag.forEach((chunk,ci)=>{
+      const span=document.createElement('span');span.innerHTML=chunk;row.appendChild(span);
+      if(ci<frag.length-1){
+        const bl=document.createElement('span');bl.className='blank';bl.textContent='    ';bl.dataset.ans=s.ans[i++];
+        bl.addEventListener('click',()=>{
+          if(bl.dataset.done)return;
+          box.querySelectorAll('.blank.active').forEach(x=>x.classList.remove('active'));
+          bl.classList.add('active');actBlank=bl;
+          if(selWord)tryFill(bl);
+        });
+        row.appendChild(bl);
+      }
+    });
+    box.appendChild(row);
+  });
+  answers.slice().sort(()=>Math.random()-.5).forEach(w=>{
+    const c=document.createElement('button');c.className='wbchip';c.textContent=w;
+    c.addEventListener('click',()=>{
+      if(c.classList.contains('used'))return;
+      if(selChip===c){c.classList.remove('sel');selWord=null;selChip=null;return;}
+      bank.querySelectorAll('.wbchip.sel').forEach(x=>x.classList.remove('sel'));
+      c.classList.add('sel');selWord=w;selChip=c;
+      if(actBlank&&!actBlank.dataset.done)tryFill(actBlank);
+    });
+    bank.appendChild(c);
+  });
+  upd();
+}
+buildWordBank('wordBank','addBox','aTxt','aBar',[
+  {n:1,html:"<span class='ab'>A</span> Let's visit the [b] and see the things they found in the ancient city.<br><span class='ab'>B</span> Well, we've got a busy [b], but we can go for an hour tomorrow.",ans:['museum','schedule']},
+  {n:2,html:"<span class='ab'>A</span> Mona's Palestinian [b] is delicious! I'd like to learn from her.<br><span class='ab'>B</span> Well, you can because she teaches at the [b] centre in town.",ans:['cooking','community']},
+  {n:3,html:"<span class='ab'>A</span> Do you think it's all right to open this [b] and go into the garden?<br><span class='ab'>B</span> Yes, please do, and you can go straight [b] the garden to the house.",ans:['gate','through']},
+  {n:4,html:"<span class='ab'>A</span> There's the [b] of an ancient palace near here, but where is it?<br><span class='ab'>B</span> We have to drive along this road through the next [b] to get to it.",ans:['site','village']},
+  {n:5,html:"<span class='ab'>A</span> We're going to go to the ancient site by [b], aren't we?<br><span class='ab'>B</span> Yes, and there'll be a [b] to show us round when we get there.",ans:['mini-bus','guide']},
+  {n:6,html:"<span class='ab'>A</span> I'm looking for a [b] mosque. Is there one near here?<br><span class='ab'>B</span> There are several. People here are very [b].",ans:['local','religious']},
 ],()=>{document.getElementById('aFb').classList.add('show');award('addwords');});
 
 /* =========================================================
@@ -635,24 +649,6 @@ DIALOGUES.forEach((d,di)=>{
 });
 dlgBox.querySelectorAll('.l-tts').forEach(b=>b.addEventListener('click',function(){speakBtn(this,this.dataset.say,'⏹');}));
 document.getElementById('pairDone').addEventListener('click',()=>{document.getElementById('pairFb').classList.add('show');award('pairs');});
-
-/* =========================================================
-   A4 : transcript read-aloud + tooltips
-========================================================= */
-(function(){
-  const txt=[...document.querySelectorAll('#scriptBox .sl')].map(l=>l.textContent.replace(/\s+/g,' ').trim()).join(' ');
-  const btn=document.getElementById('txTts');
-  btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();speakBtn(btn,txt,'⏹');});
-})();
-/* tap tooltips (mobile) */
-document.querySelectorAll('.tip,.pro').forEach(el=>{
-  el.addEventListener('click',e=>{
-    e.stopPropagation();
-    document.querySelectorAll('.tip.show,.pro.show').forEach(x=>{if(x!==el)x.classList.remove('show');});
-    el.classList.toggle('show');
-  });
-});
-document.addEventListener('click',()=>document.querySelectorAll('.tip.show,.pro.show').forEach(x=>x.classList.remove('show')));
 
 /* =========================================================
    A4 : order cities + match notes  (both must finish -> 'info')
