@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 — Getting to Palestine | Grade 9 · Period 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --olive:#4a8b3b;--olive-deep:#356a2a;--olive-soft:#e6f1dc;
+  --red:#cf4332;--red-deep:#a82f20;--red-soft:#fbe2dc;
+  --gold:#e0a82e;--gold-deep:#b9851b;--gold-soft:#fdf1d2;
+  --ink:#26303a;--ink-soft:#6d7a86;--line:#ece2d2;
+  --paper:#fffdf9;--ok:#3a9d5d;--no:#e0563f;--purple:#7c5cd6;--r:20px;
+  --shadow:0 16px 40px rgba(53,106,42,.16);--shadow-sm:0 8px 20px rgba(53,106,42,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:
+    radial-gradient(680px 420px at 90% 4%, #e6f1dc, transparent 60%),
+    radial-gradient(620px 400px at 4% 26%, #fbe2dc, transparent 60%),
+    radial-gradient(700px 420px at 64% 90%, #fdf1d2, transparent 55%),
+    linear-gradient(180deg,#fffaf3 0%,#fbfdf6 50%,#f4faf0 100%);
+  background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right}
+.wrap{max-width:1000px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:2}
+
+/* ====== floating tags ====== */
+.floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fl{position:absolute;bottom:-70px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.9rem;background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;padding:6px 14px;color:var(--olive-deep);box-shadow:var(--shadow-sm);opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:.55}92%{opacity:.55}100%{transform:translateY(-118vh) rotate(3deg);opacity:0}}
+
+/* ====== header : tour map of Palestine (unique to P4) ====== */
+header{position:relative;padding:30px 0 8px;text-align:center}
+.htitle .tag{display:inline-block;background:var(--olive);color:#fff;font-weight:600;font-size:.8rem;letter-spacing:2px;border-radius:999px;padding:4px 16px}
+.htitle h1{font-size:clamp(2.1rem,6vw,3rem);color:var(--red-deep);margin-top:8px;text-shadow:0 3px 0 #fbe2dc}
+.htitle .sub{color:var(--olive-deep);font-weight:600;font-size:1rem;margin-top:2px;margin-bottom:16px}
+.mapcard{width:min(500px,96vw);margin:0 auto;background:linear-gradient(165deg,#fbfdf6,#eef6e6);border:3px solid var(--olive);border-radius:22px;box-shadow:var(--shadow);padding:14px 14px 10px;position:relative;overflow:hidden}
+.mapcard .mh{display:flex;align-items:center;gap:8px;justify-content:center;font-weight:700;color:var(--olive-deep);font-size:1rem;margin-bottom:4px}
+.mapcard .mh .pill{font-size:.7rem;font-weight:700;color:#fff;background:var(--red);border-radius:999px;padding:3px 10px;letter-spacing:.5px}
+.tourmap{width:100%;display:block}
+.route{fill:none;stroke:#c9b48a;stroke-width:3.5;stroke-dasharray:7 7;stroke-linecap:round;opacity:.8}
+.stop circle{fill:#fff;stroke:#bcd6ad;stroke-width:3;transition:.4s}
+.stop .num{font:700 11px 'Fredoka',sans-serif;fill:var(--ink-soft);transition:.4s}
+.stop .lbl{font:600 12px 'Fredoka',sans-serif;fill:var(--olive-deep)}
+.stop.lit circle{fill:var(--olive);stroke:var(--olive);r:16;filter:drop-shadow(0 3px 6px rgba(74,139,59,.5))}
+.stop.lit .num{fill:#fff}
+.stop.lit .lbl{fill:var(--red-deep);font-weight:700}
+.bus{font-size:20px}
+
+/* ====== tabs ====== */
+nav{display:flex;gap:8px;overflow-x:auto;padding:22px 4px 14px;position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(255,250,243,.95),rgba(255,250,243,.8) 70%,transparent);backdrop-filter:blur(6px);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex-shrink:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.92rem;background:#fff;color:var(--ink);border:2px solid var(--line);padding:9px 15px;border-radius:14px;transition:.25s;display:flex;align-items:center;gap:6px}
+.tab:hover{border-color:var(--olive);transform:translateY(-2px)}
+.tab.on{background:var(--olive);color:#fff;border-color:var(--olive);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab .done-mark{display:none;font-size:.8rem;font-weight:700}
+.tab.done .done-mark{display:inline}
+
+/* ====== panels / cards ====== */
+.panel{display:none;animation:fadeUp .45s}
+.panel.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-top:18px;position:relative}
+.card .ribbon{position:absolute;top:0;right:0;left:0;height:8px;border-radius:var(--r) var(--r) 0 0;background:repeating-linear-gradient(90deg,var(--red) 0 26px,var(--olive) 26px 48px,var(--gold) 48px 72px)}
+.card h2{font-size:1.3rem;color:var(--red-deep);display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.card h2 .gate{font-size:.7rem;background:var(--olive);color:#fff;padding:3px 10px;border-radius:8px;letter-spacing:1px;font-weight:600}
+.hint{color:var(--ink-soft);font-weight:600;font-size:.95rem;margin:6px 0 14px;line-height:1.9;background:#eef6e6;border-radius:12px;padding:9px 14px;border-right:4px solid var(--olive)}
+.divider{border:0;border-top:2px dashed var(--line);margin:18px 0}
+.subttl{font-weight:700;color:var(--olive-deep);margin:14px 0 4px;font-size:1.02rem}
+
+/* ====== audio embed (Google Drive preview) ====== */
+.audio{margin:14px 0;max-width:480px}
+.audio-lbl{font-weight:600;color:var(--olive-deep);font-size:.9rem;margin-bottom:6px}
+.audio iframe{width:100%;height:58px;border:0;border-radius:12px;box-shadow:var(--shadow-sm)}
+
+/* ====== objectives ====== */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px}
+.goal{background:#fbf7ef;border:2px solid var(--line);border-radius:16px;padding:16px 14px;display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.goal:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm)}
+.goal .ico{font-size:26px;flex-shrink:0;background:#fff;border-radius:12px;width:50px;height:50px;display:grid;place-items:center;box-shadow:var(--shadow-sm)}
+.goal b{display:block;color:var(--red-deep);font-size:1rem}
+.goal span{color:var(--ink-soft);font-size:.85rem;font-weight:600;line-height:1.7;display:block}
+.rulebox{margin-top:16px;background:#fff;border:2px dashed var(--gold);border-radius:16px;padding:14px 16px}
+.rulebox b{color:var(--gold-deep)}
+.rulebox .rline{display:flex;gap:10px;align-items:flex-start;margin-top:8px;font-weight:600;color:var(--ink);font-size:.92rem;line-height:1.7}
+.rulebox .rline .em{font-size:1.2rem}
+
+/* ====== flashcards (Activity 1) ====== */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:8px}
+.flip{perspective:1100px;height:180px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:12px;text-align:center;border:2px solid var(--line);box-shadow:var(--shadow-sm)}
+.front{background:#fff}
+.front .emo{font-size:42px;line-height:1}
+.front .w{font-weight:700;color:var(--red-deep);font-size:1.12rem}
+.tts{border:0;background:var(--olive-soft);color:var(--olive-deep);border-radius:999px;padding:5px 13px;font-family:inherit;font-weight:600;cursor:pointer;font-size:.85rem}
+.tts.playing{background:var(--no);color:#fff}
+.back{background:linear-gradient(160deg,var(--olive-soft),#fff);transform:rotateY(180deg)}
+.back .mean{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-weight:700;color:var(--olive-deep);font-size:1.18rem}
+.back .sa{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.82rem;color:var(--ink-soft);font-weight:600;line-height:1.7}
+.back .sa b{color:var(--red-deep)}
+.flip-hint{text-align:center;color:var(--ink-soft);font-weight:600;font-size:.85rem;margin-top:4px}
+
+/* ====== word formation note ====== */
+.wfbox{margin-top:16px;background:#fff;border:2px dashed var(--olive);border-radius:16px;padding:14px 16px}
+.wfbox b{color:var(--olive-deep)}
+.wfrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;font-weight:600;font-size:1rem}
+.wfrow .chip{background:#fbf7ef;border:2px solid var(--line);border-radius:10px;padding:4px 12px}
+.wfrow .chip.adj{background:var(--gold-soft);border-color:var(--gold);color:var(--gold-deep)}
+.wfrow .chip.n{background:var(--olive-soft);border-color:var(--olive);color:var(--olive-deep)}
+.wfrow .arrow{color:var(--red);font-weight:800}
+.wfrow .plus{font-size:.85rem;color:var(--ink-soft);font-weight:700}
+
+/* ====== fill picker (Activity 2 & 4) ====== */
+.fillbar{display:flex;align-items:center;gap:12px;margin-top:14px;background:var(--olive);color:#fff;border-radius:14px;padding:10px 16px;font-weight:600;flex-wrap:wrap}
+.fillbar .bar{flex:1;min-width:130px;height:11px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.fillbar .bar i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.4s}
+.gsent{background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:11px;font-weight:500;font-size:1.02rem;line-height:2.4}
+.gsent.done{border-color:#bfe3cb;background:#f4fbf6}
+.gsent .gn{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-size:.78rem;font-weight:700;margin-right:6px;vertical-align:2px}
+.gsent .ab{font-weight:700;font-size:.78rem;color:#fff;background:var(--olive);border-radius:6px;padding:1px 8px;margin-right:4px}
+.bpick{display:inline-flex;gap:4px;flex-wrap:wrap;vertical-align:middle;margin:0 3px}
+.bchip{border:2px solid var(--line);background:#fbf7ef;border-radius:10px;padding:3px 11px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.88rem;color:var(--ink);transition:.2s;white-space:normal;text-align:left;max-width:280px;line-height:1.4}
+.bchip:hover{border-color:var(--olive)}
+.bchip.no{border-color:var(--no);background:#fff0f0;color:var(--no);text-decoration:line-through;animation:shake .4s}
+.blocked{display:inline-block;background:#e9fbf2;border:2px solid var(--ok);color:#168a55;border-radius:10px;padding:3px 11px;font-weight:700;font-size:.9rem;vertical-align:middle;max-width:280px;line-height:1.4}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{display:none;margin-top:12px;font-weight:600;border-radius:12px;padding:9px 13px;font-size:.92rem;line-height:1.7}
+.feedback.show{display:block;animation:fadeUp .35s}
+.feedback.good{background:#e9fbf2;color:#168a55}
+
+/* ====== pair-practice dialogues (Activity 3) ====== */
+.dlg{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 10px;margin-top:12px}
+.dlg .num-tag{font-weight:700;color:var(--red-deep);font-size:.82rem;padding:4px 6px}
+.dlg .ln{display:flex;gap:9px;align-items:flex-start;padding:6px 6px}
+.dlg .who{flex-shrink:0;font-weight:700;font-size:.74rem;color:#fff;background:var(--red);border-radius:7px;padding:2px 9px;margin-top:4px;min-width:26px;text-align:center}
+.dlg .who.b{background:var(--olive)}
+.dlg .txt{flex:1;font-weight:500;line-height:1.85}
+.dlg .txt b{color:var(--olive-deep)}
+.l-tts{flex-shrink:0;border:0;background:#eef6e6;color:var(--olive-deep);border-radius:999px;padding:5px 12px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.8rem}
+.l-tts.playing{background:var(--no);color:#fff}
+.done-btn{margin-top:16px;border:0;background:var(--gold);color:#fff;font-family:inherit;font-weight:700;font-size:.95rem;border-radius:999px;padding:10px 22px;cursor:pointer;transition:.2s}
+.done-btn:hover{transform:scale(1.04)}
+
+/* ====== transcript + tooltips (Activity 4) ====== */
+details.tx{margin-top:14px;border:2px solid var(--line);border-radius:14px;background:#fff;overflow:visible}
+details.tx>summary{cursor:pointer;font-weight:700;color:var(--olive-deep);padding:12px 16px;list-style:none;display:flex;align-items:center;gap:8px}
+details.tx>summary::-webkit-details-marker{display:none}
+details.tx[open]>summary{border-bottom:2px dashed var(--line)}
+.script{padding:6px 16px 16px}
+.script .sl{display:flex;gap:8px;padding:5px 0;line-height:2}
+.script .sp{flex-shrink:0;font-weight:700;color:var(--red-deep);min-width:58px;font-size:.9rem}
+.tip,.pro{position:relative;cursor:help;border-radius:4px;padding:0 3px;font-weight:600}
+.tip{background:var(--gold-soft);border-bottom:2px dotted var(--gold-deep)}
+.pro{background:#e9e2fb;border-bottom:2px dotted var(--purple)}
+.tip::after,.pro::after{content:attr(data-tip);position:absolute;left:50%;bottom:138%;transform:translateX(-50%);background:var(--ink);color:#fff;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.82rem;font-weight:600;width:max-content;max-width:200px;white-space:normal;text-align:center;padding:6px 11px;border-radius:9px;opacity:0;pointer-events:none;transition:.18s;z-index:30;box-shadow:var(--shadow-sm)}
+.tip:hover::after,.pro:hover::after,.tip.show::after,.pro.show::after{opacity:1}
+.imgwrap{margin-top:6px;border-radius:16px;overflow:hidden;border:2px solid var(--line);box-shadow:var(--shadow-sm)}
+.imgwrap img{width:100%;height:auto;display:block}
+
+/* ====== quiz ====== */
+.quiz-q{border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:#fff}
+.quiz-q .q-txt{font-weight:600;color:var(--ink);margin-bottom:10px;font-size:1.02rem}
+.quiz-q .q-txt .qn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:.85rem;margin-right:8px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;border:2.5px solid var(--line);background:#fff;border-radius:12px;padding:9px 14px;font-family:inherit;font-weight:500;cursor:pointer;transition:.2s;font-size:.95rem;color:var(--ink)}
+.opt:hover{border-color:var(--olive)}
+.opt.ok{border-color:var(--ok);background:#e9fbf2;color:#168a55}
+.opt.no{border-color:var(--no);background:#fff0f0;color:var(--no);animation:shake .4s}
+.opt:disabled{cursor:default}
+.score-box{display:none;margin-top:18px;background:linear-gradient(135deg,var(--olive),#6aac57);color:#fff;border-radius:18px;padding:20px;text-align:center}
+.score-box.show{display:block;animation:fadeUp .5s}
+.score-box .sc{font-size:2.6rem;font-weight:700;color:#fff3c4}
+.score-box p{font-weight:600;margin-top:6px;line-height:1.8}
+.big-btn{margin-top:16px;border:0;background:var(--red);color:#fff;font-family:inherit;font-weight:700;font-size:1rem;border-radius:999px;padding:11px 26px;cursor:pointer;transition:.2s}
+.big-btn:hover{transform:scale(1.05)}
+.big-btn:disabled{opacity:.5;cursor:default;transform:none}
+
+/* ====== olive stamps / badges ====== */
+.badge-board{background:linear-gradient(160deg,#fbfdf6,#e6f1dc);border-radius:22px;padding:26px 22px;margin-top:16px;border:3px solid var(--olive);box-shadow:var(--shadow);text-align:center}
+.badge-board h3{letter-spacing:3px;color:var(--olive-deep);font-size:1.15rem;font-weight:600}
+.badge-board .owner{margin-top:4px;font-weight:700;color:var(--ink-soft)}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;margin-top:18px}
+.badge-slot{border:2.5px dashed #bcd6ad;border-radius:16px;padding:14px 8px;min-height:118px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+.badge-slot .b-emo{font-size:32px;filter:grayscale(1);opacity:.3;transition:.3s}
+.badge-slot .b-name{font-size:.76rem;font-weight:700;color:var(--ink-soft)}
+.badge-slot .b-tick{font-size:.86rem;filter:grayscale(1);opacity:.45}
+.badge-slot.earned{border-style:solid;border-color:var(--olive);background:var(--olive-soft)}
+.badge-slot.earned .b-emo{filter:none;opacity:1;animation:bpop .7s}
+.badge-slot.earned .b-tick{filter:none;opacity:1}
+@keyframes bpop{0%{transform:scale(2.1);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
+.final-msg{display:none;margin-top:18px;background:#fff;border-radius:14px;padding:14px;font-weight:600;line-height:1.9;color:var(--ink);border:2px solid var(--olive)}
+.final-msg.show{display:block;animation:fadeUp .5s}
+
+footer{text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem}
+footer b{color:var(--red-deep)}
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+
+<div class="wrap">
+<header>
+  <div class="htitle">
+    <span class="tag">UNIT 1 · PERIOD 4 · GRADE 9</span>
+    <h1>Getting to Palestine</h1>
+    <div class="sub">Vocabulary &amp; a tour of five cities · PB page 7</div>
+  </div>
+  <div class="mapcard">
+    <div class="mh">🗺️ Our tour of Palestine <span class="pill">5 STOPS</span></div>
+    <svg class="tourmap" viewBox="0 0 480 210" id="tourmap" aria-label="Tour route map">
+      <path id="routePath" class="route" d="M70,70 Q140,30 200,58 T320,80 Q250,130 150,150 Q260,180 410,150"/>
+      <g class="stop" data-i="0" transform="translate(70,70)">
+        <circle r="13"></circle><text class="num" text-anchor="middle" dy="4">1</text>
+        <text class="lbl" text-anchor="middle" y="-22">🕌 Jerusalem</text>
+      </g>
+      <g class="stop" data-i="1" transform="translate(255,55)">
+        <circle r="13"></circle><text class="num" text-anchor="middle" dy="4">2</text>
+        <text class="lbl" text-anchor="middle" y="-22">🫒 Nablus</text>
+      </g>
+      <g class="stop" data-i="2" transform="translate(320,90)">
+        <circle r="13"></circle><text class="num" text-anchor="middle" dy="4">3</text>
+        <text class="lbl" text-anchor="middle" y="32">🌴 Jericho</text>
+      </g>
+      <g class="stop" data-i="3" transform="translate(150,150)">
+        <circle r="13"></circle><text class="num" text-anchor="middle" dy="4">4</text>
+        <text class="lbl" text-anchor="middle" y="32">🏺 Hebron</text>
+      </g>
+      <g class="stop" data-i="4" transform="translate(410,150)">
+        <circle r="13"></circle><text class="num" text-anchor="middle" dy="4">5</text>
+        <text class="lbl" text-anchor="middle" y="32">⛪ Bethlehem</text>
+      </g>
+      <g class="bus"><text id="busTxt" text-anchor="middle" dy="6">🚐</text>
+        <animateMotion dur="11s" repeatCount="indefinite" rotate="0" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+          <mpath href="#routePath"></mpath>
+        </animateMotion>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<nav id="tabs">
+  <button class="tab on" data-p="p0">🎯 Objectives</button>
+  <button class="tab" data-p="p1">🔤 Words <span class="done-mark">🫒</span></button>
+  <button class="tab" data-p="p2">📝 Add the Words <span class="done-mark">🫒</span></button>
+  <button class="tab" data-p="p3">🗣️ Check &amp; Pairs <span class="done-mark">🫒</span></button>
+  <button class="tab" data-p="p4">🗺️ City Notes <span class="done-mark">🫒</span></button>
+  <button class="tab" data-p="p5">🏁 Quiz <span class="done-mark">🫒</span></button>
+  <button class="tab" data-p="p6">🏅 Olive Stamps</button>
+</nav>
+
+<!-- ============ OBJECTIVES ============ -->
+<section class="panel on" id="p0">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">START</span>🎯 Lesson Objectives</h2>
+    <p class="hint ar">في هذه الحصة نتعلّم <b>مفردات جديدة</b> عن الأماكن والجولات السياحية، ونكوّن كلمات (religion ← religious / cook ← cooking)، ثم نستمع لمحادثة عن <b>جولة في خمس مدن فلسطينية</b> ونرتّبها ونطابقها بملاحظاتها. أنجز كل نشاط لتجمع طوابع الزيتون 🫒</p>
+    <div class="goals">
+      <div class="goal"><div class="ico">🔤</div><div><b>New Words (Activity 1)</b><span class="ar">أتعلّم 12 كلمة جديدة بالبطاقات (الصوت + المعنى) وأتعلّم تكوين الكلمات.</span></div></div>
+      <div class="goal"><div class="ico">📝</div><div><b>Add the Words (Activity 2)</b><span class="ar">أستمع وأكمل المحادثات بالكلمات الجديدة في مكانها الصحيح.</span></div></div>
+      <div class="goal"><div class="ico">🗣️</div><div><b>Check &amp; Practise (Activity 3)</b><span class="ar">أتحقّق من إجاباتي ثم أتدرّب على المحادثات مع زميلي.</span></div></div>
+      <div class="goal"><div class="ico">🗺️</div><div><b>City Notes (Activity 4)</b><span class="ar">أستمع وأرتّب المدن الخمس وأطابق كل مدينة بالملاحظة الصحيحة.</span></div></div>
+    </div>
+    <div class="rulebox">
+      <b>🧩 Word formation — building new words:</b>
+      <div class="rline"><span class="em">➕</span><div>noun <b>religion</b> &nbsp;→&nbsp; adjective <b>religious</b> &nbsp;<i>(a religious place / very religious people)</i></div></div>
+      <div class="rline"><span class="em">➕</span><div>verb <b>cook</b> &nbsp;→&nbsp; noun <b>cooking</b> &nbsp;<i>(add <b>-ing</b>: I love Palestinian cooking)</i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A1 : WORDS ============ -->
+<section class="panel" id="p1">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 1</span>🔤 Activity 1: Listen and repeat — new words</h2>
+    <p class="hint ar">استمع للتسجيل وكرّر الكلمات. اضغط <b>🔊</b> لسماع الكلمة، واضغط على البطاقة لقلبها ورؤية المعنى بالعربية والمرادف والضد (إن وُجد).</p>
+    <div class="audio">
+      <div class="audio-lbl ar">🎧 استمع وكرّر (CD 1 · Audio 4):</div>
+      <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztWEViamYxWnhoMlk/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+    <div class="cards" id="cardBox"></div>
+    <p class="flip-hint ar">👆 اضغط البطاقة لقلبها · 🔊 لسماع النطق</p>
+    <div class="wfbox">
+      <b>🧩 Word formation:</b>
+      <div class="wfrow">
+        <span class="chip n">religion <span style="font-weight:400">(n)</span></span>
+        <span class="arrow">→</span>
+        <span class="chip adj">religious <span style="font-weight:400">(adj)</span></span>
+      </div>
+      <div class="wfrow">
+        <span class="chip">cook <span style="font-weight:400">(v/n)</span></span>
+        <span class="plus">+ -ing →</span>
+        <span class="chip n">cooking <span style="font-weight:400">(n)</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A2 : ADD THE WORDS ============ -->
+<section class="panel" id="p2">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 2</span>📝 Activity 2: Listen. Add the new words</h2>
+    <p class="hint ar">استمع للمحادثات وأكمل كل فراغ بالكلمة المناسبة من النشاط الأول (مع تغيير الصيغة إذا لزم). اختر الكلمة الصحيحة لكل فراغ.</p>
+    <div class="audio">
+      <div class="audio-lbl ar">🎧 استمع وأكمل (CD 1 · Audio 5):</div>
+      <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztYXpucTZDR3JMY0U/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+    <div class="fillbar"><span id="aTxt">Completed: 0 / 12</span><div class="bar"><i id="aBar"></i></div><span>📝</span></div>
+    <div id="addBox"></div>
+    <div class="feedback good" id="aFb">🎉 Brilliant! All the words are in the right place. <span class="ar">رائع! كل الكلمات في مكانها الصحيح.</span></div>
+  </div>
+</section>
+
+<!-- ============ A3 : CHECK & PAIRS ============ -->
+<section class="panel" id="p3">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 3</span>🗣️ Activity 3: Listen and check. Then practise in pairs</h2>
+    <p class="hint ar">استمع مرة أخرى وتحقّق من إجاباتك في النشاط الثاني. ثم وزّعوا الأدوار (A و B) وتدرّبوا على قراءة المحادثات. اضغط <b>🔊</b> لسماع نطق أي سطر.</p>
+    <div class="audio">
+      <div class="audio-lbl ar">🎧 استمع وتحقّق (CD 1 · Audio 5):</div>
+      <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztYXpucTZDR3JMY0U/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+    <div id="dlgBox"></div>
+    <div style="text-align:center"><button class="done-btn" id="pairDone">🎭 We checked &amp; practised in pairs!</button></div>
+    <div class="feedback good" id="pairFb">👏 Great pair work! Now swap roles A ↔ B and read again. <span class="ar">عمل ثنائي رائع! بدّلوا الأدوار واقرؤوا مرة أخرى.</span></div>
+  </div>
+</section>
+
+<!-- ============ A4 : CITY NOTES ============ -->
+<section class="panel" id="p4">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">STEP 4</span>🗺️ Activity 4: Listen and complete the information</h2>
+    <p class="hint ar">يخطّط العمّ والعمّة لجولة في خمس مدن. استمع للتسجيل، ثم <b>(أ)</b> رتّب المدن حسب ترتيب الجولة 1–5، و<b>(ب)</b> طابق كل مدينة بالملاحظة الصحيحة عنها.</p>
+    <div class="imgwrap">
+      <img src="https://i.ibb.co/VWjFnkJB/Chat-GPT-Image-Jun-14-2026-11-41-28-AM.png" alt="A tour of five cities in Palestine" loading="lazy">
+    </div>
+    <div class="audio">
+      <div class="audio-lbl ar">🎧 استمع للجولة (CD 1 · Audio 6):</div>
+      <iframe src="https://drive.google.com/file/d/0B7oTcXqoniztTkltaGNNWXktUGc/preview" allow="autoplay" allowfullscreen></iframe>
+    </div>
+
+    <details class="tx">
+      <summary>📜 Listen &amp; read the transcript <span class="ar" style="font-weight:600;color:var(--ink-soft)">— الكلمات الصعبة 🟡 والضمائر 🟣 عليها تلميح بالعربية (مرّر أو اضغط)</span> <button class="l-tts" id="txTts" style="margin-left:auto" data-label="🔊">🔊</button></summary>
+      <div class="script" id="scriptBox">
+        <div class="sl"><span class="sp">Uncle:</span><span>We've got a little <span class="tip" data-tip="مفاجأة">surprise</span> for you, Hadeel and Nidal.</span></div>
+        <div class="sl"><span class="sp">Hadeel:</span><span>Really? What's that?</span></div>
+        <div class="sl"><span class="sp">Aunt:</span><span>Next week, <span class="pro" data-tip="نحن = العائلة">we</span>'re going on a <span class="tip" data-tip="جولة / رحلة سياحية">tour</span> – a tour of Jerusalem and other cities in Palestine.</span></div>
+        <div class="sl"><span class="sp">Nidal:</span><span>That sounds really great! Thank you very much!</span></div>
+        <div class="sl"><span class="sp">Uncle:</span><span>We have a very busy <span class="tip" data-tip="جدول مواعيد">schedule</span>. First, we're going to Jerusalem, and our tour is starting there.</span></div>
+        <div class="sl"><span class="sp">Aunt:</span><span>As I'm sure you know, <span class="pro" data-tip="it = القدس Jerusalem">it</span>'s one of the world's great <span class="tip" data-tip="دينية">religious</span> <span class="tip" data-tip="مراكز">centres</span>. And the Old City is very beautiful.</span></div>
+        <div class="sl"><span class="sp">Uncle:</span><span>A <span class="tip" data-tip="مرشد سياحي">guide</span> is going to take <span class="pro" data-tip="us = العائلة">us</span> round the Old City, starting from the <span class="tip" data-tip="باب العامود (في القدس)">Damascus Gate</span>, so that'll be very interesting.</span></div>
+        <div class="sl"><span class="sp">Rami:</span><span>And then we're going on to Nablus – our second stop.</span></div>
+        <div class="sl"><span class="sp">Uncle:</span><span>That's an important <span class="tip" data-tip="مركز تجاري">centre of business</span>. It's famous for its <span class="tip" data-tip="زيت الزيتون">olive oil</span> and the excellent <span class="tip" data-tip="صابون">soap</span> that <span class="pro" data-tip="they = أهل نابلس / صانعو الصابون">they</span> make from the olive oil.</span></div>
+        <div class="sl"><span class="sp">Aunt:</span><span>And then we're coming south again to our third place: Jericho.</span></div>
+        <div class="sl"><span class="sp">Rami:</span><span><span class="pro" data-tip="It = أريحا Jericho">It</span>'s very famous because it's the oldest city in the world.</span></div>
+        <div class="sl"><span class="sp">Uncle:</span><span>And it's also the lowest because it's at the bottom of the <span class="tip" data-tip="وادي البحر الميت">Dead Sea Valley</span>. There are various <span class="tip" data-tip="محلّية">local</span> places to see there like the <span class="tip" data-tip="قديمة">ancient</span> city walls and the museum, and Hisham's Palace.</span></div>
+        <div class="sl"><span class="sp">Aunt:</span><span>And then we're going to the far south, to our fourth city – the city of Hebron. It's a place with lots of <span class="tip" data-tip="الفنون والحِرَف اليدوية">arts and crafts</span>.</span></div>
+        <div class="sl"><span class="sp">Rami:</span><span>They make beautiful glass, for example.</span></div>
+        <div class="sl"><span class="sp">Uncle:</span><span>It's also the <span class="tip" data-tip="موقع">site</span> of the great <span class="tip" data-tip="المسجد الإبراهيمي">Al Ibrahimi Mosque</span>.</span></div>
+        <div class="sl"><span class="sp">Aunt:</span><span>And finally, city number five: Bethlehem. That's just a short way south of Jerusalem. And it's the site of the very important <span class="tip" data-tip="كنيسة المهد">Church of the Nativity</span>.</span></div>
+        <div class="sl"><span class="sp">Rami:</span><span>And that's the end of our tour!</span></div>
+      </div>
+    </details>
+
+    <hr class="divider">
+    <div class="subttl">أ) Put the cities in the order you hear them (1–5):</div>
+    <div class="fillbar"><span id="oTxt">Ordered: 0 / 5</span><div class="bar"><i id="oBar"></i></div><span>🔢</span></div>
+    <div id="orderBox"></div>
+
+    <div class="subttl">ب) Match each city with the correct note:</div>
+    <div class="fillbar"><span id="mTxt">Matched: 0 / 5</span><div class="bar"><i id="mBar"></i></div><span>🔗</span></div>
+    <div id="matchBox"></div>
+    <div class="feedback good" id="infoFb">🎉 Perfect! You completed the whole tour information. <span class="ar">ممتاز! أكملت معلومات الجولة كاملةً.</span></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p5">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">FINAL</span>🏁 Lesson Quiz — 5 points</h2>
+    <p class="hint ar">كويز نهاية الدرس! 5 أسئلة على المفردات وتكوين الكلمات وجولة المدن. أجب عنها كلها ثم اضغط «Check my score».</p>
+    <div id="quizBox"></div>
+    <div style="text-align:center"><button class="big-btn" id="quizCheck" disabled>😊 Check my score</button></div>
+    <div class="score-box" id="scoreBox">
+      <div class="sc" id="scoreNum">0 / 5</div>
+      <p id="scoreMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OLIVE STAMPS ============ -->
+<section class="panel" id="p6">
+  <div class="card"><div class="ribbon"></div>
+    <h2><span class="gate">AWARDS</span>🏅 My Olive Stamps</h2>
+    <p class="hint ar">مجموعة طوابع الترحيب! مع كل نشاط تنجزه يُختَم طابع زيتون 🫒 جديد حتى تكتمل اللوحة.</p>
+    <div class="badge-board">
+      <h3>✦ WELCOME HOME COLLECTION ✦</h3>
+      <div class="owner ar">البطل/البطلة: طالب/طالبة الصف التاسع 🎒</div>
+      <div class="badges" id="badgesBoard"></div>
+      <div class="final-msg ar" id="finalMsg">
+        🎉 مبروك! لوحة الترحيب اكتملت 🫒🇵🇸<br>
+        تعلّمت مفردات الجولة، وأكملت المحادثات، ورتّبت المدن الخمس وطابقتها بملاحظاتها. عمل رائع!
+      </div>
+      <button class="big-btn" onclick="resetLesson()">🔄 Start again (reset)</button>
+    </div>
+  </div>
+</section>
+
+<footer>Prepared with care <span>🌸</span> by <b>T. Wad Refae</b></footer>
+</div>
+
+<script>
+/* =========================================================
+   Grade 9 · Unit 1 · Period 4 — Getting to Palestine
+   "Welcome to Palestine" theme 🫒 — tour-map header, vocabulary + listening
+========================================================= */
+
+/* ---------- floating tags ---------- */
+(function(){
+  const box=document.getElementById('floaters');
+  const TAGS=['🫒 olive oil','🕌 Jerusalem','🌴 Jericho','⛪ Bethlehem','🏺 Hebron','🗺️ a tour','🧭 guide','🫒 أهلاً'];
+  TAGS.forEach((g,i)=>{
+    const b=document.createElement('span');b.className='fl';b.textContent=g;
+    b.style.left=(7+i*13)%86+'%';b.style.animationDuration=(15+(i%4)*5)+'s';b.style.animationDelay=(-i*4)+'s';
+    box.appendChild(b);
+  });
+})();
+
+/* ---------- header : tour stops lighting ---------- */
+(function(){
+  const stops=[...document.querySelectorAll('#tourmap .stop')];let i=0;
+  setInterval(()=>{
+    stops.forEach(s=>s.classList.remove('lit'));
+    stops[i].classList.add('lit');
+    i=(i+1)%stops.length;
+  },1100);
+})();
+
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('.tab'), panels=document.querySelectorAll('.panel');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
+  t.classList.add('on');document.getElementById(t.dataset.p).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- badges / progress ---------- */
+const BADGES=[
+  {id:'words',   name:'New Words',    emo:'🔤'},
+  {id:'addwords',name:'Add the Words',emo:'📝'},
+  {id:'pairs',   name:'Pairs',        emo:'🗣️'},
+  {id:'info',    name:'City Notes',   emo:'🗺️'},
+  {id:'quiz',    name:'Quiz',         emo:'🏆'},
+];
+const TAB_OF={words:'p1',addwords:'p2',pairs:'p3',info:'p4',quiz:'p5'};
+let earned={};
+try{earned=JSON.parse(localStorage.getItem('g9u1p4words')||'{}')}catch(e){earned={}}
+const board=document.getElementById('badgesBoard');
+function renderBadges(){
+  board.innerHTML='';let n=0;
+  BADGES.forEach(s=>{
+    const d=document.createElement('div');d.className='badge-slot'+(earned[s.id]?' earned':'');
+    d.innerHTML='<span class="b-emo">'+s.emo+'</span><span class="b-name">'+s.name+'</span><span class="b-tick">🫒</span>';
+    board.appendChild(d);
+    if(earned[s.id]){n++;document.querySelector('.tab[data-p="'+TAB_OF[s.id]+'"]').classList.add('done');}
+  });
+  document.getElementById('finalMsg').classList.toggle('show',n===BADGES.length);
+}
+function award(id){if(earned[id])return;earned[id]=true;localStorage.setItem('g9u1p4words',JSON.stringify(earned));renderBadges();}
+function resetLesson(){localStorage.removeItem('g9u1p4words');location.reload();}
+renderBadges();
+
+/* ---------- speech (TTS) ---------- */
+let ttsBtn=null;
+function stopTTS(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(ttsBtn){ttsBtn.classList.remove('playing');ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊';ttsBtn=null;}
+}
+function speakBtn(btn,txt,stopLabel){
+  if(ttsBtn===btn){stopTTS();return;}
+  stopTTS();if(!('speechSynthesis' in window))return;
+  btn.dataset.label=btn.innerHTML;
+  const u=new SpeechSynthesisUtterance(txt);u.lang='en-US';u.rate=.85;
+  u.onend=()=>{if(ttsBtn===btn)stopTTS();};
+  ttsBtn=btn;btn.classList.add('playing');btn.innerHTML=stopLabel||'⏹';
+  speechSynthesis.speak(u);
+}
+
+/* =========================================================
+   A1 : flashcards
+========================================================= */
+const WORDS=[
+  {w:'community', emo:'👨‍👩‍👧‍👦', m:'مجتمع / جماعة محلية', sa:'مرادف: society · ضد: individual (فرد)'},
+  {w:'gate',      emo:'🚪', m:'بوّابة', sa:'مرادف: entrance · ضد: exit (مخرج)'},
+  {w:'guide',     emo:'🧭', m:'مُرشِد / دليل سياحي', sa:'مرادف: leader · ضد: follower (تابع)'},
+  {w:'local',     emo:'📍', m:'مَحلّي', sa:'مرادف: native · ضد: foreign (أجنبي)'},
+  {w:'museum',    emo:'🏛️', m:'مُتحَف', sa:'مرادف: gallery'},
+  {w:'mini-bus',  emo:'🚐', m:'حافلة صغيرة', sa:'مرادف: van · ضد: coach (حافلة كبيرة)'},
+  {w:'schedule',  emo:'🗓️', m:'جدول مواعيد', sa:'مرادف: timetable / plan'},
+  {w:'site',      emo:'📌', m:'مَوقِع (مكان)', sa:'مرادف: location / spot'},
+  {w:'through',   emo:'➡️', m:'عَبر / خِلال', sa:'مرادف: across · ضد: around (حول)'},
+  {w:'village',   emo:'🏘️', m:'قَرية', sa:'مرادف: hamlet · ضد: city (مدينة)'},
+  {w:'Damascus Gate', emo:'🕌', m:'باب العامود (في القدس)', sa:'أحد أبواب البلدة القديمة'},
+  {w:'religious', emo:'🕊️', m:'دِيني / مُتديّن', sa:'مرادف: spiritual · ضد: secular (عَلماني)'},
+];
+const cardBox=document.getElementById('cardBox');
+let flippedSet={};
+WORDS.forEach((c,ci)=>{
+  const f=document.createElement('div');f.className='flip';
+  f.innerHTML=
+    '<div class="flip-in">'+
+      '<div class="face front">'+
+        '<span class="emo">'+c.emo+'</span>'+
+        '<span class="w">'+c.w+'</span>'+
+        '<button class="tts" data-label="🔊 listen">🔊 listen</button>'+
+      '</div>'+
+      '<div class="face back">'+
+        '<span class="mean">'+c.m+'</span>'+
+        '<span class="sa">'+c.sa+'</span>'+
+      '</div>'+
+    '</div>';
+  f.addEventListener('click',()=>{
+    f.classList.toggle('flipped');
+    flippedSet[ci]=true;
+    if(Object.keys(flippedSet).length===WORDS.length)award('words');
+  });
+  const tbtn=f.querySelector('.tts');
+  tbtn.addEventListener('click',e=>{e.stopPropagation();speakBtn(tbtn,c.w.replace('-',' '),'⏹ stop');});
+  cardBox.appendChild(f);
+});
+
+/* =========================================================
+   Fill picker engine (Activities 2 & 4)
+========================================================= */
+function buildFill(boxId,txtId,barId,sentences,onComplete){
+  const box=document.getElementById(boxId);
+  let total=0;sentences.forEach(s=>s.parts.forEach(p=>{if(typeof p!=='string')total++;}));
+  let done=0;
+  function upd(){
+    if(txtId)document.getElementById(txtId).textContent=
+      (document.getElementById(txtId).dataset.lbl||'Completed')+': '+done+' / '+total;
+    if(barId)document.getElementById(barId).style.width=(done/total*100)+'%';
+    if(done===total&&onComplete)onComplete();
+  }
+  sentences.forEach(s=>{
+    const row=document.createElement('div');row.className='gsent';
+    if(s.n!=null){const g=document.createElement('span');g.className='gn';g.textContent=s.n;row.appendChild(g);row.appendChild(document.createTextNode(' '));}
+    let blanksInRow=0,okInRow=0;
+    s.parts.forEach(p=>{
+      if(typeof p==='string'){
+        const span=document.createElement('span');span.innerHTML=p;row.appendChild(span);return;
+      }
+      blanksInRow++;
+      const pick=document.createElement('span');pick.className='bpick';
+      p.opts.map((o,oi)=>({o,oi})).sort(()=>Math.random()-.5).forEach(item=>{
+        const b=document.createElement('button');b.className='bchip';b.textContent=item.o;
+        b.addEventListener('click',()=>{
+          if(item.oi===p.a){
+            const lock=document.createElement('span');lock.className='blocked';lock.textContent=p.opts[p.a];
+            pick.replaceWith(lock);done++;okInRow++;upd();
+            if(okInRow===blanksInRow)row.classList.add('done');
+          }else{b.classList.add('no');b.disabled=true;}
+        });
+        pick.appendChild(b);
+      });
+      row.appendChild(pick);
+    });
+    box.appendChild(row);
+  });
+}
+
+/* A2 : add the words */
+buildFill('addBox','aTxt','aBar',[
+  {n:1,parts:["<span class='ab'>A</span> Let's visit the ",
+    {opts:['museum','village','gate'],a:0}," and see the things they found in the ancient city.<br>",
+    "<span class='ab'>B</span> Well, we've got a busy ",
+    {opts:['schedule','guide','site'],a:0},", but we can go for an hour tomorrow."]},
+  {n:2,parts:["<span class='ab'>A</span> Mona's Palestinian ",
+    {opts:['cooking','community','religious'],a:0}," is delicious! I'd like to learn from her.<br>",
+    "<span class='ab'>B</span> Well, you can because she teaches at the ",
+    {opts:['community','museum','village'],a:0}," centre in town."]},
+  {n:3,parts:["<span class='ab'>A</span> Do you think it's all right to open this ",
+    {opts:['gate','site','through'],a:0}," and go into the garden?<br>",
+    "<span class='ab'>B</span> Yes, please do, and you can go straight ",
+    {opts:['through','gate','local'],a:0}," the garden to the house."]},
+  {n:4,parts:["<span class='ab'>A</span> There's the ",
+    {opts:['site','museum','village'],a:0}," of an ancient palace near here, but where is it?<br>",
+    "<span class='ab'>B</span> We have to drive along this road through the next ",
+    {opts:['village','community','gate'],a:0}," to get to it."]},
+  {n:5,parts:["<span class='ab'>A</span> We're going to go to the ancient site by ",
+    {opts:['mini-bus','guide','schedule'],a:0},", aren't we?<br>",
+    "<span class='ab'>B</span> Yes, and there'll be a ",
+    {opts:['guide','mini-bus','local'],a:0}," to show us round when we get there."]},
+  {n:6,parts:["<span class='ab'>A</span> I'm looking for a ",
+    {opts:['local','religious','site'],a:0}," mosque. Is there one near here?<br>",
+    "<span class='ab'>B</span> There are several. People here are very ",
+    {opts:['religious','local','community'],a:0},"."]},
+],()=>{document.getElementById('aFb').classList.add('show');award('addwords');});
+
+/* =========================================================
+   A3 : check & practise dialogues
+========================================================= */
+const DIALOGUES=[
+  [["A","b","Let's visit the museum and see the things they found in the ancient city."],
+   ["B","","Well, we've got a busy schedule, but we can go for an hour tomorrow."]],
+  [["A","b","Mona's Palestinian cooking is delicious! I'd like to learn from her."],
+   ["B","","Well, you can because she teaches at the community centre in town."]],
+  [["A","b","Do you think it's all right to open this gate and go into the garden?"],
+   ["B","","Yes, please do, and you can go straight through the garden to the house."]],
+  [["A","b","There's the site of an ancient palace near here, but where is it?"],
+   ["B","","We have to drive along this road through the next village to get to it."]],
+  [["A","b","We're going to go to the ancient site by mini-bus, aren't we?"],
+   ["B","","Yes, and there'll be a guide to show us round when we get there."]],
+  [["A","b","I'm looking for a local mosque. Is there one near here?"],
+   ["B","","There are several. People here are very religious."]],
+];
+const dlgBox=document.getElementById('dlgBox');
+DIALOGUES.forEach((d,di)=>{
+  const wrap=document.createElement('div');wrap.className='dlg';
+  let html='<div class="num-tag">Dialogue '+(di+1)+'</div>';
+  d.forEach(l=>{
+    const plain=l[2].replace(/"/g,'&quot;');
+    html+='<div class="ln"><span class="who '+l[1]+'">'+l[0]+'</span><span class="txt">'+l[2]+
+      '</span><button class="l-tts" data-say="'+plain+'" data-label="🔊">🔊</button></div>';
+  });
+  wrap.innerHTML=html;dlgBox.appendChild(wrap);
+});
+dlgBox.querySelectorAll('.l-tts').forEach(b=>b.addEventListener('click',function(){speakBtn(this,this.dataset.say,'⏹');}));
+document.getElementById('pairDone').addEventListener('click',()=>{document.getElementById('pairFb').classList.add('show');award('pairs');});
+
+/* =========================================================
+   A4 : transcript read-aloud + tooltips
+========================================================= */
+(function(){
+  const txt=[...document.querySelectorAll('#scriptBox .sl')].map(l=>l.textContent.replace(/\s+/g,' ').trim()).join(' ');
+  const btn=document.getElementById('txTts');
+  btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();speakBtn(btn,txt,'⏹');});
+})();
+/* tap tooltips (mobile) */
+document.querySelectorAll('.tip,.pro').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.stopPropagation();
+    document.querySelectorAll('.tip.show,.pro.show').forEach(x=>{if(x!==el)x.classList.remove('show');});
+    el.classList.toggle('show');
+  });
+});
+document.addEventListener('click',()=>document.querySelectorAll('.tip.show,.pro.show').forEach(x=>x.classList.remove('show')));
+
+/* =========================================================
+   A4 : order cities + match notes  (both must finish -> 'info')
+========================================================= */
+let a4order=false,a4match=false;
+function a4check(){if(a4order&&a4match){document.getElementById('infoFb').classList.add('show');award('info');}}
+
+const CITIES=['Jerusalem','Nablus','Jericho','Hebron','Bethlehem'];
+buildFill('orderBox','oTxt','oBar',[
+  {n:1,parts:["Our tour's <b>first</b> stop is &nbsp; ",{opts:CITIES.slice(),a:0}]},
+  {n:2,parts:["The <b>second</b> stop is &nbsp; ",{opts:CITIES.slice(),a:1}]},
+  {n:3,parts:["The <b>third</b> place is &nbsp; ",{opts:CITIES.slice(),a:2}]},
+  {n:4,parts:["The <b>fourth</b> city is &nbsp; ",{opts:CITIES.slice(),a:3}]},
+  {n:5,parts:["And city number <b>five</b> is &nbsp; ",{opts:CITIES.slice(),a:4}]},
+],()=>{a4order=true;a4check();});
+document.getElementById('oTxt').dataset.lbl='Ordered';
+
+const NOTES=[
+  "One of the world's great religious centres",
+  "Famous for its olive oil and soap",
+  "The oldest city in the world",
+  "The site of a very important mosque",
+  "The site of a very important church",
+];
+buildFill('matchBox','mTxt','mBar',[
+  {n:1,parts:["<b>Jerusalem</b> &nbsp;→&nbsp; ",{opts:NOTES.slice(),a:0}]},
+  {n:2,parts:["<b>Nablus</b> &nbsp;→&nbsp; ",{opts:NOTES.slice(),a:1}]},
+  {n:3,parts:["<b>Jericho</b> &nbsp;→&nbsp; ",{opts:NOTES.slice(),a:2}]},
+  {n:4,parts:["<b>Hebron</b> &nbsp;→&nbsp; ",{opts:NOTES.slice(),a:3}]},
+  {n:5,parts:["<b>Bethlehem</b> &nbsp;→&nbsp; ",{opts:NOTES.slice(),a:4}]},
+],()=>{a4match=true;a4check();});
+document.getElementById('mTxt').dataset.lbl='Matched';
+
+/* =========================================================
+   QUIZ : 5 points
+========================================================= */
+const QUIZ=[
+  {t:'Word formation: we change the noun "religion" into the adjective…',o:['religious','religiously','religional'],a:0},
+  {t:'We make a noun from the verb "cook" by adding…',o:['-ing → cooking','-er → cooker','-tion → cookation'],a:0},
+  {t:'"The Old City tour starts from the ____ Gate."',o:['Damascus','Garden','Golden'],a:0},
+  {t:'Which city did they describe as "the oldest city in the world"?',o:['Jericho','Hebron','Nablus'],a:0},
+  {t:'Al Ibrahimi Mosque is the famous site in the city of…',o:['Hebron','Bethlehem','Jerusalem'],a:0},
+];
+const quizBox=document.getElementById('quizBox');
+const quizAns=new Array(QUIZ.length).fill(null);
+QUIZ.forEach((q,qi)=>{
+  const qd=document.createElement('div');qd.className='quiz-q';
+  qd.innerHTML='<div class="q-txt"><span class="qn">'+(qi+1)+'</span>'+q.t+'</div>';
+  const opts=document.createElement('div');opts.className='opts';
+  q.o.map((o,oi)=>({o,oi})).sort(()=>Math.random()-.5).forEach(item=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=item.o;
+    b.addEventListener('click',()=>{
+      opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok'));
+      b.classList.add('ok');quizAns[qi]=item.oi;
+      if(quizAns.every(a=>a!==null))document.getElementById('quizCheck').disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  qd.appendChild(opts);quizBox.appendChild(qd);
+});
+document.getElementById('quizCheck').addEventListener('click',()=>{
+  let score=0;
+  document.querySelectorAll('#quizBox .quiz-q').forEach((qd,qi)=>{
+    qd.querySelectorAll('.opt').forEach(b=>{
+      b.disabled=true;b.classList.remove('ok','no');
+      if(b.textContent===QUIZ[qi].o[QUIZ[qi].a])b.classList.add('ok');
+      else if(quizAns[qi]!=null&&b.textContent===QUIZ[qi].o[quizAns[qi]])b.classList.add('no');
+    });
+    if(quizAns[qi]===QUIZ[qi].a)score++;
+  });
+  document.getElementById('quizCheck').disabled=true;
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+' / 5';
+  document.getElementById('scoreMsg').innerHTML=
+    score===5?'🏆 Perfect! You know the words and the tour! <span class="ar">ممتاز! علامة كاملة!</span>':
+    score>=3 ?'⭐ Well done! Review the words to get 5/5. <span class="ar">أحسنت! راجع المفردات للعلامة الكاملة.</span>':
+              '💪 Keep trying! Read the words and transcript again. <span class="ar">حاول مرة أخرى! راجع المفردات والنص.</span>';
+  box.classList.add('show');award('quiz');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+</script>
+</body>
+</html>
