@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Past Continuous — Discovery Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --cor:#FF6B5C;--cor-d:#C13B2E;--orange:#FF9F43;--cor-l:#FFE8E4;
+  --teal:#26A69A;--grn:#2E7D32;--grn-l:#E8F5E9;--red:#C62828;--red-l:#FFEBEE;
+  --bg:#FFF6F4;--card:#fff;--txt:#3a1a14;--muted:#8a6660;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,var(--cor-d) 0%,var(--cor) 55%,var(--orange) 100%);
+  padding:28px 20px 0;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 25%,rgba(255,159,67,.35) 0%,transparent 50%),
+             radial-gradient(circle at 15% 75%,rgba(255,255,255,.12) 0%,transparent 55%);pointer-events:none}
+.hdr-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:18px;position:relative}
+.hdr-art{font-size:84px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3))}
+.hdr-text{flex:1}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:4px}
+.hdr h1{font-family:'Fredoka One',cursive;font-size:clamp(1.5rem,4vw,2.4rem);color:#fff;line-height:1.15}
+.hdr h1 span{color:#FFF3C4}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:rgba(255,255,255,.18);color:#fff;border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:700}
+.chip.ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.85rem}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:6px;padding:14px 16px 0;max-width:900px;margin:16px auto 0;
+  overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.35);
+  border-radius:22px 22px 0 0;padding:8px 16px;font-family:'Fredoka One',cursive;
+  font-size:.95rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.35)}
+.tab.active{background:#fff;color:var(--cor-d);border-color:#fff}
+
+.prog-wrap{background:rgba(255,255,255,.2);height:6px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#FFF3C4,#FF9F43);transition:width .4s ease;border-radius:0 3px 3px 0}
+
+.main{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.on{display:block}
+
+.card{background:var(--card);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.card h2{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--cor-d);margin-bottom:12px}
+.card h3{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--cor);margin:14px 0 8px}
+
+.q-inst{background:var(--cor-l);border-right:5px solid var(--cor);border-radius:10px;padding:10px 16px;margin-bottom:14px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;color:var(--cor-d);direction:rtl;text-align:right;line-height:1.6}
+
+.fb-wrap{display:none;border-radius:10px;padding:12px 16px;margin-top:10px;border-left:5px solid transparent}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#E8F5E9;border-color:#2E7D32}
+.fb-wrap.err{background:#FFEBEE;border-color:#C62828}
+.fb-en{font-weight:700;font-size:1rem;margin-bottom:4px}
+.fb-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.95rem;direction:rtl;text-align:right;color:#555}
+.fb-wrap.ok .fb-en{color:#1B5E20}
+.fb-wrap.err .fb-en{color:#B71C1C}
+
+.mcq-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.mcq-btn{background:var(--cor-l);border:2px solid #FFB3A8;border-radius:12px;padding:9px 18px;
+  font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--txt)}
+.mcq-btn:hover{background:#FFD4CC}
+.mcq-btn.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
+.mcq-btn.err{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
+.mcq-btn:disabled{cursor:default;opacity:.8}
+
+.t-in{width:100%;padding:9px;border:2px solid var(--cor);border-radius:8px;font-size:1rem;margin-bottom:4px;font-family:'Nunito',sans-serif;background:#FFFBFA}
+.t-in:focus{outline:none;border-color:var(--orange)}
+
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;background:var(--cor-l);padding:12px 16px;border-radius:12px;margin-bottom:16px}
+.wb-chip{background:#fff;border:2px solid var(--cor);border-radius:20px;padding:5px 14px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.wb-chip:hover{background:var(--cor);color:#fff}
+.wb-chip.used{opacity:.35;pointer-events:none;text-decoration:line-through}
+
+.blank{display:inline-block;min-width:100px;border-bottom:3px solid var(--cor);padding:2px 6px;text-align:center;cursor:pointer;border-radius:4px 4px 0 0;transition:background .2s}
+.blank:hover{background:var(--cor-l)}
+.blank.filled{color:var(--cor-d)}
+.blank.ok{border-color:var(--grn);color:var(--grn);background:#E8F5E9}
+.blank.err{border-color:var(--red);color:var(--red);background:#FFEBEE}
+
+.check-btn{background:linear-gradient(135deg,var(--cor),var(--orange));color:#fff;border:none;border-radius:12px;padding:10px 26px;
+  font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;margin-top:10px;transition:transform .15s,box-shadow .15s}
+.check-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(255,107,92,.4)}
+.check-btn:active{transform:translateY(0)}
+
+.lvl-done{display:none;background:linear-gradient(135deg,#FFF8E1,#FFFDE7);border:3px solid var(--orange);border-radius:16px;padding:16px 20px;
+  text-align:center;margin-top:16px;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.1rem;color:#B45309}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+.lvl-done .star{font-size:1.5rem}
+
+.disc-tbl{width:100%;border-collapse:collapse;margin:12px 0}
+.disc-tbl th{background:var(--cor-d);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:.95rem}
+.disc-tbl td{padding:9px 14px;border-bottom:1px solid var(--cor-l);font-size:.95rem}
+.disc-tbl tr:nth-child(even) td{background:#FFF6F4}
+.disc-tbl .hi{color:var(--cor-d);font-weight:800;background:#FFF3C4;padding:1px 4px;border-radius:4px}
+.disc-tbl .neg{color:#C62828;font-weight:800}
+
+.gram-tbl{width:100%;border-collapse:collapse;margin:10px 0}
+.gram-tbl th{background:var(--cor);color:#fff;padding:9px 14px;font-family:'Fredoka One',cursive}
+.gram-tbl td{padding:8px 14px;border-bottom:1px solid var(--cor-l)}
+.gram-tbl tr:nth-child(even) td{background:var(--cor-l)}
+.gram-note{background:#FFF8E1;border-left:4px solid var(--orange);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.92rem}
+.gram-note .ar{font-size:.95rem;margin-top:4px;color:#555}
+
+.vc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:12px 0}
+.vc{background:var(--cor-l);border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.vc .icon{font-size:2.2rem;margin-bottom:6px}
+.vc .en{font-weight:800;font-size:.95rem;color:var(--cor-d)}
+.vc .ar{font-size:.88rem;color:#555;margin-top:3px}
+
+.prompt-card{background:linear-gradient(135deg,var(--cor-l),#FFEFD6);border-radius:14px;padding:18px;margin-bottom:14px;border-left:5px solid var(--cor)}
+.prompt-card p{font-size:.95rem;margin-bottom:8px}
+textarea{width:100%;min-height:90px;border:2px solid var(--cor);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:.95rem;resize:vertical;background:#FFFBFA}
+textarea:focus{outline:none;border-color:var(--orange)}
+
+.quiz-q{background:var(--cor-l);border-radius:14px;padding:18px;margin-bottom:16px;border-left:5px solid var(--cor)}
+.quiz-q .qn{font-weight:800;color:var(--cor-d);margin-bottom:8px}
+.score-box{background:linear-gradient(135deg,var(--cor-d),var(--cor));color:#fff;border-radius:18px;padding:24px;text-align:center;display:none}
+.score-box.show{display:block;animation:popIn .5s ease}
+.score-box .score-num{font-family:'Fredoka One',cursive;font-size:3rem}
+.score-box .badge-big{font-size:3.5rem;margin:8px 0}
+
+.obj-list{list-style:none;padding:0}
+.obj-list li{padding:8px 0 8px 32px;position:relative;font-size:1rem;border-bottom:1px solid var(--cor-l)}
+.obj-list li::before{content:'🎥';position:absolute;left:0}
+
+@keyframes popIn{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes floatStar{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.6)}}
+@keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+footer{text-align:center;padding:20px;font-size:.82rem;color:var(--muted)}
+.flying-star{position:fixed;pointer-events:none;font-size:1.6rem;z-index:9999;animation:floatStar .9s ease forwards}
+.cf-piece{position:fixed;width:10px;height:10px;border-radius:2px;z-index:9998;animation:cfFall 1.4s ease forwards}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-art">🎥</div>
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar • English for Palestine</p>
+      <h1>Past <span>Continuous</span></h1>
+      <div class="chips">
+        <span class="chip">🎯 Grade 9</span>
+        <span class="chip">⏱️ ~30 min</span>
+        <span class="chip ar">الماضي المستمر</span>
+      </div>
+    </div>
+  </div>
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab active" onclick="go(0,event)">🚀 Start</button>
+    <button class="tab" onclick="go(1,event)">📚 Words</button>
+    <button class="tab" onclick="go(2,event)">🔍 Discover</button>
+    <button class="tab" onclick="go(3,event)">🧠 Grammar</button>
+    <button class="tab" onclick="go(4,event)">✏️ Practice</button>
+    <button class="tab" onclick="go(5,event)">🗣️ Create</button>
+    <button class="tab" onclick="go(6,event)">🎯 Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
+</div>
+
+<div class="main">
+
+<!-- ══ 1. START ══ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <h2>🚀 Freeze the Moment!</h2>
+    <p style="font-size:1.05rem;line-height:1.8;margin-bottom:14px">
+      🎥 Imagine pressing <strong>pause</strong> on a video of yesterday. At <strong>8 o'clock last night</strong>, what were you doing?
+      Maybe you <em>were eating</em>, your sister <em>was studying</em>, and the TV <em>was playing</em>.<br>
+      We use the <strong>Past Continuous</strong> to describe an action <strong>in progress</strong> at a moment in the past.
+    </p>
+    <div class="q-inst ar">📌 الطبخ كان جارياً عندما وصلتُ — اختَر الصيغة الصحيحة:</div>
+    <div id="s-q1">
+      <p style="font-weight:700;margin-bottom:8px">"When I arrived, my mother _____ (cook) dinner."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'Past Simple just says it happened — not that it was in progress.','الماضي البسيط يخبرنا أن الحدث وقع فقط، لا أنه كان جارياً.')">cooked</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,true,'Yes! 🎉 "was cooking" — the action was in progress when I arrived!','ممتاز! "was cooking" — الحدث كان جارياً عند وصولي!')">was cooking</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'Present Continuous — but we\'re in the past!','المضارع المستمر — لكننا في الماضي!')">is cooking</button>
+      </div>
+      <div class="fb-wrap" id="s-fb1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Objectives — أهداف الدرس</h2>
+    <ul class="obj-list">
+      <li>Form the Past Continuous: <strong>was / were + verb-ing</strong></li>
+      <li>Describe an action in progress at a past moment</li>
+      <li>Use <strong>when</strong> + Past Simple to show an interruption</li>
+      <li>Use <strong>while / as</strong> for two actions at the same time</li>
+      <li>Make negatives and questions in the Past Continuous</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ 2. WORDS ══ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <h2>📚 Key Time Words</h2>
+    <div class="q-inst ar">📌 هذه الكلمات الزمنية تدلّك على استخدام الماضي المستمر:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">⚡</div><div class="en">when</div><div class="ar">عندما (للحدث المقاطع)</div></div>
+      <div class="vc"><div class="icon">🔄</div><div class="en">while</div><div class="ar">بينما</div></div>
+      <div class="vc"><div class="icon">⏳</div><div class="en">as</div><div class="ar">في الوقت الذي</div></div>
+      <div class="vc"><div class="icon">🕐</div><div class="en">at that moment</div><div class="ar">في تلك اللحظة</div></div>
+      <div class="vc"><div class="icon">🌙</div><div class="en">at 8pm last night</div><div class="ar">الساعة ٨ ليلة أمس</div></div>
+      <div class="vc"><div class="icon">📅</div><div class="en">all day / all night</div><div class="ar">طوال اليوم / الليل</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📚 Action Verbs (verb → verb-ing)</h2>
+    <div class="q-inst ar">📌 الماضي المستمر يحتاج الفعل + ing — راجع هذه الأفعال:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">🍳</div><div class="en">cook → cooking</div><div class="ar">يطبخ</div></div>
+      <div class="vc"><div class="icon">📖</div><div class="en">read → reading</div><div class="ar">يقرأ</div></div>
+      <div class="vc"><div class="icon">😴</div><div class="en">sleep → sleeping</div><div class="ar">ينام</div></div>
+      <div class="vc"><div class="icon">🏃</div><div class="en">run → running</div><div class="ar">يجري (ضاعف n)</div></div>
+      <div class="vc"><div class="icon">✍️</div><div class="en">write → writing</div><div class="ar">يكتب (احذف e)</div></div>
+      <div class="vc"><div class="icon">🛝</div><div class="en">play → playing</div><div class="ar">يلعب</div></div>
+      <div class="vc"><div class="icon">☔</div><div class="en">rain → raining</div><div class="ar">تمطر</div></div>
+      <div class="vc"><div class="icon">📺</div><div class="en">watch → watching</div><div class="ar">يشاهد</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 3. DISCOVER ══ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h2>🔍 Spot the Pattern!</h2>
+    <div class="q-inst ar">📌 لاحظ ما يأتي بعد الفاعل في كل جملة — ما الذي يتكرّر؟</div>
+    <table class="disc-tbl">
+      <thead><tr><th>Subject</th><th>Sentence</th><th>Pattern</th></tr></thead>
+      <tbody>
+        <tr><td>I</td><td>I <span class="hi">was</span> read<span class="hi">ing</span> at 9pm.</td><td>was + -ing</td></tr>
+        <tr><td>He / She / It</td><td>She <span class="hi">was</span> sleep<span class="hi">ing</span>.</td><td>was + -ing</td></tr>
+        <tr><td>You / We / They</td><td>They <span class="hi">were</span> play<span class="hi">ing</span> outside.</td><td>were + -ing</td></tr>
+        <tr><td>Negative</td><td>He <span class="neg">wasn't</span> listen<span class="hi">ing</span>.</td><td>wasn't + -ing</td></tr>
+      </tbody>
+    </table>
+    <div id="disc-q1">
+      <div class="q-inst ar">📌 متى نستخدم "was" ومتى نستخدم "were"؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,true,'✅ Exactly! I/He/She/It → was; You/We/They → were.','✅ صحيح! I/He/She/It → was؛ You/We/They → were.')">I/He/She/It → was · You/We/They → were</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'Look again — was is singular, were is plural/you.','انظر مجدداً — was للمفرد، were للجمع/you.')">was for all subjects</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔍 The Interruption Pattern</h2>
+    <div class="q-inst ar">📌 جملة فيها حدثان — أيّهما كان طويلاً جارياً وأيّهما قصير قاطعه؟</div>
+    <table class="disc-tbl">
+      <thead><tr><th>Long action (in progress)</th><th>Short action (interruption)</th></tr></thead>
+      <tbody>
+        <tr><td>I <span class="hi">was watching</span> TV</td><td>when the phone <span class="neg">rang</span>.</td></tr>
+        <tr><td>She <span class="hi">was cooking</span></td><td>when I <span class="neg">arrived</span>.</td></tr>
+        <tr><td>They <span class="hi">were sleeping</span></td><td>when the alarm <span class="neg">went</span> off.</td></tr>
+      </tbody>
+    </table>
+    <div id="disc-q2">
+      <div class="q-inst ar">📌 أيّ زمن نستخدم للحدث القصير الذي يقاطع الحدث الطويل؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,false,'No — the long action in progress uses Past Continuous.','لا — الحدث الطويل الجاري يستخدم الماضي المستمر.')">Past Continuous</button>
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,true,'✅ Correct! The short interrupting action uses Past Simple.','✅ صحيح! الحدث القصير المقاطِع يستخدم الماضي البسيط.')">Past Simple</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 4. GRAMMAR ══ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <h2>🧠 The Rule</h2>
+    <div class="gram-note">
+      <strong>Form:</strong> Subject + <em>was / were</em> + verb<strong>-ing</strong>
+      <div class="ar">الصيغة: الفاعل + was/were + الفعل + ing</div>
+    </div>
+    <table class="gram-tbl">
+      <thead><tr><th>Subject</th><th>was / were</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>I / He / She / It</td><td><strong>was</strong></td><td>She <strong>was</strong> reading.</td></tr>
+        <tr><td>You / We / They</td><td><strong>were</strong></td><td>They <strong>were</strong> playing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 When Do We Use It?</h2>
+    <table class="gram-tbl">
+      <thead><tr><th>Use</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Action in progress at a specific past time</td><td>At 8pm, I <strong>was studying</strong>.</td></tr>
+        <tr><td>Interrupted by a shorter action (when + Past Simple)</td><td>I <strong>was cooking</strong> when he arrived.</td></tr>
+        <tr><td>Two parallel actions (while / as)</td><td>She <strong>was reading</strong> while he <strong>was writing</strong>.</td></tr>
+        <tr><td>Setting the scene in a story</td><td>The sun <strong>was shining</strong> and birds <strong>were singing</strong>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Negative &amp; Question</h2>
+    <table class="gram-tbl">
+      <thead><tr><th>Type</th><th>Structure</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Negative ❌</td><td>Subject + wasn't / weren't + verb-ing</td><td>He <strong>wasn't</strong> listening.</td></tr>
+        <tr><td>Question ❓</td><td>Was / Were + subject + verb-ing?</td><td><strong>Were</strong> you sleeping?</td></tr>
+        <tr><td>Short answer ✅</td><td>Yes, I was. / No, they weren't.</td><td>Yes, she was.</td></tr>
+      </tbody>
+    </table>
+    <div class="gram-note">
+      💡 <strong>when</strong> + Past Simple (short action) &nbsp;·&nbsp; <strong>while / as</strong> + Past Continuous (long action)
+      <div class="ar">when تأتي مع الماضي البسيط (الحدث القصير) · while/as تأتي مع الماضي المستمر (الحدث الطويل)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 5. PRACTICE ══ -->
+<div class="panel" id="p4">
+
+  <div class="card">
+    <h2>✏️ Level 1 — Choose the Correct Form</h2>
+    <div class="q-inst ar">📌 اختَر الصيغة الصحيحة — هل الحدث كان جارياً أم قصيراً قاطعاً؟</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. When she called, I _____ (read) a book.</p>
+    <div id="l1q1"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,true,'✅ "was reading" — in progress when she called!','✅ was reading — كان جارياً عندما اتصلت!')">was reading</button>
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,false,'Past Simple doesn\'t show the action was in progress.','الماضي البسيط لا يُظهر أن الحدث كان جارياً.')">read</button>
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,false,'"were" is for you/we/they — I → was.','were للجمع — مع I نستخدم was.')">were reading</button>
+    </div><div class="fb-wrap" id="l1fb1"></div></div>
+
+    <p style="font-weight:700;margin:16px 0 6px">2. While he _____ (cook), she _____ (set) the table.</p>
+    <div id="l1q2"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,true,'✅ "was cooking … was setting" — two parallel past actions!','✅ كلاهما ماضٍ مستمر — حدثان متوازيان!')">was cooking / was setting</button>
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,false,'Past Simple removes the sense of being simultaneous.','الماضي البسيط لا يُظهر التزامن بين الحدثين.')">cooked / set</button>
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,false,'"was cooking / set" mixes tenses — both should be continuous.','خلط بين زمنين — كلاهما يجب أن يكون مستمراً.')">was cooking / set</button>
+    </div><div class="fb-wrap" id="l1fb2"></div></div>
+
+    <p style="font-weight:700;margin:16px 0 6px">3. They _____ (play) outside when it started to rain.</p>
+    <div id="l1q3"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,false,'"was" is singular — They → were.','was للمفرد — مع They نستخدم were.')">was playing</button>
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,true,'✅ "were playing" — long action interrupted by the rain!','✅ were playing — حدث طويل قاطعه المطر!')">were playing</button>
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,false,'Past Simple "played" loses the in-progress meaning.','played يفقد معنى الاستمرار.')">played</button>
+    </div><div class="fb-wrap" id="l1fb3"></div></div>
+
+    <div class="lvl-done" id="done1"><span class="star">🎥🎥🎥</span><p>أحسنتَ! انتقل إلى المستوى الثاني 🎉</p></div>
+    <button class="check-btn" onclick="checkLevel1()">Check Level 1 ✔</button>
+  </div>
+
+  <div class="card">
+    <h2>✏️ Level 2 — Fill in the Blanks</h2>
+    <div class="q-inst ar">📌 انقر على العبارة من بنك الكلمات، ثم انقر على الفراغ لملئه:</div>
+    <div class="word-bank" id="wb2">
+      <span class="wb-chip" onclick="pickWb2(this,'was sleeping')">was sleeping</span>
+      <span class="wb-chip" onclick="pickWb2(this,'were playing')">were playing</span>
+      <span class="wb-chip" onclick="pickWb2(this,'was raining')">was raining</span>
+      <span class="wb-chip" onclick="pickWb2(this,'was reading')">was reading</span>
+      <span class="wb-chip" onclick="pickWb2(this,'were watching')">were watching</span>
+    </div>
+    <div style="font-size:1.05rem;font-weight:600;line-height:2.6">
+      <p>1. The baby _____ when the phone rang.
+         &nbsp;<span class="blank" id="b2_1" onclick="dropWb2('b2_1')" data-ans="was sleeping">______</span></p>
+      <p>2. The children _____ in the garden all afternoon.
+         &nbsp;<span class="blank" id="b2_2" onclick="dropWb2('b2_2')" data-ans="were playing">______</span></p>
+      <p>3. It _____ when we left the house.
+         &nbsp;<span class="blank" id="b2_3" onclick="dropWb2('b2_3')" data-ans="was raining">______</span></p>
+      <p>4. At 9pm, Dad _____ the newspaper.
+         &nbsp;<span class="blank" id="b2_4" onclick="dropWb2('b2_4')" data-ans="was reading">______</span></p>
+      <p>5. We _____ a film when the lights went out.
+         &nbsp;<span class="blank" id="b2_5" onclick="dropWb2('b2_5')" data-ans="were watching">______</span></p>
+    </div>
+    <div class="fb-wrap" id="l2fb"></div>
+    <div class="lvl-done" id="done2"><span class="star">🌟🌟🌟</span><p>رائع! كل الفراغات صحيحة! تابع إلى المستوى الثالث 🚀</p></div>
+    <button class="check-btn" onclick="checkLevel2()">Check Level 2 ✔</button>
+  </div>
+
+  <div class="card">
+    <h2>✏️ Level 3 — Make Questions &amp; Negatives</h2>
+    <div class="q-inst ar">📌 حوّل كل جملة كما هو مطلوب، ثم اضغط "Check":</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. Make a question: <em>She was sleeping.</em></p>
+    <input type="text" id="l3a1" class="t-in" placeholder="Was …"/>
+    <div class="fb-wrap" id="l3fb1"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">2. Make negative: <em>They were watching TV.</em></p>
+    <input type="text" id="l3a2" class="t-in" placeholder="They …"/>
+    <div class="fb-wrap" id="l3fb2"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">3. Combine (use <em>while</em>): <em>He was studying. + The phone rang.</em></p>
+    <input type="text" id="l3a3" class="t-in" placeholder="While he …"/>
+    <div class="fb-wrap" id="l3fb3"></div>
+
+    <div class="lvl-done" id="done3"><span class="star">💫💫💫</span><p>ممتاز! أتقنت النفي والسؤال! استعدّ للتحدي 🏆</p></div>
+    <button class="check-btn" onclick="checkLevel3()">Check Level 3 ✔</button>
+  </div>
+
+  <div class="card">
+    <h2>✏️ Level 4 — Correct the Mistakes</h2>
+    <div class="q-inst ar">📌 صحّح الخطأ في كل جملة واكتبها كاملةً بالشكل الصحيح:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. <span style="color:var(--red)">When she called, I read a book.</span> <small style="color:var(--muted)">(reading was in progress)</small></p>
+    <input type="text" id="l4a1" class="t-in" placeholder="When she called, I …"/>
+    <div class="fb-wrap" id="l4fb1"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">2. <span style="color:var(--red)">They was playing football.</span></p>
+    <input type="text" id="l4a2" class="t-in" placeholder="They …"/>
+    <div class="fb-wrap" id="l4fb2"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">3. <span style="color:var(--red)">She was danceing in the hall.</span></p>
+    <input type="text" id="l4a3" class="t-in" placeholder="She …"/>
+    <div class="fb-wrap" id="l4fb3"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">4. <span style="color:var(--red)">They were playing when it was starting to rain.</span></p>
+    <input type="text" id="l4a4" class="t-in" placeholder="They were playing when it …"/>
+    <div class="fb-wrap" id="l4fb4"></div>
+
+    <div class="lvl-done" id="done4"><span class="star">🎊🎊🎊</span><p>عظيم! أتقنت جميع المستويات! 🎥 انتقل إلى الإبداع!</p></div>
+    <button class="check-btn" onclick="checkLevel4()">Check Level 4 ✔</button>
+  </div>
+
+</div>
+
+<!-- ══ 6. CREATE ══ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <h2>🗣️ Freeze Frame — 8pm Last Night</h2>
+    <div class="q-inst ar">📌 اكتب ٤ جمل تصف ما كان يفعله أفراد عائلتك الساعة ٨ مساء أمس:</div>
+    <div class="prompt-card">
+      <p>✏️ At 8pm last night, what was everyone in your family doing?</p>
+      <p style="font-size:.88rem;color:var(--muted)">e.g. <em>My father was watching the news. My sister was doing her homework…</em></p>
+    </div>
+    <textarea id="cr1" placeholder="At 8pm last night, my mother was… My brother was… I was… The TV was…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr1','cr1-fb','Great scene! 🎥','مشهد رائع! استمر 🌟')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr1-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣️ Interruptions</h2>
+    <div class="q-inst ar">📌 اكتب ٤ جمل: حدث طويل كان جارياً + حدث قصير قاطعه (when):</div>
+    <div class="prompt-card">
+      <p>✏️ Write 4 sentences: something in progress + something that interrupted it.</p>
+      <p style="font-size:.88rem;color:var(--muted)">e.g. <em>I was sleeping when the alarm rang. We were eating when the guest arrived…</em></p>
+    </div>
+    <textarea id="cr2" placeholder="I was … when … We were … when …"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr2','cr2-fb','Excellent! Great use of when! 🏆','ممتاز! استخدام رائع لـ when 💫')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr2-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣️ Challenge — Set the Scene</h2>
+    <div class="q-inst ar">📌 تحدٍّ: اكتب بداية قصة (٥ جمل) تصف المشهد، مستخدماً الماضي المستمر:</div>
+    <div class="prompt-card">
+      <p>🏆 Begin a story by describing the scene. Use <strong>at least 4 Past Continuous</strong> sentences.</p>
+    </div>
+    <textarea id="cr3" rows="5" placeholder="It was a quiet evening. The rain was falling softly. People were walking home…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr3','cr3-fb','Brilliant scene-setting! 🎥✨','وصف مشهدي رائع! 🎊🌟')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr3-fb"></div>
+  </div>
+</div>
+
+<!-- ══ 7. QUIZ ══ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <h2>🎯 Quick Quiz — 5 Questions</h2>
+    <div class="q-inst ar">📌 أجب على الأسئلة الخمسة لاختبار ما تعلّمته. كل سؤال بنقطة واحدة:</div>
+
+    <div class="quiz-q" id="qq1">
+      <div class="qn">1. "When I arrived, she _____ (cook)." Which is correct?</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 الطبخ كان جارياً عند وصولي — أيّ صيغة تناسب؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,false)">cooked</button>
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,true)">was cooking</button>
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,false)">is cooking</button>
+      </div>
+      <div class="fb-wrap" id="qqfb1"></div>
+    </div>
+
+    <div class="quiz-q" id="qq2">
+      <div class="qn">2. "They _____ football at 5pm yesterday."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 اختَر صيغة was/were الصحيحة:</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,false)">was playing</button>
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,true)">were playing</button>
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,false)">played</button>
+      </div>
+      <div class="fb-wrap" id="qqfb2"></div>
+    </div>
+
+    <div class="quiz-q" id="qq3">
+      <div class="qn">3. Which word goes with the long action in progress?</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 أيّ كلمة تأتي مع الحدث الطويل الجاري؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,false)">when (short action)</button>
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,true)">while</button>
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,false)">after</button>
+      </div>
+      <div class="fb-wrap" id="qqfb3"></div>
+    </div>
+
+    <div class="quiz-q" id="qq4">
+      <div class="qn">4. True or False: "I was sleeping when the alarm rang" is correct.</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 صحّ أم خطأ: الجملة أعلاه صحيحة؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(3,'qq4','qqfb4',this,true)">True ✅</button>
+        <button class="mcq-btn" onclick="qsc(3,'qq4','qqfb4',this,false)">False ❌</button>
+      </div>
+      <div class="fb-wrap" id="qqfb4"></div>
+    </div>
+
+    <div class="quiz-q" id="qq5">
+      <div class="qn">5. Make negative: "He was listening."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 حوّل الجملة إلى منفية:</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,true)">He wasn't listening.</button>
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,false)">He didn't listening.</button>
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,false)">He weren't listening.</button>
+      </div>
+      <div class="fb-wrap" id="qqfb5"></div>
+    </div>
+
+    <button class="check-btn" onclick="calcQuiz()">See My Score 🎯</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="badge-big">🎥</div>
+    <div class="score-num" id="scoreNum"></div>
+    <div id="scoreMsg"></div>
+    <div id="scoreMsgAr" class="ar" style="margin-top:8px;font-size:1rem"></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+const panels=document.querySelectorAll('.panel');
+const tabs=document.querySelectorAll('.tab');
+function go(i,e){
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.getElementById('progFill').style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(e)e.currentTarget.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+function launchStar(x,y){
+  const icons=['⭐','🌟','✨','💫','🎥'];
+  const el=document.createElement('span');
+  el.className='flying-star';el.textContent=icons[Math.floor(Math.random()*icons.length)];
+  el.style.left=x+'px';el.style.top=y+'px';
+  document.body.appendChild(el);setTimeout(()=>el.remove(),950);
+}
+function confetti(){
+  const colors=['#FF6B5C','#FF9F43','#26A69A','#FFF3C4','#2E7D32','#C13B2E','#FFB3A8'];
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');c.className='cf-piece';
+    c.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${colors[i%colors.length]};
+      width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
+      animation-delay:${Math.random()*.8}s;animation-duration:${1.2+Math.random()*.6}s;
+      border-radius:${Math.random()>.5?'50%':'2px'}`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),2000);
+  }
+}
+function shake(el){el.style.animation='none';requestAnimationFrame(()=>{el.style.animation='shake .5s ease';});}
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${en}</div><div class="fb-ar">${ar}</div>`;
+}
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const row=document.getElementById(rowId);
+  if(row.dataset.done)return;
+  row.dataset.done='1';
+  row.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}else shake(btn);
+}
+let wbSel2=null;
+function pickWb2(chip,val){
+  if(chip.classList.contains('used'))return;
+  document.querySelectorAll('#wb2 .wb-chip').forEach(c=>c.style.outline='');
+  chip.style.outline='3px solid var(--cor-d)';wbSel2={chip,val};
+}
+function dropWb2(blankId){
+  if(!wbSel2)return;
+  const b=document.getElementById(blankId);
+  b.textContent=wbSel2.val;b.classList.remove('ok','err');b.classList.add('filled');
+  b.dataset.filled=wbSel2.val;wbSel2.chip.style.outline='';wbSel2.chip.classList.add('used');wbSel2=null;
+}
+function checkLevel1(){
+  const done=['l1q1','l1q2','l1q3'].filter(id=>document.getElementById(id).dataset.done).length;
+  if(done===3){document.getElementById('done1').classList.add('show');confetti();}
+  else alert('أجب على الأسئلة الثلاثة أولاً! / Please answer all 3 questions first.');
+}
+function checkLevel2(){
+  const ids=['b2_1','b2_2','b2_3','b2_4','b2_5'];let correct=0;
+  ids.forEach(id=>{
+    const b=document.getElementById(id);
+    const ans=(b.dataset.filled||'').trim().toLowerCase();
+    const exp=(b.dataset.ans||'').trim().toLowerCase();
+    b.classList.remove('ok','err');
+    if(ans===exp){b.classList.add('ok');correct++;}else if(ans)b.classList.add('err');
+  });
+  const ok=correct===5;
+  setFb('l2fb',ok,ok?'✅ Perfect! All 5 correct!':'❌ '+correct+'/5. Try again!',
+    ok?'✅ ممتاز! كل الفراغات صحيحة!':'❌ '+correct+' من 5. حاول مرة أخرى!');
+  if(ok){document.getElementById('done2').classList.add('show');confetti();}
+}
+function checkLevel3(){
+  const items=[
+    {id:'l3a1',fb:'l3fb1',ok:v=>v==='was she sleeping'||v==='was she sleeping?',
+      en:'✅ Correct! "Was she sleeping?"',ar:'✅ صحيح! Was she sleeping?',
+      en2:'❌ Question: Was she sleeping?',ar2:'❌ الصحيح: Was she sleeping?'},
+    {id:'l3a2',fb:'l3fb2',ok:v=>v==="they weren't watching tv"||v==='they were not watching tv',
+      en:'✅ Correct! "They weren\'t watching TV."',ar:'✅ صحيح! They weren\'t watching TV.',
+      en2:'❌ Negative: They weren\'t watching TV.',ar2:'❌ الصحيح: They weren\'t watching TV.'},
+    {id:'l3a3',fb:'l3fb3',ok:v=>v.includes('was studying')&&v.includes('rang'),
+      en:'✅ Correct! "While he was studying, the phone rang."',ar:'✅ صحيح! While he was studying, the phone rang.',
+      en2:'❌ While + Past Continuous: "While he was studying, the phone rang."',ar2:'❌ الصحيح: While he was studying, the phone rang.'},
+  ];
+  let all=true;
+  items.forEach(item=>{
+    const val=document.getElementById(item.id).value.trim().toLowerCase().replace(/\.$/,'');
+    const ok=item.ok(val);if(!ok)all=false;
+    setFb(item.fb,ok,ok?item.en:item.en2,ok?item.ar:item.ar2);
+    if(ok){const el=document.getElementById(item.id);const r=el.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+    else shake(document.getElementById(item.id));
+  });
+  if(all){document.getElementById('done3').classList.add('show');confetti();}
+}
+function checkLevel4(){
+  const items=[
+    {id:'l4a1',fb:'l4fb1',ok:v=>v.includes('was reading'),
+      en:'✅ "When she called, I was reading a book." (in progress!)',ar:'✅ صحيح! was reading — كان جارياً.',
+      en2:'❌ Action in progress → Past Continuous: was reading.',ar2:'❌ الصحيح: was reading.'},
+    {id:'l4a2',fb:'l4fb2',ok:v=>v.includes('were playing'),
+      en:'✅ "They were playing football." — They → WERE!',ar:'✅ صحيح! They جمع → were.',
+      en2:'❌ They → WERE playing (not was).',ar2:'❌ الصحيح: were playing.'},
+    {id:'l4a3',fb:'l4fb3',ok:v=>v.includes('was dancing'),
+      en:'✅ "She was dancing in the hall." — drop the -e!','ar':'✅ صحيح! dance → dancing (احذف e).',
+      en2:'❌ dance → dancing (drop the -e): was dancing.',ar2:'❌ الصحيح: was dancing.'},
+    {id:'l4a4',fb:'l4fb4',ok:v=>v.includes('started')||v.includes('began'),
+      en:'✅ "They were playing when it started to rain." (short action = Past Simple!)',ar:'✅ صحيح! started — الحدث القصير ماضٍ بسيط.',
+      en2:'❌ The interrupting action = Past Simple: started.',ar2:'❌ الصحيح: started (ماضٍ بسيط للحدث القصير).'},
+  ];
+  let all=true;
+  items.forEach(item=>{
+    const val=document.getElementById(item.id).value.trim().toLowerCase().replace(/\.$/,'');
+    const ok=item.ok(val);if(!ok)all=false;
+    setFb(item.fb,ok,ok?item.en:item.en2,ok?item.ar:item.ar2);
+    if(ok){const el=document.getElementById(item.id);const r=el.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+    else shake(document.getElementById(item.id));
+  });
+  if(all){document.getElementById('done4').classList.add('show');confetti();}
+}
+function shareFb(taId,fbId,enMsg,arMsg){
+  const val=document.getElementById(taId).value.trim();
+  if(!val){alert('اكتب إجابتك أولاً! / Please write your answer first!');return;}
+  setFb(fbId,true,enMsg,arMsg);
+  const el=document.getElementById(taId);const r=el.getBoundingClientRect();
+  launchStar(r.left+r.width/2,r.top+window.scrollY);confetti();
+}
+const qSels=new Array(5).fill(null);
+function qsc(qi,rowId,fbId,btn,correct){
+  if(qSels[qi]!==null)return;
+  qSels[qi]=correct?1:0;
+  document.getElementById(rowId).querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  const msgs=[
+    ['✅ "was cooking" — action in progress when I arrived!','✅ was cooking — كان جارياً عند وصولي!','❌ Wrong. Action in progress → was cooking.','❌ الصحيح: was cooking.'],
+    ['✅ "were playing" — They → were!','✅ were playing — They جمع → were!','❌ Wrong. They → WERE playing.','❌ الصحيح: were playing.'],
+    ['✅ "while" goes with the long action in progress.','✅ while تأتي مع الحدث الطويل الجاري.','❌ Wrong. "while" + Past Continuous (long action).','❌ الصحيح: while.'],
+    ['✅ Correct! Long action (was sleeping) + short action (rang).','✅ صحيح! حدث طويل (was sleeping) + قصير (rang).','❌ It IS correct — was sleeping + rang.','❌ الصحيح: صحيح.'],
+    ['✅ "He wasn\'t listening." — wasn\'t + verb-ing.','✅ He wasn\'t listening — wasn\'t + الفعل + ing.','❌ Wrong. Negative = wasn\'t + verb-ing: He wasn\'t listening.','❌ الصحيح: He wasn\'t listening.'],
+  ];
+  const m=msgs[qi];
+  setFb(fbId,correct,correct?m[0]:m[2],correct?m[1]:m[3]);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}else shake(btn);
+}
+function calcQuiz(){
+  if(qSels.includes(null)){alert('أجب على جميع الأسئلة أولاً! / Please answer all questions first!');return;}
+  const score=qSels.reduce((a,b)=>a+b,0);
+  document.getElementById('scoreNum').textContent=score+'/5';
+  const msgs=[
+    ['Keep practising! You\'ll get it! 💪','تدرّب أكثر — ستنجح! 💪'],
+    ['Good effort! Review the rules again. 📖','جهد جيد! راجع القواعد مجدداً. 📖'],
+    ['Well done! Almost there! 🌟','أحسنت! أنت قريب جداً! 🌟'],
+    ['Great job! One more to go! 🎉','عمل رائع! سؤال واحد بقي! 🎉'],
+    ['Almost perfect! Excellent! ✨','شبه مثالي! ممتاز! ✨'],
+    ['PERFECT! You\'re a Past Continuous director! 🎥🏆','مثالي! أنت مخرج الماضي المستمر! 🎥🏆'],
+  ];
+  document.getElementById('scoreMsg').textContent=msgs[score][0];
+  document.getElementById('scoreMsgAr').textContent=msgs[score][1];
+  document.getElementById('scoreBox').classList.add('show');
+  if(score>=4)confetti();
+  if(score===5)localStorage.setItem('badge_past_cont','🎥');
+}
+</script>
+</body>
+</html>
