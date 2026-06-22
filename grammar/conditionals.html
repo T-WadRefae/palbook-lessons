@@ -1,295 +1,874 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Conditionals — PalBook Live</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/lesson.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Conditionals — PalBook Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --sky:#0284C7;--sky-d:#0C4A6E;--sky-l:#F0F9FF;--sun:#F59E0B;
+  --txt:#1e293b;--muted:#64748b;--white:#fff;--rad:14px;
+  --shadow:0 4px 18px rgba(2,132,199,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f0f9ff;color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif}
+
+/* ── header ── */
+.hdr{background:linear-gradient(135deg,var(--sky-d) 0%,var(--sky) 60%,#38bdf8 100%);
+  color:#fff;padding:24px 16px 0;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'🌠';font-size:120px;opacity:.07;position:absolute;top:-10px;right:-10px;line-height:1}
+.hdr h1{font-family:'Fredoka One',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.chip{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.82rem;backdrop-filter:blur(4px)}
+.prog-wrap{background:rgba(0,0,0,.2);height:6px;border-radius:3px;margin:0 16px}
+.prog-fill{height:100%;background:var(--sun);border-radius:3px;transition:width .4s}
+
+/* ── tab bar ── */
+.tab-bar{display:flex;gap:6px;padding:12px 12px 0;background:var(--sky-d);
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex:0 0 auto;background:rgba(255,255,255,.15);border:none;color:#fff;
+  border-radius:10px 10px 0 0;padding:8px 14px;font-family:'Nunito',sans-serif;
+  font-size:.83rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.tab.active,.tab:hover{background:var(--white);color:var(--sky-d)}
+
+/* ── panels ── */
+.panels{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+.panel{display:none}.panel.on{display:block}
+
+/* ── cards ── */
+.card{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.card-title{font-family:'Fredoka One',sans-serif;font-size:1.3rem;color:var(--sky-d);margin-bottom:10px}
+.card-sub{color:var(--muted);font-size:.9rem;margin-bottom:14px}
+
+/* ── Arabic instruction bar ── */
+.q-inst{border-right:5px solid var(--sky);background:var(--sky-l);
+  padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0 10px;
+  font-size:.95rem;direction:rtl;text-align:right;color:var(--sky-d)}
+
+/* ── MCQ ── */
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.opt{background:#f1f5f9;border:2px solid #e2e8f0;border-radius:10px;
+  padding:9px 18px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.93rem;
+  font-weight:600;transition:all .2s}
+.opt:hover:not(:disabled){background:var(--sky-l);border-color:var(--sky)}
+.opt.ok{background:#dcfce7;border-color:#16a34a;color:#14532d}
+.opt.err{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.opt:disabled{cursor:default}
+
+/* ── feedback ── */
+.fb-wrap{display:none;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.9rem}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#dcfce7;border-left:4px solid #16a34a}
+.fb-wrap.err{background:#fee2e2;border-left:4px solid #dc2626}
+.fb-en{font-weight:700;margin-bottom:4px}
+.fb-ar{direction:rtl;text-align:right;font-size:.88rem;opacity:.85}
+
+/* ── word bank ── */
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;padding:12px;
+  background:#f8fafc;border-radius:10px;border:2px dashed #cbd5e1;min-height:48px}
+.wb-chip{background:var(--sky-l);border:2px solid var(--sky);color:var(--sky-d);
+  border-radius:20px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:.88rem;
+  transition:all .2s;user-select:none}
+.wb-chip.used{opacity:.35;pointer-events:none}
+.wb-chip.sel{background:var(--sky);color:#fff;transform:scale(1.05)}
+.blank{display:inline-block;min-width:100px;border-bottom:2.5px solid var(--sky);
+  padding:2px 8px;text-align:center;cursor:pointer;border-radius:4px;margin:0 4px;
+  font-weight:700;color:var(--sky-d);transition:background .2s}
+.blank:hover:not(.filled){background:var(--sky-l)}
+.blank.filled{border-color:#16a34a;color:#15803d;background:#f0fdf4}
+.fill-line{line-height:2.4;margin:8px 0;font-size:.92rem}
+
+/* ── type ── */
+.type-inp{border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;
+  font-family:'Nunito',sans-serif;font-size:.88rem;width:150px;margin:4px 6px;
+  transition:border-color .2s}
+.type-inp:focus{outline:none;border-color:var(--sky)}
+.type-inp.ok{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.type-inp.err{border-color:#dc2626;background:#fef2f2;color:#991b1b}
+.check-btn{background:var(--sky);color:#fff;border:none;border-radius:10px;
+  padding:9px 22px;cursor:pointer;font-family:'Nunito',sans-serif;
+  font-weight:700;font-size:.9rem;margin-top:10px;transition:background .2s}
+.check-btn:hover{background:var(--sky-d)}
+
+/* ── level done ── */
+.lvl-done{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #16a34a;
+  border-radius:12px;padding:14px;text-align:center;display:none;margin-top:14px}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ── 3 type cards ── */
+.type-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:14px 0}
+.type-card{border-radius:14px;padding:16px;position:relative}
+.type-card.t0{background:#fff7ed;border:2.5px solid #fb923c}
+.type-card.t1{background:#eff6ff;border:2.5px solid #60a5fa}
+.type-card.t2{background:#fdf4ff;border:2.5px solid #c084fc}
+.type-card .tc-badge{font-family:'Fredoka One',sans-serif;font-size:1.3rem;margin-bottom:8px}
+.type-card .tc-name{font-weight:800;font-size:.95rem;margin-bottom:4px}
+.type-card .tc-mean{font-size:.82rem;opacity:.75;margin-bottom:10px}
+.type-card .tc-formula{font-size:.8rem;background:rgba(0,0,0,.07);border-radius:8px;padding:6px 10px;font-weight:700;margin-bottom:8px}
+.type-card .tc-ex{font-size:.82rem;font-style:italic;line-height:1.6}
+.t0 .tc-badge{color:#ea580c}.t1 .tc-badge{color:#2563eb}.t2 .tc-badge{color:#9333ea}
+
+/* ── discover sentence boxes ── */
+.cond-box{border-radius:12px;padding:14px;margin:10px 0;font-size:.92rem}
+.cond-box.zero{background:#fff7ed;border-left:5px solid #fb923c}
+.cond-box.first{background:#eff6ff;border-left:5px solid #60a5fa}
+.cond-box.second{background:#fdf4ff;border-left:5px solid #c084fc}
+.cond-box .cb-type{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.zero .cb-type{color:#ea580c}.first .cb-type{color:#2563eb}.second .cb-type{color:#9333ea}
+.cond-box .cb-sent{line-height:1.8}
+.cond-box .hl-if{font-weight:800;color:#ea580c}
+.cond-box .hl-cond{font-weight:800;color:#2563eb}
+.cond-box .hl-res{font-weight:800;color:#9333ea}
+
+/* ── flashcards ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+.fc{perspective:600px;cursor:pointer;height:140px}
+.fc-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s;position:relative}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--sky-l),#fff);border:2px solid var(--sky)}
+.fc-back{background:linear-gradient(135deg,var(--sky),#38bdf8);color:#fff;transform:rotateY(180deg)}
+.fc-front .word{font-size:.95rem;font-weight:800;color:var(--sky-d);margin-top:6px;line-height:1.2}
+.fc-front .emoji{font-size:1.8rem}
+.fc-back .ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;font-weight:700}
+.fc-back .syn{font-size:.75rem;opacity:.85;margin-top:6px;line-height:1.4}
+.tts-btn{background:rgba(2,132,199,.12);border:none;border-radius:20px;
+  padding:3px 10px;font-size:.78rem;cursor:pointer;color:var(--sky-d);
+  margin-top:6px;font-family:'Nunito',sans-serif;font-weight:600}
+
+/* ── speak/write ── */
+.speak-prompt{background:var(--sky-l);border-left:4px solid var(--sky);
+  border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:.9rem}
+.speak-prompt strong{color:var(--sky-d)}
+.write-area{width:100%;border:2px solid #e2e8f0;border-radius:10px;
+  padding:12px;font-family:'Nunito',sans-serif;font-size:.9rem;
+  min-height:110px;resize:vertical;transition:border-color .2s}
+.write-area:focus{outline:none;border-color:var(--sky)}
+
+/* ── quiz ── */
+.quiz-q{background:#fff;border:2px solid #f1f5f9;border-radius:12px;padding:16px;margin:12px 0;transition:border-color .2s}
+.quiz-q.answered-ok{border-color:#16a34a;background:#f0fdf4}
+.quiz-q.answered-err{border-color:#dc2626;background:#fef2f2}
+.q-num{font-family:'Fredoka One',sans-serif;color:var(--sky);font-size:1rem;margin-bottom:8px}
+.quiz-score{background:linear-gradient(135deg,var(--sky-l),#e0f2fe);
+  border:3px solid var(--sky);border-radius:16px;padding:22px;text-align:center;
+  display:none;margin-top:18px}
+.quiz-score.show{display:block;animation:popIn .5s ease}
+.score-num{font-family:'Fredoka One',sans-serif;font-size:3rem;color:var(--sky)}
+.badge-earned{font-size:3.5rem;display:block;margin:10px 0;animation:bounce .6s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+
+/* ── misc ── */
+.star-fly{position:fixed;pointer-events:none;font-size:1.5rem;z-index:9999;animation:floatStar .9s ease forwards}
+@keyframes floatStar{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-80px) scale(1.5);opacity:0}}
+.confetti-p{position:fixed;pointer-events:none;width:8px;height:8px;z-index:9998;border-radius:2px;animation:confFall 1.2s ease forwards}
+@keyframes confFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s ease}
+.hint-ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right;
+  font-size:.92rem;background:#fff8dc;border-right:4px solid var(--sun);
+  padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0;color:#78350f}
+.divider{height:2px;background:linear-gradient(to right,var(--sky-l),var(--sky),var(--sky-l));
+  border:none;margin:18px 0;border-radius:1px}
+.lbl{font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:.82rem}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--sky);border-radius:3px}
+</style>
 </head>
 <body>
-<div class="lesson-wrap">
 
-  <header class="lesson-head">
-    <p class="eyebrow">Grammar • English for Palestine</p>
-    <h1>Conditionals — Types 0, 1 &amp; 2</h1>
-    <div class="meta">
-      <span class="chip">🎯 Grades 8 &amp; 9</span>
-      <span class="chip">⏱️ ~40 min</span>
-      <span class="chip ar">الجمل الشرطية</span>
-    </div>
-    <nav class="stepper">
-      <button>1 · If…</button>
-      <button>2 · Goals</button>
-      <button>3 · Words</button>
-      <button>4 · Types</button>
-      <button>5 · Practice</button>
-      <button>6 · Write</button>
-      <button>7 · Dream</button>
-      <button>8 · Quiz</button>
-    </nav>
-    <div class="progress-track"><div class="progress-fill"></div></div>
-  </header>
-
-  <!-- 1. Introduction -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">1</span> Introduction · What Would You Do If…?</h2>
-      <p class="section-sub">A hook about possibilities and hypotheticals — 2 to 3 minutes.</p>
-
-      <div class="placeholder">🖼️ Image / situation placeholder
-        <small>Add a picture of a crossroads or a "what if?" thought bubble. — تُضاف لاحقًا</small>
-      </div>
-
-      <p><b>"If I were the president…" 🤔</b> "If it rains, I'll stay home." "If water reaches 100°C, it boils."
-        Every time we use <i>if</i> to talk about conditions and results, we are using a <b>conditional sentence</b>.
-        There are three main types — each for a different reality.</p>
-
-      <div class="hint-ar block ar">سؤال تحفيزي: ماذا ستفعل لو كنت رئيسًا؟ ماذا يحدث لو سقطت مياه الأمطار الآن؟ الجمل الشرطية تجعل كلامك أكثر دقة ومنطقية!</div>
-
-      <p class="q">❓ "If you study hard, you ___ pass the exam." — which tense goes in the blank?</p>
-    </div>
-  </section>
-
-  <!-- 2. Learning Outcomes -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">2</span> Learning Outcomes · Conditionals Types 0, 1 &amp; 2</h2>
-      <p class="section-sub">By the end of this lesson, students will be able to:</p>
-      <ul class="clean">
-        <li>✅ Use <b>Zero Conditional</b> (Type 0) for scientific facts and general truths.</li>
-        <li>✅ Use <b>First Conditional</b> (Type 1) for real and likely future situations.</li>
-        <li>✅ Use <b>Second Conditional</b> (Type 2) for imaginary or unlikely present/future situations.</li>
-        <li>✅ Correctly position the <i>if-clause</i> and apply the right verb forms.</li>
-        <li>✅ Distinguish between the three types based on context and meaning.</li>
-      </ul>
-      <div class="hint-ar block ar">ستتعلم الأنواع الثلاثة للجمل الشرطية ومتى تستخدم كل نوع — الحقائق والاحتمالات والأوضاع الافتراضية.</div>
-    </div>
-  </section>
-
-  <!-- 3. Vocabulary -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">3</span> Vocabulary · Conditional Key Words</h2>
-      <p class="section-sub">Important words and phrases used in conditional sentences.</p>
-      <div class="vocab-grid">
-        <div class="vocab"><div class="w">if</div><div class="m ar">إذا / لو</div></div>
-        <div class="vocab"><div class="w">unless</div><div class="m ar">إلا إذا / ما لم</div></div>
-        <div class="vocab"><div class="w">when</div><div class="m ar">عندما (حقيقي)</div></div>
-        <div class="vocab"><div class="w">provided that</div><div class="m ar">شريطة أن</div></div>
-        <div class="vocab"><div class="w">would</div><div class="m ar">كان سيفعل (افتراضي)</div></div>
-        <div class="vocab"><div class="w">might</div><div class="m ar">قد يفعل</div></div>
-        <div class="vocab"><div class="w">condition</div><div class="m ar">شرط</div></div>
-        <div class="vocab"><div class="w">result</div><div class="m ar">نتيجة</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. Teach -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">4</span> Teach · Three Types of Conditionals</h2>
-      <p class="section-sub">Structure, meaning and examples for each type.</p>
-
-      <table class="grammar">
-        <tr><th>Type</th><th>Meaning</th><th>If-clause</th><th>Main clause</th></tr>
-        <tr><td><b>Zero (0)</b></td><td>General truth / scientific fact</td><td>If + <code>Present Simple</code></td><td><code>Present Simple</code></td></tr>
-        <tr><td><b>First (1)</b></td><td>Real / likely future possibility</td><td>If + <code>Present Simple</code></td><td><code>will + base verb</code></td></tr>
-        <tr><td><b>Second (2)</b></td><td>Imaginary / unlikely / hypothetical</td><td>If + <code>Past Simple</code></td><td><code>would + base verb</code></td></tr>
-      </table>
-
-      <p><b>Examples:</b></p>
-      <div class="example">
-        <b>Type 0:</b> If you heat water to 100°C, it <b>boils</b>. (Always true.)<br>
-        <b>Type 1:</b> If it rains tomorrow, I <b>will stay</b> home. (Likely — might really happen.)<br>
-        <b>Type 2:</b> If I <b>were</b> a bird, I <b>would fly</b> to Jerusalem. (Imaginary — I am not a bird.)
-      </div>
-
-      <p><b>Key notes:</b></p>
-      <ul class="clean">
-        <li>🔵 In Type 2, use <b>were</b> (not was) for all subjects: <i>If I/he/she <b>were</b> …</i></li>
-        <li>🟢 The if-clause can come first or second: <i>I <b>will help</b> if you <b>ask</b> me.</i></li>
-        <li>🟡 With <b>unless</b> = if … not: <i>Unless you study, you won't pass.</i></li>
-      </ul>
-
-      <div class="placeholder">🖼️ Visual placeholder
-        <small>Add a three-row comparison table with colour-coded structures. — تُضاف لاحقًا</small>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Guided Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">5</span> Guided Practice · Which Type?</h2>
-      <p class="section-sub">Practise identifying and completing conditionals — instant feedback.</p>
-
-      <div class="ex mcq">
-        <p class="q">1) "If I ___ more money, I would travel the world." (imaginary)</p>
-        <div class="options">
-          <button class="option" data-correct data-ok="Correct! Type 2: if + past simple → would + base.">had</button>
-          <button class="option" data-no="'Have' is present — this is Type 2 (imaginary), so use past.">have</button>
-          <button class="option" data-no="'Will have' is for Type 1 or future contexts.">will have</button>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex fill">
-        <p class="q">2) Complete with the correct verb form:</p>
-        <div class="line">If you mix red and blue, you <input type="text" data-answer="get" placeholder="(get — Type 0)"> purple.</div>
-        <div class="line">If she studies hard, she <input type="text" data-answer="will pass" placeholder="(pass — Type 1)"> the test.</div>
-        <div class="line">If I were the teacher, I <input type="text" data-answer="would give|would not give" placeholder="(give — Type 2)"> less homework.</div>
-        <button class="btn check-fill">Check</button>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex match-ex">
-        <p class="q">3) Match each sentence to its conditional type:</p>
-        <div class="match">
-          <div class="col left">
-            <button class="item" data-key="a">If water freezes, it becomes ice.</button>
-            <button class="item" data-key="b">If it is sunny, we will go out.</button>
-            <button class="item" data-key="c">If I were rich, I would help everyone.</button>
-          </div>
-          <div class="col right">
-            <button class="item" data-key="b">Type 1 — real possibility</button>
-            <button class="item" data-key="c">Type 2 — hypothetical</button>
-            <button class="item" data-key="a">Type 0 — general truth</button>
-          </div>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex dragdrop">
-        <p class="q">4) Drag each sentence to the correct type:</p>
-        <div class="dd-pool">
-          <span class="dd-token" data-zone="z1">If you drop glass, it breaks.</span>
-          <span class="dd-token" data-zone="z2">If I won the lottery, I would donate to schools.</span>
-        </div>
-        <div class="dd-zones">
-          <div class="dd-zone" data-zone="z1"><span class="label">Type 0 — always true / scientific</span></div>
-          <div class="dd-zone" data-zone="z2"><span class="label">Type 2 — imaginary / unlikely</span></div>
-        </div>
-        <button class="btn check-dd">Check</button>
-        <div class="feedback"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Independent Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">6</span> Independent Practice · My Conditions</h2>
-      <p class="section-sub">Write your own conditional sentences ✍️</p>
-      <p class="q">Write <b>6 sentences</b> — 2 for each conditional type.</p>
-      <div class="hint-ar ar">
-        Type 0: حقيقة علمية أو عامة | Type 1: موقف محتمل في المستقبل | Type 2: موقف خيالي أو مستحيل — استخدم كلًا منهما مرتين.
-      </div>
-      <textarea class="write" placeholder="Type 0:&#10;1) If you exercise daily, you feel healthier.&#10;2) If you don't sleep enough, you feel tired.&#10;&#10;Type 1:&#10;3) If it doesn't rain, we will have our picnic.&#10;4) ...&#10;&#10;Type 2:&#10;5) If I were the mayor, I would build more libraries.&#10;6) ..."></textarea>
-      <p style="margin-top:12px"><b>Self-check ✅</b></p>
-      <ul class="checklist">
-        <li><label><input type="checkbox"> Type 0 has <b>Present Simple</b> in both clauses.</label></li>
-        <li><label><input type="checkbox"> Type 1 has <b>Present Simple</b> in the if-clause and <b>will</b> in the main clause.</label></li>
-        <li><label><input type="checkbox"> Type 2 has <b>Past Simple (were)</b> in the if-clause and <b>would</b> in the main clause.</label></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 7. Real-Life Task -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">7</span> Real-Life Task · Dreaming of a Better World 🌍</h2>
-      <p class="section-sub">Use conditionals to express hopes and visions for Palestine and the world.</p>
-
-      <div class="placeholder">🖼️ Image placeholder
-        <small>Add a hopeful image — children planting trees, a rebuilt city, a Palestinian flag flying. — تُضاف لاحقًا</small>
-      </div>
-
-      <p class="q">Write a short paragraph (5–6 sentences) using all three conditional types to express what you think about Palestine's future.</p>
-      <textarea class="write" placeholder="If we protect our environment, the land will stay beautiful for our children. (Type 1)&#10;If every child had access to education, the world would be a fairer place. (Type 2)&#10;If people work together, great things always happen. (Type 0)..."></textarea>
-      <div class="hint-ar block ar">المهمة الواقعية: عبّر عن أحلامك وآمالك لفلسطين والعالم باستخدام الأنواع الثلاثة للجمل الشرطية — اجعل كلامك مؤثرًا!</div>
-    </div>
-  </section>
-
-  <!-- 8. Assessment -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">8</span> Assessment · Conditionals Quiz</h2>
-      <p class="section-sub">Answer all questions, then press Submit for your score.</p>
-
-      <div class="assessment">
-        <div class="ex mcq-q">
-          <p class="q">1) "If you heat metal, it ___." (Type 0 — general truth)</p>
-          <div class="options">
-            <button class="option">will expand</button>
-            <button class="option" data-correct>expands</button>
-            <button class="option">would expand</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">2) "If I ___ a doctor, I would help poor people." (Type 2)</p>
-          <div class="options">
-            <button class="option">am</button>
-            <button class="option">will be</button>
-            <button class="option" data-correct>were</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">3) Type 1: If it rains, we ___ (cancel) the trip.</p>
-          <input type="text" data-answer="will cancel" placeholder="will + base verb">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">4) Type 2: If she ___ (study) more, she would pass.</p>
-          <input type="text" data-answer="studied" placeholder="past simple form">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">5) Which sentence is a Type 1 (real future possibility)?</p>
-          <div class="options">
-            <button class="option">If I were taller, I would play basketball.</button>
-            <button class="option" data-correct>If you come early, we will get good seats.</button>
-            <button class="option">If you mix colours, you get new colours.</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">6) "Unless you hurry, you ___ miss the bus." (unless = if not)</p>
-          <div class="options">
-            <button class="option" data-correct>will</button>
-            <button class="option">would</button>
-            <button class="option">won't</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <button class="btn green submit-assess">Submit answers</button>
-        <div class="result">
-          <p>Your score</p>
-          <div class="score">0 / 0</div>
-          <p class="msg"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div style="height:8px"></div>
+<!-- HEADER -->
+<div class="hdr">
+  <p style="font-size:.8rem;opacity:.7;letter-spacing:1px;text-transform:uppercase">Grammar • English for Palestine</p>
+  <h1>Conditionals 🌠</h1>
+  <p class="ar" style="font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;margin-top:4px">الجمل الشرطية — Types 0 · 1 · 2</p>
+  <div class="chips">
+    <span class="chip">🎯 Grades 8 &amp; 9</span>
+    <span class="chip">⏱️ ~40 min</span>
+    <span class="chip">🌠 If… Then…</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
 </div>
 
-<nav class="lesson-nav">
-  <button class="btn ghost" id="prevBtn">‹ Prev</button>
-  <span class="spacer" id="navCounter">1 / 8</span>
-  <button class="btn" id="nextBtn">Next ›</button>
-</nav>
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab active" onclick="go(0)">🚀 Start</button>
+  <button class="tab" onclick="go(1)">📚 Words</button>
+  <button class="tab" onclick="go(2)">🔍 Discover</button>
+  <button class="tab" onclick="go(3)">🧠 Grammar</button>
+  <button class="tab" onclick="go(4)">✏️ Practice</button>
+  <button class="tab" onclick="go(5)">🗣️ Create</button>
+  <button class="tab" onclick="go(6)">🎯 Quiz</button>
+</div>
 
-<script src="assets/lesson.js"></script>
+<div class="panels">
+
+<!-- ══════════════════ TAB 1 — START ══════════════════ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <div class="card-title">🚀 What Would You Do If…?</div>
+    <div class="card-sub">We use "if" to talk about conditions and results — every day!</div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;margin:16px 0">
+      <div class="cond-box zero">
+        <div class="cb-type">🔵 Always True (Fact)</div>
+        <div class="cb-sent">
+          <span class="hl-if">If</span> you heat ice, it <span class="hl-res">melts</span>.
+        </div>
+      </div>
+      <div class="cond-box first">
+        <div class="cb-type">🟢 Real Possibility (Future)</div>
+        <div class="cb-sent">
+          <span class="hl-if">If</span> it rains tomorrow, I <span class="hl-res">will stay</span> home.
+        </div>
+      </div>
+      <div class="cond-box second">
+        <div class="cb-type">🟣 Imaginary / Dream</div>
+        <div class="cb-sent">
+          <span class="hl-if">If</span> I <span class="hl-cond">were</span> a bird, I <span class="hl-res">would fly</span> to Jerusalem.
+        </div>
+      </div>
+    </div>
+
+    <div class="hint-ar">ثلاثة أنواع من الجمل الشرطية — كل نوع لموقف مختلف: حقيقة علمية، احتمال حقيقي، أو حلم خيالي. لنكتشف!</div>
+
+    <hr class="divider"/>
+    <p class="lbl">Warm-up — Choose the right form</p>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> If you heat water to 100°C, it ___. (scientific fact)</p>
+    <div class="opts" id="s1opts">
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Will boil is for future possibility — science facts use present.','will boil للاحتمال المستقبلي — الحقائق العلمية تستخدم المضارع.')">will boil</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,true,'Correct! Zero conditional: If + present → present (always true).','صحيح! الشرطي الصفري: if + مضارع → مضارع للحقيقة الدائمة.')">boils</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Would boil is for imaginary situations — water always boils at 100°C.','would boil للمواقف الخيالية — الماء دائمًا يغلي عند 100°C.')">would boil</button>
+    </div>
+    <div class="fb-wrap" id="s1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> If I study hard, I ___ pass the exam. (real, likely future)</p>
+    <div class="opts" id="s2opts">
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Pass (present) makes it zero conditional — this is a personal likely future.','pass مضارع يجعلها شرطية صفرية — هذا احتمال مستقبلي شخصي.')">pass</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,true,'Correct! First conditional: If + present → will + base verb.','صحيح! الشرطي الأول: if + مضارع → will + فعل مصدري.')">will pass</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Would pass is second conditional — for imaginary situations.','would pass للشرطي الثاني — للمواقف الخيالية.')">would pass</button>
+    </div>
+    <div class="fb-wrap" id="s2fb"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 2 — WORDS ══════════════════ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <div class="card-title">📚 Key Vocabulary</div>
+    <div class="card-sub">Click a card to flip it. 🔊 to hear the word.</div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📌 Three Types at a Glance</div>
+    <div class="hint-ar">ملخص الأنواع الثلاثة — للمراجعة السريعة قبل اكتشاف القاعدة.</div>
+    <div class="type-cards">
+      <div class="type-card t0">
+        <div class="tc-badge">🔵 Zero (Type 0)</div>
+        <div class="tc-name">Scientific Facts &amp; General Truths</div>
+        <div class="tc-mean ar">الحقائق العلمية والحقيقة الدائمة</div>
+        <div class="tc-formula">If + Present → Present</div>
+        <div class="tc-ex">"If you mix red and blue, you get purple."</div>
+      </div>
+      <div class="type-card t1">
+        <div class="tc-badge">🟢 First (Type 1)</div>
+        <div class="tc-name">Real &amp; Likely Future</div>
+        <div class="tc-mean ar">الاحتمال الحقيقي المستقبلي</div>
+        <div class="tc-formula">If + Present → will + base</div>
+        <div class="tc-ex">"If it rains, I will take an umbrella."</div>
+      </div>
+      <div class="type-card t2">
+        <div class="tc-badge">🟣 Second (Type 2)</div>
+        <div class="tc-name">Imaginary / Unlikely</div>
+        <div class="tc-mean ar">الافتراضي والخيالي</div>
+        <div class="tc-formula">If + Past → would + base</div>
+        <div class="tc-ex">"If I had wings, I would fly to Mecca."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 3 — DISCOVER ══════════════════ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <div class="card-title">🔍 Compare the Three Types!</div>
+    <div class="card-sub">Look carefully at the verbs in the if-clause and the main clause.</div>
+    <div class="hint-ar">قارن الأفعال في كل نوع. ما الفرق بين الأزمنة المستخدمة في كل جملة؟</div>
+
+    <div class="cond-box zero" style="margin-top:14px">
+      <div class="cb-type">TYPE 0 — General truth</div>
+      <div class="cb-sent">
+        If you <strong style="color:#ea580c">heat</strong> [Present] ice, it <strong style="color:#ea580c">melts</strong> [Present].
+      </div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px">Both verbs are Present Simple.</div>
+    </div>
+
+    <div class="cond-box first">
+      <div class="cb-type">TYPE 1 — Likely future</div>
+      <div class="cb-sent">
+        If it <strong style="color:#2563eb">rains</strong> [Present] tomorrow, I <strong style="color:#2563eb">will take</strong> [will + base] an umbrella.
+      </div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px">If-clause: Present Simple → Main clause: will + verb.</div>
+    </div>
+
+    <div class="cond-box second">
+      <div class="cb-type">TYPE 2 — Imaginary</div>
+      <div class="cb-sent">
+        If I <strong style="color:#9333ea">had</strong> [Past Simple] wings, I <strong style="color:#9333ea">would fly</strong> [would + base] over Palestine.
+      </div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px">If-clause: Past Simple → Main clause: would + verb.</div>
+    </div>
+
+    <div style="background:#f0f9ff;border:2px solid #bae6fd;border-radius:12px;padding:14px;margin-top:14px;font-size:.88rem">
+      <strong>💡 Key Trick — Type 2:</strong> Use <strong>were</strong> (not was) for ALL subjects:<br>
+      <em>If I <strong>were</strong> rich… / If he <strong>were</strong> here… / If she <strong>were</strong> a teacher…</em>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 Now You Discover!</div>
+    <div class="hint-ar">ماذا تستخدم في الجملة الشرطية الثانية في الجزء الرئيسي؟</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> "If I <u>studied</u> [Past], I ___ pass." — which type and which form?</p>
+    <div class="opts" id="d1opts">
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Will pass is Type 1 — but the if-clause uses past, so it\'s Type 2.','will pass للشرطي الأول — لكن if-clause ماضٍ إذن نحتاج الشرطي الثاني.')">Type 1 — will pass</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,true,'Correct! Past in if-clause → would + base in main clause = Type 2.','صحيح! ماضٍ في if-clause → would + فعل في الجملة الرئيسية = الشرطي الثاني.')">Type 2 — would pass</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Type 0 uses present in both clauses — not past.','الشرطي الصفري يستخدم المضارع في كلا الجزأين.')">Type 0 — pass</button>
+    </div>
+    <div class="fb-wrap" id="d1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> "If ice melts, it becomes water." — which type is this?</p>
+    <div class="opts" id="d2opts">
+      <button class="opt" onclick="sc('d2','d2fb',this,true,'Correct! Both present → Type 0 (scientific fact).','صحيح! كلاهما مضارع → الشرطي الصفري (حقيقة علمية).')">Type 0 — general truth</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'Type 1 needs will in the main clause — this uses present.','الشرطي الأول يحتاج will في الجملة الرئيسية.')">Type 1 — likely future</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'Type 2 needs past + would — neither is used here.','الشرطي الثاني يحتاج ماضيًا + would.')">Type 2 — imaginary</button>
+    </div>
+    <div class="fb-wrap" id="d2fb"></div>
+
+    <div style="background:linear-gradient(135deg,var(--sky-l),#e0f2fe);border:2.5px solid var(--sky);border-radius:12px;padding:16px;text-align:center;margin-top:16px">
+      <div style="font-family:'Fredoka One',sans-serif;color:var(--sky-d);font-size:1.1rem;margin-bottom:8px">⭐ The Pattern</div>
+      <p style="font-size:.92rem;line-height:1.9">
+        🔵 <strong>Type 0:</strong> If + <em>present</em> → <em>present</em><br>
+        🟢 <strong>Type 1:</strong> If + <em>present</em> → <strong>will</strong> + base<br>
+        🟣 <strong>Type 2:</strong> If + <em>past</em> → <strong>would</strong> + base
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 4 — GRAMMAR ══════════════════ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <div class="card-title">🧠 All Three Types — Full Rules</div>
+    <div class="hint-ar">القواعد الكاملة للأنواع الثلاثة مع الأمثلة.</div>
+    <div class="type-cards">
+      <div class="type-card t0" style="border-width:3px">
+        <div class="tc-badge" style="font-size:1.5rem">🔵 Type 0</div>
+        <div class="tc-name" style="font-size:1rem">Zero Conditional</div>
+        <div class="tc-mean ar" style="font-size:.85rem">الحقائق العلمية والعامة</div>
+        <div style="background:rgba(234,88,12,.1);border-radius:8px;padding:8px;margin:8px 0;font-size:.85rem">
+          <strong>If + Present Simple,</strong><br><strong>Present Simple</strong>
+        </div>
+        <div class="tc-ex">If you <u>freeze</u> water, it <u>becomes</u> ice.<br>If plants <u>don't get</u> water, they <u>die</u>.</div>
+      </div>
+      <div class="type-card t1" style="border-width:3px">
+        <div class="tc-badge" style="font-size:1.5rem">🟢 Type 1</div>
+        <div class="tc-name" style="font-size:1rem">First Conditional</div>
+        <div class="tc-mean ar" style="font-size:.85rem">الاحتمال الحقيقي المستقبلي</div>
+        <div style="background:rgba(37,99,235,.1);border-radius:8px;padding:8px;margin:8px 0;font-size:.85rem">
+          <strong>If + Present Simple,</strong><br><strong>will + base verb</strong>
+        </div>
+        <div class="tc-ex">If it <u>rains</u>, I <u>will stay</u> home.<br>If you <u>work</u> hard, you <u>will succeed</u>.</div>
+      </div>
+      <div class="type-card t2" style="border-width:3px">
+        <div class="tc-badge" style="font-size:1.5rem">🟣 Type 2</div>
+        <div class="tc-name" style="font-size:1rem">Second Conditional</div>
+        <div class="tc-mean ar" style="font-size:.85rem">الافتراضي والخيالي</div>
+        <div style="background:rgba(147,51,234,.1);border-radius:8px;padding:8px;margin:8px 0;font-size:.85rem">
+          <strong>If + Past Simple,</strong><br><strong>would + base verb</strong>
+        </div>
+        <div class="tc-ex">If I <u>were</u> the president, I <u>would build</u> more schools.<br>If she <u>had</u> a car, she <u>would drive</u> to work.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Important Notes</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin:12px 0">
+      <div style="background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 10px 10px 0;padding:12px 16px;font-size:.9rem">
+        ⚠️ <strong>Type 2 — always use WERE:</strong><br>
+        ✗ If I <u>was</u> rich… &nbsp;|&nbsp; ✓ If I <strong>were</strong> rich…<br>
+        ✗ If he <u>was</u> here… &nbsp;|&nbsp; ✓ If he <strong>were</strong> here…<br>
+        <span class="ar" style="font-size:.85rem">(were تُستخدم مع جميع الضمائر في الشرطي الثاني)</span>
+      </div>
+      <div style="background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 10px 10px 0;padding:12px 16px;font-size:.9rem">
+        ✅ <strong>If-clause position:</strong> The if-clause can come first OR second.<br>
+        First: "If it rains, I will stay home." — <em>comma needed</em><br>
+        Second: "I will stay home if it rains." — <em>no comma</em>
+      </div>
+      <div style="background:#fdf4ff;border-left:4px solid #c084fc;border-radius:0 10px 10px 0;padding:12px 16px;font-size:.9rem">
+        💡 <strong>Unless = if… not:</strong><br>
+        "Unless you study, you won't pass." = "If you <strong>don't</strong> study, you won't pass."<br>
+        <span class="ar" style="font-size:.85rem">unless = إلا إذا / ما لم</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 5 — PRACTICE ══════════════════ -->
+<div class="panel" id="p4">
+  <div class="card">
+    <div class="card-title">✏️ Level 1 — Identify and Complete</div>
+    <div class="hint-ar">اختر الشكل الصحيح للفعل في كل جملة شرطية.</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> If you touch fire, it ___ you. (Type 0 — always true)</p>
+    <div class="opts" id="l1q1opts">
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,true,'Correct! Type 0: if + present → present (always true).','صحيح! الشرطي الصفري: مضارع → مضارع.')">burns</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'Will burn is Type 1 — this is a universal truth, use present.','will burn للشرطي الأول — هذه حقيقة دائمة تستخدم المضارع.')">will burn</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'Would burn is Type 2 — for imaginary situations.','would burn للشرطي الثاني.')">would burn</button>
+    </div>
+    <div class="fb-wrap" id="l1q1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> If I ___ a million dollars, I would build a school in Gaza. (Type 2 — imaginary)</p>
+    <div class="opts" id="l1q2opts">
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Have is present — Type 2 needs past in the if-clause.','have مضارع — الشرطي الثاني يحتاج ماضيًا في if-clause.')">have</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,true,'Correct! Type 2: if + past (had) → would in main clause.','صحيح! الشرطي الثاني: if + ماضٍ (had) → would في الجملة الرئيسية.')">had</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Will have is future — Type 2 if-clause uses past simple.','will have مستقبل — if-clause الشرطي الثاني يستخدم الماضي البسيط.')">will have</button>
+    </div>
+    <div class="fb-wrap" id="l1q2fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>3)</strong> If it doesn't rain, the crops ___. (Type 1 — real concern)</p>
+    <div class="opts" id="l1q3opts">
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'Would die is Type 2 — but this is a real concern (Type 1).','would die للشرطي الثاني — لكن هذا قلق حقيقي (الشرطي الأول).')">would die</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,true,'Correct! Type 1: if + present → will + base verb.','صحيح! الشرطي الأول: if + مضارع → will + فعل مصدري.')">will die</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'Die (present) makes it Type 0 — but this is a real likely concern.','die مضارع يجعلها صفرية — لكن هذا احتمال حقيقي.')">die</button>
+    </div>
+    <div class="fb-wrap" id="l1q3fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>4)</strong> If I ___ a doctor, I would help the poor for free. (Type 2)</p>
+    <div class="opts" id="l1q4opts">
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'Am is present — Type 2 needs past in the if-clause.','am مضارع — الشرطي الثاني يحتاج ماضيًا.')">am</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'Was is past — but Type 2 always uses WERE (not was) with I.','was ماضٍ — لكن الشرطي الثاني دائمًا يستخدم were وليس was.')">was</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,true,'Correct! Type 2 always uses WERE for all subjects.','صحيح! الشرطي الثاني دائمًا يستخدم were مع جميع الضمائر.')">were</button>
+    </div>
+    <div class="fb-wrap" id="l1q4fb"></div>
+
+    <div class="lvl-done" id="l1done">🎉 Level 1 done! You know the three types!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 2 — Fill with the Word Bank</div>
+    <div class="hint-ar">اضغط على الكلمة ثم اضغط على الفراغ لوضعها.</div>
+
+    <div class="wb-chips" id="wb2chips">
+      <span class="wb-chip" onclick="pickWb(this,'boils')">boils</span>
+      <span class="wb-chip" onclick="pickWb(this,'will help')">will help</span>
+      <span class="wb-chip" onclick="pickWb(this,'would travel')">would travel</span>
+      <span class="wb-chip" onclick="pickWb(this,'will miss')">will miss</span>
+      <span class="wb-chip" onclick="pickWb(this,'had')">had</span>
+    </div>
+
+    <div style="margin:12px 0">
+      <div class="fill-line">1) If you heat water, it <span class="blank" id="wb2b1" onclick="dropWb('wb2b1')">______</span>. <em style="font-size:.78rem;color:var(--muted)">(Type 0)</em></div>
+      <div class="fill-line">2) If you call me, I <span class="blank" id="wb2b2" onclick="dropWb('wb2b2')">______</span> you. <em style="font-size:.78rem;color:var(--muted)">(Type 1)</em></div>
+      <div class="fill-line">3) If I <span class="blank" id="wb2b3" onclick="dropWb('wb2b3')">______</span> wings, I would fly home. <em style="font-size:.78rem;color:var(--muted)">(Type 2 — if-clause)</em></div>
+      <div class="fill-line">4) If she <span class="blank" id="wb2b4" onclick="dropWb('wb2b4')">______</span> the bus, she will be late. <em style="font-size:.78rem;color:var(--muted)">(Type 1)</em></div>
+      <div class="fill-line">5) If I were rich, I <span class="blank" id="wb2b5" onclick="dropWb('wb2b5')">______</span> the world. <em style="font-size:.78rem;color:var(--muted)">(Type 2 — main clause)</em></div>
+    </div>
+
+    <button class="check-btn" onclick="checkWb2()">Check ✓</button>
+    <div class="fb-wrap" id="wb2fb"></div>
+    <div class="lvl-done" id="l2done">🎉 Level 2 done! You are mastering conditionals!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 3 — Write the Correct Form</div>
+    <div class="hint-ar">اكتب شكل الفعل الصحيح بين القوسين في المكان المناسب.</div>
+
+    <div style="margin:10px 0">
+      <div class="fill-line">1) If she <input class="type-inp" id="l3i1" placeholder="study…"> harder, she will pass. <em style="font-size:.78rem;color:var(--muted)">(Type 1 — if-clause)</em></div>
+      <div class="fill-line">2) If I were you, I <input class="type-inp" id="l3i2" placeholder="(apologise)"> . <em style="font-size:.78rem;color:var(--muted)">(Type 2 — main)</em></div>
+      <div class="fill-line">3) If you mix yellow and blue, you <input class="type-inp" id="l3i3" placeholder="(get)"> green. <em style="font-size:.78rem;color:var(--muted)">(Type 0)</em></div>
+      <div class="fill-line">4) If he <input class="type-inp" id="l3i4" placeholder="(be)"> the teacher, he would give no homework. <em style="font-size:.78rem;color:var(--muted)">(Type 2 — if-clause)</em></div>
+    </div>
+
+    <button class="check-btn" onclick="checkL3()">Check ✓</button>
+    <div class="fb-wrap" id="l3fb"></div>
+    <div class="lvl-done" id="l3done">🎉 Level 3 done! Excellent conditional forms!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 4 — Spot and Fix the Mistake</div>
+    <div class="hint-ar">كل جملة فيها خطأ. اختر الجملة الصحيحة.</div>
+
+    <p style="font-size:.95rem;margin-bottom:8px">
+      <span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>
+      &nbsp;If I was a bird, I would fly to Jerusalem.
+    </p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q1opts">
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,true,'Correct! Type 2 always uses WERE (never was), even with I/he/she.','صحيح! الشرطي الثاني دائمًا يستخدم were وليس was مع أي ضمير.')">If I were a bird, I would fly to Jerusalem.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Was is wrong in Type 2 — always use were.','was خطأ في الشرطي الثاني — استخدم were دائمًا.')">If I was a bird, I would fly to Jerusalem.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Am is present — Type 2 needs past (were) in if-clause.','am مضارع — الشرطي الثاني يحتاج ماضيًا (were) في if-clause.')">If I am a bird, I would fly to Jerusalem.</button>
+    </div>
+    <div class="fb-wrap" id="l4q1fb"></div>
+
+    <hr class="divider"/>
+
+    <p style="font-size:.95rem;margin-bottom:8px">
+      <span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>
+      &nbsp;If it will rain tomorrow, I stay home.
+    </p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q2opts">
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'Still has will rain in if-clause — wrong (if-clause uses present, not will).','لا تزال will في if-clause — خطأ.')">If it will rain tomorrow, I will stay home.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,true,'Correct! Type 1: If + present simple, will + base.','صحيح! الشرطي الأول: if + مضارع، will + فعل.')">If it rains tomorrow, I will stay home.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'Would stay is Type 2 — tomorrow is a real future possibility (Type 1).','would stay للشرطي الثاني — غدًا احتمال حقيقي (الشرطي الأول).')">If it rained tomorrow, I would stay home.</button>
+    </div>
+    <div class="fb-wrap" id="l4q2fb"></div>
+
+    <div class="lvl-done" id="l4done">🏆 All 4 levels done! You are a Conditionals champion!</div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 6 — CREATE ══════════════════ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <div class="card-title">🗣️ Speaking — Your Conditions!</div>
+    <div class="hint-ar">تحدث باستخدام الجمل الشرطية — عن الواقع والأحلام!</div>
+
+    <div class="speak-prompt">
+      <strong>Round 1 — Type 0:</strong> Complete these true facts.<br>
+      👉 <em>If you don't sleep, you ___. / If plants get no water, they ___.</em>
+    </div>
+    <div class="speak-prompt">
+      <strong>Round 2 — Type 1:</strong> What will you do this week?<br>
+      👉 <em>If I finish my homework, I will ___. / If the weather is nice, I will ___.</em>
+    </div>
+    <div class="speak-prompt">
+      <strong>Round 3 — Type 2:</strong> Dream big — what would you do?<br>
+      👉 <em>If I were the principal of this school, I would ___.</em><br>
+      👉 <em>If I could visit any place in Palestine, I would go to ___.</em>
+    </div>
+    <div class="speak-prompt">
+      <strong>Round 4 — Mix!</strong> Tell your partner a conditional sentence. They must say which type (0, 1 or 2)!
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✍️ Writing — My Conditional World</div>
+    <div class="hint-ar">اكتب فقرة تستخدم فيها الأنواع الثلاثة من الجمل الشرطية.</div>
+
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:14px;margin:10px 0;font-size:.88rem">
+      <p style="font-weight:700;margin-bottom:6px">📌 Your paragraph must include:</p>
+      <ul style="margin-left:16px;line-height:1.9">
+        <li>At least one <strong>Type 0</strong> sentence (a fact or truth)</li>
+        <li>At least two <strong>Type 1</strong> sentences (your real plans/possibilities)</li>
+        <li>At least two <strong>Type 2</strong> sentences (your dreams/wishes)</li>
+      </ul>
+    </div>
+
+    <textarea class="write-area" placeholder="If you work hard, you will achieve your goals — that is always true (Type 0). If I study every day, I will get good marks this year (Type 1). If I have free time this weekend, I will visit my grandparents (Type 1). If I were the mayor of my city, I would plant more trees and build a library (Type 2). If I could speak ten languages, I would travel everywhere and help people (Type 2)."></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💬 Challenge — Complete the Conditionals</div>
+    <div class="hint-ar">أكمل هذه الجمل الشرطية بأفكارك الخاصة.</div>
+    <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:10px;padding:14px;margin:10px 0;font-size:.9rem">
+      <ol style="margin-left:16px;line-height:2.2">
+        <li>If Palestine had peace, … (Type 1)</li>
+        <li>If I were the Minister of Education, … (Type 2)</li>
+        <li>If you exercise regularly, … (Type 0)</li>
+      </ol>
+    </div>
+    <textarea class="write-area" placeholder="1) If Palestine had peace, children will go to school safely and families will live happily.&#10;2) If I were the Minister of Education, I would give every student a free laptop.&#10;3) If you exercise regularly, you stay healthy and feel more energetic."></textarea>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 7 — QUIZ ══════════════════ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <div class="card-title">🎯 Quick Check — 5 Questions</div>
+    <div class="hint-ar">أجب على الأسئلة الخمسة ثم اضغط "Check My Score".</div>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="qq1">
+      <div class="q-num">Question 1 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">If you don't eat, you ___ hungry. (Type 0 — always true)</p>
+      <div class="opts" id="qq1opts">
+        <button class="opt" onclick="qsc(1,this,'get',event)">get</button>
+        <button class="opt" onclick="qsc(1,this,'will get',event)">will get</button>
+        <button class="opt" onclick="qsc(1,this,'would get',event)">would get</button>
+      </div>
+      <div class="fb-wrap" id="qq1fb"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="qq2">
+      <div class="q-num">Question 2 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">If it ___ sunny tomorrow, we will go on a trip. (Type 1)</p>
+      <div class="opts" id="qq2opts">
+        <button class="opt" onclick="qsc(2,this,'is',event)">is</button>
+        <button class="opt" onclick="qsc(2,this,'will be',event)">will be</button>
+        <button class="opt" onclick="qsc(2,this,'were',event)">were</button>
+      </div>
+      <div class="fb-wrap" id="qq2fb"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="qq3">
+      <div class="q-num">Question 3 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">If I ___ the president, I would end all wars. (Type 2)</p>
+      <div class="opts" id="qq3opts">
+        <button class="opt" onclick="qsc(3,this,'am',event)">am</button>
+        <button class="opt" onclick="qsc(3,this,'was',event)">was</button>
+        <button class="opt" onclick="qsc(3,this,'were',event)">were</button>
+      </div>
+      <div class="fb-wrap" id="qq3fb"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="qq4">
+      <div class="q-num">Question 4 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">"Unless you hurry, you will be late." — what does <em>unless</em> mean here?</p>
+      <div class="opts" id="qq4opts">
+        <button class="opt" onclick="qsc(4,this,'a',event)">If you hurry</button>
+        <button class="opt" onclick="qsc(4,this,'b',event)">If you don't hurry</button>
+        <button class="opt" onclick="qsc(4,this,'c',event)">Because you hurry</button>
+      </div>
+      <div class="fb-wrap" id="qq4fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="qq5">
+      <div class="q-num">Question 5 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Which sentence is a correct Type 1 conditional?</p>
+      <div class="opts" id="qq5opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(5,this,'a',event)">If I would study, I will pass.</button>
+        <button class="opt" onclick="qsc(5,this,'b',event)">If I study, I will pass.</button>
+        <button class="opt" onclick="qsc(5,this,'c',event)">If I studied, I will pass.</button>
+      </div>
+      <div class="fb-wrap" id="qq5fb"></div>
+    </div>
+
+    <button class="check-btn" style="margin-top:16px;width:100%;font-size:1rem" onclick="calcQuiz()">📊 Check My Score</button>
+
+    <div class="quiz-score" id="quizScore">
+      <div class="score-num" id="scoreTxt"></div>
+      <p id="scoreMsg" style="font-size:1rem;margin:6px 0"></p>
+      <span class="badge-earned" id="badgeIcon">🌠</span>
+      <p id="badgeMsg" style="font-size:.85rem;color:var(--muted)"></p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panels -->
+
+<footer>Prepared with care 🌸 by T. Wad Refae</footer>
+
+<script>
+// ── navigation ────────────────────────────────────────────────────
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+const prog=document.getElementById('progFill');
+function go(i){
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  prog.style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── particles ─────────────────────────────────────────────────────
+function launchStar(x,y){
+  const el=document.createElement('div');
+  el.className='star-fly';
+  el.textContent=['⭐','✨','💫','🌟'][Math.floor(Math.random()*4)];
+  el.style.cssText=`left:${x}px;top:${y}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
+}
+function confetti(){
+  const colors=['#0284C7','#F59E0B','#ec4899','#16a34a','#9333ea','#f97316'];
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div');
+    p.className='confetti-p';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[i%colors.length]};animation-delay:${Math.random()*.8}s;animation-duration:${1+Math.random()}s`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2200);
+  }
+}
+function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
+
+// ── feedback helper ───────────────────────────────────────────────
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅':'❌'} ${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+
+// ── single-choice MCQ ─────────────────────────────────────────────
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const opts=document.querySelectorAll(`#${rowId}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  checkL1done();checkL4done();
+}
+function checkL1done(){
+  if(['l1q1','l1q2','l1q3','l1q4'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l1done').classList.add('show');confetti();
+  }
+}
+function checkL4done(){
+  if(['l4q1','l4q2'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l4done').classList.add('show');confetti();
+  }
+}
+
+// ── word bank ─────────────────────────────────────────────────────
+let wbSel=null;
+const wb2answers={wb2b1:'boils',wb2b2:'will help',wb2b3:'had',wb2b4:'will miss',wb2b5:'would travel'};
+function pickWb(chip,val){
+  document.querySelectorAll('#wb2chips .wb-chip').forEach(c=>c.classList.remove('sel'));
+  if(wbSel&&wbSel.chip===chip){wbSel=null;return;}
+  chip.classList.add('sel');wbSel={chip,val};
+}
+function dropWb(blankId){
+  if(!wbSel)return;
+  const blank=document.getElementById(blankId);
+  if(blank.classList.contains('filled'))return;
+  blank.textContent=wbSel.val;blank.classList.add('filled');
+  wbSel.chip.classList.add('used');wbSel.chip.classList.remove('sel');wbSel=null;
+}
+function checkWb2(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(wb2answers)){
+    if(document.getElementById(id).textContent.trim()===ans)ok++;
+  }
+  const all=Object.keys(wb2answers).length;
+  if(ok===all){setFb('wb2fb',true,'All correct! Great conditional work!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l2done').classList.add('show');confetti();}
+  else setFb('wb2fb',false,`${ok}/${all} correct. Check again.`,`${ok} من ${all} صحيحة.`);
+}
+
+// ── Level 3 ───────────────────────────────────────────────────────
+const l3answers={l3i1:'studies',l3i2:'would apologise',l3i3:'get',l3i4:'were'};
+function checkL3(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(l3answers)){
+    const inp=document.getElementById(id);
+    const val=inp.value.trim().toLowerCase();
+    const correct=val===ans;
+    inp.className='type-inp '+(correct?'ok':'err');
+    if(correct)ok++;
+  }
+  const all=Object.keys(l3answers).length;
+  if(ok===all){setFb('l3fb',true,'All correct! Perfect conditionals!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l3done').classList.add('show');confetti();}
+  else setFb('l3fb',false,`${ok}/${all} correct. Try again.`,`${ok} من ${all} صحيحة.`);
+}
+
+// ── Quiz ──────────────────────────────────────────────────────────
+const qAnswers={1:'get',2:'is',3:'were',4:'b',5:'b'};
+const qScored={};
+function qsc(qNum,btn,val,evt){
+  const opts=document.querySelectorAll(`#qq${qNum}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  const correct=val===qAnswers[qNum];
+  btn.classList.add(correct?'ok':'err');
+  qScored[qNum]=correct;
+  document.getElementById(`qq${qNum}`).classList.add(correct?'answered-ok':'answered-err');
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  const fb={
+    1:{ok:"Correct! Type 0: If + present → present (always true).",ar:"صحيح! الشرطي الصفري: مضارع → مضارع.",no:"Type 0 uses present simple in both clauses.",nar:"الشرطي الصفري يستخدم المضارع البسيط في كلا الجزأين."},
+    2:{ok:"Correct! Type 1 if-clause uses Present Simple (not will).",ar:"صحيح! if-clause الشرطي الأول يستخدم المضارع البسيط (وليس will).",no:"In Type 1, the if-clause uses Present Simple — no will inside if.",nar:"في الشرطي الأول، if-clause تستخدم المضارع البسيط — لا will داخل if."},
+    3:{ok:"Correct! Type 2 always uses WERE (never was) with all subjects.",ar:"صحيح! الشرطي الثاني دائمًا يستخدم were (وليس was) مع جميع الضمائر.",no:"Type 2 always uses WERE — not am, not was.",nar:"الشرطي الثاني دائمًا يستخدم were — وليس am أو was."},
+    4:{ok:"Correct! Unless = if... not.",ar:"صحيح! unless = إذا لم / ما لم.",no:"Unless = if… not. So 'Unless you hurry' = 'If you don't hurry'.",nar:"unless = إذا لم — لذا unless you hurry = if you don't hurry."},
+    5:{ok:"Correct! Type 1: If + present simple → will + base verb.",ar:"صحيح! الشرطي الأول: if + مضارع بسيط → will + فعل مصدري.",no:"Type 1: If + present (no would, no past) → will + base verb.",nar:"الشرطي الأول: if + مضارع بسيط → will + فعل مصدري."}
+  };
+  if(correct)setFb(`qq${qNum}fb`,true,fb[qNum].ok,fb[qNum].ar);
+  else setFb(`qq${qNum}fb`,false,fb[qNum].no,fb[qNum].nar);
+}
+function calcQuiz(){
+  const score=Object.values(qScored).filter(Boolean).length;
+  document.getElementById('scoreTxt').textContent=`${score} / 5`;
+  const msgs=[
+    {e:'Keep going — review Types 0, 1 and 2 again!',a:'راجع الأنواع الثلاثة مرة أخرى.'},
+    {e:'Good try! Remember: 0=present/present, 1=present/will, 2=past/would.',a:'تذكر: 0=مضارع/مضارع، 1=مضارع/will، 2=ماضٍ/would.'},
+    {e:'Good! You are getting there.',a:'جيد! أنت في الطريق الصحيح.'},
+    {e:'Great! Almost perfect!',a:'رائع! تقريبًا مثالي.'},
+    {e:'Perfect! You are a Conditionals star! ⭐',a:'ممتاز! أنت نجم الجمل الشرطية!'}
+  ];
+  const m=msgs[Math.min(score,4)];
+  document.getElementById('scoreMsg').innerHTML=`${m.e}<br><span class="ar">${m.a}</span>`;
+  document.getElementById('badgeMsg').textContent=score>=3?'🌠 Dreamer Badge earned!':'Keep going — earn the Dreamer Badge!';
+  document.getElementById('quizScore').classList.add('show');
+  if(score>=3){localStorage.setItem('badge_conditionals','earned');confetti();}
+}
+
+// ── Flashcards ─────────────────────────────────────────────────────
+const cards=[
+  {word:'condition',emoji:'⚖️',ar:'الشرط',syn:'requirement — clause',ant:'result'},
+  {word:'result',emoji:'➡️',ar:'النتيجة',syn:'consequence — outcome',ant:'condition'},
+  {word:'if',emoji:'🤔',ar:'إذا / لو',syn:'providing that — in case',ant:'—'},
+  {word:'unless',emoji:'⛔',ar:'إلا إذا / ما لم',syn:'if … not',ant:'if'},
+  {word:'would',emoji:'🌠',ar:'كان سيـ (افتراضي)',syn:'used in Type 2 main clause',ant:'will (Type 1)'},
+  {word:'imaginary',emoji:'💭',ar:'افتراضي / خيالي',syn:'hypothetical — unreal',ant:'real — likely'},
+];
+const grid=document.getElementById('fcGrid');
+cards.forEach((c,i)=>{
+  grid.innerHTML+=`
+  <div class="fc" id="fc${i}" onclick="flipCard(${i})">
+    <div class="fc-inner">
+      <div class="fc-front">
+        <span class="emoji">${c.emoji}</span>
+        <div class="word">${c.word}</div>
+        <button class="tts-btn" onclick="event.stopPropagation();speak('${c.word}')">🔊 Listen</button>
+      </div>
+      <div class="fc-back">
+        <div class="ar-mean ar">${c.ar}</div>
+        <div class="syn">${c.syn}</div>
+        ${c.ant&&c.ant!=='—'?`<div class="syn" style="opacity:.7">↔ ${c.ant}</div>`:''}
+      </div>
+    </div>
+  </div>`;
+});
+function flipCard(i){document.getElementById('fc'+i).classList.toggle('flipped');}
+function speak(w){
+  const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.9;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+</script>
 </body>
 </html>
