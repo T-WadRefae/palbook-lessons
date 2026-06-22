@@ -1,325 +1,905 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Present Continuous — PalBook Live</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/lesson.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Present Continuous — Discovery Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --blu:#1E88E5;--blu-d:#0D47A1;--cyan:#00BCD4;--cyan-l:#E0F7FA;
+  --acc:#FF6F00;--grn:#2E7D32;--grn-l:#E8F5E9;--red:#C62828;--red-l:#FFEBEE;
+  --bg:#F0F8FF;--card:#fff;--txt:#1a2840;--muted:#607080;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,var(--blu-d) 0%,var(--blu) 50%,var(--cyan) 100%);
+  padding:28px 20px 0;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(0,188,212,.35) 0%,transparent 65%),
+             radial-gradient(ellipse at 80% 20%,rgba(255,255,255,.12) 0%,transparent 55%);pointer-events:none}
+.hdr-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:18px;position:relative}
+.hdr-art{font-size:88px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3))}
+.hdr-text{flex:1}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:4px}
+.hdr h1{font-family:'Fredoka One',cursive;font-size:clamp(1.5rem,4vw,2.4rem);color:#fff;line-height:1.15}
+.hdr h1 span{color:#FFD54F}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:rgba(255,255,255,.18);color:#fff;border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:700}
+.chip.ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.85rem}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:6px;padding:14px 16px 0;max-width:900px;margin:16px auto 0;
+  overflow-x:auto;scrollbar-width:none;flex-wrap:wrap;justify-content:center}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.35);
+  border-radius:22px 22px 0 0;padding:8px 16px;font-family:'Fredoka One',cursive;
+  font-size:.95rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.35)}
+.tab.active{background:#fff;color:var(--blu-d);border-color:#fff}
+
+/* ── PROGRESS ── */
+.prog-wrap{background:rgba(255,255,255,.2);height:6px;margin:0}
+.prog-fill{height:100%;background:linear-gradient(90deg,#FFD54F,#FF6F00);
+  transition:width .4s ease;border-radius:0 3px 3px 0}
+
+/* ── MAIN ── */
+.main{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.on{display:block}
+
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:16px;padding:24px;margin-bottom:20px;
+  box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.card h2{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--blu-d);margin-bottom:12px}
+.card h3{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--blu);margin:14px 0 8px}
+
+/* ── ARABIC INSTRUCTION BAR ── */
+.q-inst{background:#EDE7F6;border-right:5px solid #5E35B1;border-radius:10px;
+  padding:10px 16px;margin-bottom:14px;font-family:'Baloo Bhaijaan 2',sans-serif;
+  font-size:1rem;color:#311B92;direction:rtl;text-align:right;line-height:1.6}
+
+/* ── FEEDBACK ── */
+.fb-wrap{display:none;border-radius:10px;padding:12px 16px;margin-top:10px;
+  border-left:5px solid transparent}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#E8F5E9;border-color:#2E7D32}
+.fb-wrap.err{background:#FFEBEE;border-color:#C62828}
+.fb-en{font-weight:700;font-size:1rem;margin-bottom:4px}
+.fb-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.95rem;direction:rtl;
+  text-align:right;color:#555}
+.fb-wrap.ok .fb-en{color:#1B5E20}
+.fb-wrap.err .fb-en{color:#B71C1C}
+
+/* ── MCQ ── */
+.mcq-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.mcq-btn{background:#EDE7F6;border:2px solid #B39DDB;border-radius:12px;
+  padding:9px 18px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;
+  cursor:pointer;transition:all .2s;color:var(--txt)}
+.mcq-btn:hover{background:#D1C4E9}
+.mcq-btn.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
+.mcq-btn.err{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
+.mcq-btn:disabled{cursor:default;opacity:.8}
+
+/* ── FILL BLANKS ── */
+.fill-wrap{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:1.05rem;font-weight:600;margin:8px 0 4px}
+.blank{display:inline-block;min-width:80px;border-bottom:3px solid var(--blu);padding:2px 6px;
+  text-align:center;cursor:pointer;border-radius:4px 4px 0 0;transition:background .2s}
+.blank:hover{background:#E3F2FD}
+.blank.filled{color:var(--blu-d)}
+.blank.ok{border-color:var(--grn);color:var(--grn);background:#E8F5E9}
+.blank.err{border-color:var(--red);color:var(--red);background:#FFEBEE}
+
+/* ── WORD BANK ── */
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;background:#E3F2FD;padding:12px 16px;
+  border-radius:12px;margin-bottom:16px}
+.wb-chip{background:#fff;border:2px solid var(--blu);border-radius:20px;
+  padding:5px 14px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.wb-chip:hover{background:var(--blu);color:#fff}
+.wb-chip.used{opacity:.35;pointer-events:none;text-decoration:line-through}
+
+/* ── CHECK BTN ── */
+.check-btn{background:linear-gradient(135deg,var(--blu),var(--cyan));color:#fff;
+  border:none;border-radius:12px;padding:10px 26px;font-family:'Fredoka One',cursive;
+  font-size:1rem;cursor:pointer;margin-top:10px;transition:transform .15s,box-shadow .15s}
+.check-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(30,136,229,.4)}
+.check-btn:active{transform:translateY(0)}
+
+/* ── LEVEL DONE BANNER ── */
+.lvl-done{display:none;background:linear-gradient(135deg,#FFF8E1,#FFFDE7);
+  border:3px solid #FFD54F;border-radius:16px;padding:16px 20px;text-align:center;
+  margin-top:16px;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.1rem;color:#E65100}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+.lvl-done .star{font-size:1.5rem}
+
+/* ── DISCOVER TABLE ── */
+.disc-tbl{width:100%;border-collapse:collapse;margin:12px 0}
+.disc-tbl th{background:var(--blu-d);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:.95rem}
+.disc-tbl td{padding:9px 14px;border-bottom:1px solid #E3F2FD;font-size:.95rem}
+.disc-tbl tr:nth-child(even) td{background:#F0F8FF}
+.disc-tbl .hi{color:var(--blu-d);font-weight:800;background:#FFF9C4;padding:1px 4px;border-radius:4px}
+.disc-tbl .neg{color:#C62828;font-weight:800}
+
+/* ── GRAMMAR TABLE ── */
+.gram-tbl{width:100%;border-collapse:collapse;margin:10px 0}
+.gram-tbl th{background:var(--blu);color:#fff;padding:9px 14px;font-family:'Fredoka One',cursive}
+.gram-tbl td{padding:8px 14px;border-bottom:1px solid #E3F2FD}
+.gram-tbl tr:nth-child(even) td{background:#E3F2FD}
+.gram-note{background:#FFF8E1;border-left:4px solid #FFB300;border-radius:8px;padding:10px 14px;
+  margin:10px 0;font-size:.92rem}
+.gram-note .ar{font-size:.95rem;margin-top:4px;color:#555}
+
+/* ── VOCAB CARD ── */
+.vc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:12px 0}
+.vc{background:#E3F2FD;border-radius:14px;padding:14px 10px;text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.vc .icon{font-size:2.2rem;margin-bottom:6px}
+.vc .en{font-weight:800;font-size:.95rem;color:var(--blu-d)}
+.vc .ar{font-size:.88rem;color:#555;margin-top:3px}
+
+/* ── CREATE ── */
+.prompt-card{background:linear-gradient(135deg,#E3F2FD,#E0F7FA);border-radius:14px;
+  padding:18px;margin-bottom:14px;border-left:5px solid var(--blu)}
+.prompt-card p{font-size:.95rem;margin-bottom:8px}
+textarea{width:100%;min-height:90px;border:2px solid var(--blu);border-radius:10px;
+  padding:10px;font-family:'Nunito',sans-serif;font-size:.95rem;resize:vertical;
+  background:#FAFEFF}
+textarea:focus{outline:none;border-color:var(--cyan)}
+
+/* ── QUIZ ── */
+.quiz-q{background:#E3F2FD;border-radius:14px;padding:18px;margin-bottom:16px;
+  border-left:5px solid var(--blu)}
+.quiz-q .qn{font-weight:800;color:var(--blu-d);margin-bottom:8px}
+.score-box{background:linear-gradient(135deg,var(--blu-d),var(--blu));color:#fff;
+  border-radius:18px;padding:24px;text-align:center;display:none}
+.score-box.show{display:block;animation:popIn .5s ease}
+.score-box .score-num{font-family:'Fredoka One',cursive;font-size:3rem}
+.score-box .badge{font-size:3.5rem;margin:8px 0}
+
+/* ── ANIMATIONS ── */
+@keyframes popIn{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes floatStar{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.6)}}
+@keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* ── OBJECTIVES ── */
+.obj-list{list-style:none;padding:0}
+.obj-list li{padding:8px 0 8px 32px;position:relative;font-size:1rem;border-bottom:1px solid #E3F2FD}
+.obj-list li::before{content:'🎯';position:absolute;left:0}
+
+/* ── SPELLING BOX ── */
+.spell-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0}
+.spell-box{background:#EDE7F6;border-radius:12px;padding:12px;text-align:center}
+.spell-box .rule{font-weight:800;font-size:.9rem;color:#5E35B1;margin-bottom:4px}
+.spell-box .ex{font-size:.85rem;color:var(--txt)}
+.spell-box .ar{font-size:.8rem;margin-top:4px}
+@media(max-width:600px){.spell-grid{grid-template-columns:1fr}}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:20px;font-size:.82rem;color:var(--muted)}
+
+/* ── STAR ── */
+.flying-star{position:fixed;pointer-events:none;font-size:1.6rem;z-index:9999;
+  animation:floatStar .9s ease forwards}
+/* ── CONFETTI ── */
+.cf-piece{position:fixed;width:10px;height:10px;border-radius:2px;z-index:9998;
+  animation:cfFall 1.4s ease forwards}
+</style>
 </head>
 <body>
-<div class="lesson-wrap">
 
-  <!-- ===== Header + stepper ===== -->
-  <header class="lesson-head">
-    <div class="head-inner">
-      <div class="head-text">
-        <p class="eyebrow">Grammar • English for Palestine</p>
-        <h1>Present Continuous — Actions Happening Now</h1>
-        <div class="meta">
-          <span class="chip">🎯 Grades 5, 7 &amp; 8</span>
-          <span class="chip">⏱️ ~30 min</span>
-          <span class="chip ar">المضارع المستمر</span>
-        </div>
-      </div>
-      <div class="head-art">
-        <img src="https://i.ibb.co/2387G3wt/Gemini-Generated-Image-f4p9evf4p9evf4p9.png" alt="Present continuous illustration">
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-art">🎬</div>
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar • English for Palestine</p>
+      <h1>Present <span>Continuous</span></h1>
+      <div class="chips">
+        <span class="chip">🎯 Grades 5–8</span>
+        <span class="chip">⏱️ ~35 min</span>
+        <span class="chip ar">المضارع المستمر</span>
       </div>
     </div>
-    <nav class="stepper">
-      <button>1 · Now</button>
-      <button>2 · Goals</button>
-      <button>3 · Words</button>
-      <button>4 · Form</button>
-      <button>5 · Practice</button>
-      <button>6 · Write</button>
-      <button>7 · Observe</button>
-      <button>8 · Quiz</button>
-    </nav>
-    <div class="progress-track"><div class="progress-fill"></div></div>
-  </header>
+  </div>
 
-  <!-- ===== 1. Introduction ===== -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">1</span> Introduction · What's Happening Right Now?</h2>
-      <p class="section-sub">A hook about actions happening at this very moment — 2 to 3 minutes.</p>
-
-      <img class="lesson-img" src="https://i.ibb.co/MDwWvvFZ/Gemini-Generated-Image-qops9wqops9wqops.png" alt="A busy classroom: students reading, writing and talking right now">
-
-      <p><b>Look around you 👀</b> Right now, something is happening.
-        Someone is talking. Someone is writing. The world is moving — right now!</p>
-
-      <div class="explain ar">
-        <h4>ما فكرة الدرس باختصار؟</h4>
-        <p>عندما نتكلّم عن شيء <b>يحدث الآن، في هذه اللحظة بالذات</b> — مثل: أحدهم يكتب، وأحدهم يتكلّم — نستخدم زمنًا اسمه <b>المضارع المستمر (Present Continuous)</b>.</p>
-        <p>في هذا الدرس سنتعلّم خطوة بخطوة كيف نصف <b>ما يحدث الآن</b> وما يتغيّر هذه الأيام بطريقة صحيحة وسهلة.</p>
-      </div>
-
-      <div class="hint-ar block ar">سؤال تحفيزي: انظر حولك الآن — ماذا يفعل زملاؤك في هذه اللحظة؟ صِف ما تراه بالعربية أولًا.</div>
-
-      <p class="q">❓ What is your teacher doing right now? What are you doing?</p>
-    </div>
-  </section>
-
-  <!-- ===== 2. Learning Outcomes ===== -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">2</span> Learning Outcomes · Present Continuous</h2>
-      <p class="section-sub">By the end of this lesson, students will be able to:</p>
-      <ul class="clean">
-        <li>✅ Use the <b>Present Continuous</b> for actions happening now and temporary situations.</li>
-        <li>✅ Form sentences with <b>am / is / are + verb-ing</b>.</li>
-        <li>✅ Make <b>negatives and questions</b> using the auxiliary.</li>
-        <li>✅ Describe <b>changing situations</b> and trends.</li>
-        <li>✅ Distinguish Present Continuous from Present Simple.</li>
-      </ul>
-      <div class="hint-ar block ar">ستتعلم كيف تصف ما يحدث الآن وما يتغير تدريجيًا — وهذا يختلف عن المضارع البسيط الذي يصف العادات.</div>
-
-      <div class="explain ar">
-        <h4>ببساطة: ما هو المضارع المستمر؟ 🧩</h4>
-        <p>هو الزمن الذي نستخدمه للحديث عن:</p>
-        <ul>
-          <li>فعل <b>يحدث الآن</b> في هذه اللحظة. مثال: <span class="eg">She is reading now.</span></li>
-          <li>وضع <b>مؤقّت</b> هذه الأيام. مثال: <span class="eg">I am staying with my uncle this week.</span></li>
-          <li>شيء <b>يتغيّر تدريجيًا</b>. مثال: <span class="eg">The weather is getting warmer.</span></li>
-        </ul>
-        <p><b>القاعدة الذهبية:</b> نستخدم <span class="eg">am / is / are</span> + الفعل مع <span class="eg">-ing</span>. مثال: <span class="eg">He is playing.</span></p>
-        <p><b>الفرق عن المضارع البسيط:</b> البسيط للعادات (كل يوم)، والمستمر لما يحدث الآن. 💡</p>
-        <p>لا تقلق — سنشرح كل نقطة بالأمثلة والتمارين خطوة بخطوة. 💪</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 3. Vocabulary Preview ===== -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">3</span> Vocabulary · Action &amp; Change Words</h2>
-      <p class="section-sub">Key words you will use when talking about ongoing actions.</p>
-      <div class="vocab-grid">
-        <div class="vocab"><div class="w">right now</div><div class="m ar">الآن / في هذه اللحظة</div></div>
-        <div class="vocab"><div class="w">at the moment</div><div class="m ar">في الوقت الحالي</div></div>
-        <div class="vocab"><div class="w">currently</div><div class="m ar">حاليًا</div></div>
-        <div class="vocab"><div class="w">these days</div><div class="m ar">هذه الأيام</div></div>
-        <div class="vocab"><div class="w">look!</div><div class="m ar">انظر!</div></div>
-        <div class="vocab"><div class="w">listen!</div><div class="m ar">استمع!</div></div>
-        <div class="vocab"><div class="w">getting</div><div class="m ar">يصبح / يزداد</div></div>
-        <div class="vocab"><div class="w">changing</div><div class="m ar">يتغير</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 4. Teach ===== -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">4</span> Teach · The Present Continuous Rule</h2>
-      <p class="section-sub">When we use it and how to form it correctly.</p>
-
-      <p><b>When do we use it?</b></p>
-      <ul class="clean">
-        <li>🔵 Actions happening <b>right now</b>: <i>She is reading a book.</i></li>
-        <li>🟢 Temporary situations: <i>I am staying at my uncle's house this week.</i></li>
-        <li>🟡 Changing / developing situations: <i>The weather is getting warmer.</i></li>
-      </ul>
-
-      <p><b>Form:</b> <code>am / is / are + verb + -ing</code></p>
-      <table class="grammar">
-        <tr><th>Subject</th><th>Auxiliary</th><th>Example</th></tr>
-        <tr><td>I</td><td><code>am</code></td><td>I <code>am playing</code> football.</td></tr>
-        <tr><td>He / She / It</td><td><code>is</code></td><td>She <code>is reading</code>.</td></tr>
-        <tr><td>You / We / They</td><td><code>are</code></td><td>They <code>are studying</code>.</td></tr>
-      </table>
-
-      <p><b>Spelling rules for -ing:</b></p>
-      <ul class="clean">
-        <li>run → runn<b>ing</b> (double consonant after short vowel)</li>
-        <li>write → writ<b>ing</b> (drop silent -e)</li>
-        <li>play → play<b>ing</b> (just add -ing)</li>
-      </ul>
-
-      <p><b>Negatives &amp; questions:</b></p>
-      <div class="example">She <b>is not (isn't) sleeping</b>. · <b>Are</b> you <b>listening</b>?</div>
-
-      <img class="lesson-img" src="https://i.ibb.co/H1jkBhs/Gemini-Generated-Image-g8i9wjg8i9wjg8i9.png" alt="Present continuous timeline showing an action happening NOW">
-
-      <div class="explain ar">
-        <h4>اقرأ الخط الزمني ⏳</h4>
-        <p>المضارع المستمر يقع على <b>الآن (NOW)</b> — الفعل بدأ ولم ينتهِ بعد، فهو مستمرّ في هذه اللحظة.</p>
-        <p>تذكّر التركيب دائمًا: <span class="eg">am / is / are</span> + الفعل + <span class="eg">-ing</span>.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 5. Guided Practice ===== -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">5</span> Guided Practice · am/is/are + verb-ing</h2>
-      <p class="section-sub">Practise forming and using the Present Continuous — instant feedback.</p>
-
-      <!-- MCQ -->
-      <div class="ex mcq">
-        <p class="q">1) Choose the correct sentence: <i>The boys ___ football in the park.</i></p>
-        <div class="options">
-          <button class="option" data-correct data-ok="Correct! They → are playing.">are playing</button>
-          <button class="option" data-no="With they we need 'are', not 'is'.">is playing</button>
-          <button class="option" data-no="We need am/is/are + verb-ing here.">plays</button>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <!-- Fill -->
-      <div class="ex fill">
-        <p class="q">2) Complete with the correct form (am/is/are + -ing):</p>
-        <div class="line">Look! It <input type="text" data-answer="is raining|is raining " placeholder="(rain)"> outside!</div>
-        <div class="line">We <input type="text" data-answer="are learning|are learning " placeholder="(learn)"> English now.</div>
-        <div class="line">She <input type="text" data-answer="isn't watching|is not watching" placeholder="(not / watch)"> TV.</div>
-        <button class="btn check-fill">Check</button>
-        <div class="feedback"></div>
-      </div>
-
-      <!-- Match -->
-      <div class="ex match-ex">
-        <p class="q">3) Match each subject with its auxiliary:</p>
-        <div class="match">
-          <div class="col left">
-            <button class="item" data-key="a">I</button>
-            <button class="item" data-key="b">She</button>
-            <button class="item" data-key="c">They</button>
-          </div>
-          <div class="col right">
-            <button class="item" data-key="b">is</button>
-            <button class="item" data-key="c">are</button>
-            <button class="item" data-key="a">am</button>
-          </div>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <!-- Drag & Drop -->
-      <div class="ex dragdrop">
-        <p class="q">4) Drag the correct -ing form to each sentence:</p>
-        <div class="dd-pool">
-          <span class="dd-token" data-zone="z1">running</span>
-          <span class="dd-token" data-zone="z2">writing</span>
-        </div>
-        <div class="dd-zones">
-          <div class="dd-zone" data-zone="z1"><span class="label">The dog is ___ in the garden.</span></div>
-          <div class="dd-zone" data-zone="z2"><span class="label">Ahmad is ___ a letter.</span></div>
-        </div>
-        <button class="btn check-dd">Check</button>
-        <div class="feedback"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 6. Independent Practice ===== -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">6</span> Independent Practice · Right Now!</h2>
-      <p class="section-sub">Use the Present Continuous to describe what is happening around you ✍️</p>
-      <p class="q">Write <b>5 sentences</b> about what is happening right now in your classroom or at home.</p>
-      <div class="hint-ar ar">استخدم الأفعال التالية: sit, write, talk, look, smile, use — وتأكد من استخدام am/is/are الصحيح.</div>
-      <textarea class="write" placeholder="1) My teacher is writing on the board.&#10;2) ..."></textarea>
-      <p style="margin-top:12px"><b>Self-check ✅</b></p>
-      <ul class="checklist">
-        <li><label><input type="checkbox"> I used <b>am / is / are</b> correctly with each subject.</label></li>
-        <li><label><input type="checkbox"> All verbs end in <b>-ing</b>.</label></li>
-        <li><label><input type="checkbox"> I described things actually happening right now.</label></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ===== 7. Real-Life Task ===== -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">7</span> Real-Life Task · Observe Your World 🌍</h2>
-      <p class="section-sub">Use Present Continuous to describe a scene from real life.</p>
-      <img class="lesson-img" src="https://i.ibb.co/MkwbfG7F/Firefly-gpt-image.png" alt="A busy street scene with people doing different things">
-      <p class="q">Look at the picture. Write <b>4 sentences</b> describing what the people are doing.</p>
-      <textarea class="write" placeholder="1) A woman is selling vegetables.&#10;2) Children are running near the fountain.&#10;3) ..."></textarea>
-      <div class="hint-ar block ar">المهمة الواقعية: صِف مشهدًا حقيقيًا تراه أمامك — الآن في الفصل أو في الشارع — باستخدام المضارع المستمر.</div>
-    </div>
-  </section>
-
-  <!-- ===== 8. Assessment ===== -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">8</span> Assessment · Present Continuous Quiz</h2>
-      <p class="section-sub">Answer all questions, then press Submit for your score.</p>
-
-      <div class="assessment">
-        <div class="ex mcq-q">
-          <p class="q">1) She ___ a book at the moment.</p>
-          <div class="options">
-            <button class="option">read</button>
-            <button class="option" data-correct>is reading</button>
-            <button class="option">are reading</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">2) ___ they playing in the park?</p>
-          <div class="options">
-            <button class="option">Is</button>
-            <button class="option" data-correct>Are</button>
-            <button class="option">Am</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">3) Which sentence uses Present Continuous correctly?</p>
-          <div class="options">
-            <button class="option">I am always eat breakfast.</button>
-            <button class="option" data-correct>The city is growing very fast these days.</button>
-            <button class="option">She is go to school now.</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">4) The baby ___ (sleep) right now.</p>
-          <input type="text" data-answer="is sleeping" placeholder="is/are + verb-ing">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">5) Negative: I ___ (not / listen) — I ___ listening.</p>
-          <input type="text" data-answer="am not|I am not" placeholder="am/is/are + not">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">6) "These days, temperatures ___ rising." — what does this show?</p>
-          <div class="options">
-            <button class="option">A past habit</button>
-            <button class="option">A permanent fact</button>
-            <button class="option" data-correct>A changing situation</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <button class="btn green submit-assess">Submit answers</button>
-        <div class="result">
-          <p>Your score</p>
-          <div class="score">0 / 0</div>
-          <p class="msg"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div style="height:8px"></div>
+  <!-- Tab bar inside header gradient -->
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab active" onclick="go(0,event)">🚀 Start</button>
+    <button class="tab" onclick="go(1,event)">📚 Words</button>
+    <button class="tab" onclick="go(2,event)">🔍 Discover</button>
+    <button class="tab" onclick="go(3,event)">🧠 Grammar</button>
+    <button class="tab" onclick="go(4,event)">✏️ Practice</button>
+    <button class="tab" onclick="go(5,event)">🗣️ Create</button>
+    <button class="tab" onclick="go(6,event)">🎯 Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
 </div>
 
-<nav class="lesson-nav">
-  <button class="btn ghost" id="prevBtn">‹ Prev</button>
-  <span class="spacer" id="navCounter">1 / 8</span>
-  <button class="btn" id="nextBtn">Next ›</button>
-</nav>
+<!-- ═══════════ PANELS ═══════════ -->
+<div class="main">
 
-<script src="assets/lesson.js"></script>
+<!-- ══ 1. START ══ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <h2>🚀 What is happening RIGHT NOW?</h2>
+    <img src="https://i.ibb.co/2387G3wt/Gemini-Generated-Image-f4p9evf4p9evf4p9.png"
+         alt="Busy classroom" style="width:100%;height:auto;border-radius:12px;margin-bottom:16px"/>
+    <p style="font-size:1.05rem;margin-bottom:14px">
+      Look at the picture. Can you describe what the people are doing <em>right now</em>?
+    </p>
+    <div class="q-inst ar">📌 انظر إلى الصورة. اختَر الجملة الصحيحة التي تصف ما يحدث الآن:</div>
+    <div id="s-q1">
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'Not quite — we need a tense for NOW.','ليست الصيغة الصحيحة — نحتاج تعبيراً عن اللحظة الحالية.')">She reads a book.</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,true,'Yes! 🎉 She IS reading — action happening right now!','ممتاز! "is reading" تعبّر عن حدث يجري الآن.')">She is reading a book.</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'Past tense — but we\'re talking about now!','هذا الماضي — نحن نتحدث عن الآن!')">She was reading a book.</button>
+      </div>
+      <div class="fb-wrap" id="s-fb1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Objectives — أهداف الدرس</h2>
+    <ul class="obj-list">
+      <li>Use am / is / are correctly with verb+ing</li>
+      <li>Spell -ing forms correctly (double letter, drop -e, ie → y)</li>
+      <li>Make negatives and questions in the Present Continuous</li>
+      <li>Tell the difference between Present Simple and Present Continuous</li>
+    </ul>
+  </div>
+</div><!-- /p0 -->
+
+<!-- ══ 2. WORDS ══ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <h2>📚 Key Vocabulary</h2>
+    <div class="q-inst ar">📌 تعرَّف على الكلمات المهمة في هذا الدرس:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">🏃</div><div class="en">run / running</div><div class="ar">يجري / يجري الآن</div></div>
+      <div class="vc"><div class="icon">🎨</div><div class="en">draw / drawing</div><div class="ar">يرسم / يرسم الآن</div></div>
+      <div class="vc"><div class="icon">📖</div><div class="en">read / reading</div><div class="ar">يقرأ / يقرأ الآن</div></div>
+      <div class="vc"><div class="icon">🎵</div><div class="en">sing / singing</div><div class="ar">يغني / يغني الآن</div></div>
+      <div class="vc"><div class="icon">🍳</div><div class="en">cook / cooking</div><div class="ar">يطبخ / يطبخ الآن</div></div>
+      <div class="vc"><div class="icon">💻</div><div class="en">write / writing</div><div class="ar">يكتب / يكتب الآن</div></div>
+      <div class="vc"><div class="icon">📺</div><div class="en">watch / watching</div><div class="ar">يشاهد / يشاهد الآن</div></div>
+      <div class="vc"><div class="icon">🛝</div><div class="en">play / playing</div><div class="ar">يلعب / يلعب الآن</div></div>
+      <div class="vc"><div class="icon">😴</div><div class="en">sleep / sleeping</div><div class="ar">ينام / ينام الآن</div></div>
+      <div class="vc"><div class="icon">🛁</div><div class="en">swim / swimming</div><div class="ar">يسبح / يسبح الآن</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🕐 Time Expressions</h2>
+    <div class="q-inst ar">📌 هذه الكلمات الزمنية تدلّك على استخدام المضارع المستمر:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">⚡</div><div class="en">right now</div><div class="ar">الآن تماماً</div></div>
+      <div class="vc"><div class="icon">📍</div><div class="en">at the moment</div><div class="ar">في هذه اللحظة</div></div>
+      <div class="vc"><div class="icon">👀</div><div class="en">look! / listen!</div><div class="ar">انظر! / استمع!</div></div>
+      <div class="vc"><div class="icon">📅</div><div class="en">these days</div><div class="ar">هذه الأيام</div></div>
+      <div class="vc"><div class="icon">🔄</div><div class="en">still</div><div class="ar">لا يزال</div></div>
+      <div class="vc"><div class="icon">🌅</div><div class="en">today</div><div class="ar">اليوم</div></div>
+    </div>
+  </div>
+</div><!-- /p1 -->
+
+<!-- ══ 3. DISCOVER ══ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h2>🔍 Spot the Pattern!</h2>
+    <div class="q-inst ar">📌 لاحظ الجمل في الجدول جيداً — ماذا تلاحظ في بداية كل جملة وفي الفعل؟</div>
+    <table class="disc-tbl">
+      <thead><tr><th>Subject</th><th>Sentence</th><th>What changed?</th></tr></thead>
+      <tbody>
+        <tr><td>I</td><td>I <span class="hi">am</span> play<span class="hi">ing</span>.</td><td>am + -ing</td></tr>
+        <tr><td>He</td><td>He <span class="hi">is</span> read<span class="hi">ing</span>.</td><td>is + -ing</td></tr>
+        <tr><td>She</td><td>She <span class="hi">is</span> cook<span class="hi">ing</span>.</td><td>is + -ing</td></tr>
+        <tr><td>It</td><td>It <span class="hi">is</span> rain<span class="hi">ing</span>.</td><td>is + -ing</td></tr>
+        <tr><td>You</td><td>You <span class="hi">are</span> sing<span class="hi">ing</span>.</td><td>are + -ing</td></tr>
+        <tr><td>We</td><td>We <span class="hi">are</span> work<span class="hi">ing</span>.</td><td>are + -ing</td></tr>
+        <tr><td>They</td><td>They <span class="hi">are</span> swim<span class="hi">ming</span>.</td><td>are + -ing</td></tr>
+      </tbody>
+    </table>
+    <div class="q-inst ar" style="margin-top:16px">🤔 ماذا لاحظت؟ أيّ كلمة تأتي دائماً بعد الفاعل؟ وكيف تتغير حسب الفاعل؟ أجب على السؤال أدناه:</div>
+    <div id="disc-q1">
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'Look again — the verb also changes!','انظر مرة أخرى — الفعل أيضاً يتغير!')">Only the subject changes.</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,true,'Exactly! ✅ am/is/are + verb-ing — YOU discovered the rule!','رائع! ✅ am/is/are + فعل + ing — لقد اكتشفت القاعدة بنفسك!')">am/is/are + verb + -ing</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'Close, but we need am/is/are too!','قريب، لكننا نحتاج am/is/are أيضاً!')">Just add -ing to the verb.</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔍 Negatives — What do you notice?</h2>
+    <div class="q-inst ar">📌 انظر إلى الجمل المنفية — أين توضع "not"؟</div>
+    <table class="disc-tbl">
+      <thead><tr><th>Positive ✅</th><th>Negative ❌</th></tr></thead>
+      <tbody>
+        <tr><td>I am reading.</td><td>I am <span class="neg">not</span> reading.</td></tr>
+        <tr><td>She is cooking.</td><td>She is <span class="neg">not</span> cooking. / She <span class="neg">isn't</span> cooking.</td></tr>
+        <tr><td>They are playing.</td><td>They are <span class="neg">not</span> playing. / They <span class="neg">aren't</span> playing.</td></tr>
+      </tbody>
+    </table>
+    <div id="disc-q2">
+      <div class="q-inst ar">📌 أين تضع "not" في الجملة المنفية؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,false,'No — "not" goes after am/is/are, before the verb.','لا — "not" تأتي بعد am/is/are وقبل الفعل.')">Before am/is/are.</button>
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,true,'Perfect! ✅ am/is/are + NOT + verb-ing','ممتاز! ✅ "not" تأتي بعد am/is/are مباشرةً.')">After am/is/are.</button>
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,false,'Not at the end — it goes right after am/is/are.','ليس في النهاية — تأتي بعد am/is/are.')">At the end of the sentence.</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb2"></div>
+    </div>
+  </div>
+</div><!-- /p2 -->
+
+<!-- ══ 4. GRAMMAR ══ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <h2>🧠 The Rule</h2>
+    <div class="gram-note">
+      <strong>Form:</strong> Subject + <em>am / is / are</em> + verb<strong>-ing</strong>
+      <div class="ar">الصيغة: الفاعل + am/is/are + الفعل + ing</div>
+    </div>
+    <table class="gram-tbl">
+      <thead><tr><th>Subject</th><th>To Be</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>I</td><td><strong>am</strong></td><td>I <strong>am</strong> studying.</td></tr>
+        <tr><td>He / She / It</td><td><strong>is</strong></td><td>She <strong>is</strong> dancing.</td></tr>
+        <tr><td>You / We / They</td><td><strong>are</strong></td><td>They <strong>are</strong> laughing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Negative &amp; Question</h2>
+    <table class="gram-tbl">
+      <thead><tr><th>Type</th><th>Structure</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Negative ❌</td><td>Subject + am/is/are + <strong>not</strong> + verb-ing</td><td>He <strong>isn't</strong> sleeping.</td></tr>
+        <tr><td>Question ❓</td><td><strong>Am/Is/Are</strong> + subject + verb-ing?</td><td><strong>Are</strong> you listening?</td></tr>
+        <tr><td>Short answer ✅</td><td>Yes, I am. / No, she isn't.</td><td>Yes, they are.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Spelling Rules for -ing</h2>
+    <div class="q-inst ar">📌 انتبه لقواعد الإملاء عند إضافة -ing إلى الأفعال:</div>
+    <div class="spell-grid">
+      <div class="spell-box">
+        <div class="rule">Most verbs → just add -ing</div>
+        <div class="ex">play → play<strong>ing</strong><br>read → read<strong>ing</strong></div>
+        <div class="ar">معظم الأفعال: أضف -ing مباشرة</div>
+      </div>
+      <div class="spell-box">
+        <div class="rule">Ends in -e → drop e, add -ing</div>
+        <div class="ex">write → writ<strong>ing</strong><br>dance → danc<strong>ing</strong></div>
+        <div class="ar">ينتهي بـ e: احذف e وأضف -ing</div>
+      </div>
+      <div class="spell-box">
+        <div class="rule">Short CVC → double last letter</div>
+        <div class="ex">run → run<strong>n</strong>ing<br>swim → swim<strong>m</strong>ing</div>
+        <div class="ar">حرف+حركة+حرف قصير: ضاعف الأخير</div>
+      </div>
+      <div class="spell-box" style="grid-column:1/-1">
+        <div class="rule">Ends in -ie → change ie to y, add -ing</div>
+        <div class="ex">lie → l<strong>y</strong>ing &nbsp;|&nbsp; die → d<strong>y</strong>ing &nbsp;|&nbsp; tie → t<strong>y</strong>ing</div>
+        <div class="ar">ينتهي بـ ie: حوّل ie إلى y ثم أضف -ing</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Present Simple vs. Present Continuous</h2>
+    <table class="gram-tbl">
+      <thead><tr><th>Present Simple</th><th>Present Continuous</th></tr></thead>
+      <tbody>
+        <tr><td>Habits / routines<br><span style="font-size:.85rem;color:var(--muted)">عادات ومواقف دائمة</span></td><td>Actions happening NOW<br><span style="font-size:.85rem;color:var(--muted)">أحداث تجري الآن</span></td></tr>
+        <tr><td>I <strong>play</strong> football every day.</td><td>I <strong>am playing</strong> football now.</td></tr>
+        <tr><td>She <strong>reads</strong> before bed.</td><td>She <strong>is reading</strong> right now.</td></tr>
+        <tr><td>They <strong>go</strong> to school.</td><td>They <strong>are going</strong> to school now.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- /p3 -->
+
+<!-- ══ 5. PRACTICE ══ -->
+<div class="panel" id="p4">
+
+  <!-- LEVEL 1 — MCQ -->
+  <div class="card">
+    <h2>✏️ Level 1 — Choose the Correct Form</h2>
+    <div class="q-inst ar">📌 اختَر الفعل الصحيح لإتمام كل جملة في زمن المضارع المستمر:</div>
+
+    <!-- Q1 -->
+    <p style="font-weight:700;margin-bottom:6px">1. Look! The baby _____ in the cot.</p>
+    <div id="l1q1"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,false,'That\'s Present Simple — we need NOW!','هذا مضارع بسيط — نحتاج صيغة "الآن"!')">sleep</button>
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,true,'✅ "is sleeping" — is + verb-ing for NOW.','✅ صحيح! is + sleeping للحدث الجاري الآن.')">is sleeping</button>
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,false,'"sleeps" is for habits, not right now.','sleeps للعادات، لا لما يحدث الآن.')">sleeps</button>
+    </div><div class="fb-wrap" id="l1fb1"></div></div>
+
+    <!-- Q2 -->
+    <p style="font-weight:700;margin:16px 0 6px">2. We _____ our homework at the moment.</p>
+    <div id="l1q2"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,false,'"are do" is not correct — add -ing to the verb.','are do خطأ — يجب أن يكون are doing.')">are do</button>
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,true,'✅ "are doing" — are + verb-ing. Perfect!','✅ are doing صحيح تماماً!')">are doing</button>
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,false,'"do" is base form — use are + doing for now.','do المجرد لا يصلح هنا — استخدم are + doing.')">do</button>
+    </div><div class="fb-wrap" id="l1fb2"></div></div>
+
+    <!-- Q3 -->
+    <p style="font-weight:700;margin:16px 0 6px">3. Listen! She _____ a beautiful song.</p>
+    <div id="l1q3"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,false,'"sang" is past tense — we\'re talking about right now!','sang ماضٍ — نحن نتحدث عن اللحظة الحالية!')">sang</button>
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,false,'"sings" is a habit. Use is + singing for NOW.','sings للعادات. استخدم is + singing للحاضر الآني.')">sings</button>
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,true,'✅ "is singing" — exactly right! She is singing now.','✅ is singing صحيح! هي تغني الآن.')">is singing</button>
+    </div><div class="fb-wrap" id="l1fb3"></div></div>
+
+    <div class="lvl-done" id="done1">
+      <span class="star">⭐⭐⭐</span>
+      <p>أحسنتَ! انتقل إلى المستوى الثاني 🎉</p>
+    </div>
+    <button class="check-btn" onclick="checkLevel1()">Check Level 1 ✔</button>
+  </div>
+
+  <!-- LEVEL 2 — FILL BLANKS -->
+  <div class="card">
+    <h2>✏️ Level 2 — Fill in the Blanks</h2>
+    <div class="q-inst ar">📌 انقر على الكلمة من بنك الكلمات، ثم انقر على الفراغ لملئه — كوّن جملاً في المضارع المستمر:</div>
+
+    <div class="word-bank" id="wb2">
+      <span class="wb-chip" onclick="pickWb2(this,'is cooking')">is cooking</span>
+      <span class="wb-chip" onclick="pickWb2(this,'are watching')">are watching</span>
+      <span class="wb-chip" onclick="pickWb2(this,'am writing')">am writing</span>
+      <span class="wb-chip" onclick="pickWb2(this,'is running')">is running</span>
+      <span class="wb-chip" onclick="pickWb2(this,'are playing')">are playing</span>
+    </div>
+
+    <div style="font-size:1.05rem;font-weight:600;line-height:2.4">
+      <p>1. Mum _____ dinner right now.
+         &nbsp;<span class="blank" id="b2_1" onclick="dropWb2('b2_1','is cooking')" data-ans="is cooking">______</span></p>
+      <p>2. I _____ a letter to my friend.
+         &nbsp;<span class="blank" id="b2_2" onclick="dropWb2('b2_2','am writing')" data-ans="am writing">______</span></p>
+      <p>3. The boys _____ football in the yard.
+         &nbsp;<span class="blank" id="b2_3" onclick="dropWb2('b2_3','are playing')" data-ans="are playing">______</span></p>
+      <p>4. Look! The dog _____ after the ball.
+         &nbsp;<span class="blank" id="b2_4" onclick="dropWb2('b2_4','is running')" data-ans="is running">______</span></p>
+      <p>5. They _____ a film at the moment.
+         &nbsp;<span class="blank" id="b2_5" onclick="dropWb2('b2_5','are watching')" data-ans="are watching">______</span></p>
+    </div>
+    <div class="fb-wrap" id="l2fb"></div>
+    <div class="lvl-done" id="done2">
+      <span class="star">🌟🌟🌟</span>
+      <p>رائع! كل الفراغات صحيحة! تابع إلى المستوى الثالث 🚀</p>
+    </div>
+    <button class="check-btn" onclick="checkLevel2()">Check Level 2 ✔</button>
+  </div>
+
+  <!-- LEVEL 3 — MAKE NEGATIVES/QUESTIONS -->
+  <div class="card">
+    <h2>✏️ Level 3 — Make It Negative or a Question</h2>
+    <div class="q-inst ar">📌 حوّل كل جملة إيجابية إلى منفية أو استفهامية، ثم اضغط "Check" للتحقق من إجابتك:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. Make negative: <em>She is dancing.</em></p>
+    <input type="text" id="l3a1" placeholder="She …" style="width:100%;padding:9px;border:2px solid var(--blu);border-radius:8px;font-size:1rem;margin-bottom:4px"/>
+    <div class="fb-wrap" id="l3fb1"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">2. Make a question: <em>They are playing outside.</em></p>
+    <input type="text" id="l3a2" placeholder="Are …" style="width:100%;padding:9px;border:2px solid var(--blu);border-radius:8px;font-size:1rem;margin-bottom:4px"/>
+    <div class="fb-wrap" id="l3fb2"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">3. Make negative: <em>I am eating lunch.</em></p>
+    <input type="text" id="l3a3" placeholder="I …" style="width:100%;padding:9px;border:2px solid var(--blu);border-radius:8px;font-size:1rem;margin-bottom:4px"/>
+    <div class="fb-wrap" id="l3fb3"></div>
+
+    <div class="lvl-done" id="done3">
+      <span class="star">💫💫💫</span>
+      <p>ممتاز! أتقنت صياغة النفي والسؤال! استعدّ للتحدي 🏆</p>
+    </div>
+    <button class="check-btn" onclick="checkLevel3()">Check Level 3 ✔</button>
+  </div>
+
+  <!-- LEVEL 4 — CORRECT MISTAKES -->
+  <div class="card">
+    <h2>✏️ Level 4 — Correct the Mistakes</h2>
+    <div class="q-inst ar">📌 هذه الجمل تحتوي على أخطاء. صحّح كل جملة واكتبها بالشكل الصحيح:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. <span style="color:var(--red)">He are reading a book.</span></p>
+    <input type="text" id="l4a1" placeholder="He …" style="width:100%;padding:9px;border:2px solid var(--blu);border-radius:8px;font-size:1rem;margin-bottom:4px"/>
+    <div class="fb-wrap" id="l4fb1"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">2. <span style="color:var(--red)">They is playing in the garden.</span></p>
+    <input type="text" id="l4a2" placeholder="They …" style="width:100%;padding:9px;border:2px solid var(--blu);border-radius:8px;font-size:1rem;margin-bottom:4px"/>
+    <div class="fb-wrap" id="l4fb2"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">3. <span style="color:var(--red)">She is danceing in the hall.</span></p>
+    <input type="text" id="l4a3" placeholder="She …" style="width:100%;padding:9px;border:2px solid var(--blu);border-radius:8px;font-size:1rem;margin-bottom:4px"/>
+    <div class="fb-wrap" id="l4fb3"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">4. <span style="color:var(--red)">I am not sleep.</span></p>
+    <input type="text" id="l4a4" placeholder="I …" style="width:100%;padding:9px;border:2px solid var(--blu);border-radius:8px;font-size:1rem;margin-bottom:4px"/>
+    <div class="fb-wrap" id="l4fb4"></div>
+
+    <div class="lvl-done" id="done4">
+      <span class="star">🎊🎊🎊</span>
+      <p>عظيم! لقد أتقنت جميع المستويات! انتقل إلى الإبداع 🗣️</p>
+    </div>
+    <button class="check-btn" onclick="checkLevel4()">Check Level 4 ✔</button>
+  </div>
+
+</div><!-- /p4 -->
+
+<!-- ══ 6. CREATE ══ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <h2>🗣️ Describe the Picture</h2>
+    <div class="q-inst ar">📌 انظر إلى الصورة وصف ما تراه بثلاث جمل على الأقل في المضارع المستمر:</div>
+    <img src="https://i.ibb.co/MDwWvvFZ/Gemini-Generated-Image-qops9wqops9wqops.png" alt="Classroom scene"
+         style="width:100%;height:auto;border-radius:12px;margin-bottom:14px"/>
+    <textarea id="cr1" placeholder="The teacher is writing on the board. The students are…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr1','cr1-fb','Great description! Keep it up 🎬','وصف رائع! استمر في الممارسة 🌟')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr1-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣️ What are YOU doing right now?</h2>
+    <div class="q-inst ar">📌 اكتب ٥ جمل تصف ما تفعله أنت وأفراد عائلتك في هذه اللحظة:</div>
+    <div class="prompt-card">
+      <p>✏️ Write 5 sentences about what you and your family are doing right now.</p>
+      <p style="font-size:.88rem;color:var(--muted)">e.g. <em>My sister is listening to music. My dad is cooking dinner…</em></p>
+    </div>
+    <textarea id="cr2" placeholder="I am… My brother is… My mother is… My father is… My sister is…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr2','cr2-fb','Wonderful! Your sentences are full of life! 🌟','رائع جداً! جملك حيّة ومعبّرة 💫')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr2-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣️ Challenge — Find the Mistakes</h2>
+    <div class="q-inst ar">📌 تحدٍّ: اكتب فقرة قصيرة (٦ جمل) تصف يومك المدرسي مستخدماً المضارع المستمر، ثم أعطها لزميلك ليجد الأخطاء:</div>
+    <div class="prompt-card">
+      <p>🏆 Write a short paragraph (6 sentences) describing your school day using Present Continuous. Include at least one negative and one question.</p>
+    </div>
+    <textarea id="cr3" rows="5" placeholder="Right now, we are having an English lesson. Our teacher is explaining…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr3','cr3-fb','Excellent! You\'ve mastered Present Continuous! 🎬✨','ممتاز! لقد أتقنت المضارع المستمر 🎉🌟')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr3-fb"></div>
+  </div>
+</div><!-- /p5 -->
+
+<!-- ══ 7. QUIZ ══ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <h2>🎯 Quick Quiz — 5 Questions</h2>
+    <div class="q-inst ar">📌 أجب على الأسئلة الخمسة التالية لاختبار ما تعلّمته في هذا الدرس. كل سؤال بنقطة واحدة:</div>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="qq1">
+      <div class="qn">1. Which sentence is correct?</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 أيّ الجمل صحيحة في زمن المضارع المستمر؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,false)">She playing now.</button>
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,true)">She is playing now.</button>
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,false)">She play now.</button>
+      </div>
+      <div class="fb-wrap" id="qqfb1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="qq2">
+      <div class="qn">2. What is the correct -ing form of "run"?</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 ما صيغة -ing الصحيحة للفعل run؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,false)">runing</button>
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,true)">running</button>
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,false)">runeing</button>
+      </div>
+      <div class="fb-wrap" id="qqfb2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="qq3">
+      <div class="qn">3. Make the sentence negative: "I am watching TV."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 حوّل الجملة إلى منفية:</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,true)">I am not watching TV.</button>
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,false)">I not am watching TV.</button>
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,false)">I am watching not TV.</button>
+      </div>
+      <div class="fb-wrap" id="qqfb3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="qq4">
+      <div class="qn">4. True or False: "We use Present Continuous for habits and routines."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 صحّ أم خطأ: نستخدم المضارع المستمر للعادات والروتين؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(3,'qq4','qqfb4',this,false)">True ✅</button>
+        <button class="mcq-btn" onclick="qsc(3,'qq4','qqfb4',this,true)">False ❌</button>
+      </div>
+      <div class="fb-wrap" id="qqfb4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="qq5">
+      <div class="qn">5. Which word tells you to use Present Continuous?</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 أيّ كلمة زمنية تدلّ على استخدام المضارع المستمر؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,false)">every day</button>
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,false)">yesterday</button>
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,true)">right now</button>
+      </div>
+      <div class="fb-wrap" id="qqfb5"></div>
+    </div>
+
+    <button class="check-btn" onclick="calcQuiz()">See My Score 🎯</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="badge">🎬</div>
+    <div class="score-num" id="scoreNum"></div>
+    <div id="scoreMsg"></div>
+    <div id="scoreMsgAr" class="ar" style="margin-top:8px;font-size:1rem"></div>
+  </div>
+</div><!-- /p6 -->
+
+</div><!-- /main -->
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+// ── TAB NAVIGATION ──
+const panels=document.querySelectorAll('.panel');
+const tabs=document.querySelectorAll('.tab');
+function go(i,e){
+  panels.forEach((p,j)=>{p.classList.toggle('on',j===i)});
+  tabs.forEach((t,j)=>{t.classList.toggle('active',j===i)});
+  document.getElementById('progFill').style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(e)e.currentTarget.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+// ── VISUAL EFFECTS ──
+function launchStar(x,y){
+  const icons=['⭐','🌟','✨','💫'];
+  const el=document.createElement('span');
+  el.className='flying-star';
+  el.textContent=icons[Math.floor(Math.random()*icons.length)];
+  el.style.left=x+'px';el.style.top=y+'px';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),950);
+}
+function confetti(){
+  const colors=['#1E88E5','#00BCD4','#FF6F00','#FFD54F','#2E7D32','#E91E63','#9C27B0'];
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');
+    c.className='cf-piece';
+    c.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${colors[i%colors.length]};
+      width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
+      animation-delay:${Math.random()*.8}s;animation-duration:${1.2+Math.random()*.6}s;
+      border-radius:${Math.random()>0.5?'50%':'2px'}`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),2000);
+  }
+}
+function shake(el){el.style.animation='none';requestAnimationFrame(()=>{el.style.animation='shake .5s ease'});}
+
+// ── DUAL FEEDBACK ──
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${en}</div><div class="fb-ar">${ar}</div>`;
+}
+
+// ── SINGLE-CHOICE MCQ (immediate, lock row) ──
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const row=document.getElementById(rowId);
+  if(row.dataset.done)return;
+  row.dataset.done='1';
+  row.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){
+    const r=btn.getBoundingClientRect();
+    launchStar(r.left+r.width/2,r.top+window.scrollY);
+  }else{
+    shake(btn);
+  }
+}
+
+// ── WORD BANK (Level 2) ──
+let wbSel2=null;
+function pickWb2(chip,val){
+  if(chip.classList.contains('used'))return;
+  document.querySelectorAll('#wb2 .wb-chip').forEach(c=>c.style.outline='');
+  chip.style.outline='3px solid var(--blu-d)';
+  wbSel2={chip,val};
+}
+function dropWb2(blankId,ans){
+  if(!wbSel2)return;
+  const blank=document.getElementById(blankId);
+  if(blank.dataset.locked)return;
+  blank.textContent=wbSel2.val;
+  blank.classList.add('filled');
+  blank.dataset.filled=wbSel2.val;
+  wbSel2.chip.style.outline='';
+  wbSel2.chip.classList.add('used');
+  wbSel2=null;
+}
+
+// ── CHECK LEVEL 1 ──
+function checkLevel1(){
+  const qs=['l1q1','l1q2','l1q3'];
+  let done=qs.filter(id=>document.getElementById(id).dataset.done).length;
+  if(done===3){document.getElementById('done1').classList.add('show');confetti();}
+  else{alert('أجب على الأسئلة الثلاثة أولاً! / Please answer all 3 questions first.');}
+}
+
+// ── CHECK LEVEL 2 ──
+function checkLevel2(){
+  const blanks=['b2_1','b2_2','b2_3','b2_4','b2_5'];
+  let correct=0;
+  blanks.forEach(id=>{
+    const b=document.getElementById(id);
+    const ans=(b.dataset.filled||'').trim().toLowerCase();
+    const expected=(b.dataset.ans||'').trim().toLowerCase();
+    if(ans===expected){b.classList.add('ok');correct++;}
+    else if(ans){b.classList.add('err');}
+  });
+  const ok=correct===5;
+  setFb('l2fb',ok,
+    ok?'✅ Perfect! All 5 blanks are correct!':'❌ '+correct+'/5 correct. Try again!',
+    ok?'✅ ممتاز! كل الفراغات صحيحة!':'❌ '+correct+' من 5 صحيح. حاول مرة أخرى!'
+  );
+  if(ok){document.getElementById('done2').classList.add('show');confetti();}
+}
+
+// ── CHECK LEVEL 3 ──
+function checkLevel3(){
+  const items=[
+    {id:'l3a1',fb:'l3fb1',
+      ok:v=>v==='she is not dancing'||v==='she isn\'t dancing',
+      en:'✅ Correct! "She is not dancing" / "She isn\'t dancing"',
+      ar:'✅ صحيح! She is not dancing أو She isn\'t dancing',
+      en2:'❌ Check: She is NOT dancing / She isn\'t dancing',
+      ar2:'❌ الصحيح: She is not dancing / She isn\'t dancing'},
+    {id:'l3a2',fb:'l3fb2',
+      ok:v=>v==='are they playing outside?'||v==='are they playing outside',
+      en:'✅ Correct! "Are they playing outside?"',
+      ar:'✅ صحيح! Are they playing outside?',
+      en2:'❌ Check: Are they playing outside?',
+      ar2:'❌ الصحيح: Are they playing outside?'},
+    {id:'l3a3',fb:'l3fb3',
+      ok:v=>v==='i am not eating lunch'||v==="i'm not eating lunch"||v==='i am not eating lunch.',
+      en:'✅ Correct! "I am not eating lunch."',
+      ar:'✅ صحيح! I am not eating lunch.',
+      en2:'❌ Check: I am not eating lunch.',
+      ar2:'❌ الصحيح: I am not eating lunch.'},
+  ];
+  let all=true;
+  items.forEach(item=>{
+    const val=document.getElementById(item.id).value.trim().toLowerCase().replace(/\.$/,'');
+    const ok=item.ok(val);
+    if(!ok)all=false;
+    setFb(item.fb,ok,ok?item.en:item.en2,ok?item.ar:item.ar2);
+    if(ok){
+      const el=document.getElementById(item.id);
+      const r=el.getBoundingClientRect();
+      launchStar(r.left+r.width/2,r.top+window.scrollY);
+    }else{
+      shake(document.getElementById(item.id));
+    }
+  });
+  if(all){document.getElementById('done3').classList.add('show');confetti();}
+}
+
+// ── CHECK LEVEL 4 ──
+function checkLevel4(){
+  const items=[
+    {id:'l4a1',fb:'l4fb1',
+      ok:v=>v==='he is reading a book',
+      en:'✅ "He is reading a book." — is, not are!',
+      ar:'✅ صحيح! He is (not are) reading.',
+      en2:'❌ "He ARE" is wrong. He is (singular) → He IS reading.',
+      ar2:'❌ He مفرد → يستخدم is وليس are'},
+    {id:'l4a2',fb:'l4fb2',
+      ok:v=>v==='they are playing in the garden',
+      en:'✅ "They are playing in the garden." — are, not is!',
+      ar:'✅ صحيح! They are (not is) playing.',
+      en2:'❌ "They IS" is wrong. They → ARE playing.',
+      ar2:'❌ They جمع → يستخدم are وليس is'},
+    {id:'l4a3',fb:'l4fb3',
+      ok:v=>v==='she is dancing in the hall',
+      en:'✅ "She is dancing" — drop the -e before -ing!',
+      ar:'✅ صحيح! dance → dancing (احذف e ثم أضف -ing)',
+      en2:'❌ "danceing" is wrong. dance → danc + ing = dancing',
+      ar2:'❌ dance → احذف e وأضف ing: dancing'},
+    {id:'l4a4',fb:'l4fb4',
+      ok:v=>v==='i am not sleeping',
+      en:'✅ "I am not sleeping." — verb-ing needed!',
+      ar:'✅ صحيح! am not sleeping وليس am not sleep',
+      en2:'❌ "am not sleep" — needs -ing: am not sleeping.',
+      ar2:'❌ الصحيح: am not sleeping (الفعل + ing)'},
+  ];
+  let all=true;
+  items.forEach(item=>{
+    const val=document.getElementById(item.id).value.trim().toLowerCase().replace(/\.$/,'');
+    const ok=item.ok(val);
+    if(!ok)all=false;
+    setFb(item.fb,ok,ok?item.en:item.en2,ok?item.ar:item.ar2);
+    if(ok){
+      const el=document.getElementById(item.id);
+      const r=el.getBoundingClientRect();
+      launchStar(r.left+r.width/2,r.top+window.scrollY);
+    }else{
+      shake(document.getElementById(item.id));
+    }
+  });
+  if(all){document.getElementById('done4').classList.add('show');confetti();}
+}
+
+// ── CREATE FEEDBACK ──
+function shareFb(taId,fbId,enMsg,arMsg){
+  const val=document.getElementById(taId).value.trim();
+  if(!val){alert('اكتب إجابتك أولاً! / Please write your answer first!');return;}
+  setFb(fbId,true,enMsg,arMsg);
+  const el=document.getElementById(taId);
+  const r=el.getBoundingClientRect();
+  launchStar(r.left+r.width/2,r.top+window.scrollY);
+  confetti();
+}
+
+// ── QUIZ ──
+const qSels=new Array(5).fill(null);
+function qsc(qi,rowId,fbId,btn,correct){
+  if(qSels[qi]!==null)return;
+  qSels[qi]=correct?1:0;
+  const row=document.getElementById(rowId);
+  row.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  const msgs=[
+    ['✅ Correct! "She is playing" = is + verb-ing.','✅ صحيح! is + playing للمضارع المستمر.','❌ Wrong. The correct form is: She is playing now.','❌ الصحيح: She is playing now.'],
+    ['✅ Correct! run → runn + ing (double n).','✅ صحيح! run ينتهي بـ CVC → ضاعف الحرف الأخير.','❌ Wrong. run → runn + ing = running (double the n).','❌ الصحيح: run → running (ضاعف n).'],
+    ['✅ Correct! "I am not watching TV."','✅ صحيح! not تأتي بعد am مباشرة.','❌ Wrong. "not" goes after am: I am not watching TV.','❌ الصحيح: I am NOT watching TV.'],
+    ['✅ Correct! Present Continuous is for NOW, not habits.','✅ صحيح! المضارع المستمر للأحداث الجارية الآن وليس للعادات.','❌ Wrong. Present Continuous is for actions happening NOW, not habits.','❌ الصحيح: خطأ — المضارع المستمر للأحداث الجارية الآن.'],
+    ['✅ Correct! "right now" signals Present Continuous.','✅ صحيح! "right now" دليل على المضارع المستمر.','❌ Wrong. "right now" = Present Continuous. "every day" = Present Simple.','❌ الصحيح: right now يدل على المضارع المستمر.'],
+  ];
+  const m=msgs[qi];
+  setFb(fbId,correct,correct?m[0]:m[2],correct?m[1]:m[3]);
+  if(correct){
+    const r=btn.getBoundingClientRect();
+    launchStar(r.left+r.width/2,r.top+window.scrollY);
+  }else{shake(btn);}
+}
+function calcQuiz(){
+  if(qSels.includes(null)){alert('أجب على جميع الأسئلة أولاً! / Please answer all questions first!');return;}
+  const score=qSels.reduce((a,b)=>a+b,0);
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+'/5';
+  const msgs=[
+    ['Keep practising! You\'ll get it! 💪','تدرّب أكثر — ستنجح! 💪'],
+    ['Good effort! Review the rules again. 📖','جهد جيد! راجع القواعد مجدداً. 📖'],
+    ['Well done! Almost there! 🌟','أحسنت! أنت قريب جداً! 🌟'],
+    ['Great job! One more to go! 🎉','عمل رائع! سؤال واحد بقي! 🎉'],
+    ['Almost perfect! Excellent! ✨','شبه مثالي! ممتاز! ✨'],
+    ['PERFECT! You\'re a Present Continuous star! 🎬🏆','مثالي! أنت نجم المضارع المستمر! 🎬🏆'],
+  ];
+  document.getElementById('scoreMsg').textContent=msgs[score][0];
+  document.getElementById('scoreMsgAr').textContent=msgs[score][1];
+  box.classList.add('show');
+  if(score>=4)confetti();
+  if(score===5)localStorage.setItem('badge_pres_cont','🎬');
+}
+</script>
 </body>
 </html>
