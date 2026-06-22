@@ -18,6 +18,32 @@ Each lesson is a single self-contained HTML file: `grade<N>/unit<U>p<P>*.html`.
 11. **File naming**: exactly `grade<N>/unit<U>p<P>.html` (e.g. `grade7/unit1p1.html`) by unit and lesson number — **no suffixes or additions** to the name.
 12. **Conversation transcripts**: new/difficult words get a **hover tooltip with the Arabic meaning** (yellow highlight); **pronouns get a different highlight color** with a tooltip saying **what the pronoun refers to**. Tooltips must also work on tap (mobile).
 
+## Grammar lesson design (Discovery Learning pattern)
+
+All grammar lessons in `/grammar/` must follow this **student-journey** model. Build for *how students learn*, not for presenting a rule. The tabs below are the required structure:
+
+| # | Tab label | Emoji | Purpose |
+|---|-----------|-------|---------|
+| 1 | Start | 🚀 | Hook — image/scenario + opening question to activate prior knowledge. Quick warm-up activity (MCQ or drag). |
+| 2 | Words | 📚 | Key vocabulary + frequency/time adverbs. Images/icons preferred over text. No matching games unless teacher asks. |
+| 3 | Discover | 🔍 | Inductive discovery — show contrasting examples (e.g. I play / She plays), ask "What changed? Why?". Student finds the pattern BEFORE seeing the rule. |
+| 4 | Grammar | 🧠 | Explicit rule explanation — use/form/negatives/questions. Clean tables, minimal text. Arabic hints for key points. |
+| 5 | Practice | ✏️ | Graded exercises — Level 1 (choose) → Level 2 (fill) → Level 3 (make questions) → Level 4 (correct mistakes). Instant feedback. |
+| 6 | Create | 🗣️ | Speaking + Writing combined. Short prompts first, then "My Daily Routine" paragraph, then challenge. |
+| 7 | Quiz | 🎯 | 5-question self-check (MCQ + T/F + one writing item). Instant score. Badge/stamp reward themed to the grammar topic. |
+
+**Optional tab 8 — Real Life** (⭐): add when relevant — short reading / social-media post / daily schedule with Present Simple examples to spot. Include it when the grammar appears naturally in authentic text.
+
+### Grammar lesson rules
+- Tabs are **real tabs** (click to show/hide panels) — NOT a vertical scroll-through page. Only the active panel is visible.
+- The **Discover tab comes BEFORE Grammar** — students notice the pattern first, then read the rule.
+- Each lesson is **fully self-contained** (no external CSS/JS files). All styles and scripts inline.
+- No `assets/lesson.css` dependency — grammar lessons must work standalone.
+- Practice exercises go from easy → hard within the same tab (levelled, not separate tabs).
+- Speak and Write are **combined in one "Create" tab** to keep the tab count to 7.
+- Gamification badge theme = grammar topic (e.g., clock stamp for Present Simple, camera stamp for Past Simple) — never travel/airport.
+- Footer alternates: "Designed with love 💗 by T. Wad Refae" / "Prepared with care 🌸 by T. Wad Refae".
+
 ## Other conventions
 
 - Single-file pages: all CSS/JS inline, Google Fonts (Fredoka/Nunito for English, Baloo Bhaijaan 2 for Arabic).
