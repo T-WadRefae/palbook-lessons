@@ -1,299 +1,982 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Reported Speech — PalBook Live</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/lesson.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Reported Speech — PalBook Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ros:#E11D48;--ros-d:#9F1239;--ros-l:#FFF1F2;--amb:#F59E0B;
+  --txt:#1e293b;--muted:#64748b;--white:#fff;--rad:14px;
+  --shadow:0 4px 18px rgba(225,29,72,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f8f7ff;color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif}
+
+/* ── header ── */
+.hdr{background:linear-gradient(135deg,var(--ros-d) 0%,var(--ros) 60%,#fb7185 100%);
+  color:#fff;padding:24px 16px 0;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'📰';font-size:120px;opacity:.07;position:absolute;top:-10px;right:-10px;line-height:1}
+.hdr h1{font-family:'Fredoka One',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:.5px}
+.hdr p{opacity:.9;font-size:.95rem;margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.chip{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.82rem;backdrop-filter:blur(4px)}
+
+/* ── progress ── */
+.prog-wrap{background:rgba(0,0,0,.2);height:6px;border-radius:3px;margin:0 16px}
+.prog-fill{height:100%;background:var(--amb);border-radius:3px;transition:width .4s}
+
+/* ── tab bar ── */
+.tab-bar{display:flex;gap:6px;padding:12px 12px 0;background:var(--ros-d);
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){
+  .tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}
+}
+.tab{flex:0 0 auto;background:rgba(255,255,255,.15);border:none;color:#fff;
+  border-radius:10px 10px 0 0;padding:8px 14px;font-family:'Nunito',sans-serif;
+  font-size:.83rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.tab.active,.tab:hover{background:var(--white);color:var(--ros-d)}
+
+/* ── panels ── */
+.panels{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+.panel{display:none}.panel.on{display:block}
+
+/* ── cards ── */
+.card{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.card-title{font-family:'Fredoka One',sans-serif;font-size:1.3rem;color:var(--ros-d);margin-bottom:10px}
+.card-sub{color:var(--muted);font-size:.9rem;margin-bottom:14px}
+
+/* ── Arabic instruction bar ── */
+.q-inst{border-right:5px solid var(--ros);background:var(--ros-l);
+  padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0 10px;
+  font-size:.95rem;direction:rtl;text-align:right;color:var(--ros-d)}
+
+/* ── MCQ ── */
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.opt{background:#f1f5f9;border:2px solid #e2e8f0;border-radius:10px;
+  padding:9px 18px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.93rem;
+  font-weight:600;transition:all .2s}
+.opt:hover:not(:disabled){background:var(--ros-l);border-color:var(--ros)}
+.opt.ok{background:#dcfce7;border-color:#16a34a;color:#14532d}
+.opt.err{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.opt:disabled{cursor:default}
+
+/* ── feedback ── */
+.fb-wrap{display:none;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.9rem}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#dcfce7;border-left:4px solid #16a34a}
+.fb-wrap.err{background:#fee2e2;border-left:4px solid #dc2626}
+.fb-en{font-weight:700;margin-bottom:4px}
+.fb-ar{direction:rtl;text-align:right;font-size:.88rem;opacity:.85}
+
+/* ── word bank ── */
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;padding:12px;
+  background:#f8fafc;border-radius:10px;border:2px dashed #cbd5e1;min-height:48px}
+.wb-chip{background:var(--ros-l);border:2px solid var(--ros);color:var(--ros-d);
+  border-radius:20px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:.88rem;
+  transition:all .2s;user-select:none}
+.wb-chip.used{opacity:.35;pointer-events:none}
+.wb-chip.sel{background:var(--ros);color:#fff;transform:scale(1.05)}
+.blank{display:inline-block;min-width:90px;border-bottom:2.5px solid var(--ros);
+  padding:2px 8px;text-align:center;cursor:pointer;border-radius:4px;margin:0 4px;
+  font-weight:700;color:var(--ros-d);transition:background .2s}
+.blank:hover:not(.filled){background:var(--ros-l)}
+.blank.filled{border-color:#16a34a;color:#15803d;background:#f0fdf4}
+.fill-line{line-height:2.2;margin:8px 0;font-size:.95rem}
+
+/* ── type answer ── */
+.type-inp{border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;
+  font-family:'Nunito',sans-serif;font-size:.92rem;width:130px;margin:0 6px;
+  transition:border-color .2s}
+.type-inp:focus{outline:none;border-color:var(--ros)}
+.type-inp.ok{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.type-inp.err{border-color:#dc2626;background:#fef2f2;color:#991b1b}
+.check-btn{background:var(--ros);color:#fff;border:none;border-radius:10px;
+  padding:9px 22px;cursor:pointer;font-family:'Nunito',sans-serif;
+  font-weight:700;font-size:.9rem;margin-top:10px;transition:background .2s}
+.check-btn:hover{background:var(--ros-d)}
+
+/* ── level done banner ── */
+.lvl-done{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #16a34a;
+  border-radius:12px;padding:14px;text-align:center;display:none;margin-top:14px}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ── backshift table ── */
+.shift-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:12px 0}
+.shift-table th{background:var(--ros);color:#fff;padding:9px 12px;text-align:left}
+.shift-table td{padding:9px 12px;border-bottom:1px solid #f1f5f9}
+.shift-table tr:nth-child(even) td{background:#fff5f7}
+.shift-arrow{color:var(--ros);font-weight:900;font-size:1rem;padding:0 6px}
+
+/* ── grammar cards ── */
+.g-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
+.g-card{border-radius:12px;padding:14px;text-align:center}
+.g-card h4{font-family:'Fredoka One',sans-serif;font-size:1rem;margin-bottom:6px}
+.g-card.blue{background:#eff6ff;color:#1d4ed8;border:2px solid #93c5fd}
+.g-card.rose{background:#fff1f2;color:#be123c;border:2px solid #fda4af}
+.g-card.green{background:#f0fdf4;color:#15803d;border:2px solid #86efac}
+.g-card.amber{background:#fffbeb;color:#92400e;border:2px solid #fcd34d}
+.g-card p{font-size:.82rem;line-height:1.5}
+
+/* ── formula box ── */
+.formula{background:linear-gradient(135deg,var(--ros-l),#fff5f7);
+  border:2.5px solid var(--ros);border-radius:12px;padding:16px 20px;
+  text-align:center;margin:14px 0}
+.formula h3{font-family:'Fredoka One',sans-serif;color:var(--ros-d);font-size:1.1rem;margin-bottom:8px}
+.formula code{font-size:1rem;background:rgba(225,29,72,.1);padding:3px 8px;border-radius:6px}
+
+/* ── discover speech bubbles ── */
+.bubble-pair{display:flex;flex-direction:column;gap:12px;margin:14px 0}
+.bubble{padding:12px 16px;border-radius:14px;font-size:.92rem;position:relative;max-width:90%}
+.bubble.direct{background:#dbeafe;border-left:4px solid #3b82f6;align-self:flex-start}
+.bubble.reported{background:#fce7f3;border-left:4px solid var(--ros);align-self:flex-end}
+.bubble span.changed{font-weight:800;color:var(--ros);text-decoration:underline wavy}
+.bubble-label{font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ── time table ── */
+.time-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.time-table th{background:var(--ros);color:#fff;padding:8px 12px;text-align:center}
+.time-table td{padding:8px 12px;border-bottom:1px solid #f1f5f9;text-align:center}
+.time-table tr:nth-child(even) td{background:#fff5f7}
+.arr{color:var(--ros);font-weight:900}
+
+/* ── flashcards ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+.fc{perspective:600px;cursor:pointer;height:140px}
+.fc-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s;position:relative}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--ros-l),#fff);border:2px solid var(--ros)}
+.fc-back{background:linear-gradient(135deg,var(--ros),#fb7185);color:#fff;transform:rotateY(180deg)}
+.fc-front .word{font-size:1rem;font-weight:800;color:var(--ros-d);margin-top:6px;line-height:1.2}
+.fc-front .emoji{font-size:1.8rem}
+.fc-back .ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;font-weight:700}
+.fc-back .syn{font-size:.75rem;opacity:.85;margin-top:6px}
+.tts-btn{background:rgba(225,29,72,.12);border:none;border-radius:20px;
+  padding:3px 10px;font-size:.78rem;cursor:pointer;color:var(--ros-d);
+  margin-top:6px;font-family:'Nunito',sans-serif;font-weight:600}
+
+/* ── create/write ── */
+.speak-prompt{background:var(--ros-l);border-left:4px solid var(--ros);
+  border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:.9rem}
+.speak-prompt strong{color:var(--ros-d)}
+.write-area{width:100%;border:2px solid #e2e8f0;border-radius:10px;
+  padding:12px;font-family:'Nunito',sans-serif;font-size:.9rem;
+  min-height:110px;resize:vertical;transition:border-color .2s}
+.write-area:focus{outline:none;border-color:var(--ros)}
+
+/* ── quiz ── */
+.quiz-q{background:#fff;border:2px solid #f1f5f9;border-radius:12px;
+  padding:16px;margin:12px 0;transition:border-color .2s}
+.quiz-q.answered-ok{border-color:#16a34a;background:#f0fdf4}
+.quiz-q.answered-err{border-color:#dc2626;background:#fef2f2}
+.q-num{font-family:'Fredoka One',sans-serif;color:var(--ros);font-size:1rem;margin-bottom:8px}
+.quiz-score{background:linear-gradient(135deg,var(--ros-l),#fff5f7);
+  border:3px solid var(--ros);border-radius:16px;padding:22px;text-align:center;
+  display:none;margin-top:18px}
+.quiz-score.show{display:block;animation:popIn .5s ease}
+.score-num{font-family:'Fredoka One',sans-serif;font-size:3rem;color:var(--ros)}
+.badge-earned{font-size:3.5rem;display:block;margin:10px 0;animation:bounce .6s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+
+/* ── float star ── */
+.star-fly{position:fixed;pointer-events:none;font-size:1.5rem;z-index:9999;
+  animation:floatStar .9s ease forwards}
+@keyframes floatStar{
+  0%{transform:translateY(0) scale(1);opacity:1}
+  100%{transform:translateY(-80px) scale(1.5);opacity:0}
+}
+/* confetti */
+.confetti-p{position:fixed;pointer-events:none;width:8px;height:8px;z-index:9998;
+  border-radius:2px;animation:confFall 1.2s ease forwards}
+@keyframes confFall{
+  0%{transform:translateY(-20px) rotate(0);opacity:1}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+/* shake */
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s ease}
+
+/* ── misc ── */
+.hint-ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right;
+  font-size:.92rem;background:#fff8dc;border-right:4px solid var(--amb);
+  padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0;color:#78350f}
+.divider{height:2px;background:linear-gradient(to right,var(--ros-l),var(--ros),var(--ros-l));
+  border:none;margin:18px 0;border-radius:1px}
+.lbl{font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;
+  color:var(--muted);margin-bottom:6px}
+.example-box{background:#f8fafc;border-left:4px solid var(--ros);
+  border-radius:0 10px 10px 0;padding:10px 14px;margin:8px 0;font-size:.92rem}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:.82rem}
+
+/* ── scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--ros);border-radius:3px}
+</style>
 </head>
 <body>
-<div class="lesson-wrap">
 
-  <header class="lesson-head">
-    <p class="eyebrow">Grammar • English for Palestine</p>
-    <h1>Reported Speech — Reporting What Was Said</h1>
-    <div class="meta">
-      <span class="chip">🎯 Grades 7 &amp; 9</span>
-      <span class="chip">⏱️ ~35 min</span>
-      <span class="chip ar">الكلام المنقول</span>
-    </div>
-    <nav class="stepper">
-      <button>1 · Gossip</button>
-      <button>2 · Goals</button>
-      <button>3 · Words</button>
-      <button>4 · Shift</button>
-      <button>5 · Practice</button>
-      <button>6 · Write</button>
-      <button>7 · Reporter</button>
-      <button>8 · Quiz</button>
-    </nav>
-    <div class="progress-track"><div class="progress-fill"></div></div>
-  </header>
-
-  <!-- 1. Introduction -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">1</span> Introduction · What Did He Say?</h2>
-      <p class="section-sub">A hook about passing on information — 2 to 3 minutes.</p>
-
-      <div class="placeholder">🖼️ Image / situation placeholder
-        <small>Add a picture of students whispering/relaying a message or a news reporter. — تُضاف لاحقًا</small>
-      </div>
-
-      <p><b>Imagine your teacher left a message 📩</b> Your friend asks: "What did the teacher say?"
-        You answer: "She said that we <b>have</b> a test tomorrow." — not "She said we has a test."
-        When we report what someone said, we <i>shift</i> the verb back in time.</p>
-
-      <div class="hint-ar block ar">سؤال تحفيزي: كيف تنقل كلام شخص آخر بالعربية؟ وكيف تفعل ذلك بالإنجليزية؟ اليوم نتعلم "backshift" — الإزاحة الزمنية عند النقل.</div>
-
-      <p class="q">❓ Your friend told you "I am happy." How would you tell another friend what he said?</p>
-    </div>
-  </section>
-
-  <!-- 2. Learning Outcomes -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">2</span> Learning Outcomes · Reported Speech</h2>
-      <p class="section-sub">By the end of this lesson, students will be able to:</p>
-      <ul class="clean">
-        <li>✅ Change <b>direct speech</b> to <b>indirect/reported speech</b>.</li>
-        <li>✅ Apply the <b>tense backshift</b>: present → past, past → past perfect.</li>
-        <li>✅ Change pronouns and time expressions correctly.</li>
-        <li>✅ Report <b>statements</b> using <i>said / told + that</i>.</li>
-        <li>✅ Report <b>questions</b> using <i>asked if / whether / question word</i>.</li>
-      </ul>
-      <div class="hint-ar block ar">ستتعلم كيف تنقل كلام الآخرين مع تحويل الأفعال والضمائر والظروف الزمنية بشكل صحيح.</div>
-    </div>
-  </section>
-
-  <!-- 3. Vocabulary -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">3</span> Vocabulary · Reporting Verbs &amp; Time Changes</h2>
-      <p class="section-sub">Key reporting verbs and the time expressions that shift.</p>
-      <div class="vocab-grid">
-        <div class="vocab"><div class="w">said</div><div class="m ar">قال</div></div>
-        <div class="vocab"><div class="w">told</div><div class="m ar">أخبر (+ شخص)</div></div>
-        <div class="vocab"><div class="w">asked</div><div class="m ar">سأل</div></div>
-        <div class="vocab"><div class="w">replied</div><div class="m ar">أجاب</div></div>
-        <div class="vocab"><div class="w">today → that day</div><div class="m ar">اليوم ← ذلك اليوم</div></div>
-        <div class="vocab"><div class="w">now → then</div><div class="m ar">الآن ← آنذاك</div></div>
-        <div class="vocab"><div class="w">here → there</div><div class="m ar">هنا ← هناك</div></div>
-        <div class="vocab"><div class="w">tomorrow → next day</div><div class="m ar">غدًا ← اليوم التالي</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. Teach -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">4</span> Teach · The Tense Backshift</h2>
-      <p class="section-sub">How verbs, pronouns, and time expressions change in reported speech.</p>
-
-      <p><b>Tense backshift table:</b></p>
-      <table class="grammar">
-        <tr><th>Direct (original)</th><th>Reported (shifted back)</th></tr>
-        <tr><td>Present Simple: <i>I <b>work</b> here.</i></td><td>Past Simple: He said he <code>worked</code> there.</td></tr>
-        <tr><td>Present Continuous: <i>I <b>am studying</b>.</i></td><td>Past Continuous: She said she <code>was studying</code>.</td></tr>
-        <tr><td>Past Simple: <i>I <b>went</b> out.</i></td><td>Past Perfect: He said he <code>had gone</code> out.</td></tr>
-        <tr><td>will: <i>I <b>will come</b>.</i></td><td>would: She said she <code>would come</code>.</td></tr>
-      </table>
-
-      <p><b>Pronouns shift</b> to match the new speaker's perspective:</p>
-      <div class="example">"I love this city." → She said <b>she</b> loved that city.</div>
-
-      <p><b>Reporting questions:</b></p>
-      <ul class="clean">
-        <li>Yes/No question: "Do you like tea?" → He asked <b>if / whether</b> I liked tea.</li>
-        <li>Wh- question: "Where do you live?" → She asked <b>where</b> I lived.</li>
-      </ul>
-
-      <div class="placeholder">🖼️ Visual placeholder
-        <small>Add a before/after graphic: direct speech bubble → reported speech sentence. — تُضاف لاحقًا</small>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Guided Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">5</span> Guided Practice · Backshifting Tenses</h2>
-      <p class="section-sub">Practise converting direct to reported speech — instant feedback.</p>
-
-      <div class="ex mcq">
-        <p class="q">1) Direct: "I am tired." → He said he ___ tired.</p>
-        <div class="options">
-          <button class="option" data-correct data-ok="Correct! am → was (backshift).">was</button>
-          <button class="option" data-no="'Is' does not backshift — remember, 'am' shifts to 'was'.">is</button>
-          <button class="option" data-no="'Will be' is for reporting a will-statement, not am.">will be</button>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex fill">
-        <p class="q">2) Report these sentences:</p>
-        <div class="line">"I play football." → He said he <input type="text" data-answer="played" placeholder="play → ?"> football.</div>
-        <div class="line">"She will help." → They said she <input type="text" data-answer="would" placeholder="will → ?"> help.</div>
-        <div class="line">"I am studying now." → He said he <input type="text" data-answer="was studying" placeholder="am studying → ?"> then.</div>
-        <button class="btn check-fill">Check</button>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex match-ex">
-        <p class="q">3) Match each direct speech verb with its reported speech form:</p>
-        <div class="match">
-          <div class="col left">
-            <button class="item" data-key="a">am / is / are</button>
-            <button class="item" data-key="b">will</button>
-            <button class="item" data-key="c">Past Simple</button>
-          </div>
-          <div class="col right">
-            <button class="item" data-key="b">would</button>
-            <button class="item" data-key="c">Past Perfect (had + pp)</button>
-            <button class="item" data-key="a">was / were</button>
-          </div>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex dragdrop">
-        <p class="q">4) Drag to show the correct type of reported speech:</p>
-        <div class="dd-pool">
-          <span class="dd-token" data-zone="z1">He said he was tired.</span>
-          <span class="dd-token" data-zone="z2">She asked if I liked tea.</span>
-        </div>
-        <div class="dd-zones">
-          <div class="dd-zone" data-zone="z1"><span class="label">Reported Statement (said/told)</span></div>
-          <div class="dd-zone" data-zone="z2"><span class="label">Reported Question (asked)</span></div>
-        </div>
-        <button class="btn check-dd">Check</button>
-        <div class="feedback"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Independent Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">6</span> Independent Practice · Report It!</h2>
-      <p class="section-sub">Convert direct speech to reported speech ✍️</p>
-      <p class="q">Report these 5 sentences from direct to indirect speech.</p>
-      <div class="hint-ar ar">
-        تذكر: 1) حوّل الأفعال إلى الماضي. 2) بدّل الضمائر. 3) بدّل الظروف الزمنية (now → then، today → that day).
-      </div>
-      <textarea class="write" placeholder='1) "I love this school." → She said she loved that school.&#10;2) "We are going to Hebron." → They said they ...&#10;3) "I will visit tomorrow." → He said he ...&#10;4) "Do you speak French?" → She asked if ...&#10;5) "Where do you live?" → He asked where ...'></textarea>
-      <p style="margin-top:12px"><b>Self-check ✅</b></p>
-      <ul class="checklist">
-        <li><label><input type="checkbox"> I shifted all verbs one tense back.</label></li>
-        <li><label><input type="checkbox"> I changed <b>I → he/she</b> and <b>my → his/her</b>.</label></li>
-        <li><label><input type="checkbox"> For questions I used <b>asked if / whether / question word</b>.</label></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 7. Real-Life Task -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">7</span> Real-Life Task · Be a Reporter 🌍</h2>
-      <p class="section-sub">Interview a classmate and report the answers.</p>
-
-      <div class="placeholder">🖼️ Image placeholder
-        <small>Add a picture of a student holding a microphone as a reporter. — تُضاف لاحقًا</small>
-      </div>
-
-      <p class="q">Ask your partner 3 questions. Then write a short report using reported speech.</p>
-      <table class="grammar">
-        <tr><th>Direct question</th><th>Partner's direct answer</th></tr>
-        <tr><td>What do you want to be?</td><td><input type="text" style="border:0;border-bottom:2px solid #99C3EC;background:#f3f9ff;padding:4px;width:90%"></td></tr>
-        <tr><td>What did you do yesterday?</td><td><input type="text" style="border:0;border-bottom:2px solid #99C3EC;background:#f3f9ff;padding:4px;width:90%"></td></tr>
-        <tr><td>Where do you live?</td><td><input type="text" style="border:0;border-bottom:2px solid #99C3EC;background:#f3f9ff;padding:4px;width:90%"></td></tr>
-      </table>
-      <p style="margin-top:12px">Now write your report:</p>
-      <textarea class="write" placeholder="I interviewed [name]. He/She said that he/she wanted to be ... He/She told me he/she had ..."></textarea>
-      <div class="hint-ar block ar">المهمة الواقعية: قابل زميلك كصحفي حقيقي، ثم اكتب تقريرًا قصيرًا ينقل ما قاله باستخدام الكلام المنقول.</div>
-    </div>
-  </section>
-
-  <!-- 8. Assessment -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">8</span> Assessment · Reported Speech Quiz</h2>
-      <p class="section-sub">Answer all questions, then press Submit for your score.</p>
-
-      <div class="assessment">
-        <div class="ex mcq-q">
-          <p class="q">1) "I live in Gaza." → She said she ___ in Gaza.</p>
-          <div class="options">
-            <button class="option">lives</button>
-            <button class="option" data-correct>lived</button>
-            <button class="option">has lived</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">2) "Do you know the answer?" → He asked ___ I knew the answer.</p>
-          <div class="options">
-            <button class="option">that</button>
-            <button class="option" data-correct>if</button>
-            <button class="option">what</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">3) "I will help you." → She said she ___ help me.</p>
-          <input type="text" data-answer="would" placeholder="will → ?">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">4) Which pronoun? "I am tired." → He said ___ was tired.</p>
-          <input type="text" data-answer="he" placeholder="he / she / they">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">5) "Where do you work?" → She asked where ___.</p>
-          <div class="options">
-            <button class="option">do I work</button>
-            <button class="option" data-correct>I worked</button>
-            <button class="option">I work</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">6) In reported speech, "now" changes to:</p>
-          <div class="options">
-            <button class="option">today</button>
-            <button class="option" data-correct>then</button>
-            <button class="option">yet</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <button class="btn green submit-assess">Submit answers</button>
-        <div class="result">
-          <p>Your score</p>
-          <div class="score">0 / 0</div>
-          <p class="msg"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div style="height:8px"></div>
+<!-- HEADER -->
+<div class="hdr">
+  <p style="font-size:.8rem;opacity:.7;letter-spacing:1px;text-transform:uppercase">Grammar • English for Palestine</p>
+  <h1>Reported Speech 📰</h1>
+  <p class="ar" style="font-size:1rem;margin-top:4px">الكلام المنقول</p>
+  <div class="chips">
+    <span class="chip">🎯 Grades 7 &amp; 9</span>
+    <span class="chip">⏱️ ~35 min</span>
+    <span class="chip">📰 Backshift &amp; Report</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
 </div>
 
-<nav class="lesson-nav">
-  <button class="btn ghost" id="prevBtn">‹ Prev</button>
-  <span class="spacer" id="navCounter">1 / 8</span>
-  <button class="btn" id="nextBtn">Next ›</button>
-</nav>
+<!-- TAB BAR -->
+<div class="tab-bar" id="tabBar">
+  <button class="tab active" onclick="go(0)">🚀 Start</button>
+  <button class="tab" onclick="go(1)">📚 Words</button>
+  <button class="tab" onclick="go(2)">🔍 Discover</button>
+  <button class="tab" onclick="go(3)">🧠 Grammar</button>
+  <button class="tab" onclick="go(4)">✏️ Practice</button>
+  <button class="tab" onclick="go(5)">🗣️ Create</button>
+  <button class="tab" onclick="go(6)">🎯 Quiz</button>
+</div>
 
-<script src="assets/lesson.js"></script>
+<div class="panels">
+
+<!-- ══════════════════ TAB 1 — START ══════════════════ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <div class="card-title">🚀 What Did He Say?</div>
+    <div class="card-sub">Have you ever passed on someone's message?</div>
+
+    <div style="text-align:center;font-size:5rem;margin:12px 0">📱💬</div>
+    <div class="hint-ar">
+      تخيّل أن صديقك أرسل رسالة، وطُلب منك إخبار المعلمة بما قاله. هذا هو "الكلام المنقول"!
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin:16px 0">
+      <div class="bubble direct">
+        <div class="bubble-label">Direct (what he said)</div>
+        "I <strong>am</strong> happy today!"
+      </div>
+      <div style="font-size:2rem;align-self:center;color:var(--ros)">→</div>
+      <div class="bubble reported">
+        <div class="bubble-label">Reported (what you tell the teacher)</div>
+        He said he <strong>was</strong> happy that day!
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <p class="lbl">Warm-up — Choose the right answer</p>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px">
+      <strong>1)</strong> Sara says: "I <u>am</u> studying." You tell your mother: "Sara said she ___ studying."
+    </p>
+    <div class="opts" id="s1opts">
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Not quite — the verb must shift back.','الفعل يتحول للماضي عند النقل.')">is</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,true,'Correct! am/is → was (backshift).','صحيح! am/is تصبح was في الكلام المنقول.')">was</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Too far back — will be is for reporting will.','will be تُستخدم عند نقل will فقط.')">will be</button>
+    </div>
+    <div class="fb-wrap" id="s1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px">
+      <strong>2)</strong> He said: "I <u>will</u> call tomorrow." → He said he ___ call the next day.
+    </p>
+    <div class="opts" id="s2opts">
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Will stays as will only in direct speech.','will لا تُستخدم في الكلام المنقول.')">will</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,true,'Correct! will → would in reported speech.','صحيح! will تصبح would عند النقل.')">would</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Should is for advice, not reported will.','should للنصيحة وليس لنقل will.')">should</button>
+    </div>
+    <div class="fb-wrap" id="s2fb"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 2 — WORDS ══════════════════ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <div class="card-title">📚 Key Vocabulary</div>
+    <div class="card-sub">Click a card to flip it. 🔊 to hear the word.</div>
+
+    <div class="fc-grid" id="fcGrid">
+      <!-- JS fills cards -->
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⏱️ Time Expressions — What Changes?</div>
+    <div class="hint-ar">الظروف الزمنية تتغير عند النقل من الحاضر إلى الماضي.</div>
+    <table class="time-table">
+      <tr><th>Direct Speech</th><th class="arr">→</th><th>Reported Speech</th></tr>
+      <tr><td>now</td><td class="arr">→</td><td>then</td></tr>
+      <tr><td>today</td><td class="arr">→</td><td>that day</td></tr>
+      <tr><td>tomorrow</td><td class="arr">→</td><td>the next day / the following day</td></tr>
+      <tr><td>yesterday</td><td class="arr">→</td><td>the day before / the previous day</td></tr>
+      <tr><td>here</td><td class="arr">→</td><td>there</td></tr>
+      <tr><td>this</td><td class="arr">→</td><td>that</td></tr>
+      <tr><td>these</td><td class="arr">→</td><td>those</td></tr>
+      <tr><td>last week</td><td class="arr">→</td><td>the week before</td></tr>
+      <tr><td>ago</td><td class="arr">→</td><td>before</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 3 — DISCOVER ══════════════════ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <div class="card-title">🔍 What's Changing?</div>
+    <div class="card-sub">Study these pairs carefully — before reading any rule!</div>
+
+    <div class="hint-ar">لاحظ الفرق بين الكلام المباشر والمنقول. ماذا يحدث للأفعال؟</div>
+
+    <div class="bubble-pair">
+      <div style="margin-bottom:6px"><span style="background:#dbeafe;padding:3px 8px;border-radius:6px;font-size:.8rem;font-weight:700;color:#1d4ed8">PAIR 1</span></div>
+      <div class="bubble direct">
+        <div class="bubble-label">Direct</div>
+        "I <strong>work</strong> here." &nbsp;<em style="font-size:.8rem;color:#64748b">(Present Simple)</em>
+      </div>
+      <div class="bubble reported">
+        <div class="bubble-label">Reported</div>
+        She said she <span class="changed">worked</span> there. &nbsp;<em style="font-size:.8rem;color:#64748b">(Past Simple)</em>
+      </div>
+    </div>
+
+    <div class="bubble-pair">
+      <div style="margin-bottom:6px"><span style="background:#fce7f3;padding:3px 8px;border-radius:6px;font-size:.8rem;font-weight:700;color:var(--ros-d)">PAIR 2</span></div>
+      <div class="bubble direct">
+        <div class="bubble-label">Direct</div>
+        "I <strong>will</strong> come." &nbsp;<em style="font-size:.8rem;color:#64748b">(Future)</em>
+      </div>
+      <div class="bubble reported">
+        <div class="bubble-label">Reported</div>
+        He said he <span class="changed">would</span> come. &nbsp;<em style="font-size:.8rem;color:#64748b">(Past Future)</em>
+      </div>
+    </div>
+
+    <div class="bubble-pair">
+      <div style="margin-bottom:6px"><span style="background:#dcfce7;padding:3px 8px;border-radius:6px;font-size:.8rem;font-weight:700;color:#15803d">PAIR 3</span></div>
+      <div class="bubble direct">
+        <div class="bubble-label">Direct</div>
+        "I <strong>went</strong> out." &nbsp;<em style="font-size:.8rem;color:#64748b">(Past Simple)</em>
+      </div>
+      <div class="bubble reported">
+        <div class="bubble-label">Reported</div>
+        She said she <span class="changed">had gone</span> out. &nbsp;<em style="font-size:.8rem;color:#64748b">(Past Perfect)</em>
+      </div>
+    </div>
+
+    <div class="bubble-pair">
+      <div style="margin-bottom:6px"><span style="background:#fef9c3;padding:3px 8px;border-radius:6px;font-size:.8rem;font-weight:700;color:#78350f">PAIR 4</span></div>
+      <div class="bubble direct">
+        <div class="bubble-label">Direct</div>
+        "I <strong>am studying</strong>." &nbsp;<em style="font-size:.8rem;color:#64748b">(Present Continuous)</em>
+      </div>
+      <div class="bubble reported">
+        <div class="bubble-label">Reported</div>
+        He said he <span class="changed">was studying</span>. &nbsp;<em style="font-size:.8rem;color:#64748b">(Past Continuous)</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 Now You Discover!</div>
+    <div class="hint-ar">ماذا لاحظت؟ ما الذي يحدث للأفعال عند نقل الكلام؟</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> What happened to the verbs in all four pairs?</p>
+    <div class="opts" id="d1opts">
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Look again — they all changed!','انظر مرة أخرى — كلها تغيّرت.')">They stayed the same.</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,true,'Excellent! The verbs shift ONE step BACK in time.','رائع! الأفعال تنتقل خطوة واحدة نحو الماضي.')">They moved backward in time.</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'No — verbs go back, not forward.','لا — الأفعال تتحرك نحو الماضي.')">They moved forward in time.</button>
+    </div>
+    <div class="fb-wrap" id="d1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> "I am happy." → She said ___ was happy. Which pronoun replaces <em>I</em>?</p>
+    <div class="opts" id="d2opts">
+      <button class="opt" onclick="sc('d2','d2fb',this,true,'Correct! I → she/he depending on who spoke.','صحيح! I تصبح she أو he حسب من تكلّم.')">she</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'They is plural. The speaker is one person.','they للجمع — المتكلم هنا مفرد.')">they</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'I is the original speaker — it changes.','I هو المتكلم الأصلي ويتغير عند النقل.')">I</button>
+    </div>
+    <div class="fb-wrap" id="d2fb"></div>
+
+    <div class="formula" style="margin-top:16px">
+      <h3>⭐ The Big Pattern</h3>
+      <p style="font-size:.95rem">When we report what someone said, the <strong>verb goes ONE step back in time</strong>.</p>
+      <p style="font-size:.9rem;margin-top:8px;color:var(--muted)">We call this the <strong>"Backshift"</strong> — الإزاحة الزمنية</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 4 — GRAMMAR ══════════════════ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <div class="card-title">🧠 The Tense Backshift</div>
+    <div class="hint-ar">جدول الإزاحة الزمنية — الأفعال تتحول خطوة نحو الماضي.</div>
+
+    <table class="shift-table">
+      <tr>
+        <th>Direct Speech</th>
+        <th></th>
+        <th>Reported Speech</th>
+      </tr>
+      <tr>
+        <td><strong>Present Simple</strong><br><em>I <u>work</u> here.</em></td>
+        <td class="shift-arrow">→</td>
+        <td><strong>Past Simple</strong><br>She said she <code>worked</code> there.</td>
+      </tr>
+      <tr>
+        <td><strong>Present Continuous</strong><br><em>I <u>am studying</u>.</em></td>
+        <td class="shift-arrow">→</td>
+        <td><strong>Past Continuous</strong><br>He said he <code>was studying</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Past Simple</strong><br><em>I <u>went</u> out.</em></td>
+        <td class="shift-arrow">→</td>
+        <td><strong>Past Perfect</strong><br>She said she <code>had gone</code> out.</td>
+      </tr>
+      <tr>
+        <td><strong>will</strong><br><em>I <u>will</u> help.</em></td>
+        <td class="shift-arrow">→</td>
+        <td><strong>would</strong><br>He said he <code>would</code> help.</td>
+      </tr>
+      <tr>
+        <td><strong>can</strong><br><em>I <u>can</u> swim.</em></td>
+        <td class="shift-arrow">→</td>
+        <td><strong>could</strong><br>She said she <code>could</code> swim.</td>
+      </tr>
+      <tr>
+        <td><strong>may</strong><br><em>I <u>may</u> come.</em></td>
+        <td class="shift-arrow">→</td>
+        <td><strong>might</strong><br>He said he <code>might</code> come.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Pronouns Change Too</div>
+    <div class="hint-ar">الضمائر تتغير حسب المنظور الجديد.</div>
+    <div class="g-cards">
+      <div class="g-card blue">
+        <h4>I → he / she</h4>
+        <p>"I love this."<br>→ She said <strong>she</strong> loved that.</p>
+      </div>
+      <div class="g-card rose">
+        <h4>we → they</h4>
+        <p>"We are ready."<br>→ They said <strong>they</strong> were ready.</p>
+      </div>
+      <div class="g-card green">
+        <h4>my → his / her</h4>
+        <p>"I lost my pen."<br>→ He said he lost <strong>his</strong> pen.</p>
+      </div>
+      <div class="g-card amber">
+        <h4>you → I / they</h4>
+        <p>"You are late."<br>→ She told <strong>me</strong> I was late.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Reporting Statements vs Questions</div>
+    <div class="g-cards" style="grid-template-columns:1fr 1fr">
+      <div class="g-card blue">
+        <h4>Statements</h4>
+        <p>said (that) …<br>told + person (that) …</p>
+        <p style="margin-top:8px">"I am tired."<br>→ She <strong>said</strong> she was tired.<br>→ She <strong>told me</strong> she was tired.</p>
+      </div>
+      <div class="g-card rose">
+        <h4>Questions</h4>
+        <p>asked + <strong>if/whether</strong> (Yes/No)<br>asked + <strong>wh-word</strong> (Wh-Q)</p>
+        <p style="margin-top:8px">"Do you like tea?"<br>→ He asked <strong>if</strong> I liked tea.<br>"Where do you live?"<br>→ She asked <strong>where</strong> I lived.</p>
+      </div>
+    </div>
+    <div class="hint-ar" style="margin-top:12px">
+      <strong>ملاحظة مهمة:</strong> عند نقل السؤال، لا نستخدم ترتيب السؤال — الفعل يأتي بعد الفاعل.
+      ✗ She asked where <u>did</u> I live. &nbsp;|&nbsp; ✓ She asked where <u>I lived</u>.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 5 — PRACTICE ══════════════════ -->
+<div class="panel" id="p4">
+  <div class="card">
+    <div class="card-title">✏️ Level 1 — Choose the Right Form</div>
+    <div class="hint-ar">اختر الشكل الصحيح للفعل في الكلام المنقول.</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> "I <u>am</u> late." → He said he ___ late.</p>
+    <div class="opts" id="l1q1opts">
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'Am/is → was. Not is.','am/is تصبح was.')">is</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,true,'Correct! am → was (backshift).','صحيح! am تصبح was.')">was</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'Were is past plural — was matches "I am".','were للجمع وليس للمفرد هنا.')">were</button>
+    </div>
+    <div class="fb-wrap" id="l1q1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> "She <u>will</u> call." → They said she ___ call.</p>
+    <div class="opts" id="l1q2opts">
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Will stays direct. In reported speech it becomes would.','will في الكلام المنقول تصبح would.')">will</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,true,'Correct! will → would.','صحيح! will تصبح would.')">would</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Should is advice — not a backshift of will.','should للنصيحة وليس لنقل will.')">should</button>
+    </div>
+    <div class="fb-wrap" id="l1q2fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>3)</strong> "I <u>played</u> chess." → She said she ___ chess.</p>
+    <div class="opts" id="l1q3opts">
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'Plays is present — wrong tense.','plays مضارع وغير صحيح هنا.')">plays</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'Played is already past — it shifts to past perfect.','played ماضي بسيط تصبح had played.')">played</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,true,'Correct! Past Simple → Past Perfect (had + pp).','صحيح! الماضي البسيط يصبح الماضي التام.')">had played</button>
+    </div>
+    <div class="fb-wrap" id="l1q3fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>4)</strong> "Do you live here?" → He asked if I ___ there.</p>
+    <div class="opts" id="l1q4opts">
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'Live is present — in reported questions the verb shifts.','live مضارع — يتحول في النقل.')">live</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,true,'Correct! live → lived (backshift + no question word order).','صحيح! live تصبح lived.')">lived</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'Had lived is too far back for a Present Simple question.','had lived أبعد من اللازم.')">had lived</button>
+    </div>
+    <div class="fb-wrap" id="l1q4fb"></div>
+
+    <div class="lvl-done" id="l1done">🎉 Level 1 done! Great job shifting tenses!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 2 — Fill with the Word Bank</div>
+    <div class="hint-ar">اضغط على الكلمة ثم اضغط على الفراغ لوضعها في مكانها الصحيح.</div>
+
+    <div class="wb-chips" id="wb2chips">
+      <span class="wb-chip" onclick="pickWb(this,'was')">was</span>
+      <span class="wb-chip" onclick="pickWb(this,'would')">would</span>
+      <span class="wb-chip" onclick="pickWb(this,'had visited')">had visited</span>
+      <span class="wb-chip" onclick="pickWb(this,'asked')">asked</span>
+      <span class="wb-chip" onclick="pickWb(this,'told')">told</span>
+    </div>
+
+    <div style="margin:12px 0">
+      <div class="fill-line">1) "I am happy." → She <span class="blank" id="wb2b1" onclick="dropWb('wb2b1')">______</span> me she was happy.</div>
+      <div class="fill-line">2) "I am tired." → He said he <span class="blank" id="wb2b2" onclick="dropWb('wb2b2')">______</span> tired.</div>
+      <div class="fill-line">3) "I will come." → She said she <span class="blank" id="wb2b3" onclick="dropWb('wb2b3')">______</span> come.</div>
+      <div class="fill-line">4) "I visited Paris." → He said he <span class="blank" id="wb2b4" onclick="dropWb('wb2b4')">______</span> Paris.</div>
+      <div class="fill-line">5) "Do you know?" → She <span class="blank" id="wb2b5" onclick="dropWb('wb2b5')">______</span> if I knew.</div>
+    </div>
+
+    <button class="check-btn" onclick="checkWb2()">Check ✓</button>
+    <div class="fb-wrap" id="wb2fb"></div>
+    <div class="lvl-done" id="l2done">🎉 Level 2 done! You are mastering reported speech!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 3 — Write the Backshifted Verb</div>
+    <div class="hint-ar">اكتب الفعل المحوّل الصحيح في الكلام المنقول.</div>
+
+    <div style="margin:10px 0">
+      <div class="fill-line">1) "I <u>work</u> here." → She said she <input class="type-inp" id="l3i1" placeholder="…"> there.</div>
+      <div class="fill-line">2) "I <u>am</u> a teacher." → He said he <input class="type-inp" id="l3i2" placeholder="…"> a teacher.</div>
+      <div class="fill-line">3) "I <u>will</u> help." → She said she <input class="type-inp" id="l3i3" placeholder="…"> help.</div>
+      <div class="fill-line">4) "I <u>can</u> swim." → He said he <input class="type-inp" id="l3i4" placeholder="…"> swim.</div>
+    </div>
+
+    <button class="check-btn" onclick="checkL3()">Check ✓</button>
+    <div class="fb-wrap" id="l3fb"></div>
+    <div class="lvl-done" id="l3done">🎉 Level 3 done! Excellent backshifting!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 4 — Spot and Fix the Mistake</div>
+    <div class="hint-ar">كل جملة فيها خطأ في الكلام المنقول. اختر الجملة الصحيحة.</div>
+
+    <p style="margin-bottom:8px;font-size:.95rem">
+      <span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>
+      &nbsp;"I love Palestine." → She said she <u>love</u> Palestine.
+    </p>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <div class="opts" id="l4q1opts">
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Loves is present — it needs to shift.','loves مضارع ويجب أن يتحول.')">She said she loves Palestine.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,true,'Correct! love → loved (backshift).','صحيح! love تصبح loved.')">She said she loved Palestine.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Had loved is too far back — love is simple present.','had loved أبعد من اللازم لفعل مضارع بسيط.')">She said she had loved Palestine.</button>
+    </div>
+    <div class="fb-wrap" id="l4q1fb"></div>
+
+    <hr class="divider"/>
+
+    <p style="margin-bottom:8px;font-size:.95rem">
+      <span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>
+      &nbsp;She asked where <u>did I live</u>.
+    </p>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <div class="opts" id="l4q2opts">
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,true,'Correct! In reported questions, NO auxiliary inversion.','صحيح! في الأسئلة المنقولة لا نقلب الفاعل والفعل المساعد.')">She asked where I lived.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'Do I live keeps question word order — wrong in reported speech.','do I live ترتيب سؤال — خاطئ في الكلام المنقول.')">She asked where do I live.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'Living needs a be verb — this is not correct.','living بحاجة إلى فعل be.')">She asked where I am living.</button>
+    </div>
+    <div class="fb-wrap" id="l4q2fb"></div>
+
+    <div class="lvl-done" id="l4done">🏆 All 4 levels done! You are a Reported Speech master!</div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 6 — CREATE ══════════════════ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <div class="card-title">🗣️ Speaking — Report It Out Loud!</div>
+    <div class="hint-ar">انقل هذه الجمل شفويًا لزميلك أو معلمك. استخدم "said / told / asked".</div>
+
+    <div class="speak-prompt">
+      <strong>Round 1:</strong> Your friend said: <em>"I am going to the library after school."</em><br>
+      👉 Tell your teacher what your friend said.
+    </div>
+    <div class="speak-prompt">
+      <strong>Round 2:</strong> Your teacher said: <em>"I will give you homework tomorrow."</em><br>
+      👉 Tell your classmate what the teacher said.
+    </div>
+    <div class="speak-prompt">
+      <strong>Round 3:</strong> Your mother asked: <em>"Where did you go yesterday?"</em><br>
+      👉 Tell your father what your mother asked.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✍️ Writing — Be a Reporter!</div>
+    <div class="hint-ar">تخيّل أنك صحفي. قابلت زميلك وقال هذه الجمل. اكتب تقريرًا قصيرًا ينقل ما قاله.</div>
+
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:14px;margin:10px 0">
+      <p style="font-weight:700;margin-bottom:8px">Your classmate said:</p>
+      <ol style="margin-left:16px;line-height:2;font-size:.92rem">
+        <li>"I <strong>am</strong> 14 years old."</li>
+        <li>"I <strong>play</strong> football every day."</li>
+        <li>"I <strong>will visit</strong> my uncle next week."</li>
+        <li>"I <strong>went</strong> to Jerusalem last year."</li>
+      </ol>
+    </div>
+
+    <p class="lbl" style="margin-top:12px">Write your reporter's paragraph:</p>
+    <textarea class="write-area" placeholder="I interviewed [name]. He/She said that he/she was 14 years old. He/She told me he/she played football every day. He/She said he/she would visit his/her uncle the following week. He/She said he/she had gone to Jerusalem the year before."></textarea>
+
+    <div class="hint-ar" style="margin-top:10px">
+      ✍️ لا تنسَ: 1) حوّل الأفعال. 2) بدّل الضمائر. 3) غيّر الظروف الزمنية (next week → the following week, last year → the year before).
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💬 Challenge — Report the Questions</div>
+    <div class="hint-ar">تحدٍّ إضافي: انقل هذه الأسئلة بالكتابة.</div>
+
+    <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:10px;padding:14px;margin:10px 0;font-size:.92rem">
+      <ol style="margin-left:16px;line-height:2">
+        <li>The teacher asked: "Do you understand the lesson?"</li>
+        <li>My friend asked: "Where do you live?"</li>
+        <li>Ali asked: "Can you help me?"</li>
+      </ol>
+    </div>
+    <textarea class="write-area" placeholder="1) The teacher asked if I understood the lesson.&#10;2) My friend asked where I lived.&#10;3) Ali asked if I could help him."></textarea>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 7 — QUIZ ══════════════════ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <div class="card-title">🎯 Quick Check — 5 Questions</div>
+    <div class="hint-ar">أجب على الأسئلة الخمسة ثم اضغط "Check My Score" لمعرفة نتيجتك.</div>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="qq1">
+      <div class="q-num">Question 1 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">"I <u>play</u> football." → He said he ___ football.</p>
+      <div class="opts" id="qq1opts">
+        <button class="opt" onclick="qsc(1,this,'played',event)">played</button>
+        <button class="opt" onclick="qsc(1,this,'plays',event)">plays</button>
+        <button class="opt" onclick="qsc(1,this,'play',event)">play</button>
+      </div>
+      <div class="fb-wrap" id="qq1fb"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="qq2">
+      <div class="q-num">Question 2 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">What is the reported form of <strong>will</strong>?</p>
+      <div class="opts" id="qq2opts">
+        <button class="opt" onclick="qsc(2,this,'shall',event)">shall</button>
+        <button class="opt" onclick="qsc(2,this,'would',event)">would</button>
+        <button class="opt" onclick="qsc(2,this,'should',event)">should</button>
+      </div>
+      <div class="fb-wrap" id="qq2fb"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="qq3">
+      <div class="q-num">Question 3 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">"<u>I</u> am happy." → She said ___ was happy.</p>
+      <div class="opts" id="qq3opts">
+        <button class="opt" onclick="qsc(3,this,'I',event)">I</button>
+        <button class="opt" onclick="qsc(3,this,'she',event)">she</button>
+        <button class="opt" onclick="qsc(3,this,'they',event)">they</button>
+      </div>
+      <div class="fb-wrap" id="qq3fb"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="qq4">
+      <div class="q-num">Question 4 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">"Do you speak Arabic?" → He asked ___ I spoke Arabic. (Yes/No question — choose the connector)</p>
+      <div class="opts" id="qq4opts">
+        <button class="opt" onclick="qsc(4,this,'that',event)">that</button>
+        <button class="opt" onclick="qsc(4,this,'if',event)">if</button>
+        <button class="opt" onclick="qsc(4,this,'what',event)">what</button>
+      </div>
+      <div class="fb-wrap" id="qq4fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="qq5">
+      <div class="q-num">Question 5 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">"I went to school <u>today</u>." → She said she had gone to school ___.</p>
+      <div class="opts" id="qq5opts">
+        <button class="opt" onclick="qsc(5,this,'today',event)">today</button>
+        <button class="opt" onclick="qsc(5,this,'that day',event)">that day</button>
+        <button class="opt" onclick="qsc(5,this,'the next day',event)">the next day</button>
+      </div>
+      <div class="fb-wrap" id="qq5fb"></div>
+    </div>
+
+    <button class="check-btn" style="margin-top:16px;width:100%;font-size:1rem" onclick="calcQuiz()">📊 Check My Score</button>
+
+    <div class="quiz-score" id="quizScore">
+      <div class="score-num" id="scoreTxt"></div>
+      <p id="scoreMsg" style="font-size:1rem;margin:6px 0"></p>
+      <span class="badge-earned" id="badgeIcon">📢</span>
+      <p id="badgeMsg" style="font-size:.85rem;color:var(--muted)"></p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panels -->
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+// ── navigation ──────────────────────────────────────────────────
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+const prog=document.getElementById('progFill');
+function go(i){
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  prog.style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── particles ───────────────────────────────────────────────────
+function launchStar(x,y){
+  const el=document.createElement('div');
+  el.className='star-fly';
+  el.textContent=['⭐','✨','💫','🌟'][Math.floor(Math.random()*4)];
+  el.style.cssText=`left:${x}px;top:${y}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
+}
+function confetti(){
+  const colors=['#E11D48','#F59E0B','#3b82f6','#16a34a','#8b5cf6','#ec4899'];
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div');
+    p.className='confetti-p';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[i%colors.length]};animation-delay:${Math.random()*.8}s;animation-duration:${1+Math.random()}s`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2200);
+  }
+}
+function shake(el){
+  el.classList.remove('shake');
+  void el.offsetWidth;
+  el.classList.add('shake');
+}
+
+// ── feedback helper ──────────────────────────────────────────────
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅':'❌'} ${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+
+// ── single-choice MCQ ────────────────────────────────────────────
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const opts=document.querySelectorAll(`#${rowId}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  checkL1();checkL4done();
+}
+
+// ── L1 completion ────────────────────────────────────────────────
+function checkL1(){
+  const ids=['l1q1','l1q2','l1q3','l1q4'];
+  const allDone=ids.every(id=>document.querySelector(`#${id}opts .opt.ok`));
+  if(allDone){const d=document.getElementById('l1done');d.classList.add('show');confetti();}
+}
+function checkL4done(){
+  const ids=['l4q1','l4q2'];
+  const allDone=ids.every(id=>document.querySelector(`#${id}opts .opt.ok`));
+  if(allDone){const d=document.getElementById('l4done');d.classList.add('show');confetti();}
+}
+
+// ── word bank ────────────────────────────────────────────────────
+let wbSel=null;
+const wb2answers={wb2b1:'told',wb2b2:'was',wb2b3:'would',wb2b4:'had visited',wb2b5:'asked'};
+function pickWb(chip,val){
+  document.querySelectorAll('#wb2chips .wb-chip').forEach(c=>c.classList.remove('sel'));
+  if(wbSel===chip){wbSel=null;return;}
+  chip.classList.add('sel');
+  wbSel={chip,val};
+}
+function dropWb(blankId){
+  if(!wbSel)return;
+  const blank=document.getElementById(blankId);
+  if(blank.classList.contains('filled'))return;
+  blank.textContent=wbSel.val;
+  blank.classList.add('filled');
+  wbSel.chip.classList.add('used');
+  wbSel.chip.classList.remove('sel');
+  wbSel=null;
+}
+function checkWb2(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(wb2answers)){
+    const blank=document.getElementById(id);
+    if(blank.textContent.trim()===ans)ok++;
+  }
+  const all=Object.keys(wb2answers).length;
+  if(ok===all){
+    setFb('wb2fb',true,'All correct! Well done!','ممتاز! جميع الإجابات صحيحة!');
+    document.getElementById('l2done').classList.add('show');confetti();
+  }else{
+    setFb('wb2fb',false,`${ok}/${all} correct. Check the blanks and try again.`,`${ok} من ${all} صحيحة. راجع إجاباتك.`);
+  }
+}
+
+// ── Level 3 ──────────────────────────────────────────────────────
+const l3answers={l3i1:'worked',l3i2:'was',l3i3:'would',l3i4:'could'};
+function checkL3(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(l3answers)){
+    const inp=document.getElementById(id);
+    const val=inp.value.trim().toLowerCase();
+    const correct=val===ans;
+    inp.className='type-inp '+(correct?'ok':'err');
+    if(correct)ok++;
+  }
+  const all=Object.keys(l3answers).length;
+  if(ok===all){
+    setFb('l3fb',true,'Excellent! All backshifts are correct!','ممتاز! جميع الأفعال محوّلة بشكل صحيح!');
+    document.getElementById('l3done').classList.add('show');confetti();
+  }else{
+    setFb('l3fb',false,`${ok}/${all} correct. Try again.`,`${ok} من ${all} صحيحة. حاول مرة أخرى.`);
+  }
+}
+
+// ── Quiz ─────────────────────────────────────────────────────────
+const qAnswers={1:'played',2:'would',3:'she',4:'if',5:'that day'};
+const qScored={};
+function qsc(qNum,btn,val,evt){
+  const opts=document.querySelectorAll(`#qq${qNum}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  const correct=val===qAnswers[qNum];
+  btn.classList.add(correct?'ok':'err');
+  qScored[qNum]=correct;
+  document.getElementById(`qq${qNum}`).classList.add(correct?'answered-ok':'answered-err');
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  const fbMessages={
+    1:{ok:"Correct! play → played.",ar:"صحيح! play تصبح played."},
+    2:{ok:"Correct! will → would.",ar:"صحيح! will تصبح would."},
+    3:{ok:"Correct! I → she/he.",ar:"صحيح! I تصبح she أو he."},
+    4:{ok:"Correct! For Yes/No questions use 'if' or 'whether'.",ar:"صحيح! للأسئلة بنعم/لا نستخدم if أو whether."},
+    5:{ok:"Correct! today → that day.",ar:"صحيح! today تصبح that day."}
+  };
+  const no={
+    1:{no:"play doesn't shift — Play/plays → played.",ar:"play مضارع يجب أن يتحول."},
+    2:{no:"Shall/should are not backshifts of will.",ar:"shall وshould ليسا تحويلاً لـ will."},
+    3:{no:"The pronoun must shift — I (the speaker) becomes she/he.",ar:"الضمير يتحول — I تصبح she أو he."},
+    4:{no:"'That' is for statements. 'What' needs a wh-question.",ar:"that للجمل وليس للأسئلة."},
+    5:{no:"'Today' stays as-is in direct speech — in reported speech it becomes 'that day'.",ar:"today في الكلام المنقول تصبح that day."}
+  };
+  if(correct)setFb(`qq${qNum}fb`,true,fbMessages[qNum].ok,fbMessages[qNum].ar);
+  else setFb(`qq${qNum}fb`,false,no[qNum].no,no[qNum].ar);
+}
+function calcQuiz(){
+  const total=5;
+  const score=Object.values(qScored).filter(Boolean).length;
+  const box=document.getElementById('quizScore');
+  document.getElementById('scoreTxt').textContent=`${score} / ${total}`;
+  const msgs=[
+    {e:'Keep practising — read the Grammar tab again!',a:'تابع المحاولة — راجع علامات النقل مرة أخرى.'},
+    {e:'Good effort! Review the backshift table.',a:'جهد طيب! راجع جدول الإزاحة الزمنية.'},
+    {e:'Good! You know the basics.',a:'جيد! أنت تعرف الأساسيات.'},
+    {e:'Great job! Almost there!',a:'عمل رائع! أنت قريب من الإتقان.'},
+    {e:'Perfect! You are a Reported Speech star! ⭐',a:'ممتاز! أنت نجم الكلام المنقول!'}
+  ];
+  const m=msgs[Math.min(score,4)];
+  document.getElementById('scoreMsg').innerHTML=`${m.e}<br><span class="ar">${m.a}</span>`;
+  document.getElementById('badgeMsg').textContent=score>=3?'📢 Reporter Badge earned!':'Keep going — earn the Reporter Badge!';
+  box.classList.add('show');
+  if(score>=3){localStorage.setItem('badge_reported','earned');confetti();}
+}
+
+// ── Flashcards ───────────────────────────────────────────────────
+const cards=[
+  {word:'report',emoji:'📢',ar:'يُبلِّغ / يُخبر',syn:'tell — inform',ant:'hide — conceal'},
+  {word:'said',emoji:'🗣️',ar:'قال (فعل ماضي)',syn:'told — stated',ant:'—'},
+  {word:'told',emoji:'👂',ar:'أخبر (+ شخص)',syn:'informed — said',ant:'hid — kept secret'},
+  {word:'asked',emoji:'❓',ar:'سأل',syn:'questioned — inquired',ant:'answered — replied'},
+  {word:'backshift',emoji:'⬅️',ar:'الإزاحة الزمنية',syn:'tense shift',ant:'direct speech'},
+  {word:'direct speech',emoji:'💬',ar:'الكلام المباشر',syn:'quotation',ant:'indirect / reported speech'},
+];
+const grid=document.getElementById('fcGrid');
+cards.forEach((c,i)=>{
+  grid.innerHTML+=`
+  <div class="fc" id="fc${i}" onclick="flipCard(${i})">
+    <div class="fc-inner">
+      <div class="fc-front">
+        <span class="emoji">${c.emoji}</span>
+        <div class="word">${c.word}</div>
+        <button class="tts-btn" onclick="event.stopPropagation();speak('${c.word}')">🔊 Listen</button>
+      </div>
+      <div class="fc-back">
+        <div class="ar-mean ar">${c.ar}</div>
+        <div class="syn">${c.syn}</div>
+        ${c.ant&&c.ant!=='—'?`<div class="syn" style="opacity:.7">↔ ${c.ant}</div>`:''}
+      </div>
+    </div>
+  </div>`;
+});
+function flipCard(i){document.getElementById('fc'+i).classList.toggle('flipped');}
+function speak(w){
+  const u=new SpeechSynthesisUtterance(w);
+  u.lang='en-US';u.rate=.9;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+</script>
 </body>
 </html>
