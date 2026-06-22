@@ -1,287 +1,927 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Stative Verbs — PalBook Live</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/lesson.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Stative Verbs — Discovery Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --sun:#F97316;--sun-d:#9A3412;--sun-l:#FFF7ED;
+  --yel:#EAB308;--yel-l:#FEFCE8;
+  --grn:#2E7D32;--grn-l:#E8F5E9;--red:#C62828;--red-l:#FFEBEE;
+  --bg:#FFF7ED;--card:#fff;--txt:#431407;--muted:#B45309;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,var(--sun-d) 0%,var(--sun) 55%,#FB923C 100%);
+  padding:28px 20px 0;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 20%,rgba(234,179,8,.35) 0%,transparent 50%),
+             radial-gradient(circle at 10% 80%,rgba(255,255,255,.1) 0%,transparent 55%);pointer-events:none}
+.hdr-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:18px;position:relative}
+.hdr-art{font-size:84px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3))}
+.hdr-text{flex:1}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:4px}
+.hdr h1{font-family:'Fredoka One',cursive;font-size:clamp(1.5rem,4vw,2.4rem);color:#fff;line-height:1.15}
+.hdr h1 span{color:#FEF08A}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:rgba(255,255,255,.18);color:#fff;border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:700}
+.chip.ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.85rem}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:6px;padding:14px 16px 0;max-width:900px;margin:16px auto 0;
+  overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.35);
+  border-radius:22px 22px 0 0;padding:8px 16px;font-family:'Fredoka One',cursive;
+  font-size:.95rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.35)}
+.tab.active{background:#fff;color:var(--sun-d);border-color:#fff}
+
+.prog-wrap{background:rgba(255,255,255,.2);height:6px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#FEF08A,var(--yel));transition:width .4s ease;border-radius:0 3px 3px 0}
+
+.main{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.on{display:block}
+
+.card{background:var(--card);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.card h2{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--sun-d);margin-bottom:12px}
+.card h3{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--sun);margin:14px 0 8px}
+
+.q-inst{background:var(--sun-l);border-right:5px solid var(--sun);border-radius:10px;padding:10px 16px;margin-bottom:14px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;color:var(--sun-d);direction:rtl;text-align:right;line-height:1.6}
+
+.fb-wrap{display:none;border-radius:10px;padding:12px 16px;margin-top:10px;border-left:5px solid transparent}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:var(--grn-l);border-color:var(--grn)}
+.fb-wrap.err{background:var(--red-l);border-color:var(--red)}
+.fb-en{font-weight:700;font-size:1rem;margin-bottom:4px}
+.fb-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.95rem;direction:rtl;text-align:right;color:#555}
+.fb-wrap.ok .fb-en{color:#1B5E20}
+.fb-wrap.err .fb-en{color:#B71C1C}
+
+.mcq-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.mcq-btn{background:var(--sun-l);border:2px solid #FED7AA;border-radius:12px;padding:9px 18px;
+  font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--txt)}
+.mcq-btn:hover{background:#FFEDD5}
+.mcq-btn.ok{background:var(--grn-l);border-color:var(--grn);color:#1B5E20}
+.mcq-btn.err{background:var(--red-l);border-color:var(--red);color:#B71C1C}
+.mcq-btn:disabled{cursor:default;opacity:.8}
+
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;background:var(--sun-l);padding:12px 16px;border-radius:12px;margin-bottom:16px}
+.wb-chip{background:#fff;border:2px solid var(--sun);border-radius:20px;padding:5px 14px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;color:var(--sun-d)}
+.wb-chip:hover{background:var(--sun);color:#fff}
+.wb-chip.used{opacity:.35;pointer-events:none;text-decoration:line-through}
+
+.blank{display:inline-block;min-width:110px;border-bottom:3px solid var(--sun);padding:2px 6px;text-align:center;cursor:pointer;border-radius:4px 4px 0 0;transition:background .2s;font-weight:700}
+.blank:hover{background:var(--sun-l)}
+.blank.filled{color:var(--sun-d)}
+.blank.ok{border-color:var(--grn);color:var(--grn);background:var(--grn-l)}
+.blank.err{border-color:var(--red);color:var(--red);background:var(--red-l)}
+
+.t-in{width:100%;padding:9px;border:2px solid var(--sun);border-radius:8px;font-size:1rem;margin-bottom:4px;font-family:'Nunito',sans-serif;background:#FFFDF9}
+.t-in:focus{outline:none;border-color:var(--yel)}
+
+.check-btn{background:linear-gradient(135deg,var(--sun),#FB923C);color:#fff;border:none;border-radius:12px;padding:10px 26px;
+  font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;margin-top:10px;transition:transform .15s,box-shadow .15s}
+.check-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(249,115,22,.4)}
+.check-btn:active{transform:translateY(0)}
+
+.lvl-done{display:none;background:linear-gradient(135deg,var(--yel-l),#FEF3C7);border:3px solid var(--yel);border-radius:16px;padding:16px 20px;
+  text-align:center;margin-top:16px;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.1rem;color:#713F12}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+
+/* discover table */
+.disc-tbl{width:100%;border-collapse:collapse;margin:12px 0}
+.disc-tbl th{background:var(--sun-d);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:.95rem}
+.disc-tbl td{padding:9px 14px;border-bottom:1px solid var(--sun-l);font-size:.95rem;vertical-align:top}
+.disc-tbl tr:nth-child(even) td{background:var(--sun-l)}
+.hi{color:var(--sun-d);font-weight:800;background:#FEF08A;padding:1px 5px;border-radius:4px}
+.neg{color:#C62828;font-weight:800}
+.ok-col{background:#E8F5E9!important}
+.err-col{background:#FFEBEE!important}
+
+/* grammar table */
+.gram-tbl{width:100%;border-collapse:collapse;margin:10px 0}
+.gram-tbl th{background:var(--sun);color:#fff;padding:9px 14px;font-family:'Fredoka One',cursive;text-align:left}
+.gram-tbl td{padding:8px 14px;border-bottom:1px solid var(--sun-l);vertical-align:top}
+.gram-tbl tr:nth-child(even) td{background:var(--sun-l)}
+.gram-note{background:var(--yel-l);border-left:4px solid var(--yel);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.92rem}
+
+/* stative category cards */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:14px 0}
+.cat-card{border-radius:14px;padding:14px;border:2px solid transparent}
+.cat-mind{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);border-color:#A78BFA}
+.cat-emo{background:linear-gradient(135deg,#FFE4E6,#FECDD3);border-color:#FB7185}
+.cat-sense{background:linear-gradient(135deg,#D1FAE5,#A7F3D0);border-color:#34D399}
+.cat-own{background:linear-gradient(135deg,#FEF3C7,#FDE68A);border-color:#F59E0B}
+.cat-card h4{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:8px}
+.cat-mind h4{color:#4C1D95}
+.cat-emo h4{color:#881337}
+.cat-sense h4{color:#065F46}
+.cat-own h4{color:#78350F}
+.cat-card .verbs{display:flex;flex-wrap:wrap;gap:6px}
+.cat-card .vb{background:rgba(255,255,255,.7);border-radius:20px;padding:3px 10px;font-size:.85rem;font-weight:700}
+
+/* vs box */
+.vs-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:12px 0}
+.vs-ok{background:var(--grn-l);border:2px solid var(--grn);border-radius:12px;padding:12px;text-align:center}
+.vs-err{background:var(--red-l);border:2px solid var(--red);border-radius:12px;padding:12px;text-align:center;text-decoration:line-through}
+.vs-lbl{text-align:center;font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--muted)}
+.vs-ok p{color:#1B5E20;font-weight:700}
+.vs-err p{color:#B71C1C}
+
+/* flashcard */
+.fc-wrap{perspective:700px;width:190px;height:165px;cursor:pointer;margin:0 auto 4px}
+.fc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s}
+.fc-wrap.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.fc-front{background:linear-gradient(135deg,var(--sun-l),#FFEDD5);border:2px solid #FED7AA}
+.fc-back{background:linear-gradient(135deg,var(--yel-l),#FEF3C7);border:2px solid #FCD34D;transform:rotateY(180deg)}
+.fc-emoji{font-size:2.4rem;margin-bottom:6px}
+.fc-word{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--sun-d)}
+.fc-tts{position:absolute;top:8px;right:8px;background:var(--sun);color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+.fc-tts:hover{background:var(--sun-d)}
+.fc-ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.05rem;color:var(--sun-d);font-weight:700;margin-bottom:4px;text-align:center}
+.fc-syn{font-size:.8rem;color:#666;text-align:center;line-height:1.4}
+.fc-hint{text-align:center;font-size:.75rem;color:var(--muted);margin-top:4px}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin:14px 0}
+
+/* lvl hdr */
+.lvl-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.lvl-badge{background:var(--sun);color:#fff;border-radius:20px;padding:4px 14px;font-family:'Fredoka One',cursive;font-size:.9rem}
+
+/* prompt card */
+.prompt-card{background:linear-gradient(135deg,var(--sun-l),var(--yel-l));border-radius:14px;padding:18px;margin-bottom:14px;border-left:5px solid var(--sun)}
+.prompt-card p{font-size:.95rem;margin-bottom:8px}
+textarea{width:100%;min-height:90px;border:2px solid var(--sun);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:.95rem;resize:vertical;background:#FFFDF9}
+textarea:focus{outline:none;border-color:var(--yel)}
+
+/* quiz */
+.quiz-q{background:var(--sun-l);border-radius:14px;padding:18px;margin-bottom:16px;border-left:5px solid var(--sun)}
+.quiz-q .qn{font-weight:800;color:var(--sun-d);margin-bottom:8px}
+.score-box{background:linear-gradient(135deg,var(--sun-d),var(--sun));color:#fff;border-radius:18px;padding:24px;text-align:center;display:none}
+.score-box.show{display:block;animation:popIn .5s ease}
+.score-box .score-num{font-family:'Fredoka One',cursive;font-size:3rem}
+.score-box .badge-big{font-size:3.5rem;margin:8px 0}
+
+.obj-list{list-style:none;padding:0}
+.obj-list li{padding:8px 0 8px 32px;position:relative;font-size:1rem;border-bottom:1px solid var(--sun-l)}
+.obj-list li::before{content:'👁️';position:absolute;left:0}
+
+@keyframes popIn{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes floatStar{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.6)}}
+@keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+footer{text-align:center;padding:20px;font-size:.82rem;color:var(--muted)}
+.flying-star{position:fixed;pointer-events:none;font-size:1.6rem;z-index:9999;animation:floatStar .9s ease forwards}
+.cf-piece{position:fixed;width:10px;height:10px;border-radius:2px;z-index:9998;animation:cfFall 1.4s ease forwards}
+</style>
 </head>
 <body>
-<div class="lesson-wrap">
 
-  <header class="lesson-head">
-    <p class="eyebrow">Grammar • English for Palestine</p>
-    <h1>Stative Verbs — Feelings &amp; Perception</h1>
-    <div class="meta">
-      <span class="chip">🎯 Grades 7 &amp; 8</span>
-      <span class="chip">⏱️ ~30 min</span>
-      <span class="chip ar">أفعال الحالة</span>
-    </div>
-    <nav class="stepper">
-      <button>1 · Feel</button>
-      <button>2 · Goals</button>
-      <button>3 · Words</button>
-      <button>4 · Rule</button>
-      <button>5 · Practice</button>
-      <button>6 · Write</button>
-      <button>7 · Senses</button>
-      <button>8 · Quiz</button>
-    </nav>
-    <div class="progress-track"><div class="progress-fill"></div></div>
-  </header>
-
-  <!-- 1. Introduction -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">1</span> Introduction · What Do You Feel Right Now?</h2>
-      <p class="section-sub">A hook about verbs of feeling and the senses — 2 to 3 minutes.</p>
-
-      <div class="placeholder">🖼️ Image / situation placeholder
-        <small>Add a picture showing emotions: happy, tired, thinking students. — تُضاف لاحقًا</small>
-      </div>
-
-      <p><b>Close your eyes 👁️</b> What do you hear? What do you smell? What do you feel?
-        These verbs — hear, smell, feel, love, know — describe <i>states</i>, not <i>actions</i>.
-        They have a special grammar rule that surprises many learners.</p>
-
-      <div class="hint-ar block ar">سؤال تحفيزي: هل تقول "I am knowing the answer" أم "I know the answer"؟ لماذا؟ اليوم نتعلم أفعال الحالة التي لا تُستخدم في المستمر.</div>
-
-      <p class="q">❓ Do you <i>know</i> the answer — or are you <i>knowing</i> it? Which is correct and why?</p>
-    </div>
-  </section>
-
-  <!-- 2. Learning Outcomes -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">2</span> Learning Outcomes · Stative Verbs</h2>
-      <p class="section-sub">By the end of this lesson, students will be able to:</p>
-      <ul class="clean">
-        <li>✅ Identify the main categories of <b>stative verbs</b> (feelings, senses, mental states, possession).</li>
-        <li>✅ Understand why stative verbs are <b>NOT used in continuous tenses</b>.</li>
-        <li>✅ Avoid the common error of using stative verbs with <b>-ing</b>.</li>
-        <li>✅ Recognise verbs that can be <b>both stative and dynamic</b> (have, think, see).</li>
-      </ul>
-      <div class="hint-ar block ar">ستتعلم لماذا بعض الأفعال مثل (know, love, see) لا يمكن استخدامها في صيغة المستمر وكيف تتجنب الأخطاء الشائعة.</div>
-    </div>
-  </section>
-
-  <!-- 3. Vocabulary -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">3</span> Vocabulary · Stative Verb Groups</h2>
-      <p class="section-sub">The most common stative verbs grouped by category.</p>
-      <div class="vocab-grid">
-        <div class="vocab"><div class="w">love / hate</div><div class="m ar">يحب / يكره (عاطفة)</div></div>
-        <div class="vocab"><div class="w">know / understand</div><div class="m ar">يعرف / يفهم (ذهني)</div></div>
-        <div class="vocab"><div class="w">see / hear</div><div class="m ar">يرى / يسمع (حواس)</div></div>
-        <div class="vocab"><div class="w">smell / taste</div><div class="m ar">يشم / يتذوق (حواس)</div></div>
-        <div class="vocab"><div class="w">want / need</div><div class="m ar">يريد / يحتاج (رغبة)</div></div>
-        <div class="vocab"><div class="w">believe / think</div><div class="m ar">يعتقد / يظن (رأي)</div></div>
-        <div class="vocab"><div class="w">have / own</div><div class="m ar">يمتلك (ملكية)</div></div>
-        <div class="vocab"><div class="w">seem / appear</div><div class="m ar">يبدو (مظهر)</div></div>
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-art">👁️</div>
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar • English for Palestine</p>
+      <h1><span>Stative</span> Verbs</h1>
+      <div class="chips">
+        <span class="chip">🎯 Grades 7 &amp; 8</span>
+        <span class="chip">⏱️ ~30 min</span>
+        <span class="chip ar">أفعال الحالة</span>
       </div>
     </div>
-  </section>
-
-  <!-- 4. Teach -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">4</span> Teach · Why No -ing?</h2>
-      <p class="section-sub">The stative verb rule, examples and the tricky dual-use verbs.</p>
-
-      <p><b>The rule:</b> Stative verbs describe a <i>state</i> — not an action in progress. We do not use them in continuous tenses.</p>
-      <table class="grammar">
-        <tr><th>Wrong ✗</th><th>Correct ✅</th></tr>
-        <tr><td>I <s>am knowing</s> the answer.</td><td>I <code>know</code> the answer.</td></tr>
-        <tr><td>She <s>is loving</s> this song.</td><td>She <code>loves</code> this song.</td></tr>
-        <tr><td>They <s>are wanting</s> help.</td><td>They <code>want</code> help.</td></tr>
-      </table>
-
-      <p><b>Dual-use verbs</b> — some verbs can be stative <i>or</i> dynamic depending on meaning:</p>
-      <table class="grammar">
-        <tr><th>Verb</th><th>Stative meaning</th><th>Dynamic meaning</th></tr>
-        <tr><td>have</td><td>I <code>have</code> a car. (possession)</td><td>I <code>am having</code> lunch. (activity)</td></tr>
-        <tr><td>think</td><td>I <code>think</code> he's right. (opinion)</td><td>I <code>am thinking</code> about it. (process)</td></tr>
-        <tr><td>see</td><td>I <code>see</code> what you mean. (understand)</td><td>I <code>am seeing</code> the doctor. (appointment)</td></tr>
-      </table>
-
-      <div class="placeholder">🖼️ Visual placeholder
-        <small>Add a comparison table: "state verbs (no -ing)" vs. "action verbs (can use -ing)". — تُضاف لاحقًا</small>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Guided Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">5</span> Guided Practice · State or Action?</h2>
-      <p class="section-sub">Practise stative vs. dynamic verbs — instant feedback.</p>
-
-      <div class="ex mcq">
-        <p class="q">1) "Right now, I ___ what you mean." (understand)</p>
-        <div class="options">
-          <button class="option" data-correct data-ok="Correct! 'Understand' is a stative verb — no -ing.">understand</button>
-          <button class="option" data-no="'Am understanding' is wrong — this is a stative verb.">am understanding</button>
-          <button class="option" data-no="'Understood' is past tense — not for the present.">understood</button>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex fill">
-        <p class="q">2) Choose the correct form for each gap:</p>
-        <div class="line">This soup <input type="text" data-answer="smells|tastes" placeholder="(smell/taste)"> wonderful!</div>
-        <div class="line">She <input type="text" data-answer="believes" placeholder="(believe)"> every word he says.</div>
-        <div class="line">I <input type="text" data-answer="am having" placeholder="(have — activity)"> a great time!</div>
-        <button class="btn check-fill">Check</button>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex match-ex">
-        <p class="q">3) Match each verb with its stative category:</p>
-        <div class="match">
-          <div class="col left">
-            <button class="item" data-key="a">love</button>
-            <button class="item" data-key="b">know</button>
-            <button class="item" data-key="c">own</button>
-          </div>
-          <div class="col right">
-            <button class="item" data-key="c">Possession</button>
-            <button class="item" data-key="a">Emotion / feeling</button>
-            <button class="item" data-key="b">Mental state</button>
-          </div>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex dragdrop">
-        <p class="q">4) Drag each verb to the correct group:</p>
-        <div class="dd-pool">
-          <span class="dd-token" data-zone="z1">want</span>
-          <span class="dd-token" data-zone="z2">run</span>
-        </div>
-        <div class="dd-zones">
-          <div class="dd-zone" data-zone="z1"><span class="label">Stative — no -ing allowed</span></div>
-          <div class="dd-zone" data-zone="z2"><span class="label">Dynamic — -ing is OK</span></div>
-        </div>
-        <button class="btn check-dd">Check</button>
-        <div class="feedback"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Independent Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">6</span> Independent Practice · How I Feel</h2>
-      <p class="section-sub">Describe your current state and feelings using stative verbs ✍️</p>
-      <p class="q">Write <b>5 sentences</b> about yourself right now, using stative verbs correctly.</p>
-      <div class="hint-ar ar">استخدم أفعالًا مثل: know, love, think, need, believe, seem, want — تذكر: لا -ing مع هذه الأفعال عند وصف الحالة.</div>
-      <textarea class="write" placeholder="1) I know all the students in my class.&#10;2) I love reading in English.&#10;3) I think this lesson is very useful.&#10;4) ..."></textarea>
-      <p style="margin-top:12px"><b>Self-check ✅</b></p>
-      <ul class="checklist">
-        <li><label><input type="checkbox"> None of my stative verbs end in <b>-ing</b> (when used as states).</label></li>
-        <li><label><input type="checkbox"> I used the <b>simple present</b> for all stative verbs.</label></li>
-        <li><label><input type="checkbox"> I used at least 4 different stative verbs.</label></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 7. Real-Life Task -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">7</span> Real-Life Task · The Five Senses 🌍</h2>
-      <p class="section-sub">Describe a real place using stative sense verbs.</p>
-
-      <div class="placeholder">🖼️ Image placeholder
-        <small>Add a photo of a Palestinian market / nature scene (Sebastia, Ramallah park, etc.). — تُضاف لاحقًا</small>
-      </div>
-
-      <p class="q">Think of a place you love in Palestine. Describe it using all five senses and stative verbs.</p>
-      <textarea class="write" placeholder="I love the old market in Nablus. It smells of spices and fresh bread. It looks beautiful with its old stones..."></textarea>
-      <div class="hint-ar block ar">المهمة الواقعية: صِف مكانًا تحبه باستخدام الحواس الخمس: smell, taste, look, sound, feel — وهي أفعال حالة!</div>
-    </div>
-  </section>
-
-  <!-- 8. Assessment -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">8</span> Assessment · Stative Verbs Quiz</h2>
-      <p class="section-sub">Answer all questions, then press Submit for your score.</p>
-
-      <div class="assessment">
-        <div class="ex mcq-q">
-          <p class="q">1) Which sentence is correct?</p>
-          <div class="options">
-            <button class="option">I am knowing the answer.</button>
-            <button class="option" data-correct>I know the answer.</button>
-            <button class="option">I am know the answer.</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">2) "She ___ a new car." (possession)</p>
-          <div class="options">
-            <button class="option" data-correct>has</button>
-            <button class="option">is having</button>
-            <button class="option">have</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">3) This food ___ (taste) amazing! (correct form)</p>
-          <input type="text" data-answer="tastes" placeholder="tastes / is tasting">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">4) I ___ (not believe) that story. (correct form)</p>
-          <input type="text" data-answer="don't believe|do not believe" placeholder="don't / doesn't believe">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">5) "I am having lunch right now." — This is correct because:</p>
-          <div class="options">
-            <button class="option">have is always stative</button>
-            <button class="option" data-correct>have here means an activity (eating), not possession</button>
-            <button class="option">all verbs can use -ing</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">6) Which is a stative verb?</p>
-          <div class="options">
-            <button class="option">run</button>
-            <button class="option">eat</button>
-            <button class="option" data-correct>believe</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <button class="btn green submit-assess">Submit answers</button>
-        <div class="result">
-          <p>Your score</p>
-          <div class="score">0 / 0</div>
-          <p class="msg"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div style="height:8px"></div>
+  </div>
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab active" onclick="go(0,event)">🚀 Start</button>
+    <button class="tab" onclick="go(1,event)">📚 Words</button>
+    <button class="tab" onclick="go(2,event)">🔍 Discover</button>
+    <button class="tab" onclick="go(3,event)">🧠 Grammar</button>
+    <button class="tab" onclick="go(4,event)">✏️ Practice</button>
+    <button class="tab" onclick="go(5,event)">🗣️ Create</button>
+    <button class="tab" onclick="go(6,event)">🎯 Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
 </div>
 
-<nav class="lesson-nav">
-  <button class="btn ghost" id="prevBtn">‹ Prev</button>
-  <span class="spacer" id="navCounter">1 / 8</span>
-  <button class="btn" id="nextBtn">Next ›</button>
-</nav>
+<div class="main">
 
-<script src="assets/lesson.js"></script>
+<!-- ══ 1. START ══ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <h2>🚀 Does This Sound Right?</h2>
+    <p style="font-size:1.05rem;line-height:1.8;margin-bottom:14px">
+      Your English friend sends you this message: <br>
+      <em style="background:#FEF08A;padding:2px 8px;border-radius:6px">"Hi! I am knowing the answer to your question. I am loving your idea!"</em><br><br>
+      Something feels <strong>wrong</strong>… but why? 🤔<br>
+      The verbs <em>know</em> and <em>love</em> describe <strong>states</strong> — not actions happening right now.
+      These are called <strong>stative verbs</strong>, and they have a special rule!
+    </p>
+
+    <div class="q-inst ar">📌 اختَر الجملة الصحيحة في كلِّ زوج:</div>
+
+    <div id="s-q1" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">1. Which is correct?</p>
+      <div class="mcq-row" style="flex-direction:column">
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'"I am knowing" is WRONG — "know" is a stative verb, never used in continuous.','خطأ — "know" فعل حالة، لا يُستخدم في المستمر أبداً.')">I am knowing the answer.</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,true,'✅ Correct! "know" is stative — use Simple, not Continuous.','صحيح! "know" فعل حالة — استخدم المبسَّط وليس المستمر.')">I know the answer.</button>
+      </div>
+      <div class="fb-wrap" id="s-fb1"></div>
+    </div>
+
+    <div id="s-q2">
+      <p style="font-weight:700;margin-bottom:8px">2. Which is correct?</p>
+      <div class="mcq-row" style="flex-direction:column">
+        <button class="mcq-btn" onclick="sc('s-q2','s-fb2',this,true,'🌟 Yes! "like" is stative — always simple form.','نعم! "like" فعل حالة — دائماً صيغة المبسَّط.')">She likes chocolate ice cream.</button>
+        <button class="mcq-btn" onclick="sc('s-q2','s-fb2',this,false,'"is liking" is WRONG — "like" describes a state, not a continuing action.','خطأ — "like" تصف حالة وليست فعلاً جارياً.')">She is liking chocolate ice cream.</button>
+      </div>
+      <div class="fb-wrap" id="s-fb2"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Objectives — أهداف الدرس</h2>
+    <ul class="obj-list">
+      <li>Identify stative verbs (feelings, senses, mental states, possession)</li>
+      <li>Understand why stative verbs are NOT used in continuous tenses</li>
+      <li>Choose between simple and continuous for stative vs dynamic verbs</li>
+      <li>Recognize verbs that can be both stative and dynamic (think, have, see)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ 2. WORDS ══ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <h2>📚 Key Vocabulary</h2>
+    <div class="q-inst ar">📌 هذه المفردات مرتبطة بأفعال الحالة — اضغط على البطاقة للترجمة، واضغط 🔊 لسماع النطق:</div>
+    <div class="fc-grid">
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'state')">🔊</button>
+              <div class="fc-emoji">🧊</div>
+              <div class="fc-word">state</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">حالة / وضع</div>
+              <div class="fc-syn">synonym: condition, situation<br>antonym: action</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'perception')">🔊</button>
+              <div class="fc-emoji">👁️</div>
+              <div class="fc-word">perception</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">إدراك / استشعار</div>
+              <div class="fc-syn">synonym: awareness, sense<br>antonym: oblivion</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'emotion')">🔊</button>
+              <div class="fc-emoji">💖</div>
+              <div class="fc-word">emotion</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">مشاعر / عاطفة</div>
+              <div class="fc-syn">synonym: feeling, sentiment<br>antonym: —</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'possession')">🔊</button>
+              <div class="fc-emoji">🏠</div>
+              <div class="fc-word">possession</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">ملكية / امتلاك</div>
+              <div class="fc-syn">synonym: ownership<br>antonym: —</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'dynamic')">🔊</button>
+              <div class="fc-emoji">⚡</div>
+              <div class="fc-word">dynamic</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">ديناميكي / نشط (فعل حركة)</div>
+              <div class="fc-syn">synonym: active, action<br>antonym: stative</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'belong')">🔊</button>
+              <div class="fc-emoji">🔑</div>
+              <div class="fc-word">belong</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">ينتمي / يعود لـ</div>
+              <div class="fc-syn">synonym: own, possess<br>antonym: —</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🗂️ Stative Verb Groups</h2>
+    <div class="q-inst ar">📌 أفعال الحالة مقسَّمة إلى أربع مجموعات — احفظ أمثلة من كلِّ مجموعة:</div>
+    <div class="cat-grid">
+      <div class="cat-card cat-mind">
+        <h4>🧠 Mental States</h4>
+        <div class="verbs">
+          <span class="vb">know</span><span class="vb">believe</span><span class="vb">think*</span>
+          <span class="vb">understand</span><span class="vb">remember</span><span class="vb">forget</span><span class="vb">realize</span>
+        </div>
+      </div>
+      <div class="cat-card cat-emo">
+        <h4>❤️ Emotions</h4>
+        <div class="verbs">
+          <span class="vb">love</span><span class="vb">hate</span><span class="vb">like</span>
+          <span class="vb">prefer</span><span class="vb">fear</span><span class="vb">want</span><span class="vb">need</span><span class="vb">wish</span>
+        </div>
+      </div>
+      <div class="cat-card cat-sense">
+        <h4>👁️ Senses</h4>
+        <div class="verbs">
+          <span class="vb">see*</span><span class="vb">hear</span><span class="vb">smell*</span>
+          <span class="vb">taste*</span><span class="vb">seem</span><span class="vb">appear</span><span class="vb">look (= seem)</span>
+        </div>
+      </div>
+      <div class="cat-card cat-own">
+        <h4>🏠 Possession &amp; Other</h4>
+        <div class="verbs">
+          <span class="vb">have*</span><span class="vb">own</span><span class="vb">belong</span>
+          <span class="vb">contain</span><span class="vb">mean</span><span class="vb">cost</span><span class="vb">weigh</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:8px">* These verbs can also be dynamic (action) in some contexts — see the Grammar tab!</p>
+  </div>
+</div>
+
+<!-- ══ 3. DISCOVER ══ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h2>🔍 Spot the Difference!</h2>
+    <p style="margin-bottom:14px">Study these sentence pairs. One column is <strong style="color:#1B5E20">correct ✅</strong>, one is <strong style="color:#B71C1C">wrong ❌</strong>.</p>
+
+    <table class="disc-tbl">
+      <tr><th style="width:45%">✅ Correct</th><th style="width:55%">❌ Wrong — why?</th></tr>
+      <tr>
+        <td class="ok-col">I <span class="hi">know</span> the answer.</td>
+        <td class="err-col"><span class="neg">I am knowing</span> the answer. <br><em style="font-size:.82rem">"know" = mental state — no continuous!</em></td>
+      </tr>
+      <tr>
+        <td class="ok-col">She <span class="hi">loves</span> reading.</td>
+        <td class="err-col"><span class="neg">She is loving</span> reading. <br><em style="font-size:.82rem">"love" = emotion — no continuous!</em></td>
+      </tr>
+      <tr>
+        <td class="ok-col">This soup <span class="hi">smells</span> amazing.</td>
+        <td class="err-col"><span class="neg">This soup is smelling</span> amazing. <br><em style="font-size:.82rem">"smell" (=perception) — no continuous!</em></td>
+      </tr>
+      <tr>
+        <td class="ok-col">The bag <span class="hi">belongs</span> to Sara.</td>
+        <td class="err-col"><span class="neg">The bag is belonging</span> to Sara. <br><em style="font-size:.82rem">"belong" = possession — no continuous!</em></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🔍 But Wait — Some Verbs Can Go Both Ways!</h2>
+    <div class="q-inst ar">📌 بعض الأفعال يمكن أن تكون حالة أو فعلاً ديناميكياً حسب المعنى:</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+      <div style="background:var(--sun-l);border-radius:12px;padding:14px;border:2px solid var(--sun)">
+        <p style="font-weight:800;color:var(--sun-d);margin-bottom:6px">think (stative = opinion)</p>
+        <p>"I <strong>think</strong> you are right." ✅<br><em style="font-size:.85rem">= I believe / my opinion</em></p>
+      </div>
+      <div style="background:#D1FAE5;border-radius:12px;padding:14px;border:2px solid #34D399">
+        <p style="font-weight:800;color:#065F46;margin-bottom:6px">think (dynamic = mental activity)</p>
+        <p>"I <strong>am thinking</strong> about the answer." ✅<br><em style="font-size:.85rem">= actively processing right now</em></p>
+      </div>
+      <div style="background:var(--sun-l);border-radius:12px;padding:14px;border:2px solid var(--sun)">
+        <p style="font-weight:800;color:var(--sun-d);margin-bottom:6px">have (stative = possession)</p>
+        <p>"I <strong>have</strong> a new phone." ✅<br><em style="font-size:.85rem">= I own it</em></p>
+      </div>
+      <div style="background:#D1FAE5;border-radius:12px;padding:14px;border:2px solid #34D399">
+        <p style="font-weight:800;color:#065F46;margin-bottom:6px">have (dynamic = experience)</p>
+        <p>"I <strong>am having</strong> dinner." ✅<br><em style="font-size:.85rem">= doing the activity now</em></p>
+      </div>
+    </div>
+
+    <div id="disc-q1">
+      <div class="q-inst ar">📌 اختَر الجملة الصحيحة — "think" بمعنى الرأي أم النشاط الذهني؟</div>
+      <p style="font-weight:700;margin-bottom:8px">"I _____ about your offer." (actively considering right now)</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'"think" here = opinion, but the clue is "actively considering right now" — it\'s dynamic!','هنا think = رأي، لكن السياق "الآن بنشاط" — فهي ديناميكية!')">think</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,true,'✅ "am thinking" = mental activity in progress — dynamic use!','"am thinking" = نشاط ذهني جارٍ الآن — استخدام ديناميكي!')">am thinking</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb1"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 4. GRAMMAR ══ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <h2>🧠 The Stative Verb Rule</h2>
+
+    <div style="background:linear-gradient(135deg,#FFF7ED,#FFECD2);border:3px solid var(--sun);border-radius:16px;padding:20px;text-align:center;margin-bottom:18px">
+      <div style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--sun-d);margin-bottom:8px">⚡ The Golden Rule</div>
+      <p style="font-size:1.05rem">Stative verbs describe a <strong>state</strong> (not an action in progress).<br>
+      They are <strong>NOT</strong> normally used in <strong>continuous tenses</strong> (-ing forms).</p>
+      <div class="ar" style="margin-top:10px;font-size:.95rem;color:var(--muted)">أفعال الحالة تصف وضعاً ثابتاً — لا تُستخدم في الأزمنة المستمرة بصيغة -ing</div>
+    </div>
+
+    <h3>✅ vs ❌ Quick Examples</h3>
+    <div class="vs-row">
+      <div class="vs-err"><p>"She <strong>is knowing</strong> French."</p></div>
+      <div class="vs-lbl">→</div>
+      <div class="vs-ok"><p>"She <strong>knows</strong> French."</p></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-err"><p>"I <strong>am wanting</strong> a coffee."</p></div>
+      <div class="vs-lbl">→</div>
+      <div class="vs-ok"><p>"I <strong>want</strong> a coffee."</p></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-err"><p>"He <strong>is owning</strong> a house."</p></div>
+      <div class="vs-lbl">→</div>
+      <div class="vs-ok"><p>"He <strong>owns</strong> a house."</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Stative vs Dynamic Summary</h2>
+    <table class="gram-tbl">
+      <tr><th>Stative (no -ing)</th><th>Dynamic (can use -ing)</th></tr>
+      <tr><td>She <strong>knows</strong> Arabic.</td><td>She <strong>is learning</strong> Arabic. (right now)</td></tr>
+      <tr><td>I <strong>love</strong> football.</td><td>I <strong>am playing</strong> football. (right now)</td></tr>
+      <tr><td>He <strong>has</strong> a car.</td><td>He <strong>is having</strong> a shower. (activity)</td></tr>
+      <tr><td>This <strong>tastes</strong> delicious.</td><td>She <strong>is tasting</strong> the soup. (to check)</td></tr>
+    </table>
+
+    <div class="gram-note">
+      💡 <strong>Quick Test:</strong> Can you add "right now" and it still makes sense?<br>
+      <span style="font-size:.9rem">"I <strong>know</strong> the answer right now" ✅ — but "knowing" sounds wrong → stative!<br>
+      "She <strong>is cooking</strong> right now" ✅ — continuous works → dynamic!</span>
+      <div class="ar" style="margin-top:6px;font-size:.9rem">📌 اختبار سريع: إذا أضفت "right now" وبدت الجملة طبيعية بالمستمر فالفعل ديناميكي. إذا بدت غريبة فهو فعل حالة!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 5. PRACTICE ══ -->
+<div class="panel" id="p4">
+
+  <!-- LEVEL 1 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 1</span>
+      <span style="font-size:.95rem;color:var(--muted)">Choose the correct form</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الأول: اختَر الصيغة الصحيحة — هل الفعل حالة أم فعل ديناميكي جارٍ الآن؟</div>
+
+    <div id="l1-q1" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">1. "Right now, Hana _____ a delicious cake." (active baking in the kitchen)</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q1','l1-fb1',this,true,'✅ Dynamic verb! Baking = action in progress → continuous!','فعل ديناميكي! الخبز = فعل جارٍ ← مستمر!')">is baking</button>
+        <button class="mcq-btn" onclick="sc('l1-q1','l1-fb1',this,false,'"bakes" is simple — but she\'s doing it RIGHT NOW, so continuous fits better.','bakes مبسَّط — لكنها تفعله الآن، فالمستمر أنسب.')">bakes</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb1"></div>
+    </div>
+
+    <div id="l1-q2" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">2. "I _____ what you mean. Please stop explaining."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q2','l1-fb2',this,false,'"am understanding" is WRONG — "understand" is a stative verb (mental state).','"am understanding" خطأ — "understand" فعل حالة ذهنية.')">am understanding</button>
+        <button class="mcq-btn" onclick="sc('l1-q2','l1-fb2',this,true,'🌟 "understand" = stative (mental state) — always use Simple!','"understand" = حالة ذهنية — دائماً صيغة المبسَّط!')">understand</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb2"></div>
+    </div>
+
+    <div id="l1-q3" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">3. "This apple _____ really sweet." (general quality)</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q3','l1-fb3',this,true,'✅ "tastes" = stative use — describing quality, not an action.','"tastes" = استخدام حالة — يصف طعماً ثابتاً.')">tastes</button>
+        <button class="mcq-btn" onclick="sc('l1-q3','l1-fb3',this,false,'"is tasting" = someone is actively trying the food — that\'s dynamic use.','"is tasting" = شخص يتذوَّق بنشاط — استخدام ديناميكي.')">is tasting</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb3"></div>
+    </div>
+
+    <div id="l1-q4" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">4. "He _____ his homework at the moment." (in progress)</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q4','l1-fb4',this,false,'"does" is simple — but we know it\'s happening right now "at the moment".','does مبسَّط — لكن "at the moment" تدل على الحال الآن.')">does</button>
+        <button class="mcq-btn" onclick="sc('l1-q4','l1-fb4',this,true,'🎯 "is doing" — dynamic action happening right now!','"is doing" — فعل ديناميكي جارٍ الآن!')">is doing</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb4"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl1-done')">✅ Done with Level 1</button>
+    <div class="lvl-done" id="lvl1-done">⭐ Level 1 complete! المستوى الأول منتهٍ! ⭐</div>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 2</span>
+      <span style="font-size:.95rem;color:var(--muted)">Fill in the blanks</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الثاني: اضغط على الفعل من البنك، ثم اضغط على الفراغ المناسب:</div>
+
+    <div class="word-bank" id="wb2">
+      <span class="wb-chip" onclick="pickWb2(this,'know')">know</span>
+      <span class="wb-chip" onclick="pickWb2(this,'is reading')">is reading</span>
+      <span class="wb-chip" onclick="pickWb2(this,'belongs')">belongs</span>
+      <span class="wb-chip" onclick="pickWb2(this,'are playing')">are playing</span>
+      <span class="wb-chip" onclick="pickWb2(this,'need')">need</span>
+    </div>
+
+    <p style="line-height:2.6;font-size:.97rem">
+      1. I <span class="blank" id="b2-1" onclick="dropWb2('b2-1')">_____</span> your phone number by heart — I don't need to look it up.<br>
+      2. This dictionary <span class="blank" id="b2-2" onclick="dropWb2('b2-2')">_____</span> to the school library.<br>
+      3. Look! The children <span class="blank" id="b2-3" onclick="dropWb2('b2-3')">_____</span> football in the garden right now.<br>
+      4. She <span class="blank" id="b2-4" onclick="dropWb2('b2-4')">_____</span> a science book at the moment — don't disturb her.<br>
+      5. You <span class="blank" id="b2-5" onclick="dropWb2('b2-5')">_____</span> to rest — you look exhausted.
+    </p>
+
+    <button class="check-btn" onclick="checkL2()">✅ Check Level 2</button>
+    <div class="fb-wrap" id="l2-fb"></div>
+    <div class="lvl-done" id="lvl2-done">🌟 Level 2 complete! المستوى الثاني منتهٍ! 🌟</div>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 3</span>
+      <span style="font-size:.95rem;color:var(--muted)">Rewrite correctly</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الثالث: أعِد كتابة هذه الجمل الخاطئة بشكل صحيح:</div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">1. ✗ "I am wanting a glass of water."</p>
+      <input type="text" class="t-in" id="l3-1" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4(1,'i want a glass of water','l3-fb1','Remove -ing! "want" is stative — use simple form.')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb1"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">2. ✗ "She is knowing three languages."</p>
+      <input type="text" class="t-in" id="l3-2" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4(2,'she knows three languages','l3-fb2','Remove -ing! "know" is stative — always use simple.')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb2"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">3. ✗ "This pizza is smelling wonderful."</p>
+      <input type="text" class="t-in" id="l3-3" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4(3,'this pizza smells wonderful','l3-fb3','Remove -ing! "smell" (= perception) is stative.')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb3"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl3-done')">✅ Done with Level 3</button>
+    <div class="lvl-done" id="lvl3-done">💫 Level 3 complete! المستوى الثالث منتهٍ! 💫</div>
+  </div>
+
+  <!-- LEVEL 4 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 4</span>
+      <span style="font-size:.95rem;color:var(--muted)">State or dynamic? — sort it out</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الرابع: قرِّر لكلِّ جملة — هل الفعل حالة أم ديناميكي؟ اختَر الإجابة الصحيحة:</div>
+
+    <div id="l4-q1" style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:8px">1. "I _____ about your idea now." (actively considering = mental activity)</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l4-q1','l4-fb1',this,false,'"think" = opinion here would work too, but the clue "actively" points to the process.','هنا يوجد نشاط ذهني جارٍ.')">think</button>
+        <button class="mcq-btn" onclick="sc('l4-q1','l4-fb1',this,true,'✅ Dynamic "thinking" — the brain is actively processing!','ديناميكي! الدماغ يعمل الآن بنشاط!')">am thinking</button>
+      </div>
+      <div class="fb-wrap" id="l4-fb1"></div>
+    </div>
+
+    <div id="l4-q2" style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:8px">2. "He _____ three languages — Arabic, English and French." (permanent ability)</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l4-q2','l4-fb2',this,true,'🌟 "knows" — permanent knowledge = stative!','"knows" — معرفة دائمة = حالة!')">knows</button>
+        <button class="mcq-btn" onclick="sc('l4-q2','l4-fb2',this,false,'"is knowing" is wrong here — permanent knowledge, not a temporary activity.','خطأ هنا — معرفة دائمة وليست نشاطاً مؤقتاً.')">is knowing</button>
+      </div>
+      <div class="fb-wrap" id="l4-fb2"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl4-done',true)">🎉 Finish Practice!</button>
+    <div class="lvl-done" id="lvl4-done">👁️ All 4 levels done! أنهيت التدريب! انتقل إلى Create! 👁️</div>
+  </div>
+</div>
+
+<!-- ══ 6. CREATE ══ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <h2>🗣️ Speaking — How Do You Feel?</h2>
+    <div class="q-inst ar">📌 تحدَّث مع زميلك باستخدام أفعال الحالة — تذكَّر: لا -ing!</div>
+
+    <div class="prompt-card">
+      <p><strong>👁️ Round 1 — Your Senses Right Now</strong></p>
+      <p>Tell your partner what you see, hear, and smell right now using stative verbs.</p>
+      <p style="font-size:.88rem;color:#888">e.g. "I hear the wind." / "This room smells like books." / "I see a whiteboard."</p>
+    </div>
+
+    <div class="prompt-card">
+      <p><strong>❤️ Round 2 — Things You Love or Hate</strong></p>
+      <p>Share 3 things you <strong>love</strong> and 2 things you <strong>hate</strong> using proper stative forms.</p>
+      <p style="font-size:.88rem;color:#888">e.g. "I love football." (NOT: I am loving) / "I hate waking up early."</p>
+    </div>
+
+    <div class="prompt-card">
+      <p><strong>🧠 Round 3 — What Do You Know?</strong></p>
+      <p>Tell your partner 3 facts you <strong>know</strong> about Palestine — use "know", "believe", "understand".</p>
+      <p style="font-size:.88rem;color:#888">e.g. "I know that Palestine is famous for olive trees."</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✍️ Writing — My Senses &amp; Feelings</h2>
+    <div class="q-inst ar">📌 اكتب فقرة تصف ما تشعر به وما تعرفه الآن — استخدم ٥ أفعال حالة مختلفة على الأقل:</div>
+    <div style="background:var(--sun-l);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:.92rem">
+      💡 <strong>Ideas:</strong> "Right now, I feel… I can hear… I know that… I believe… I love… I need…"<br>
+      <span style="color:var(--red);font-size:.88rem">⚠️ Do NOT use -ing with stative verbs!</span>
+    </div>
+    <textarea id="write-para" placeholder="Write 5-6 sentences using stative verbs. No -ing for feelings, senses, or mental states!"></textarea>
+    <button class="check-btn" onclick="checkPara()">✅ Submit</button>
+    <div class="fb-wrap" id="para-fb"></div>
+  </div>
+</div>
+
+<!-- ══ 7. QUIZ ══ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <h2>🎯 Final Quiz — 5 Questions</h2>
+    <div class="q-inst ar">📌 اختبر نفسك — خمسة أسئلة تشمل الدرس كاملاً!</div>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="qq1">
+      <div class="qn">Q1. Which sentence is correct?</div>
+      <div class="mcq-row" style="flex-direction:column">
+        <button class="mcq-btn" onclick="qsc(1,this,false)">I am believing in you.</button>
+        <button class="mcq-btn" onclick="qsc(1,this,true)">I believe in you.</button>
+        <button class="mcq-btn" onclick="qsc(1,this,false)">I am believing you are right.</button>
+      </div>
+      <div class="fb-wrap" id="q-fb1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="qq2">
+      <div class="qn">Q2. True or False:</div>
+      <p style="margin-bottom:10px">"Stative verbs describe actions that are in progress right now."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(2,this,false)">True</button>
+        <button class="mcq-btn" onclick="qsc(2,this,true)">False</button>
+      </div>
+      <div class="fb-wrap" id="q-fb2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="qq3">
+      <div class="qn">Q3. Choose the correct form:</div>
+      <p style="margin-bottom:10px">"This coffee _____ really good." (quality/perception)</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(3,this,true)">tastes</button>
+        <button class="mcq-btn" onclick="qsc(3,this,false)">is tasting</button>
+        <button class="mcq-btn" onclick="qsc(3,this,false)">tasted</button>
+      </div>
+      <div class="fb-wrap" id="q-fb3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="qq4">
+      <div class="qn">Q4. Which sentence shows the DYNAMIC use of "have"?</div>
+      <div class="mcq-row" style="flex-direction:column">
+        <button class="mcq-btn" onclick="qsc(4,this,false)">I have a bicycle.</button>
+        <button class="mcq-btn" onclick="qsc(4,this,false)">She has blue eyes.</button>
+        <button class="mcq-btn" onclick="qsc(4,this,true)">We are having lunch right now.</button>
+      </div>
+      <div class="fb-wrap" id="q-fb4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="qq5">
+      <div class="qn">Q5. Write ONE correct sentence using a stative verb of emotion:</div>
+      <div class="q-inst ar">📌 اكتب جملة واحدة صحيحة باستخدام فعل حالة عاطفية (love/hate/like/prefer/need/want):</div>
+      <input type="text" class="t-in" id="q5-ans" placeholder='e.g. I love ...'/>
+      <button class="check-btn" onclick="checkQ5()">Submit ✓</button>
+      <div class="fb-wrap" id="q-fb5"></div>
+    </div>
+
+    <button class="check-btn" style="width:100%;font-size:1.1rem;padding:14px" onclick="showScore()">👁️ See My Score</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="badge-big">👁️</div>
+    <div class="score-num" id="scoreNum">0/5</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:1.3rem;margin:8px 0" id="scoreMsg"></div>
+    <div class="ar" style="font-size:1rem;margin-top:6px" id="scoreAr"></div>
+    <div style="margin-top:16px;font-size:1.5rem" id="scoreBadge"></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+const panels=document.querySelectorAll('.panel');
+const tabs=document.querySelectorAll('.tab');
+function go(i,e){
+  panels.forEach(p=>p.classList.remove('on'));
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels[i].classList.add('on');tabs[i].classList.add('active');
+  document.getElementById('progFill').style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(e)e.stopPropagation();
+}
+function launchStar(x,y){
+  const s=['⭐','🌟','✨','💫'];
+  const el=document.createElement('div');
+  el.className='flying-star';el.textContent=s[Math.floor(Math.random()*s.length)];
+  el.style.cssText=`left:${x-12}px;top:${y-12}px`;
+  document.body.appendChild(el);setTimeout(()=>el.remove(),950);
+}
+function shake(el){el.style.animation='shake .4s ease';setTimeout(()=>el.style.animation='',450)}
+function confetti(){
+  const c=['#F97316','#EAB308','#34D399','#FB7185','#A78BFA','#38BDF8'];
+  for(let i=0;i<60;i++){
+    const cf=document.createElement('div');cf.className='cf-piece';
+    cf.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${c[Math.floor(Math.random()*c.length)]};animation-delay:${Math.random()*.8}s;animation-duration:${1.2+Math.random()*.6}s`;
+    document.body.appendChild(cf);setTimeout(()=>cf.remove(),2200);
+  }
+}
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅ ':'❌ '}${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const row=document.getElementById(rowId);
+  if(row.dataset.done)return;
+  row.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){launchStar(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top+window.scrollY);row.dataset.done=1;}
+  else shake(btn);
+}
+function flipCard(w){w.classList.toggle('flipped')}
+function tts(e,word){
+  e.stopPropagation();
+  const u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=0.9;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+function doneLevel(id,doConfetti){
+  document.getElementById(id).classList.add('show');
+  if(doConfetti)confetti();
+  else{launchStar(window.innerWidth/2,window.innerHeight/3);setTimeout(()=>launchStar(window.innerWidth/2+40,window.innerHeight/3),200);}
+}
+let wbSel2=null;
+function pickWb2(chip,val){
+  document.querySelectorAll('#wb2 .wb-chip').forEach(c=>c.style.outline='');
+  wbSel2={chip,val};chip.style.outline='3px solid var(--sun)';
+}
+function dropWb2(blankId){
+  if(!wbSel2)return;
+  const bl=document.getElementById(blankId);
+  if(bl.classList.contains('ok'))return;
+  bl.textContent=wbSel2.val;bl.classList.add('filled');
+  wbSel2.chip.style.outline='';wbSel2=null;
+}
+const l2ans={'b2-1':'know','b2-2':'belongs','b2-3':'are playing','b2-4':'is reading','b2-5':'need'};
+function checkL2(){
+  let ok=0;
+  for(const [id,ans] of Object.entries(l2ans)){
+    const bl=document.getElementById(id);
+    const got=(bl.textContent||'').trim().toLowerCase();
+    if(got===ans){bl.classList.add('ok');bl.classList.remove('err');ok++;}
+    else{bl.classList.add('err');bl.classList.remove('ok');}
+  }
+  const all=ok===5;
+  setFb('l2-fb',all,all?'All 5 correct! 🎉':`${ok}/5 — fix the red blanks.`,all?'أحسنت! جميع الإجابات صحيحة!':'راجع الخانات الحمراء.');
+  if(all){doneLevel('lvl2-done');confetti();}
+}
+function checkL4(n,expected,fbId,wrongHint){
+  const got=document.getElementById('l3-'+n).value.trim().toLowerCase().replace(/[.!?]/g,'');
+  const exp=expected.toLowerCase().replace(/[.!?]/g,'');
+  const ok=got===exp;
+  setFb(fbId,ok,ok?'✅ Correct! No -ing for stative verbs.':'❌ '+wrongHint,ok?'ممتاز! لا -ing مع أفعال الحالة.':'راجع القاعدة وأزِل -ing.');
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+  else shake(document.getElementById('l3-'+n));
+}
+function checkPara(){
+  const txt=document.getElementById('write-para').value.trim().toLowerCase();
+  const stv=['know','believe','understand','love','hate','like','prefer','want','need','feel','hear','smell','see','seem','belong'];
+  const found=stv.filter(v=>txt.includes(v));
+  const hasIng=/\b(am|is|are)\s+(knowing|believing|loving|hating|liking|wanting|needing|hearing|smelling|belonging)\b/.test(txt);
+  const ok=found.length>=4&&!hasIng;
+  setFb('para-fb',ok,
+    ok?'✅ Great! You used stative verbs correctly — no -ing!':hasIng?'❌ You used -ing with a stative verb — remove it!':'❌ Use at least 4 different stative verbs.',
+    ok?'ممتاز! استخدمت أفعال الحالة بشكل صحيح!':hasIng?'استخدمت -ing مع فعل حالة — أزلها!':'استخدم ٤ أفعال حالة مختلفة على الأقل.'
+  );
+  if(ok)confetti();
+}
+const qAns={};
+function qsc(n,btn,correct){
+  const qq=document.getElementById('qq'+n);
+  if(qq.dataset.done)return;
+  qq.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');qAns[n]=correct;
+  const msgs=[
+    ['"believe" is stative — Simple form only!','"believe" فعل حالة — صيغة المبسَّط فقط!'],
+    ['FALSE! Stative verbs describe STATES, not actions in progress.','خطأ! أفعال الحالة تصف وضعاً ثابتاً وليست أفعالاً جارية.'],
+    ['"tastes" — stative use describing quality.','"tastes" — استخدام حالة لوصف طعم ثابت.'],
+    ['"are having lunch" — dynamic use of "have" = doing an activity.','"are having lunch" — استخدام ديناميكي لـ have = نشاط.']
+  ];
+  if(n<=4)setFb('q-fb'+n,correct,correct?'✅ '+msgs[n-1][0]:'❌ '+msgs[n-1][0],msgs[n-1][1]);
+  if(correct)launchStar(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top+window.scrollY);
+  else shake(btn);
+  qq.dataset.done=1;
+}
+function checkQ5(){
+  const txt=document.getElementById('q5-ans').value.trim().toLowerCase();
+  const stv=['love','hate','like','prefer','need','want'];
+  const hasStv=stv.some(v=>txt.includes(v));
+  const hasIng=/(am|is|are)\s+(loving|hating|liking|preferring|needing|wanting)/.test(txt);
+  const ok=hasStv&&!hasIng&&txt.length>5;
+  setFb('q-fb5',ok,
+    ok?'✅ Well done! Correct stative sentence!':hasIng?'❌ Remove -ing from the stative verb!':'❌ Use a stative emotion verb (love/hate/like/prefer/need/want).',
+    ok?'ممتاز! جملة حالة صحيحة!':hasIng?'أزِل -ing من فعل الحالة!':'استخدم فعل حالة عاطفي.'
+  );
+  qAns[5]=ok;
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+}
+function showScore(){
+  let s=0;for(let i=1;i<=5;i++)if(qAns[i])s++;
+  document.getElementById('scoreNum').textContent=s+'/5';
+  const msgs=[
+    ['Keep going! Review the Grammar tab 💪','راجع تبويب Grammar وحاول مجدداً! 💪'],
+    ['Good effort! Review stative categories 📖','جهد جيد! راجع مجموعات أفعال الحالة 📖'],
+    ['Getting better! A bit more practice ✨','أصبحت أفضل! تحتاج مزيداً من التدريب ✨'],
+    ['Well done! Nearly perfect 🌟','أحسنت! تقريباً مثالي 🌟'],
+    ['Excellent! Great work 🎉','ممتاز! عمل رائع 🎉'],
+    ['Perfect! 👁️ Stative Verb Expert!','علامة كاملة! أنت خبير أفعال الحالة 👁️']
+  ];
+  document.getElementById('scoreMsg').textContent=msgs[s][0];
+  document.getElementById('scoreAr').textContent=msgs[s][1];
+  document.getElementById('scoreBadge').textContent=s>=4?'👁️⭐👁️':'👁️';
+  document.getElementById('scoreBox').classList.add('show');
+  if(s>=4){confetti();localStorage.setItem('badge_stative','earned');}
+  document.getElementById('scoreBox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
 </body>
 </html>
