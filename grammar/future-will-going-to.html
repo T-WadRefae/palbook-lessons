@@ -1,295 +1,1063 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Future: will &amp; going to — PalBook Live</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/lesson.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Future: will &amp; going to — Discovery Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --pur:#7C3AED;--pur-d:#4C1D95;--pur-l:#F5F3FF;
+  --gld:#F59E0B;--gld-l:#FFFBEB;
+  --grn:#2E7D32;--grn-l:#E8F5E9;--red:#C62828;--red-l:#FFEBEE;
+  --bg:#F5F3FF;--card:#fff;--txt:#2d1b69;--muted:#7c5cbf;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,var(--pur-d) 0%,var(--pur) 55%,#A855F7 100%);
+  padding:28px 20px 0;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 25%,rgba(245,158,11,.3) 0%,transparent 50%),
+             radial-gradient(circle at 15% 75%,rgba(255,255,255,.1) 0%,transparent 55%);pointer-events:none}
+.hdr::after{content:'✨🌟💫⭐';position:absolute;top:10px;right:20px;font-size:1.6rem;
+  letter-spacing:4px;opacity:.35;pointer-events:none}
+.hdr-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:18px;position:relative}
+.hdr-art{font-size:84px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hdr-text{flex:1}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:4px}
+.hdr h1{font-family:'Fredoka One',cursive;font-size:clamp(1.5rem,4vw,2.4rem);color:#fff;line-height:1.15}
+.hdr h1 span{color:#FDE68A}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:rgba(255,255,255,.18);color:#fff;border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:700}
+.chip.ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.85rem}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:6px;padding:14px 16px 0;max-width:900px;margin:16px auto 0;
+  overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.35);
+  border-radius:22px 22px 0 0;padding:8px 16px;font-family:'Fredoka One',cursive;
+  font-size:.95rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.35)}
+.tab.active{background:#fff;color:var(--pur-d);border-color:#fff}
+
+.prog-wrap{background:rgba(255,255,255,.2);height:6px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#FDE68A,#F59E0B);transition:width .4s ease;border-radius:0 3px 3px 0}
+
+.main{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.on{display:block}
+
+.card{background:var(--card);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.card h2{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--pur-d);margin-bottom:12px}
+.card h3{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--pur);margin:14px 0 8px}
+
+/* instruction bar */
+.q-inst{background:var(--pur-l);border-right:5px solid var(--pur);border-radius:10px;padding:10px 16px;margin-bottom:14px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;color:var(--pur-d);direction:rtl;text-align:right;line-height:1.6}
+
+/* feedback */
+.fb-wrap{display:none;border-radius:10px;padding:12px 16px;margin-top:10px;border-left:5px solid transparent}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:var(--grn-l);border-color:var(--grn)}
+.fb-wrap.err{background:var(--red-l);border-color:var(--red)}
+.fb-en{font-weight:700;font-size:1rem;margin-bottom:4px}
+.fb-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.95rem;direction:rtl;text-align:right;color:#555}
+.fb-wrap.ok .fb-en{color:#1B5E20}
+.fb-wrap.err .fb-en{color:#B71C1C}
+
+/* MCQ */
+.mcq-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.mcq-btn{background:var(--pur-l);border:2px solid #C4B5FD;border-radius:12px;padding:9px 18px;
+  font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--txt)}
+.mcq-btn:hover{background:#EDE9FE}
+.mcq-btn.ok{background:var(--grn-l);border-color:var(--grn);color:#1B5E20}
+.mcq-btn.err{background:var(--red-l);border-color:var(--red);color:#B71C1C}
+.mcq-btn:disabled{cursor:default;opacity:.8}
+
+/* word bank */
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;background:var(--pur-l);padding:12px 16px;border-radius:12px;margin-bottom:16px}
+.wb-chip{background:#fff;border:2px solid var(--pur);border-radius:20px;padding:5px 14px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;color:var(--pur-d)}
+.wb-chip:hover{background:var(--pur);color:#fff}
+.wb-chip.used{opacity:.35;pointer-events:none;text-decoration:line-through}
+
+.blank{display:inline-block;min-width:110px;border-bottom:3px solid var(--pur);padding:2px 6px;text-align:center;cursor:pointer;border-radius:4px 4px 0 0;transition:background .2s;font-weight:700}
+.blank:hover{background:var(--pur-l)}
+.blank.filled{color:var(--pur-d)}
+.blank.ok{border-color:var(--grn);color:var(--grn);background:var(--grn-l)}
+.blank.err{border-color:var(--red);color:var(--red);background:var(--red-l)}
+
+.t-in{width:100%;padding:9px;border:2px solid var(--pur);border-radius:8px;font-size:1rem;margin-bottom:4px;font-family:'Nunito',sans-serif;background:#FEFCFF}
+.t-in:focus{outline:none;border-color:var(--gld)}
+
+.check-btn{background:linear-gradient(135deg,var(--pur),#A855F7);color:#fff;border:none;border-radius:12px;padding:10px 26px;
+  font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;margin-top:10px;transition:transform .15s,box-shadow .15s}
+.check-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(124,58,237,.4)}
+.check-btn:active{transform:translateY(0)}
+
+.lvl-done{display:none;background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:3px solid var(--gld);border-radius:16px;padding:16px 20px;
+  text-align:center;margin-top:16px;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.1rem;color:#92400E}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+
+/* discover table */
+.disc-tbl{width:100%;border-collapse:collapse;margin:12px 0}
+.disc-tbl th{background:var(--pur-d);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:.95rem}
+.disc-tbl td{padding:9px 14px;border-bottom:1px solid var(--pur-l);font-size:.95rem}
+.disc-tbl tr:nth-child(even) td{background:var(--pur-l)}
+.disc-tbl .hi{color:var(--pur-d);font-weight:800;background:#FDE68A;padding:1px 4px;border-radius:4px}
+.disc-tbl .neg{color:#C62828;font-weight:800}
+.disc-tbl .ok-col{background:#E8F5E9!important}
+.disc-tbl .warn-col{background:#FFF8E1!important}
+
+/* grammar table */
+.gram-tbl{width:100%;border-collapse:collapse;margin:10px 0}
+.gram-tbl th{background:var(--pur);color:#fff;padding:9px 14px;font-family:'Fredoka One',cursive}
+.gram-tbl td{padding:8px 14px;border-bottom:1px solid var(--pur-l);vertical-align:top}
+.gram-tbl tr:nth-child(even) td{background:var(--pur-l)}
+.gram-note{background:#FFFBEB;border-left:4px solid var(--gld);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.92rem}
+.gram-note .ar{font-size:.95rem;margin-top:4px;color:#555}
+
+/* vocab cards */
+.vc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:12px 0}
+.vc{background:var(--pur-l);border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08);position:relative}
+.vc .icon{font-size:2.2rem;margin-bottom:6px}
+.vc .en{font-weight:800;font-size:.95rem;color:var(--pur-d)}
+.vc .ar{font-size:.88rem;color:#555;margin-top:3px;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+/* flashcard (flip) */
+.fc-wrap{perspective:700px;width:190px;height:170px;cursor:pointer;margin:0 auto 4px}
+.fc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s}
+.fc-wrap.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.fc-front{background:linear-gradient(135deg,var(--pur-l),#EDE9FE);border:2px solid #C4B5FD}
+.fc-back{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid #FCD34D;transform:rotateY(180deg)}
+.fc-emoji{font-size:2.4rem;margin-bottom:6px}
+.fc-word{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--pur-d)}
+.fc-tts{position:absolute;top:8px;right:8px;background:var(--pur);color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+.fc-tts:hover{background:var(--pur-d)}
+.fc-ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.05rem;color:var(--pur-d);font-weight:700;margin-bottom:4px;text-align:center}
+.fc-syn{font-size:.8rem;color:#666;text-align:center;line-height:1.4}
+.fc-hint{text-align:center;font-size:.75rem;color:var(--muted);margin-top:4px}
+
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin:14px 0}
+
+/* prompt cards */
+.prompt-card{background:linear-gradient(135deg,var(--pur-l),#FFFBEB);border-radius:14px;padding:18px;margin-bottom:14px;border-left:5px solid var(--pur)}
+.prompt-card p{font-size:.95rem;margin-bottom:8px}
+textarea{width:100%;min-height:90px;border:2px solid var(--pur);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:.95rem;resize:vertical;background:#FEFCFF}
+textarea:focus{outline:none;border-color:var(--gld)}
+
+/* quiz */
+.quiz-q{background:var(--pur-l);border-radius:14px;padding:18px;margin-bottom:16px;border-left:5px solid var(--pur)}
+.quiz-q .qn{font-weight:800;color:var(--pur-d);margin-bottom:8px}
+.score-box{background:linear-gradient(135deg,var(--pur-d),var(--pur));color:#fff;border-radius:18px;padding:24px;text-align:center;display:none}
+.score-box.show{display:block;animation:popIn .5s ease}
+.score-box .score-num{font-family:'Fredoka One',cursive;font-size:3rem}
+.score-box .badge-big{font-size:3.5rem;margin:8px 0}
+
+/* objectives list */
+.obj-list{list-style:none;padding:0}
+.obj-list li{padding:8px 0 8px 32px;position:relative;font-size:1rem;border-bottom:1px solid var(--pur-l)}
+.obj-list li::before{content:'🔮';position:absolute;left:0}
+
+/* comparison box */
+.cmp-box{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media(max-width:600px){.cmp-box{grid-template-columns:1fr}}
+.cmp-side{border-radius:14px;padding:16px}
+.cmp-will{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);border:2px solid var(--pur)}
+.cmp-going{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid var(--gld)}
+.cmp-side h4{font-family:'Fredoka One',cursive;font-size:1.05rem;margin-bottom:8px}
+.cmp-will h4{color:var(--pur-d)}
+.cmp-going h4{color:#92400E}
+.cmp-side ul{list-style:none;padding:0;font-size:.92rem}
+.cmp-side ul li{padding:4px 0;border-bottom:1px dashed rgba(0,0,0,.1)}
+.cmp-side ul li:last-child{border:none}
+.cmp-side .ex{font-style:italic;color:#555;font-size:.88rem;margin-top:3px}
+
+/* speech bubble */
+.bubble{background:#fff;border:2px solid var(--pur);border-radius:14px;padding:12px 16px;margin:8px 0;position:relative;font-size:.95rem}
+.bubble::before{content:'';position:absolute;bottom:-12px;left:20px;border:6px solid transparent;border-top-color:var(--pur)}
+.bubble .spk{font-size:.82rem;color:var(--muted);margin-bottom:4px;font-weight:700}
+
+/* timeline */
+.timeline{display:flex;align-items:center;gap:0;margin:16px 0;overflow-x:auto}
+.tl-event{background:var(--pur-l);border:2px solid var(--pur);border-radius:12px;padding:10px 14px;text-align:center;min-width:130px;font-size:.88rem}
+.tl-event .tl-em{font-size:1.4rem;margin-bottom:4px}
+.tl-event .tl-lbl{font-weight:800;color:var(--pur-d)}
+.tl-event .tl-sub{font-size:.78rem;color:#888}
+.tl-arrow{font-size:1.5rem;color:var(--pur);padding:0 6px;flex-shrink:0}
+
+/* level header */
+.lvl-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.lvl-badge{background:var(--pur);color:#fff;border-radius:20px;padding:4px 14px;font-family:'Fredoka One',cursive;font-size:.9rem}
+
+@keyframes popIn{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes floatStar{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.6)}}
+@keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+footer{text-align:center;padding:20px;font-size:.82rem;color:var(--muted)}
+.flying-star{position:fixed;pointer-events:none;font-size:1.6rem;z-index:9999;animation:floatStar .9s ease forwards}
+.cf-piece{position:fixed;width:10px;height:10px;border-radius:2px;z-index:9998;animation:cfFall 1.4s ease forwards}
+</style>
 </head>
 <body>
-<div class="lesson-wrap">
 
-  <header class="lesson-head">
-    <p class="eyebrow">Grammar • English for Palestine</p>
-    <h1>Future: will &amp; going to — Plans &amp; Predictions</h1>
-    <div class="meta">
-      <span class="chip">🎯 Grades 5, 7 &amp; 9</span>
-      <span class="chip">⏱️ ~30 min</span>
-      <span class="chip ar">المستقبل: will و going to</span>
-    </div>
-    <nav class="stepper">
-      <button>1 · Dream</button>
-      <button>2 · Goals</button>
-      <button>3 · Words</button>
-      <button>4 · Rule</button>
-      <button>5 · Practice</button>
-      <button>6 · Write</button>
-      <button>7 · Plan</button>
-      <button>8 · Quiz</button>
-    </nav>
-    <div class="progress-track"><div class="progress-fill"></div></div>
-  </header>
-
-  <!-- 1. Introduction -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">1</span> Introduction · What's Your Dream?</h2>
-      <p class="section-sub">A hook about the future — dreams and plans — 2 to 3 minutes.</p>
-
-      <div class="placeholder">🖼️ Image / situation placeholder
-        <small>Add a picture of a student dreaming / a road map to the future. — تُضاف لاحقًا</small>
-      </div>
-
-      <p><b>Close your eyes for a moment 🌙</b> What do you want to do when you grow up?
-        Where will you travel? What are you going to study?
-        The future is exciting — and English has two special ways to talk about it!</p>
-
-      <div class="hint-ar block ar">سؤال تحفيزي: ماذا ستفعل بعد المدرسة اليوم؟ وما أحلامك للمستقبل؟ نتعلم اليوم كيف نعبر عن الخطط والتنبؤات بالإنجليزية.</div>
-
-      <p class="q">❓ What are you going to do this summer? What do you think the world will look like in 2050?</p>
-    </div>
-  </section>
-
-  <!-- 2. Learning Outcomes -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">2</span> Learning Outcomes · Future: will &amp; going to</h2>
-      <p class="section-sub">By the end of this lesson, students will be able to:</p>
-      <ul class="clean">
-        <li>✅ Use <b>will</b> for predictions, promises and spontaneous decisions.</li>
-        <li>✅ Use <b>going to</b> for plans and intentions already decided.</li>
-        <li>✅ Form <b>negatives and questions</b> with both structures.</li>
-        <li>✅ Choose the correct form based on context.</li>
-        <li>✅ Use future time expressions (<i>tomorrow, next year, in 2030</i>).</li>
-      </ul>
-      <div class="hint-ar block ar">ستتعلم الفرق بين will (للتنبؤات والقرارات الفورية) وgoing to (للخطط المقررة مسبقًا).</div>
-    </div>
-  </section>
-
-  <!-- 3. Vocabulary -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">3</span> Vocabulary · Future Time Expressions</h2>
-      <p class="section-sub">Key time words that signal future tense.</p>
-      <div class="vocab-grid">
-        <div class="vocab"><div class="w">tomorrow</div><div class="m ar">غدًا</div></div>
-        <div class="vocab"><div class="w">next week</div><div class="m ar">الأسبوع القادم</div></div>
-        <div class="vocab"><div class="w">next year</div><div class="m ar">العام القادم</div></div>
-        <div class="vocab"><div class="w">in 2030</div><div class="m ar">في عام 2030</div></div>
-        <div class="vocab"><div class="w">soon</div><div class="m ar">قريبًا</div></div>
-        <div class="vocab"><div class="w">someday</div><div class="m ar">يومًا ما</div></div>
-        <div class="vocab"><div class="w">plan</div><div class="m ar">خطة / يخطط</div></div>
-        <div class="vocab"><div class="w">predict</div><div class="m ar">يتنبأ</div></div>
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-art">🔮</div>
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar • English for Palestine</p>
+      <h1>Future: <span>will</span> &amp; <span>going to</span></h1>
+      <div class="chips">
+        <span class="chip">🎯 Grades 5, 7 &amp; 9</span>
+        <span class="chip">⏱️ ~35 min</span>
+        <span class="chip ar">المستقبل: will و going to</span>
       </div>
     </div>
-  </section>
-
-  <!-- 4. Teach -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">4</span> Teach · will vs. going to</h2>
-      <p class="section-sub">When to use each form and how to construct them.</p>
-
-      <p><b>will + base verb:</b> predictions, promises, spontaneous decisions</p>
-      <table class="grammar">
-        <tr><th>Use</th><th>Example</th></tr>
-        <tr><td>Prediction</td><td>I think it <code>will rain</code> tomorrow.</td></tr>
-        <tr><td>Promise</td><td>I <code>will help</code> you, I promise!</td></tr>
-        <tr><td>Spontaneous decision</td><td>"There's no milk." "OK, I <code>will buy</code> some."</td></tr>
-      </table>
-
-      <p><b>going to + base verb:</b> plans already decided, evidence-based predictions</p>
-      <table class="grammar">
-        <tr><th>Use</th><th>Example</th></tr>
-        <tr><td>Planned intention</td><td>I <code>am going to study</code> medicine.</td></tr>
-        <tr><td>Evidence-based prediction</td><td>Look at those clouds — it <code>is going to rain</code>!</td></tr>
-      </table>
-
-      <p><b>Negatives &amp; questions:</b></p>
-      <div class="example">She <b>won't (will not) come</b>. · <b>Will</b> you help me? · They <b>aren't going to travel</b>.</div>
-
-      <div class="placeholder">🖼️ Visual placeholder
-        <small>Add a two-column visual: will (lightning bolt = spontaneous) vs. going to (calendar = planned). — تُضاف لاحقًا</small>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Guided Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">5</span> Guided Practice · Choosing the Right Future</h2>
-      <p class="section-sub">Practise will and going to — instant feedback.</p>
-
-      <div class="ex mcq">
-        <p class="q">1) "Look! That boy ___ fall off his bike!" (evidence visible right now)</p>
-        <div class="options">
-          <button class="option" data-correct data-ok="Correct! We can see the evidence — going to is right.">is going to</button>
-          <button class="option" data-no="'Will' is for predictions without visible evidence.">will</button>
-          <button class="option" data-no="That's past tense — not correct here.">fell</button>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex fill">
-        <p class="q">2) Complete with the correct future form:</p>
-        <div class="line">I think prices <input type="text" data-answer="will rise|will go up" placeholder="(rise) — prediction"> next year.</div>
-        <div class="line">We <input type="text" data-answer="are going to visit|are going to see" placeholder="(visit) — plan made"> Hebron this Friday.</div>
-        <div class="line">"The phone is ringing!" "I <input type="text" data-answer="will answer|'ll answer" placeholder="(answer) — spontaneous"> it!"</div>
-        <button class="btn check-fill">Check</button>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex match-ex">
-        <p class="q">3) Match each sentence with the reason we use that future form:</p>
-        <div class="match">
-          <div class="col left">
-            <button class="item" data-key="a">I will carry that for you.</button>
-            <button class="item" data-key="b">She's going to be a doctor.</button>
-            <button class="item" data-key="c">It will be cold tomorrow.</button>
-          </div>
-          <div class="col right">
-            <button class="item" data-key="c">General prediction</button>
-            <button class="item" data-key="a">Spontaneous offer</button>
-            <button class="item" data-key="b">Fixed plan / intention</button>
-          </div>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex dragdrop">
-        <p class="q">4) Drag to the correct future category:</p>
-        <div class="dd-pool">
-          <span class="dd-token" data-zone="z1">will visit</span>
-          <span class="dd-token" data-zone="z2">am going to study</span>
-        </div>
-        <div class="dd-zones">
-          <div class="dd-zone" data-zone="z1"><span class="label">Spontaneous / promise / general prediction</span></div>
-          <div class="dd-zone" data-zone="z2"><span class="label">Pre-arranged plan</span></div>
-        </div>
-        <button class="btn check-dd">Check</button>
-        <div class="feedback"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Independent Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">6</span> Independent Practice · My Future Plans</h2>
-      <p class="section-sub">Write about your own future plans and predictions ✍️</p>
-      <p class="q">Write <b>5 sentences</b> about your future — use both <b>will</b> and <b>going to</b>.</p>
-      <div class="hint-ar ar">اكتب عن خططك للمستقبل (going to) وتنبؤاتك للعالم (will) — استخدم الاثنين معًا.</div>
-      <textarea class="write" placeholder="1) I am going to study engineering at university.&#10;2) I think technology will change education a lot.&#10;3) ..."></textarea>
-      <p style="margin-top:12px"><b>Self-check ✅</b></p>
-      <ul class="checklist">
-        <li><label><input type="checkbox"> I used <b>going to</b> for at least 2 pre-arranged plans.</label></li>
-        <li><label><input type="checkbox"> I used <b>will</b> for at least 2 predictions.</label></li>
-        <li><label><input type="checkbox"> I included a future time expression in each sentence.</label></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 7. Real-Life Task -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">7</span> Real-Life Task · Interview: Future Plans 🌍</h2>
-      <p class="section-sub">Ask a classmate about their real plans and predictions.</p>
-
-      <div class="placeholder">🖼️ Image placeholder
-        <small>Add a picture of a student thinking about the future / a calendar. — تُضاف لاحقًا</small>
-      </div>
-
-      <p class="q">Interview your partner. Write their answers and convert them to full sentences.</p>
-      <table class="grammar">
-        <tr><th>Question</th><th>Partner's answer</th></tr>
-        <tr><td>What are you going to do after school today?</td><td><input type="text" style="border:0;border-bottom:2px solid #99C3EC;background:#f3f9ff;padding:4px;width:90%"></td></tr>
-        <tr><td>What do you think will happen in Palestine in 10 years?</td><td><input type="text" style="border:0;border-bottom:2px solid #99C3EC;background:#f3f9ff;padding:4px;width:90%"></td></tr>
-        <tr><td>What job will you do when you grow up?</td><td><input type="text" style="border:0;border-bottom:2px solid #99C3EC;background:#f3f9ff;padding:4px;width:90%"></td></tr>
-      </table>
-      <div class="hint-ar block ar">المهمة الواقعية: سجّل إجابات زميلك ثم اكتب جملتين عنه: "He is going to… / She thinks the world will…"</div>
-    </div>
-  </section>
-
-  <!-- 8. Assessment -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">8</span> Assessment · Future Forms Quiz</h2>
-      <p class="section-sub">Answer all questions, then press Submit for your score.</p>
-
-      <div class="assessment">
-        <div class="ex mcq-q">
-          <p class="q">1) "I think she ___ win the prize." (general opinion)</p>
-          <div class="options">
-            <button class="option" data-correct>will</button>
-            <button class="option">is going to</button>
-            <button class="option">is</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">2) "We have already bought tickets. We ___ travel to Jordan next week."</p>
-          <div class="options">
-            <button class="option">will</button>
-            <button class="option" data-correct>are going to</button>
-            <button class="option">would</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">3) Negative of will: She ___ (not) come to school tomorrow.</p>
-          <input type="text" data-answer="won't|will not" placeholder="won't / will not">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">4) Question: ___ you help me with this? (will)</p>
-          <input type="text" data-answer="Will" placeholder="Will / Going to">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">5) "Look at that black cloud! It ___ rain!" (visible evidence)</p>
-          <div class="options">
-            <button class="option">will</button>
-            <button class="option" data-correct>is going to</button>
-            <button class="option">rains</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">6) "I promise I ___ call you later."</p>
-          <div class="options">
-            <button class="option" data-correct>will</button>
-            <button class="option">am going to</button>
-            <button class="option">would</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <button class="btn green submit-assess">Submit answers</button>
-        <div class="result">
-          <p>Your score</p>
-          <div class="score">0 / 0</div>
-          <p class="msg"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div style="height:8px"></div>
+  </div>
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab active" onclick="go(0,event)">🚀 Start</button>
+    <button class="tab" onclick="go(1,event)">📚 Words</button>
+    <button class="tab" onclick="go(2,event)">🔍 Discover</button>
+    <button class="tab" onclick="go(3,event)">🧠 Grammar</button>
+    <button class="tab" onclick="go(4,event)">✏️ Practice</button>
+    <button class="tab" onclick="go(5,event)">🗣️ Create</button>
+    <button class="tab" onclick="go(6,event)">🎯 Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
 </div>
 
-<nav class="lesson-nav">
-  <button class="btn ghost" id="prevBtn">‹ Prev</button>
-  <span class="spacer" id="navCounter">1 / 8</span>
-  <button class="btn" id="nextBtn">Next ›</button>
-</nav>
+<div class="main">
 
-<script src="assets/lesson.js"></script>
+<!-- ══ 1. START ══ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <h2>🚀 What Does the Future Hold?</h2>
+    <p style="font-size:1.05rem;line-height:1.8;margin-bottom:16px">
+      Imagine you're holding a <strong>crystal ball</strong> 🔮 — you can see what's coming!<br>
+      In English, we have <strong>two main ways</strong> to talk about the future. Sometimes you
+      <em>decide right now</em>; sometimes you <em>planned it long ago</em>. Can you feel the difference?
+    </p>
+
+    <div class="bubble">
+      <div class="spk">👦 Khalid:</div>
+      "I <strong>'m going to</strong> study engineering — I applied last month."
+    </div>
+    <div class="bubble" style="margin-top:14px">
+      <div class="spk">👧 Dina:</div>
+      "Oh, I just dropped my pen. I <strong>'ll</strong> pick it up."
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);margin:10px 0 18px">Can you spot the difference? One was <em>planned before</em>, one is <em>decided right now</em>.</p>
+
+    <div class="q-inst ar">📌 اختَر الإجابة الصحيحة — أيّ صيغة مستقبل تناسب كلّ جملة؟</div>
+
+    <div id="s-q1">
+      <p style="font-weight:700;margin-bottom:10px">1. "Look at those dark clouds! It _____ rain any minute."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'Close! "will" is for general predictions, but here we can SEE the evidence (dark clouds).','تقريباً! نستخدم will للتنبؤات العامة، لكن هنا يوجد دليل مرئي (الغيوم).')">will rain</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,true,'Excellent! 🌟 Evidence in front of our eyes → "is going to rain"!','ممتاز! عندما يوجد دليل أمامنا نستخدم is going to!')">is going to rain</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'Present Simple is for routines, not future predictions.','المضارع البسيط للعادات وليس للتنبؤات المستقبلية.')">rains</button>
+      </div>
+      <div class="fb-wrap" id="s-fb1"></div>
+    </div>
+
+    <br>
+    <div id="s-q2" style="margin-top:8px">
+      <p style="font-weight:700;margin-bottom:10px">2. "I didn't bring a pen. Don't worry — I _____ lend you mine."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('s-q2','s-fb2',this,true,'Perfect! 🎉 A spontaneous offer made right now = will!','مثالي! عرض تلقائي الآن = will!')">will lend</button>
+        <button class="mcq-btn" onclick="sc('s-q2','s-fb2',this,false,'"am going to lend" means you planned this before — but it\'s a spontaneous offer!','"am going to" تعني خططت لذلك مسبقاً — لكن هذا عرض تلقائي فوري!')">am going to lend</button>
+        <button class="mcq-btn" onclick="sc('s-q2','s-fb2',this,false,'Past Simple is the wrong tense here!','الماضي البسيط خاطئ هنا!')">lent</button>
+      </div>
+      <div class="fb-wrap" id="s-fb2"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Objectives — أهداف الدرس</h2>
+    <ul class="obj-list">
+      <li>Use <strong>will</strong> for predictions, promises, and spontaneous decisions</li>
+      <li>Use <strong>going to</strong> for prior plans, intentions, and evidence-based predictions</li>
+      <li>Form negatives: <strong>won't</strong> / <strong>am not / isn't / aren't going to</strong></li>
+      <li>Form questions: <strong>Will…?</strong> / <strong>Are you going to…?</strong></li>
+      <li>Choose the right form based on context clues</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ 2. WORDS ══ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <h2>📚 Key Vocabulary</h2>
+    <div class="q-inst ar">📌 هذه المفردات مرتبطة بالحديث عن المستقبل — اضغط على البطاقة للترجمة، واضغط 🔊 لسماع النطق:</div>
+    <div class="fc-grid">
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'predict')">🔊</button>
+              <div class="fc-emoji">🔮</div>
+              <div class="fc-word">predict</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">يتنبأ / يتوقع</div>
+              <div class="fc-syn">synonym: foresee<br>antonym: —</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'plan')">🔊</button>
+              <div class="fc-emoji">📋</div>
+              <div class="fc-word">plan</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">يخطط / خطة</div>
+              <div class="fc-syn">synonym: intend<br>antonym: improvise</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'promise')">🔊</button>
+              <div class="fc-emoji">🤝</div>
+              <div class="fc-word">promise</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">يعِد / وعد</div>
+              <div class="fc-syn">synonym: pledge<br>antonym: break a promise</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'intend')">🔊</button>
+              <div class="fc-emoji">💭</div>
+              <div class="fc-word">intend</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">ينوي / يقصد</div>
+              <div class="fc-syn">synonym: plan, mean to<br>antonym: —</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'spontaneous')">🔊</button>
+              <div class="fc-emoji">⚡</div>
+              <div class="fc-word">spontaneous</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">تلقائي / عفوي</div>
+              <div class="fc-syn">synonym: impulsive<br>antonym: planned</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'certain')">🔊</button>
+              <div class="fc-emoji">💯</div>
+              <div class="fc-word">certain</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">متأكد / مؤكَّد</div>
+              <div class="fc-syn">synonym: sure, definite<br>antonym: uncertain</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>⏰ Future Time Expressions</h2>
+    <div class="q-inst ar">📌 هذه التعبيرات الزمنية تُستخدم مع صيغ المستقبل:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">📅</div><div class="en">tomorrow</div><div class="ar">غداً</div></div>
+      <div class="vc"><div class="icon">📆</div><div class="en">next week</div><div class="ar">الأسبوع القادم</div></div>
+      <div class="vc"><div class="icon">🗓️</div><div class="en">next year</div><div class="ar">العام القادم</div></div>
+      <div class="vc"><div class="icon">⚡</div><div class="en">soon</div><div class="ar">قريباً</div></div>
+      <div class="vc"><div class="icon">🔭</div><div class="en">in the future</div><div class="ar">في المستقبل</div></div>
+      <div class="vc"><div class="icon">🚀</div><div class="en">in 2030</div><div class="ar">في عام ٢٠٣٠</div></div>
+      <div class="vc"><div class="icon">🌅</div><div class="en">someday</div><div class="ar">يوماً ما</div></div>
+      <div class="vc"><div class="icon">🕐</div><div class="en">tonight</div><div class="ar">الليلة</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 3. DISCOVER ══ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h2>🔍 What Do You Notice?</h2>
+    <p style="margin-bottom:14px">Read these conversations carefully. <strong>Who planned ahead? Who decided just now?</strong></p>
+
+    <h3>Conversation A — A Surprise Offer</h3>
+    <div class="bubble">
+      <div class="spk">👧 Sara:</div>
+      "This bag is so heavy! I can't carry it."
+    </div>
+    <div class="bubble" style="margin-top:10px">
+      <div class="spk">👦 Omar:</div>
+      "Don't worry! I <strong style="color:var(--pur-d)">will</strong> carry it for you."
+    </div>
+    <p style="font-size:.88rem;color:var(--muted);margin:8px 0 16px">→ Omar just heard the problem and decided <em>right now</em>.</p>
+
+    <h3>Conversation B — An Arranged Plan</h3>
+    <div class="bubble">
+      <div class="spk">👧 Rima:</div>
+      "What are your plans for this summer?"
+    </div>
+    <div class="bubble" style="margin-top:10px">
+      <div class="spk">👦 Jamal:</div>
+      "I <strong style="color:#92400E">'m going to</strong> visit my grandparents. I already bought the ticket."
+    </div>
+    <p style="font-size:.88rem;color:var(--muted);margin:8px 0 16px">→ Jamal decided this <em>before the conversation</em> — he even bought a ticket!</p>
+
+    <h3>Conversation C — A Prediction</h3>
+    <div class="bubble">
+      <div class="spk">🌦️</div>
+      "Look at those clouds — it <strong style="color:#92400E">'s going to</strong> rain!"
+      <br>
+      "I think robots <strong style="color:var(--pur-d)">will</strong> do most jobs in 2050."
+    </div>
+    <p style="font-size:.88rem;color:var(--muted);margin:8px 0 0">→ Evidence visible NOW → <em>going to</em>. General prediction, no evidence → <em>will</em>.</p>
+  </div>
+
+  <div class="card">
+    <h2>🔍 Spot the Pattern</h2>
+    <div class="q-inst ar">📌 قارِن الأمثلة — ما الفرق بين will و going to؟ الإجابات في الصفوف الخضراء والصفراء أدناه:</div>
+    <table class="disc-tbl">
+      <tr><th style="width:45%">will</th><th style="width:55%">going to</th></tr>
+      <tr>
+        <td class="ok-col">I <span class="hi">will</span> open the door. <br><em style="font-size:.82rem">(right now, not planned)</em></td>
+        <td class="warn-col">I <span class="hi">am going to</span> open a restaurant. <br><em style="font-size:.82rem">(decided months ago)</em></td>
+      </tr>
+      <tr>
+        <td class="ok-col">It <span class="hi">will</span> probably rain tomorrow. <br><em style="font-size:.82rem">(general prediction)</em></td>
+        <td class="warn-col">It <span class="hi">is going to</span> rain — look at those clouds! <br><em style="font-size:.82rem">(evidence right now)</em></td>
+      </tr>
+      <tr>
+        <td class="ok-col">I <span class="hi">will</span> always love you. <br><em style="font-size:.82rem">(promise)</em></td>
+        <td class="warn-col">She <span class="hi">is going to</span> study medicine. <br><em style="font-size:.82rem">(prior intention)</em></td>
+      </tr>
+    </table>
+
+    <p style="font-weight:700;margin-top:16px;margin-bottom:10px">What did you discover? Complete these rules:</p>
+    <div id="disc-q1">
+      <div class="q-inst ar">📌 أيٌّ منهما يناسب القرارات التلقائية؟</div>
+      <p style="font-weight:700;margin-bottom:8px">We use <strong>will</strong> for decisions made _____.</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,true,'Correct! ⚡ "will" = right now, in the moment!','صحيح! will تُستخدم للقرارات الفورية في اللحظة الحالية!')">right now (spontaneous)</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'That\'s "going to" — planned BEFORE the conversation.','هذه is going to — المخطَّط قبل المحادثة.')">before the conversation</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb1"></div>
+    </div>
+
+    <br>
+    <div id="disc-q2">
+      <div class="q-inst ar">📌 أيٌّ منهما يُستخدم عند وجود دليل أمامنا؟</div>
+      <p style="font-weight:700;margin-bottom:8px">We use <strong>going to</strong> for predictions when we can see _____.</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,false,'Not quite — "will" is the general guess with no evidence.','ليس تماماً — will هي التخمين العام بدون دليل.')">no evidence at all</button>
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,true,'Yes! 🌟 Visible evidence NOW → going to!','نعم! الدليل المرئي الآن → going to!')">visible evidence right now</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 4. GRAMMAR ══ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <h2>🧠 The Rules — will vs going to</h2>
+
+    <div class="cmp-box">
+      <div class="cmp-side cmp-will">
+        <h4>🔵 will + base verb</h4>
+        <ul>
+          <li>⚡ Spontaneous decision<div class="ex">"I'll get the door!"</div></li>
+          <li>🤝 Promise<div class="ex">"I will never lie to you."</div></li>
+          <li>🔮 General prediction<div class="ex">"Robots will replace many jobs."</div></li>
+          <li>💁 Offer / request<div class="ex">"Will you help me?"</div></li>
+        </ul>
+      </div>
+      <div class="cmp-side cmp-going">
+        <h4>🟡 am/is/are going to</h4>
+        <ul>
+          <li>📋 Prior plan / intention<div class="ex">"I'm going to study tonight."</div></li>
+          <li>🌦️ Prediction with evidence<div class="ex">"It's going to rain — see the clouds?"</div></li>
+          <li>✅ Decision made before<div class="ex">"She's going to move to Ramallah."</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Positive, Negative &amp; Question Forms</h2>
+    <table class="gram-tbl">
+      <tr><th>Form</th><th>will</th><th>going to</th></tr>
+      <tr><td><strong>+ Positive</strong></td><td>I/You/He/She/We/They <strong>will go</strong></td><td>I <strong>am going to go</strong><br>He/She <strong>is going to go</strong><br>We/They <strong>are going to go</strong></td></tr>
+      <tr><td><strong>– Negative</strong></td><td>I <strong>won't</strong> (will not) go</td><td>I <strong>am not going to</strong> go<br>He <strong>isn't going to</strong> go<br>They <strong>aren't going to</strong> go</td></tr>
+      <tr><td><strong>? Question</strong></td><td><strong>Will</strong> you go?</td><td><strong>Are</strong> you going to go?<br><strong>Is</strong> she going to go?</td></tr>
+      <tr><td><strong>Short answer</strong></td><td>Yes, I <strong>will</strong>. / No, I <strong>won't</strong>.</td><td>Yes, I <strong>am</strong>. / No, I <strong>'m not</strong>.</td></tr>
+    </table>
+
+    <div class="gram-note">
+      ⚠️ <strong>Common mistakes to avoid:</strong>
+      <ul style="margin-top:6px;padding-left:16px;font-size:.92rem">
+        <li><span class="neg">✗</span> I will <strong>to go</strong>. → <span style="color:var(--grn)">✓</span> I will <strong>go</strong>. (no "to" after will!)</li>
+        <li><span class="neg">✗</span> She is going to <strong>goes</strong>. → <span style="color:var(--grn)">✓</span> She is going to <strong>go</strong>. (base verb!)</li>
+        <li><span class="neg">✗</span> They <strong>going to</strong> travel. → <span style="color:var(--grn)">✓</span> They <strong>are going to</strong> travel.</li>
+      </ul>
+      <div class="ar" style="margin-top:8px;font-size:.92rem">📌 تذكّر: لا "to" بعد will، واستخدم المصدر دائماً (base verb).</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Quick Visual Summary</h2>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">
+      <div style="flex:1;min-width:200px;background:linear-gradient(135deg,#EDE9FE,#DDD6FE);border-radius:14px;padding:16px;text-align:center">
+        <div style="font-size:2rem;margin-bottom:6px">⚡🤝🔮💁</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--pur-d)">will</div>
+        <div style="font-size:.85rem;color:#555;margin-top:4px">Spontaneous · Promise<br>Prediction · Offer</div>
+      </div>
+      <div style="flex:1;min-width:200px;background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border-radius:14px;padding:16px;text-align:center">
+        <div style="font-size:2rem;margin-bottom:6px">📋✅🌦️</div>
+        <div style="font-family:'Fredoka One',cursive;font-size:1.1rem;color:#92400E">going to</div>
+        <div style="font-size:.85rem;color:#555;margin-top:4px">Prior plan · Intention<br>Evidence-based prediction</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 5. PRACTICE ══ -->
+<div class="panel" id="p4">
+
+  <!-- LEVEL 1 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 1</span>
+      <span style="font-size:.95rem;color:var(--muted)">Choose the correct form</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الأول: اختر will أو going to — انتبه لسياق الجملة (هل هو قرار تلقائي أم خطة مسبقة؟)</div>
+
+    <div id="l1-q1" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">1. "I already registered for the course. I _____ study graphic design."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q1','l1-fb1',this,false,'"will study" suggests a spontaneous decision, but she already registered!','"will study" تعني قرار تلقائي، لكنها سجّلت مسبقاً!')">will study</button>
+        <button class="mcq-btn" onclick="sc('l1-q1','l1-fb1',this,true,'✅ Correct! Registered before = prior plan = going to!','صحيح! التسجيل كان مسبقاً = خطة مسبقة = going to!')">am going to study</button>
+        <button class="mcq-btn" onclick="sc('l1-q1','l1-fb1',this,false,'This is present simple — not for personal future plans.','المضارع البسيط — وليس للخطط الشخصية المستقبلية.')">study</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb1"></div>
+    </div>
+
+    <div id="l1-q2" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">2. "The phone is ringing! Wait — I _____ answer it."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q2','l1-fb2',this,true,'🎯 Spot on! Decided right now when the phone rang = will!','أحسنت! قرار تلقائي عند رنين الهاتف = will!')">will answer</button>
+        <button class="mcq-btn" onclick="sc('l1-q2','l1-fb2',this,false,'Going to needs a prior plan — this is a sudden decision.','going to تحتاج خطة مسبقة — هذا قرار مفاجئ.')">am going to answer</button>
+        <button class="mcq-btn" onclick="sc('l1-q2','l1-fb2',this,false,'Past Simple — wrong tense entirely!','الماضي البسيط — تنسيق خاطئ تماماً!')">answered</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb2"></div>
+    </div>
+
+    <div id="l1-q3" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">3. "Feel how hot the pan is! The oil _____ spill!"</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q3','l1-fb3',this,false,'"will spill" = general prediction with no evidence — but we can FEEL the heat!','"will spill" = تنبؤ عام بدون دليل — لكن نستطيع الإحساس بالحرارة!')">will spill</button>
+        <button class="mcq-btn" onclick="sc('l1-q3','l1-fb3',this,true,'🌟 Yes! We can feel the evidence → is going to!','نعم! نستطيع الإحساس بالدليل ← is going to!')">is going to spill</button>
+        <button class="mcq-btn" onclick="sc('l1-q3','l1-fb3',this,false,'Present Continuous is for actions happening RIGHT now, not predictions.','المضارع المستمر للأفعال الجارية الآن، وليس للتنبؤات.')">is spilling</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb3"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl1-done')">✅ Done with Level 1</button>
+    <div class="lvl-done" id="lvl1-done">⭐ Level 1 complete! المستوى الأول منتهٍ — انتقل للمستوى التالي! ⭐</div>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 2</span>
+      <span style="font-size:.95rem;color:var(--muted)">Fill in the blanks</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الثاني: اضغط على كلمة من بنك الكلمات، ثم اضغط على الفراغ المناسب.</div>
+
+    <div class="word-bank" id="wb2">
+      <span class="wb-chip" onclick="pickWb2(this,'will')">will</span>
+      <span class="wb-chip" onclick="pickWb2(this,'am going to')">am going to</span>
+      <span class="wb-chip" onclick="pickWb2(this,'is going to')">is going to</span>
+      <span class="wb-chip" onclick="pickWb2(this,'are going to')">are going to</span>
+      <span class="wb-chip" onclick="pickWb2(this,'won\'t')">won't</span>
+    </div>
+
+    <p style="line-height:2.4;font-size:.97rem">
+      1. I <span class="blank" id="b2-1" onclick="dropWb2('b2-1')">_____</span> visit my grandmother next week — I told her yesterday. <br>
+      2. Don't worry, I <span class="blank" id="b2-2" onclick="dropWb2('b2-2')">_____</span> help you with your homework. (I decide now)<br>
+      3. She <span class="blank" id="b2-3" onclick="dropWb2('b2-3')">_____</span> become a doctor. She applied to medical school last month.<br>
+      4. We <span class="blank" id="b2-4" onclick="dropWb2('b2-4')">_____</span> be late! Look at the traffic — it's terrible!<br>
+      5. I <span class="blank" id="b2-5" onclick="dropWb2('b2-5')">_____</span> eat that! It smells terrible! (spontaneous refusal)
+    </p>
+
+    <button class="check-btn" onclick="checkL2()">✅ Check Level 2</button>
+    <div class="fb-wrap" id="l2-fb"></div>
+    <div class="lvl-done" id="lvl2-done">🌟 Level 2 complete! المستوى الثاني منتهٍ — واصل التقدم! 🌟</div>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 3</span>
+      <span style="font-size:.95rem;color:var(--muted)">Make questions</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الثالث: حوِّل كلَّ جملة إلى سؤال. اكتب السؤال في الخانة المخصصة.</div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">1. "She will call you later." → Make a Yes/No question:</p>
+      <input type="text" class="t-in" id="l3-1" placeholder='Type the question here, e.g. "Will she...?"'/>
+      <button class="check-btn" onclick="checkL3(1,'will she call you later?','l3-fb1')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb1"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">2. "They are going to travel next summer." → Make a Yes/No question:</p>
+      <input type="text" class="t-in" id="l3-2" placeholder='Type the question here...'/>
+      <button class="check-btn" onclick="checkL3(2,'are they going to travel next summer?','l3-fb2')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb2"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">3. "He will win the championship." → Make a Yes/No question:</p>
+      <input type="text" class="t-in" id="l3-3" placeholder='Type the question here...'/>
+      <button class="check-btn" onclick="checkL3(3,'will he win the championship?','l3-fb3')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb3"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl3-done')">✅ Done with Level 3</button>
+    <div class="lvl-done" id="lvl3-done">💫 Level 3 complete! المستوى الثالث منتهٍ! 💫</div>
+  </div>
+
+  <!-- LEVEL 4 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 4</span>
+      <span style="font-size:.95rem;color:var(--muted)">Correct the mistakes</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الرابع: هذه الجمل تحتوي أخطاء — اكتب الجملة الصحيحة:</div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">1. ✗ "I will to go to the cinema tonight."</p>
+      <input type="text" class="t-in" id="l4-1" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4(1,'i will go to the cinema tonight','l4-fb1','Remove "to" after will — never use will + to + verb!')">Check ✓</button>
+      <div class="fb-wrap" id="l4-fb1"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">2. ✗ "She going to be late."</p>
+      <input type="text" class="t-in" id="l4-2" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4(2,'she is going to be late','l4-fb2','Missing "is" — the verb to be (am/is/are) is required before going to!')">Check ✓</button>
+      <div class="fb-wrap" id="l4-fb2"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">3. ✗ "Will you going to help me?"</p>
+      <input type="text" class="t-in" id="l4-3" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4m3('l4-fb3')">Check ✓</button>
+      <div class="fb-wrap" id="l4-fb3"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl4-done',true)">🎉 Finish Practice!</button>
+    <div class="lvl-done" id="lvl4-done">🔮 All 4 levels done! أنهيت التدريب! انتقل إلى Create! 🔮</div>
+  </div>
+</div>
+
+<!-- ══ 6. CREATE ══ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <h2>🗣️ Speaking — Talk About Your Future</h2>
+    <div class="q-inst ar">📌 تحدَّث مع زميلك عن المواضيع التالية — استخدم will و going to في حديثك:</div>
+
+    <div class="prompt-card">
+      <p><strong>🎯 Round 1 — This Weekend</strong></p>
+      <p>Tell your partner 2 things you are <strong>going to do</strong> this weekend (prior plans).</p>
+      <p style="font-size:.88rem;color:#888">e.g. "I'm going to visit my cousins on Friday."</p>
+    </div>
+
+    <div class="prompt-card">
+      <p><strong>🔮 Round 2 — Predictions for 2050</strong></p>
+      <p>Give 3 predictions about what the world <strong>will</strong> look like in 2050.</p>
+      <p style="font-size:.88rem;color:#888">e.g. "Cars will fly." / "People will live on Mars."</p>
+    </div>
+
+    <div class="prompt-card">
+      <p><strong>💬 Round 3 — Classroom Situations</strong></p>
+      <p>Your teacher offers you a piece of chocolate — respond spontaneously using <strong>will</strong>.</p>
+      <p style="font-size:.88rem;color:#888">e.g. "Thank you! I'll save it for later!"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✍️ Writing — My Future Plans</h2>
+    <div class="q-inst ar">📌 اكتب فقرة من ٥ إلى ٧ جمل عن خططك للمستقبل — استخدم will مرتين على الأقل و going to مرتين على الأقل:</div>
+
+    <div style="background:var(--pur-l);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:.92rem">
+      💡 <strong>Starter:</strong> "In the future, I am going to… I will also… I hope I will… By next year, I am going to…"
+    </div>
+
+    <textarea id="write-para" placeholder="Write your paragraph here — 5 to 7 sentences. Use 'will' at least twice and 'going to' at least twice..."></textarea>
+    <button class="check-btn" onclick="checkPara()">✅ Submit My Paragraph</button>
+    <div class="fb-wrap" id="para-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>⭐ Challenge — Future Interview</h2>
+    <div class="q-inst ar">📌 التحدي: اسأل زميلك هذه الأسئلة باستخدام will و going to، ثم اكتب إجاباته:</div>
+    <ol style="line-height:2.2;padding-left:20px;font-size:.95rem">
+      <li>Will you go to university? What <strong>will</strong> you study?</li>
+      <li>What <strong>are you going to</strong> do after school today?</li>
+      <li>Do you think technology <strong>will</strong> change your life? How?</li>
+      <li>Where <strong>are you going to</strong> live when you grow up?</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ══ 7. QUIZ ══ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <h2>🎯 Final Quiz — 5 Questions</h2>
+    <div class="q-inst ar">📌 اختبر نفسك — خمسة أسئلة تشمل الدرس كاملاً. اقرأ كلَّ سؤال بعناية!</div>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="qq1">
+      <div class="qn">Q1. Choose the correct answer:</div>
+      <p style="margin-bottom:10px">"I just spilled coffee. I _____ clean it up."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(1,this,true)">will clean</button>
+        <button class="mcq-btn" onclick="qsc(1,this,false)">am going to clean</button>
+        <button class="mcq-btn" onclick="qsc(1,this,false)">cleaned</button>
+      </div>
+      <div class="fb-wrap" id="q-fb1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="qq2">
+      <div class="qn">Q2. Choose the correct answer:</div>
+      <p style="margin-bottom:10px">"She already applied. She _____ become a nurse."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(2,this,false)">will become</button>
+        <button class="mcq-btn" onclick="qsc(2,this,true)">is going to become</button>
+        <button class="mcq-btn" onclick="qsc(2,this,false)">becomes</button>
+      </div>
+      <div class="fb-wrap" id="q-fb2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="qq3">
+      <div class="qn">Q3. True or False:</div>
+      <p style="margin-bottom:10px">"We use <em>going to</em> for spontaneous decisions made right now."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(3,this,false)">True</button>
+        <button class="mcq-btn" onclick="qsc(3,this,true)">False</button>
+      </div>
+      <div class="fb-wrap" id="q-fb3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="qq4">
+      <div class="qn">Q4. Which sentence is correct?</div>
+      <div class="mcq-row" style="flex-direction:column">
+        <button class="mcq-btn" onclick="qsc(4,this,false)">I will to visit you tomorrow.</button>
+        <button class="mcq-btn" onclick="qsc(4,this,false)">They going to travel next week.</button>
+        <button class="mcq-btn" onclick="qsc(4,this,true)">We are going to watch a film tonight.</button>
+        <button class="mcq-btn" onclick="qsc(4,this,false)">She will goes to the market.</button>
+      </div>
+      <div class="fb-wrap" id="q-fb4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="qq5">
+      <div class="qn">Q5. Complete the sentence (write in the box):</div>
+      <p style="margin-bottom:8px">Write ONE thing you <strong>are going to do</strong> tomorrow:</p>
+      <div class="q-inst ar">📌 اكتب جملة واحدة باستخدام going to عن خطة غدٍ:</div>
+      <input type="text" class="t-in" id="q5-ans" placeholder='Tomorrow I am going to ...'/>
+      <button class="check-btn" onclick="checkQ5()">Submit ✓</button>
+      <div class="fb-wrap" id="q-fb5"></div>
+    </div>
+
+    <button class="check-btn" style="width:100%;font-size:1.1rem;padding:14px" onclick="showScore()">🔮 See My Score</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="badge-big">🔮</div>
+    <div class="score-num" id="scoreNum">0/5</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:1.3rem;margin:8px 0" id="scoreMsg"></div>
+    <div class="ar" style="font-size:1rem;margin-top:6px" id="scoreAr"></div>
+    <div style="margin-top:16px;font-size:1.5rem" id="scoreBadge"></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+// ─── navigation ───
+const panels=document.querySelectorAll('.panel');
+const tabs=document.querySelectorAll('.tab');
+function go(i,e){
+  panels.forEach(p=>p.classList.remove('on'));
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels[i].classList.add('on');
+  tabs[i].classList.add('active');
+  document.getElementById('progFill').style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(e)e.stopPropagation();
+}
+
+// ─── effects ───
+function launchStar(x,y){
+  const stars=['⭐','🌟','✨','💫'];
+  const el=document.createElement('div');
+  el.className='flying-star';
+  el.textContent=stars[Math.floor(Math.random()*stars.length)];
+  el.style.cssText=`left:${x-12}px;top:${y-12}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),950);
+}
+function shake(el){
+  el.style.animation='shake .4s ease';
+  setTimeout(()=>el.style.animation='',450);
+}
+function confetti(){
+  const colors=['#7C3AED','#A855F7','#F59E0B','#FCD34D','#10B981','#EC4899','#3B82F6'];
+  for(let i=0;i<60;i++){
+    const cf=document.createElement('div');
+    cf.className='cf-piece';
+    cf.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*.8}s;animation-duration:${1.2+Math.random()*.6}s`;
+    document.body.appendChild(cf);
+    setTimeout(()=>cf.remove(),2200);
+  }
+}
+
+// ─── feedback helper ───
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅ ':'❌ '}${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+
+// ─── single-choice MCQ ───
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const row=document.getElementById(rowId);
+  if(row.dataset.done)return;
+  const btns=row.querySelectorAll('.mcq-btn');
+  btns.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){
+    launchStar(btn.getBoundingClientRect().left+btn.offsetWidth/2, btn.getBoundingClientRect().top+window.scrollY);
+    row.dataset.done=1;
+  } else {
+    shake(btn);
+  }
+}
+
+// ─── flashcard flip ───
+function flipCard(w){w.classList.toggle('flipped')}
+
+// ─── TTS ───
+function tts(e,word){
+  e.stopPropagation();
+  const u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US';u.rate=0.9;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+// ─── level done banner ───
+function doneLevel(id,doConfetti){
+  const el=document.getElementById(id);
+  el.classList.add('show');
+  if(doConfetti)confetti();
+  else{
+    launchStar(window.innerWidth/2,window.innerHeight/3);
+    setTimeout(()=>launchStar(window.innerWidth/2+40,window.innerHeight/3),200);
+  }
+}
+
+// ─── word bank (Level 2) ───
+let wbSel2=null;
+function pickWb2(chip,val){
+  document.querySelectorAll('#wb2 .wb-chip').forEach(c=>c.style.outline='');
+  wbSel2={chip,val};
+  chip.style.outline='3px solid var(--pur)';
+}
+function dropWb2(blankId){
+  if(!wbSel2)return;
+  const bl=document.getElementById(blankId);
+  if(bl.classList.contains('ok'))return;
+  bl.textContent=wbSel2.val;
+  bl.classList.add('filled');
+  wbSel2.chip.style.outline='';
+  wbSel2=null;
+}
+
+// ─── Level 2 check ───
+const l2ans={'b2-1':'am going to','b2-2':'will','b2-3':'is going to','b2-4':'are going to','b2-5':"won't"};
+function checkL2(){
+  let ok=0,total=5;
+  for(const [id,ans] of Object.entries(l2ans)){
+    const bl=document.getElementById(id);
+    const got=(bl.textContent||'').trim().toLowerCase();
+    if(got===ans){bl.classList.add('ok');bl.classList.remove('err');ok++;}
+    else{bl.classList.add('err');bl.classList.remove('ok');}
+  }
+  const allOk=ok===total;
+  setFb('l2-fb',allOk,
+    allOk?`All ${total} correct! 🎉`:`${ok}/${total} correct. Try fixing the red ones.`,
+    allOk?'أحسنت! جميع الإجابات صحيحة!':'بعض الإجابات خاطئة — راجع الخانات الحمراء.'
+  );
+  if(allOk){doneLevel('lvl2-done');confetti();}
+}
+
+// ─── Level 3 check ───
+function checkL3(n,expected,fbId){
+  const got=document.getElementById('l3-'+n).value.trim().toLowerCase().replace(/[?.!]/g,'');
+  const exp=expected.replace(/[?.!]/g,'').toLowerCase();
+  const ok=got===exp||got.includes(exp.slice(0,10));
+  setFb(fbId,ok,
+    ok?'✅ Great question!':'❌ Check the word order: question word + subject + verb?',
+    ok?'ممتاز! صياغة السؤال صحيحة!':'راجع ترتيب السؤال: أداة الاستفهام + الفاعل + الفعل.'
+  );
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+  else shake(document.getElementById('l3-'+n));
+}
+
+// ─── Level 4 check ───
+function checkL4(n,expected,fbId,wrongHint){
+  const got=document.getElementById('l4-'+n).value.trim().toLowerCase().replace(/[.!?]/g,'');
+  const exp=expected.toLowerCase().replace(/[.!?]/g,'');
+  const ok=got===exp;
+  setFb(fbId,ok,
+    ok?'✅ Correct! Well done!':'❌ '+wrongHint,
+    ok?'ممتاز! الجملة الصحيحة!':'راجع الخطأ وصحِّح.'
+  );
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+  else shake(document.getElementById('l4-'+n));
+}
+function checkL4m3(fbId){
+  const got=document.getElementById('l4-3').value.trim().toLowerCase().replace(/[.!?]/g,'');
+  const ok1='will you help me';const ok2='are you going to help me';
+  const ok=got===ok1||got===ok2||got.includes('will you help')||got.includes('going to help');
+  setFb(fbId,ok,
+    ok?'✅ Correct! Either "Will you help me?" or "Are you going to help me?" works!':'❌ Don\'t mix will and going to. Use one: "Will you help me?" OR "Are you going to help me?"',
+    ok?'ممتاز! كلا الصيغتين صحيحة!':'لا تخلط will مع going to — استخدم إحداهما فقط.'
+  );
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+  else shake(document.getElementById('l4-3'));
+}
+
+// ─── paragraph check ───
+function checkPara(){
+  const txt=document.getElementById('write-para').value.trim().toLowerCase();
+  const hasWill=(txt.match(/\bwill\b/g)||[]).length;
+  const hasGoing=(txt.match(/going to/g)||[]).length;
+  const ok=hasWill>=2&&hasGoing>=2&&txt.length>40;
+  setFb('para-fb',ok,
+    ok?'✅ Great paragraph! You used both forms correctly.':'❌ Make sure you use "will" at least twice AND "going to" at least twice.',
+    ok?'ممتاز! استخدمت الصيغتين بشكل صحيح!':'تأكد من استخدام will مرتين على الأقل و going to مرتين على الأقل.'
+  );
+  if(ok)confetti();
+}
+
+// ─── quiz ───
+const qAns={};
+function qsc(n,btn,correct){
+  const qq=document.getElementById('qq'+n);
+  if(qq.dataset.done)return;
+  qq.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  qAns[n]=correct;
+  const msgs=[
+    ['Spontaneous decision → will!','القرار التلقائي في اللحظة = will!'],
+    ['"Already applied" = prior plan = going to!','"قدّمت مسبقاً" = خطة مسبقة = going to!'],
+    ['FALSE! Spontaneous decisions use WILL, not going to.','خطأ! القرارات التلقائية تستخدم will وليس going to.'],
+    ['Correct! "are going to watch" is the right form.','صحيح! are going to watch هي الصيغة الصحيحة.']
+  ];
+  if(n<=4){
+    setFb('q-fb'+n,correct,
+      correct?'✅ '+msgs[n-1][0]:'❌ '+msgs[n-1][0],
+      msgs[n-1][1]
+    );
+  }
+  if(correct)launchStar(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top+window.scrollY);
+  else shake(btn);
+  qq.dataset.done=1;
+}
+function checkQ5(){
+  const txt=document.getElementById('q5-ans').value.trim().toLowerCase();
+  const ok=txt.includes('going to')&&txt.length>10;
+  setFb('q-fb5',ok,
+    ok?'✅ Well done! A correct going to sentence!':'❌ Make sure to use "am/is/are going to + verb".',
+    ok?'ممتاز! جملة going to صحيحة!':'تأكد من استخدام am/is/are going to + فعل مصدر.'
+  );
+  qAns[5]=ok;
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+}
+function showScore(){
+  let s=0;
+  for(let i=1;i<=5;i++)if(qAns[i])s++;
+  document.getElementById('scoreNum').textContent=s+'/5';
+  const msgs=[
+    ['Keep practising! 💪','لا تستسلم — واصل المراجعة! 💪'],
+    ['Good effort! Review the Grammar tab 📖','جهد جيد! راجع تبويب Grammar 📖'],
+    ['Good try! A bit more practice needed ✨','جيد! تحتاج قليلاً من التدريب ✨'],
+    ['Well done! Almost there! 🌟','أحسنت! أنت قريب من الكمال! 🌟'],
+    ['Excellent! Nearly perfect! 🎉','ممتاز! كاد أن يكون كاملاً! 🎉'],
+    ['Perfect score! 🔮 Future Master!','علامة كاملة! أنت خبير المستقبل! 🔮']
+  ];
+  document.getElementById('scoreMsg').textContent=msgs[s][0];
+  document.getElementById('scoreAr').textContent=msgs[s][1];
+  document.getElementById('scoreBadge').textContent=s>=4?'🔮⭐🔮':'🔮';
+  document.getElementById('scoreBox').classList.add('show');
+  if(s>=4){confetti();localStorage.setItem('badge_future','earned');}
+  document.getElementById('scoreBox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
 </body>
 </html>
