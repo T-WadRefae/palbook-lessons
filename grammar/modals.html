@@ -1,284 +1,987 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Modal Verbs — PalBook Live</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/lesson.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Modal Verbs — Discovery Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --tea:#0D9488;--tea-d:#0F5B55;--tea-l:#F0FDFA;
+  --amb:#D97706;--amb-l:#FFFBEB;
+  --grn:#2E7D32;--grn-l:#E8F5E9;--red:#C62828;--red-l:#FFEBEE;
+  --bg:#F0FDFA;--card:#fff;--txt:#0F3330;--muted:#4B8E88;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,var(--tea-d) 0%,var(--tea) 55%,#14B8A6 100%);
+  padding:28px 20px 0;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 75% 25%,rgba(217,119,6,.3) 0%,transparent 50%),
+             radial-gradient(circle at 20% 80%,rgba(255,255,255,.1) 0%,transparent 55%);pointer-events:none}
+.hdr-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:18px;position:relative}
+.hdr-art{font-size:84px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3))}
+.hdr-text{flex:1}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:4px}
+.hdr h1{font-family:'Fredoka One',cursive;font-size:clamp(1.5rem,4vw,2.4rem);color:#fff;line-height:1.15}
+.hdr h1 span{color:#FDE68A}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:rgba(255,255,255,.18);color:#fff;border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:700}
+.chip.ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.85rem}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:6px;padding:14px 16px 0;max-width:900px;margin:16px auto 0;
+  overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.35);
+  border-radius:22px 22px 0 0;padding:8px 16px;font-family:'Fredoka One',cursive;
+  font-size:.95rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.35)}
+.tab.active{background:#fff;color:var(--tea-d);border-color:#fff}
+
+.prog-wrap{background:rgba(255,255,255,.2);height:6px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#FDE68A,#D97706);transition:width .4s ease;border-radius:0 3px 3px 0}
+
+.main{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.on{display:block}
+
+.card{background:var(--card);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.card h2{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--tea-d);margin-bottom:12px}
+.card h3{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--tea);margin:14px 0 8px}
+
+/* instruction bar */
+.q-inst{background:var(--tea-l);border-right:5px solid var(--tea);border-radius:10px;padding:10px 16px;margin-bottom:14px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;color:var(--tea-d);direction:rtl;text-align:right;line-height:1.6}
+
+/* feedback */
+.fb-wrap{display:none;border-radius:10px;padding:12px 16px;margin-top:10px;border-left:5px solid transparent}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:var(--grn-l);border-color:var(--grn)}
+.fb-wrap.err{background:var(--red-l);border-color:var(--red)}
+.fb-en{font-weight:700;font-size:1rem;margin-bottom:4px}
+.fb-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.95rem;direction:rtl;text-align:right;color:#555}
+.fb-wrap.ok .fb-en{color:#1B5E20}
+.fb-wrap.err .fb-en{color:#B71C1C}
+
+/* MCQ */
+.mcq-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.mcq-btn{background:var(--tea-l);border:2px solid #99E6DE;border-radius:12px;padding:9px 18px;
+  font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--txt)}
+.mcq-btn:hover{background:#CCFBF1}
+.mcq-btn.ok{background:var(--grn-l);border-color:var(--grn);color:#1B5E20}
+.mcq-btn.err{background:var(--red-l);border-color:var(--red);color:#B71C1C}
+.mcq-btn:disabled{cursor:default;opacity:.8}
+
+/* word bank */
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;background:var(--tea-l);padding:12px 16px;border-radius:12px;margin-bottom:16px}
+.wb-chip{background:#fff;border:2px solid var(--tea);border-radius:20px;padding:5px 14px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;color:var(--tea-d)}
+.wb-chip:hover{background:var(--tea);color:#fff}
+.wb-chip.used{opacity:.35;pointer-events:none;text-decoration:line-through}
+
+.blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--tea);padding:2px 6px;text-align:center;cursor:pointer;border-radius:4px 4px 0 0;transition:background .2s;font-weight:700}
+.blank:hover{background:var(--tea-l)}
+.blank.filled{color:var(--tea-d)}
+.blank.ok{border-color:var(--grn);color:var(--grn);background:var(--grn-l)}
+.blank.err{border-color:var(--red);color:var(--red);background:var(--red-l)}
+
+.t-in{width:100%;padding:9px;border:2px solid var(--tea);border-radius:8px;font-size:1rem;margin-bottom:4px;font-family:'Nunito',sans-serif;background:#F9FEFE}
+.t-in:focus{outline:none;border-color:var(--amb)}
+
+.check-btn{background:linear-gradient(135deg,var(--tea),#14B8A6);color:#fff;border:none;border-radius:12px;padding:10px 26px;
+  font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;margin-top:10px;transition:transform .15s,box-shadow .15s}
+.check-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(13,148,136,.4)}
+.check-btn:active{transform:translateY(0)}
+
+.lvl-done{display:none;background:linear-gradient(135deg,var(--amb-l),#FEF3C7);border:3px solid var(--amb);border-radius:16px;padding:16px 20px;
+  text-align:center;margin-top:16px;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.1rem;color:#92400E}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+
+/* discover table */
+.disc-tbl{width:100%;border-collapse:collapse;margin:12px 0;overflow:hidden;border-radius:10px}
+.disc-tbl th{background:var(--tea-d);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:.95rem}
+.disc-tbl td{padding:9px 14px;border-bottom:1px solid var(--tea-l);font-size:.95rem;vertical-align:top}
+.disc-tbl tr:nth-child(even) td{background:var(--tea-l)}
+.hi{color:var(--tea-d);font-weight:800;background:#FDE68A;padding:1px 5px;border-radius:4px}
+.neg{color:#C62828;font-weight:800}
+
+/* grammar big table */
+.gram-tbl{width:100%;border-collapse:collapse;margin:10px 0}
+.gram-tbl th{background:var(--tea);color:#fff;padding:9px 14px;font-family:'Fredoka One',cursive;text-align:left}
+.gram-tbl td{padding:9px 14px;border-bottom:1px solid var(--tea-l);vertical-align:top}
+.gram-tbl tr:nth-child(even) td{background:var(--tea-l)}
+.gram-note{background:var(--amb-l);border-left:4px solid var(--amb);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.92rem}
+
+/* modal badges */
+.modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin:14px 0}
+.modal-card{border-radius:14px;padding:16px;border:2px solid transparent}
+.mc-can{background:linear-gradient(135deg,#E0F2FE,#BAE6FD);border-color:#38BDF8}
+.mc-must{background:linear-gradient(135deg,#FEE2E2,#FECACA);border-color:#F87171}
+.mc-should{background:linear-gradient(135deg,#D1FAE5,#A7F3D0);border-color:#34D399}
+.mc-may{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);border-color:#A78BFA}
+.modal-card h4{font-family:'Fredoka One',cursive;font-size:1.15rem;margin-bottom:6px}
+.mc-can h4{color:#0369A1}
+.mc-must h4{color:#B91C1C}
+.mc-should h4{color:#065F46}
+.mc-may h4{color:#4C1D95}
+.modal-card ul{list-style:none;padding:0;font-size:.88rem}
+.modal-card ul li{padding:3px 0;border-bottom:1px dashed rgba(0,0,0,.1)}
+.modal-card ul li:last-child{border:none}
+.modal-card .ex{font-style:italic;font-size:.84rem;color:#555;margin-top:3px}
+.modal-card .neg-eg{color:#B91C1C;font-size:.84rem;margin-top:4px;font-weight:700}
+
+/* flashcard */
+.fc-wrap{perspective:700px;width:190px;height:165px;cursor:pointer;margin:0 auto 4px}
+.fc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s}
+.fc-wrap.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.fc-front{background:linear-gradient(135deg,var(--tea-l),#CCFBF1);border:2px solid #99E6DE}
+.fc-back{background:linear-gradient(135deg,var(--amb-l),#FEF3C7);border:2px solid #FCD34D;transform:rotateY(180deg)}
+.fc-emoji{font-size:2.4rem;margin-bottom:6px}
+.fc-word{font-family:'Fredoka One',cursive;font-size:1.15rem;color:var(--tea-d)}
+.fc-tts{position:absolute;top:8px;right:8px;background:var(--tea);color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+.fc-tts:hover{background:var(--tea-d)}
+.fc-ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.05rem;color:var(--tea-d);font-weight:700;margin-bottom:4px;text-align:center}
+.fc-syn{font-size:.8rem;color:#666;text-align:center;line-height:1.4}
+.fc-hint{text-align:center;font-size:.75rem;color:var(--muted);margin-top:4px}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin:14px 0}
+
+/* vocab cards */
+.vc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:12px 0}
+.vc{background:var(--tea-l);border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.vc .icon{font-size:2.2rem;margin-bottom:6px}
+.vc .en{font-weight:800;font-size:.95rem;color:var(--tea-d)}
+.vc .ar{font-size:.88rem;color:#555;margin-top:3px;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+/* speech bubbles */
+.bubble{background:#fff;border:2px solid var(--tea);border-radius:14px;padding:12px 16px;margin:8px 0;font-size:.95rem}
+.bubble .spk{font-size:.82rem;color:var(--muted);margin-bottom:4px;font-weight:700}
+
+/* lvl hdr */
+.lvl-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.lvl-badge{background:var(--tea);color:#fff;border-radius:20px;padding:4px 14px;font-family:'Fredoka One',cursive;font-size:.9rem}
+
+/* prompt card */
+.prompt-card{background:linear-gradient(135deg,var(--tea-l),var(--amb-l));border-radius:14px;padding:18px;margin-bottom:14px;border-left:5px solid var(--tea)}
+.prompt-card p{font-size:.95rem;margin-bottom:8px}
+textarea{width:100%;min-height:90px;border:2px solid var(--tea);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:.95rem;resize:vertical;background:#F9FEFE}
+textarea:focus{outline:none;border-color:var(--amb)}
+
+/* quiz */
+.quiz-q{background:var(--tea-l);border-radius:14px;padding:18px;margin-bottom:16px;border-left:5px solid var(--tea)}
+.quiz-q .qn{font-weight:800;color:var(--tea-d);margin-bottom:8px}
+.score-box{background:linear-gradient(135deg,var(--tea-d),var(--tea));color:#fff;border-radius:18px;padding:24px;text-align:center;display:none}
+.score-box.show{display:block;animation:popIn .5s ease}
+.score-box .score-num{font-family:'Fredoka One',cursive;font-size:3rem}
+.score-box .badge-big{font-size:3.5rem;margin:8px 0}
+
+/* obj list */
+.obj-list{list-style:none;padding:0}
+.obj-list li{padding:8px 0 8px 32px;position:relative;font-size:1rem;border-bottom:1px solid var(--tea-l)}
+.obj-list li::before{content:'💬';position:absolute;left:0}
+
+@keyframes popIn{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes floatStar{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.6)}}
+@keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+footer{text-align:center;padding:20px;font-size:.82rem;color:var(--muted)}
+.flying-star{position:fixed;pointer-events:none;font-size:1.6rem;z-index:9999;animation:floatStar .9s ease forwards}
+.cf-piece{position:fixed;width:10px;height:10px;border-radius:2px;z-index:9998;animation:cfFall 1.4s ease forwards}
+</style>
 </head>
 <body>
-<div class="lesson-wrap">
 
-  <header class="lesson-head">
-    <p class="eyebrow">Grammar • English for Palestine</p>
-    <h1>Modal Verbs — can, must, should, may</h1>
-    <div class="meta">
-      <span class="chip">🎯 Grades 6 &amp; 7</span>
-      <span class="chip">⏱️ ~30 min</span>
-      <span class="chip ar">أفعال الأوجه</span>
-    </div>
-    <nav class="stepper">
-      <button>1 · Advice</button>
-      <button>2 · Goals</button>
-      <button>3 · Words</button>
-      <button>4 · Meaning</button>
-      <button>5 · Practice</button>
-      <button>6 · Write</button>
-      <button>7 · Rules</button>
-      <button>8 · Quiz</button>
-    </nav>
-    <div class="progress-track"><div class="progress-fill"></div></div>
-  </header>
-
-  <!-- 1. Introduction -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">1</span> Introduction · Can You Give Advice?</h2>
-      <p class="section-sub">A hook about helping a friend — giving advice and rules — 2 to 3 minutes.</p>
-
-      <div class="placeholder">🖼️ Image / situation placeholder
-        <small>Add a picture of a student looking worried about an exam, and a friend giving advice. — تُضاف لاحقًا</small>
-      </div>
-
-      <p><b>Imagine your friend has an exam tomorrow 📝</b> What would you say?
-        "You <b>should</b> study!" · "You <b>must</b> sleep early!" · "You <b>can</b> ask the teacher for help!"
-        These small words carry big meaning — they are called <b>modal verbs</b>.</p>
-
-      <div class="hint-ar block ar">سؤال تحفيزي: ماذا تنصح صديقك بفعله قبل الامتحان؟ نستخدم أفعال الأوجه للنصيحة والإذن والضرورة.</div>
-
-      <p class="q">❓ What should students do to be healthy and successful at school?</p>
-    </div>
-  </section>
-
-  <!-- 2. Learning Outcomes -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">2</span> Learning Outcomes · Modal Verbs</h2>
-      <p class="section-sub">By the end of this lesson, students will be able to:</p>
-      <ul class="clean">
-        <li>✅ Use <b>can</b> for ability and informal permission.</li>
-        <li>✅ Use <b>must</b> for strong obligation / certainty.</li>
-        <li>✅ Use <b>should</b> for advice and recommendation.</li>
-        <li>✅ Use <b>may</b> for formal permission and possibility.</li>
-        <li>✅ Form negatives: <b>can't, mustn't, shouldn't</b>.</li>
-        <li>✅ Note that modals are followed by the <b>base verb</b> (no -s, no -ing, no to).</li>
-      </ul>
-      <div class="hint-ar block ar">ستتعلم أفعال الأوجه الأربعة الرئيسية ومعانيها — النصيحة والإذن والضرورة والاحتمال.</div>
-    </div>
-  </section>
-
-  <!-- 3. Vocabulary -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">3</span> Vocabulary · Modal Meaning Words</h2>
-      <p class="section-sub">Key vocabulary connected to ability, permission, obligation and advice.</p>
-      <div class="vocab-grid">
-        <div class="vocab"><div class="w">ability</div><div class="m ar">قدرة</div></div>
-        <div class="vocab"><div class="w">permission</div><div class="m ar">إذن / سماح</div></div>
-        <div class="vocab"><div class="w">obligation</div><div class="m ar">التزام / واجب</div></div>
-        <div class="vocab"><div class="w">advice</div><div class="m ar">نصيحة</div></div>
-        <div class="vocab"><div class="w">possibility</div><div class="m ar">احتمال</div></div>
-        <div class="vocab"><div class="w">prohibition</div><div class="m ar">تحريم / منع</div></div>
-        <div class="vocab"><div class="w">recommend</div><div class="m ar">يوصي</div></div>
-        <div class="vocab"><div class="w">allowed</div><div class="m ar">مسموح به</div></div>
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-art">💬</div>
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar • English for Palestine</p>
+      <h1>Modal <span>Verbs</span></h1>
+      <div class="chips">
+        <span class="chip">🎯 Grades 6 &amp; 7</span>
+        <span class="chip">⏱️ ~30 min</span>
+        <span class="chip ar">أفعال الأوجه</span>
       </div>
     </div>
-  </section>
-
-  <!-- 4. Teach -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">4</span> Teach · Modal Meanings &amp; Forms</h2>
-      <p class="section-sub">Each modal, its meaning, and its negative form.</p>
-
-      <table class="grammar">
-        <tr><th>Modal</th><th>Main meaning</th><th>Negative</th><th>Example</th></tr>
-        <tr><td><code>can</code></td><td>ability / informal permission</td><td><code>can't</code></td><td>I <b>can</b> swim. · <b>Can</b> I go out?</td></tr>
-        <tr><td><code>must</code></td><td>strong obligation / necessity</td><td><code>mustn't</code> (prohibition)</td><td>You <b>must</b> wear a seatbelt.</td></tr>
-        <tr><td><code>should</code></td><td>advice / recommendation</td><td><code>shouldn't</code></td><td>You <b>should</b> drink water.</td></tr>
-        <tr><td><code>may</code></td><td>formal permission / possibility</td><td><code>may not</code></td><td><b>May</b> I ask a question? · It <b>may</b> rain.</td></tr>
-      </table>
-
-      <p><b>Key rule:</b> after a modal, always use the <b>base verb</b> (no -s, no -to, no -ing):</p>
-      <div class="example">✅ She <b>should study</b>. &nbsp;✗ She should <s>studies</s>. &nbsp;✗ She should <s>to study</s>.</div>
-
-      <div class="placeholder">🖼️ Visual placeholder
-        <small>Add a modal verbs chart with colour-coded meanings. — تُضاف لاحقًا</small>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Guided Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">5</span> Guided Practice · Choosing the Right Modal</h2>
-      <p class="section-sub">Practise modal verbs — instant feedback.</p>
-
-      <div class="ex mcq">
-        <p class="q">1) "You look tired. You ___ sleep early tonight." (advice)</p>
-        <div class="options">
-          <button class="option" data-correct data-ok="Correct! 'Should' is the best modal for advice.">should</button>
-          <button class="option" data-no="'Must' is too strong for advice — it's more like an order.">must</button>
-          <button class="option" data-no="'May' is for permission and possibility, not advice.">may</button>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex fill">
-        <p class="q">2) Fill in with the correct modal:</p>
-        <div class="line">Students <input type="text" data-answer="must|should" placeholder="(obligation)"> wear school uniform.</div>
-        <div class="line">You <input type="text" data-answer="can" placeholder="(ability)"> borrow my pen if you need it.</div>
-        <div class="line">You <input type="text" data-answer="mustn't|must not|shouldn't" placeholder="(prohibition)"> use your phone in class.</div>
-        <button class="btn check-fill">Check</button>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex match-ex">
-        <p class="q">3) Match each modal sentence with its meaning:</p>
-        <div class="match">
-          <div class="col left">
-            <button class="item" data-key="a">May I open the window?</button>
-            <button class="item" data-key="b">She can play the oud.</button>
-            <button class="item" data-key="c">You must stop at the red light.</button>
-          </div>
-          <div class="col right">
-            <button class="item" data-key="c">Strong obligation / law</button>
-            <button class="item" data-key="a">Formal permission request</button>
-            <button class="item" data-key="b">Ability</button>
-          </div>
-        </div>
-        <div class="feedback"></div>
-      </div>
-
-      <div class="ex dragdrop">
-        <p class="q">4) Drag each modal to its category:</p>
-        <div class="dd-pool">
-          <span class="dd-token" data-zone="z1">should</span>
-          <span class="dd-token" data-zone="z2">must</span>
-        </div>
-        <div class="dd-zones">
-          <div class="dd-zone" data-zone="z1"><span class="label">Advice (you can ignore it)</span></div>
-          <div class="dd-zone" data-zone="z2"><span class="label">Strong obligation (you cannot ignore it)</span></div>
-        </div>
-        <button class="btn check-dd">Check</button>
-        <div class="feedback"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Independent Practice -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">6</span> Independent Practice · Advice &amp; Rules</h2>
-      <p class="section-sub">Write your own sentences using modal verbs ✍️</p>
-      <p class="q">Write <b>5 sentences</b> — give advice, state rules, or ask for permission using different modal verbs.</p>
-      <div class="hint-ar ar">فكّر في قواعد مدرستك، وصحتك، وحياتك اليومية — استخدم كل فعل وجه مرة واحدة على الأقل.</div>
-      <textarea class="write" placeholder="1) You should drink eight glasses of water every day.&#10;2) Students must not run in the school corridors.&#10;3) May I ask you a question?&#10;4) ..."></textarea>
-      <p style="margin-top:12px"><b>Self-check ✅</b></p>
-      <ul class="checklist">
-        <li><label><input type="checkbox"> I used at least 3 different modal verbs.</label></li>
-        <li><label><input type="checkbox"> Every modal is followed by the <b>base verb</b> (no -s, no -to).</label></li>
-        <li><label><input type="checkbox"> I wrote at least one negative modal sentence.</label></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 7. Real-Life Task -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">7</span> Real-Life Task · School Rules Poster 🌍</h2>
-      <p class="section-sub">Create a mini school-rules poster using modal verbs.</p>
-
-      <div class="placeholder">🖼️ Image placeholder
-        <small>Add a picture of a school notice board with rules. — تُضاف لاحقًا</small>
-      </div>
-
-      <p class="q">Write <b>6 school rules</b> — 3 things students <b>must / should</b> do, and 3 things they <b>must not / shouldn't</b> do.</p>
-      <textarea class="write" placeholder="Students MUST:&#10;1) ...&#10;2) ...&#10;3) ...&#10;&#10;Students MUST NOT:&#10;1) ...&#10;2) ...&#10;3) ..."></textarea>
-      <div class="hint-ar block ar">المهمة الواقعية: صمّم لائحة قواعد لمدرستك الخاصة المثالية — ما الواجبات؟ وما المحظورات؟</div>
-    </div>
-  </section>
-
-  <!-- 8. Assessment -->
-  <section class="section">
-    <div class="card">
-      <h2 class="section-title"><span class="n">8</span> Assessment · Modal Verbs Quiz</h2>
-      <p class="section-sub">Answer all questions, then press Submit for your score.</p>
-
-      <div class="assessment">
-        <div class="ex mcq-q">
-          <p class="q">1) She ___ speak three languages. (ability)</p>
-          <div class="options">
-            <button class="option" data-correct>can</button>
-            <button class="option">must</button>
-            <button class="option">should</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">2) You ___ smoke here. (prohibition)</p>
-          <div class="options">
-            <button class="option">shouldn't to</button>
-            <button class="option" data-correct>mustn't</button>
-            <button class="option">may not to</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">3) "You look pale. You ___ (should) see a doctor." — write the correct sentence.</p>
-          <input type="text" data-answer="should see" placeholder="should + base verb">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex fill-q">
-          <p class="q">4) "___ I use your dictionary, please?" (formal permission)</p>
-          <input type="text" data-answer="May" placeholder="May / Can">
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">5) Which sentence is grammatically correct?</p>
-          <div class="options">
-            <button class="option">He should to eat more vegetables.</button>
-            <button class="option">She musts wear her uniform.</button>
-            <button class="option" data-correct>They can help us tomorrow.</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <div class="ex mcq-q">
-          <p class="q">6) "It ___ rain later — take an umbrella." (possibility)</p>
-          <div class="options">
-            <button class="option">should</button>
-            <button class="option" data-correct>may</button>
-            <button class="option">must</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-
-        <button class="btn green submit-assess">Submit answers</button>
-        <div class="result">
-          <p>Your score</p>
-          <div class="score">0 / 0</div>
-          <p class="msg"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div style="height:8px"></div>
+  </div>
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab active" onclick="go(0,event)">🚀 Start</button>
+    <button class="tab" onclick="go(1,event)">📚 Words</button>
+    <button class="tab" onclick="go(2,event)">🔍 Discover</button>
+    <button class="tab" onclick="go(3,event)">🧠 Grammar</button>
+    <button class="tab" onclick="go(4,event)">✏️ Practice</button>
+    <button class="tab" onclick="go(5,event)">🗣️ Create</button>
+    <button class="tab" onclick="go(6,event)">🎯 Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
 </div>
 
-<nav class="lesson-nav">
-  <button class="btn ghost" id="prevBtn">‹ Prev</button>
-  <span class="spacer" id="navCounter">1 / 8</span>
-  <button class="btn" id="nextBtn">Next ›</button>
-</nav>
+<div class="main">
 
-<script src="assets/lesson.js"></script>
+<!-- ══ 1. START ══ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <h2>🚀 What Would You Say?</h2>
+    <p style="font-size:1.05rem;line-height:1.8;margin-bottom:16px">
+      Your friend looks <strong>very worried</strong> 😟 — she has a big exam tomorrow!<br>
+      Which of these would you say to help her?<br>
+      <em>"You <strong>should</strong> study!"</em> &nbsp;·&nbsp;
+      <em>"You <strong>must</strong> sleep early!"</em> &nbsp;·&nbsp;
+      <em>"You <strong>can</strong> ask the teacher!"</em><br>
+      These small words — <strong>can, must, should, may</strong> — carry huge meaning. They are called <strong>modal verbs</strong>.
+    </p>
+
+    <div class="q-inst ar">📌 اختَر أفضل نصيحة في كلِّ موقف:</div>
+
+    <div id="s-q1" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">1. Your friend is coughing badly. You say: "You _____ see a doctor."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'"can" means ability — "You are able to see a doctor?" Not the best fit here.','can تعني القدرة — هذا ليس الأنسب للنصيحة.')">can</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,true,'✅ "should" = strong advice — exactly right!','"should" = نصيحة قوية — هذا هو الصحيح!')">should</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'"may" is very formal here — a gentle possibility, not strong advice.','may رسمية جداً هنا — تعطي احتمالاً لا نصيحة قوية.')">may</button>
+      </div>
+      <div class="fb-wrap" id="s-fb1"></div>
+    </div>
+
+    <div id="s-q2">
+      <p style="font-weight:700;margin-bottom:8px">2. The sign says 🚭 — no smoking. You tell your classmate: "You _____ smoke here."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('s-q2','s-fb2',this,false,'"shouldn\'t" gives advice, but a sign = a rule — something stronger needed.','shouldn\'t تعطي نصيحة، لكن اللافتة تعني قانوناً — نحتاج أقوى.')">shouldn't</button>
+        <button class="mcq-btn" onclick="sc('s-q2','s-fb2',this,false,'"can\'t" is for ability — but we need to express a rule/prohibition.','can\'t للقدرة — لكن نحتاج للتعبير عن حظر رسمي.')">can't</button>
+        <button class="mcq-btn" onclick="sc('s-q2','s-fb2',this,true,'🎯 "mustn\'t" = prohibition — it\'s forbidden! Perfect!','"mustn\'t" = محظور — ممنوع تماماً! إجابة صحيحة!')">mustn't</button>
+      </div>
+      <div class="fb-wrap" id="s-fb2"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Objectives — أهداف الدرس</h2>
+    <ul class="obj-list">
+      <li>Use <strong>can</strong> for ability and informal permission</li>
+      <li>Use <strong>must</strong> for strong obligation and prohibition (mustn't)</li>
+      <li>Use <strong>should</strong> for advice and recommendation</li>
+      <li>Use <strong>may</strong> for formal permission and possibility</li>
+      <li>Know that modals are always followed by the <strong>base verb</strong> (no -s / no -ing / no to)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ 2. WORDS ══ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <h2>📚 Key Vocabulary</h2>
+    <div class="q-inst ar">📌 هذه المفردات تساعدك على فهم معاني أفعال الأوجه — اضغط على البطاقة للترجمة، واضغط 🔊 لسماع النطق:</div>
+    <div class="fc-grid">
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'ability')">🔊</button>
+              <div class="fc-emoji">💪</div>
+              <div class="fc-word">ability</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">قدرة / مهارة</div>
+              <div class="fc-syn">synonym: skill, capability<br>antonym: inability</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'permission')">🔊</button>
+              <div class="fc-emoji">🚪</div>
+              <div class="fc-word">permission</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">إذن / سماح</div>
+              <div class="fc-syn">synonym: consent, approval<br>antonym: prohibition</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'obligation')">🔊</button>
+              <div class="fc-emoji">⚠️</div>
+              <div class="fc-word">obligation</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">التزام / واجب</div>
+              <div class="fc-syn">synonym: duty, requirement<br>antonym: choice, option</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'advice')">🔊</button>
+              <div class="fc-emoji">💡</div>
+              <div class="fc-word">advice</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">نصيحة</div>
+              <div class="fc-syn">synonym: recommendation<br>antonym: —</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'prohibition')">🔊</button>
+              <div class="fc-emoji">🚫</div>
+              <div class="fc-word">prohibition</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">حظر / منع</div>
+              <div class="fc-syn">synonym: ban, forbid<br>antonym: permission</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+      <div>
+        <div class="fc-wrap" onclick="flipCard(this)">
+          <div class="fc-inner">
+            <div class="fc-front">
+              <button class="fc-tts" onclick="tts(event,'possibility')">🔊</button>
+              <div class="fc-emoji">🤔</div>
+              <div class="fc-word">possibility</div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-ar-mean">احتمال / إمكانية</div>
+              <div class="fc-syn">synonym: chance, likelihood<br>antonym: certainty</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-hint ar">اضغط للترجمة</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔑 The Four Modal Verbs at a Glance</h2>
+    <div class="q-inst ar">📌 هذه هي أفعال الأوجه الأربعة الرئيسية — احفظ معنى كلٍّ منها:</div>
+    <div class="vc-grid">
+      <div class="vc" style="background:linear-gradient(135deg,#E0F2FE,#BAE6FD);border:2px solid #38BDF8">
+        <div class="icon">💪</div>
+        <div class="en" style="color:#0369A1">can</div>
+        <div class="ar">قدرة / إذن غير رسمي</div>
+      </div>
+      <div class="vc" style="background:linear-gradient(135deg,#FEE2E2,#FECACA);border:2px solid #F87171">
+        <div class="icon">⚠️</div>
+        <div class="en" style="color:#B91C1C">must</div>
+        <div class="ar">ضرورة / حظر (mustn't)</div>
+      </div>
+      <div class="vc" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0);border:2px solid #34D399">
+        <div class="icon">💡</div>
+        <div class="en" style="color:#065F46">should</div>
+        <div class="ar">نصيحة / توصية</div>
+      </div>
+      <div class="vc" style="background:linear-gradient(135deg,#EDE9FE,#DDD6FE);border:2px solid #A78BFA">
+        <div class="icon">🎩</div>
+        <div class="en" style="color:#4C1D95">may</div>
+        <div class="ar">إذن رسمي / احتمال</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 3. DISCOVER ══ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h2>🔍 Same Verb — Different Modal</h2>
+    <p style="margin-bottom:12px">Read these sentences. <strong>Only the modal changes</strong> — but the meaning completely changes!</p>
+
+    <table class="disc-tbl">
+      <tr><th>Sentence</th><th>What does it mean?</th></tr>
+      <tr><td>You <span class="hi">can</span> leave early.</td><td>You are <strong>allowed to</strong> leave (informal).</td></tr>
+      <tr><td>You <span class="hi">must</span> leave now.</td><td>It is <strong>necessary / required</strong> — no choice!</td></tr>
+      <tr><td>You <span class="hi">should</span> leave soon.</td><td>It is <strong>a good idea</strong> — my advice.</td></tr>
+      <tr><td>You <span class="hi">may</span> leave now.</td><td>You are <strong>formally permitted</strong> to leave.</td></tr>
+      <tr><td>You <span class="neg">mustn't</span> leave.</td><td>It is <strong>forbidden / prohibited</strong>!</td></tr>
+    </table>
+
+    <div class="q-inst ar" style="margin-top:14px">📌 لاحظ: الفعل leave لم يتغيَّر — الذي تغيَّر هو أداة الوجه (modal) فقط. هل لاحظت أن الفعل بعد أداة الوجه هو دائماً مصدر بسيط (base verb)؟</div>
+  </div>
+
+  <div class="card">
+    <h2>🔍 Notice the Pattern!</h2>
+    <p style="margin-bottom:12px">Look at these examples. What do they all have in common?</p>
+
+    <div class="bubble"><div class="spk">Grammar examples:</div>
+      She <span class="hi">can</span> <strong>swim</strong>. &nbsp;|&nbsp;
+      He <span class="hi">must</span> <strong>study</strong>. &nbsp;|&nbsp;
+      You <span class="hi">should</span> <strong>eat</strong> fruit. &nbsp;|&nbsp;
+      <span class="hi">May</span> I <strong>come</strong> in?
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);margin:10px 0 0">→ After every modal: <strong>base verb</strong> — no -s, no -ing, no "to"!</p>
+    <p style="font-size:.88rem;margin-top:4px">❌ She <span class="neg">can swims</span> &nbsp; ❌ He <span class="neg">must to study</span> &nbsp; ❌ You <span class="neg">should eating</span></p>
+
+    <div id="disc-q1" style="margin-top:16px">
+      <div class="q-inst ar">📌 اختَر الجملة الصحيحة:</div>
+      <div class="mcq-row" style="flex-direction:column">
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'No -s after a modal! Modal verbs don\'t follow the subject-verb agreement rule.','لا تُضاف -s بعد أداة الوجه!')">She should <strong>goes</strong> to the doctor.</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'No "to" after a modal! "Must" is already the helper — no infinitive marker needed.','لا "to" بعد أداة الوجه!')">He must <strong>to sleep</strong> early.</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,true,'✅ Correct! Modal + base verb — simple and clean!','صحيح! أداة الوجه + مصدر بسيط!')">You can <strong>use</strong> my pen.</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb1"></div>
+    </div>
+
+    <div id="disc-q2" style="margin-top:16px">
+      <div class="q-inst ar">📌 اختَر الفعل المناسب حسب القاعدة:</div>
+      <p style="font-weight:700;margin-bottom:8px">"Students must _____ their homework every day."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,false,'No -ing after must! Modal verbs take the base verb.','لا -ing بعد أداة الوجه!')">doing</button>
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,false,'No "to" after must!','لا "to" بعد must!')">to do</button>
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,true,'🌟 Perfect! must + base verb → must do!','ممتاز! must + مصدر بسيط!')">do</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 4. GRAMMAR ══ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <h2>🧠 The Four Modal Verbs — Full Rules</h2>
+    <div class="modal-grid">
+      <div class="modal-card mc-can">
+        <h4>💪 can</h4>
+        <ul>
+          <li>Ability<div class="ex">"She <strong>can</strong> speak French."</div></li>
+          <li>Informal permission<div class="ex">"You <strong>can</strong> use my phone."</div></li>
+          <li>Request<div class="ex">"<strong>Can</strong> you help me?"</div></li>
+        </ul>
+        <div class="neg-eg">Negative: <strong>can't / cannot</strong><br>"I <strong>can't</strong> swim."</div>
+      </div>
+      <div class="modal-card mc-must">
+        <h4>⚠️ must</h4>
+        <ul>
+          <li>Strong obligation<div class="ex">"You <strong>must</strong> wear a seatbelt."</div></li>
+          <li>Logical certainty<div class="ex">"He worked hard — he <strong>must</strong> be tired."</div></li>
+        </ul>
+        <div class="neg-eg">Negative: <strong>mustn't</strong> = FORBIDDEN<br>"You <strong>mustn't</strong> cheat."</div>
+      </div>
+      <div class="modal-card mc-should">
+        <h4>💡 should</h4>
+        <ul>
+          <li>Advice / recommendation<div class="ex">"You <strong>should</strong> eat more fruit."</div></li>
+          <li>Expectation<div class="ex">"She <strong>should</strong> be here by now."</div></li>
+        </ul>
+        <div class="neg-eg">Negative: <strong>shouldn't</strong> = bad idea<br>"You <strong>shouldn't</strong> skip meals."</div>
+      </div>
+      <div class="modal-card mc-may">
+        <h4>🎩 may</h4>
+        <ul>
+          <li>Formal permission<div class="ex">"<strong>May</strong> I come in, please?"</div></li>
+          <li>Possibility<div class="ex">"It <strong>may</strong> rain later."</div></li>
+        </ul>
+        <div class="neg-eg">Negative: <strong>may not</strong> = not allowed (formal)<br>"You <strong>may not</strong> enter."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Form — One Rule for All</h2>
+    <table class="gram-tbl">
+      <tr><th>Type</th><th>Structure</th><th>Example</th></tr>
+      <tr><td>✅ Positive</td><td>Subject + modal + <strong>base verb</strong></td><td>She <strong>can swim</strong>.</td></tr>
+      <tr><td>❌ Negative</td><td>Subject + modal + <strong>not</strong> + base verb</td><td>He <strong>must not</strong> lie.</td></tr>
+      <tr><td>❓ Question</td><td>Modal + subject + base verb?</td><td><strong>Should</strong> I call you?</td></tr>
+    </table>
+
+    <div class="gram-note">
+      ⚠️ <strong>Golden Rule:</strong> After ALL modal verbs → always the <strong>base verb</strong>
+      <ul style="margin-top:6px;padding-left:16px;font-size:.9rem">
+        <li>❌ He <span class="neg">can to swim</span> → ✅ He <strong>can swim</strong></li>
+        <li>❌ She <span class="neg">must studies</span> → ✅ She <strong>must study</strong></li>
+        <li>❌ You <span class="neg">should sleeping</span> → ✅ You <strong>should sleep</strong></li>
+      </ul>
+      <div class="ar" style="margin-top:6px;font-size:.9rem">📌 القاعدة الذهبية: بعد كلِّ أداة وجه يأتي المصدر البسيط (base verb) بدون to أو -s أو -ing.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 5. PRACTICE ══ -->
+<div class="panel" id="p4">
+
+  <!-- LEVEL 1 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 1</span>
+      <span style="font-size:.95rem;color:var(--muted)">Choose the right modal</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الأول: اختر أداة الوجه المناسبة لكلِّ سياق — انتبه إلى معنى الجملة!</div>
+
+    <div id="l1-q1" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">1. My little sister is three years old. She _____ read yet.</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q1','l1-fb1',this,true,'✅ "can\'t" = no ability yet — perfect!','"can\'t" = لا توجد قدرة بعد — ممتاز!')">can't</button>
+        <button class="mcq-btn" onclick="sc('l1-q1','l1-fb1',this,false,'"mustn\'t" means forbidden — she\'s not forbidden, she just doesn\'t have the ability.','mustn\'t تعني محظور — هي ليست ممنوعة، فقط لا تستطيع.')">mustn't</button>
+        <button class="mcq-btn" onclick="sc('l1-q1','l1-fb1',this,false,'"shouldn\'t" gives advice — but this is about ability, not advice.','shouldn\'t تعطي نصيحة — لكن هذه قدرة وليست نصيحة.')">shouldn't</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb1"></div>
+    </div>
+
+    <div id="l1-q2" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">2. You _____ eat too much junk food — it's bad for your health.</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q2','l1-fb2',this,false,'"mustn\'t" is a strong prohibition — bit too strong for health advice.','mustn\'t للحظر الشديد — قوي جداً للنصيحة الصحية.')">mustn't</button>
+        <button class="mcq-btn" onclick="sc('l1-q2','l1-fb2',this,true,'🌟 "shouldn\'t" = health advice — great choice!','"shouldn\'t" = نصيحة صحية — خيار ممتاز!')">shouldn't</button>
+        <button class="mcq-btn" onclick="sc('l1-q2','l1-fb2',this,false,'"may not" is a formal denial of permission — too formal for personal advice.','may not للرفض الرسمي — رسمي جداً للنصيحة الشخصية.')">may not</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb2"></div>
+    </div>
+
+    <div id="l1-q3" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">3. "_____ I use your dictionary, please?" (formal, in class)</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q3','l1-fb3',this,false,'"Can" works but it\'s informal. The question says "formal" — something more polite fits.','Can تناسب لكن هي غير رسمية. السؤال يقول "رسمي".')">Can</button>
+        <button class="mcq-btn" onclick="sc('l1-q3','l1-fb3',this,true,'✅ "May" = formal permission request — perfect for in class!','"May" = طلب إذن رسمي — مثالي في الفصل!')">May</button>
+        <button class="mcq-btn" onclick="sc('l1-q3','l1-fb3',this,false,'"Should" gives advice — not how to ask permission!','"Should" تعطي نصيحة — ليست لطلب الإذن!')">Should</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb3"></div>
+    </div>
+
+    <div id="l1-q4" style="margin-bottom:18px">
+      <p style="font-weight:700;margin-bottom:8px">4. School rules: "Students _____ be on time. Lateness is not acceptable."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('l1-q4','l1-fb4',this,false,'"should" is a suggestion — school rules are stronger than suggestions.','should اقتراح — قواعد المدرسة أقوى من الاقتراح.')">should</button>
+        <button class="mcq-btn" onclick="sc('l1-q4','l1-fb4',this,true,'🎯 "must" = strong obligation — rules demand it!','"must" = التزام قوي — القواعد تتطلبه!')">must</button>
+        <button class="mcq-btn" onclick="sc('l1-q4','l1-fb4',this,false,'"may" is for permission — this is an obligation, not permission.','may للإذن — هذا التزام وليس إذن.')">may</button>
+      </div>
+      <div class="fb-wrap" id="l1-fb4"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl1-done')">✅ Done with Level 1</button>
+    <div class="lvl-done" id="lvl1-done">⭐ Level 1 complete! المستوى الأول منتهٍ — انتقل للمستوى التالي! ⭐</div>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 2</span>
+      <span style="font-size:.95rem;color:var(--muted)">Fill in the blanks</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الثاني: اضغط على أداة الوجه من البنك، ثم اضغط على الفراغ المناسب:</div>
+
+    <div class="word-bank" id="wb2">
+      <span class="wb-chip" onclick="pickWb2(this,'can')">can</span>
+      <span class="wb-chip" onclick="pickWb2(this,'must')">must</span>
+      <span class="wb-chip" onclick="pickWb2(this,'should')">should</span>
+      <span class="wb-chip" onclick="pickWb2(this,'may')">may</span>
+      <span class="wb-chip" onclick="pickWb2(this,'can\'t')">can't</span>
+      <span class="wb-chip" onclick="pickWb2(this,'mustn\'t')">mustn't</span>
+    </div>
+
+    <p style="line-height:2.6;font-size:.97rem">
+      1. I <span class="blank" id="b2-1" onclick="dropWb2('b2-1')">_____</span> ride a bike — I learned when I was five. <br>
+      2. You <span class="blank" id="b2-2" onclick="dropWb2('b2-2')">_____</span> run in the corridor! It's dangerous. <br>
+      3. She looks pale. She <span class="blank" id="b2-3" onclick="dropWb2('b2-3')">_____</span> rest for a while. <br>
+      4. It's raining. We <span class="blank" id="b2-4" onclick="dropWb2('b2-4')">_____</span> take an umbrella. <br>
+      5. "<span class="blank" id="b2-5" onclick="dropWb2('b2-5')">_____</span> I ask you a question, Miss?" (formal, in class)
+    </p>
+
+    <button class="check-btn" onclick="checkL2()">✅ Check Level 2</button>
+    <div class="fb-wrap" id="l2-fb"></div>
+    <div class="lvl-done" id="lvl2-done">🌟 Level 2 complete! المستوى الثاني منتهٍ! 🌟</div>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 3</span>
+      <span style="font-size:.95rem;color:var(--muted)">Write advice sentences</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الثالث: اكتب جملة نصيحة أو قاعدة لكلِّ موقف مستخدماً should أو must:</div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">1. Your friend never brushes his teeth. Advise him: (use <strong>should</strong>)</p>
+      <input type="text" class="t-in" id="l3-1" placeholder='You should ...'/>
+      <button class="check-btn" onclick="checkL3(1,'l3-fb1')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb1"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">2. A school rule — students cannot use phones in class. Write the rule: (use <strong>mustn't</strong>)</p>
+      <input type="text" class="t-in" id="l3-2" placeholder='Students mustn\'t ...'/>
+      <button class="check-btn" onclick="checkL3(2,'l3-fb2')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb2"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">3. Write ONE thing students <strong>can</strong> do in the school garden:</p>
+      <input type="text" class="t-in" id="l3-3" placeholder='Students can ...'/>
+      <button class="check-btn" onclick="checkL3(3,'l3-fb3')">Check ✓</button>
+      <div class="fb-wrap" id="l3-fb3"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl3-done')">✅ Done with Level 3</button>
+    <div class="lvl-done" id="lvl3-done">💫 Level 3 complete! المستوى الثالث منتهٍ! 💫</div>
+  </div>
+
+  <!-- LEVEL 4 -->
+  <div class="card">
+    <div class="lvl-hdr">
+      <span class="lvl-badge">Level 4</span>
+      <span style="font-size:.95rem;color:var(--muted)">Correct the mistakes</span>
+    </div>
+    <div class="q-inst ar">📌 المستوى الرابع: هذه الجمل تحتوي أخطاء في استخدام أفعال الأوجه — اكتب الجملة الصحيحة:</div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">1. ✗ "She can to play the piano beautifully."</p>
+      <input type="text" class="t-in" id="l4-1" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4(1,'she can play the piano beautifully','l4-fb1','Remove "to"! Modal verbs take the base verb — never "to + verb".')">Check ✓</button>
+      <div class="fb-wrap" id="l4-fb1"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">2. ✗ "You must to do your homework."</p>
+      <input type="text" class="t-in" id="l4-2" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4(2,'you must do your homework','l4-fb2','No "to" after must! Just: must + base verb.')">Check ✓</button>
+      <div class="fb-wrap" id="l4-fb2"></div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <p style="font-weight:700;margin-bottom:6px">3. ✗ "He should sleeps early every night."</p>
+      <input type="text" class="t-in" id="l4-3" placeholder='Write the correct sentence...'/>
+      <button class="check-btn" onclick="checkL4(3,'he should sleep early every night','l4-fb3','No -s after should! Modal verbs never take -s, even with he/she/it.')">Check ✓</button>
+      <div class="fb-wrap" id="l4-fb3"></div>
+    </div>
+
+    <button class="check-btn" onclick="doneLevel('lvl4-done',true)">🎉 Finish Practice!</button>
+    <div class="lvl-done" id="lvl4-done">💬 All 4 levels done! أنهيت التدريب! انتقل إلى Create! 💬</div>
+  </div>
+</div>
+
+<!-- ══ 6. CREATE ══ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <h2>🗣️ Speaking — School Rules &amp; Advice</h2>
+    <div class="q-inst ar">📌 تحدَّث مع زميلك عن هذه المواقف — استخدم can / must / should / may في كلِّ إجابة:</div>
+
+    <div class="prompt-card">
+      <p><strong>🏫 Round 1 — School Rules</strong></p>
+      <p>Tell your partner <strong>3 rules</strong> at your school using <strong>must</strong> and <strong>mustn't</strong>.</p>
+      <p style="font-size:.88rem;color:#888">e.g. "Students must be quiet in the library." / "We mustn't use phones in class."</p>
+    </div>
+
+    <div class="prompt-card">
+      <p><strong>💡 Round 2 — Health Advice</strong></p>
+      <p>Give your partner <strong>3 pieces of advice</strong> for staying healthy using <strong>should</strong> and <strong>shouldn't</strong>.</p>
+      <p style="font-size:.88rem;color:#888">e.g. "You should drink 8 glasses of water a day."</p>
+    </div>
+
+    <div class="prompt-card">
+      <p><strong>🎩 Round 3 — Formal Requests</strong></p>
+      <p>Practice asking your teacher for permission using <strong>May I…?</strong></p>
+      <p style="font-size:.88rem;color:#888">e.g. "May I open the window, please?" / "May I go to the bathroom?"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✍️ Writing — School Rules Poster</h2>
+    <div class="q-inst ar">📌 اكتب ٦ قواعد لمدرستك — ٣ أشياء يجب فعلها (must) و٣ أشياء محظورة (mustn't). استخدم should مرة واحدة أيضاً:</div>
+
+    <div style="background:var(--tea-l);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:.92rem">
+      💡 <strong>Template:</strong><br>
+      "At our school, students must… / must… / must…<br>
+      Students mustn't… / mustn't… / mustn't…<br>
+      Students should…"
+    </div>
+
+    <textarea id="write-poster" placeholder="Write your school rules poster here..."></textarea>
+    <button class="check-btn" onclick="checkPoster()">✅ Submit My Poster</button>
+    <div class="fb-wrap" id="poster-fb"></div>
+  </div>
+</div>
+
+<!-- ══ 7. QUIZ ══ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <h2>🎯 Final Quiz — 5 Questions</h2>
+    <div class="q-inst ar">📌 اختبر نفسك — خمسة أسئلة تشمل الدرس كاملاً!</div>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="qq1">
+      <div class="qn">Q1. Choose the correct answer:</div>
+      <p style="margin-bottom:10px">"You _____ touch that wire — it's dangerous!"</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(1,this,false)">shouldn't</button>
+        <button class="mcq-btn" onclick="qsc(1,this,true)">mustn't</button>
+        <button class="mcq-btn" onclick="qsc(1,this,false)">may not</button>
+      </div>
+      <div class="fb-wrap" id="q-fb1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="qq2">
+      <div class="qn">Q2. True or False:</div>
+      <p style="margin-bottom:10px">"We write 'She <em>cans</em> swim' because the subject is she."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(2,this,false)">True</button>
+        <button class="mcq-btn" onclick="qsc(2,this,true)">False</button>
+      </div>
+      <div class="fb-wrap" id="q-fb2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="qq3">
+      <div class="qn">Q3. Choose the correct sentence:</div>
+      <div class="mcq-row" style="flex-direction:column">
+        <button class="mcq-btn" onclick="qsc(3,this,false)">He must to finish his work.</button>
+        <button class="mcq-btn" onclick="qsc(3,this,true)">You should see a doctor.</button>
+        <button class="mcq-btn" onclick="qsc(3,this,false)">She can swims very fast.</button>
+        <button class="mcq-btn" onclick="qsc(3,this,false)">They may to leave early.</button>
+      </div>
+      <div class="fb-wrap" id="q-fb3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="qq4">
+      <div class="qn">Q4. Your student asks the teacher politely to enter the class. Which sentence is correct?</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(4,this,false)">Can I enter?</button>
+        <button class="mcq-btn" onclick="qsc(4,this,true)">May I come in, please?</button>
+        <button class="mcq-btn" onclick="qsc(4,this,false)">Must I come in?</button>
+      </div>
+      <div class="fb-wrap" id="q-fb4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="qq5">
+      <div class="qn">Q5. Write a sentence using <strong>should</strong> to advise a friend who never sleeps early:</div>
+      <div class="q-inst ar">📌 اكتب جملة نصيحة باستخدام should:</div>
+      <input type="text" class="t-in" id="q5-ans" placeholder='You should ...'/>
+      <button class="check-btn" onclick="checkQ5()">Submit ✓</button>
+      <div class="fb-wrap" id="q-fb5"></div>
+    </div>
+
+    <button class="check-btn" style="width:100%;font-size:1.1rem;padding:14px" onclick="showScore()">💬 See My Score</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="badge-big">💬</div>
+    <div class="score-num" id="scoreNum">0/5</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:1.3rem;margin:8px 0" id="scoreMsg"></div>
+    <div class="ar" style="font-size:1rem;margin-top:6px" id="scoreAr"></div>
+    <div style="margin-top:16px;font-size:1.5rem" id="scoreBadge"></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer>Prepared with care 🌸 by T. Wad Refae</footer>
+
+<script>
+// ─── navigation ───
+const panels=document.querySelectorAll('.panel');
+const tabs=document.querySelectorAll('.tab');
+function go(i,e){
+  panels.forEach(p=>p.classList.remove('on'));
+  tabs.forEach(t=>t.classList.remove('active'));
+  panels[i].classList.add('on');
+  tabs[i].classList.add('active');
+  document.getElementById('progFill').style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(e)e.stopPropagation();
+}
+
+// ─── effects ───
+function launchStar(x,y){
+  const stars=['⭐','🌟','✨','💫'];
+  const el=document.createElement('div');
+  el.className='flying-star';
+  el.textContent=stars[Math.floor(Math.random()*stars.length)];
+  el.style.cssText=`left:${x-12}px;top:${y-12}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),950);
+}
+function shake(el){el.style.animation='shake .4s ease';setTimeout(()=>el.style.animation='',450)}
+function confetti(){
+  const colors=['#0D9488','#14B8A6','#D97706','#FCD34D','#34D399','#A78BFA','#F87171'];
+  for(let i=0;i<60;i++){
+    const cf=document.createElement('div');
+    cf.className='cf-piece';
+    cf.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*.8}s;animation-duration:${1.2+Math.random()*.6}s`;
+    document.body.appendChild(cf);
+    setTimeout(()=>cf.remove(),2200);
+  }
+}
+
+// ─── feedback ───
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅ ':'❌ '}${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+
+// ─── single choice MCQ ───
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const row=document.getElementById(rowId);
+  if(row.dataset.done)return;
+  row.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){launchStar(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top+window.scrollY);row.dataset.done=1;}
+  else shake(btn);
+}
+
+// ─── flashcard ───
+function flipCard(w){w.classList.toggle('flipped')}
+
+// ─── TTS ───
+function tts(e,word){
+  e.stopPropagation();
+  const u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US';u.rate=0.9;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+
+// ─── level done ───
+function doneLevel(id,doConfetti){
+  document.getElementById(id).classList.add('show');
+  if(doConfetti)confetti();
+  else{launchStar(window.innerWidth/2,window.innerHeight/3);setTimeout(()=>launchStar(window.innerWidth/2+40,window.innerHeight/3),200);}
+}
+
+// ─── word bank ───
+let wbSel2=null;
+function pickWb2(chip,val){
+  document.querySelectorAll('#wb2 .wb-chip').forEach(c=>c.style.outline='');
+  wbSel2={chip,val};chip.style.outline='3px solid var(--tea)';
+}
+function dropWb2(blankId){
+  if(!wbSel2)return;
+  const bl=document.getElementById(blankId);
+  if(bl.classList.contains('ok'))return;
+  bl.textContent=wbSel2.val;bl.classList.add('filled');
+  wbSel2.chip.style.outline='';wbSel2=null;
+}
+
+// ─── Level 2 check ───
+const l2ans={'b2-1':'can','b2-2':"mustn't",'b2-3':'should','b2-4':'must','b2-5':'may'};
+function checkL2(){
+  let ok=0;
+  for(const [id,ans] of Object.entries(l2ans)){
+    const bl=document.getElementById(id);
+    const got=(bl.textContent||'').trim().toLowerCase();
+    if(got===ans.toLowerCase()){bl.classList.add('ok');bl.classList.remove('err');ok++;}
+    else{bl.classList.add('err');bl.classList.remove('ok');}
+  }
+  const all=ok===5;
+  setFb('l2-fb',all,all?'All 5 correct! 🎉':`${ok}/5 correct — fix the red blanks.`,all?'أحسنت! جميع الإجابات صحيحة!':'بعض الإجابات خاطئة — راجع الخانات الحمراء.');
+  if(all){doneLevel('lvl2-done');confetti();}
+}
+
+// ─── Level 3 check (open sentences) ───
+function checkL3(n,fbId){
+  const val=document.getElementById('l3-'+n).value.trim().toLowerCase();
+  const hasModal=n===1?val.includes('should'):n===2?val.includes("mustn't")||val.includes('must not'):val.includes('can');
+  const hasVerb=val.length>8;
+  const ok=hasModal&&hasVerb;
+  setFb(fbId,ok,
+    ok?'✅ Great sentence!':'❌ Make sure you use the correct modal + base verb.',
+    ok?'ممتاز! الجملة صحيحة!':'تأكد من استخدام أداة الوجه الصحيحة + المصدر البسيط.'
+  );
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+  else shake(document.getElementById('l3-'+n));
+}
+
+// ─── Level 4 check ───
+function checkL4(n,expected,fbId,wrongHint){
+  const got=document.getElementById('l4-'+n).value.trim().toLowerCase().replace(/[.!?]/g,'');
+  const exp=expected.toLowerCase().replace(/[.!?]/g,'');
+  const ok=got===exp;
+  setFb(fbId,ok,ok?'✅ Correct!':'❌ '+wrongHint,ok?'ممتاز! الجملة صحيحة!':'راجع القاعدة وصحِّح.');
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+  else shake(document.getElementById('l4-'+n));
+}
+
+// ─── poster check ───
+function checkPoster(){
+  const txt=document.getElementById('write-poster').value.trim().toLowerCase();
+  const hasMust=(txt.match(/\bmust\b/g)||[]).length;
+  const hasMustn=(txt.match(/mustn't|must not/g)||[]).length;
+  const hasShould=(txt.match(/\bshould\b/g)||[]).length;
+  const ok=hasMust>=1&&hasMustn>=1&&hasShould>=1&&txt.length>50;
+  setFb('poster-fb',ok,
+    ok?'✅ Excellent poster! All required modals used.':'❌ Make sure to use must, mustn\'t, AND should.',
+    ok?'ممتاز! استخدمت جميع أفعال الأوجه المطلوبة!':'تأكد من استخدام must و mustn\'t و should.'
+  );
+  if(ok)confetti();
+}
+
+// ─── quiz ───
+const qAns={};
+function qsc(n,btn,correct){
+  const qq=document.getElementById('qq'+n);
+  if(qq.dataset.done)return;
+  qq.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  qAns[n]=correct;
+  const msgs=[
+    ['"mustn\'t" = strong prohibition — perfect for danger!','mustn\'t = حظر قوي — مثالي للخطر!'],
+    ['FALSE! Modal verbs NEVER take -s, even with he/she/it.','خطأ! أفعال الأوجه لا تأخذ -s أبداً حتى مع he/she/it.'],
+    ['"should see a doctor" — correct! Modal + base verb.','should see a doctor — صحيح! أداة الوجه + مصدر بسيط.'],
+    ['"May I come in, please?" — the most polite and formal.','"May I come in" هي الأكثر أدباً ورسمية.']
+  ];
+  if(n<=4){setFb('q-fb'+n,correct,correct?'✅ '+msgs[n-1][0]:'❌ '+msgs[n-1][0],msgs[n-1][1]);}
+  if(correct)launchStar(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top+window.scrollY);
+  else shake(btn);
+  qq.dataset.done=1;
+}
+function checkQ5(){
+  const txt=document.getElementById('q5-ans').value.trim().toLowerCase();
+  const ok=txt.includes('should')&&txt.length>8;
+  setFb('q-fb5',ok,ok?'✅ Well done! A correct advice sentence!':'❌ Use "should" + base verb.',ok?'ممتاز!':'استخدم should + المصدر البسيط.');
+  qAns[5]=ok;
+  if(ok)launchStar(window.innerWidth/2,window.innerHeight/3);
+}
+function showScore(){
+  let s=0;for(let i=1;i<=5;i++)if(qAns[i])s++;
+  document.getElementById('scoreNum').textContent=s+'/5';
+  const msgs=[
+    ['Keep practising! Review the Grammar tab 💪','راجع تبويب Grammar وحاول مجدداً! 💪'],
+    ['Good effort! Almost there 📖','جهد جيد! راجع القواعد 📖'],
+    ['Good try! A bit more practice ✨','جيد! مزيد من التدريب ✨'],
+    ['Well done! Nearly perfect 🌟','أحسنت! تقريباً مثالي 🌟'],
+    ['Excellent! Great work 🎉','ممتاز! عمل رائع 🎉'],
+    ['Perfect score! 💬 Modal Master!','علامة كاملة! أنت خبير أفعال الأوجه 💬']
+  ];
+  document.getElementById('scoreMsg').textContent=msgs[s][0];
+  document.getElementById('scoreAr').textContent=msgs[s][1];
+  document.getElementById('scoreBadge').textContent=s>=4?'💬⭐💬':'💬';
+  document.getElementById('scoreBox').classList.add('show');
+  if(s>=4){confetti();localStorage.setItem('badge_modals','earned');}
+  document.getElementById('scoreBox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
 </body>
 </html>
