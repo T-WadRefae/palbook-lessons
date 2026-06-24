@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology in Our Schools · Grade 6 Reading · PalBook</title>
+<meta name="description" content="Interactive reading lesson: Technology in Our Schools (Grade 6) — vocabulary, ideas, comprehension and a gamified quiz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#6d28d9; --p2:#4c1d95; --a:#06b6d4;
+  --bg1:#f6f4ff; --bg2:#ece8ff; --ink:#2e1065;
+  --card:#ffffff; --line:rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh;overflow-x:hidden}
+.ar{font-family:'Baloo Bhaijaan 2','Nunito',sans-serif;direction:rtl}
+h1,h2,h3,.fred{font-family:'Fredoka','Nunito',sans-serif}
+a{color:inherit}
+
+/* themed background textures (one per topic family) */
+body:before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background-attachment:fixed}
+.pat-olive:before{background:radial-gradient(circle at 12% 20%,rgba(107,142,35,.10) 0 12px,transparent 13px),radial-gradient(circle at 80% 70%,rgba(200,169,81,.10) 0 14px,transparent 15px);background-size:120px 120px}
+.pat-school:before{background-image:linear-gradient(rgba(37,99,235,.06) 1px,transparent 1px);background-size:100% 30px}
+.pat-pitch:before{background:repeating-linear-gradient(90deg,rgba(22,163,74,.06) 0 60px,rgba(22,163,74,.02) 60px 120px)}
+.pat-waves:before{background:radial-gradient(120% 60px at 50% 0,transparent 70%,rgba(14,165,233,.10) 71%) 0 0/100% 60px repeat-y}
+.pat-stone:before{background:linear-gradient(335deg,rgba(120,113,108,.08) 1px,transparent 1px) ,linear-gradient(rgba(120,113,108,.08) 1px,transparent 1px);background-size:56px 34px}
+.pat-glass:before{background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,.06) 1px,transparent 1px);background-size:30px 30px}
+.pat-tatreez:before{background-image:linear-gradient(45deg,rgba(185,28,28,.10) 25%,transparent 25%,transparent 75%,rgba(185,28,28,.10) 75%),linear-gradient(45deg,rgba(185,28,28,.10) 25%,transparent 25%,transparent 75%,rgba(185,28,28,.10) 75%);background-size:22px 22px;background-position:0 0,11px 11px}
+.pat-sun:before{background:repeating-conic-gradient(from 0deg at 90% 8%,rgba(245,158,11,.08) 0deg 6deg,transparent 6deg 12deg)}
+.pat-sand:before{background:repeating-linear-gradient(8deg,rgba(217,119,6,.06) 0 22px,transparent 22px 46px)}
+.pat-ink:before{background-image:radial-gradient(rgba(109,76,65,.10) 1px,transparent 1px);background-size:18px 18px}
+.pat-food:before{background:radial-gradient(circle at 20% 30%,rgba(194,65,12,.08) 0 10px,transparent 11px),radial-gradient(circle at 70% 80%,rgba(22,163,74,.08) 0 8px,transparent 9px);background-size:90px 90px}
+.pat-rhythm:before{background:repeating-linear-gradient(90deg,rgba(220,38,38,.10) 0 4px,transparent 4px 26px)}
+.pat-star:before{background-image:radial-gradient(rgba(124,58,237,.12) 1px,transparent 2px);background-size:34px 34px}
+.pat-eco:before{background:radial-gradient(circle at 15% 15%,rgba(13,148,136,.08) 0 12px,transparent 13px);background-size:110px 110px}
+
+/* floating themed motifs */
+.floats{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;opacity:.5}
+.fm{position:absolute;top:-8%;opacity:.22;animation:fall linear infinite}
+@keyframes fall{0%{transform:translateY(-10vh) rotate(0)}100%{transform:translateY(112vh) rotate(360deg)}}
+
+/* reading progress */
+.progress{position:fixed;top:0;left:0;height:5px;width:0;z-index:60;
+  background:linear-gradient(90deg,var(--a),var(--p));box-shadow:0 0 10px var(--a)}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;display:flex;gap:6px;padding:8px 10px;
+  background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;display:flex;align-items:center;gap:6px;text-decoration:none;
+  padding:8px 14px;border-radius:999px;font-weight:800;font-size:.9rem;color:var(--p2);
+  white-space:nowrap;transition:.2s;border:2px solid transparent}
+nav a:hover{background:var(--bg2)}
+nav a.active{background:var(--p);color:#fff;box-shadow:0 6px 16px -6px var(--p)}
+@media(min-width:760px){nav{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+
+main{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 16px 60px}
+section{scroll-margin-top:70px;margin:26px 0}
+.sec-h{display:flex;align-items:center;gap:10px;margin:0 0 14px}
+.sec-h .num{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;
+  background:var(--p);color:#fff;font-weight:800;font-family:'Fredoka'}
+.sec-h h2{margin:0;font-size:1.5rem;color:var(--p2)}
+.sec-h .ar{margin-inline-start:auto;color:var(--p);font-weight:700;font-size:1rem}
+
+/* header */
+.hd{position:relative;overflow:hidden;border-radius:0 0 28px 28px;padding:38px 22px 30px;margin:0 -16px 8px;box-shadow:0 14px 30px -18px rgba(0,0,0,.5)}
+.hd-cat{display:inline-block;padding:5px 14px;border-radius:999px;font-weight:800;font-size:.8rem;letter-spacing:.3px;margin-bottom:10px}
+.hd-title{font-size:clamp(1.7rem,5vw,2.7rem);margin:0;line-height:1.1;text-shadow:0 2px 12px rgba(0,0,0,.25)}
+.hd-motif{font-size:1.6rem;margin-top:12px;letter-spacing:6px}
+.hd-motif.big{font-size:2.4rem;opacity:.9}
+.hd-rays{position:absolute;inset:-40% -10% auto;height:120%;background:
+  repeating-conic-gradient(from 0deg,rgba(255,255,255,.06) 0deg 8deg,transparent 8deg 16deg);animation:spin 40s linear infinite;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hd-bar{position:absolute;left:0;top:0;bottom:0;width:8px}
+.hd-side{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:2.6rem;opacity:.5;letter-spacing:4px}
+.hd-diag2{position:absolute;right:-30%;top:-60%;width:90%;height:220%;transform:rotate(18deg);opacity:.55}
+.hd-star .stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.8;animation:tw 2.4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.3)}}
+.hd-ribbon{display:inline-block;padding:4px 16px;border-radius:6px;font-weight:800;font-size:.78rem;margin-bottom:10px;box-shadow:0 4px 10px rgba(0,0,0,.2)}
+.stone-frame{border:3px solid rgba(255,255,255,.35);border-radius:14px;padding:20px;box-shadow:inset 0 0 30px rgba(0,0,0,.25)}
+.neon-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:26px 26px;mask-image:radial-gradient(circle at 50% 40%,#000,transparent 75%)}
+.glass-box{position:relative;background:rgba(255,255,255,.08);border:2px solid;border-radius:18px;padding:22px;backdrop-filter:blur(6px)}
+
+/* cards/blocks */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 18px;
+  box-shadow:0 10px 26px -20px rgba(0,0,0,.5)}
+
+/* hero image placeholder */
+.hero-img{display:grid;place-items:center;text-align:center;gap:6px;min-height:190px;border-radius:18px;
+  border:3px dashed var(--p);background:repeating-linear-gradient(45deg,var(--bg1),var(--bg1) 14px,var(--bg2) 14px,var(--bg2) 28px);color:var(--p2)}
+.hero-img .ic{font-size:2.6rem}
+.hero-img b{font-size:1.05rem}
+.hero-img small{opacity:.8}
+
+/* reading meta */
+.rmeta{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);
+  border-radius:999px;padding:7px 13px;font-weight:700;font-size:.85rem;color:var(--p2)}
+.chip b{color:var(--p)}
+
+/* passage */
+.passage{font-size:1.12rem;line-height:1.95}
+.passage .par{margin:0 0 16px;opacity:0;transform:translateY(8px);animation:rise .6s forwards}
+.passage .par[data-i="1"]{animation-delay:.05s}.passage .par[data-i="2"]{animation-delay:.1s}
+.passage .par[data-i="3"]{animation-delay:.15s}.passage .par[data-i="4"]{animation-delay:.2s}
+.passage .par[data-i="5"]{animation-delay:.25s}
+@keyframes rise{to{opacity:1;transform:none}}
+.vw{color:#1d4ed8;font-weight:800;cursor:pointer;border-bottom:2px dotted #1d4ed8;border-radius:3px;padding:0 1px;transition:.15s}
+.vw:hover,.vw:focus{background:#dbeafe;outline:none}
+.pw{color:#9333ea;font-weight:800;cursor:pointer;background:#f3e8ff;border-radius:5px;padding:0 4px;transition:.15s}
+.pw:hover,.pw:focus{background:#e9d5ff;outline:none}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:.82rem;font-weight:700}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:13px;height:13px;border-radius:4px;display:inline-block}
+
+/* popover */
+#pop{position:absolute;z-index:80;max-width:280px;background:#0f172a;color:#fff;border-radius:14px;
+  padding:12px 14px;box-shadow:0 18px 40px -12px rgba(0,0,0,.6);opacity:0;transform:scale(.9);
+  pointer-events:none;transition:.16s;font-size:.9rem}
+#pop.show{opacity:1;transform:scale(1)}
+#pop .pw-word{font-family:'Fredoka';font-weight:700;font-size:1.05rem;margin-bottom:4px}
+#pop .pw-ar{font-family:'Baloo Bhaijaan 2';direction:rtl;color:#fcd34d;font-weight:700}
+#pop .pw-line{margin-top:6px;font-size:.84rem;color:#cbd5e1}
+#pop .pw-line b{color:#86efac}
+#pop .pw-line.ant b{color:#fca5a5}
+#pop .pw-pos{display:inline-block;margin-top:6px;font-size:.72rem;background:rgba(255,255,255,.14);padding:2px 8px;border-radius:999px}
+#pop .pw-ref{margin-top:4px}
+#pop .pw-ref em{color:#fcd34d;font-style:normal;font-weight:800}
+#pop:after{content:"";position:absolute;top:100%;left:var(--ax,50%);transform:translateX(-50%);
+  border:8px solid transparent;border-top-color:#0f172a}
+#pop.below:after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:#0f172a}
+
+/* completion */
+.complete{display:flex;align-items:center;gap:12px;margin-top:16px;padding:14px 16px;border-radius:16px;
+  background:linear-gradient(120deg,var(--p),var(--p2));color:#fff;font-weight:800;opacity:.55;transition:.4s}
+.complete.done{opacity:1;box-shadow:0 12px 26px -14px var(--p)}
+.complete .big{font-size:1.6rem}
+
+/* ideas mind-map */
+.mind{display:grid;gap:14px}
+.main-idea{background:linear-gradient(120deg,var(--p),var(--p2));color:#fff;border-radius:20px;padding:18px 20px;position:relative}
+.main-idea .lab{font-size:.78rem;font-weight:800;letter-spacing:1px;opacity:.85;text-transform:uppercase}
+.main-idea p{margin:6px 0 0;font-size:1.12rem;line-height:1.55;font-weight:700}
+.ideas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.idea{background:#fff;border:1px solid var(--line);border-left:6px solid var(--a);border-radius:16px;
+  padding:14px 16px;cursor:pointer;opacity:0;transform:translateY(10px);animation:rise .5s var(--d,0ms) forwards;transition:transform .2s,box-shadow .2s}
+.idea:hover{transform:translateY(-4px);box-shadow:0 14px 28px -16px rgba(0,0,0,.5)}
+.idea-h{display:flex;align-items:center;gap:8px}
+.idea-t{font-family:'Fredoka';font-weight:700;color:var(--p2);font-size:1.05rem}
+.idea-x{margin-inline-start:auto;width:24px;height:24px;border-radius:50%;background:var(--bg2);color:var(--p);
+  display:grid;place-items:center;font-weight:800;transition:.2s}
+.idea.open .idea-x{transform:rotate(45deg);background:var(--p);color:#fff}
+.idea-d{max-height:0;overflow:hidden;transition:max-height .35s,margin .35s,opacity .35s;opacity:0;line-height:1.6}
+.idea.open .idea-d{max-height:260px;margin-top:10px;opacity:1}
+
+/* flip cards */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.flip{perspective:1200px;height:230px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.flip-f,.flip-b{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  border:1px solid var(--line);box-shadow:0 10px 24px -18px rgba(0,0,0,.6)}
+.flip-f{background:#fff}
+.flip-b{background:linear-gradient(150deg,var(--p),var(--p2));color:#fff;transform:rotateY(180deg);justify-content:center;gap:4px}
+.vc-emo{font-size:2rem}
+.vc-word{font-family:'Fredoka';font-weight:700;font-size:1.4rem;color:var(--p2)}
+.vc-pron{color:var(--p);font-weight:700;font-size:.9rem}
+.vc-pos{font-size:.74rem;background:var(--bg2);color:var(--p2);padding:2px 10px;border-radius:999px;margin-top:6px;font-weight:700}
+.vc-hint{position:absolute;bottom:10px;font-size:.7rem;opacity:.55;direction:rtl;font-family:'Baloo Bhaijaan 2'}
+.tts{position:absolute;top:10px;right:10px;border:none;background:var(--bg2);color:var(--p2);width:34px;height:34px;
+  border-radius:50%;font-size:1rem;cursor:pointer;transition:.2s}
+.tts:hover{background:var(--p);color:#fff;transform:scale(1.1)}
+.vc-ar{font-family:'Baloo Bhaijaan 2';direction:rtl;font-size:1.4rem;font-weight:700}
+.vc-row{font-size:.86rem;margin-top:3px}
+.vc-tag{font-size:.66rem;font-weight:800;padding:1px 7px;border-radius:999px;margin-inline-end:5px}
+.vc-tag.syn{background:#bbf7d0;color:#14532d}
+.vc-tag.ant{background:#fecaca;color:#7f1d1d}
+.vc-ex{margin-top:8px;font-size:.82rem;font-style:italic;opacity:.92;line-height:1.4}
+
+/* questions (shared) */
+.q{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-bottom:14px;
+  box-shadow:0 10px 24px -20px rgba(0,0,0,.5)}
+.q-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.q-no{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--p);color:#fff;display:grid;place-items:center;font-weight:800;font-family:'Fredoka'}
+.q-lvl{margin-inline-start:auto;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+  padding:3px 9px;border-radius:999px;background:var(--bg2);color:var(--p2)}
+.q-text{font-weight:700;font-size:1.05rem;line-height:1.45}
+.opts{display:grid;gap:9px;margin-top:12px}
+.opt{display:flex;align-items:center;gap:10px;text-align:start;padding:11px 14px;border-radius:12px;border:2px solid var(--line);
+  background:#fff;font-weight:700;font-size:.98rem;cursor:pointer;transition:.18s;color:var(--ink)}
+.opt:hover{border-color:var(--p);transform:translateX(3px)}
+.opt .mk{flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.8rem}
+.opt.correct{background:linear-gradient(120deg,#16a34a,#22c55e);color:#fff;border-color:#16a34a;animation:pop .4s}
+.opt.wrong{background:linear-gradient(120deg,#dc2626,#ef4444);color:#fff;border-color:#dc2626;animation:shake .4s}
+.opt.disabled{pointer-events:none;opacity:.85}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+.fb{margin-top:11px;padding:10px 13px;border-radius:12px;font-weight:800;display:none;align-items:center;gap:8px}
+.fb.ok{display:flex;background:#dcfce7;color:#166534}
+.fb.no{display:flex;background:#fee2e2;color:#991b1b}
+.fb .retry{margin-inline-start:auto;border:none;background:var(--p);color:#fff;padding:6px 12px;border-radius:999px;font-weight:800;cursor:pointer}
+.tf-row{display:flex;gap:10px;margin-top:12px}
+.tf-row .opt{flex:1;justify-content:center}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.word{padding:8px 14px;border-radius:999px;background:var(--bg2);border:2px solid var(--p);color:var(--p2);font-weight:800;cursor:pointer;transition:.15s}
+.word:hover{background:var(--p);color:#fff}
+.word.used{opacity:.35;pointer-events:none}
+.blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--p);text-align:center;font-weight:800;color:var(--p);margin:0 4px;padding:0 6px}
+.fill-sent{font-size:1.05rem;font-weight:700;line-height:1.7;margin-top:8px}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mcol{display:grid;gap:8px}
+.mitem{padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:#fff;font-weight:700;cursor:pointer;transition:.15s;font-size:.92rem}
+.mitem:hover{border-color:var(--p)}
+.mitem.sel{border-color:var(--a);background:var(--bg2)}
+.mitem.done{background:linear-gradient(120deg,#16a34a,#22c55e);color:#fff;border-color:#16a34a;pointer-events:none}
+.mitem.miss{animation:shake .4s}
+.short-ans textarea{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px;font-family:inherit;font-size:.98rem;min-height:70px;resize:vertical}
+.btn{border:none;border-radius:999px;padding:9px 16px;font-weight:800;cursor:pointer;background:var(--p);color:#fff;transition:.18s;font-family:'Fredoka'}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.ghost{background:var(--bg2);color:var(--p2)}
+.model{margin-top:10px;padding:11px 14px;border-radius:12px;background:var(--bg2);border-left:5px solid var(--p);display:none;line-height:1.55}
+.model.show{display:block;animation:rise .4s}
+.model b{color:var(--p)}
+
+/* quiz HUD */
+.hud{position:sticky;top:60px;z-index:30;background:linear-gradient(120deg,var(--p2),var(--p));color:#fff;
+  border-radius:18px;padding:14px 16px;margin-bottom:16px;box-shadow:0 12px 28px -16px var(--p)}
+.hud-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hud .lvl{font-family:'Fredoka';font-weight:700;font-size:1.05rem}
+.hud .score{margin-inline-start:auto;font-weight:800;font-size:1.15rem}
+.stars{letter-spacing:3px;font-size:1.05rem}
+.xpbar{height:10px;border-radius:999px;background:rgba(255,255,255,.25);margin-top:10px;overflow:hidden}
+.xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#fde047,#fb923c);transition:width .5s}
+.xp-num{font-size:.8rem;font-weight:800;opacity:.9;margin-top:4px}
+
+/* quiz result / badge */
+.result{display:none;text-align:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px 20px;margin-top:8px;box-shadow:0 16px 36px -22px rgba(0,0,0,.55)}
+.result.show{display:block;animation:rise .5s}
+.badge{width:130px;height:130px;margin:6px auto 12px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 35%,var(--a),var(--p));color:#fff;box-shadow:0 0 0 8px var(--bg2),0 14px 30px -10px var(--p);
+  animation:badgeIn .7s cubic-bezier(.34,1.56,.64,1)}
+@keyframes badgeIn{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1) rotate(0)}}
+.badge .e{font-size:3.2rem;line-height:1}
+.result h3{font-size:1.6rem;margin:.2em 0;color:var(--p2)}
+.result .lvl-name{font-weight:800;color:var(--p);font-size:1.1rem}
+.result .again{margin-top:14px}
+
+/* confetti */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:90}
+
+footer{text-align:center;padding:26px 16px 10px;color:var(--p2);font-weight:700;opacity:.85}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body class="pat-glass">
+<div class="progress" id="progress"></div>
+<div class="floats" aria-hidden="true">
+<span class="fm" style="left:2%;font-size:16px;animation-delay:0s;animation-duration:14s">💻</span>
+<span class="fm" style="left:45%;font-size:23px;animation-delay:1s;animation-duration:19s">📱</span>
+<span class="fm" style="left:88%;font-size:30px;animation-delay:2s;animation-duration:24s">🖥️</span>
+<span class="fm" style="left:36%;font-size:37px;animation-delay:3s;animation-duration:17s">💻</span>
+<span class="fm" style="left:79%;font-size:22px;animation-delay:4s;animation-duration:22s">📱</span>
+<span class="fm" style="left:27%;font-size:29px;animation-delay:5s;animation-duration:15s">🖥️</span>
+<span class="fm" style="left:70%;font-size:36px;animation-delay:0s;animation-duration:20s">💻</span>
+<span class="fm" style="left:18%;font-size:21px;animation-delay:1s;animation-duration:25s">📱</span>
+<span class="fm" style="left:61%;font-size:28px;animation-delay:2s;animation-duration:18s">🖥️</span>
+<span class="fm" style="left:9%;font-size:35px;animation-delay:3s;animation-duration:23s">💻</span>
+<span class="fm" style="left:52%;font-size:20px;animation-delay:4s;animation-duration:16s">📱</span>
+<span class="fm" style="left:95%;font-size:27px;animation-delay:5s;animation-duration:21s">🖥️</span>
+</div>
+
+<nav id="nav" aria-label="Lesson sections">
+  <a href="#reading" data-sec="reading" class="active">📖 Reading</a>
+  <a href="#ideas" data-sec="ideas">💡 Ideas</a>
+  <a href="#vocabulary" data-sec="vocabulary">🔤 Vocabulary</a>
+  <a href="#comprehension" data-sec="comprehension">🧠 Reading Comprehension</a>
+  <a href="#quiz" data-sec="quiz">🎯 Quiz</a>
+</nav>
+
+<header class="hd hd-glass" style="background:linear-gradient(135deg,#4c1d95,#6d28d9);color:#fff;text-align:center">
+  <div class="neon-grid"></div>
+  <div class="glass-box" style="border-color:#06b6d4">
+    <div class="hd-cat" style="background:rgba(255,255,255,.12)">Grade 6 · Lesson 2 &nbsp;•&nbsp; Technology</div>
+    <h1 class="hd-title">Technology in Our Schools</h1>
+    <div class="hd-motif">💻 📱 🖥️</div>
+  </div>
+</header>
+
+<main>
+
+<!-- READING -->
+<section id="reading">
+  <div class="sec-h"><span class="num">1</span><h2>Reading</h2><span class="ar">القراءة</span></div>
+  <div class="hero-img" role="img" aria-label="Image placeholder">
+    <div class="ic">🖼️</div>
+    <b>Image will be added later</b>
+    <small class="ar">سيتم إضافة الصورة لاحقًا</small>
+  </div>
+  <div class="rmeta">
+    <span class="chip">⏱️ <span>Reading time</span> <b>~3 min</b></span>
+    <span class="chip">📝 <span>Words</span> <b>180</b></span>
+    <span class="chip">📚 <span>Grade 6</span> · <b>Technology</b></span>
+  </div>
+  <div class="card passage">
+<p class="par" data-i="0">Technology is changing the way students learn in Palestinian schools. Many schools now use computers, tablets, and <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: interactive" data-kind="vocab" data-w="interactive" data-pos="adjective" data-ar="تفاعُلي" data-syn="responsive, two-way" data-ant="passive" data-ex="They use interactive whiteboards." data-pron="in-ter-AK-tiv">interactive</span> whiteboards in the classroom. <span class="pw" tabindex="0" role="button" aria-label="pronoun: These" data-kind="pron" data-w="These" data-ref="computers, tablets and whiteboards">These</span> tools make lessons more interesting and help students understand difficult topics more easily.</p>
+<p class="par" data-i="1">Students can use the internet to search for information, watch educational videos, and do <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: research" data-kind="vocab" data-w="research" data-pos="noun" data-ar="بَحث / دراسة" data-syn="investigation, study" data-ant="—" data-ex="They do research for their projects." data-pron="REE-surch">research</span> for their projects. Some teachers use online programmes to give students extra practice in subjects like Maths and English.</p>
+<p class="par" data-i="2">However, not all schools have the same <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: access" data-kind="vocab" data-w="access" data-pos="noun" data-ar="إمكانية الوصول" data-syn="entry, availability" data-ant="lack, denial" data-ex="Not all schools have the same access to technology." data-pron="AK-ses">access</span> to technology. In some areas, schools still face <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: challenges" data-kind="vocab" data-w="challenges" data-pos="noun" data-ar="تَحدّيات / صعوبات" data-syn="difficulties, obstacles" data-ant="advantages, ease" data-ex="Some schools face challenges like slow internet." data-pron="CHAL-in-jiz">challenges</span> such as limited electricity or slow internet connections. Teachers and students in <span class="pw" tabindex="0" role="button" aria-label="pronoun: These" data-kind="pron" data-w="These" data-ref="computers, tablets and whiteboards">these</span> areas find creative ways to learn despite these difficulties.</p>
+<p class="par" data-i="3">Digital skills are becoming more and more important in today&#x27;s world. Students who learn how to use technology well will have better <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: opportunities" data-kind="vocab" data-w="opportunities" data-pos="noun" data-ar="فُرَص" data-syn="chances, openings" data-ant="—" data-ex="Digital skills give better opportunities." data-pron="op-or-TOO-ni-teez">opportunities</span> in the future. Many young Palestinians are now learning programming and other digital skills that will help <span class="pw" tabindex="0" role="button" aria-label="pronoun: them" data-kind="pron" data-w="them" data-ref="young Palestinians">them</span> in their careers.</p>
+<p class="par" data-i="4">Technology can be a powerful tool for education. When used wisely, <span class="pw" tabindex="0" role="button" aria-label="pronoun: it" data-kind="pron" data-w="it" data-ref="technology">it</span> can open doors and help students reach their full <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: potential" data-kind="vocab" data-w="potential" data-pos="noun" data-ar="إمكانات / قُدرات كامنة" data-syn="ability, promise" data-ant="—" data-ex="Technology helps students reach their full potential." data-pron="puh-TEN-shul">potential</span>, no matter where they live.</p>
+    <div class="legend">
+      <span><i class="dot" style="background:#1d4ed8"></i> Vocabulary <span class="ar">(اضغط للمعنى)</span></span>
+      <span><i class="dot" style="background:#9333ea"></i> Pronoun <span class="ar">(اضغط لِما يعود عليه)</span></span>
+    </div>
+  </div>
+  <div class="complete" id="complete">
+    <span class="big">✅</span>
+    <span id="complete-txt">Scroll through the passage to complete your reading…</span>
+  </div>
+</section>
+
+<!-- IDEAS -->
+<section id="ideas">
+  <div class="sec-h"><span class="num">2</span><h2>Ideas</h2><span class="ar">الأفكار</span></div>
+  <div class="mind">
+    <div class="main-idea">
+      <div class="lab">⭐ Main Idea · الفكرة الرئيسية</div>
+      <p>Technology is transforming learning in Palestinian schools — making lessons richer and building vital digital skills — and, used wisely despite challenges, it can help every student reach their full potential.</p>
+    </div>
+    <div class="ideas-grid">
+<div class="idea" tabindex="0" style="--d:0ms">
+  <div class="idea-h"><span class="idea-t">New classroom tools 🖥️</span><span class="idea-x" aria-hidden="true">+</span></div>
+  <div class="idea-d">Computers, tablets and interactive whiteboards make lessons more interesting and difficult topics easier to understand.</div>
+</div>
+<div class="idea" tabindex="0" style="--d:90ms">
+  <div class="idea-h"><span class="idea-t">Learning online 🌐</span><span class="idea-x" aria-hidden="true">+</span></div>
+  <div class="idea-d">Students use the internet to research, watch educational videos and get extra practice in subjects like Maths and English.</div>
+</div>
+<div class="idea" tabindex="0" style="--d:180ms">
+  <div class="idea-h"><span class="idea-t">Real challenges 🔌</span><span class="idea-x" aria-hidden="true">+</span></div>
+  <div class="idea-d">Not all schools have equal access; some face limited electricity or slow internet, yet teachers and students find creative ways to learn.</div>
+</div>
+<div class="idea" tabindex="0" style="--d:270ms">
+  <div class="idea-h"><span class="idea-t">Skills for the future 👩‍💻</span><span class="idea-x" aria-hidden="true">+</span></div>
+  <div class="idea-d">Digital skills like programming open better opportunities and help young Palestinians reach their full potential.</div>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- VOCABULARY -->
+<section id="vocabulary">
+  <div class="sec-h"><span class="num">3</span><h2>Vocabulary</h2><span class="ar">المُفردات</span></div>
+  <div class="vgrid">
+<div class="flip" tabindex="0" aria-label="Vocabulary card: interactive">
+  <div class="flip-in">
+    <div class="flip-f">
+      <button class="tts" title="Listen" aria-label="Pronounce interactive" data-say="interactive">🔊</button>
+      <div class="vc-emo">🔤</div>
+      <div class="vc-word">interactive</div>
+      <div class="vc-pron">/in-ter-AK-tiv/</div>
+      <div class="vc-pos">adjective</div>
+      <div class="vc-hint">اضغط للترجمة • tap to flip</div>
+    </div>
+    <div class="flip-b"><div class="vc-ar">تفاعُلي</div><div class="vc-row"><span class="vc-tag syn">Synonym</span> responsive, two-way</div><div class="vc-row"><span class="vc-tag ant">Antonym</span> passive</div><div class="vc-ex">“They use interactive whiteboards.”</div></div>
+  </div>
+</div>
+<div class="flip" tabindex="0" aria-label="Vocabulary card: research">
+  <div class="flip-in">
+    <div class="flip-f">
+      <button class="tts" title="Listen" aria-label="Pronounce research" data-say="research">🔊</button>
+      <div class="vc-emo">📘</div>
+      <div class="vc-word">research</div>
+      <div class="vc-pron">/REE-surch/</div>
+      <div class="vc-pos">noun</div>
+      <div class="vc-hint">اضغط للترجمة • tap to flip</div>
+    </div>
+    <div class="flip-b"><div class="vc-ar">بَحث / دراسة</div><div class="vc-row"><span class="vc-tag syn">Synonym</span> investigation, study</div><div class="vc-ex">“They do research for their projects.”</div></div>
+  </div>
+</div>
+<div class="flip" tabindex="0" aria-label="Vocabulary card: access">
+  <div class="flip-in">
+    <div class="flip-f">
+      <button class="tts" title="Listen" aria-label="Pronounce access" data-say="access">🔊</button>
+      <div class="vc-emo">🗣️</div>
+      <div class="vc-word">access</div>
+      <div class="vc-pron">/AK-ses/</div>
+      <div class="vc-pos">noun</div>
+      <div class="vc-hint">اضغط للترجمة • tap to flip</div>
+    </div>
+    <div class="flip-b"><div class="vc-ar">إمكانية الوصول</div><div class="vc-row"><span class="vc-tag syn">Synonym</span> entry, availability</div><div class="vc-row"><span class="vc-tag ant">Antonym</span> lack, denial</div><div class="vc-ex">“Not all schools have the same access to technology.”</div></div>
+  </div>
+</div>
+<div class="flip" tabindex="0" aria-label="Vocabulary card: challenges">
+  <div class="flip-in">
+    <div class="flip-f">
+      <button class="tts" title="Listen" aria-label="Pronounce challenges" data-say="challenges">🔊</button>
+      <div class="vc-emo">✨</div>
+      <div class="vc-word">challenges</div>
+      <div class="vc-pron">/CHAL-in-jiz/</div>
+      <div class="vc-pos">noun</div>
+      <div class="vc-hint">اضغط للترجمة • tap to flip</div>
+    </div>
+    <div class="flip-b"><div class="vc-ar">تَحدّيات / صعوبات</div><div class="vc-row"><span class="vc-tag syn">Synonym</span> difficulties, obstacles</div><div class="vc-row"><span class="vc-tag ant">Antonym</span> advantages, ease</div><div class="vc-ex">“Some schools face challenges like slow internet.”</div></div>
+  </div>
+</div>
+<div class="flip" tabindex="0" aria-label="Vocabulary card: opportunities">
+  <div class="flip-in">
+    <div class="flip-f">
+      <button class="tts" title="Listen" aria-label="Pronounce opportunities" data-say="opportunities">🔊</button>
+      <div class="vc-emo">🧩</div>
+      <div class="vc-word">opportunities</div>
+      <div class="vc-pron">/op-or-TOO-ni-teez/</div>
+      <div class="vc-pos">noun</div>
+      <div class="vc-hint">اضغط للترجمة • tap to flip</div>
+    </div>
+    <div class="flip-b"><div class="vc-ar">فُرَص</div><div class="vc-row"><span class="vc-tag syn">Synonym</span> chances, openings</div><div class="vc-ex">“Digital skills give better opportunities.”</div></div>
+  </div>
+</div>
+<div class="flip" tabindex="0" aria-label="Vocabulary card: potential">
+  <div class="flip-in">
+    <div class="flip-f">
+      <button class="tts" title="Listen" aria-label="Pronounce potential" data-say="potential">🔊</button>
+      <div class="vc-emo">🔎</div>
+      <div class="vc-word">potential</div>
+      <div class="vc-pron">/puh-TEN-shul/</div>
+      <div class="vc-pos">noun</div>
+      <div class="vc-hint">اضغط للترجمة • tap to flip</div>
+    </div>
+    <div class="flip-b"><div class="vc-ar">إمكانات / قُدرات كامنة</div><div class="vc-row"><span class="vc-tag syn">Synonym</span> ability, promise</div><div class="vc-ex">“Technology helps students reach their full potential.”</div></div>
+  </div>
+</div>
+  </div>
+</section>
+
+<!-- COMPREHENSION -->
+<section id="comprehension">
+  <div class="sec-h"><span class="num">4</span><h2>Reading Comprehension</h2><span class="ar">الفهم القرائي</span></div>
+  <div id="comp-list"></div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="sec-h"><span class="num">5</span><h2>Quiz</h2><span class="ar">الاختبار · 10 نقاط</span></div>
+  <div class="hud">
+    <div class="hud-top">
+      <span class="lvl" id="hud-lvl">🌱 Beginner</span>
+      <span class="stars" id="hud-stars">☆☆☆☆☆</span>
+      <span class="score">Score: <span id="hud-score">0</span>/10</span>
+    </div>
+    <div class="xpbar"><i id="xpfill"></i></div>
+    <div class="xp-num"><span id="xp">0</span> XP · <span id="answered">0</span>/<span id="total">0</span> answered</div>
+  </div>
+  <div id="quiz-list"></div>
+  <div class="result" id="result">
+    <div class="badge"><span class="e" id="badge-emoji">💡</span></div>
+    <h3 id="result-title">Master Reader!</h3>
+    <div class="lvl-name" id="result-level"></div>
+    <p id="result-msg" style="margin:.5em 0;font-weight:700"></p>
+    <div style="font-size:1.05rem;font-weight:800;color:var(--p2)">🏅 Badge unlocked: <span id="badge-name">Tech Learner</span></div>
+    <button class="btn again" onclick="location.reload()">🔄 Try Again</button>
+  </div>
+</section>
+
+</main>
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<div id="pop" role="tooltip" aria-live="polite"></div>
+<canvas id="confetti"></canvas>
+
+<script>
+window.LESSON = {"id": "g6l2", "title": "Technology in Our Schools", "badge": "💡", "badgeName": "Tech Learner", "comp": [{"type": "mcq", "q": "Which tools are now used in many Palestinian classrooms?", "options": ["Only chalkboards", "Computers, tablets and interactive whiteboards", "Typewriters", "Radios"], "answer": 1, "level": "Literal"}, {"type": "mcq", "q": "What can students use the internet for?", "options": ["Only games", "Research, videos and information", "Sleeping", "Cooking"], "answer": 1, "level": "Literal"}, {"type": "mcq", "q": "What challenge do some schools face?", "options": ["Too many teachers", "Limited electricity or slow internet", "Too much money", "No students"], "answer": 1, "level": "Literal"}, {"type": "short", "q": "Why are digital skills important for the future?", "answer": "Students who use technology well will have better opportunities and careers in the future.", "level": "Inferential"}, {"type": "short", "q": "What are some young Palestinians learning today?", "answer": "They are learning programming and other digital skills to help them in their careers.", "level": "Literal"}], "quiz": [{"type": "mcq", "q": "Interactive whiteboards make lessons more…", "options": ["interesting", "boring"], "answer": 0, "points": 1}, {"type": "tf", "q": "All schools have exactly the same access to technology.", "answer": false, "points": 1}, {"type": "mcq", "q": "Many young Palestinians are learning…", "options": ["farming", "programming", "driving", "fishing"], "answer": 1, "points": 1}, {"type": "fill", "q": "Used wisely, technology can help students reach their full ___.", "bank": ["potential", "traffic", "weather", "holiday"], "answer": "potential", "points": 2}, {"type": "pronoun", "q": "“These tools make lessons more interesting.” — These tools = ?", "options": ["pens and books", "computers, tablets and whiteboards", "cars"], "answer": 1, "points": 1}, {"type": "match", "q": "Match each word with its meaning:", "pairs": [["access", "ability to use/reach"], ["challenges", "difficulties"], ["research", "careful study"]], "points": 4}], "footer": "Designed with love 💗 by T. Wad Refae"};
+(function(){
+"use strict";
+var L = window.LESSON;
+var $ = function(s,r){return (r||document).querySelector(s)};
+var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+/* ---------- reading progress bar ---------- */
+var prog = $('#progress');
+function onScroll(){
+  var h = document.documentElement;
+  var p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+  prog.style.width = Math.min(100, p*100) + '%';
+}
+document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+/* ---------- nav active indicator ---------- */
+var links = $$('#nav a');
+var byId = {}; links.forEach(function(a){byId[a.dataset.sec]=a});
+if('IntersectionObserver' in window){
+  var obs = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('active')});
+      var a = byId[e.target.id]; if(a) a.classList.add('active');
+    }});
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  $$('section').forEach(function(s){obs.observe(s)});
+}
+
+/* ---------- completion marker ---------- */
+var done=false, comp=$('#complete');
+function checkRead(){
+  if(done) return;
+  var sec=$('#reading'); var r=sec.getBoundingClientRect();
+  if(r.bottom < window.innerHeight*0.9){
+    done=true; comp.classList.add('done');
+    $('#complete-txt').innerHTML = "Great! You finished the passage. <span class='ar'>أحسنت! أنهيت القراءة</span> 🎉";
+    burst(window.innerWidth/2, 120, 26);
+  }
+}
+document.addEventListener('scroll', checkRead, {passive:true});
+
+/* ---------- vocab / pronoun popover ---------- */
+var pop = $('#pop'); var popOpen=null;
+function showPop(el){
+  var k = el.dataset.kind, h='';
+  if(k==='vocab'){
+    h = '<div class="pw-word">'+el.dataset.w+' <span class="pw-pos">'+el.dataset.pos+'</span></div>'
+      + '<div class="pw-ar">'+el.dataset.ar+'</div>'
+      + '<div class="pw-line"><b>Synonym:</b> '+el.dataset.syn+'</div>'
+      + (el.dataset.ant && el.dataset.ant!=='—' ? '<div class="pw-line ant"><b>Antonym:</b> '+el.dataset.ant+'</div>' : '')
+      + '<div class="pw-line" style="font-style:italic">“'+el.dataset.ex+'”</div>';
+  } else {
+    h = '<div class="pw-word">'+el.dataset.w+'</div>'
+      + '<div class="pw-ref">'+el.dataset.w+' → <em>'+el.dataset.ref+'</em></div>';
+  }
+  pop.innerHTML=h; pop.classList.add('show'); popOpen=el;
+  var r = el.getBoundingClientRect();
+  var px = window.scrollX + r.left + r.width/2;
+  var py = window.scrollY + r.top;
+  pop.style.left='0px'; pop.style.top='0px';
+  var pw = pop.offsetWidth, ph = pop.offsetHeight;
+  var left = px - pw/2; left=Math.max(8, Math.min(left, window.scrollX+document.documentElement.clientWidth-pw-8));
+  var top = py - ph - 12; pop.classList.remove('below');
+  if(top < window.scrollY+4){ top = window.scrollY + r.bottom + 12; pop.classList.add('below'); }
+  pop.style.left=left+'px'; pop.style.top=top+'px';
+  pop.style.setProperty('--ax', (px-left)+'px');
+}
+function hidePop(){ pop.classList.remove('show'); popOpen=null; }
+$$('.vw, .pw').forEach(function(el){
+  el.addEventListener('click', function(e){ e.stopPropagation(); if(popOpen===el){hidePop();}else{showPop(el);} });
+  el.addEventListener('mouseenter', function(){ showPop(el); });
+  el.addEventListener('mouseleave', function(){ if(popOpen===el) hidePop(); });
+  el.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault(); showPop(el);} if(e.key==='Escape') hidePop(); });
+});
+document.addEventListener('click', function(e){ if(popOpen && !popOpen.contains(e.target) && !pop.contains(e.target)) hidePop(); });
+document.addEventListener('scroll', function(){ if(popOpen) showPop(popOpen); }, {passive:true});
+
+/* ---------- flip cards + TTS ---------- */
+$$('.flip').forEach(function(c){
+  c.addEventListener('click', function(e){ if(e.target.closest('.tts')) return; c.classList.toggle('flipped'); });
+  c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault(); c.classList.toggle('flipped');} });
+});
+$$('.tts').forEach(function(b){
+  b.addEventListener('click', function(e){ e.stopPropagation(); say(b.dataset.say); });
+});
+function say(t){
+  try{ var u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
+}
+
+/* ---------- ideas expand ---------- */
+$$('.idea').forEach(function(d){
+  function t(){ d.classList.toggle('open'); }
+  d.addEventListener('click', t);
+  d.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault(); t();} });
+});
+
+/* ---------- confetti ---------- */
+var cv=$('#confetti'), cx=cv.getContext('2d'), parts=[];
+function size(){ cv.width=innerWidth; cv.height=innerHeight; }
+size(); addEventListener('resize', size);
+var COLORS=['#f59e0b','#ef4444','#22c55e','#3b82f6','#a855f7','#ec4899','#fde047'];
+function burst(x,y,n){
+  for(var i=0;i<(n||30);i++){
+    parts.push({x:x,y:y,vx:(Math.random()-.5)*9,vy:Math.random()*-9-3,
+      g:.28+Math.random()*.15,s:5+Math.random()*6,c:COLORS[(Math.random()*COLORS.length)|0],
+      r:Math.random()*6,vr:(Math.random()-.5)*.4,life:60+Math.random()*30});
+  }
+  if(!raf) raf=requestAnimationFrame(loop);
+}
+var raf=null;
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts=parts.filter(function(p){return p.life>0});
+  parts.forEach(function(p){
+    p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr; p.life--;
+    cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c;
+    cx.globalAlpha=Math.max(0,p.life/40); cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); cx.restore();
+  });
+  if(parts.length) raf=requestAnimationFrame(loop); else { raf=null; cx.clearRect(0,0,cv.width,cv.height); }
+}
+function burstAt(el,n){ var r=el.getBoundingClientRect(); burst(r.left+r.width/2, r.top+10, n||24); }
+
+var OK=['Excellent!','Great Job!','Amazing!','Correct Answer!','Wonderful!','Brilliant!','أحسنت! 🌟'];
+var NO=['Almost there!','Good attempt!','Try again!','So close — read again!','Keep going!'];
+function pick(a){return a[(Math.random()*a.length)|0];}
+
+/* ---------- question engine ---------- */
+function makeFb(){ var f=document.createElement('div'); f.className='fb'; return f; }
+function feedbackOK(f,msg,el){ f.className='fb ok'; f.innerHTML='✔ '+(msg||pick(OK)); if(el) burstAt(el); }
+function feedbackNO(f,hint){ f.className='fb no'; f.innerHTML='✖ '+pick(NO)+(hint?' <span style="font-weight:600;opacity:.9">Hint: '+hint+'</span>':'')
+   +'<button class="retry">Try again</button>'; }
+
+function renderMCQ(q, item, onScore){
+  var box=document.createElement('div'); box.className='opts';
+  var fb=makeFb(); var solved=false;
+  item.options.forEach(function(o,i){
+    var b=document.createElement('button'); b.className='opt'; b.type='button';
+    b.innerHTML='<span class="mk">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span>';
+    b.addEventListener('click', function(){
+      if(solved) return;
+      if(i===item.answer){ solved=true; b.classList.add('correct'); feedbackOK(fb,null,b);
+        $$('.opt',box).forEach(function(x){x.classList.add('disabled')}); if(onScore)onScore(item.points||1);
+      } else { b.classList.add('wrong'); feedbackNO(fb,item.hint);
+        var rt=$('.retry',fb); if(rt) rt.onclick=function(){ b.classList.remove('wrong'); fb.className='fb'; };
+      }
+    });
+    box.appendChild(b);
+  });
+  q.appendChild(box); q.appendChild(fb);
+}
+
+function renderTF(q,item,onScore){
+  var row=document.createElement('div'); row.className='tf-row';
+  var fb=makeFb(); var solved=false;
+  [['True',true],['False',false]].forEach(function(pair){
+    var b=document.createElement('button'); b.className='opt'; b.type='button'; b.textContent=pair[0];
+    b.addEventListener('click',function(){
+      if(solved) return;
+      if(pair[1]===item.answer){ solved=true; b.classList.add('correct'); feedbackOK(fb,null,b);
+        $$('.opt',row).forEach(function(x){x.classList.add('disabled')}); if(onScore)onScore(item.points||1);
+      } else { b.classList.add('wrong'); feedbackNO(fb,item.hint);
+        var rt=$('.retry',fb); if(rt) rt.onclick=function(){ b.classList.remove('wrong'); fb.className='fb'; };
+      }
+    });
+    row.appendChild(b);
+  });
+  q.appendChild(row); q.appendChild(fb);
+}
+
+function renderFill(q,item,onScore){
+  var sent=document.createElement('div'); sent.className='fill-sent';
+  var parts=item.q.split('___');
+  var blank=document.createElement('span'); blank.className='blank'; blank.textContent='_____';
+  sent.appendChild(document.createTextNode(parts[0])); sent.appendChild(blank);
+  sent.appendChild(document.createTextNode(parts[1]||''));
+  var bank=document.createElement('div'); bank.className='bank';
+  var fb=makeFb(); var solved=false;
+  shuffle(item.bank.slice()).forEach(function(w){
+    var c=document.createElement('button'); c.className='word'; c.type='button'; c.textContent=w;
+    c.addEventListener('click',function(){
+      if(solved) return;
+      blank.textContent=w;
+      if(w===item.answer){ solved=true; blank.style.color='#16a34a'; blank.style.borderColor='#16a34a';
+        c.classList.add('used'); feedbackOK(fb,null,blank); if(onScore)onScore(item.points||1);
+        $$('.word',bank).forEach(function(x){x.classList.add('used')});
+      } else { c.classList.add('used'); feedbackNO(fb,item.hint);
+        var rt=$('.retry',fb); if(rt) rt.onclick=function(){ fb.className='fb'; blank.textContent='_____'; };
+      }
+    });
+    bank.appendChild(c);
+  });
+  q.appendChild(sent); q.appendChild(bank); q.appendChild(fb);
+}
+
+function renderMatch(q,item,onScore){
+  var wrap=document.createElement('div'); wrap.className='match';
+  var left=document.createElement('div'); left.className='mcol';
+  var right=document.createElement('div'); right.className='mcol';
+  var fb=makeFb(); var matched=0, sel=null, awarded=false;
+  var pts=item.points||item.pairs.length;
+  var per=pts/item.pairs.length;
+  item.pairs.forEach(function(p,i){
+    var l=document.createElement('button'); l.className='mitem'; l.type='button'; l.textContent=p[0]; l.dataset.k=i; left.appendChild(l);
+  });
+  shuffle(item.pairs.map(function(p,i){return [p[1],i]})).forEach(function(pr){
+    var r=document.createElement('button'); r.className='mitem'; r.type='button'; r.textContent=pr[0]; r.dataset.k=pr[1]; right.appendChild(r);
+  });
+  function clk(el,col){
+    if(el.classList.contains('done')) return;
+    if(col!==(sel&&sel.col)){
+      if(sel){ if(sel.el.dataset.k===el.dataset.k){
+          sel.el.classList.add('done'); el.classList.add('done'); sel.el.classList.remove('sel'); matched++;
+          if(onScore && per){ onScore(per); }
+          if(matched===item.pairs.length){ feedbackOK(fb,'Perfect match! 🎯'); }
+        } else { el.classList.add('miss'); var s=sel; setTimeout(function(){el.classList.remove('miss'); s.el.classList.remove('sel');},420);
+          fb.className='fb no'; fb.innerHTML='✖ '+pick(NO); }
+        sel=null;
+      } else { el.classList.add('sel'); sel={el:el,col:col}; }
+    } else { if(sel) sel.el.classList.remove('sel'); el.classList.add('sel'); sel={el:el,col:col}; }
+  }
+  $$('.mitem',left).forEach(function(e){e.onclick=function(){clk(e,'L')}});
+  $$('.mitem',right).forEach(function(e){e.onclick=function(){clk(e,'R')}});
+  wrap.appendChild(left); wrap.appendChild(right);
+  q.appendChild(wrap); q.appendChild(fb);
+}
+
+function renderShort(q,item){
+  var w=document.createElement('div'); w.className='short-ans';
+  var ta=document.createElement('textarea'); ta.placeholder='Write your answer… اكتب إجابتك';
+  var btn=document.createElement('button'); btn.className='btn ghost'; btn.type='button'; btn.style.marginTop='10px'; btn.textContent='💡 Show model answer';
+  var model=document.createElement('div'); model.className='model'; model.innerHTML='<b>Model answer:</b> '+item.answer;
+  btn.addEventListener('click',function(){ model.classList.add('show'); btn.style.display='none'; });
+  w.appendChild(ta); w.appendChild(btn); w.appendChild(model);
+  q.appendChild(w);
+}
+
+function shuffle(a){ for(var i=a.length-1;i>0;i--){var j=(Math.random()*(i+1))|0; var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+
+function buildQuestion(item, n, onScore){
+  var q=document.createElement('div'); q.className='q';
+  var top=document.createElement('div'); top.className='q-top';
+  top.innerHTML='<span class="q-no">'+n+'</span><span class="q-text">'+(item.q||'')+'</span>'
+    + (item.level?'<span class="q-lvl">'+item.level+'</span>':'');
+  q.appendChild(top);
+  var t=item.type;
+  if(t==='mcq'||t==='pronoun') renderMCQ(q,item,onScore);
+  else if(t==='tf') renderTF(q,item,onScore);
+  else if(t==='fill') renderFill(q,item,onScore);
+  else if(t==='match') renderMatch(q,item,onScore);
+  else if(t==='short') renderShort(q,item);
+  return q;
+}
+
+/* comprehension (no scoring) */
+var cl=$('#comp-list');
+L.comp.forEach(function(it,i){ cl.appendChild(buildQuestion(it,i+1,null)); });
+
+/* quiz (scored, gamified) */
+var ql=$('#quiz-list');
+var totalPts=0; L.quiz.forEach(function(it){ totalPts += (it.points|| (it.type==='match'?it.pairs.length:1)); });
+var earned=0, answeredQ=0, qCount=L.quiz.length;
+$('#total').textContent=qCount;
+var qSolved=[];
+L.quiz.forEach(function(it,i){
+  qSolved[i]=false;
+  var onScore=(function(idx){ return function(p){
+    earned+=p; if(!qSolved[idx]){ qSolved[idx]=true; answeredQ++; }
+    updateHUD();
+    if(answeredQ===qCount) finish();
+  };})(i);
+  ql.appendChild(buildQuestion(it,i+1,onScore));
+});
+
+var LEVELS=[
+ [0,'🌱 Beginner','You\'re getting started — read the passage again and try once more!'],
+ [3,'🧭 Explorer','Nice exploring! Keep practising to climb higher.'],
+ [5,'📖 Reader','Good reading skills — you understood a lot!'],
+ [7,'⭐ Skilled Reader','Impressive! You read with real understanding.'],
+ [9,'🏆 Master Reader','Outstanding! You mastered this lesson!']
+];
+function levelFor(s){ var L0=LEVELS[0]; for(var i=0;i<LEVELS.length;i++){ if(s>=LEVELS[i][0]) L0=LEVELS[i]; } return L0; }
+function scaled(){ return Math.round(earned/totalPts*10); }
+
+function updateHUD(){
+  var s=scaled();
+  $('#hud-score').textContent=s;
+  $('#answered').textContent=answeredQ;
+  $('#xp').textContent=Math.round(earned*10);
+  $('#xpfill').style.width=Math.min(100,(answeredQ/qCount)*100)+'%';
+  var st=Math.round(s/2);
+  $('#hud-stars').textContent = '★★★★★'.slice(0,st)+'☆☆☆☆☆'.slice(0,5-st);
+  var lv=levelFor(s); $('#hud-lvl').textContent=lv[1];
+}
+function finish(){
+  var s=scaled(), lv=levelFor(s);
+  $('#result-title').textContent=lv[1].replace(/^\S+\s/,'')+'!';
+  $('#result-level').textContent='Level: '+lv[1]+'  ·  Score '+s+'/10';
+  $('#result-msg').textContent=lv[2];
+  var R=$('#result'); R.classList.add('show');
+  R.scrollIntoView({behavior:'smooth',block:'center'});
+  try{localStorage.setItem('palbook-read-'+L.id, JSON.stringify({score:s,ts:Date.now()}));}catch(e){}
+  var i=0,iv=setInterval(function(){ burst(Math.random()*innerWidth, innerHeight*0.35, 22); if(++i>5)clearInterval(iv); },220);
+}
+updateHUD();
+})();
+</script>
+</body>
+</html>
