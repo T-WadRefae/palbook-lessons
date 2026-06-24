@@ -262,6 +262,21 @@ main>section.tab-on{display:block;animation:tabin .4s}
 footer{text-align:center;padding:26px 16px 10px;color:var(--p2);font-weight:700;opacity:.85}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- read-aloud (full passage TTS, grade-paced) ---- */
+.read-aloud{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:2px 0 14px}
+.ra-btn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;
+  border-radius:999px;padding:11px 20px;font-family:inherit;font-weight:800;font-size:.95rem;
+  box-shadow:0 4px 14px rgba(0,0,0,.15);transition:.2s}
+.ra-btn:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(0,0,0,.2)}
+.ra-btn .ico{font-size:1.15rem;line-height:1}
+.ra-btn .ar{font-family:'Baloo Bhaijaan 2','Nunito',sans-serif;font-weight:700;opacity:.92;font-size:.85rem}
+.ra-btn.on{background:linear-gradient(135deg,#c0392b,#922b21)}
+.ra-btn.on .ico{animation:rapulse 1s infinite}
+@keyframes rapulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ra-rate{font-size:.8rem;font-weight:700;color:var(--p2);opacity:.82;
+  font-family:'Baloo Bhaijaan 2','Nunito',sans-serif}
 </style>
 </head>
 <body class="pat-stone">
@@ -312,7 +327,15 @@ footer{text-align:center;padding:26px 16px 10px;color:var(--p2);font-weight:700;
     <span class="chip">📝 <span>Words</span> <b>185</b></span>
     <span class="chip">📚 <span>Grade 6</span> · <b>History &amp; Heritage</b></span>
   </div>
-  <div class="card passage">
+    <div class="read-aloud">
+    <button id="readBtn" class="ra-btn" type="button" aria-label="Listen to the whole text">
+      <span class="ico">🔊</span>
+      <span class="lbl">Listen to the text</span>
+      <span class="ar">استمع للنص</span>
+    </button>
+    <span class="ra-rate" id="readRate"></span>
+  </div>
+<div class="card passage">
 <p class="par" data-i="0">Jerusalem is one of the oldest and most important cities in the world. <span class="pw" tabindex="0" role="button" aria-label="pronoun: Its" data-kind="pron" data-w="Its" data-ref="Jerusalem&#x27;s">Its</span> Old City is <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: surrounded" data-kind="vocab" data-w="surrounded" data-pos="verb" data-ar="مُحاط / مُحاطة" data-syn="enclosed, encircled" data-ant="open, exposed" data-ex="The Old City is surrounded by walls." data-pron="suh-ROWN-did">surrounded</span> by <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: ancient" data-kind="vocab" data-w="ancient" data-pos="adjective" data-ar="قَديم / عَتيق" data-syn="very old, historic" data-ant="modern, new" data-ex="The city has ancient stone walls." data-pron="AYN-shunt">ancient</span> stone walls that were built hundreds of years ago. Inside the walls, you can find <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: narrow" data-kind="vocab" data-w="narrow" data-ar="ضَيِّقة">narrow</span> streets, old <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: markets" data-kind="vocab" data-w="markets" data-ar="أسواق">markets</span>, and beautiful buildings from different historical periods.</p>
 <p class="par" data-i="1">The Old City of Jerusalem is home to many <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: religious" data-kind="vocab" data-w="religious" data-ar="دينية">religious</span> and historical sites. The Al-Aqsa Mosque is one of the holiest places in Islam and is <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: located" data-kind="vocab" data-w="located" data-ar="يَقَع">located</span> in the heart of the Old City. The Dome of the Rock, with <span class="pw" tabindex="0" role="button" aria-label="pronoun: Its" data-kind="pron" data-w="Its" data-ref="Jerusalem&#x27;s">its</span> golden dome, is one of the most <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: recognisable" data-kind="vocab" data-w="recognisable" data-pos="adjective" data-ar="يَسهُل تمييزه" data-syn="well-known, familiar" data-ant="unfamiliar" data-ex="The Dome of the Rock is recognisable worldwide." data-pron="REK-uhg-ny-zuh-buhl">recognisable</span> buildings in the world.</p>
 <p class="par" data-i="2">Walking through the markets of Jerusalem is a wonderful experience. The <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: souks" data-kind="vocab" data-w="souks" data-pos="noun" data-ar="الأسواق" data-syn="markets, bazaars" data-ant="—" data-ex="The souks are full of colourful goods." data-pron="sooks">souks</span> are full of colourful <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: goods" data-kind="vocab" data-w="goods" data-ar="بَضائِع">goods</span>, <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: spices" data-kind="vocab" data-w="spices" data-ar="بَهارات">spices</span>, sweets, and traditional Palestinian crafts. The smell of fresh bread, coffee, and spices fills the air.</p>
@@ -563,6 +586,52 @@ $$('.tts').forEach(function(b){
 function say(t){
   try{ var u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
 }
+
+/* ---------- read-aloud: full passage TTS, paced per grade ---------- */
+(function(){
+  var btn=document.getElementById('readBtn'); if(!btn) return;
+  var lbl=btn.querySelector('.lbl');
+  var rateInfo=document.getElementById('readRate');
+  var grade=7;
+  var rm=document.querySelector('#reading .rmeta');
+  if(rm){ var gm=rm.textContent.match(/Grade\s*(\d)/); if(gm) grade=+gm[1]; }
+  var RATE={5:.7,6:.78,7:.85,8:.92,9:1}[grade]||.85;
+  var SPEEDLBL={5:'\uD83D\uDC22 \u0628\u0637\u064A\u0621',6:'\uD83D\uDC22 \u0628\u0637\u064A\u0621',7:'\uD83D\uDEB6 \u0645\u062A\u0648\u0633\u0637',8:'\uD83D\uDEB6 \u0645\u062A\u0648\u0633\u0637',9:'\uD83D\uDE42 \u0637\u0628\u064A\u0639\u064A'}[grade]||'';
+  if(rateInfo) rateInfo.textContent=SPEEDLBL;
+  var speaking=false;
+  function passageText(){
+    var ps=document.querySelectorAll('#reading .passage .par'); var parts=[];
+    ps.forEach(function(p){ parts.push((p.textContent||'').replace(/\s+/g,' ').trim()); });
+    return parts.join(' ');
+  }
+  function reset(){ speaking=false; btn.classList.remove('on'); if(lbl) lbl.textContent='Listen to the text'; }
+  function stop(){ try{speechSynthesis.cancel();}catch(e){} reset(); }
+  function start(){
+    var t=passageText(); if(!t) return;
+    var chunks=t.match(/[^.!?]+[.!?]*/g)||[t];
+    try{ speechSynthesis.cancel(); }catch(e){}
+    speaking=true; btn.classList.add('on'); if(lbl) lbl.textContent='Stop';
+    var i=0;
+    (function next(){
+      if(!speaking) return;
+      if(i>=chunks.length){ reset(); return; }
+      var s=(chunks[i++]||'').trim(); if(!s){ next(); return; }
+      var u=new SpeechSynthesisUtterance(s); u.lang='en-US'; u.rate=RATE;
+      u.onend=next; u.onerror=function(){ reset(); };
+      speechSynthesis.speak(u);
+    })();
+  }
+  btn.addEventListener('click', function(){ speaking?stop():start(); });
+  window.addEventListener('beforeunload', stop);
+  /* a single-word TTS click should halt the passage first */
+  document.addEventListener('click', function(e){
+    var t=e.target.closest&&e.target.closest('.tts'); if(t&&speaking) stop();
+  }, true);
+  /* leaving any tab stops playback */
+  document.querySelectorAll('[data-sec]').forEach(function(a){
+    a.addEventListener('click', function(){ if(speaking) stop(); });
+  });
+})();
 
 /* ---------- ideas expand ---------- */
 $$('.idea').forEach(function(d){

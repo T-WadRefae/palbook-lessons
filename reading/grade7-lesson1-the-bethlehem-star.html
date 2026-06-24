@@ -262,6 +262,21 @@ main>section.tab-on{display:block;animation:tabin .4s}
 footer{text-align:center;padding:26px 16px 10px;color:var(--p2);font-weight:700;opacity:.85}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- read-aloud (full passage TTS, grade-paced) ---- */
+.read-aloud{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:2px 0 14px}
+.ra-btn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;
+  background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;
+  border-radius:999px;padding:11px 20px;font-family:inherit;font-weight:800;font-size:.95rem;
+  box-shadow:0 4px 14px rgba(0,0,0,.15);transition:.2s}
+.ra-btn:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(0,0,0,.2)}
+.ra-btn .ico{font-size:1.15rem;line-height:1}
+.ra-btn .ar{font-family:'Baloo Bhaijaan 2','Nunito',sans-serif;font-weight:700;opacity:.92;font-size:.85rem}
+.ra-btn.on{background:linear-gradient(135deg,#c0392b,#922b21)}
+.ra-btn.on .ico{animation:rapulse 1s infinite}
+@keyframes rapulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ra-rate{font-size:.8rem;font-weight:700;color:var(--p2);opacity:.82;
+  font-family:'Baloo Bhaijaan 2','Nunito',sans-serif}
 </style>
 </head>
 <body class="pat-star">
@@ -312,7 +327,15 @@ footer{text-align:center;padding:26px 16px 10px;color:var(--p2);font-weight:700;
     <span class="chip">📝 <span>Words</span> <b>209</b></span>
     <span class="chip">📚 <span>Grade 7</span> · <b>History &amp; Tourism</b></span>
   </div>
-  <div class="card passage">
+    <div class="read-aloud">
+    <button id="readBtn" class="ra-btn" type="button" aria-label="Listen to the whole text">
+      <span class="ico">🔊</span>
+      <span class="lbl">Listen to the text</span>
+      <span class="ar">استمع للنص</span>
+    </button>
+    <span class="ra-rate" id="readRate"></span>
+  </div>
+<div class="card passage">
 <p class="par" data-i="0">Bethlehem is a city in the West Bank with a history that <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: stretches" data-kind="vocab" data-w="stretches" data-ar="يَمتَدّ">stretches</span> back thousands of years. <span class="pw" tabindex="0" role="button" aria-label="pronoun: It" data-kind="pron" data-w="It" data-ref="Bethlehem">It</span> is one of the most visited cities in Palestine and <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: attracts" data-kind="vocab" data-w="attracts" data-ar="يَجذِب">attracts</span> <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: tourists" data-kind="vocab" data-w="tourists" data-ar="سُيّاح">tourists</span> and <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: pilgrims" data-kind="vocab" data-w="pilgrims" data-pos="noun" data-ar="حُجّاج / زوّار مُقدّسون" data-syn="worshippers, travellers" data-ant="—" data-ex="Pilgrims come from all over the world." data-pron="PIL-grimz">pilgrims</span> from all over the world. Located about ten kilometres south of Jerusalem, Bethlehem is <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: surrounded" data-kind="vocab" data-w="surrounded" data-ar="مُحاطة">surrounded</span> by olive groves and limestone hills.</p>
 <p class="par" data-i="1">The old town of Bethlehem is built on a <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: hillside" data-kind="vocab" data-w="hillside" data-ar="سَفح تَلّة">hillside</span>, and <span class="pw" tabindex="0" role="button" aria-label="pronoun: its" data-kind="pron" data-w="its" data-ref="Bethlehem&#x27;s">its</span> narrow streets and ancient stone buildings tell the story of many generations. The city is known for its skilled <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: craftsmen" data-kind="vocab" data-w="craftsmen" data-pos="noun" data-ar="حِرفيّون / صُنّاع مَهَرة" data-syn="artisans, makers" data-ant="—" data-ex="Skilled craftsmen make olive-wood objects." data-pron="KRAFTS-men">craftsmen</span> who produce beautiful objects from olive wood, mother-of-pearl, and Palestinian embroidery.</p>
 <p class="par" data-i="2">Bethlehem&#x27;s <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: economy" data-kind="vocab" data-w="economy" data-pos="noun" data-ar="الاقتصاد" data-syn="financial system" data-ant="—" data-ex="Bethlehem&#x27;s economy depends on tourism." data-pron="i-KON-uh-mee">economy</span> has historically <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: depended" data-kind="vocab" data-w="depended" data-ar="اعتَمَد">depended</span> on tourism and traditional crafts. However, the city has faced many economic challenges over the years. Despite <span class="pw" tabindex="0" role="button" aria-label="pronoun: these difficulties" data-kind="pron" data-w="these difficulties" data-ref="the economic challenges">these difficulties</span>, Bethlehemites have shown remarkable <span class="vw" tabindex="0" role="button" aria-label="vocabulary word: resilience" data-kind="vocab" data-w="resilience" data-pos="noun" data-ar="المُرونة / القُدرة على الصُّمود" data-syn="toughness, strength" data-ant="weakness, fragility" data-ex="The people show remarkable resilience." data-pron="ri-ZIL-yuns">resilience</span> and creativity in maintaining their cultural and economic life.</p>
@@ -564,6 +587,52 @@ $$('.tts').forEach(function(b){
 function say(t){
   try{ var u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
 }
+
+/* ---------- read-aloud: full passage TTS, paced per grade ---------- */
+(function(){
+  var btn=document.getElementById('readBtn'); if(!btn) return;
+  var lbl=btn.querySelector('.lbl');
+  var rateInfo=document.getElementById('readRate');
+  var grade=7;
+  var rm=document.querySelector('#reading .rmeta');
+  if(rm){ var gm=rm.textContent.match(/Grade\s*(\d)/); if(gm) grade=+gm[1]; }
+  var RATE={5:.7,6:.78,7:.85,8:.92,9:1}[grade]||.85;
+  var SPEEDLBL={5:'\uD83D\uDC22 \u0628\u0637\u064A\u0621',6:'\uD83D\uDC22 \u0628\u0637\u064A\u0621',7:'\uD83D\uDEB6 \u0645\u062A\u0648\u0633\u0637',8:'\uD83D\uDEB6 \u0645\u062A\u0648\u0633\u0637',9:'\uD83D\uDE42 \u0637\u0628\u064A\u0639\u064A'}[grade]||'';
+  if(rateInfo) rateInfo.textContent=SPEEDLBL;
+  var speaking=false;
+  function passageText(){
+    var ps=document.querySelectorAll('#reading .passage .par'); var parts=[];
+    ps.forEach(function(p){ parts.push((p.textContent||'').replace(/\s+/g,' ').trim()); });
+    return parts.join(' ');
+  }
+  function reset(){ speaking=false; btn.classList.remove('on'); if(lbl) lbl.textContent='Listen to the text'; }
+  function stop(){ try{speechSynthesis.cancel();}catch(e){} reset(); }
+  function start(){
+    var t=passageText(); if(!t) return;
+    var chunks=t.match(/[^.!?]+[.!?]*/g)||[t];
+    try{ speechSynthesis.cancel(); }catch(e){}
+    speaking=true; btn.classList.add('on'); if(lbl) lbl.textContent='Stop';
+    var i=0;
+    (function next(){
+      if(!speaking) return;
+      if(i>=chunks.length){ reset(); return; }
+      var s=(chunks[i++]||'').trim(); if(!s){ next(); return; }
+      var u=new SpeechSynthesisUtterance(s); u.lang='en-US'; u.rate=RATE;
+      u.onend=next; u.onerror=function(){ reset(); };
+      speechSynthesis.speak(u);
+    })();
+  }
+  btn.addEventListener('click', function(){ speaking?stop():start(); });
+  window.addEventListener('beforeunload', stop);
+  /* a single-word TTS click should halt the passage first */
+  document.addEventListener('click', function(e){
+    var t=e.target.closest&&e.target.closest('.tts'); if(t&&speaking) stop();
+  }, true);
+  /* leaving any tab stops playback */
+  document.querySelectorAll('[data-sec]').forEach(function(a){
+    a.addEventListener('click', function(){ if(speaking) stop(); });
+  });
+})();
 
 /* ---------- ideas expand ---------- */
 $$('.idea').forEach(function(d){
