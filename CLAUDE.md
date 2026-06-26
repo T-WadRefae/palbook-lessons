@@ -44,6 +44,29 @@ All grammar lessons in `/grammar/` must follow this **student-journey** model. B
 - Gamification badge theme = grammar topic (e.g., clock stamp for Present Simple, camera stamp for Past Simple) — never travel/airport.
 - Footer alternates: "Designed with love 💗 by T. Wad Refae" / "Prepared with care 🌸 by T. Wad Refae".
 
+## Writing lesson design (General → Writing section)
+
+Writing lessons live in `/writing/` and are listed in `writing/index.html` (the hub: header + grade 5–9 filter + preview). They also appear in the live app `palbook-live` under **General → Writing** (add each new lesson to `src/data/writingLessons.js` there). The teacher gave explicit permission to push **palbook-live to `main`** for the writing section so it deploys live.
+
+**Tab template (5 tabs, NO quiz):**
+
+| # | Tab | Emoji | Purpose |
+|---|-----|-------|---------|
+| 1 | Objectives | 📌 | أهداف الدرس + the writing goal/task. |
+| 2 | Model / Look | 📖 | Annotated model text — each part opens on click with an English tip + Arabic explanation (like the formal-letter "Letter Guide"). |
+| 3 | Build It | ✏️ | Guided construction — word banks, sentence frames, levelled practice with instant feedback. |
+| 4 | Checklist | ✅ | Tappable self-check + progress bar — **this replaces the quiz** (live grading is hard). |
+| 5 | Worksheet | 📝 | Placeholder tab holding a `<!-- WORKSHEET-LINK -->` comment; the teacher drops the printable worksheet (Drive/PDF) link here later. |
+
+### Writing lesson rules
+- **NO quiz.** Writing is assessed by the printable worksheet (uploaded later) + the self-check Checklist. Never add a scored quiz to a writing lesson.
+- **The theme must wrap the WHOLE page — immersive, not just a themed header + plain tabs.** Build each lesson as a single themed "object": a thematic full-page background/environment + a framed container whose frame motif IS the theme, with header, tabs and panels living inside it. Reference standard: the formal-letter envelope (`grade8/unit12p12.html`), the Past Simple **film reel** (sprocket holes on both edges + clapperboard), and the Posters **notice board** (wooden posts + screws). Header, tab style, and panels all match the theme.
+- Each lesson is **fully self-contained** (all CSS/JS inline). Real tabs (click to show/hide; only the active panel visible).
+- Tab bar: horizontally scrollable on mobile, wraps on wider screens (`@media (min-width:700px)`).
+- Gamification badge/stamp themed to the **lesson topic** (saved to `localStorage`) — never travel/airport.
+- File naming: `writing/grade<N>-<topic>.html` (e.g. `grade6-past-simple.html`); add a matching card inside the `<!-- WRITING-CARDS-START/END -->` block in `writing/index.html`.
+- Footer alternates the two standard credits.
+
 ## Other conventions
 
 - Single-file pages: all CSS/JS inline, Google Fonts (Fredoka/Nunito for English, Baloo Bhaijaan 2 for Arabic).
