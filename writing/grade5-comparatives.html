@@ -18,8 +18,9 @@
   html{font-size:clamp(16px,1.4vw,19px);}
   body{min-height:100%;font-family:'Nunito',sans-serif;color:var(--ink);
     background:
-      repeating-linear-gradient(180deg, rgba(0,0,0,.03) 0 1px, transparent 1px 40px),
-      linear-gradient(180deg,#dfe9f5,#cfddee);
+      linear-gradient(rgba(20,60,110,.10) 1px, transparent 1px) 0 0/26px 26px,
+      linear-gradient(90deg, rgba(20,60,110,.10) 1px, transparent 1px) 0 0/26px 26px,
+      linear-gradient(180deg,#1f4f86,#2a63a3);
     padding:24px 12px 64px;-webkit-font-smoothing:antialiased;}
   .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;}
 
@@ -30,9 +31,18 @@
     border:3px solid var(--tape-edge);animation:rise .6s ease both;}
   @keyframes rise{from{opacity:0;transform:translateY(-14px);}to{opacity:1;transform:none;}}
   /* ruler tick marks on top + bottom */
-  .wall::before,.wall::after{content:"";position:absolute;left:10px;right:10px;height:18px;
+  .wall::before,.wall::after{content:"";position:absolute;left:24px;right:24px;height:18px;
     background:repeating-linear-gradient(90deg, var(--tape-edge) 0 1.5px, transparent 1.5px 14px);}
   .wall::before{top:7px;} .wall::after{bottom:7px;transform:scaleY(-1);}
+  /* ruler tick marks on left + right (4-sided frame) */
+  .tick-l,.tick-r{position:absolute;top:24px;bottom:24px;width:18px;
+    background:repeating-linear-gradient(0deg, var(--tape-edge) 0 1.5px, transparent 1.5px 14px);}
+  .tick-l{left:7px;} .tick-r{right:7px;}
+  .corner{position:absolute;width:14px;height:14px;border:3px solid var(--tape-edge);}
+  .corner.tl{top:5px;left:5px;border-right:0;border-bottom:0;}
+  .corner.tr{top:5px;right:5px;border-left:0;border-bottom:0;}
+  .corner.bl{bottom:5px;left:5px;border-right:0;border-top:0;}
+  .corner.br{bottom:5px;right:5px;border-left:0;border-top:0;}
   .wall .num-mark{position:absolute;top:5px;font-family:'Fredoka';font-size:.55rem;color:var(--tape-edge);font-weight:600;}
 
   .inner{position:relative;background:var(--board);border-radius:10px;border:2px solid #bcd2ec;padding:12px;}
@@ -116,12 +126,14 @@
 <body>
 
 <div class="wall">
-  <span class="num-mark" style="left:14px">0</span>
-  <span class="num-mark" style="left:30%">10</span>
-  <span class="num-mark" style="left:55%">20</span>
-  <span class="num-mark" style="right:16px">30</span>
+  <span class="tick-l"></span><span class="tick-r"></span>
+  <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+  <span class="num-mark" style="left:30px">0</span>
+  <span class="num-mark" style="left:33%">10</span>
+  <span class="num-mark" style="left:58%">20</span>
+  <span class="num-mark" style="right:30px">30</span>
 
-  <div class="inner">
+  <div class="inner" style="margin:14px 0 0">
     <div class="label">
       <span class="grade-tag">Grade 5 · Writing</span>
       <h1>📏 The Measuring Wall</h1>
