@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade 8 · Writing · From One Paragraph to Two</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --blue:#0e3a5f; --blue2:#0a2d4a; --cyan:#46c2e6; --cyan2:#8fe0f4; --steel:#9fb3c4;
+    --card:#fbfdff; --line:#dce7f0; --amber:#f2b134;
+    --ink:#1f2b36; --ink-soft:#5b6770; --good:#2f8a5c; --good-deep:#22683f; --red:#c0392b;
+    --l1:#3a86c8; --l2:#e08a2b; --l3:#c0457b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{font-size:clamp(16px,1.4vw,19px);}
+  body{min-height:100%;font-family:'Nunito',sans-serif;color:var(--ink);overflow-x:hidden;
+    background:
+      linear-gradient(rgba(70,194,230,.08) 1px,transparent 1px) 0 0/30px 30px,
+      linear-gradient(90deg, rgba(70,194,230,.08) 1px,transparent 1px) 0 0/30px 30px,
+      linear-gradient(180deg,#0e3a5f,#071f33);
+    padding:24px 12px 64px;-webkit-font-smoothing:antialiased;}
+  .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;}
+
+  .wrap{max-width:840px;margin:0 auto;position:relative;background:var(--card);border-radius:12px;padding:0 0 16px;
+    border:1px solid #cfdceb;box-shadow:0 22px 50px rgba(0,0,0,.5);animation:rise .55s cubic-bezier(.22,.68,0,1.2) both;}
+  @keyframes rise{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:none;}}
+
+  /* ════ DISTINCTIVE HEADER — blueprint suspension bridge ════ */
+  .bp-head{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--blue),var(--blue2));color:#fff;
+    padding:16px 14px 14px;border-radius:12px 12px 0 0;border-bottom:3px solid var(--cyan);}
+  .bp-head::before{content:"";position:absolute;inset:0;background:
+    linear-gradient(rgba(70,194,230,.12) 1px,transparent 1px) 0 0/22px 22px,
+    linear-gradient(90deg,rgba(70,194,230,.12) 1px,transparent 1px) 0 0/22px 22px;pointer-events:none;}
+  .bp-head .titles{position:relative;text-align:center;}
+  .bp-head .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:.56rem;background:var(--cyan);color:#063047;padding:3px 12px;border-radius:20px;}
+  .bp-head h1{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:clamp(1.1rem,4vw,1.6rem);margin:5px 0 2px;color:#eaf8fd;}
+  .bp-head .teacher{font-family:'Oswald';font-size:.64rem;letter-spacing:1px;color:#9cd0e4;}
+  /* the bridge */
+  .bridge{position:relative;height:70px;margin-top:8px;}
+  .tower{position:absolute;bottom:0;width:10px;height:58px;background:var(--cyan);box-shadow:0 0 8px rgba(70,194,230,.6);}
+  .tower.lft{left:16%;} .tower.rgt{right:16%;}
+  .deck{position:absolute;bottom:14px;left:6%;right:6%;height:5px;background:var(--cyan2);border-radius:3px;}
+  .cable{position:absolute;bottom:14px;height:2px;background:rgba(143,224,244,.7);transform-origin:left;}
+  .pill{position:absolute;bottom:20px;width:40px;height:26px;border:2px solid var(--cyan);border-radius:5px;display:grid;place-items:center;
+    font-family:'Oswald';font-weight:700;font-size:.66rem;color:#063047;background:#dff4fb;}
+  .pill.p1{left:11%;} .pill.p2{right:11%;}
+  .linkchip{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);background:var(--amber);color:#3a2d06;
+    font-family:'Oswald';font-weight:700;font-size:.6rem;letter-spacing:1px;padding:3px 10px;border-radius:14px;box-shadow:0 3px 6px rgba(0,0,0,.4);}
+
+  nav.tabs{display:flex;gap:7px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;padding:13px 12px 2px;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex:0 0 auto;cursor:pointer;border:2px solid #c6d6e6;background:#eef5fb;color:var(--blue);
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:.8rem;padding:9px 14px;border-radius:9px;transition:.15s;}
+  .tab-btn:hover{background:#e2eef8;}
+  .tab-btn.active{background:var(--blue);color:#fff;border-color:var(--blue2);}
+  @media(min-width:700px){nav.tabs{flex-wrap:wrap;overflow-x:visible;justify-content:center;}}
+
+  .doc{margin:10px 12px 0;background:#fff;border-radius:8px;border:1px solid var(--line);padding:8px 12px;}
+  .panel{display:none;padding:16px 6px 20px;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  h2.sh{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--blue);font-size:1.12rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .hint{background:#eaf6fb;border-right:5px solid var(--cyan);border-radius:10px;padding:9px 12px;margin:0 0 16px;font-size:.95rem;color:#0e4a6b;font-weight:600;}
+
+  .obj-list{list-style:none;display:grid;gap:10px;}
+  .obj-list li{display:flex;align-items:flex-start;gap:10px;background:#f6fafd;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:700;font-size:.95rem;}
+  .obj-list .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-family:'Oswald';font-size:.85rem;}
+  .mission{margin-top:16px;background:linear-gradient(135deg,#fff6e0,#ffeebd);border:2px dashed var(--amber);border-radius:14px;padding:14px 16px;}
+  .mission .ttl{font-family:'Oswald';letter-spacing:1px;text-transform:uppercase;font-weight:600;color:#b8800f;font-size:.95rem;margin-bottom:4px;}
+
+  /* model two paragraphs */
+  .paras{display:grid;gap:10px;margin-bottom:14px;}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-family:'Fredoka';font-weight:500;line-height:1.8;font-size:.98rem;}
+  .pcard .tag{font-family:'Oswald';font-size:.62rem;letter-spacing:1px;color:var(--blue);text-transform:uppercase;margin-bottom:5px;}
+  .ts{background:#dcebf8;border-radius:5px;padding:0 5px;font-weight:700;color:var(--blue);}
+  .det{background:#e9f6ee;border-radius:5px;padding:0 5px;font-weight:700;color:var(--good-deep);}
+  .lk{background:#fff0c9;border-radius:5px;padding:0 5px;font-weight:700;color:#9a7200;}
+  .bridge-mid{text-align:center;font-family:'Oswald';font-size:.7rem;letter-spacing:1px;color:var(--amber);font-weight:700;}
+
+  .parts{display:grid;gap:10px;}
+  .part{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s;}
+  .part:hover{border-color:var(--cyan);}
+  .part-tag{display:flex;align-items:center;gap:8px;padding:12px 14px;font-weight:800;font-size:.95rem;background:#eaf6fb;}
+  .part-tag .arr{transition:transform .2s;color:var(--blue);font-size:.7rem;}
+  .part.open .arr{transform:rotate(90deg);}
+  .part-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .part.open .part-body{max-height:320px;}
+  .part-inner{padding:4px 14px 14px;}
+  .en-tip{background:#eaf6fb;border-radius:8px;padding:7px 10px;font-weight:700;font-size:.88rem;color:#0e4a6b;margin-bottom:8px;}
+  .part-inner .ar{font-size:.95rem;color:#36424c;font-weight:600;line-height:1.7;}
+
+  /* levelled build */
+  .lvl{font-family:'Oswald';font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 9px;border-radius:12px;color:#fff;display:inline-block;margin-bottom:8px;}
+  .lvl.l1{background:var(--l1);} .lvl.l2{background:var(--l2);} .lvl.l3{background:var(--l3);}
+  .ex{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .ex .q{font-family:'Fredoka';font-size:16px;font-weight:600;margin-bottom:10px;}
+  .pick{display:flex;gap:8px;flex-wrap:wrap;}
+  .pick button{position:relative;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font:inherit;font-weight:800;font-size:.9rem;cursor:pointer;transition:.12s;}
+  .pick button:hover{border-color:var(--cyan);}
+  .pick button.right{background:#dff0ea;border-color:var(--good);color:var(--good-deep);animation:pop .4s ease;}
+  .pick button.wrong{background:#fde3df;border-color:var(--red);color:#a82c22;animation:shake .3s ease;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .fb{margin-top:8px;font-weight:800;font-size:.88rem;min-height:18px;}
+
+  .chk{list-style:none;display:grid;gap:9px;margin:0 0 18px;}
+  .chk li{display:flex;align-items:center;gap:11px;background:#f6fafd;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.12s;}
+  .chk li .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #c4d3e2;color:transparent;display:grid;place-items:center;font-weight:900;transition:.12s;}
+  .chk li.done{background:#dff0ea;border-color:var(--good);}
+  .chk li.done .box{background:var(--good);border-color:var(--good);color:#fff;animation:pop .4s ease;}
+  .progress{background:#dfe8f1;border-radius:999px;height:16px;overflow:hidden;}
+  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .4s;}
+  .p-text{text-align:center;font-weight:800;color:var(--ink-soft);margin-top:7px;font-size:.9rem;}
+  .stamp{margin:16px auto 0;max-width:280px;text-align:center;border:3px dashed #c4d3e2;border-radius:16px;padding:18px;opacity:.4;transition:.3s;transform:scale(.96);}
+  .stamp.win{opacity:1;border-color:var(--cyan);background:#eefaff;animation:stampPop .6s cubic-bezier(.2,.8,.2,1.4);}
+  @keyframes stampPop{0%{transform:scale(.4) rotate(-12deg);opacity:0;}60%{transform:scale(1.15) rotate(4deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+  .stamp .big{font-size:46px;} .stamp .lbl{font-family:'Oswald';letter-spacing:1px;text-transform:uppercase;font-weight:700;color:var(--blue);font-size:1.05rem;margin-top:4px;}
+
+  .ws{text-align:center;padding:18px 14px;}
+  .ws .icon{font-size:54px;} .ws h3{font-family:'Oswald';letter-spacing:.5px;text-transform:uppercase;color:var(--blue);font-size:1.12rem;margin:8px 0 6px;}
+  .ws .soon{display:inline-block;background:#dfe8f1;color:#5b6770;border-radius:999px;padding:7px 18px;font-weight:800;margin-top:10px;}
+  .ws .note{margin-top:14px;font-size:.9rem;color:var(--ink-soft);font-weight:600;}
+  footer{text-align:center;margin:16px 12px 0;font-size:.82rem;color:#9fb3c4;font-weight:700;}
+
+  .confetti{position:fixed;top:-14px;width:10px;height:14px;border-radius:2px;z-index:9999;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(106vh) rotate(720deg);}}
+  .spark{position:absolute;pointer-events:none;font-size:14px;z-index:50;animation:sparkpop .7s ease forwards;}
+  @keyframes sparkpop{0%{opacity:0;transform:translate(0,0) scale(.4);}30%{opacity:1;}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.2);}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- ════ DISTINCTIVE HEADER ════ -->
+  <header class="bp-head">
+    <div class="titles">
+      <span class="grade-tag">Grade 8 · Writing</span>
+      <h1>The Paragraph Bridge</h1>
+      <div class="teacher">FROM ONE PARAGRAPH TO TWO · T. WAD REFAE</div>
+    </div>
+    <div class="bridge">
+      <span class="tower lft"></span><span class="tower rgt"></span>
+      <span class="deck"></span>
+      <span class="cable" style="left:16%;width:34%;transform:rotate(20deg);"></span>
+      <span class="cable" style="right:16%;width:34%;transform:rotate(-20deg) translateX(-100%);transform-origin:right;"></span>
+      <span class="pill p1">P1</span><span class="pill p2">P2</span>
+      <span class="linkchip">In addition…</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="show('obj',this)">📌 Objectives</button>
+    <button class="tab-btn" onclick="show('model',this)">🌉 The Bridge</button>
+    <button class="tab-btn" onclick="show('build',this)">✏️ Build It</button>
+    <button class="tab-btn" onclick="show('check',this)">✅ Checklist</button>
+    <button class="tab-btn" onclick="show('ws',this)">📝 Worksheet</button>
+  </nav>
+
+  <div class="doc">
+
+    <section id="tab-obj" class="panel active">
+      <h2 class="sh">📌 Lesson Objectives</h2>
+      <p class="hint ar">في نهاية الدرس، رح يكون الطالب قادر على: ✍️</p>
+      <ul class="obj-list">
+        <li><span class="num">1</span>Make one paragraph <b>longer &amp; richer</b> with details and examples.</li>
+        <li><span class="num">2</span>Plan a <b>second paragraph</b> about a new point.</li>
+        <li><span class="num">3</span>Link the two paragraphs with linking words.</li>
+        <li><span class="num">4</span>Keep each paragraph on <b>one main idea</b>.</li>
+      </ul>
+      <div class="mission">
+        <div class="ttl">🌉 Today's Mission</div>
+        <p class="ar" style="margin:0;font-weight:600">فقرة واحدة صارت قويّة؟ حان وقت بناء <b>جسر</b> لفقرة ثانية! مهمتنا نكبّر الفقرة بالتفاصيل، ثم نربطها بفقرة جديدة بكلمة ربط مناسبة.</p>
+      </div>
+    </section>
+
+    <section id="tab-model" class="panel">
+      <h2 class="sh">🌉 Two Paragraphs, One Bridge</h2>
+      <p class="hint ar">اقرأ الفقرتين وكلمة الربط بينهما، ثم اضغط على كل جزء 👇.</p>
+      <div class="paras">
+        <div class="pcard"><div class="tag">Paragraph 1 — first point</div><span class="ts">My school is a great place to learn.</span> The classrooms are big and bright. <span class="det">For example, each room has a smart board and many books.</span> The teachers are kind and always ready to help.</div>
+        <div class="bridge-mid">⬇ &nbsp;🔗 In addition, &nbsp;⬇</div>
+        <div class="pcard"><div class="tag">Paragraph 2 — new point</div><span class="lk">In addition,</span> <span class="ts">our school has wonderful activities.</span> <span class="det">We have a football team and an art club.</span> These activities make every day fun and exciting.</div>
+      </div>
+      <div class="parts">
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🧱 Make paragraph 1 richer</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Add details, examples and reasons to the same idea: "For example…"</div>
+            <p class="ar">وسّع الفقرة الأولى بإضافة تفاصيل وأمثلة وأسباب <b>عن نفس الفكرة</b>: <em>For example… / This is because…</em></p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🌉 Start paragraph 2 with a NEW topic sentence</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">The 2nd paragraph has its own new main idea.</div>
+            <p class="ar">الفقرة الثانية لها <b>فكرة رئيسية جديدة</b> وجملة موضوع خاصة بها (نقطة مختلفة عن الأولى).</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🔗 Linking words between paragraphs</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Add a point: In addition, Also, Furthermore. Contrast: However, On the other hand.</div>
+            <p class="ar">للإضافة: <em>In addition, Also, Furthermore</em>. للتناقض: <em>However, On the other hand</em>. نضعها في بداية الفقرة الثانية.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🎯 One idea per paragraph</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Don't mix the two points — keep each paragraph focused.</div>
+            <p class="ar">لا تخلط الفكرتين في فقرة واحدة. كل فقرة تبقى على فكرتها لتكون الكتابة منظّمة وواضحة.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-build" class="panel">
+      <h2 class="sh">✏️ Build the Bridge</h2>
+      <p class="hint ar">التمارين تتدرّج: مستوى 1 (اختيار) ← 2 (تمييز) ← 3 (بناء). بالتوفيق! 💪</p>
+
+      <div class="ex" data-answer="In addition,"><span class="lvl l1">Level 1 · choose</span><div class="q">Linking word to ADD a new point:</div><div class="pick"><button onclick="pick(this,'In addition,')">In addition,</button><button onclick="pick(this,'Because')">Because</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="a new topic sentence"><span class="lvl l1">Level 1 · choose</span><div class="q">A second paragraph starts with…</div><div class="pick"><button onclick="pick(this,'a new topic sentence')">a new topic sentence</button><button onclick="pick(this,'a small detail')">a small detail</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="It has over 2,000 books."><span class="lvl l2">Level 2 · identify</span><div class="q">Which ADDS detail to "Our school has a library."?</div><div class="pick"><button onclick="pick(this,'It has over 2,000 books.')">It has over 2,000 books.</button><button onclick="pick(this,'I have a cat.')">I have a cat.</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="However,"><span class="lvl l2">Level 2 · identify</span><div class="q">Which links a CONTRASTING paragraph?</div><div class="pick"><button onclick="pick(this,'Also,')">Also,</button><button onclick="pick(this,'However,')">However,</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="In addition, our school is great at sports."><span class="lvl l3">Level 3 · build</span><div class="q">Best opener for paragraph 2 (a new point about sports):</div><div class="pick"><button onclick="pick(this,'In addition, our school is great at sports.')">In addition, our school is great at sports.</button><button onclick="pick(this,'sports good fun team')">sports good fun team</button></div><div class="fb"></div></div>
+    </section>
+
+    <section id="tab-check" class="panel">
+      <h2 class="sh">✅ My Two-Paragraph Check</h2>
+      <p class="hint ar">اضغط على كل بند بعد ما تتأكد منه في كتابتك ✍️</p>
+      <ul class="chk" id="chkList">
+        <li onclick="toggleChk(this)"><span class="box">✓</span>Paragraph 1 has a topic sentence + details/examples.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>Paragraph 2 has a NEW topic sentence.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I linked them (In addition / Also / However).</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>Each paragraph keeps to one main idea.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I left a clear gap/indent between paragraphs.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>Capital letters and full stops are correct.</li>
+      </ul>
+      <div class="progress"><div class="fill" id="pFill"></div></div>
+      <div class="p-text" id="pText">0 / 6</div>
+      <div class="stamp" id="stamp"><div class="big">🌉</div><div class="lbl">Bridge Built!</div></div>
+    </section>
+
+    <section id="tab-ws" class="panel">
+      <h2 class="sh">📝 Worksheet</h2>
+      <div class="ws">
+        <div class="icon">🌉📄</div>
+        <h3>Practice Worksheet</h3>
+        <p class="ar" style="font-weight:600;color:#5b6770">ورقة عمل الطباعة لهذا الدرس رح تنضاف هنا قريباً.</p>
+        <!-- WORKSHEET-LINK: ضعي رابط Google Drive / PDF هنا لاحقاً، واستبدلي زر "Coming soon" برابط فعلي -->
+        <span class="soon">⏳ Coming soon · قريباً</span>
+        <p class="note ar">سيتم رفع ورقة العمل لاحقاً لتُطبع وتُحلّ في الصف 🌸</p>
+      </div>
+    </section>
+
+  </div><!-- /doc -->
+  <footer>Designed with love 💗 by T. Wad Refae</footer>
+</div>
+
+<script>
+  function show(id,btn){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active');
+  }
+  function togglePart(el){ el.classList.toggle('open'); }
+  function sparkle(el){
+    const marks=['✨','🌉','⭐','🔗'];
+    for(let i=0;i<5;i++){
+      const s=document.createElement('span'); s.className='spark'; s.textContent=marks[i%marks.length];
+      const r=el.getBoundingClientRect(); s.style.left=(r.width/2)+'px'; s.style.top='4px';
+      s.style.setProperty('--dx',(Math.random()*80-40)+'px'); s.style.setProperty('--dy',(-30-Math.random()*40)+'px');
+      el.appendChild(s); setTimeout(()=>s.remove(),700);
+    }
+  }
+  function celebrate(){
+    const cols=['#46c2e6','#0e3a5f','#2f8a5c','#f2b134','#8fe0f4','#c0457b'];
+    for(let i=0;i<42;i++){
+      const c=document.createElement('div'); c.className='confetti';
+      c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+      c.style.animationDuration=(1.6+Math.random()*1.4)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
+      c.style.transform='rotate('+(Math.random()*360)+'deg)';
+      document.body.appendChild(c); setTimeout(()=>c.remove(),3200);
+    }
+  }
+  let buildCelebrated=false;
+  function pick(btn,val){
+    const ex=btn.closest('.ex'); const ans=ex.dataset.answer; const fb=ex.querySelector('.fb');
+    ex.querySelectorAll('.pick button').forEach(b=>b.classList.remove('right','wrong'));
+    if(val===ans){
+      btn.classList.add('right'); fb.textContent='✅ Strong build! Correct.'; fb.style.color='#22683f'; sparkle(btn);
+      const all=[...document.querySelectorAll('.ex')];
+      if(!buildCelebrated && all.every(e=>e.querySelector('.pick button.right'))){ buildCelebrated=true; celebrate(); }
+    } else { btn.classList.add('wrong'); fb.textContent='❌ Try again.'; fb.style.color='#a82c22'; }
+  }
+  const KEY='write-g8-two-paragraphs-done';
+  const items=[...document.querySelectorAll('#chkList li')];
+  let wasComplete=false;
+  function refresh(){
+    const done=items.filter(i=>i.classList.contains('done')).length;
+    document.getElementById('pFill').style.width=(done/items.length*100)+'%';
+    document.getElementById('pText').textContent=done+' / '+items.length;
+    const stamp=document.getElementById('stamp');
+    if(done===items.length){ stamp.classList.add('win'); localStorage.setItem(KEY,'1'); if(!wasComplete){ wasComplete=true; celebrate(); } }
+    else { stamp.classList.remove('win'); wasComplete=false; }
+  }
+  function toggleChk(li){ li.classList.toggle('done'); refresh(); }
+  if(localStorage.getItem(KEY)==='1'){ items.forEach(i=>i.classList.add('done')); wasComplete=true; refresh(); }
+</script>
+</body>
+</html>
