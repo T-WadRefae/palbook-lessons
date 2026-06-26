@@ -61,6 +61,8 @@ Writing lessons live in `/writing/` and are listed in `writing/index.html` (the 
 ### Writing lesson rules
 - **NO quiz.** Writing is assessed by the printable worksheet (uploaded later) + the self-check Checklist. Never add a scored quiz to a writing lesson.
 - **The theme must wrap the WHOLE page — immersive, not just a themed header + plain tabs.** Build each lesson as a single themed "object": a thematic full-page background/environment + a framed container whose frame motif IS the theme, with header, tabs and panels living inside it. Reference standard: the formal-letter envelope (`grade8/unit12p12.html`), the Past Simple **film reel** (sprocket holes on both edges + clapperboard), and the Posters **notice board** (wooden posts + screws). Header, tab style, and panels all match the theme.
+- **Always give MAXIMUM effort on layout** — every writing lesson is a polished, immersive showpiece, not a quick template fill.
+- **Add encouraging effects** (teacher's standing requirement): on each **correct answer** show a celebratory micro-animation (sparkle/pop ✨), and on **task completion** (all checklist items ticked, or all practice answered correctly) fire a **confetti burst + a bouncing badge/stamp**. Keep it lightweight inline JS/CSS.
 - Each lesson is **fully self-contained** (all CSS/JS inline). Real tabs (click to show/hide; only the active panel visible).
 - Tab bar: horizontally scrollable on mobile, wraps on wider screens (`@media (min-width:700px)`).
 - Gamification badge/stamp themed to the **lesson topic** (saved to `localStorage`) — never travel/airport.
