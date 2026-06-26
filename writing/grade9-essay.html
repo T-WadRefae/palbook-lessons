@@ -34,11 +34,17 @@
     linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px) 0 0/20px 20px,
     linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px) 0 0/20px 20px;pointer-events:none;}
   .arch-head .row{position:relative;display:flex;align-items:center;justify-content:center;gap:16px;}
-  /* the 3-floor building */
-  .tower3{flex:none;width:78px;}
-  .floor{border:2px solid var(--gold);border-radius:4px;margin-bottom:4px;text-align:center;font-family:'Playfair Display';font-weight:700;font-size:.6rem;color:#0a1426;padding:5px 0;}
-  .floor.f-in{background:#bcdcf5;} .floor.f-bo{background:#bfe6cf;height:38px;display:flex;align-items:center;justify-content:center;} .floor.f-co{background:#f6c9dd;}
-  .roof{width:0;height:0;border-left:43px solid transparent;border-right:43px solid transparent;border-bottom:16px solid var(--gold);margin:0 auto -2px;}
+  /* the 3-floor essay building (SVG) */
+  .bldg-svg{flex:none;width:112px;height:auto;overflow:visible;}
+  .bldg-svg .out{stroke:var(--gold);stroke-width:2;}
+  .bldg-svg .win{fill:rgba(255,255,255,.6);stroke:rgba(10,20,38,.25);stroke-width:.8;}
+  .bldg-svg .door{fill:#0d1d38;}
+  .bldg-svg .ft{fill:#0a1426;font-family:'Playfair Display',serif;font-weight:700;}
+  .bldg-svg .flag{fill:var(--gold);}
+  .bldg-svg .dim{stroke:var(--gold);stroke-width:1;opacity:.8;}
+  .bldg-svg .num{fill:var(--gold);font-family:'Playfair Display',serif;font-weight:700;font-size:11px;}
+  @keyframes flagwave{0%,100%{transform:scaleX(1);}50%{transform:scaleX(.7);}}
+  .bldg-svg .flagp{transform-origin:62px 10px;animation:flagwave 2.4s ease-in-out infinite;}
   .titles{text-align:center;}
   .arch-head .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:.56rem;background:var(--gold);color:#2a2208;padding:3px 12px;border-radius:20px;}
   .arch-head h1{font-family:'Playfair Display',serif;font-weight:800;letter-spacing:.5px;font-size:clamp(1.1rem,4vw,1.65rem);margin:5px 0 2px;}
@@ -133,12 +139,32 @@
   <!-- ════ DISTINCTIVE HEADER ════ -->
   <header class="arch-head">
     <div class="row">
-      <div class="tower3">
-        <div class="roof"></div>
-        <div class="floor f-in">INTRO</div>
-        <div class="floor f-bo">BODY</div>
-        <div class="floor f-co">CONCLUSION</div>
-      </div>
+      <svg class="bldg-svg" viewBox="0 0 124 156" role="img" aria-label="A three-floor essay building: Introduction, Body, Conclusion">
+        <g class="flagp">
+          <line class="dim" x1="62" y1="4" x2="62" y2="20"/>
+          <path class="flag" d="M62,5 L80,10 L62,15 Z"/>
+        </g>
+        <rect class="flag" x="22" y="20" width="80" height="7" rx="1"/>
+        <!-- intro floor -->
+        <rect class="out" x="26" y="27" width="72" height="38" fill="#bcdcf5"/>
+        <rect class="win" x="36" y="33" width="16" height="11"/><rect class="win" x="72" y="33" width="16" height="11"/>
+        <text class="ft" x="62" y="60" text-anchor="middle" font-size="11">INTRO</text>
+        <!-- body floor -->
+        <rect class="out" x="26" y="65" width="72" height="46" fill="#bfe6cf"/>
+        <rect class="win" x="35" y="71" width="14" height="11"/><rect class="win" x="55" y="71" width="14" height="11"/><rect class="win" x="75" y="71" width="14" height="11"/>
+        <text class="ft" x="62" y="103" text-anchor="middle" font-size="12">BODY</text>
+        <!-- conclusion floor -->
+        <rect class="out" x="26" y="111" width="72" height="38" fill="#f6c9dd"/>
+        <text class="ft" x="62" y="124" text-anchor="middle" font-size="10">CONCL.</text>
+        <rect class="door" x="54" y="129" width="16" height="20" rx="1"/>
+        <!-- ground -->
+        <line class="out" x1="16" y1="149" x2="108" y2="149"/>
+        <!-- floor numbers -->
+        <line class="dim" x1="106" y1="27" x2="106" y2="149"/>
+        <text class="num" x="111" y="50">1</text>
+        <text class="num" x="111" y="92">2</text>
+        <text class="num" x="111" y="134">3</text>
+      </svg>
       <div class="titles">
         <span class="grade-tag">Grade 9 · Writing</span>
         <h1>The 3-Paragraph Essay</h1>

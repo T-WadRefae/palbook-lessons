@@ -37,17 +37,22 @@
   .bp-head .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:.56rem;background:var(--cyan);color:#063047;padding:3px 12px;border-radius:20px;}
   .bp-head h1{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:clamp(1.1rem,4vw,1.6rem);margin:5px 0 2px;color:#eaf8fd;}
   .bp-head .teacher{font-family:'Oswald';font-size:.64rem;letter-spacing:1px;color:#9cd0e4;}
-  /* the bridge */
-  .bridge{position:relative;height:70px;margin-top:8px;}
-  .tower{position:absolute;bottom:0;width:10px;height:58px;background:var(--cyan);box-shadow:0 0 8px rgba(70,194,230,.6);}
-  .tower.lft{left:16%;} .tower.rgt{right:16%;}
-  .deck{position:absolute;bottom:14px;left:6%;right:6%;height:5px;background:var(--cyan2);border-radius:3px;}
-  .cable{position:absolute;bottom:14px;height:2px;background:rgba(143,224,244,.7);transform-origin:left;}
-  .pill{position:absolute;bottom:20px;width:40px;height:26px;border:2px solid var(--cyan);border-radius:5px;display:grid;place-items:center;
-    font-family:'Oswald';font-weight:700;font-size:.66rem;color:#063047;background:#dff4fb;}
-  .pill.p1{left:11%;} .pill.p2{right:11%;}
-  .linkchip{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);background:var(--amber);color:#3a2d06;
-    font-family:'Oswald';font-weight:700;font-size:.6rem;letter-spacing:1px;padding:3px 10px;border-radius:14px;box-shadow:0 3px 6px rgba(0,0,0,.4);}
+  /* blueprint annotations */
+  .blue-stamp{position:absolute;right:12px;top:10px;border:2px solid var(--cyan);color:var(--cyan);font-family:'Oswald';font-weight:700;font-size:.5rem;letter-spacing:1.5px;padding:3px 8px;border-radius:3px;transform:rotate(7deg);opacity:.85;z-index:3;}
+  .titleblock{position:absolute;left:12px;bottom:10px;border:1px solid rgba(143,224,244,.45);border-radius:2px;font-family:'Oswald';font-size:.44rem;letter-spacing:1px;color:#bfe6f4;line-height:1.5;z-index:3;}
+  .titleblock b{display:block;padding:2px 8px;border-bottom:1px solid rgba(143,224,244,.3);font-weight:600;}
+  .titleblock b:last-child{border-bottom:0;color:var(--cyan2);}
+  .bridge-svg{position:relative;display:block;width:100%;max-width:540px;height:auto;margin:8px auto 0;overflow:visible;}
+  .bridge-svg .ln{stroke:var(--cyan);stroke-width:2.5;}
+  .bridge-svg .cab{stroke:var(--cyan2);stroke-width:2.5;fill:none;filter:drop-shadow(0 0 3px rgba(70,194,230,.6));}
+  .bridge-svg .sus{stroke:rgba(143,224,244,.7);stroke-width:1.2;}
+  .bridge-svg .deckln{stroke:var(--cyan2);stroke-width:5;stroke-linecap:round;}
+  .bridge-svg text{font-family:'Oswald',sans-serif;font-weight:700;fill:#063047;}
+  .bp-pill{fill:#dff4fb;stroke:var(--cyan);stroke-width:2;}
+  .linkflag{fill:var(--amber);filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));}
+  .linkflag-txt{font-family:'Oswald',sans-serif;font-weight:700;fill:#3a2d06;font-size:10px;}
+  @keyframes drive{0%{transform:translateX(0);}100%{transform:translateX(312px);}}
+  .bridge-svg .car{animation:drive 6s linear infinite;}
 
   nav.tabs{display:flex;gap:7px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;padding:13px 12px 2px;}
   nav.tabs::-webkit-scrollbar{display:none;}
@@ -135,19 +140,39 @@
 <div class="wrap">
   <!-- ════ DISTINCTIVE HEADER ════ -->
   <header class="bp-head">
+    <div class="blue-stamp">DWG&nbsp;Nº&nbsp;08</div>
+    <div class="titleblock"><b>SCALE 1:1</b><b>BRIDGE · P1 → P2</b></div>
     <div class="titles">
       <span class="grade-tag">Grade 8 · Writing</span>
       <h1>The Paragraph Bridge</h1>
       <div class="teacher">FROM ONE PARAGRAPH TO TWO · T. WAD REFAE</div>
     </div>
-    <div class="bridge">
-      <span class="tower lft"></span><span class="tower rgt"></span>
-      <span class="deck"></span>
-      <span class="cable" style="left:16%;width:34%;transform:rotate(20deg);"></span>
-      <span class="cable" style="right:16%;width:34%;transform:rotate(-20deg) translateX(-100%);transform-origin:right;"></span>
-      <span class="pill p1">P1</span><span class="pill p2">P2</span>
-      <span class="linkchip">In addition…</span>
-    </div>
+    <svg class="bridge-svg" viewBox="0 0 400 100" role="img" aria-label="A suspension bridge linking Paragraph 1 to Paragraph 2">
+      <!-- deck -->
+      <line class="deckln" x1="24" y1="74" x2="376" y2="74"/>
+      <!-- towers -->
+      <line class="ln" x1="100" y1="24" x2="100" y2="84"/>
+      <line class="ln" x1="300" y1="24" x2="300" y2="84"/>
+      <!-- main suspension cable -->
+      <path class="cab" d="M24,74 L100,24 Q200,78 300,24 L376,74"/>
+      <!-- suspenders -->
+      <line class="sus" x1="140" y1="43" x2="140" y2="74"/>
+      <line class="sus" x1="170" y1="50" x2="170" y2="74"/>
+      <line class="sus" x1="200" y1="52" x2="200" y2="74"/>
+      <line class="sus" x1="230" y1="50" x2="230" y2="74"/>
+      <line class="sus" x1="260" y1="43" x2="260" y2="74"/>
+      <!-- a little car crossing the bridge -->
+      <g class="car"><rect x="30" y="64" width="20" height="9" rx="2" fill="#f2b134"/><circle cx="36" cy="74" r="2.2" fill="#0a2d4a"/><circle cx="44" cy="74" r="2.2" fill="#0a2d4a"/></g>
+      <!-- paragraph pillars -->
+      <rect class="bp-pill" x="40" y="50" width="40" height="24" rx="4"/>
+      <text x="60" y="67" text-anchor="middle" font-size="13">P1</text>
+      <rect class="bp-pill" x="320" y="50" width="40" height="24" rx="4"/>
+      <text x="340" y="67" text-anchor="middle" font-size="13">P2</text>
+      <!-- link banner -->
+      <line class="sus" x1="200" y1="20" x2="200" y2="40"/>
+      <rect class="linkflag" x="158" y="4" width="84" height="18" rx="9"/>
+      <text class="linkflag-txt" x="200" y="17" text-anchor="middle">In addition…</text>
+    </svg>
   </header>
 
   <nav class="tabs">
