@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade 9 · Writing · Expanding Notes into Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --board:#26303a; --board2:#1b232b; --sheet:#fbf8f0; --frame-edge:#2a333d;
+    --coral:#ef6f5e; --coral-deep:#cf4f3e; --teal:#2bb3a3; --teal-deep:#1f897c; --amber:#f2b134;
+    --line:#e6dfce; --ink:#2a2a26; --ink-soft:#666055; --good:#2f8a6b; --good-deep:#216a52; --red:#c0392b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{font-size:clamp(16px,1.4vw,19px);}
+  body{min-height:100%;font-family:'Nunito',sans-serif;color:var(--ink);overflow-x:hidden;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 12%, rgba(242,177,52,.10), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 24px, transparent 24px 48px),
+      linear-gradient(180deg,#2f3a45,#1a2128);
+    padding:24px 12px 64px;-webkit-font-smoothing:antialiased;}
+  .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;}
+
+  /* ════════ STORYBOARD SHEET ════════ */
+  .storyboard{max-width:850px;margin:0 auto;position:relative;background:var(--sheet);border-radius:10px;padding:0 0 16px;
+    border:3px solid var(--board);box-shadow:0 22px 50px rgba(0,0,0,.5);
+    animation:land .55s cubic-bezier(.22,.68,0,1.2) both;}
+  @keyframes land{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:none;}}
+
+  /* ════ DISTINCTIVE HEADER — storyboard frames + marker ════ */
+  .sb-head{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--board),var(--board2));color:#fff;
+    padding:16px 14px 14px;border-bottom:4px dashed var(--amber);border-radius:7px 7px 0 0;}
+  .sb-head .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:.56rem;background:var(--amber);color:#2a2208;padding:3px 12px;border-radius:20px;}
+  .sb-head h1{font-family:'Permanent Marker',cursive;font-weight:400;letter-spacing:1px;font-size:clamp(1.5rem,5.5vw,2.4rem);margin:5px 0 2px;color:#fff;text-shadow:2px 2px 0 var(--coral-deep);}
+  .sb-head .sub{font-family:'Fredoka';font-weight:600;font-size:.76rem;color:#d4dde4;}
+  .sb-head .teacher{font-family:'Permanent Marker',cursive;font-size:.8rem;color:#bcc6cf;margin-top:2px;}
+  /* mini sketch frames row */
+  .frames{display:flex;justify-content:center;gap:8px;margin-top:11px;flex-wrap:wrap;}
+  .mini{width:62px;height:40px;background:#f4efe2;border:2px solid #0f141a;border-radius:4px;position:relative;
+    box-shadow:0 3px 0 rgba(0,0,0,.35);overflow:hidden;}
+  .mini span{position:absolute;top:1px;left:3px;font-family:'Permanent Marker';font-size:.5rem;color:#8a8170;}
+  .mini.f1::after{content:"🧒";position:absolute;inset:0;display:grid;place-items:center;font-size:1rem;}
+  .mini.f2::after{content:"🐕";position:absolute;inset:0;display:grid;place-items:center;font-size:1rem;}
+  .mini.f3::after{content:"🌳";position:absolute;inset:0;display:grid;place-items:center;font-size:1rem;}
+  .mini.f4::after{content:"🎉";position:absolute;inset:0;display:grid;place-items:center;font-size:1rem;}
+  .pencil{position:absolute;right:12px;top:12px;font-size:1.7rem;transform:rotate(40deg);}
+
+  nav.tabs{display:flex;gap:7px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;padding:13px 12px 2px;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex:0 0 auto;cursor:pointer;border:2px solid #cdc6b4;background:#f1ece0;color:var(--board);
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:.8rem;padding:9px 14px;border-radius:9px;transition:.15s;}
+  .tab-btn:hover{background:#e9e2d3;}
+  .tab-btn.active{background:var(--board);color:var(--amber);border-color:var(--board2);}
+  @media(min-width:700px){nav.tabs{flex-wrap:wrap;overflow-x:visible;justify-content:center;}}
+
+  .scene{margin:10px 12px 0;background:#fff;border-radius:8px;border:1px solid var(--line);padding:8px 12px;}
+  .panel{display:none;padding:16px 6px 20px;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  h2.sh{font-family:'Permanent Marker',cursive;color:var(--coral-deep);font-size:1.2rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .hint{background:#e8f6f3;border-right:5px solid var(--teal);border-radius:10px;padding:9px 12px;margin:0 0 16px;font-size:.95rem;color:#1c5e54;font-weight:600;}
+
+  .obj-list{list-style:none;display:grid;gap:10px;}
+  .obj-list li{display:flex;align-items:flex-start;gap:10px;background:#faf6ec;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:700;font-size:.95rem;}
+  .obj-list .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;display:grid;place-items:center;font-family:'Fredoka';font-size:.85rem;}
+  .mission{margin-top:16px;background:linear-gradient(135deg,#fdeee0,#fbe0cf);border:2px dashed var(--coral);border-radius:14px;padding:14px 16px;}
+  .mission .ttl{font-family:'Permanent Marker';color:var(--coral-deep);font-size:1rem;margin-bottom:4px;}
+
+  /* notes -> story */
+  .sbgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+  .cell{background:#faf6ec;border:2px solid var(--board);border-radius:6px;padding:8px 6px;text-align:center;font-family:'Permanent Marker';font-size:.7rem;color:#4a463c;position:relative;min-height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
+  .cell .ic{font-size:1.4rem;}
+  .cell .n{position:absolute;top:2px;left:4px;font-size:.5rem;color:#9a9075;}
+  .storyout{background:#fff;border:1px dashed var(--coral);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-family:'Fredoka';font-weight:500;line-height:1.9;font-size:1rem;}
+  .storyout .lbl{font-family:'Permanent Marker';font-size:.8rem;color:var(--coral-deep);margin-bottom:5px;}
+  .det{background:#fde8e4;border-radius:5px;padding:0 5px;font-weight:700;color:var(--coral-deep);}
+  .seq{background:#d9f2ee;border-radius:5px;padding:0 5px;font-weight:700;color:var(--teal-deep);}
+  @media(max-width:560px){.sbgrid{grid-template-columns:repeat(2,1fr);}}
+
+  .parts{display:grid;gap:10px;}
+  .part{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s;}
+  .part:hover{border-color:var(--coral);}
+  .part-tag{display:flex;align-items:center;gap:8px;padding:12px 14px;font-weight:800;font-size:.95rem;background:#fdeee0;}
+  .part-tag .arr{transition:transform .2s;color:var(--coral-deep);font-size:.7rem;}
+  .part.open .arr{transform:rotate(90deg);}
+  .part-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .part.open .part-body{max-height:320px;}
+  .part-inner{padding:4px 14px 14px;}
+  .en-tip{background:#fdeee0;border-radius:8px;padding:7px 10px;font-weight:700;font-size:.88rem;color:var(--coral-deep);margin-bottom:8px;}
+  .part-inner .ar{font-size:.95rem;color:#44403a;font-weight:600;line-height:1.7;}
+
+  .ex{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .ex .q{font-family:'Fredoka';font-size:16px;font-weight:600;margin-bottom:10px;}
+  .pick{display:flex;gap:8px;flex-wrap:wrap;}
+  .pick button{position:relative;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font:inherit;font-weight:800;font-size:.9rem;cursor:pointer;transition:.12s;}
+  .pick button:hover{border-color:var(--coral);}
+  .pick button.right{background:#dff0e9;border-color:var(--good);color:var(--good-deep);animation:pop .4s ease;}
+  .pick button.wrong{background:#fde3df;border-color:var(--red);color:#a82c22;animation:shake .3s ease;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .fb{margin-top:8px;font-weight:800;font-size:.88rem;min-height:18px;}
+
+  .chk{list-style:none;display:grid;gap:9px;margin:0 0 18px;}
+  .chk li{display:flex;align-items:center;gap:11px;background:#faf6ec;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.12s;}
+  .chk li .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #d6cdb6;color:transparent;display:grid;place-items:center;font-weight:900;transition:.12s;}
+  .chk li.done{background:#dff0e9;border-color:var(--good);}
+  .chk li.done .box{background:var(--good);border-color:var(--good);color:#fff;animation:pop .4s ease;}
+  .progress{background:#e8dfc9;border-radius:999px;height:16px;overflow:hidden;}
+  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--coral-deep),var(--amber));transition:width .4s;}
+  .p-text{text-align:center;font-weight:800;color:var(--ink-soft);margin-top:7px;font-size:.9rem;}
+  .stamp{margin:16px auto 0;max-width:280px;text-align:center;border:3px dashed #d6cdb6;border-radius:16px;padding:18px;opacity:.4;transition:.3s;transform:scale(.96);}
+  .stamp.win{opacity:1;border-color:var(--good);background:#f1fbf6;animation:stampPop .6s cubic-bezier(.2,.8,.2,1.4);}
+  @keyframes stampPop{0%{transform:scale(.4) rotate(-12deg);opacity:0;}60%{transform:scale(1.15) rotate(4deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+  .stamp .big{font-size:46px;} .stamp .lbl{font-family:'Permanent Marker';color:var(--good-deep);font-size:1.2rem;margin-top:2px;}
+
+  .ws{text-align:center;padding:18px 14px;}
+  .ws .icon{font-size:54px;} .ws h3{font-family:'Permanent Marker';color:var(--coral-deep);font-size:1.15rem;margin:8px 0 6px;}
+  .ws .soon{display:inline-block;background:#e8dfc9;color:#7a6f58;border-radius:999px;padding:7px 18px;font-weight:800;margin-top:10px;}
+  .ws .note{margin-top:14px;font-size:.9rem;color:var(--ink-soft);font-weight:600;}
+  footer{text-align:center;margin:16px 12px 0;font-size:.82rem;color:#a9b2bb;font-weight:700;}
+
+  .confetti{position:fixed;top:-14px;width:10px;height:14px;border-radius:2px;z-index:9999;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(106vh) rotate(720deg);}}
+  .spark{position:absolute;pointer-events:none;font-size:14px;z-index:50;animation:sparkpop .7s ease forwards;}
+  @keyframes sparkpop{0%{opacity:0;transform:translate(0,0) scale(.4);}30%{opacity:1;}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.2);}}
+</style>
+</head>
+<body>
+
+<div class="storyboard">
+  <!-- ════ DISTINCTIVE HEADER ════ -->
+  <header class="sb-head">
+    <span class="pencil">✏️</span>
+    <div style="text-align:center">
+      <span class="grade-tag">Grade 9 · Writing</span>
+      <h1>STORYBOARD</h1>
+      <div class="sub">🎬 Expanding Notes into a Story</div>
+      <div class="teacher">~ T. Wad Refae</div>
+    </div>
+    <div class="frames">
+      <div class="mini f1"><span>1</span></div>
+      <div class="mini f2"><span>2</span></div>
+      <div class="mini f3"><span>3</span></div>
+      <div class="mini f4"><span>4</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="show('obj',this)">📌 Objectives</button>
+    <button class="tab-btn" onclick="show('model',this)">🎬 The Board</button>
+    <button class="tab-btn" onclick="show('build',this)">✏️ Build It</button>
+    <button class="tab-btn" onclick="show('check',this)">✅ Checklist</button>
+    <button class="tab-btn" onclick="show('ws',this)">📝 Worksheet</button>
+  </nav>
+
+  <div class="scene">
+
+    <section id="tab-obj" class="panel active">
+      <h2 class="sh">📌 Lesson Objectives</h2>
+      <p class="hint ar">في نهاية الدرس، رح يكون الطالب قادر على: ✍️</p>
+      <ul class="obj-list">
+        <li><span class="num">1</span>Plan a story from short notes (who / where / what / end).</li>
+        <li><span class="num">2</span>Expand each note with <b>details &amp; description</b>.</li>
+        <li><span class="num">3</span>Add <b>feelings</b> and an interesting opening &amp; ending.</li>
+        <li><span class="num">4</span>Link the events in order to make a full story.</li>
+      </ul>
+      <div class="mission">
+        <div class="ttl">🎬 Today's Mission</div>
+        <p class="ar" style="margin:0;font-weight:600">كل قصة تبدأ بلوح أفكار! 🎬 مهمتنا نأخذ ملاحظات قصيرة (لقطات) ونوسّعها بالتفاصيل والمشاعر حتى تصبح قصة كاملة.</p>
+      </div>
+    </section>
+
+    <section id="tab-model" class="panel">
+      <h2 class="sh">🎬 From Frames to Story</h2>
+      <p class="hint ar">هذه لقطات القصة كملاحظات، وتحتها القصة الموسّعة — ثم اضغط على كل جزء 👇.</p>
+      <div class="sbgrid">
+        <div class="cell"><span class="n">1</span><span class="ic">🧒</span>boy · dog</div>
+        <div class="cell"><span class="n">2</span><span class="ic">❓</span>lost · park</div>
+        <div class="cell"><span class="n">3</span><span class="ic">🔎</span>searched</div>
+        <div class="cell"><span class="n">4</span><span class="ic">🎉</span>found · happy</div>
+      </div>
+      <div class="storyout">
+        <div class="lbl">✍️ The Expanded Story</div>
+        <span class="det">One sunny morning</span>, Omar took his little dog to the park. <span class="seq">Suddenly</span>, the dog ran away and was lost! Omar <span class="det">searched everywhere</span> and called its name with a worried heart. <span class="seq">Finally</span>, he heard a soft bark behind a tree. He <span class="det">was so happy</span> to hold his dog again.
+      </div>
+      <div class="parts">
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🗺️ Plan with notes (who/where/what/end)</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Notes are the plan: characters, place, problem, ending.</div>
+            <p class="ar">الملاحظات هي مخطّط القصة: <b>من</b> (الشخصيات)، <b>أين</b> (المكان)، <b>ماذا حدث</b> (الحدث/المشكلة)، و<b>النهاية</b>.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🎨 Add details &amp; description</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Add adjectives & setting: "a little dog", "one sunny morning".</div>
+            <p class="ar">وسّع كل ملاحظة بالتفاصيل والصفات ووصف المكان والزمان: <em>little dog, sunny morning, big park</em>.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>💖 Add feelings &amp; a hook</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Show emotions and a strong opening/ending: worried, so happy.</div>
+            <p class="ar">أضِف المشاعر (<em>worried, excited, so happy</em>) وافتتاحية جذّابة ونهاية مؤثّرة — هذا ما يجعل القصة حيّة.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🔗 Link &amp; sequence the events</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Use time/drama words: One morning, Suddenly, Then, Finally.</div>
+            <p class="ar">اربط اللقطات بكلمات الزمن والتشويق: <em>One morning, Suddenly, Then, After that, Finally</em> — لتتدفّق القصة.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-build" class="panel">
+      <h2 class="sh">✏️ Direct the Scene</h2>
+      <p class="hint ar">اختر الإجابة التي تبني قصة أفضل 👇</p>
+      <div class="ex" data-answer="One morning, Omar lost his little dog."><div class="q">Which is a STORY sentence (expanded)?</div><div class="pick"><button onclick="pick(this,'One morning, Omar lost his little dog.')">One morning, Omar lost his little dog.</button><button onclick="pick(this,'boy lost dog')">boy lost dog</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="details &amp; feelings"><div class="q">To expand a note, you add…</div><div class="pick"><button onclick="pick(this,'details &amp; feelings')">details &amp; feelings</button><button onclick="pick(this,'nothing new')">nothing new</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="One sunny morning, …"><div class="q">Best story opening:</div><div class="pick"><button onclick="pick(this,'One sunny morning, …')">One sunny morning, …</button><button onclick="pick(this,'dog park lost')">dog park lost</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="Suddenly,"><div class="q">A word to show a surprise event:</div><div class="pick"><button onclick="pick(this,'Suddenly,')">Suddenly,</button><button onclick="pick(this,'Also,')">Also,</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="how it ended and how he felt"><div class="q">A good ending shows…</div><div class="pick"><button onclick="pick(this,'how it ended and how he felt')">how it ended and how he felt</button><button onclick="pick(this,'a list of words')">a list of words</button></div><div class="fb"></div></div>
+    </section>
+
+    <section id="tab-check" class="panel">
+      <h2 class="sh">✅ My Story Check</h2>
+      <p class="hint ar">اضغط على كل بند بعد ما تتأكد منه في قصتك ✍️</p>
+      <ul class="chk" id="chkList">
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I planned with notes (who, where, what, end).</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I expanded each note into full sentences.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I added details and description.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I showed feelings and used a strong opening.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I linked the events with sequence words.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>My story has a clear ending.</li>
+      </ul>
+      <div class="progress"><div class="fill" id="pFill"></div></div>
+      <div class="p-text" id="pText">0 / 6</div>
+      <div class="stamp" id="stamp"><div class="big">🎬</div><div class="lbl">Story Complete!</div></div>
+    </section>
+
+    <section id="tab-ws" class="panel">
+      <h2 class="sh">📝 Worksheet</h2>
+      <div class="ws">
+        <div class="icon">🎬📄</div>
+        <h3>Practice Worksheet</h3>
+        <p class="ar" style="font-weight:600;color:#666055">ورقة عمل الطباعة لهذا الدرس رح تنضاف هنا قريباً.</p>
+        <!-- WORKSHEET-LINK: ضعي رابط Google Drive / PDF هنا لاحقاً، واستبدلي زر "Coming soon" برابط فعلي -->
+        <span class="soon">⏳ Coming soon · قريباً</span>
+        <p class="note ar">سيتم رفع ورقة العمل لاحقاً لتُطبع وتُحلّ في الصف 🌸</p>
+      </div>
+    </section>
+
+  </div><!-- /scene -->
+  <footer>Prepared with care 🌸 by T. Wad Refae</footer>
+</div>
+
+<script>
+  function show(id,btn){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active');
+  }
+  function togglePart(el){ el.classList.toggle('open'); }
+  function sparkle(el){
+    const marks=['✨','🎬','⭐','✏️'];
+    for(let i=0;i<5;i++){
+      const s=document.createElement('span'); s.className='spark'; s.textContent=marks[i%marks.length];
+      const r=el.getBoundingClientRect(); s.style.left=(r.width/2)+'px'; s.style.top='4px';
+      s.style.setProperty('--dx',(Math.random()*80-40)+'px'); s.style.setProperty('--dy',(-30-Math.random()*40)+'px');
+      el.appendChild(s); setTimeout(()=>s.remove(),700);
+    }
+  }
+  function celebrate(){
+    const cols=['#ef6f5e','#f2b134','#2bb3a3','#26303a','#cf4f3e','#1f897c'];
+    for(let i=0;i<40;i++){
+      const c=document.createElement('div'); c.className='confetti';
+      c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+      c.style.animationDuration=(1.6+Math.random()*1.4)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
+      c.style.transform='rotate('+(Math.random()*360)+'deg)';
+      document.body.appendChild(c); setTimeout(()=>c.remove(),3200);
+    }
+  }
+  let buildCelebrated=false;
+  function pick(btn,val){
+    const ex=btn.closest('.ex'); const ans=ex.dataset.answer; const fb=ex.querySelector('.fb');
+    ex.querySelectorAll('.pick button').forEach(b=>b.classList.remove('right','wrong'));
+    if(val===ans){
+      btn.classList.add('right'); fb.textContent='✅ Great storytelling!'; fb.style.color='#216a52'; sparkle(btn);
+      const all=[...document.querySelectorAll('.ex')];
+      if(!buildCelebrated && all.every(e=>e.querySelector('.pick button.right'))){ buildCelebrated=true; celebrate(); }
+    } else { btn.classList.add('wrong'); fb.textContent='❌ Make it richer — try again.'; fb.style.color='#a82c22'; }
+  }
+  const KEY='write-g9-expand-done';
+  const items=[...document.querySelectorAll('#chkList li')];
+  let wasComplete=false;
+  function refresh(){
+    const done=items.filter(i=>i.classList.contains('done')).length;
+    document.getElementById('pFill').style.width=(done/items.length*100)+'%';
+    document.getElementById('pText').textContent=done+' / '+items.length;
+    const stamp=document.getElementById('stamp');
+    if(done===items.length){ stamp.classList.add('win'); localStorage.setItem(KEY,'1'); if(!wasComplete){ wasComplete=true; celebrate(); } }
+    else { stamp.classList.remove('win'); wasComplete=false; }
+  }
+  function toggleChk(li){ li.classList.toggle('done'); refresh(); }
+  if(localStorage.getItem(KEY)==='1'){ items.forEach(i=>i.classList.add('done')); wasComplete=true; refresh(); }
+</script>
+</body>
+</html>
