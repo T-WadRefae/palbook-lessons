@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Past Simple — Narrating Past Events</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --amber:#D4A853;--amber-d:#8B5E3C;--parch:#F5E6C8;--parch-d:#E8D0A0;
+  --teal:#4DB6AC;--teal-d:#00796B;--coral:#FF7043;
+  --ink:#2C1810;--ink-s:#6B4D3A;--bg:#FBF5EC;--card:#fff;
+  --rad:18px;--shad:0 4px 18px rgba(44,24,16,.09);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;min-height:100vh;padding-bottom:40px}
+.ar{font-family:'Baloo Bhaijaan 2',system-ui,sans-serif;direction:rtl;text-align:right}
+img{max-width:100%;height:auto;border-radius:14px;display:block}
+
+/* HEADER — parchment-scroll / story theme */
+.hdr{background:linear-gradient(135deg,#F5DEB3 0%,#D4A853 40%,#8B5E3C 80%,#3E2723 100%);position:relative;overflow:hidden}
+.hdr-deco{position:absolute;top:-24px;right:-24px;width:160px;height:160px;background:radial-gradient(circle,rgba(255,255,255,.2) 0%,transparent 68%);border-radius:50%;pointer-events:none}
+.hdr-deco2{position:absolute;bottom:-16px;left:-16px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,255,255,.12) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;padding:26px 20px 16px;gap:14px}
+.hdr-text{flex:1}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.82);margin-bottom:5px}
+.hdr-text h1{font-family:'Fredoka One',cursive;font-size:clamp(20px,5vw,30px);color:#fff;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,.22)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{background:rgba(255,255,255,.22);color:#fff;border-radius:999px;padding:3px 11px;font-size:11px;font-weight:700;backdrop-filter:blur(4px)}
+.hdr-art{flex-shrink:0;width:clamp(70px,17vw,110px);text-align:center;font-size:clamp(52px,14vw,90px);line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.25))}
+
+/* TAB BAR */
+.tab-bar{display:flex;background:#fff;border-bottom:3px solid var(--parch-d);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.t-btn{flex:0 0 auto;padding:13px 14px;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-3px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--ink-s);white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:5px}
+.t-btn:hover{color:var(--amber-d);background:#FBF0E0}
+.t-btn.active{color:var(--amber-d);border-bottom-color:var(--amber-d);background:#FBF0E0}
+.t-btn .em{font-size:16px}
+.prog-wrap{height:5px;background:var(--parch-d)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber-d));transition:width .4s ease;border-radius:0 3px 3px 0}
+
+/* PANELS */
+.panel{display:none;padding:20px 16px;max-width:820px;margin:0 auto}
+.panel.on{display:block}
+
+/* CARDS */
+.card{background:var(--card);border-radius:var(--rad);padding:20px 18px;margin-bottom:16px;box-shadow:var(--shad)}
+.ctitle{font-family:'Fredoka One',cursive;font-size:19px;color:var(--amber-d);margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.csub{font-size:12px;color:var(--ink-s);margin-bottom:12px}
+
+/* HINT / EXPLAIN */
+.hint{background:linear-gradient(135deg,#FFF9C4,#FFF3CD);border-right:4px solid #F9A825;border-radius:12px;padding:11px 13px;margin:10px 0;font-size:13px;line-height:1.7;color:#5D4037}
+.expl{background:#F3F0FF;border-right:4px solid #7C4DFF;border-radius:12px;padding:11px 13px;margin:10px 0;font-size:13px;line-height:1.7;color:#311B92}
+
+/* STORY HOOK */
+.story-card{background:linear-gradient(135deg,#FFF8F0,#FFF3E0);border-radius:16px;padding:20px;margin:12px 0;border:2px solid var(--parch-d)}
+.story-card .line{font-size:15px;line-height:1.8;color:var(--ink)}
+.story-card .line span{font-family:'Fredoka One',cursive;color:var(--amber-d)}
+.timeline{display:flex;align-items:center;justify-content:center;gap:0;margin:16px 0;flex-wrap:wrap}
+.tl-box{background:#fff;border:2px solid var(--parch-d);border-radius:12px;padding:10px 14px;text-align:center;min-width:100px}
+.tl-box .tl-top{font-size:20px;margin-bottom:3px}
+.tl-box .tl-label{font-size:12px;font-weight:700;color:var(--ink-s)}
+.tl-box.past{background:linear-gradient(135deg,#EFEBE9,#D7CCC8);border-color:#A1887F}
+.tl-box.past .tl-label{color:#4E342E}
+.tl-arrow{font-size:22px;color:var(--amber);padding:0 6px}
+
+/* OPTIONS */
+.opt-row{display:flex;flex-direction:column;gap:7px}
+.opt{background:#F8F9FF;border:2px solid #D0D5F0;border-radius:11px;padding:9px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-align:left;transition:all .2s;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--teal-d);background:#E0F2F1}
+.opt.ok{background:#E8F5E9;border-color:#43A047;color:#1B5E20}
+.opt.bad{background:#FFEBEE;border-color:#E53935;color:#B71C1C}
+.fb{font-size:13px;font-weight:700;min-height:18px;margin-top:7px}
+.fb.ok{color:#2E7D32}
+.fb.bad{color:#C62828}
+
+/* VOCAB CARDS */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px;margin:12px 0}
+.vc{background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,.07);border:2px solid #FFE082;transition:transform .18s}
+.vc:hover{transform:translateY(-3px)}
+.vc .em2{font-size:26px;margin-bottom:5px}
+.vc .eng{font-family:'Fredoka One',cursive;font-size:14px;color:var(--amber-d)}
+.vc .arm{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:12px;color:#5D4037;margin-top:3px;direction:rtl}
+
+/* IRREGULAR VERB GRID */
+.irr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0}
+.irr-card{background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-radius:12px;padding:12px 14px;border:2px solid #A5D6A7;display:flex;align-items:center;justify-content:space-between}
+.irr-card .base{font-family:'Fredoka One',cursive;font-size:16px;color:#2E7D32}
+.irr-card .arrow{color:#9E9E9E;font-size:16px}
+.irr-card .past-f{font-family:'Fredoka One',cursive;font-size:16px;color:#C62828}
+
+/* DISCOVER TABLE */
+.dtbl{width:100%;border-collapse:collapse;margin:14px 0;border-radius:13px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07);font-size:14px}
+.dtbl th{background:linear-gradient(135deg,#00796B,#004D40);color:#fff;padding:9px 13px;font-family:'Fredoka One',cursive;font-size:14px}
+.dtbl td{padding:9px 13px;border-bottom:1px solid #E0F2F1;color:var(--ink)}
+.dtbl tr:last-child td{border-bottom:none}
+.dtbl tr:nth-child(odd) td{background:#F0FBF9}
+.dtbl tr:nth-child(even) td{background:#fff}
+.hl{color:#C62828;font-weight:800}
+.hlg{color:#2E7D32;font-weight:800}
+.hlb{color:#0D47A1;font-weight:800}
+
+/* NOTICE */
+.nbox{background:linear-gradient(135deg,#FFF3E0,#FFF8E1);border:2px dashed var(--amber);border-radius:14px;padding:15px;margin:12px 0;text-align:center}
+.nbox .big{font-family:'Fredoka One',cursive;font-size:17px;color:var(--amber-d);margin-bottom:6px}
+.nbox p{color:#5D4037;font-size:13px;line-height:1.6}
+
+/* GRAMMAR */
+.gtbl{width:100%;border-collapse:collapse;margin:10px 0;border-radius:11px;overflow:hidden;font-size:13px}
+.gtbl th{background:linear-gradient(135deg,var(--amber),var(--amber-d));color:#fff;padding:8px 12px;font-family:'Fredoka One',cursive;text-align:left}
+.gtbl td{padding:8px 12px;border-bottom:1px solid var(--parch-d)}
+.gtbl tr:last-child td{border-bottom:none}
+.gtbl tr:nth-child(odd) td{background:var(--parch)}
+.gtbl tr:nth-child(even) td{background:#fff}
+code{background:#FFF3E0;color:var(--amber-d);border-radius:5px;padding:1px 5px;font-size:12px;font-weight:700}
+.rule{background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-left:5px solid #43A047;border-radius:11px;padding:12px 15px;margin:10px 0;font-size:13px;line-height:1.7}
+.rule strong{color:#1B5E20}
+.eg{background:#EDE7F6;border-radius:8px;padding:7px 12px;margin:5px 0;font-size:13px;color:#311B92;font-weight:600;display:block}
+
+/* PRACTICE */
+.lvl{display:inline-block;background:linear-gradient(135deg,#00796B,#004D40);color:#fff;font-family:'Fredoka One',cursive;font-size:12px;padding:2px 11px;border-radius:999px;margin-bottom:9px}
+.ex{margin-bottom:22px}
+.qt{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:9px;line-height:1.5}
+.fline{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin:7px 0;font-size:14px}
+.finp{border:none;border-bottom:2.5px solid var(--amber);background:var(--parch);padding:3px 7px;min-width:90px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:var(--ink);border-radius:5px 5px 0 0;outline:none;transition:border-color .2s}
+.finp:focus{border-bottom-color:var(--teal-d)}
+.finp.ok{background:#E8F5E9;border-bottom-color:#43A047;color:#1B5E20}
+.finp.bad{background:#FFEBEE;border-bottom-color:#E53935;color:#C62828}
+.cbtn{background:linear-gradient(135deg,var(--amber),var(--amber-d));color:#fff;border:none;border-radius:9px;padding:8px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-top:7px;transition:transform .18s,box-shadow .18s;box-shadow:0 3px 10px rgba(139,94,60,.28)}
+.cbtn:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(139,94,60,.38)}
+
+/* WORD BANK */
+.wbank{display:flex;flex-wrap:wrap;gap:7px;padding:11px;background:#F3F4FF;border-radius:11px;margin:8px 0}
+.wt{background:linear-gradient(135deg,#00796B,#004D40);color:#fff;border-radius:7px;padding:4px 11px;font-size:13px;font-weight:700;cursor:pointer;user-select:none;transition:transform .15s}
+.wt:hover{transform:scale(1.05)}
+.wt.used{opacity:.32;pointer-events:none}
+.brow{display:flex;flex-wrap:wrap;gap:5px;min-height:40px;padding:7px 11px;background:#fff;border:2px dashed #C5CAE9;border-radius:11px;align-items:center;margin:7px 0;cursor:pointer}
+.bchip{background:#E0F2F1;color:#00695C;border-radius:6px;padding:3px 9px;font-size:13px;font-weight:700}
+.ph-txt{color:#B0BEC5;font-size:12px}
+
+/* CREATE */
+.speak-wrap{background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-radius:14px;padding:16px;margin:10px 0}
+.speak-wrap h3{font-family:'Fredoka One',cursive;font-size:16px;color:#2E7D32;margin-bottom:8px}
+.qcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:9px 0}
+.qcard{background:#fff;border-radius:11px;padding:11px;border:2px solid #A5D6A7;font-size:13px;font-weight:600;color:#1B5E20}
+.wtxt{width:100%;min-height:110px;border:2px solid var(--parch-d);border-radius:11px;padding:11px 13px;font-family:'Nunito',sans-serif;font-size:13px;color:var(--ink);background:var(--parch);resize:vertical;outline:none;line-height:1.7}
+.wtxt:focus{border-color:var(--amber)}
+.chklist{list-style:none;margin:9px 0}
+.chklist li{display:flex;align-items:center;gap:7px;padding:5px 0;font-size:13px;color:var(--ink-s)}
+.chklist input[type=checkbox]{width:17px;height:17px;accent-color:var(--amber-d);cursor:pointer}
+.wlevel{border-radius:11px;padding:12px 14px;margin-bottom:10px;font-size:13px}
+
+/* QUIZ */
+.qq{margin-bottom:18px}
+.qnum{display:inline-block;background:linear-gradient(135deg,var(--amber),var(--amber-d));color:#fff;font-family:'Fredoka One',cursive;font-size:13px;padding:2px 9px;border-radius:999px;margin-bottom:5px}
+.qtext{font-weight:700;font-size:14px;margin-bottom:9px}
+.qfill{border:none;border-bottom:2.5px solid var(--amber);background:var(--parch);padding:5px 9px;min-width:130px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border-radius:5px 5px 0 0;outline:none;color:var(--ink);transition:border-color .2s}
+.qfill:focus{border-bottom-color:var(--teal-d)}
+.qfill.ok{background:#E8F5E9;border-bottom-color:#43A047;color:#1B5E20}
+.qfill.bad{background:#FFEBEE;border-bottom-color:#E53935;color:#C62828}
+.sub-btn{background:linear-gradient(135deg,#43A047,#2E7D32);color:#fff;border:none;border-radius:13px;padding:13px 32px;font-family:'Fredoka One',cursive;font-size:17px;cursor:pointer;width:100%;margin-top:9px;transition:transform .18s,box-shadow .18s;box-shadow:0 4px 16px rgba(46,125,50,.28)}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(46,125,50,.38)}
+.result-box{display:none;text-align:center;padding:26px 18px;background:linear-gradient(135deg,var(--parch),#FFF8E1);border-radius:18px;margin-top:14px;border:3px solid var(--amber)}
+.result-box .snum{font-family:'Fredoka One',cursive;font-size:50px;color:var(--amber-d);line-height:1}
+.result-box .slbl{font-size:13px;color:var(--ink-s);margin-bottom:8px}
+.result-box .smsg{font-family:'Fredoka One',cursive;font-size:19px;color:#5D4037;margin:8px 0}
+.stamp{font-size:54px;margin:8px 0;filter:drop-shadow(0 4px 8px rgba(0,0,0,.2));animation:stmp .6s cubic-bezier(.2,.8,.3,1.3) forwards}
+@keyframes stmp{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+
+.footer{text-align:center;padding:18px 16px 8px;font-size:12px;color:var(--ink-s)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-deco"></div>
+  <div class="hdr-deco2"></div>
+  <div class="hdr-inner">
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar · English for Palestine</p>
+      <h1>Past Simple<br>Narrating Past Events</h1>
+      <div class="chips">
+        <span class="chip">🎯 Grades 5, 6 &amp; 8</span>
+        <span class="chip">⏱ ~35 min</span>
+        <span class="chip ar">الماضي البسيط</span>
+      </div>
+    </div>
+    <div class="hdr-art">📖</div>
+  </div>
+
+  <nav class="tab-bar">
+    <button class="t-btn active" data-tab="start"><span class="em">🚀</span> Start</button>
+    <button class="t-btn" data-tab="words"><span class="em">📚</span> Words</button>
+    <button class="t-btn" data-tab="discover"><span class="em">🔍</span> Discover</button>
+    <button class="t-btn" data-tab="grammar"><span class="em">🧠</span> Grammar</button>
+    <button class="t-btn" data-tab="practice"><span class="em">✏️</span> Practice</button>
+    <button class="t-btn" data-tab="create"><span class="em">🗣️</span> Create</button>
+    <button class="t-btn" data-tab="quiz"><span class="em">🎯</span> Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14.28%"></div></div>
+</header>
+
+<!-- ══════════════ TAB 1 · START ══════════════ -->
+<section class="panel on" id="tab-start">
+
+  <div class="card">
+    <p class="ctitle">📅 Do You Remember Yesterday?</p>
+    <p class="csub">A story from the past — 2 to 3 minutes.</p>
+
+    <div class="story-card">
+      <div class="line">
+        <span>Yesterday</span>, Ahmad woke up early.<br>
+        He <span>ate</span> his breakfast fast and <span>ran</span> to school.<br>
+        His team <span>played</span> a football match — and they <span>won</span>! ⚽🏆
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-box past">
+        <div class="tl-top">🕐</div>
+        <div class="tl-label">Yesterday<br><small>PAST ✅ finished</small></div>
+      </div>
+      <div class="tl-arrow">→</div>
+      <div class="tl-box">
+        <div class="tl-top">⭐</div>
+        <div class="tl-label">Today<br><small>NOW</small></div>
+      </div>
+    </div>
+
+    <div class="hint ar">
+      الماضي البسيط نستخدمه لنحكي عن أحداث <strong>انتهت</strong> في الماضي. كل الأفعال أعلاه — ate, ran, played, won — هي أفعال ماضي بسيط.
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">💭 Think About It</p>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:12px">
+      Can you tell the class one thing you did <strong>last weekend</strong>?<br>
+      <span style="font-size:13px;color:var(--ink-s)">Think of a sentence like: "Last Friday, I played…"</span>
+    </p>
+
+    <p style="font-weight:700;font-size:14px;margin-bottom:8px">❓ Quick check: Which sentence is Past Simple?</p>
+    <div class="opt-row" id="qc1-row">
+      <button class="opt" onclick="singleCheck('qc1-row','qc1-fb',this,'bad','That is Present Simple — a habit, not a past event.')">She <strong>goes</strong> to school every day.</button>
+      <button class="opt" onclick="singleCheck('qc1-row','qc1-fb',this,'ok','Yes! "went" is Past Simple — the event is finished.')">She <strong>went</strong> to school yesterday.</button>
+      <button class="opt" onclick="singleCheck('qc1-row','qc1-fb',this,'bad','That is Present Continuous — happening now.')">She <strong>is going</strong> to school right now.</button>
+    </div>
+    <div class="fb" id="qc1-fb"></div>
+
+    <div class="hint ar" style="margin-top:12px">
+      <strong>هدف الدرس:</strong> نتعلّم الماضي البسيط — كيف نحكي عن الأحداث التي <strong>انتهت</strong> في الماضي. سنكتشف قاعدة الأفعال المنتظمة وغير المنتظمة بأنفسنا.
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 2 · WORDS ══════════════ -->
+<section class="panel" id="tab-words">
+
+  <div class="card">
+    <p class="ctitle">🕐 Past Time Expressions</p>
+    <p class="csub">These words and phrases tell us the action is in the past.</p>
+    <div class="vgrid">
+      <div class="vc"><div class="em2">📅</div><div class="eng">yesterday</div><div class="arm">أمس</div></div>
+      <div class="vc"><div class="em2">📆</div><div class="eng">last week</div><div class="arm">الأسبوع الماضي</div></div>
+      <div class="vc"><div class="em2">🗓️</div><div class="eng">last year</div><div class="arm">العام الماضي</div></div>
+      <div class="vc"><div class="em2">⏳</div><div class="eng">… ago</div><div class="arm">منذ …</div></div>
+      <div class="vc"><div class="em2">🔢</div><div class="eng">in 2019</div><div class="arm">في عام 2019</div></div>
+      <div class="vc"><div class="em2">✨</div><div class="eng">once</div><div class="arm">ذات مرة</div></div>
+      <div class="vc"><div class="em2">➡️</div><div class="eng">then</div><div class="arm">ثمّ / بعد ذلك</div></div>
+      <div class="vc"><div class="em2">🏁</div><div class="eng">finally</div><div class="arm">أخيرًا</div></div>
+    </div>
+    <div class="hint ar">كلما رأيت إحدى هذه الكلمات في الجملة، توقّع أن تجد فعلًا في الماضي البسيط!</div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">⚡ Common Irregular Verbs</p>
+    <p class="csub">These verbs do NOT follow the -ed rule — you need to learn them!</p>
+    <div class="irr-grid">
+      <div class="irr-card"><span class="base">go</span><span class="arrow">→</span><span class="past-f">went</span></div>
+      <div class="irr-card"><span class="base">eat</span><span class="arrow">→</span><span class="past-f">ate</span></div>
+      <div class="irr-card"><span class="base">have</span><span class="arrow">→</span><span class="past-f">had</span></div>
+      <div class="irr-card"><span class="base">see</span><span class="arrow">→</span><span class="past-f">saw</span></div>
+      <div class="irr-card"><span class="base">come</span><span class="arrow">→</span><span class="past-f">came</span></div>
+      <div class="irr-card"><span class="base">buy</span><span class="arrow">→</span><span class="past-f">bought</span></div>
+      <div class="irr-card"><span class="base">do</span><span class="arrow">→</span><span class="past-f">did</span></div>
+      <div class="irr-card"><span class="base">say</span><span class="arrow">→</span><span class="past-f">said</span></div>
+      <div class="irr-card"><span class="base">run</span><span class="arrow">→</span><span class="past-f">ran</span></div>
+      <div class="irr-card"><span class="base">win</span><span class="arrow">→</span><span class="past-f">won</span></div>
+      <div class="irr-card"><span class="base">take</span><span class="arrow">→</span><span class="past-f">took</span></div>
+      <div class="irr-card"><span class="base">give</span><span class="arrow">→</span><span class="past-f">gave</span></div>
+    </div>
+    <div class="hint ar">الأفعال الشاذة ليس لها قاعدة — حفظها هو الحل. ابدأ بالأكثر شيوعًا: <strong>go/went · have/had · see/saw · eat/ate</strong>.</div>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 3 · DISCOVER ══════════════ -->
+<section class="panel" id="tab-discover">
+
+  <div class="card">
+    <p class="ctitle">👀 Regular Verbs — Spot the Pattern</p>
+    <p class="csub">Look at these verbs in the present and the past. What was added?</p>
+
+    <table class="dtbl">
+      <tr><th>Base form (now)</th><th>Past Simple (yesterday)</th></tr>
+      <tr><td>I <span class="hlb">walk</span> to school.</td><td>I <span class="hlg">walk<strong>ed</strong></span> to school.</td></tr>
+      <tr><td>They <span class="hlb">play</span> football.</td><td>They <span class="hlg">play<strong>ed</strong></span> football.</td></tr>
+      <tr><td>She <span class="hlb">study</span> English.</td><td>She <span class="hlg">studi<strong>ed</strong></span> English.</td></tr>
+      <tr><td>He <span class="hlb">stop</span>.</td><td>He <span class="hlg">stop<strong>ped</strong></span>.</td></tr>
+    </table>
+
+    <div class="nbox">
+      <div class="big">🤔 What do you notice?</div>
+      <p>Look at the green words — what was added to make Past Simple? Are there any spelling changes?</p>
+    </div>
+
+    <p style="font-weight:700;font-size:14px;margin:12px 0 8px">What do regular verbs add in Past Simple?</p>
+    <div class="opt-row" id="qc2-row">
+      <button class="opt" onclick="singleCheck('qc2-row','qc2-fb',this,'bad','No — -s is for Present Simple with he/she/it.')">They add <strong>-s</strong> at the end.</button>
+      <button class="opt" onclick="singleCheck('qc2-row','qc2-fb',this,'ok','Correct! Regular verbs add -ed (sometimes with a spelling change).')">They add <strong>-ed</strong> at the end.</button>
+      <button class="opt" onclick="singleCheck('qc2-row','qc2-fb',this,'bad','No change in ending means the verb is not in past form.')">They do not change at all.</button>
+    </div>
+    <div class="fb" id="qc2-fb"></div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">⚡ Irregular Verbs — Something Different</p>
+    <p class="csub">Now look at these past forms. Do they follow the -ed rule?</p>
+
+    <table class="dtbl">
+      <tr><th>Base form</th><th>Past Simple</th></tr>
+      <tr><td>I <span class="hlb">go</span> to school.</td><td>I <span class="hl">went</span> to school.</td></tr>
+      <tr><td>She <span class="hlb">eat</span>s breakfast.</td><td>She <span class="hl">ate</span> breakfast.</td></tr>
+      <tr><td>We <span class="hlb">see</span> the film.</td><td>We <span class="hl">saw</span> the film.</td></tr>
+      <tr><td>He <span class="hlb">buy</span>s bread.</td><td>He <span class="hl">bought</span> bread.</td></tr>
+    </table>
+
+    <div class="nbox">
+      <div class="big">💡 Did you spot it?</div>
+      <p>Irregular verbs do NOT add -ed. They change completely to a <strong>new word</strong>.<br>
+      There is no rule — you must <strong>memorise</strong> them!</p>
+    </div>
+
+    <div class="expl ar">
+      الأفعال الشاذة لا تتبع قاعدة -ed — لكل فعل شاذ شكله الخاص في الماضي.<br>
+      مثال: go → went، eat → ate، see → saw. يجب حفظها.
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">❓ Negatives &amp; Questions — Spot the Pattern</p>
+    <p class="csub">How do we make negatives and questions in Past Simple?</p>
+
+    <table class="dtbl">
+      <tr><th>Affirmative ✅</th><th>Negative ❌</th><th>Question ❓</th></tr>
+      <tr>
+        <td>I <span class="hlg">went</span>.</td>
+        <td>I <span class="hl">didn't</span> <span class="hlb">go</span>.</td>
+        <td><span class="hl">Did</span> you <span class="hlb">go</span>?</td>
+      </tr>
+      <tr>
+        <td>She <span class="hlg">ate</span>.</td>
+        <td>She <span class="hl">didn't</span> <span class="hlb">eat</span>.</td>
+        <td><span class="hl">Did</span> she <span class="hlb">eat</span>?</td>
+      </tr>
+    </table>
+
+    <div class="nbox">
+      <div class="big">💡 Key discovery!</div>
+      <p>With <strong>didn't</strong> and <strong>Did</strong>, the verb goes back to its <strong>base form</strong>.<br>
+      <span style="color:#C62828">❌ I didn't <del>went</del></span> &nbsp; <span style="color:#2E7D32">✅ I didn't <strong>go</strong></span></p>
+    </div>
+
+    <div class="expl ar">
+      مع النفي والسؤال في الماضي البسيط نستخدم <strong>did / didn't</strong>، والفعل الرئيسي يرجع لصيغته الأصلية.<br>
+      ❌ She didn't <em>went</em> &nbsp; ✅ She didn't <em>go</em>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 4 · GRAMMAR ══════════════ -->
+<section class="panel" id="tab-grammar">
+
+  <div class="card">
+    <p class="ctitle">📌 When Do We Use It?</p>
+    <div class="rule">
+      Use <strong>Past Simple</strong> for:<br>
+      ✅ <strong>Completed actions</strong> — things that started and finished in the past.<br>
+      ✅ <strong>Stories &amp; narration</strong> — "First… then… finally…"<br>
+      ✅ <strong>Past habits</strong> — things you used to do regularly.
+    </div>
+    <span class="eg">Ahmad <strong>visited</strong> his grandmother last Friday. (completed)</span>
+    <span class="eg">He <strong>woke up</strong>, <strong>ate</strong> breakfast, then <strong>left</strong>. (story)</span>
+    <div class="hint ar">نستخدم الماضي البسيط: للأحداث المنتهية — القصص والحكايات — والعادات الماضية.</div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">📐 Regular Verbs — How to Form</p>
+    <table class="gtbl">
+      <tr><th>Rule</th><th>Base form</th><th>Past Simple</th></tr>
+      <tr><td>add -ed</td><td>walk, play</td><td><code>walked</code>, <code>played</code></td></tr>
+      <tr><td>e → add -d only</td><td>live, like</td><td><code>lived</code>, <code>liked</code></td></tr>
+      <tr><td>y → -ied (consonant + y)</td><td>study, try</td><td><code>studied</code>, <code>tried</code></td></tr>
+      <tr><td>double consonant + -ed</td><td>stop, plan</td><td><code>stopped</code>, <code>planned</code></td></tr>
+    </table>
+    <div class="hint ar">
+      إذا انتهى الفعل بحرف ساكن + y → نحذف y ونضيف ied.<br>
+      إذا انتهى بحرف متحرك + حرف ساكن → نضاعف الحرف الأخير ثم نضيف ed.
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">❌ Negatives &amp; ❓ Questions</p>
+    <table class="gtbl">
+      <tr><th>Type</th><th>Form</th><th>Example</th></tr>
+      <tr><td>Negative</td><td>Subject + <code>didn't</code> + base verb</td><td>She <code>didn't go</code> to school.</td></tr>
+      <tr><td>Yes/No question</td><td><code>Did</code> + subject + base verb?</td><td><code>Did</code> you see the film?</td></tr>
+      <tr><td>Wh- question</td><td>Wh- + <code>did</code> + subject + base verb?</td><td>What <code>did</code> you eat?</td></tr>
+    </table>
+    <div class="hint ar">
+      ⚠️ بعد didn't / Did نستخدم الفعل بصيغته الأصلية — حتى الأفعال الشاذة ترجع لأصلها.<br>
+      ❌ She didn't <em>went</em> &nbsp; ✅ She didn't <em>go</em>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">📝 Linking Words for Stories</p>
+    <div class="rule">
+      Use these words to make your story flow naturally:<br>
+      <strong>First</strong> → <strong>Then / Next</strong> → <strong>After that</strong> → <strong>Finally</strong>
+    </div>
+    <span class="eg"><strong>First</strong>, I woke up. <strong>Then</strong> I ate breakfast. <strong>After that</strong>, I went to school. <strong>Finally</strong>, I played football.</span>
+    <div class="hint ar">كلمات الربط تجعل قصتك منظّمة وممتعة. استخدمها في تمرين الكتابة!</div>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 5 · PRACTICE ══════════════ -->
+<section class="panel" id="tab-practice">
+
+  <div class="card">
+    <span class="lvl">Level 1 — Choose</span>
+    <div class="ex">
+      <p class="qt">1) Last night, I ___ a great film.</p>
+      <div class="opt-row" id="p1-row">
+        <button class="opt" onclick="singleCheck('p1-row','p1-fb',this,'ok','Correct! see → saw (irregular).')">saw</button>
+        <button class="opt" onclick="singleCheck('p1-row','p1-fb',this,'bad','"Seed" is not a word.')">seed</button>
+        <button class="opt" onclick="singleCheck('p1-row','p1-fb',this,'bad','-ing is not Past Simple.')">seeing</button>
+      </div>
+      <div class="fb" id="p1-fb"></div>
+    </div>
+
+    <div class="ex">
+      <p class="qt">2) ___ you visit Ramallah last summer?</p>
+      <div class="opt-row" id="p2-row">
+        <button class="opt" onclick="singleCheck('p2-row','p2-fb',this,'ok','Correct! Past Simple questions use Did.')">Did</button>
+        <button class="opt" onclick="singleCheck('p2-row','p2-fb',this,'bad','Does is for Present Simple questions.')">Does</button>
+        <button class="opt" onclick="singleCheck('p2-row','p2-fb',this,'bad','Were is only for past of "to be".')">Were</button>
+      </div>
+      <div class="fb" id="p2-fb"></div>
+    </div>
+
+    <div class="ex">
+      <p class="qt">3) Which sentence is correct?</p>
+      <div class="opt-row" id="p3-row">
+        <button class="opt" onclick="singleCheck('p3-row','p3-fb',this,'bad','She didn\'t + base verb: go, not went.')">She didn't went to school.</button>
+        <button class="opt" onclick="singleCheck('p3-row','p3-fb',this,'ok','Perfect! didn\'t + base verb = didn\'t go.')">She didn't go to school.</button>
+        <button class="opt" onclick="singleCheck('p3-row','p3-fb',this,'bad','don\'t is Present Simple — use didn\'t for past.')">She don't go to school.</button>
+      </div>
+      <div class="fb" id="p3-fb"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="lvl">Level 2 — Fill in the Blank</span>
+    <p class="qt">Write the correct past simple form of the verb in brackets:</p>
+    <div class="fline">1) We <input class="finp" data-ans="visited" id="f1" placeholder="(visit)"> Jerusalem last year.</div>
+    <div class="fline">2) She <input class="finp" data-ans="didn't come|did not come" id="f2" placeholder="(not / come)"> to school.</div>
+    <div class="fline">3) He <input class="finp" data-ans="ate" id="f3" placeholder="(eat)"> his lunch quickly.</div>
+    <div class="fline">4) They <input class="finp" data-ans="stopped" id="f4" placeholder="(stop)"> playing at 5 pm.</div>
+    <div class="fline">5) <input class="finp" data-ans="did" id="f5" placeholder="(Did/Does?)"> she buy the book?</div>
+    <button class="cbtn" onclick="checkFill(['f1','f2','f3','f4','f5'],'fill-fb')">Check ✓</button>
+    <div class="fb" id="fill-fb"></div>
+  </div>
+
+  <div class="card">
+    <span class="lvl">Level 3 — Build a Question</span>
+    <p class="qt">Click the words in the right order to make a correct Past Simple question:</p>
+    <p style="font-size:13px;color:var(--ink-s);margin-bottom:8px">📌 you / did / yesterday / Nablus / visit / ?</p>
+    <div class="wbank" id="wb1">
+      <span class="wt" onclick="addWord(this,'build1')">Did</span>
+      <span class="wt" onclick="addWord(this,'build1')">you</span>
+      <span class="wt" onclick="addWord(this,'build1')">visit</span>
+      <span class="wt" onclick="addWord(this,'build1')">Nablus</span>
+      <span class="wt" onclick="addWord(this,'build1')">yesterday</span>
+      <span class="wt" onclick="addWord(this,'build1')">?</span>
+    </div>
+    <div class="brow" id="build1" onclick="removeLastWord('build1')">
+      <span class="ph-txt">Click words above to build the question…</span>
+    </div>
+    <button class="cbtn" onclick="checkBuild('build1','Did you visit Nablus yesterday ?','b1-fb')">Check ✓</button>
+    <div class="fb" id="b1-fb"></div>
+  </div>
+
+  <div class="card">
+    <span class="lvl">Level 4 — Correct the Mistake</span>
+    <p class="qt">Each sentence has ONE mistake. Type the corrected sentence:</p>
+    <p style="font-size:13px;font-weight:700;margin:10px 0 4px">❌ She didn't went to school yesterday.</p>
+    <input type="text" class="finp" style="width:100%;min-width:unset" id="c1" placeholder="She …">
+    <div class="fb" id="c1-fb"></div>
+    <p style="font-size:13px;font-weight:700;margin:14px 0 4px">❌ Did he played football last week?</p>
+    <input type="text" class="finp" style="width:100%;min-width:unset" id="c2" placeholder="Did he …">
+    <div class="fb" id="c2-fb"></div>
+    <button class="cbtn" style="margin-top:10px" onclick="checkCorrections()">Check ✓</button>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 6 · CREATE ══════════════ -->
+<section class="panel" id="tab-create">
+
+  <div class="card">
+    <p class="ctitle">🗣️ Speaking — Tell Your Story</p>
+    <p class="csub">Ask your classmate about last weekend. Write their answers below.</p>
+    <div class="speak-wrap">
+      <h3>Question Cards</h3>
+      <div class="qcards">
+        <div class="qcard">What did you do last Friday?</div>
+        <div class="qcard">Where did you go last weekend?</div>
+        <div class="qcard">What did you eat for dinner yesterday?</div>
+        <div class="qcard">Did you watch TV last night?</div>
+        <div class="qcard">Who did you see last week?</div>
+        <div class="qcard">What sport did you play recently?</div>
+      </div>
+    </div>
+    <div class="hint ar" style="margin-bottom:10px">بعد المقابلة: اكتب جملتين عن زميلك. مثال: <em>He went to Nablus. She didn't play football.</em></div>
+    <textarea class="wtxt" placeholder="My partner is ___. He/She went… He/She didn't…"></textarea>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">✍️ Writing — A Story from the Past</p>
+    <p class="csub">Choose your level and write your paragraph. Use linking words: First / Then / After that / Finally.</p>
+    <div class="wlevel" style="background:#EDE7F6"><strong style="color:#512DA8">Short (3–4 sentences):</strong><span style="font-size:12px;color:#4527A0"> Write about what you did last Friday.</span></div>
+    <div class="wlevel" style="background:#E8F5E9"><strong style="color:#2E7D32">Medium (5–6 sentences):</strong><span style="font-size:12px;color:#1B5E20"> Write "My Last Weekend" — use at least 3 different past verbs.</span></div>
+    <div class="wlevel" style="background:#FFF3E0"><strong style="color:#E65100">Challenge (6+ sentences):</strong><span style="font-size:12px;color:#BF360C"> Write about a special day you remember — a trip, a celebration or a match.</span></div>
+    <textarea class="wtxt" placeholder="Last Friday, I woke up early. First, I…"></textarea>
+    <p style="font-weight:700;font-size:13px;margin-top:12px">Self-check ✅</p>
+    <ul class="chklist">
+      <li><label><input type="checkbox"> I used Past Simple verbs (regular + irregular).</label></li>
+      <li><label><input type="checkbox"> I used at least one past time expression.</label></li>
+      <li><label><input type="checkbox"> I used linking words (First / Then / Finally).</label></li>
+      <li><label><input type="checkbox"> Each sentence starts with a capital letter and ends with a full stop.</label></li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 7 · QUIZ ══════════════ -->
+<section class="panel" id="tab-quiz">
+
+  <div class="card">
+    <p class="ctitle">🎯 Check Yourself</p>
+    <p class="csub">Answer all 5 questions, then press Submit for your score.</p>
+
+    <div id="quizForm">
+      <div class="qq">
+        <span class="qnum">Q1</span>
+        <p class="qtext">She ___ to the market an hour ago.</p>
+        <div class="opt-row" id="q1-row">
+          <button class="opt" onclick="qSel(this,'q1-row',0)">goes</button>
+          <button class="opt" data-correct onclick="qSel(this,'q1-row',0)">went</button>
+          <button class="opt" onclick="qSel(this,'q1-row',0)">is going</button>
+        </div>
+      </div>
+
+      <div class="qq">
+        <span class="qnum">Q2</span>
+        <p class="qtext">They ___ their homework last night.</p>
+        <div class="opt-row" id="q2-row">
+          <button class="opt" data-correct onclick="qSel(this,'q2-row',1)">didn't finish</button>
+          <button class="opt" onclick="qSel(this,'q2-row',1)">don't finish</button>
+          <button class="opt" onclick="qSel(this,'q2-row',1)">not finished</button>
+        </div>
+      </div>
+
+      <div class="qq">
+        <span class="qnum">Q3</span>
+        <p class="qtext">He ___ (watch) a film yesterday. <span style="font-size:12px;color:var(--ink-s)">(write the correct form)</span></p>
+        <input type="text" class="qfill" id="q3f" placeholder="watched / watch ?">
+      </div>
+
+      <div class="qq">
+        <span class="qnum">Q4</span>
+        <p class="qtext">___ you see the match last night? <span style="font-size:12px;color:var(--ink-s)">(Did or Does?)</span></p>
+        <input type="text" class="qfill" id="q4f" placeholder="Did / Does">
+      </div>
+
+      <div class="qq">
+        <span class="qnum">Q5</span>
+        <p class="qtext">The past simple of "buy" is:</p>
+        <div class="opt-row" id="q5-row">
+          <button class="opt" onclick="qSel(this,'q5-row',2)">buyed</button>
+          <button class="opt" data-correct onclick="qSel(this,'q5-row',2)">bought</button>
+          <button class="opt" onclick="qSel(this,'q5-row',2)">buys</button>
+        </div>
+      </div>
+
+      <button class="sub-btn" onclick="submitQuiz()">Submit ✓</button>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="stamp" id="stamp">📖</div>
+      <div class="snum" id="snum">0/5</div>
+      <div class="slbl">Your score</div>
+      <div class="smsg" id="smsg"></div>
+      <div class="hint ar" id="smsg-ar"></div>
+    </div>
+  </div>
+
+</section>
+
+<footer class="footer">Prepared with care 🌸 by T. Wad Refae</footer>
+
+<script>
+/* ── Tab switching ── */
+const TABS = ['start','words','discover','grammar','practice','create','quiz'];
+function showTab(id) {
+  TABS.forEach(t => {
+    document.getElementById('tab-' + t).classList.remove('on');
+    document.querySelector('[data-tab="' + t + '"]').classList.remove('active');
+  });
+  document.getElementById('tab-' + id).classList.add('on');
+  document.querySelector('[data-tab="' + id + '"]').classList.add('active');
+  document.getElementById('progFill').style.width = ((TABS.indexOf(id)+1)/TABS.length*100).toFixed(1)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.t-btn').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+
+/* ── Single-choice check ── */
+function singleCheck(rowId, fbId, btn, result, msg) {
+  document.getElementById(rowId).querySelectorAll('.opt').forEach(b => { b.disabled=true; b.classList.remove('ok','bad'); });
+  btn.classList.add(result);
+  const fb = document.getElementById(fbId);
+  fb.textContent = (result==='ok'?'✅ ':'❌ ') + msg;
+  fb.className = 'fb ' + result;
+}
+
+/* ── Fill blank ── */
+function checkFill(ids, fbId) {
+  let score = 0;
+  ids.forEach(id => {
+    const inp = document.getElementById(id);
+    const ans = inp.dataset.ans.split('|').map(a=>a.trim().toLowerCase());
+    inp.classList.remove('ok','bad');
+    if (ans.includes(inp.value.trim().toLowerCase())) { inp.classList.add('ok'); score++; }
+    else inp.classList.add('bad');
+  });
+  const fb = document.getElementById(fbId);
+  fb.className = 'fb '+(score===ids.length?'ok':'bad');
+  fb.textContent = score===ids.length ? '✅ All correct! Great work!' : score+'/'+ids.length+' correct — check the red ones.';
+}
+
+/* ── Word bank ── */
+const stacks = {};
+function addWord(token, buildId) {
+  if (!stacks[buildId]) stacks[buildId] = [];
+  const build = document.getElementById(buildId);
+  const ph = build.querySelector('.ph-txt');
+  if (ph) ph.remove();
+  const chip = document.createElement('span');
+  chip.className = 'bchip'; chip.textContent = token.textContent;
+  build.appendChild(chip);
+  token.classList.add('used');
+  stacks[buildId].push(token);
+}
+function removeLastWord(buildId) {
+  const build = document.getElementById(buildId);
+  const chips = build.querySelectorAll('.bchip');
+  if (!chips.length) return;
+  chips[chips.length-1].remove();
+  const st = stacks[buildId];
+  if (st && st.length) { st[st.length-1].classList.remove('used'); st.pop(); }
+  if (!build.querySelectorAll('.bchip').length) {
+    const ph = document.createElement('span'); ph.className='ph-txt';
+    ph.textContent='Click words above to build the question…'; build.appendChild(ph);
+  }
+}
+function checkBuild(buildId, expected, fbId) {
+  const built = [...document.getElementById(buildId).querySelectorAll('.bchip')].map(c=>c.textContent).join(' ');
+  const fb = document.getElementById(fbId);
+  if (built.trim().toLowerCase()===expected.toLowerCase()) { fb.textContent='✅ Perfect question!'; fb.className='fb ok'; }
+  else { fb.textContent='❌ Try: Did you visit Nablus yesterday?'; fb.className='fb bad'; }
+}
+
+/* ── Corrections ── */
+function checkCorrections() {
+  const c1v = document.getElementById('c1').value.trim().toLowerCase().replace(/\.$/,'');
+  const ok1 = ["she didn't go to school yesterday","she did not go to school yesterday"].includes(c1v);
+  document.getElementById('c1').className = 'finp '+(ok1?'ok':'bad');
+  document.getElementById('c1-fb').textContent = ok1?'✅ Correct!':'❌ Hint: She didn\'t go… (after didn\'t use base form: go, not went)';
+  document.getElementById('c1-fb').className = 'fb '+(ok1?'ok':'bad');
+
+  const c2v = document.getElementById('c2').value.trim().toLowerCase().replace(/\?$/,'').trim();
+  const ok2 = ["did he play football last week","did he play football last week?"].includes(c2v.replace(/\.$/,''));
+  const el2 = document.getElementById('c2');
+  el2.className = 'finp '+(ok2?'ok':'bad');
+  document.getElementById('c2-fb').textContent = ok2?'✅ Correct!':'❌ Hint: Did he play… (after Did use base form: play, not played)';
+  document.getElementById('c2-fb').className = 'fb '+(ok2?'ok':'bad');
+}
+
+/* ── Quiz ── */
+const qSels = [null, null, null]; // Q1=0, Q2=1, Q5=2
+function qSel(btn, rowId, idx) {
+  document.getElementById(rowId).querySelectorAll('.opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected'); qSels[idx] = btn;
+}
+function submitQuiz() {
+  let score = 0;
+  // MCQ: Q1, Q2, Q5
+  [[0,'q1-row'],[1,'q2-row'],[2,'q5-row']].forEach(([idx,rowId]) => {
+    const row = document.getElementById(rowId);
+    row.querySelectorAll('.opt').forEach(b => { b.disabled=true; b.classList.remove('selected'); if(b.dataset.correct) b.classList.add('ok'); });
+    const sel = qSels[idx];
+    if (sel) { if(sel.dataset.correct){score++;}else{sel.classList.remove('ok');sel.classList.add('bad');} }
+  });
+  // Q3
+  const q3 = document.getElementById('q3f');
+  if (q3.value.trim().toLowerCase()==='watched'){score++;q3.classList.add('ok');}else q3.classList.add('bad');
+  q3.disabled=true;
+  // Q4
+  const q4 = document.getElementById('q4f');
+  if (q4.value.trim().toLowerCase()==='did'){score++;q4.classList.add('ok');}else q4.classList.add('bad');
+  q4.disabled=true;
+
+  document.querySelector('.sub-btn').style.display='none';
+  const rb = document.getElementById('resultBox'); rb.style.display='block';
+  document.getElementById('snum').textContent = score+'/5';
+  const msgs  = ['Keep trying! 💪','Good effort!','Nice work! 👍','Very good! ⭐','Almost there! 🌟','Perfect! 🏆'];
+  const arMsg = ['راجع الدرس وحاول مجددًا.','جيد — راجع القاعدة مرة أخرى.','أداء جيد — تقريبًا هناك!','ممتاز — أنت تفهم القاعدة!','رائع جدًا!','ممتاز! أتقنت الماضي البسيط! 🎉'];
+  document.getElementById('smsg').textContent = msgs[score];
+  document.getElementById('smsg-ar').textContent = arMsg[score];
+  if (score>=3) localStorage.setItem('ps2-badge','📖');
+}
+</script>
+
+</body>
+</html>

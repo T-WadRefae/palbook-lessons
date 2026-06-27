@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade 9 · Writing · Progress &amp; Fitness Reports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#21386b; --navy2:#172850; --maroon:#7b2d3a; --gold:#e3b94e; --gold-deep:#b78f28;
+    --card:#fdfbf4; --line:#e6dec9; --paper-edge:#ddd2b6;
+    --ink:#23262e; --ink-soft:#5f6470; --good:#2f7a52; --good-deep:#22603f; --red:#c0392b; --warm:#e0a32e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{font-size:clamp(16px,1.4vw,19px);}
+  body{min-height:100%;font-family:'Nunito',sans-serif;color:var(--ink);overflow-x:hidden;
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 10%, rgba(227,185,78,.10), transparent 70%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 12px, transparent 12px 24px),
+      linear-gradient(180deg,var(--navy),var(--navy2));
+    padding:24px 12px 64px;-webkit-font-smoothing:antialiased;}
+  .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;}
+
+  /* ════════ REPORT CARD ════════ */
+  .report{max-width:840px;margin:0 auto;position:relative;background:var(--card);border-radius:8px;padding:0 0 16px;
+    border:1px solid var(--paper-edge);box-shadow:0 22px 50px rgba(0,0,0,.5);
+    animation:land .55s cubic-bezier(.22,.68,0,1.2) both;}
+  @keyframes land{from{opacity:0;transform:translateY(-18px);}to{opacity:1;transform:none;}}
+
+  /* ════ DISTINCTIVE HEADER — crest + A+ seal ════ */
+  .rc-head{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;
+    padding:18px 16px 16px;border-bottom:4px solid var(--gold);border-radius:8px 8px 0 0;}
+  .rc-head::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, transparent 2px 20px);pointer-events:none;}
+  /* crest shield */
+  .crest{position:absolute;left:16px;top:14px;width:46px;height:54px;background:linear-gradient(180deg,#2c4a86,#1b2e58);
+    border:2px solid var(--gold);border-radius:8px 8px 8px 8px/8px 8px 26px 26px;clip-path:polygon(0 0,100% 0,100% 62%,50% 100%,0 62%);
+    display:flex;align-items:flex-start;justify-content:center;padding-top:7px;color:var(--gold);font-size:1.1rem;}
+  /* A+ rosette seal */
+  .seal{position:absolute;right:16px;top:12px;width:50px;height:50px;border-radius:50%;
+    background:radial-gradient(circle at 38% 32%,#f3d473,var(--gold-deep));border:3px solid #fff;
+    box-shadow:0 0 0 2px var(--gold-deep),0 3px 7px rgba(0,0,0,.4);display:grid;place-items:center;
+    font-family:'Playfair Display',serif;font-weight:800;color:#5a4408;font-size:1.05rem;transform:rotate(-8deg);}
+  .seal::before,.seal::after{content:"";position:absolute;bottom:-12px;width:10px;height:20px;background:var(--maroon);}
+  .seal::before{left:12px;transform:rotate(10deg);} .seal::after{right:12px;transform:rotate(-10deg);}
+  .rc-head .inner{position:relative;text-align:center;padding:0 60px;}
+  .rc-head .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:.56rem;background:var(--gold);color:#2a2208;padding:3px 12px;border-radius:20px;}
+  .rc-head h1{font-family:'Playfair Display',serif;font-weight:800;letter-spacing:1px;font-size:clamp(1.1rem,4vw,1.6rem);margin:5px 0 2px;}
+  .rc-head .sub{font-family:'Fredoka';font-weight:600;font-size:.74rem;color:#d7e0f0;}
+  .rc-head .meta{margin-top:8px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;font-family:'Playfair Display',serif;font-size:.58rem;letter-spacing:1px;color:#cdd7ea;}
+  .rc-head .meta span{border:1px solid rgba(227,185,78,.5);border-radius:3px;padding:2px 8px;}
+
+  nav.tabs{display:flex;gap:7px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;padding:13px 12px 2px;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex:0 0 auto;cursor:pointer;border:2px solid #d7dde6;background:#eef1f6;color:var(--navy);
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:.8rem;padding:9px 14px;border-radius:9px;transition:.15s;}
+  .tab-btn:hover{background:#e3e8f1;}
+  .tab-btn.active{background:var(--navy);color:#fff;border-color:var(--navy2);}
+  @media(min-width:700px){nav.tabs{flex-wrap:wrap;overflow-x:visible;justify-content:center;}}
+
+  .doc{margin:10px 12px 0;background:#fff;border-radius:8px;border:1px solid var(--line);padding:8px 12px;}
+  .panel{display:none;padding:16px 6px 20px;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  h2.sh{font-family:'Playfair Display',serif;font-weight:700;color:var(--navy);font-size:1.15rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .hint{background:#eef2fa;border-right:5px solid var(--navy);border-radius:10px;padding:9px 12px;margin:0 0 16px;font-size:.95rem;color:#1c2e54;font-weight:600;}
+
+  .obj-list{list-style:none;display:grid;gap:10px;}
+  .obj-list li{display:flex;align-items:flex-start;gap:10px;background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:700;font-size:.95rem;}
+  .obj-list .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:'Playfair Display';font-size:.8rem;}
+  .mission{margin-top:16px;background:linear-gradient(135deg,#fbf2da,#f6e6b8);border:2px dashed var(--gold);border-radius:14px;padding:14px 16px;}
+  .mission .ttl{font-family:'Playfair Display';font-weight:700;color:var(--gold-deep);font-size:1rem;margin-bottom:4px;}
+
+  /* model: data table + report */
+  .rtable{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:.92rem;}
+  .rtable th,.rtable td{border:1px solid var(--line);padding:8px 10px;text-align:center;}
+  .rtable th{background:#eef2fa;font-family:'Playfair Display';color:var(--navy);}
+  .rtable .g{font-weight:800;color:var(--good-deep);}
+  .reportbox{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.95rem;line-height:1.7;}
+  .reportbox .lbl{font-family:'Playfair Display';font-size:.7rem;letter-spacing:1px;color:var(--navy);margin-bottom:6px;text-transform:uppercase;}
+  .fact{background:#e3eefb;border-radius:5px;padding:0 5px;font-weight:700;color:var(--navy);}
+  .rec{background:#e9f6ee;border-radius:5px;padding:0 5px;font-weight:700;color:var(--good-deep);}
+
+  .parts{display:grid;gap:10px;}
+  .part{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s;}
+  .part:hover{border-color:var(--navy);}
+  .part-tag{display:flex;align-items:center;gap:8px;padding:12px 14px;font-weight:800;font-size:.95rem;background:#eef2fa;}
+  .part-tag .arr{transition:transform .2s;color:var(--navy);font-size:.7rem;}
+  .part.open .arr{transform:rotate(90deg);}
+  .part-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .part.open .part-body{max-height:320px;}
+  .part-inner{padding:4px 14px 14px;}
+  .en-tip{background:#eef2fa;border-radius:8px;padding:7px 10px;font-weight:700;font-size:.88rem;color:#1c2e54;margin-bottom:8px;}
+  .part-inner .ar{font-size:.95rem;color:#3a414c;font-weight:600;line-height:1.7;}
+
+  .ex{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .ex .q{font-family:'Fredoka';font-size:16px;font-weight:600;margin-bottom:10px;}
+  .pick{display:flex;gap:8px;flex-wrap:wrap;}
+  .pick button{position:relative;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font:inherit;font-weight:800;font-size:.9rem;cursor:pointer;transition:.12s;}
+  .pick button:hover{border-color:var(--navy);}
+  .pick button.right{background:#dff0e6;border-color:var(--good);color:var(--good-deep);animation:pop .4s ease;}
+  .pick button.wrong{background:#fde3df;border-color:var(--red);color:#a82c22;animation:shake .3s ease;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .fb{margin-top:8px;font-weight:800;font-size:.88rem;min-height:18px;}
+
+  .chk{list-style:none;display:grid;gap:9px;margin:0 0 18px;}
+  .chk li{display:flex;align-items:center;gap:11px;background:#f8fafc;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.12s;}
+  .chk li .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #c4cdd8;color:transparent;display:grid;place-items:center;font-weight:900;transition:.12s;}
+  .chk li.done{background:#dff0e6;border-color:var(--good);}
+  .chk li.done .box{background:var(--good);border-color:var(--good);color:#fff;animation:pop .4s ease;}
+  .progress{background:#e6ebf1;border-radius:999px;height:16px;overflow:hidden;}
+  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--navy),#5a86c0);transition:width .4s;}
+  .p-text{text-align:center;font-weight:800;color:var(--ink-soft);margin-top:7px;font-size:.9rem;}
+  .stamp{margin:16px auto 0;max-width:280px;text-align:center;border:3px dashed #c4cdd8;border-radius:16px;padding:18px;opacity:.4;transition:.3s;transform:scale(.96);}
+  .stamp.win{opacity:1;border-color:var(--good);background:#f1fbf5;animation:stampPop .6s cubic-bezier(.2,.8,.2,1.4);}
+  @keyframes stampPop{0%{transform:scale(.4) rotate(-12deg);opacity:0;}60%{transform:scale(1.15) rotate(4deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+  .stamp .big{font-size:46px;} .stamp .lbl{font-family:'Playfair Display';font-weight:700;color:var(--good-deep);font-size:1.05rem;margin-top:4px;letter-spacing:1px;}
+
+  .ws{text-align:center;padding:18px 14px;}
+  .ws .icon{font-size:54px;} .ws h3{font-family:'Playfair Display';color:var(--navy);font-size:1.15rem;margin:8px 0 6px;}
+  .ws .soon{display:inline-block;background:#e6ebf1;color:#5f6470;border-radius:999px;padding:7px 18px;font-weight:800;margin-top:10px;}
+  .ws .note{margin-top:14px;font-size:.9rem;color:var(--ink-soft);font-weight:600;}
+  footer{text-align:center;margin:16px 12px 0;font-size:.82rem;color:var(--ink-soft);font-weight:700;}
+
+  .confetti{position:fixed;top:-14px;width:10px;height:14px;border-radius:2px;z-index:9999;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(106vh) rotate(720deg);}}
+  .spark{position:absolute;pointer-events:none;font-size:14px;z-index:50;animation:sparkpop .7s ease forwards;}
+  @keyframes sparkpop{0%{opacity:0;transform:translate(0,0) scale(.4);}30%{opacity:1;}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.2);}}
+</style>
+</head>
+<body>
+
+<div class="report">
+  <!-- ════ DISTINCTIVE HEADER ════ -->
+  <header class="rc-head">
+    <span class="crest">★</span>
+    <span class="seal">A+</span>
+    <div class="inner">
+      <span class="grade-tag">Grade 9 · Writing</span>
+      <h1>ACADEMIC REPORT CARD</h1>
+      <div class="sub">📊 Progress &amp; Fitness Reports</div>
+      <div class="meta"><span>STUDENT: ______</span><span>TERM 2</span><span>by T. Wad Refae</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="show('obj',this)">📌 Objectives</button>
+    <button class="tab-btn" onclick="show('model',this)">📊 The Report</button>
+    <button class="tab-btn" onclick="show('build',this)">✏️ Build It</button>
+    <button class="tab-btn" onclick="show('check',this)">✅ Checklist</button>
+    <button class="tab-btn" onclick="show('ws',this)">📝 Worksheet</button>
+  </nav>
+
+  <div class="doc">
+
+    <section id="tab-obj" class="panel active">
+      <h2 class="sh">📌 Lesson Objectives</h2>
+      <p class="hint ar">في نهاية الدرس، رح يكون الطالب قادر على: ✍️</p>
+      <ul class="obj-list">
+        <li><span class="num">1</span>Write a formal report based on <b>data &amp; tables</b>.</li>
+        <li><span class="num">2</span>Turn numbers/results into clear factual sentences.</li>
+        <li><span class="num">3</span>Use a formal, <b>objective</b> tone (third person).</li>
+        <li><span class="num">4</span>Give an overall comment and a recommendation.</li>
+      </ul>
+      <div class="mission">
+        <div class="ttl">📊 Today's Mission</div>
+        <p class="ar" style="margin:0;font-weight:600">التقرير يحوّل <b>الأرقام إلى كلمات</b>! مهمتنا نقرأ جدول النتائج (دراسة أو لياقة) ونكتب تقريرًا رسميًا بالحقائق ثم توصية.</p>
+      </div>
+    </section>
+
+    <section id="tab-model" class="panel">
+      <h2 class="sh">📊 From Data to Report</h2>
+      <p class="hint ar">اقرأ الجدول والتقرير، ثم اضغط على كل جزء 👇.</p>
+      <table class="rtable">
+        <thead><tr><th>Area</th><th>Result</th><th>Level</th></tr></thead>
+        <tbody>
+          <tr><td>Reading</td><td class="g">88%</td><td>Excellent</td></tr>
+          <tr><td>Maths</td><td class="g">75%</td><td>Good</td></tr>
+          <tr><td>Fitness — running</td><td class="g">9 / 10</td><td>Strong</td></tr>
+        </tbody>
+      </table>
+      <div class="reportbox">
+        <div class="lbl">✍️ The Report</div>
+        This report shows Sami's progress this term. He <span class="fact">scored 88% in Reading</span> and <span class="fact">75% in Maths</span>. His fitness is strong, and he <span class="fact">scored 9 out of 10</span> in running. Overall, his performance was very good. <span class="rec">He should practise Maths a little more.</span>
+      </div>
+      <div class="parts">
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🏷️ Heading &amp; introduction</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Start by saying what the report is about: "This report shows…"</div>
+            <p class="ar">ابدأ بجملة تعريفية تقول موضوع التقرير: <em>This report shows … / This report describes …</em></p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>📊 Facts from the data</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Use the exact numbers: scored 88%, 9 out of 10, improved by…</div>
+            <p class="ar">حوّل بيانات الجدول إلى جُمل بالأرقام الدقيقة: <em>scored 88%, 9 out of 10, increased/improved</em>. لا تخترع أرقامًا.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🎩 Formal, objective tone</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Third person (he/she/they). Avoid "I think" and slang.</div>
+            <p class="ar">التقرير رسمي وموضوعي: استخدم ضمير الغائب (he/she/they)، وتجنّب <em>I think</em> والكلمات العامية.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>✅ Comment &amp; recommendation</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">End with an overall comment + advice: "Overall… He should…"</div>
+            <p class="ar">اختم بتعليق عام ثم توصية: <em>Overall, … was good. He/She should …</em> لتقديم نصيحة للتحسين.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-build" class="panel">
+      <h2 class="sh">✏️ Write the Report</h2>
+      <p class="hint ar">اختر الخيار الأنسب لتقرير رسمي 👇</p>
+      <div class="ex" data-answer="formal &amp; objective"><div class="q">A report's tone should be…</div><div class="pick"><button onclick="pick(this,'formal &amp; objective')">formal &amp; objective</button><button onclick="pick(this,'chatty &amp; personal')">chatty &amp; personal</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="He scored 90% in Maths."><div class="q">Best sentence from data "Maths: 90%":</div><div class="pick"><button onclick="pick(this,'He scored 90% in Maths.')">He scored 90% in Maths.</button><button onclick="pick(this,'He is super good at maths!')">He is super good at maths!</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="third person"><div class="q">Reports are written in…</div><div class="pick"><button onclick="pick(this,'third person')">third person</button><button onclick="pick(this,'&quot;I think…&quot;')">"I think…"</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="facts &amp; data"><div class="q">A report is based on…</div><div class="pick"><button onclick="pick(this,'facts &amp; data')">facts &amp; data</button><button onclick="pick(this,'feelings &amp; guesses')">feelings &amp; guesses</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="She should practise more reading."><div class="q">A good recommendation:</div><div class="pick"><button onclick="pick(this,'She should practise more reading.')">She should practise more reading.</button><button onclick="pick(this,'Reading is boring.')">Reading is boring.</button></div><div class="fb"></div></div>
+    </section>
+
+    <section id="tab-check" class="panel">
+      <h2 class="sh">✅ My Report Check</h2>
+      <p class="hint ar">اضغط على كل بند بعد ما تتأكد منه في تقريرك ✍️</p>
+      <ul class="chk" id="chkList">
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I started by saying what the report is about.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I used the exact numbers from the data.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>My tone is formal and objective (third person).</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I avoided "I think" and slang.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I gave an overall comment.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I added a recommendation (He/She should…).</li>
+      </ul>
+      <div class="progress"><div class="fill" id="pFill"></div></div>
+      <div class="p-text" id="pText">0 / 6</div>
+      <div class="stamp" id="stamp"><div class="big">🪪</div><div class="lbl">REPORT FILED!</div></div>
+    </section>
+
+    <section id="tab-ws" class="panel">
+      <h2 class="sh">📝 Worksheet</h2>
+      <div class="ws">
+        <div class="icon">📊📄</div>
+        <h3>Practice Worksheet</h3>
+        <p class="ar" style="font-weight:600;color:#5f6470">ورقة عمل الطباعة لهذا الدرس رح تنضاف هنا قريباً.</p>
+        <!-- WORKSHEET-LINK: ضعي رابط Google Drive / PDF هنا لاحقاً، واستبدلي زر "Coming soon" برابط فعلي -->
+        <span class="soon">⏳ Coming soon · قريباً</span>
+        <p class="note ar">سيتم رفع ورقة العمل لاحقاً لتُطبع وتُحلّ في الصف 🌸</p>
+      </div>
+    </section>
+
+  </div><!-- /doc -->
+  <footer>Designed with love 💗 by T. Wad Refae</footer>
+</div>
+
+<script>
+  function show(id,btn){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active');
+  }
+  function togglePart(el){ el.classList.toggle('open'); }
+  function sparkle(el){
+    const marks=['✨','📊','⭐','🏅'];
+    for(let i=0;i<5;i++){
+      const s=document.createElement('span'); s.className='spark'; s.textContent=marks[i%marks.length];
+      const r=el.getBoundingClientRect(); s.style.left=(r.width/2)+'px'; s.style.top='4px';
+      s.style.setProperty('--dx',(Math.random()*80-40)+'px'); s.style.setProperty('--dy',(-30-Math.random()*40)+'px');
+      el.appendChild(s); setTimeout(()=>s.remove(),700);
+    }
+  }
+  function celebrate(){
+    const cols=['#21386b','#e3b94e','#2f7a52','#7b2d3a','#5a86c0','#b78f28'];
+    for(let i=0;i<40;i++){
+      const c=document.createElement('div'); c.className='confetti';
+      c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+      c.style.animationDuration=(1.6+Math.random()*1.4)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
+      c.style.transform='rotate('+(Math.random()*360)+'deg)';
+      document.body.appendChild(c); setTimeout(()=>c.remove(),3200);
+    }
+  }
+  let buildCelebrated=false;
+  function pick(btn,val){
+    const ex=btn.closest('.ex'); const ans=ex.dataset.answer; const fb=ex.querySelector('.fb');
+    ex.querySelectorAll('.pick button').forEach(b=>b.classList.remove('right','wrong'));
+    if(val===ans){
+      btn.classList.add('right'); fb.textContent='✅ Correct — professional!'; fb.style.color='#22603f'; sparkle(btn);
+      const all=[...document.querySelectorAll('.ex')];
+      if(!buildCelebrated && all.every(e=>e.querySelector('.pick button.right'))){ buildCelebrated=true; celebrate(); }
+    } else { btn.classList.add('wrong'); fb.textContent='❌ Keep it formal &amp; factual — try again.'; fb.style.color='#a82c22'; }
+  }
+  const KEY='write-g9-reports-done';
+  const items=[...document.querySelectorAll('#chkList li')];
+  let wasComplete=false;
+  function refresh(){
+    const done=items.filter(i=>i.classList.contains('done')).length;
+    document.getElementById('pFill').style.width=(done/items.length*100)+'%';
+    document.getElementById('pText').textContent=done+' / '+items.length;
+    const stamp=document.getElementById('stamp');
+    if(done===items.length){ stamp.classList.add('win'); localStorage.setItem(KEY,'1'); if(!wasComplete){ wasComplete=true; celebrate(); } }
+    else { stamp.classList.remove('win'); wasComplete=false; }
+  }
+  function toggleChk(li){ li.classList.toggle('done'); refresh(); }
+  if(localStorage.getItem(KEY)==='1'){ items.forEach(i=>i.classList.add('done')); wasComplete=true; refresh(); }
+</script>
+</body>
+</html>

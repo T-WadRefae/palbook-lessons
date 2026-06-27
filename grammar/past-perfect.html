@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Past Perfect — Discovery Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ind:#3949AB;--ind-d:#1A237E;--blue:#5C6BC0;--ind-l:#E8EAF6;
+  --rose:#EC407A;--grn:#2E7D32;--grn-l:#E8F5E9;--red:#C62828;--red-l:#FFEBEE;
+  --bg:#F4F5FB;--card:#fff;--txt:#161a3a;--muted:#5f6488;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+.hdr{background:linear-gradient(135deg,var(--ind-d) 0%,var(--ind) 55%,var(--blue) 100%);
+  padding:28px 20px 0;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 25%,rgba(236,64,122,.28) 0%,transparent 50%),
+             radial-gradient(circle at 15% 75%,rgba(255,255,255,.10) 0%,transparent 55%);pointer-events:none}
+.hdr-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:18px;position:relative}
+.hdr-art{font-size:80px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.35))}
+.hdr-text{flex:1}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:4px}
+.hdr h1{font-family:'Fredoka One',cursive;font-size:clamp(1.5rem,4vw,2.4rem);color:#fff;line-height:1.15}
+.hdr h1 span{color:#FFD54F}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:rgba(255,255,255,.18);color:#fff;border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:700}
+.chip.ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.85rem}
+
+.tab-bar{display:flex;gap:6px;padding:14px 16px 0;max-width:900px;margin:16px auto 0;overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.35);border-radius:22px 22px 0 0;
+  padding:8px 16px;font-family:'Fredoka One',cursive;font-size:.95rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.35)}
+.tab.active{background:#fff;color:var(--ind-d);border-color:#fff}
+
+.prog-wrap{background:rgba(255,255,255,.2);height:6px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#FFD54F,#EC407A);transition:width .4s ease;border-radius:0 3px 3px 0}
+
+.main{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.on{display:block}
+
+.card{background:var(--card);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.card h2{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--ind-d);margin-bottom:12px}
+.card h3{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--ind);margin:14px 0 8px}
+
+.q-inst{background:var(--ind-l);border-right:5px solid var(--ind);border-radius:10px;padding:10px 16px;margin-bottom:14px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;color:var(--ind-d);direction:rtl;text-align:right;line-height:1.6}
+
+.fb-wrap{display:none;border-radius:10px;padding:12px 16px;margin-top:10px;border-left:5px solid transparent}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#E8F5E9;border-color:#2E7D32}
+.fb-wrap.err{background:#FFEBEE;border-color:#C62828}
+.fb-en{font-weight:700;font-size:1rem;margin-bottom:4px}
+.fb-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.95rem;direction:rtl;text-align:right;color:#555}
+.fb-wrap.ok .fb-en{color:#1B5E20}
+.fb-wrap.err .fb-en{color:#B71C1C}
+
+.mcq-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.mcq-btn{background:var(--ind-l);border:2px solid #9FA8DA;border-radius:12px;padding:9px 18px;
+  font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--txt)}
+.mcq-btn:hover{background:#C5CAE9}
+.mcq-btn.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
+.mcq-btn.err{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
+.mcq-btn:disabled{cursor:default;opacity:.8}
+
+.t-in{width:100%;padding:9px;border:2px solid var(--ind);border-radius:8px;font-size:1rem;margin-bottom:4px;font-family:'Nunito',sans-serif;background:#FAFAFF}
+.t-in:focus{outline:none;border-color:var(--blue)}
+
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;background:var(--ind-l);padding:12px 16px;border-radius:12px;margin-bottom:16px}
+.wb-chip{background:#fff;border:2px solid var(--ind);border-radius:20px;padding:5px 14px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.wb-chip:hover{background:var(--ind);color:#fff}
+.wb-chip.used{opacity:.35;pointer-events:none;text-decoration:line-through}
+
+.blank{display:inline-block;min-width:110px;border-bottom:3px solid var(--ind);padding:2px 6px;text-align:center;cursor:pointer;border-radius:4px 4px 0 0;transition:background .2s}
+.blank:hover{background:var(--ind-l)}
+.blank.filled{color:var(--ind-d)}
+.blank.ok{border-color:var(--grn);color:var(--grn);background:#E8F5E9}
+.blank.err{border-color:var(--red);color:var(--red);background:#FFEBEE}
+
+.check-btn{background:linear-gradient(135deg,var(--ind),var(--blue));color:#fff;border:none;border-radius:12px;padding:10px 26px;
+  font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;margin-top:10px;transition:transform .15s,box-shadow .15s}
+.check-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(57,73,171,.4)}
+.check-btn:active{transform:translateY(0)}
+
+.lvl-done{display:none;background:linear-gradient(135deg,#FFF8E1,#FFFDE7);border:3px solid #FFD54F;border-radius:16px;padding:16px 20px;
+  text-align:center;margin-top:16px;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.1rem;color:#B45309}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+.lvl-done .star{font-size:1.5rem}
+
+.disc-tbl{width:100%;border-collapse:collapse;margin:12px 0}
+.disc-tbl th{background:var(--ind-d);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:.95rem}
+.disc-tbl td{padding:9px 14px;border-bottom:1px solid var(--ind-l);font-size:.95rem}
+.disc-tbl tr:nth-child(even) td{background:#F4F5FB}
+.disc-tbl .hi{color:var(--rose);font-weight:800;background:#FCE4EC;padding:1px 4px;border-radius:4px}
+.disc-tbl .neg{color:#C62828;font-weight:800}
+.disc-tbl .ord{color:var(--ind);font-weight:800}
+
+.gram-tbl{width:100%;border-collapse:collapse;margin:10px 0}
+.gram-tbl th{background:var(--ind);color:#fff;padding:9px 14px;font-family:'Fredoka One',cursive}
+.gram-tbl td{padding:8px 14px;border-bottom:1px solid var(--ind-l)}
+.gram-tbl tr:nth-child(even) td{background:var(--ind-l)}
+.gram-note{background:#FFF8E1;border-left:4px solid #FFD54F;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.92rem}
+.gram-note .ar{font-size:.95rem;margin-top:4px;color:#555}
+
+.vc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:12px 0}
+.vc{background:var(--ind-l);border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.vc .icon{font-size:2.2rem;margin-bottom:6px}
+.vc .en{font-weight:800;font-size:.95rem;color:var(--ind-d)}
+.vc .ar{font-size:.88rem;color:#555;margin-top:3px}
+
+/* timeline */
+.tl-wrap{margin:18px 0;padding:18px 16px;background:var(--ind-l);border-radius:12px}
+.tl-line{position:relative;height:6px;background:linear-gradient(90deg,var(--rose),var(--ind));border-radius:3px;margin:30px 14px}
+.tl-pt{position:absolute;top:-9px;width:22px;height:22px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.tl-pt.a{left:0;background:var(--rose)}
+.tl-pt.b{right:0;background:var(--ind)}
+.tl-cap{position:absolute;top:18px;font-size:.78rem;font-weight:800;white-space:nowrap}
+.tl-cap.a{left:-6px;color:var(--rose)}
+.tl-cap.b{right:-6px;color:var(--ind)}
+
+.prompt-card{background:linear-gradient(135deg,var(--ind-l),#EDE7F6);border-radius:14px;padding:18px;margin-bottom:14px;border-left:5px solid var(--ind)}
+.prompt-card p{font-size:.95rem;margin-bottom:8px}
+textarea{width:100%;min-height:90px;border:2px solid var(--ind);border-radius:10px;padding:10px;font-family:'Nunito',sans-serif;font-size:.95rem;resize:vertical;background:#FAFAFF}
+textarea:focus{outline:none;border-color:var(--blue)}
+
+.quiz-q{background:var(--ind-l);border-radius:14px;padding:18px;margin-bottom:16px;border-left:5px solid var(--ind)}
+.quiz-q .qn{font-weight:800;color:var(--ind-d);margin-bottom:8px}
+.score-box{background:linear-gradient(135deg,var(--ind-d),var(--ind));color:#fff;border-radius:18px;padding:24px;text-align:center;display:none}
+.score-box.show{display:block;animation:popIn .5s ease}
+.score-box .score-num{font-family:'Fredoka One',cursive;font-size:3rem}
+.score-box .badge-big{font-size:3.5rem;margin:8px 0}
+
+.obj-list{list-style:none;padding:0}
+.obj-list li{padding:8px 0 8px 32px;position:relative;font-size:1rem;border-bottom:1px solid var(--ind-l)}
+.obj-list li::before{content:'⏮️';position:absolute;left:0}
+
+@keyframes popIn{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes floatStar{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.6)}}
+@keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+footer{text-align:center;padding:20px;font-size:.82rem;color:var(--muted)}
+.flying-star{position:fixed;pointer-events:none;font-size:1.6rem;z-index:9999;animation:floatStar .9s ease forwards}
+.cf-piece{position:fixed;width:10px;height:10px;border-radius:2px;z-index:9998;animation:cfFall 1.4s ease forwards}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-art">⏮️</div>
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar • English for Palestine</p>
+      <h1>Past <span>Perfect</span></h1>
+      <div class="chips">
+        <span class="chip">🎯 Grade 9</span>
+        <span class="chip">⏱️ ~30 min</span>
+        <span class="chip ar">الماضي التام</span>
+      </div>
+    </div>
+  </div>
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab active" onclick="go(0,event)">🚀 Start</button>
+    <button class="tab" onclick="go(1,event)">📚 Words</button>
+    <button class="tab" onclick="go(2,event)">🔍 Discover</button>
+    <button class="tab" onclick="go(3,event)">🧠 Grammar</button>
+    <button class="tab" onclick="go(4,event)">✏️ Practice</button>
+    <button class="tab" onclick="go(5,event)">🗣️ Create</button>
+    <button class="tab" onclick="go(6,event)">🎯 Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
+</div>
+
+<div class="main">
+
+<!-- ══ 1. START ══ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <h2>🚀 Rewind the Story!</h2>
+    <p style="font-size:1.05rem;line-height:1.8;margin-bottom:14px">
+      ⏮️ You arrive at the cinema… but the film <em>has already begun</em> — it started <strong>before</strong> you got there.
+      To show that one past action happened <strong>before another past action</strong>, we use the <strong>Past Perfect</strong>.
+    </p>
+    <div class="q-inst ar">📌 المغادرة حدثت قبل وصولي — اختَر الصيغة الصحيحة:</div>
+    <div id="s-q1">
+      <p style="font-weight:700;margin-bottom:8px">"When I arrived, she _____ (already / leave)."</p>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'Past Simple doesn\'t show which happened first.','الماضي البسيط لا يُظهر أيّ حدث وقع أولاً.')">already left</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,true,'Yes! 🎉 "had already left" — she left BEFORE I arrived!','ممتاز! "had already left" — غادرت قبل وصولي!')">had already left</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'"was leaving" = in progress — but she had finished leaving.','was leaving = جارٍ — لكنها كانت قد غادرت بالفعل.')">was already leaving</button>
+      </div>
+      <div class="fb-wrap" id="s-fb1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Objectives — أهداف الدرس</h2>
+    <ul class="obj-list">
+      <li>Form the Past Perfect: <strong>had + past participle</strong></li>
+      <li>Show that one past action happened <strong>before</strong> another</li>
+      <li>Use <strong>by the time / before / after / already / never … before</strong></li>
+      <li>Make negatives and questions in the Past Perfect</li>
+      <li>Order events correctly when telling a story</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ 2. WORDS ══ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <h2>📚 Signal Words</h2>
+    <div class="q-inst ar">📌 هذه الكلمات ترشدك إلى ترتيب الأحداث في الماضي التام:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">⏰</div><div class="en">by the time</div><div class="ar">بحلول الوقت الذي</div></div>
+      <div class="vc"><div class="icon">⬅️</div><div class="en">before</div><div class="ar">قبل أن</div></div>
+      <div class="vc"><div class="icon">➡️</div><div class="en">after</div><div class="ar">بعد أن</div></div>
+      <div class="vc"><div class="icon">✅</div><div class="en">already</div><div class="ar">بالفعل (قبل الحدث)</div></div>
+      <div class="vc"><div class="icon">🚫</div><div class="en">never … before</div><div class="ar">لم يسبق أن</div></div>
+      <div class="vc"><div class="icon">⏳</div><div class="en">just</div><div class="ar">للتو (قبل لحظة)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📚 Common Past Participles (3rd form)</h2>
+    <div class="q-inst ar">📌 الماضي التام يحتاج "التصريف الثالث" للفعل — احفظ هذه الأفعال:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">🍽️</div><div class="en">eat → eaten</div><div class="ar">أكَلَ</div></div>
+      <div class="vc"><div class="icon">🏃</div><div class="en">go → gone</div><div class="ar">ذهبَ</div></div>
+      <div class="vc"><div class="icon">👀</div><div class="en">see → seen</div><div class="ar">رأى</div></div>
+      <div class="vc"><div class="icon">✍️</div><div class="en">write → written</div><div class="ar">كتبَ</div></div>
+      <div class="vc"><div class="icon">🚪</div><div class="en">leave → left</div><div class="ar">غادرَ</div></div>
+      <div class="vc"><div class="icon">🏁</div><div class="en">start → started</div><div class="ar">بدأ (منتظم)</div></div>
+      <div class="vc"><div class="icon">✔️</div><div class="en">do → done</div><div class="ar">فعلَ</div></div>
+      <div class="vc"><div class="icon">😴</div><div class="en">sleep → slept</div><div class="ar">نامَ</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 3. DISCOVER ══ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h2>🔍 Spot the Pattern!</h2>
+    <div class="q-inst ar">📌 انظر إلى الجمل — أيّ حدث وقع أولاً؟ وما الصيغة المستخدمة له؟</div>
+    <table class="disc-tbl">
+      <thead><tr><th>Sentence</th><th>Which happened first?</th></tr></thead>
+      <tbody>
+        <tr><td>When I arrived, she <span class="hi">had already left</span>.</td><td><span class="ord">1.</span> She left → <span class="ord">2.</span> I arrived</td></tr>
+        <tr><td>He was tired because he <span class="hi">had worked</span> all day.</td><td><span class="ord">1.</span> He worked → <span class="ord">2.</span> He felt tired</td></tr>
+        <tr><td>By the time we arrived, the film <span class="hi">had started</span>.</td><td><span class="ord">1.</span> Film started → <span class="ord">2.</span> We arrived</td></tr>
+        <tr><td>She <span class="neg">hadn't eaten</span> before she left.</td><td>She left without eating first</td></tr>
+      </tbody>
+    </table>
+    <div id="disc-q1">
+      <div class="q-inst ar">📌 ما الصيغة المستخدمة للحدث الذي وقع أولاً (الأقدم)؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'"have + participle" is Present Perfect — not past.','have + participle هو المضارع التام، وليس الماضي.')">have + past participle</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,true,'✅ had + past participle — same for ALL subjects!','✅ had + التصريف الثالث — لجميع الفاعلين!')">had + past participle</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'"was + participle" is not a tense — look again.','was + participle ليس زمناً — انظر مجدداً.')">was + past participle</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔍 The Order of Events</h2>
+    <div class="q-inst ar">📌 الماضي التام دائماً للحدث الأقدم، والماضي البسيط للحدث الأحدث — لاحظ الخط الزمني:</div>
+    <div class="tl-wrap">
+      <p style="text-align:center;font-weight:700;margin-bottom:6px">"By the time we <strong>arrived</strong>, the film <strong>had started</strong>."</p>
+      <div class="tl-line">
+        <span class="tl-pt a"></span><span class="tl-cap a">Film had started</span>
+        <span class="tl-pt b"></span><span class="tl-cap b">We arrived</span>
+      </div>
+    </div>
+    <div id="disc-q2">
+      <div class="q-inst ar">📌 الحدث الأقدم (film) يكون بصيغة...؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,true,'✅ Correct! The earlier action = Past Perfect (had started).','✅ صحيح! الحدث الأقدم = ماضٍ تام (had started).')">Past Perfect (had + participle)</button>
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,false,'No — Past Simple is for the LATER action (arrived).','لا — الماضي البسيط للحدث الأحدث (arrived).')">Past Simple</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 4. GRAMMAR ══ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <h2>🧠 The Rule</h2>
+    <div class="gram-note">
+      <strong>Form:</strong> Subject + <em>had</em> + <strong>past participle</strong> (3rd form) — <em>same for ALL subjects</em>
+      <div class="ar">الصيغة: الفاعل + had + التصريف الثالث — لجميع الفاعلين</div>
+    </div>
+    <table class="gram-tbl">
+      <thead><tr><th>Subject</th><th>had + participle</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>I / You / He / She / We / They</td><td><strong>had</strong> eaten</td><td>They <strong>had eaten</strong> before noon.</td></tr>
+        <tr><td>Contraction</td><td><strong>'d</strong> + participle</td><td>She<strong>'d</strong> left. (= She had left)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 When Do We Use It?</h2>
+    <table class="gram-tbl">
+      <thead><tr><th>Use</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>An action completed BEFORE another past action</td><td>When she arrived, I <strong>had already eaten</strong>.</td></tr>
+        <tr><td>With <em>by the time</em></td><td><strong>By the time</strong> he woke up, we <strong>had left</strong>.</td></tr>
+        <tr><td>A reason in the past</td><td>He was tired because he <strong>hadn't slept</strong>.</td></tr>
+        <tr><td>With <em>never … before</em></td><td>I <strong>had never seen</strong> snow before that day.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Negative &amp; Question</h2>
+    <table class="gram-tbl">
+      <thead><tr><th>Type</th><th>Structure</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Negative ❌</td><td>Subject + hadn't + participle</td><td>She <strong>hadn't</strong> finished.</td></tr>
+        <tr><td>Question ❓</td><td>Had + subject + participle?</td><td><strong>Had</strong> you ever seen it before?</td></tr>
+        <tr><td>Short answer ✅</td><td>Yes, I had. / No, they hadn't.</td><td>Yes, she had.</td></tr>
+      </tbody>
+    </table>
+    <div class="gram-note">
+      💡 The OLDER action → <strong>Past Perfect</strong> (had + participle). The NEWER action → <strong>Past Simple</strong>.
+      <div class="ar">الحدث الأقدم → الماضي التام (had + التصريف الثالث) · الحدث الأحدث → الماضي البسيط</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 5. PRACTICE ══ -->
+<div class="panel" id="p4">
+
+  <div class="card">
+    <h2>✏️ Level 1 — Choose the Correct Form</h2>
+    <div class="q-inst ar">📌 اختَر الصيغة الصحيحة للحدث الأقدم في كل جملة:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. By the time we arrived, the match _____ (start).</p>
+    <div id="l1q1"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,true,'✅ "had started" — completed BEFORE we arrived!','✅ had started — اكتمل قبل وصولنا!')">had started</button>
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,false,'"started" doesn\'t show it happened before our arrival.','started لا يُظهر أنه وقع قبل وصولنا.')">started</button>
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,false,'"was starting" = in progress — but it had already begun.','was starting = جارٍ — لكنه كان قد بدأ بالفعل.')">was starting</button>
+    </div><div class="fb-wrap" id="l1fb1"></div></div>
+
+    <p style="font-weight:700;margin:16px 0 6px">2. He was tired because he _____ (work) all night.</p>
+    <div id="l1q2"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,false,'"worked" doesn\'t link it as the earlier cause.','worked لا يربطه كسبب أقدم.')">worked</button>
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,true,'✅ "had worked" — the work came BEFORE the tiredness!','✅ had worked — العمل سبق الشعور بالتعب!')">had worked</button>
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,false,'"has worked" is Present Perfect — but this is the past.','has worked مضارع تام — لكننا في الماضي.')">has worked</button>
+    </div><div class="fb-wrap" id="l1fb2"></div></div>
+
+    <p style="font-weight:700;margin:16px 0 6px">3. She _____ (not / eat) before she left for school.</p>
+    <div id="l1q3"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,false,'"didn\'t eat" loses the "before" sequence.','didn\'t eat يفقد ترتيب "قبل".')">didn't eat</button>
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,true,'✅ "hadn\'t eaten" — Past Perfect negative for the earlier action!','✅ hadn\'t eaten — نفي الماضي التام للحدث الأقدم!')">hadn't eaten</button>
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,false,'"wasn\'t eating" = in progress — not what we mean here.','wasn\'t eating = جارٍ — ليس المقصود هنا.')">wasn't eating</button>
+    </div><div class="fb-wrap" id="l1fb3"></div></div>
+
+    <div class="lvl-done" id="done1"><span class="star">⏮️⏮️⏮️</span><p>أحسنتَ! انتقل إلى المستوى الثاني 🎉</p></div>
+    <button class="check-btn" onclick="checkLevel1()">Check Level 1 ✔</button>
+  </div>
+
+  <div class="card">
+    <h2>✏️ Level 2 — Fill in the Blanks</h2>
+    <div class="q-inst ar">📌 انقر على العبارة من بنك الكلمات، ثم انقر على الفراغ لملئه:</div>
+    <div class="word-bank" id="wb2">
+      <span class="wb-chip" onclick="pickWb2(this,'had already left')">had already left</span>
+      <span class="wb-chip" onclick="pickWb2(this,'had finished')">had finished</span>
+      <span class="wb-chip" onclick="pickWb2(this,'had started')">had started</span>
+      <span class="wb-chip" onclick="pickWb2(this,&quot;hadn't seen&quot;)">hadn't seen</span>
+      <span class="wb-chip" onclick="pickWb2(this,'had gone')">had gone</span>
+    </div>
+    <div style="font-size:1.05rem;font-weight:600;line-height:2.6">
+      <p>1. When I got to the party, everyone _____.
+         &nbsp;<span class="blank" id="b2_1" onclick="dropWb2('b2_1')" data-ans="had already left">______</span></p>
+      <p>2. She felt relieved because she _____ her exams.
+         &nbsp;<span class="blank" id="b2_2" onclick="dropWb2('b2_2')" data-ans="had finished">______</span></p>
+      <p>3. By the time we sat down, the film _____.
+         &nbsp;<span class="blank" id="b2_3" onclick="dropWb2('b2_3')" data-ans="had started">______</span></p>
+      <p>4. Before that trip, I _____ the sea.
+         &nbsp;<span class="blank" id="b2_4" onclick="dropWb2('b2_4')" data-ans="hadn't seen">______</span></p>
+      <p>5. When he called, they _____ home.
+         &nbsp;<span class="blank" id="b2_5" onclick="dropWb2('b2_5')" data-ans="had gone">______</span></p>
+    </div>
+    <div class="fb-wrap" id="l2fb"></div>
+    <div class="lvl-done" id="done2"><span class="star">🌟🌟🌟</span><p>رائع! كل الفراغات صحيحة! تابع إلى المستوى الثالث 🚀</p></div>
+    <button class="check-btn" onclick="checkLevel2()">Check Level 2 ✔</button>
+  </div>
+
+  <div class="card">
+    <h2>✏️ Level 3 — Combine the Events</h2>
+    <div class="q-inst ar">📌 ادمج الحدثين في جملة واحدة مستخدماً الماضي التام للحدث الأقدم:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. She left. → Then I arrived. (use: by the time)</p>
+    <input type="text" id="l3a1" class="t-in" placeholder="By the time I arrived, she …"/>
+    <div class="fb-wrap" id="l3fb1"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">2. Make a question: <em>They had arrived.</em></p>
+    <input type="text" id="l3a2" class="t-in" placeholder="Had …"/>
+    <div class="fb-wrap" id="l3fb2"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">3. They didn't eat. → Then the meeting ended. (use: hadn't … before)</p>
+    <input type="text" id="l3a3" class="t-in" placeholder="They hadn't …"/>
+    <div class="fb-wrap" id="l3fb3"></div>
+
+    <div class="lvl-done" id="done3"><span class="star">💫💫💫</span><p>ممتاز! أتقنت ترتيب الأحداث! استعدّ للتحدي 🏆</p></div>
+    <button class="check-btn" onclick="checkLevel3()">Check Level 3 ✔</button>
+  </div>
+
+  <div class="card">
+    <h2>✏️ Level 4 — Correct the Mistakes</h2>
+    <div class="q-inst ar">📌 صحّح الخطأ في كل جملة واكتبها كاملةً بالشكل الصحيح:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. <span style="color:var(--red)">By the time we arrived, the film started.</span></p>
+    <input type="text" id="l4a1" class="t-in" placeholder="By the time we arrived, the film …"/>
+    <div class="fb-wrap" id="l4fb1"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">2. <span style="color:var(--red)">He was tired because he has worked all day.</span></p>
+    <input type="text" id="l4a2" class="t-in" placeholder="He was tired because he …"/>
+    <div class="fb-wrap" id="l4fb2"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">3. <span style="color:var(--red)">I have went home before she called.</span></p>
+    <input type="text" id="l4a3" class="t-in" placeholder="I …"/>
+    <div class="fb-wrap" id="l4fb3"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">4. <span style="color:var(--red)">She had ate before she left.</span></p>
+    <input type="text" id="l4a4" class="t-in" placeholder="She …"/>
+    <div class="fb-wrap" id="l4fb4"></div>
+
+    <div class="lvl-done" id="done4"><span class="star">🎊🎊🎊</span><p>عظيم! أتقنت جميع المستويات! ⏮️ انتقل إلى الإبداع!</p></div>
+    <button class="check-btn" onclick="checkLevel4()">Check Level 4 ✔</button>
+  </div>
+
+</div>
+
+<!-- ══ 6. CREATE ══ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <h2>🗣️ Before That Moment</h2>
+    <div class="q-inst ar">📌 اكتب ٤ جمل عن أشياء كانت قد حدثت قبل لحظة معينة في الماضي:</div>
+    <div class="prompt-card">
+      <p>✏️ Write 4 sentences about things that had already happened before a past moment.</p>
+      <p style="font-size:.88rem;color:var(--muted)">e.g. <em>By the time I woke up, Mum had already made breakfast. When I got to school, the lesson had started…</em></p>
+    </div>
+    <textarea id="cr1" placeholder="By the time…, … had… When I…, … had already…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr1','cr1-fb','Great sequencing! ⏮️','ترتيب رائع للأحداث! 🌟')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr1-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣️ First Times</h2>
+    <div class="q-inst ar">📌 اكتب ٣ جمل عن تجارب لم تكن قد جرّبتها من قبل، مستخدماً never … before:</div>
+    <div class="prompt-card">
+      <p>✏️ Write 3 sentences using "had never … before".</p>
+      <p style="font-size:.88rem;color:var(--muted)">e.g. <em>Before last summer, I had never swum in the sea.</em></p>
+    </div>
+    <textarea id="cr2" placeholder="Before…, I had never… Until that day, she had never…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr2','cr2-fb','Excellent! 🏆','ممتاز! 💫')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr2-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣️ Challenge — Order the Story</h2>
+    <div class="q-inst ar">📌 تحدٍّ: اكتب فقرة قصيرة (٥ جمل) عن يوم في الماضي، مستخدماً الماضي التام لترتيب الأحداث الأقدم:</div>
+    <div class="prompt-card">
+      <p>🏆 Tell a short story about a past day. Use <strong>at least 3 Past Perfect</strong> sentences to show what had happened earlier.</p>
+    </div>
+    <textarea id="cr3" rows="5" placeholder="It was a strange morning. When I got up, the others had already left. They had eaten breakfast and had gone…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr3','cr3-fb','Brilliant! You\'ve mastered the order of past events! ⏮️✨','رائع! أتقنت ترتيب أحداث الماضي! 🎊🌟')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr3-fb"></div>
+  </div>
+</div>
+
+<!-- ══ 7. QUIZ ══ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <h2>🎯 Quick Quiz — 5 Questions</h2>
+    <div class="q-inst ar">📌 أجب على الأسئلة الخمسة لاختبار ما تعلّمته. كل سؤال بنقطة واحدة:</div>
+
+    <div class="quiz-q" id="qq1">
+      <div class="qn">1. "By the time we left, the rain _____ (stop)."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 المطر توقّف قبل مغادرتنا — أيّ زمن؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,false)">stopped</button>
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,true)">had stopped</button>
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,false)">was stopping</button>
+      </div>
+      <div class="fb-wrap" id="qqfb1"></div>
+    </div>
+
+    <div class="quiz-q" id="qq2">
+      <div class="qn">2. Which is the correct past participle of "go"?</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 ما التصريف الثالث الصحيح للفعل go؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,false)">went</button>
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,true)">gone</button>
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,false)">goed</button>
+      </div>
+      <div class="fb-wrap" id="qqfb2"></div>
+    </div>
+
+    <div class="quiz-q" id="qq3">
+      <div class="qn">3. Which word signals Past Perfect?</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 أيّ كلمة تشير إلى الماضي التام؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,false)">while</button>
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,true)">by the time</button>
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,false)">now</button>
+      </div>
+      <div class="fb-wrap" id="qqfb3"></div>
+    </div>
+
+    <div class="quiz-q" id="qq4">
+      <div class="qn">4. True or False: "had + past participle" is the same for ALL subjects.</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 صحّ أم خطأ: نستخدم "had + التصريف الثالث" مع جميع الفاعلين؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(3,'qq4','qqfb4',this,true)">True ✅</button>
+        <button class="mcq-btn" onclick="qsc(3,'qq4','qqfb4',this,false)">False ❌</button>
+      </div>
+      <div class="fb-wrap" id="qqfb4"></div>
+    </div>
+
+    <div class="quiz-q" id="qq5">
+      <div class="qn">5. "She was tired because she _____ (not / sleep) well."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 التعب جاء بعد ليلة سيئة — ما الزمن الصحيح؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,false)">didn't sleep</button>
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,true)">hadn't slept</button>
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,false)">wasn't sleeping</button>
+      </div>
+      <div class="fb-wrap" id="qqfb5"></div>
+    </div>
+
+    <button class="check-btn" onclick="calcQuiz()">See My Score 🎯</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="badge-big">⏮️</div>
+    <div class="score-num" id="scoreNum"></div>
+    <div id="scoreMsg"></div>
+    <div id="scoreMsgAr" class="ar" style="margin-top:8px;font-size:1rem"></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer>Prepared with care 🌸 by T. Wad Refae</footer>
+
+<script>
+const panels=document.querySelectorAll('.panel');
+const tabs=document.querySelectorAll('.tab');
+function go(i,e){
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.getElementById('progFill').style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(e)e.currentTarget.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+function launchStar(x,y){
+  const icons=['⭐','🌟','✨','💫','⏮️'];
+  const el=document.createElement('span');
+  el.className='flying-star';el.textContent=icons[Math.floor(Math.random()*icons.length)];
+  el.style.left=x+'px';el.style.top=y+'px';
+  document.body.appendChild(el);setTimeout(()=>el.remove(),950);
+}
+function confetti(){
+  const colors=['#3949AB','#5C6BC0','#EC407A','#FFD54F','#2E7D32','#1A237E','#9FA8DA'];
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');c.className='cf-piece';
+    c.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${colors[i%colors.length]};
+      width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
+      animation-delay:${Math.random()*.8}s;animation-duration:${1.2+Math.random()*.6}s;
+      border-radius:${Math.random()>.5?'50%':'2px'}`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),2000);
+  }
+}
+function shake(el){el.style.animation='none';requestAnimationFrame(()=>{el.style.animation='shake .5s ease';});}
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${en}</div><div class="fb-ar">${ar}</div>`;
+}
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const row=document.getElementById(rowId);
+  if(row.dataset.done)return;
+  row.dataset.done='1';
+  row.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}else shake(btn);
+}
+let wbSel2=null;
+function pickWb2(chip,val){
+  if(chip.classList.contains('used'))return;
+  document.querySelectorAll('#wb2 .wb-chip').forEach(c=>c.style.outline='');
+  chip.style.outline='3px solid var(--ind-d)';wbSel2={chip,val};
+}
+function dropWb2(blankId){
+  if(!wbSel2)return;
+  const b=document.getElementById(blankId);
+  b.textContent=wbSel2.val;b.classList.remove('ok','err');b.classList.add('filled');
+  b.dataset.filled=wbSel2.val;wbSel2.chip.style.outline='';wbSel2.chip.classList.add('used');wbSel2=null;
+}
+function checkLevel1(){
+  const done=['l1q1','l1q2','l1q3'].filter(id=>document.getElementById(id).dataset.done).length;
+  if(done===3){document.getElementById('done1').classList.add('show');confetti();}
+  else alert('أجب على الأسئلة الثلاثة أولاً! / Please answer all 3 questions first.');
+}
+function checkLevel2(){
+  const ids=['b2_1','b2_2','b2_3','b2_4','b2_5'];let correct=0;
+  ids.forEach(id=>{
+    const b=document.getElementById(id);
+    const ans=(b.dataset.filled||'').trim().toLowerCase();
+    const exp=(b.dataset.ans||'').trim().toLowerCase();
+    b.classList.remove('ok','err');
+    if(ans===exp){b.classList.add('ok');correct++;}else if(ans)b.classList.add('err');
+  });
+  const ok=correct===5;
+  setFb('l2fb',ok,ok?'✅ Perfect! All 5 correct!':'❌ '+correct+'/5. Try again!',
+    ok?'✅ ممتاز! كل الفراغات صحيحة!':'❌ '+correct+' من 5. حاول مرة أخرى!');
+  if(ok){document.getElementById('done2').classList.add('show');confetti();}
+}
+function checkLevel3(){
+  const items=[
+    {id:'l3a1',fb:'l3fb1',ok:v=>v.includes('had already left')||v.includes('had left'),
+      en:'✅ Correct! "By the time I arrived, she had already left."',ar:'✅ صحيح! By the time I arrived, she had already left.',
+      en2:'❌ Past Perfect: "By the time I arrived, she had (already) left."',ar2:'❌ الصحيح: had left.'},
+    {id:'l3a2',fb:'l3fb2',ok:v=>v==='had they arrived'||v==='had they arrived?',
+      en:'✅ Correct! "Had they arrived?"',ar:'✅ صحيح! Had they arrived?',
+      en2:'❌ Question: Had they arrived?',ar2:'❌ الصحيح: Had they arrived?'},
+    {id:'l3a3',fb:'l3fb3',ok:v=>(v.includes("hadn't eaten")||v.includes('had not eaten')),
+      en:'✅ Correct! "They hadn\'t eaten before the meeting ended."',ar:'✅ صحيح! They hadn\'t eaten before the meeting ended.',
+      en2:'❌ Past Perfect negative: "They hadn\'t eaten before…"',ar2:'❌ الصحيح: hadn\'t eaten.'},
+  ];
+  let all=true;
+  items.forEach(item=>{
+    const val=document.getElementById(item.id).value.trim().toLowerCase().replace(/\.$/,'');
+    const ok=item.ok(val);if(!ok)all=false;
+    setFb(item.fb,ok,ok?item.en:item.en2,ok?item.ar:item.ar2);
+    if(ok){const el=document.getElementById(item.id);const r=el.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+    else shake(document.getElementById(item.id));
+  });
+  if(all){document.getElementById('done3').classList.add('show');confetti();}
+}
+function checkLevel4(){
+  const items=[
+    {id:'l4a1',fb:'l4fb1',ok:v=>v.includes('had started'),
+      en:'✅ "...the film had started." (completed before we arrived!)',ar:'✅ صحيح! had started — اكتمل قبل الوصول.',
+      en2:'❌ By the time → Past Perfect: had started.',ar2:'❌ الصحيح: had started.'},
+    {id:'l4a2',fb:'l4fb2',ok:v=>v.includes('had worked'),
+      en:'✅ "...because he had worked all day." (past, not present!)',ar:'✅ صحيح! had worked — ماضٍ تام وليس مضارعاً.',
+      en2:'❌ Use Past Perfect (past story): had worked, not has worked.',ar2:'❌ الصحيح: had worked.'},
+    {id:'l4a3',fb:'l4fb3',ok:v=>v.includes('had gone'),
+      en:'✅ "I had gone home before she called." — had + GONE!',ar:'✅ صحيح! had gone — التصريف الثالث.',
+      en2:'❌ Past Perfect = had + participle: had gone (not have went).',ar2:'❌ الصحيح: had gone.'},
+    {id:'l4a4',fb:'l4fb4',ok:v=>v.includes('had eaten'),
+      en:'✅ "She had eaten before she left." — eat → EATEN!',ar:'✅ صحيح! eat → eaten (التصريف الثالث).',
+      en2:'❌ The participle of eat is EATEN: had eaten (not had ate).',ar2:'❌ الصحيح: had eaten.'},
+  ];
+  let all=true;
+  items.forEach(item=>{
+    const val=document.getElementById(item.id).value.trim().toLowerCase().replace(/\.$/,'');
+    const ok=item.ok(val);if(!ok)all=false;
+    setFb(item.fb,ok,ok?item.en:item.en2,ok?item.ar:item.ar2);
+    if(ok){const el=document.getElementById(item.id);const r=el.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+    else shake(document.getElementById(item.id));
+  });
+  if(all){document.getElementById('done4').classList.add('show');confetti();}
+}
+function shareFb(taId,fbId,enMsg,arMsg){
+  const val=document.getElementById(taId).value.trim();
+  if(!val){alert('اكتب إجابتك أولاً! / Please write your answer first!');return;}
+  setFb(fbId,true,enMsg,arMsg);
+  const el=document.getElementById(taId);const r=el.getBoundingClientRect();
+  launchStar(r.left+r.width/2,r.top+window.scrollY);confetti();
+}
+const qSels=new Array(5).fill(null);
+function qsc(qi,rowId,fbId,btn,correct){
+  if(qSels[qi]!==null)return;
+  qSels[qi]=correct?1:0;
+  document.getElementById(rowId).querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  const msgs=[
+    ['✅ "had stopped" — completed before we left!','✅ had stopped — اكتمل قبل مغادرتنا!','❌ Wrong. "by the time" → Past Perfect: had stopped.','❌ الصحيح: had stopped.'],
+    ['✅ "gone" is the past participle of go.','✅ gone هو التصريف الثالث للفعل go.','❌ Wrong. go → gone (3rd form), not went/goed.','❌ الصحيح: gone.'],
+    ['✅ "by the time" signals Past Perfect.','✅ by the time تشير إلى الماضي التام.','❌ Wrong. "by the time" = Past Perfect; "while/now" = others.','❌ الصحيح: by the time.'],
+    ['✅ Correct! "had" is the same for all subjects.','✅ صحيح! had لجميع الفاعلين.','❌ It IS the same for all subjects: I/you/he/we/they had.','❌ الصحيح: صحيح.'],
+    ['✅ "hadn\'t slept" — the cause came first (Past Perfect)!','✅ hadn\'t slept — السبب وقع أولاً (ماضٍ تام)!','❌ Wrong. Earlier cause → Past Perfect: hadn\'t slept.','❌ الصحيح: hadn\'t slept.'],
+  ];
+  const m=msgs[qi];
+  setFb(fbId,correct,correct?m[0]:m[2],correct?m[1]:m[3]);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}else shake(btn);
+}
+function calcQuiz(){
+  if(qSels.includes(null)){alert('أجب على جميع الأسئلة أولاً! / Please answer all questions first!');return;}
+  const score=qSels.reduce((a,b)=>a+b,0);
+  document.getElementById('scoreNum').textContent=score+'/5';
+  const msgs=[
+    ['Keep practising! You\'ll get it! 💪','تدرّب أكثر — ستنجح! 💪'],
+    ['Good effort! Review the rules again. 📖','جهد جيد! راجع القواعد مجدداً. 📖'],
+    ['Well done! Almost there! 🌟','أحسنت! أنت قريب جداً! 🌟'],
+    ['Great job! One more to go! 🎉','عمل رائع! سؤال واحد بقي! 🎉'],
+    ['Almost perfect! Excellent! ✨','شبه مثالي! ممتاز! ✨'],
+    ['PERFECT! You\'re a master of past order! ⏮️🏆','مثالي! أنت خبير ترتيب الماضي! ⏮️🏆'],
+  ];
+  document.getElementById('scoreMsg').textContent=msgs[score][0];
+  document.getElementById('scoreMsgAr').textContent=msgs[score][1];
+  document.getElementById('scoreBox').classList.add('show');
+  if(score>=4)confetti();
+  if(score===5)localStorage.setItem('badge_past_perfect','⏮️');
+}
+</script>
+</body>
+</html>

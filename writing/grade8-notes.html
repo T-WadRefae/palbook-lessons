@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade 8 · Writing · Making Notes for Writing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --manila:#f3e3b6; --manila2:#e9d49a; --manila-edge:#caa85e;
+    --desk:#3a2a1c; --desk2:#241810; --paper:#fbf6e6; --line:#e3d6b2;
+    --red:#c0392b; --amber:#e0a32e; --ink:#2b2317; --ink-soft:#6e6043;
+    --good:#3f8a52; --good-deep:#2c6c3d; --accent:#7a5a2a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{font-size:clamp(16px,1.4vw,19px);}
+  body{min-height:100%;font-family:'Nunito',sans-serif;color:var(--ink);overflow-x:hidden;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 24%, rgba(224,163,46,.12), transparent 70%),
+      repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 26px),
+      linear-gradient(180deg,var(--desk),var(--desk2));
+    padding:40px 12px 64px;-webkit-font-smoothing:antialiased;}
+  .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;}
+
+  /* ════════ CASE FILE ════════ */
+  .file{max-width:840px;margin:0 auto;position:relative;background:linear-gradient(180deg,var(--manila),var(--manila2));
+    border-radius:6px 14px 14px 14px;padding:14px;border:2px solid var(--manila-edge);
+    box-shadow:0 22px 50px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.4);
+    animation:open .55s cubic-bezier(.22,.68,0,1.2) both;}
+  @keyframes open{from{opacity:0;transform:translateY(-20px) rotate(-.5deg);}to{opacity:1;transform:none;}}
+  /* folder tab */
+  .file::before{content:"CASE FILE";position:absolute;top:-26px;left:18px;background:var(--manila2);
+    border:2px solid var(--manila-edge);border-bottom:0;border-radius:10px 10px 0 0;padding:5px 20px;
+    font-family:'Special Elite',monospace;font-size:.66rem;letter-spacing:2px;color:#6b5320;}
+  /* paperclip */
+  .clip{position:absolute;top:-12px;right:40px;width:18px;height:46px;border:4px solid #9aa3ad;border-radius:12px;z-index:6;transform:rotate(8deg);box-shadow:0 2px 3px rgba(0,0,0,.3);}
+
+  /* ════ DISTINCTIVE DETECTIVE HEADER ════ */
+  .case-head{position:relative;overflow:hidden;background:linear-gradient(160deg,#2c2620,#1c1813);
+    border:3px solid #0f0c08;border-radius:10px;padding:18px 16px 20px;color:#f4ecd6;}
+  /* fingerprint motif */
+  .case-head::before{content:"";position:absolute;right:-26px;bottom:-30px;width:150px;height:150px;border-radius:50%;
+    background:repeating-radial-gradient(circle, transparent 0 6px, rgba(224,163,46,.16) 6px 8px);opacity:.5;}
+  .magnify{position:absolute;left:14px;top:50%;transform:translateY(-50%) rotate(-12deg);font-size:2.6rem;filter:drop-shadow(0 3px 4px rgba(0,0,0,.5));}
+  .confidential{position:absolute;right:10px;top:14px;transform:rotate(9deg);border:3px solid var(--red);color:var(--red);
+    font-family:'Special Elite',monospace;font-size:.6rem;letter-spacing:2px;padding:3px 9px;border-radius:4px;opacity:.85;
+    box-shadow:inset 0 0 0 1px rgba(192,57,43,.4);}
+  .case-head .inner{position:relative;text-align:center;padding:0 38px;}
+  .case-head .caseno{font-family:'Special Elite',monospace;font-size:.62rem;letter-spacing:3px;color:var(--amber);}
+  .case-head .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:.58rem;background:var(--amber);color:#2c2208;padding:3px 12px;border-radius:20px;margin:4px 0 2px;}
+  .case-head h1{font-family:'Special Elite',monospace;font-weight:400;font-size:clamp(1.1rem,4vw,1.65rem);margin:5px 0 3px;color:#fff;text-shadow:0 2px 3px rgba(0,0,0,.5);}
+  .case-head .teacher{font-family:'Special Elite',monospace;font-size:.66rem;color:#cdbf9a;}
+  .evidence{display:flex;justify-content:center;gap:6px;margin-top:9px;flex-wrap:wrap;}
+  .etag{font-family:'Special Elite',monospace;font-size:.54rem;letter-spacing:1px;background:rgba(224,163,46,.18);border:1px solid rgba(224,163,46,.5);color:var(--amber);padding:2px 8px;border-radius:3px;}
+
+  nav.tabs{display:flex;gap:7px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;padding:13px 2px 2px;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex:0 0 auto;cursor:pointer;border:2px solid var(--manila-edge);background:#fbf3da;color:#6b5320;
+    font-family:'Special Elite',monospace;font-weight:400;font-size:.74rem;letter-spacing:.5px;padding:9px 13px;border-radius:8px;transition:.15s;}
+  .tab-btn:hover{background:#f4e7c2;}
+  .tab-btn.active{background:#2c2620;color:var(--amber);border-color:#0f0c08;}
+  @media(min-width:700px){nav.tabs{flex-wrap:wrap;overflow-x:visible;justify-content:center;}}
+
+  .pages{margin-top:10px;background:
+      repeating-linear-gradient(180deg, transparent 0 29px, #e7dcbe 29px 30px),
+      var(--paper);
+    border-radius:8px;border:1px solid var(--line);padding:8px 12px;}
+  .panel{display:none;padding:16px 6px 22px;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  h2.sh{font-family:'Special Elite',monospace;color:var(--accent);font-size:1.1rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .hint{background:#fff5da;border-right:5px solid var(--amber);border-radius:10px;padding:9px 12px;margin:0 0 16px;font-size:.95rem;color:#7a5a14;font-weight:600;}
+
+  .obj-list{list-style:none;display:grid;gap:10px;}
+  .obj-list li{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:700;font-size:.95rem;}
+  .obj-list .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:'Special Elite';font-size:.8rem;}
+  .mission{margin-top:16px;background:#2c2620;border-radius:14px;padding:14px 16px;color:#f1e7cf;}
+  .mission .ttl{font-family:'Special Elite';letter-spacing:1px;color:var(--amber);font-size:.95rem;margin-bottom:4px;}
+
+  /* notes -> report */
+  .casebox{display:grid;gap:12px;margin-bottom:16px;}
+  .notes,.report{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+  .notes .lbl,.report .lbl{font-family:'Special Elite';font-size:.7rem;letter-spacing:1px;color:var(--accent);margin-bottom:6px;}
+  .note-words{display:flex;flex-wrap:wrap;gap:6px;}
+  .nw{background:#fff2cf;border:1px dashed var(--amber);border-radius:6px;padding:3px 9px;font-family:'Special Elite';font-size:.82rem;color:#6b5320;}
+  .report p{font-family:'Fredoka';font-weight:500;line-height:1.8;font-size:1rem;margin:0;}
+  .arrow{text-align:center;font-size:1.4rem;color:var(--accent);}
+
+  .parts{display:grid;gap:10px;}
+  .part{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s;}
+  .part:hover{border-color:var(--amber);}
+  .part-tag{display:flex;align-items:center;gap:8px;padding:12px 14px;font-weight:800;font-size:.95rem;background:#fff5da;}
+  .part-tag .arr{transition:transform .2s;color:var(--accent);font-size:.7rem;}
+  .part.open .arr{transform:rotate(90deg);}
+  .part-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .part.open .part-body{max-height:320px;}
+  .part-inner{padding:4px 14px 14px;}
+  .en-tip{background:#fff5da;border-radius:8px;padding:7px 10px;font-weight:700;font-size:.88rem;color:#7a5a14;margin-bottom:8px;}
+  .part-inner .ar{font-size:.95rem;color:#4a4030;font-weight:600;line-height:1.7;}
+
+  .ex{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .ex .q{font-family:'Fredoka';font-size:16px;font-weight:600;margin-bottom:10px;}
+  .pick{display:flex;gap:8px;flex-wrap:wrap;}
+  .pick button{position:relative;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font:inherit;font-weight:800;font-size:.9rem;cursor:pointer;transition:.12s;}
+  .pick button:hover{border-color:var(--amber);}
+  .pick button.right{background:#dff0d8;border-color:var(--good);color:var(--good-deep);animation:pop .4s ease;}
+  .pick button.wrong{background:#fde3df;border-color:var(--red);color:#a82c22;animation:shake .3s ease;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .fb{margin-top:8px;font-weight:800;font-size:.88rem;min-height:18px;}
+
+  .chk{list-style:none;display:grid;gap:9px;margin:0 0 18px;}
+  .chk li{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.12s;}
+  .chk li .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #d8c79c;color:transparent;display:grid;place-items:center;font-weight:900;transition:.12s;}
+  .chk li.done{background:#dff0d8;border-color:var(--good);}
+  .chk li.done .box{background:var(--good);border-color:var(--good);color:#fff;animation:pop .4s ease;}
+  .progress{background:#e7dcbe;border-radius:999px;height:16px;overflow:hidden;}
+  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--good-deep),#7fc28e);transition:width .4s;}
+  .p-text{text-align:center;font-weight:800;color:var(--ink-soft);margin-top:7px;font-size:.9rem;}
+  .stamp{margin:16px auto 0;max-width:280px;text-align:center;border:3px dashed #d8c79c;border-radius:16px;padding:18px;opacity:.4;transition:.3s;transform:scale(.96);}
+  .stamp.win{opacity:1;border-color:var(--good);background:#f2fbef;animation:stampPop .6s cubic-bezier(.2,.8,.2,1.4);}
+  @keyframes stampPop{0%{transform:scale(.4) rotate(-12deg);opacity:0;}60%{transform:scale(1.15) rotate(4deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+  .stamp .big{font-size:46px;} .stamp .lbl{font-family:'Special Elite';color:var(--good-deep);font-size:1.05rem;margin-top:4px;letter-spacing:1px;}
+
+  .ws{text-align:center;padding:18px 14px;}
+  .ws .icon{font-size:54px;} .ws h3{font-family:'Special Elite';color:var(--accent);font-size:1.1rem;margin:8px 0 6px;}
+  .ws .soon{display:inline-block;background:#e7dcbe;color:#7a6a45;border-radius:999px;padding:7px 18px;font-weight:800;margin-top:10px;}
+  .ws .note{margin-top:14px;font-size:.9rem;color:var(--ink-soft);font-weight:600;}
+  footer{text-align:center;margin-top:18px;font-size:.82rem;color:#cdbf9a;font-weight:700;}
+
+  .confetti{position:fixed;top:-14px;width:10px;height:14px;border-radius:2px;z-index:9999;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(106vh) rotate(720deg);}}
+  .spark{position:absolute;pointer-events:none;font-size:14px;z-index:50;animation:sparkpop .7s ease forwards;}
+  @keyframes sparkpop{0%{opacity:0;transform:translate(0,0) scale(.4);}30%{opacity:1;}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.2);}}
+</style>
+</head>
+<body>
+
+<div class="file">
+  <span class="clip"></span>
+
+  <!-- ════ DISTINCTIVE HEADER ════ -->
+  <header class="case-head">
+    <div class="magnify">🔍</div>
+    <div class="confidential">CONFIDENTIAL</div>
+    <div class="inner">
+      <div class="caseno">CASE FILE Nº 008</div>
+      <span class="grade-tag">Grade 8 · Writing</span>
+      <h1>The Note Detective</h1>
+      <div class="teacher">Lead Investigator: T. Wad Refae</div>
+      <div class="evidence"><span class="etag">🗒️ NOTES</span><span class="etag">🔑 KEY WORDS</span><span class="etag">✍️ REPORT</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="show('obj',this)">📌 Objectives</button>
+    <button class="tab-btn" onclick="show('model',this)">🔍 The Case</button>
+    <button class="tab-btn" onclick="show('build',this)">✏️ Build It</button>
+    <button class="tab-btn" onclick="show('check',this)">✅ Checklist</button>
+    <button class="tab-btn" onclick="show('ws',this)">📝 Worksheet</button>
+  </nav>
+
+  <div class="pages">
+
+    <section id="tab-obj" class="panel active">
+      <h2 class="sh">📌 Lesson Objectives</h2>
+      <p class="hint ar">في نهاية الدرس، رح يكون الطالب قادر على: ✍️</p>
+      <ul class="obj-list">
+        <li><span class="num">1</span>Take short <b>notes</b> using key words (not full sentences).</li>
+        <li><span class="num">2</span>Use abbreviations and group related ideas.</li>
+        <li><span class="num">3</span>Turn notes into <b>full sentences</b>.</li>
+        <li><span class="num">4</span>Build the notes into an organised paragraph.</li>
+      </ul>
+      <div class="mission">
+        <div class="ttl">🔍 The Mission</div>
+        <p class="ar" style="margin:0;font-weight:600">كل محقّق ماهر يدوّن <b>الأدلة</b> بكلمات قصيرة 🗒️ ثم يكتب <b>التقرير</b> الكامل. مهمتنا: نأخذ ملاحظات ذكية ونحوّلها إلى فقرة منظّمة!</p>
+      </div>
+    </section>
+
+    <section id="tab-model" class="panel">
+      <h2 class="sh">🔍 From Notes to Report</h2>
+      <p class="hint ar">شوف كيف تتحوّل الملاحظات إلى تقرير، ثم اضغط على كل دليل 👇.</p>
+      <div class="casebox">
+        <div class="notes">
+          <div class="lbl">🗒️ THE NOTES (key words)</div>
+          <div class="note-words"><span class="nw">Petra</span><span class="nw">ancient city</span><span class="nw">Jordan</span><span class="nw">carved – rock</span><span class="nw">tourists ↑</span></div>
+        </div>
+        <div class="arrow">⬇️</div>
+        <div class="report">
+          <div class="lbl">✍️ THE REPORT (full paragraph)</div>
+          <p>Petra is an ancient city in Jordan. It is carved out of rock, and many tourists visit it every year. It is one of the most famous places in the world.</p>
+        </div>
+      </div>
+      <div class="parts">
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🔑 Key words only — not full sentences</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Write only the important words: Petra · ancient city · Jordan.</div>
+            <p class="ar">عند تدوين الملاحظات نكتب <b>الكلمات المهمة فقط</b> (أسماء، أفعال، أرقام) — وليس جُملاً كاملة. هذا أسرع وأوضح.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>✂️ Use abbreviations &amp; symbols</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Use short forms &amp; symbols: &amp; (and), ↑ (more), e.g., etc.</div>
+            <p class="ar">استخدم اختصارات ورموزاً لتوفير الوقت: <em>&amp; = and</em>، <em>↑ = يزيد</em>، <em>e.g. = مثال</em>.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🗂️ Group related notes</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Keep notes about the same idea together.</div>
+            <p class="ar">اجمع الملاحظات المتعلّقة بنفس الفكرة معاً — هذا يساعدك ترتّب فقرتك لاحقاً.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>✍️ Expand notes → full sentences</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Add the missing words (is, the, and…) to make full sentences.</div>
+            <p class="ar">حوّل الملاحظات إلى جُمل كاملة بإضافة الكلمات الناقصة (is, the, and…) وربطها لتصبح فقرة منظّمة.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-build" class="panel">
+      <h2 class="sh">✏️ Crack the Case</h2>
+      <p class="hint ar">اختر الإجابة الصحيحة 👇</p>
+      <div class="ex" data-answer="Petra – ancient city"><div class="q">Which is a good NOTE?</div><div class="pick"><button onclick="pick(this,'Petra – ancient city')">Petra – ancient city</button><button onclick="pick(this,'Petra is a very old and beautiful city.')">Petra is a very old and beautiful city.</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="key words"><div class="q">Notes should be…</div><div class="pick"><button onclick="pick(this,'key words')">key words</button><button onclick="pick(this,'full sentences')">full sentences</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="make notes first"><div class="q">What do you do first?</div><div class="pick"><button onclick="pick(this,'make notes first')">make notes first</button><button onclick="pick(this,'write the paragraph first')">write the paragraph first</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="abbreviations &amp; symbols"><div class="q">Good notes often use…</div><div class="pick"><button onclick="pick(this,'abbreviations &amp; symbols')">abbreviations &amp; symbols</button><button onclick="pick(this,'long descriptions')">long descriptions</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="The black cat sleeps on the sofa."><div class="q">Expand the note: "cat – black – sleeps – sofa"</div><div class="pick"><button onclick="pick(this,'The black cat sleeps on the sofa.')">The black cat sleeps on the sofa.</button><button onclick="pick(this,'cat black sleeps sofa')">cat black sleeps sofa</button></div><div class="fb"></div></div>
+    </section>
+
+    <section id="tab-check" class="panel">
+      <h2 class="sh">✅ My Notes Check</h2>
+      <p class="hint ar">اضغط على كل بند بعد ما تتأكد منه ✍️</p>
+      <ul class="chk" id="chkList">
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I wrote notes as key words, not full sentences.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I used abbreviations / symbols where helpful.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I grouped notes about the same idea.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I turned each note into a full sentence.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>My sentences form an organised paragraph.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>Each sentence has a capital letter and a full stop.</li>
+      </ul>
+      <div class="progress"><div class="fill" id="pFill"></div></div>
+      <div class="p-text" id="pText">0 / 6</div>
+      <div class="stamp" id="stamp"><div class="big">🔍</div><div class="lbl">CASE SOLVED!</div></div>
+    </section>
+
+    <section id="tab-ws" class="panel">
+      <h2 class="sh">📝 Worksheet</h2>
+      <div class="ws">
+        <div class="icon">🔍📄</div>
+        <h3>Practice Worksheet</h3>
+        <p class="ar" style="font-weight:600;color:#6e6043">ورقة عمل الطباعة لهذا الدرس رح تنضاف هنا قريباً.</p>
+        <!-- WORKSHEET-LINK: ضعي رابط Google Drive / PDF هنا لاحقاً، واستبدلي زر "Coming soon" برابط فعلي -->
+        <span class="soon">⏳ Coming soon · قريباً</span>
+        <p class="note ar">سيتم رفع ورقة العمل لاحقاً لتُطبع وتُحلّ في الصف 🌸</p>
+      </div>
+    </section>
+
+  </div><!-- /pages -->
+  <footer>Prepared with care 🌸 by T. Wad Refae</footer>
+</div>
+
+<script>
+  function show(id,btn){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active');
+  }
+  function togglePart(el){ el.classList.toggle('open'); }
+  function sparkle(el){
+    const marks=['✨','🔎','⭐','🗝️'];
+    for(let i=0;i<5;i++){
+      const s=document.createElement('span'); s.className='spark'; s.textContent=marks[i%marks.length];
+      const r=el.getBoundingClientRect(); s.style.left=(r.width/2)+'px'; s.style.top='4px';
+      s.style.setProperty('--dx',(Math.random()*80-40)+'px'); s.style.setProperty('--dy',(-30-Math.random()*40)+'px');
+      el.appendChild(s); setTimeout(()=>s.remove(),700);
+    }
+  }
+  function celebrate(){
+    const cols=['#c0392b','#e0a32e','#3f8a52','#3a7bd5','#caa85e','#f4ecd6'];
+    for(let i=0;i<40;i++){
+      const c=document.createElement('div'); c.className='confetti';
+      c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+      c.style.animationDuration=(1.6+Math.random()*1.4)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
+      c.style.transform='rotate('+(Math.random()*360)+'deg)';
+      document.body.appendChild(c); setTimeout(()=>c.remove(),3200);
+    }
+  }
+  let buildCelebrated=false;
+  function pick(btn,val){
+    const ex=btn.closest('.ex'); const ans=ex.dataset.answer; const fb=ex.querySelector('.fb');
+    ex.querySelectorAll('.pick button').forEach(b=>b.classList.remove('right','wrong'));
+    if(val===ans){
+      btn.classList.add('right'); fb.textContent='✅ Case cracked! Correct.'; fb.style.color='#2c6c3d'; sparkle(btn);
+      const all=[...document.querySelectorAll('.ex')];
+      if(!buildCelebrated && all.every(e=>e.querySelector('.pick button.right'))){ buildCelebrated=true; celebrate(); }
+    } else { btn.classList.add('wrong'); fb.textContent='❌ Look again, detective.'; fb.style.color='#a82c22'; }
+  }
+  const KEY='write-g8-notes-done';
+  const items=[...document.querySelectorAll('#chkList li')];
+  let wasComplete=false;
+  function refresh(){
+    const done=items.filter(i=>i.classList.contains('done')).length;
+    document.getElementById('pFill').style.width=(done/items.length*100)+'%';
+    document.getElementById('pText').textContent=done+' / '+items.length;
+    const stamp=document.getElementById('stamp');
+    if(done===items.length){ stamp.classList.add('win'); localStorage.setItem(KEY,'1'); if(!wasComplete){ wasComplete=true; celebrate(); } }
+    else { stamp.classList.remove('win'); wasComplete=false; }
+  }
+  function toggleChk(li){ li.classList.toggle('done'); refresh(); }
+  if(localStorage.getItem(KEY)==='1'){ items.forEach(i=>i.classList.add('done')); wasComplete=true; refresh(); }
+</script>
+</body>
+</html>

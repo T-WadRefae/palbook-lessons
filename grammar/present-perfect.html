@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Present Perfect — Discovery Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --em:#10A37F;--em-d:#0B6E55;--teal:#14B8A6;--mint:#D1FAE5;
+  --gold:#F59E0B;--grn:#2E7D32;--grn-l:#E8F5E9;--red:#C62828;--red-l:#FFEBEE;
+  --bg:#F0FDF9;--card:#fff;--txt:#103028;--muted:#5a7068;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl}
+
+/* ── HEADER (medal / achievement theme) ── */
+.hdr{background:linear-gradient(135deg,var(--em-d) 0%,var(--em) 55%,var(--teal) 100%);
+  padding:28px 20px 0;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 85% 30%,rgba(245,158,11,.30) 0%,transparent 50%),
+             radial-gradient(circle at 15% 70%,rgba(255,255,255,.12) 0%,transparent 55%);pointer-events:none}
+.hdr-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:18px;position:relative}
+.hdr-art{font-size:84px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3))}
+.hdr-text{flex:1}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:4px}
+.hdr h1{font-family:'Fredoka One',cursive;font-size:clamp(1.5rem,4vw,2.4rem);color:#fff;line-height:1.15}
+.hdr h1 span{color:#FFE082}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:rgba(255,255,255,.18);color:#fff;border-radius:20px;padding:3px 12px;font-size:.8rem;font-weight:700}
+.chip.ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.85rem}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:6px;padding:14px 16px 0;max-width:900px;margin:16px auto 0;
+  overflow-x:auto;scrollbar-width:none;flex-wrap:wrap;justify-content:center}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.35);
+  border-radius:22px 22px 0 0;padding:8px 16px;font-family:'Fredoka One',cursive;
+  font-size:.95rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab:hover{background:rgba(255,255,255,.35)}
+.tab.active{background:#fff;color:var(--em-d);border-color:#fff}
+
+/* ── PROGRESS ── */
+.prog-wrap{background:rgba(255,255,255,.2);height:6px;margin:0}
+.prog-fill{height:100%;background:linear-gradient(90deg,#FFE082,#F59E0B);
+  transition:width .4s ease;border-radius:0 3px 3px 0}
+
+/* ── MAIN ── */
+.main{max-width:900px;margin:0 auto;padding:24px 16px 60px}
+.panel{display:none}.panel.on{display:block}
+
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:16px;padding:24px;margin-bottom:20px;
+  box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.card h2{font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--em-d);margin-bottom:12px}
+.card h3{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--em);margin:14px 0 8px}
+
+/* ── ARABIC INSTRUCTION BAR ── */
+.q-inst{background:#E0F2F1;border-right:5px solid var(--em);border-radius:10px;
+  padding:10px 16px;margin-bottom:14px;font-family:'Baloo Bhaijaan 2',sans-serif;
+  font-size:1rem;color:var(--em-d);direction:rtl;text-align:right;line-height:1.6}
+
+/* ── FEEDBACK ── */
+.fb-wrap{display:none;border-radius:10px;padding:12px 16px;margin-top:10px;
+  border-left:5px solid transparent}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#E8F5E9;border-color:#2E7D32}
+.fb-wrap.err{background:#FFEBEE;border-color:#C62828}
+.fb-en{font-weight:700;font-size:1rem;margin-bottom:4px}
+.fb-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:.95rem;direction:rtl;
+  text-align:right;color:#555}
+.fb-wrap.ok .fb-en{color:#1B5E20}
+.fb-wrap.err .fb-en{color:#B71C1C}
+
+/* ── MCQ ── */
+.mcq-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+.mcq-btn{background:#E0F2F1;border:2px solid #80CBC4;border-radius:12px;
+  padding:9px 18px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;
+  cursor:pointer;transition:all .2s;color:var(--txt)}
+.mcq-btn:hover{background:#B2DFDB}
+.mcq-btn.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
+.mcq-btn.err{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
+.mcq-btn:disabled{cursor:default;opacity:.8}
+
+/* ── FILL BLANKS ── */
+.blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--em);padding:2px 6px;
+  text-align:center;cursor:pointer;border-radius:4px 4px 0 0;transition:background .2s}
+.blank:hover{background:var(--mint)}
+.blank.filled{color:var(--em-d)}
+.blank.ok{border-color:var(--grn);color:var(--grn);background:#E8F5E9}
+.blank.err{border-color:var(--red);color:var(--red);background:#FFEBEE}
+
+/* ── WORD BANK ── */
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;background:var(--mint);padding:12px 16px;
+  border-radius:12px;margin-bottom:16px}
+.wb-chip{background:#fff;border:2px solid var(--em);border-radius:20px;
+  padding:5px 14px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+.wb-chip:hover{background:var(--em);color:#fff}
+.wb-chip.used{opacity:.35;pointer-events:none;text-decoration:line-through}
+
+/* ── CHECK BTN ── */
+.check-btn{background:linear-gradient(135deg,var(--em),var(--teal));color:#fff;
+  border:none;border-radius:12px;padding:10px 26px;font-family:'Fredoka One',cursive;
+  font-size:1rem;cursor:pointer;margin-top:10px;transition:transform .15s,box-shadow .15s}
+.check-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(16,163,127,.4)}
+.check-btn:active{transform:translateY(0)}
+
+/* ── TEXT INPUT ── */
+.t-in{width:100%;padding:9px;border:2px solid var(--em);border-radius:8px;font-size:1rem;
+  margin-bottom:4px;font-family:'Nunito',sans-serif;background:#FAFFFD}
+.t-in:focus{outline:none;border-color:var(--teal)}
+
+/* ── LEVEL DONE BANNER ── */
+.lvl-done{display:none;background:linear-gradient(135deg,#FFF8E1,#FFFDE7);
+  border:3px solid var(--gold);border-radius:16px;padding:16px 20px;text-align:center;
+  margin-top:16px;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1.1rem;color:#B45309}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+.lvl-done .star{font-size:1.5rem}
+
+/* ── DISCOVER TABLE ── */
+.disc-tbl{width:100%;border-collapse:collapse;margin:12px 0}
+.disc-tbl th{background:var(--em-d);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:.95rem}
+.disc-tbl td{padding:9px 14px;border-bottom:1px solid var(--mint);font-size:.95rem}
+.disc-tbl tr:nth-child(even) td{background:#F0FDF9}
+.disc-tbl .hi{color:var(--em-d);font-weight:800;background:#FFF9C4;padding:1px 4px;border-radius:4px}
+.disc-tbl .neg{color:#C62828;font-weight:800}
+
+/* ── GRAMMAR TABLE ── */
+.gram-tbl{width:100%;border-collapse:collapse;margin:10px 0}
+.gram-tbl th{background:var(--em);color:#fff;padding:9px 14px;font-family:'Fredoka One',cursive}
+.gram-tbl td{padding:8px 14px;border-bottom:1px solid var(--mint)}
+.gram-tbl tr:nth-child(even) td{background:#E0F2F1}
+.gram-note{background:#FFF8E1;border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;
+  margin:10px 0;font-size:.92rem}
+.gram-note .ar{font-size:.95rem;margin-top:4px;color:#555}
+
+/* ── VOCAB CARD ── */
+.vc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:12px 0}
+.vc{background:#E0F2F1;border-radius:14px;padding:14px 10px;text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.vc .icon{font-size:2.2rem;margin-bottom:6px}
+.vc .en{font-weight:800;font-size:.95rem;color:var(--em-d)}
+.vc .ar{font-size:.88rem;color:#555;margin-top:3px}
+
+/* ── CREATE ── */
+.prompt-card{background:linear-gradient(135deg,#E0F2F1,#D1FAE5);border-radius:14px;
+  padding:18px;margin-bottom:14px;border-left:5px solid var(--em)}
+.prompt-card p{font-size:.95rem;margin-bottom:8px}
+textarea{width:100%;min-height:90px;border:2px solid var(--em);border-radius:10px;
+  padding:10px;font-family:'Nunito',sans-serif;font-size:.95rem;resize:vertical;background:#FAFFFD}
+textarea:focus{outline:none;border-color:var(--teal)}
+
+/* ── QUIZ ── */
+.quiz-q{background:#E0F2F1;border-radius:14px;padding:18px;margin-bottom:16px;
+  border-left:5px solid var(--em)}
+.quiz-q .qn{font-weight:800;color:var(--em-d);margin-bottom:8px}
+.score-box{background:linear-gradient(135deg,var(--em-d),var(--em));color:#fff;
+  border-radius:18px;padding:24px;text-align:center;display:none}
+.score-box.show{display:block;animation:popIn .5s ease}
+.score-box .score-num{font-family:'Fredoka One',cursive;font-size:3rem}
+.score-box .badge{font-size:3.5rem;margin:8px 0}
+
+/* ── ANIMATIONS ── */
+@keyframes popIn{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes floatStar{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(1.6)}}
+@keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* ── OBJECTIVES ── */
+.obj-list{list-style:none;padding:0}
+.obj-list li{padding:8px 0 8px 32px;position:relative;font-size:1rem;border-bottom:1px solid var(--mint)}
+.obj-list li::before{content:'🏅';position:absolute;left:0}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;align-items:center;gap:0;margin:16px 0;position:relative}
+.tl-bar{flex:1;height:6px;background:linear-gradient(90deg,#B2DFDB,var(--em));border-radius:3px;position:relative}
+.tl-dot{width:14px;height:14px;border-radius:50%;background:var(--em-d);position:absolute;top:-4px}
+.tl-label{font-size:.8rem;font-weight:700;color:var(--muted)}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:20px;font-size:.82rem;color:var(--muted)}
+
+/* ── STAR / CONFETTI ── */
+.flying-star{position:fixed;pointer-events:none;font-size:1.6rem;z-index:9999;animation:floatStar .9s ease forwards}
+.cf-piece{position:fixed;width:10px;height:10px;border-radius:2px;z-index:9998;animation:cfFall 1.4s ease forwards}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-art">🏆</div>
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar • English for Palestine</p>
+      <h1>Present <span>Perfect</span></h1>
+      <div class="chips">
+        <span class="chip">🎯 Grades 7 &amp; 9</span>
+        <span class="chip">⏱️ ~35 min</span>
+        <span class="chip ar">المضارع التام</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab active" onclick="go(0,event)">🚀 Start</button>
+    <button class="tab" onclick="go(1,event)">📚 Words</button>
+    <button class="tab" onclick="go(2,event)">🔍 Discover</button>
+    <button class="tab" onclick="go(3,event)">🧠 Grammar</button>
+    <button class="tab" onclick="go(4,event)">✏️ Practice</button>
+    <button class="tab" onclick="go(5,event)">🗣️ Create</button>
+    <button class="tab" onclick="go(6,event)">🎯 Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
+</div>
+
+<!-- ═══════════ PANELS ═══════════ -->
+<div class="main">
+
+<!-- ══ 1. START ══ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <h2>🚀 The Bridge to Now</h2>
+    <p style="font-size:1.05rem;margin-bottom:14px">
+      🍰 <strong>Have you ever tasted knaafeh?</strong> &nbsp; 📝 <strong>Have you finished your homework yet?</strong><br>
+      These questions link the past to <em>now</em> — the result still matters at this moment. That is exactly when we use the <strong>Present Perfect</strong>.
+    </p>
+    <div class="q-inst ar">📌 انظر إلى الموقف واختَر الجملة الصحيحة. (الحدث وقع في الماضي لكن نتيجته مهمة الآن):</div>
+    <div id="s-q1">
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'That is Past Simple — it cuts the link to now.','هذا ماضٍ بسيط — يقطع الصلة باللحظة الحالية.')">I lost my key.</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,true,'Yes! 🎉 "have lost" — the result (no key NOW) matters!','ممتاز! "have lost" لأن النتيجة (لا مفتاح الآن) مهمة!')">I have lost my key.</button>
+        <button class="mcq-btn" onclick="sc('s-q1','s-fb1',this,false,'Present Continuous is for actions in progress, not results.','المضارع المستمر للأحداث الجارية، لا للنتائج.')">I am losing my key.</button>
+      </div>
+      <div class="fb-wrap" id="s-fb1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Objectives — أهداف الدرس</h2>
+    <ul class="obj-list">
+      <li>Form the Present Perfect: <strong>have / has + past participle</strong></li>
+      <li>Use <strong>just, already, yet</strong> correctly</li>
+      <li>Talk about life experiences with <strong>ever / never</strong></li>
+      <li>Use <strong>for</strong> and <strong>since</strong> for duration</li>
+      <li>Tell the difference between Present Perfect and Past Simple</li>
+    </ul>
+  </div>
+</div><!-- /p0 -->
+
+<!-- ══ 2. WORDS ══ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <h2>📚 Signal Words — Time Markers</h2>
+    <div class="q-inst ar">📌 هذه الكلمات تدلّك على استخدام المضارع التام:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">⚡</div><div class="en">just</div><div class="ar">للتو / منذ لحظة</div></div>
+      <div class="vc"><div class="icon">✅</div><div class="en">already</div><div class="ar">بالفعل / مسبقاً</div></div>
+      <div class="vc"><div class="icon">⏳</div><div class="en">yet</div><div class="ar">حتى الآن (نفي/سؤال)</div></div>
+      <div class="vc"><div class="icon">🌍</div><div class="en">ever</div><div class="ar">في حياتك (سؤال)</div></div>
+      <div class="vc"><div class="icon">🚫</div><div class="en">never</div><div class="ar">لم ولن (تجربة)</div></div>
+      <div class="vc"><div class="icon">📏</div><div class="en">for</div><div class="ar">لمدة (فترة زمنية)</div></div>
+      <div class="vc"><div class="icon">📍</div><div class="en">since</div><div class="ar">منذ (نقطة بداية)</div></div>
+      <div class="vc"><div class="icon">🕘</div><div class="en">recently</div><div class="ar">مؤخراً</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📚 Common Past Participles</h2>
+    <div class="q-inst ar">📌 المضارع التام يحتاج "التصريف الثالث" للفعل — احفظ هذه الأفعال المهمة:</div>
+    <div class="vc-grid">
+      <div class="vc"><div class="icon">🍽️</div><div class="en">eat → eaten</div><div class="ar">أكَلَ</div></div>
+      <div class="vc"><div class="icon">🥤</div><div class="en">drink → drunk</div><div class="ar">شرِبَ</div></div>
+      <div class="vc"><div class="icon">📖</div><div class="en">read → read</div><div class="ar">قرأ</div></div>
+      <div class="vc"><div class="icon">✍️</div><div class="en">write → written</div><div class="ar">كتبَ</div></div>
+      <div class="vc"><div class="icon">👀</div><div class="en">see → seen</div><div class="ar">رأى</div></div>
+      <div class="vc"><div class="icon">🏃</div><div class="en">go → gone</div><div class="ar">ذهبَ</div></div>
+      <div class="vc"><div class="icon">🎁</div><div class="en">give → given</div><div class="ar">أعطى</div></div>
+      <div class="vc"><div class="icon">✔️</div><div class="en">do → done</div><div class="ar">فعلَ</div></div>
+      <div class="vc"><div class="icon">📞</div><div class="en">make → made</div><div class="ar">صنعَ</div></div>
+      <div class="vc"><div class="icon">🏁</div><div class="en">finish → finished</div><div class="ar">أنهى (منتظم)</div></div>
+    </div>
+  </div>
+</div><!-- /p1 -->
+
+<!-- ══ 3. DISCOVER ══ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h2>🔍 Spot the Pattern!</h2>
+    <div class="q-inst ar">📌 لاحظ الجمل في الجدول — ما الذي يأتي بعد الفاعل؟ وكيف يتغير حسب الفاعل؟</div>
+    <table class="disc-tbl">
+      <thead><tr><th>Subject</th><th>Sentence</th><th>What changed?</th></tr></thead>
+      <tbody>
+        <tr><td>I</td><td>I <span class="hi">have</span> finish<span class="hi">ed</span> my work.</td><td>have + participle</td></tr>
+        <tr><td>You</td><td>You <span class="hi">have</span> <span class="hi">eaten</span> already.</td><td>have + participle</td></tr>
+        <tr><td>We</td><td>We <span class="hi">have</span> <span class="hi">seen</span> the film.</td><td>have + participle</td></tr>
+        <tr><td>They</td><td>They <span class="hi">have</span> <span class="hi">gone</span> home.</td><td>have + participle</td></tr>
+        <tr><td>He</td><td>He <span class="hi">has</span> <span class="hi">written</span> a letter.</td><td>has + participle</td></tr>
+        <tr><td>She</td><td>She <span class="hi">has</span> <span class="hi">done</span> her homework.</td><td>has + participle</td></tr>
+        <tr><td>It</td><td>It <span class="hi">has</span> <span class="hi">started</span> to rain.</td><td>has + participle</td></tr>
+      </tbody>
+    </table>
+    <div class="q-inst ar" style="margin-top:16px">🤔 متى نستخدم "has" بدلاً من "have"؟ أجب أدناه:</div>
+    <div id="disc-q1">
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'Look again — He/She/It use HAS.','انظر مجدداً — He/She/It تستخدم has.')">have for all subjects</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,true,'Exactly! ✅ He/She/It → HAS, everyone else → HAVE.','رائع! ✅ He/She/It → has، والبقية → have.')">has with He / She / It</button>
+        <button class="mcq-btn" onclick="sc('disc-q1','disc-fb1',this,false,'No — has is only for He/She/It (singular).','لا — has فقط مع He/She/It المفرد.')">has with I / You / We</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔍 Present Perfect vs. Past Simple</h2>
+    <div class="q-inst ar">📌 قارِن بين الجملتين — أيّهما يذكر وقتاً محدّداً في الماضي؟ وأيّهما يربط الماضي بالحاضر؟</div>
+    <table class="disc-tbl">
+      <thead><tr><th>Past Simple (وقت محدّد)</th><th>Present Perfect (صلة بالحاضر)</th></tr></thead>
+      <tbody>
+        <tr><td>I <span class="neg">visited</span> Jerusalem <strong>in 2019</strong>.</td><td>I <span class="hi">have visited</span> Jerusalem. <em>(when? not important)</em></td></tr>
+        <tr><td>She <span class="neg">ate</span> breakfast <strong>at 7am</strong>.</td><td>She <span class="hi">has just eaten</span> breakfast.</td></tr>
+        <tr><td>They <span class="neg">finished</span> <strong>yesterday</strong>.</td><td>They <span class="hi">have already finished</span>.</td></tr>
+      </tbody>
+    </table>
+    <div id="disc-q2">
+      <div class="q-inst ar">📌 أيّ زمن نستخدمه عندما لا نذكر وقتاً محدّداً والنتيجة مهمة الآن؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,false,'Past Simple needs a finished time (yesterday, in 2019).','الماضي البسيط يحتاج وقتاً منتهياً (yesterday، in 2019).')">Past Simple</button>
+        <button class="mcq-btn" onclick="sc('disc-q2','disc-fb2',this,true,'Correct! ✅ Present Perfect = no specific time + link to now.','صحيح! ✅ المضارع التام = بلا وقت محدّد + صلة بالحاضر.')">Present Perfect</button>
+      </div>
+      <div class="fb-wrap" id="disc-fb2"></div>
+    </div>
+  </div>
+</div><!-- /p2 -->
+
+<!-- ══ 4. GRAMMAR ══ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <h2>🧠 The Rule</h2>
+    <div class="gram-note">
+      <strong>Form:</strong> Subject + <em>have / has</em> + <strong>past participle</strong> (3rd form)
+      <div class="ar">الصيغة: الفاعل + have/has + التصريف الثالث للفعل</div>
+    </div>
+    <table class="gram-tbl">
+      <thead><tr><th>Subject</th><th>Auxiliary</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>I / You / We / They</td><td><strong>have</strong></td><td>I <strong>have finished</strong> my work.</td></tr>
+        <tr><td>He / She / It</td><td><strong>has</strong></td><td>She <strong>has eaten</strong> already.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Where Do the Signal Words Go?</h2>
+    <div class="q-inst ar">📌 لكل كلمة دلالة موضعها الخاص في الجملة — انتبه جيداً:</div>
+    <table class="gram-tbl">
+      <thead><tr><th>Marker</th><th>Position</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>just</strong></td><td>after have/has</td><td>I have <strong>just</strong> arrived.</td></tr>
+        <tr><td><strong>already</strong></td><td>after have/has</td><td>She has <strong>already</strong> left.</td></tr>
+        <tr><td><strong>yet</strong></td><td>at the end (neg. / question)</td><td>I haven't finished <strong>yet</strong>. · Have you eaten <strong>yet</strong>?</td></tr>
+        <tr><td><strong>ever / never</strong></td><td>after have/has</td><td>Have you <strong>ever</strong> been to Gaza? · I have <strong>never</strong> seen snow.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Negative &amp; Question</h2>
+    <table class="gram-tbl">
+      <thead><tr><th>Type</th><th>Structure</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Negative ❌</td><td>Subject + haven't / hasn't + participle</td><td>He <strong>hasn't</strong> arrived yet.</td></tr>
+        <tr><td>Question ❓</td><td>Have / Has + subject + participle?</td><td><strong>Have</strong> you finished?</td></tr>
+        <tr><td>Short answer ✅</td><td>Yes, I have. / No, she hasn't.</td><td>Yes, they have.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🧠 for vs. since</h2>
+    <div class="q-inst ar">📌 نستخدم "for" مع مدة زمنية، و "since" مع نقطة بداية محدّدة:</div>
+    <table class="gram-tbl">
+      <thead><tr><th>for + مدة</th><th>since + نقطة بداية</th></tr></thead>
+      <tbody>
+        <tr><td>for five years</td><td>since 2020</td></tr>
+        <tr><td>for two hours</td><td>since Monday</td></tr>
+        <tr><td>I have lived here <strong>for</strong> five years.</td><td>She has studied English <strong>since</strong> 2020.</td></tr>
+      </tbody>
+    </table>
+    <div class="timeline">
+      <span class="tl-label">PAST</span>
+      <div class="tl-bar"><span class="tl-dot" style="left:0"></span><span class="tl-dot" style="right:0;background:var(--gold)"></span></div>
+      <span class="tl-label">NOW</span>
+    </div>
+    <p style="font-size:.88rem;color:var(--muted);text-align:center">Present Perfect connects a past action to the present moment.</p>
+  </div>
+</div><!-- /p3 -->
+
+<!-- ══ 5. PRACTICE ══ -->
+<div class="panel" id="p4">
+
+  <!-- LEVEL 1 — MCQ -->
+  <div class="card">
+    <h2>✏️ Level 1 — Choose the Correct Form</h2>
+    <div class="q-inst ar">📌 اختَر الإجابة الصحيحة لإتمام كل جملة في زمن المضارع التام:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. "I can't come in — I _____ my key!" (the result matters now)</p>
+    <div id="l1q1"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,false,'Past Simple removes the link to now.','الماضي البسيط يقطع الصلة بالحاضر.')">lost</button>
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,true,'✅ "have lost" — no key right now!','✅ have lost — لا مفتاح الآن!')">have lost</button>
+      <button class="mcq-btn" onclick="sc('l1q1','l1fb1',this,false,'Present Continuous is for actions in progress.','المضارع المستمر للأحداث الجارية.')">am losing</button>
+    </div><div class="fb-wrap" id="l1fb1"></div></div>
+
+    <p style="font-weight:700;margin:16px 0 6px">2. She _____ her homework. (use: has / just / finish)</p>
+    <div id="l1q2"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,true,'✅ "has just finished" — just goes after has!','✅ has just finished — "just" تأتي بعد has!')">has just finished</button>
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,false,'"have" is wrong for She — use HAS.','She مفرد → استخدم has وليس have.')">have just finished</button>
+      <button class="mcq-btn" onclick="sc('l1q2','l1fb2',this,false,'"just has" — wrong order. just comes AFTER has.','ترتيب خاطئ — just تأتي بعد has.')">just has finished</button>
+    </div><div class="fb-wrap" id="l1fb2"></div></div>
+
+    <p style="font-weight:700;margin:16px 0 6px">3. _____ you ever _____ to Jericho?</p>
+    <div id="l1q3"><div class="mcq-row">
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,false,'"Did...gone" mixes two tenses. Use Have...been.','خلط بين زمنين — استخدم Have...been.')">Did / gone</button>
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,true,'✅ "Have you ever been" — perfect experience question!','✅ Have you ever been — سؤال عن تجربة حياتية!')">Have / been</button>
+      <button class="mcq-btn" onclick="sc('l1q3','l1fb3',this,false,'"Have...go" needs the participle: been/gone.','بعد have نحتاج التصريف الثالث: been/gone.')">Have / go</button>
+    </div><div class="fb-wrap" id="l1fb3"></div></div>
+
+    <div class="lvl-done" id="done1"><span class="star">🏅🏅🏅</span><p>أحسنتَ! انتقل إلى المستوى الثاني 🎉</p></div>
+    <button class="check-btn" onclick="checkLevel1()">Check Level 1 ✔</button>
+  </div>
+
+  <!-- LEVEL 2 — FILL BLANKS -->
+  <div class="card">
+    <h2>✏️ Level 2 — Fill in the Blanks</h2>
+    <div class="q-inst ar">📌 انقر على العبارة من بنك الكلمات، ثم انقر على الفراغ المناسب لملئه:</div>
+    <div class="word-bank" id="wb2">
+      <span class="wb-chip" onclick="pickWb2(this,'has eaten')">has eaten</span>
+      <span class="wb-chip" onclick="pickWb2(this,'have visited')">have visited</span>
+      <span class="wb-chip" onclick="pickWb2(this,'has written')">has written</span>
+      <span class="wb-chip" onclick="pickWb2(this,\"haven't seen\")">haven't seen</span>
+      <span class="wb-chip" onclick="pickWb2(this,'have lived')">have lived</span>
+    </div>
+    <div style="font-size:1.05rem;font-weight:600;line-height:2.4">
+      <p>1. He _____ his lunch already.
+         &nbsp;<span class="blank" id="b2_1" onclick="dropWb2('b2_1')" data-ans="has eaten">______</span></p>
+      <p>2. We _____ Nablus many times.
+         &nbsp;<span class="blank" id="b2_2" onclick="dropWb2('b2_2')" data-ans="have visited">______</span></p>
+      <p>3. She _____ three letters today.
+         &nbsp;<span class="blank" id="b2_3" onclick="dropWb2('b2_3')" data-ans="has written">______</span></p>
+      <p>4. I _____ that film yet.
+         &nbsp;<span class="blank" id="b2_4" onclick="dropWb2('b2_4')" data-ans="haven't seen">______</span></p>
+      <p>5. They _____ here for ten years.
+         &nbsp;<span class="blank" id="b2_5" onclick="dropWb2('b2_5')" data-ans="have lived">______</span></p>
+    </div>
+    <div class="fb-wrap" id="l2fb"></div>
+    <div class="lvl-done" id="done2"><span class="star">🌟🌟🌟</span><p>رائع! كل الفراغات صحيحة! تابع إلى المستوى الثالث 🚀</p></div>
+    <button class="check-btn" onclick="checkLevel2()">Check Level 2 ✔</button>
+  </div>
+
+  <!-- LEVEL 3 — MAKE NEGATIVES/QUESTIONS -->
+  <div class="card">
+    <h2>✏️ Level 3 — Make It Negative or a Question</h2>
+    <div class="q-inst ar">📌 حوّل كل جملة كما هو مطلوب، ثم اضغط "Check" للتحقق:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. Make negative: <em>She has finished her work.</em></p>
+    <input type="text" id="l3a1" class="t-in" placeholder="She …"/>
+    <div class="fb-wrap" id="l3fb1"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">2. Make a question: <em>They have arrived.</em></p>
+    <input type="text" id="l3a2" class="t-in" placeholder="Have …"/>
+    <div class="fb-wrap" id="l3fb2"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">3. Make negative: <em>I have seen this film.</em></p>
+    <input type="text" id="l3a3" class="t-in" placeholder="I …"/>
+    <div class="fb-wrap" id="l3fb3"></div>
+
+    <div class="lvl-done" id="done3"><span class="star">💫💫💫</span><p>ممتاز! أتقنت النفي والسؤال! استعدّ للتحدي 🏆</p></div>
+    <button class="check-btn" onclick="checkLevel3()">Check Level 3 ✔</button>
+  </div>
+
+  <!-- LEVEL 4 — CORRECT MISTAKES -->
+  <div class="card">
+    <h2>✏️ Level 4 — Correct the Mistakes</h2>
+    <div class="q-inst ar">📌 صحّح الخطأ في كل جملة واكتبها بالشكل الصحيح:</div>
+
+    <p style="font-weight:700;margin-bottom:6px">1. <span style="color:var(--red)">She have eaten lunch.</span></p>
+    <input type="text" id="l4a1" class="t-in" placeholder="She …"/>
+    <div class="fb-wrap" id="l4fb1"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">2. <span style="color:var(--red)">I have went to school.</span></p>
+    <input type="text" id="l4a2" class="t-in" placeholder="I …"/>
+    <div class="fb-wrap" id="l4fb2"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">3. <span style="color:var(--red)">Have you finished already? (→ negative: not yet)</span></p>
+    <input type="text" id="l4a3" class="t-in" placeholder="I haven't …"/>
+    <div class="fb-wrap" id="l4fb3"></div>
+
+    <p style="font-weight:700;margin:14px 0 6px">4. <span style="color:var(--red)">We have lived here since five years.</span></p>
+    <input type="text" id="l4a4" class="t-in" placeholder="We …"/>
+    <div class="fb-wrap" id="l4fb4"></div>
+
+    <div class="lvl-done" id="done4"><span class="star">🎊🎊🎊</span><p>عظيم! أتقنت جميع المستويات! انتقل إلى الإبداع 🗣️</p></div>
+    <button class="check-btn" onclick="checkLevel4()">Check Level 4 ✔</button>
+  </div>
+
+</div><!-- /p4 -->
+
+<!-- ══ 6. CREATE ══ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <h2>🗣️ Your Life Experiences</h2>
+    <div class="q-inst ar">📌 اكتب ٤ جمل عن تجاربك في الحياة مستخدماً ever / never / already:</div>
+    <div class="prompt-card">
+      <p>✏️ Write about things you have (or haven't) done in your life.</p>
+      <p style="font-size:.88rem;color:var(--muted)">e.g. <em>I have visited Jerusalem. I have never seen snow. I have already read this book.</em></p>
+    </div>
+    <textarea id="cr1" placeholder="I have… I have never… I have already…"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr1','cr1-fb','Great experiences! Keep going 🏆','تجارب رائعة! استمر 🌟')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr1-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣️ What Have You Done Today?</h2>
+    <div class="q-inst ar">📌 اكتب ٥ جمل عن أشياء أنجزتها اليوم مستخدماً just / already / yet:</div>
+    <textarea id="cr2" placeholder="I have just… I have already… I haven't … yet."></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr2','cr2-fb','Wonderful! Your day sounds busy! 🌟','رائع جداً! يومك مليء بالإنجاز 💫')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr2-fb"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗣️ Challenge — Interview a Friend</h2>
+    <div class="q-inst ar">📌 تحدٍّ: اكتب ٤ أسئلة بصيغة "Have you ever…؟" ثم سجّل إجابات زميلك:</div>
+    <div class="prompt-card">
+      <p>🏆 Write 4 "Have you ever…?" questions and your friend's answers.</p>
+      <p style="font-size:.88rem;color:var(--muted)">e.g. <em>Q: Have you ever ridden a horse? — A: Yes, I have. / No, I haven't.</em></p>
+    </div>
+    <textarea id="cr3" rows="5" placeholder="Q1: Have you ever…? A1: …"></textarea>
+    <div style="text-align:right;margin-top:6px">
+      <button class="check-btn" onclick="shareFb('cr3','cr3-fb','Excellent! You\'ve mastered the Present Perfect! 🏆✨','ممتاز! لقد أتقنت المضارع التام 🎉🌟')">Submit ✔</button>
+    </div>
+    <div class="fb-wrap" id="cr3-fb"></div>
+  </div>
+</div><!-- /p5 -->
+
+<!-- ══ 7. QUIZ ══ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <h2>🎯 Quick Quiz — 5 Questions</h2>
+    <div class="q-inst ar">📌 أجب على الأسئلة الخمسة لاختبار ما تعلّمته. كل سؤال بنقطة واحدة:</div>
+
+    <div class="quiz-q" id="qq1">
+      <div class="qn">1. Which sentence is correct?</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 أيّ الجمل صحيحة في المضارع التام؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,false)">She have finished.</button>
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,true)">She has finished.</button>
+        <button class="mcq-btn" onclick="qsc(0,'qq1','qqfb1',this,false)">She has finish.</button>
+      </div>
+      <div class="fb-wrap" id="qqfb1"></div>
+    </div>
+
+    <div class="quiz-q" id="qq2">
+      <div class="qn">2. Choose: "I have _____ seen this film." (sooner than expected)</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 اختَر الكلمة المناسبة (أسرع مما هو متوقع):</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,false)">yet</button>
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,true)">already</button>
+        <button class="mcq-btn" onclick="qsc(1,'qq2','qqfb2',this,false)">since</button>
+      </div>
+      <div class="fb-wrap" id="qqfb2"></div>
+    </div>
+
+    <div class="quiz-q" id="qq3">
+      <div class="qn">3. Make negative: "They have arrived."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 حوّل الجملة إلى منفية:</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,true)">They haven't arrived.</button>
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,false)">They don't have arrived.</button>
+        <button class="mcq-btn" onclick="qsc(2,'qq3','qqfb3',this,false)">They hasn't arrived.</button>
+      </div>
+      <div class="fb-wrap" id="qqfb3"></div>
+    </div>
+
+    <div class="quiz-q" id="qq4">
+      <div class="qn">4. True or False: "We use 'for' with a starting point (since 2020)."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 صحّ أم خطأ: نستخدم for مع نقطة بداية؟</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(3,'qq4','qqfb4',this,false)">True ✅</button>
+        <button class="mcq-btn" onclick="qsc(3,'qq4','qqfb4',this,true)">False ❌</button>
+      </div>
+      <div class="fb-wrap" id="qqfb4"></div>
+    </div>
+
+    <div class="quiz-q" id="qq5">
+      <div class="qn">5. Complete: "She _____ in this city _____ 2015."</div>
+      <div class="q-inst ar" style="margin-bottom:8px">📌 أكمل الجملة بالصيغة الصحيحة:</div>
+      <div class="mcq-row">
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,false)">has lived / for</button>
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,true)">has lived / since</button>
+        <button class="mcq-btn" onclick="qsc(4,'qq5','qqfb5',this,false)">have lived / since</button>
+      </div>
+      <div class="fb-wrap" id="qqfb5"></div>
+    </div>
+
+    <button class="check-btn" onclick="calcQuiz()">See My Score 🎯</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="badge">🏆</div>
+    <div class="score-num" id="scoreNum"></div>
+    <div id="scoreMsg"></div>
+    <div id="scoreMsgAr" class="ar" style="margin-top:8px;font-size:1rem"></div>
+  </div>
+</div><!-- /p6 -->
+
+</div><!-- /main -->
+
+<footer>Prepared with care 🌸 by T. Wad Refae</footer>
+
+<script>
+// ── TAB NAVIGATION ──
+const panels=document.querySelectorAll('.panel');
+const tabs=document.querySelectorAll('.tab');
+function go(i,e){
+  panels.forEach((p,j)=>{p.classList.toggle('on',j===i)});
+  tabs.forEach((t,j)=>{t.classList.toggle('active',j===i)});
+  document.getElementById('progFill').style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(e)e.currentTarget.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+// ── VISUAL EFFECTS ──
+function launchStar(x,y){
+  const icons=['⭐','🌟','✨','💫','🏅'];
+  const el=document.createElement('span');
+  el.className='flying-star';
+  el.textContent=icons[Math.floor(Math.random()*icons.length)];
+  el.style.left=x+'px';el.style.top=y+'px';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),950);
+}
+function confetti(){
+  const colors=['#10A37F','#14B8A6','#F59E0B','#FFE082','#2E7D32','#E91E63','#0B6E55'];
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');
+    c.className='cf-piece';
+    c.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${colors[i%colors.length]};
+      width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
+      animation-delay:${Math.random()*.8}s;animation-duration:${1.2+Math.random()*.6}s;
+      border-radius:${Math.random()>0.5?'50%':'2px'}`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),2000);
+  }
+}
+function shake(el){el.style.animation='none';requestAnimationFrame(()=>{el.style.animation='shake .5s ease'});}
+
+// ── DUAL FEEDBACK ──
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${en}</div><div class="fb-ar">${ar}</div>`;
+}
+
+// ── SINGLE-CHOICE MCQ ──
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const row=document.getElementById(rowId);
+  if(row.dataset.done)return;
+  row.dataset.done='1';
+  row.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else{shake(btn);}
+}
+
+// ── WORD BANK (Level 2) ──
+let wbSel2=null;
+function pickWb2(chip,val){
+  if(chip.classList.contains('used'))return;
+  document.querySelectorAll('#wb2 .wb-chip').forEach(c=>c.style.outline='');
+  chip.style.outline='3px solid var(--em-d)';
+  wbSel2={chip,val};
+}
+function dropWb2(blankId){
+  if(!wbSel2)return;
+  const blank=document.getElementById(blankId);
+  blank.textContent=wbSel2.val;
+  blank.classList.remove('ok','err');
+  blank.classList.add('filled');
+  blank.dataset.filled=wbSel2.val;
+  wbSel2.chip.style.outline='';
+  wbSel2.chip.classList.add('used');
+  wbSel2=null;
+}
+
+// ── CHECK LEVEL 1 ──
+function checkLevel1(){
+  const qs=['l1q1','l1q2','l1q3'];
+  let done=qs.filter(id=>document.getElementById(id).dataset.done).length;
+  if(done===3){document.getElementById('done1').classList.add('show');confetti();}
+  else{alert('أجب على الأسئلة الثلاثة أولاً! / Please answer all 3 questions first.');}
+}
+
+// ── CHECK LEVEL 2 ──
+function checkLevel2(){
+  const blanks=['b2_1','b2_2','b2_3','b2_4','b2_5'];
+  let correct=0;
+  blanks.forEach(id=>{
+    const b=document.getElementById(id);
+    const ans=(b.dataset.filled||'').trim().toLowerCase();
+    const expected=(b.dataset.ans||'').trim().toLowerCase();
+    b.classList.remove('ok','err');
+    if(ans===expected){b.classList.add('ok');correct++;}
+    else if(ans){b.classList.add('err');}
+  });
+  const ok=correct===5;
+  setFb('l2fb',ok,
+    ok?'✅ Perfect! All 5 blanks are correct!':'❌ '+correct+'/5 correct. Try again!',
+    ok?'✅ ممتاز! كل الفراغات صحيحة!':'❌ '+correct+' من 5 صحيح. حاول مرة أخرى!');
+  if(ok){document.getElementById('done2').classList.add('show');confetti();}
+}
+
+// ── CHECK LEVEL 3 ──
+function checkLevel3(){
+  const items=[
+    {id:'l3a1',fb:'l3fb1',
+      ok:v=>v==='she has not finished her work'||v==="she hasn't finished her work",
+      en:'✅ Correct! "She hasn\'t finished her work."',ar:'✅ صحيح! She hasn\'t finished her work.',
+      en2:'❌ Check: She has not / hasn\'t finished her work.',ar2:'❌ الصحيح: She hasn\'t finished her work.'},
+    {id:'l3a2',fb:'l3fb2',
+      ok:v=>v==='have they arrived'||v==='have they arrived?',
+      en:'✅ Correct! "Have they arrived?"',ar:'✅ صحيح! Have they arrived?',
+      en2:'❌ Check: Have they arrived?',ar2:'❌ الصحيح: Have they arrived?'},
+    {id:'l3a3',fb:'l3fb3',
+      ok:v=>v==='i have not seen this film'||v==="i haven't seen this film",
+      en:'✅ Correct! "I haven\'t seen this film."',ar:'✅ صحيح! I haven\'t seen this film.',
+      en2:'❌ Check: I have not / haven\'t seen this film.',ar2:'❌ الصحيح: I haven\'t seen this film.'},
+  ];
+  let all=true;
+  items.forEach(item=>{
+    const val=document.getElementById(item.id).value.trim().toLowerCase().replace(/\.$/,'');
+    const ok=item.ok(val);
+    if(!ok)all=false;
+    setFb(item.fb,ok,ok?item.en:item.en2,ok?item.ar:item.ar2);
+    if(ok){const el=document.getElementById(item.id);const r=el.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+    else{shake(document.getElementById(item.id));}
+  });
+  if(all){document.getElementById('done3').classList.add('show');confetti();}
+}
+
+// ── CHECK LEVEL 4 ──
+function checkLevel4(){
+  const items=[
+    {id:'l4a1',fb:'l4fb1',
+      ok:v=>v==='she has eaten lunch',
+      en:'✅ "She has eaten lunch." — She → HAS, not have!',ar:'✅ صحيح! She مفرد → has وليس have.',
+      en2:'❌ "She have" is wrong. She → HAS eaten.',ar2:'❌ She مفرد → has eaten.'},
+    {id:'l4a2',fb:'l4fb2',
+      ok:v=>v==='i have gone to school',
+      en:'✅ "I have gone to school." — past participle is GONE, not went!',ar:'✅ صحيح! التصريف الثالث هو gone وليس went.',
+      en2:'❌ "have went" is wrong. go → gone (3rd form).',ar2:'❌ الصحيح: have gone (التصريف الثالث).'},
+    {id:'l4a3',fb:'l4fb3',
+      ok:v=>v==="i haven't finished yet"||v==='i have not finished yet',
+      en:'✅ "I haven\'t finished yet." — yet goes at the end!',ar:'✅ صحيح! yet تأتي في نهاية الجملة المنفية.',
+      en2:'❌ Negative: I haven\'t finished yet.',ar2:'❌ الصحيح: I haven\'t finished yet.'},
+    {id:'l4a4',fb:'l4fb4',
+      ok:v=>v==='we have lived here for five years',
+      en:'✅ "...for five years." — use FOR with a duration!',ar:'✅ صحيح! نستخدم for مع المدة.',
+      en2:'❌ "since five years" is wrong → for five years (duration).',ar2:'❌ الصحيح: for five years (مدة).'},
+  ];
+  let all=true;
+  items.forEach(item=>{
+    const val=document.getElementById(item.id).value.trim().toLowerCase().replace(/\.$/,'');
+    const ok=item.ok(val);
+    if(!ok)all=false;
+    setFb(item.fb,ok,ok?item.en:item.en2,ok?item.ar:item.ar2);
+    if(ok){const el=document.getElementById(item.id);const r=el.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+    else{shake(document.getElementById(item.id));}
+  });
+  if(all){document.getElementById('done4').classList.add('show');confetti();}
+}
+
+// ── CREATE FEEDBACK ──
+function shareFb(taId,fbId,enMsg,arMsg){
+  const val=document.getElementById(taId).value.trim();
+  if(!val){alert('اكتب إجابتك أولاً! / Please write your answer first!');return;}
+  setFb(fbId,true,enMsg,arMsg);
+  const el=document.getElementById(taId);const r=el.getBoundingClientRect();
+  launchStar(r.left+r.width/2,r.top+window.scrollY);confetti();
+}
+
+// ── QUIZ ──
+const qSels=new Array(5).fill(null);
+function qsc(qi,rowId,fbId,btn,correct){
+  if(qSels[qi]!==null)return;
+  qSels[qi]=correct?1:0;
+  const row=document.getElementById(rowId);
+  row.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  const msgs=[
+    ['✅ Correct! She → has finished (has + participle).','✅ صحيح! She → has finished.','❌ Wrong. She → HAS finished (has + التصريف الثالث).','❌ الصحيح: She has finished.'],
+    ['✅ Correct! "already" = sooner than expected.','✅ صحيح! already تعني أسرع مما هو متوقع.','❌ Wrong. "already" is the right word here.','❌ الصحيح: already.'],
+    ['✅ Correct! "They haven\'t arrived."','✅ صحيح! They haven\'t arrived.','❌ Wrong. Negative = haven\'t/hasn\'t + participle.','❌ الصحيح: They haven\'t arrived.'],
+    ['✅ Correct! "since" is for a starting point, not "for".','✅ صحيح! since للنقطة البداية، for للمدة.','❌ Wrong. "for" = duration; "since" = starting point.','❌ الصحيح: خطأ — for للمدة، since للبداية.'],
+    ['✅ Correct! "has lived ... since 2015" (starting point).','✅ صحيح! has lived ... since 2015.','❌ Wrong. She → has lived; 2015 is a point → since.','❌ الصحيح: has lived / since.'],
+  ];
+  const m=msgs[qi];
+  setFb(fbId,correct,correct?m[0]:m[2],correct?m[1]:m[3]);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else{shake(btn);}
+}
+function calcQuiz(){
+  if(qSels.includes(null)){alert('أجب على جميع الأسئلة أولاً! / Please answer all questions first!');return;}
+  const score=qSels.reduce((a,b)=>a+b,0);
+  const box=document.getElementById('scoreBox');
+  document.getElementById('scoreNum').textContent=score+'/5';
+  const msgs=[
+    ['Keep practising! You\'ll get it! 💪','تدرّب أكثر — ستنجح! 💪'],
+    ['Good effort! Review the rules again. 📖','جهد جيد! راجع القواعد مجدداً. 📖'],
+    ['Well done! Almost there! 🌟','أحسنت! أنت قريب جداً! 🌟'],
+    ['Great job! One more to go! 🎉','عمل رائع! سؤال واحد بقي! 🎉'],
+    ['Almost perfect! Excellent! ✨','شبه مثالي! ممتاز! ✨'],
+    ['PERFECT! You\'re a Present Perfect champion! 🏆','مثالي! أنت بطل المضارع التام! 🏆'],
+  ];
+  document.getElementById('scoreMsg').textContent=msgs[score][0];
+  document.getElementById('scoreMsgAr').textContent=msgs[score][1];
+  box.classList.add('show');
+  if(score>=4)confetti();
+  if(score===5)localStorage.setItem('badge_pres_perfect','🏆');
+}
+</script>
+</body>
+</html>

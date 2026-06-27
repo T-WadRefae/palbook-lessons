@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade 9 · Writing · Active to Passive Narrative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --steel:#566173; --steel2:#3a4252; --steel3:#2a313e; --hazard:#f2c200; --bolt:#aab3c0;
+    --orange:#e07b39; --orange-deep:#bd5f22; --panel:#eef1f5; --line:#d8dee7;
+    --ink:#222833; --ink-soft:#5b6470; --good:#2f8a5c; --good-deep:#22683f; --red:#c0392b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{font-size:clamp(16px,1.4vw,19px);}
+  body{min-height:100%;font-family:'Nunito',sans-serif;color:var(--ink);overflow-x:hidden;
+    background:
+      radial-gradient(circle, rgba(170,179,192,.18) 1.5px, transparent 2px) 0 0/30px 30px,
+      linear-gradient(180deg,#5a6473,#39414f);
+    padding:24px 12px 64px;-webkit-font-smoothing:antialiased;}
+  .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;}
+
+  /* ════════ MACHINE PANEL ════════ */
+  .machine{max-width:840px;margin:0 auto;position:relative;background:var(--panel);border-radius:12px;padding:0 0 16px;
+    border:4px solid var(--steel2);box-shadow:0 22px 50px rgba(0,0,0,.5);
+    animation:boot .55s cubic-bezier(.22,.68,0,1.2) both;}
+  @keyframes boot{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:none;}}
+  /* rivets */
+  .machine::before,.machine::after{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#cfd6df,#8b94a2);top:8px;}
+  .machine::before{left:8px;} .machine::after{right:8px;}
+
+  /* ════ DISTINCTIVE HEADER — gears + conveyor ════ */
+  .fac-head{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--steel),var(--steel2));color:#fff;padding:0;border-radius:8px 8px 0 0;}
+  .hazard{height:10px;background:repeating-linear-gradient(45deg,var(--hazard) 0 14px,#1c1f26 14px 28px);}
+  .fac-top{position:relative;padding:16px 16px 12px;text-align:center;}
+  .gear{position:absolute;font-size:2.2rem;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5));animation:spin 6s linear infinite;}
+  .gear.g1{left:14px;top:14px;} .gear.g2{right:14px;top:24px;font-size:1.6rem;animation-direction:reverse;animation-duration:4s;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .fac-top .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:.56rem;background:var(--hazard);color:#2a2208;padding:3px 12px;border-radius:20px;}
+  .fac-top h1{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:clamp(1.2rem,4.4vw,1.8rem);margin:6px 0 2px;}
+  .fac-top .sub{font-family:'Fredoka';font-weight:600;font-size:.76rem;color:#d4dae3;}
+  .fac-top .teacher{font-family:'Oswald';font-size:.66rem;letter-spacing:1px;color:#aeb7c4;margin-top:2px;}
+  /* conveyor belt */
+  .belt{height:30px;background:repeating-linear-gradient(90deg,#23callout 0,#262b34 0 18px,#1c2027 18px 22px);background-color:#23272f;border-top:3px solid #11141a;position:relative;overflow:hidden;}
+  .belt .box{position:absolute;top:5px;font-size:1.1rem;animation:roll 5s linear infinite;}
+  @keyframes roll{from{left:-10%;}to{left:108%;}}
+
+  nav.tabs{display:flex;gap:7px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;padding:13px 12px 2px;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex:0 0 auto;cursor:pointer;border:2px solid #c2cad6;background:#e7ebf1;color:var(--steel2);
+    font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.5px;text-transform:uppercase;font-size:.74rem;padding:9px 13px;border-radius:8px;transition:.15s;}
+  .tab-btn:hover{background:#dde3ec;}
+  .tab-btn.active{background:var(--steel2);color:var(--hazard);border-color:var(--steel3);}
+  @media(min-width:700px){nav.tabs{flex-wrap:wrap;overflow-x:visible;justify-content:center;}}
+
+  .doc{margin:10px 12px 0;background:#fff;border-radius:8px;border:1px solid var(--line);padding:8px 12px;}
+  .panel{display:none;padding:16px 6px 20px;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  h2.sh{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--steel2);font-size:1.12rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .hint{background:#eef1f6;border-right:5px solid var(--orange);border-radius:10px;padding:9px 12px;margin:0 0 16px;font-size:.95rem;color:#8a4a1e;font-weight:600;}
+
+  .obj-list{list-style:none;display:grid;gap:10px;}
+  .obj-list li{display:flex;align-items:flex-start;gap:10px;background:#f6f8fb;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:700;font-size:.95rem;}
+  .obj-list .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--steel2);color:var(--hazard);display:grid;place-items:center;font-family:'Oswald';font-size:.85rem;}
+  .mission{margin-top:16px;background:linear-gradient(135deg,#fdf0db,#fbe2c2);border:2px dashed var(--orange);border-radius:14px;padding:14px 16px;}
+  .mission .ttl{font-family:'Oswald';letter-spacing:1px;text-transform:uppercase;font-weight:600;color:var(--orange-deep);font-size:.95rem;margin-bottom:4px;}
+
+  /* model active->passive */
+  .flip{display:grid;gap:10px;margin-bottom:14px;}
+  .act,.pas{border-radius:10px;padding:11px 13px;font-family:'Fredoka';font-weight:500;line-height:1.7;font-size:1rem;}
+  .act{background:#eef1f6;border:1px solid var(--line);}
+  .pas{background:#fdeede;border:1px solid var(--orange);}
+  .act .lbl,.pas .lbl{font-family:'Oswald';font-size:.66rem;letter-spacing:1px;font-weight:600;margin-bottom:4px;text-transform:uppercase;}
+  .act .lbl{color:var(--steel2);} .pas .lbl{color:var(--orange-deep);}
+  .be{background:#cfe0ff;border-radius:5px;padding:0 5px;font-weight:700;color:#1c3e7a;}
+  .pp{background:#ffe0c4;border-radius:5px;padding:0 5px;font-weight:700;color:var(--orange-deep);}
+  .process{background:#fff;border:1px dashed var(--steel);border-radius:10px;padding:11px 13px;margin-bottom:16px;font-family:'Fredoka';font-weight:500;line-height:1.9;font-size:.98rem;}
+  .process .lbl{font-family:'Oswald';font-size:.66rem;letter-spacing:1px;color:var(--steel2);text-transform:uppercase;margin-bottom:5px;}
+
+  .parts{display:grid;gap:10px;}
+  .part{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s;}
+  .part:hover{border-color:var(--orange);}
+  .part-tag{display:flex;align-items:center;gap:8px;padding:12px 14px;font-weight:800;font-size:.95rem;background:#eef1f6;}
+  .part-tag .arr{transition:transform .2s;color:var(--orange);font-size:.7rem;}
+  .part.open .arr{transform:rotate(90deg);}
+  .part-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .part.open .part-body{max-height:340px;}
+  .part-inner{padding:4px 14px 14px;}
+  .en-tip{background:#eef1f6;border-radius:8px;padding:7px 10px;font-weight:700;font-size:.88rem;color:var(--steel2);margin-bottom:8px;}
+  .part-inner .ar{font-size:.95rem;color:#3a414c;font-weight:600;line-height:1.7;}
+
+  .ex{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .ex .q{font-family:'Fredoka';font-size:16px;font-weight:600;margin-bottom:10px;}
+  .pick{display:flex;gap:8px;flex-wrap:wrap;}
+  .pick button{position:relative;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font:inherit;font-weight:800;font-size:.9rem;cursor:pointer;transition:.12s;}
+  .pick button:hover{border-color:var(--orange);}
+  .pick button.right{background:#dff0e6;border-color:var(--good);color:var(--good-deep);animation:pop .4s ease;}
+  .pick button.wrong{background:#fde3df;border-color:var(--red);color:#a82c22;animation:shake .3s ease;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .fb{margin-top:8px;font-weight:800;font-size:.88rem;min-height:18px;}
+
+  .chk{list-style:none;display:grid;gap:9px;margin:0 0 18px;}
+  .chk li{display:flex;align-items:center;gap:11px;background:#f6f8fb;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.12s;}
+  .chk li .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #c2cad6;color:transparent;display:grid;place-items:center;font-weight:900;transition:.12s;}
+  .chk li.done{background:#dff0e6;border-color:var(--good);}
+  .chk li.done .box{background:var(--good);border-color:var(--good);color:#fff;animation:pop .4s ease;}
+  .progress{background:#dfe5ee;border-radius:999px;height:16px;overflow:hidden;}
+  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--steel2),var(--orange));transition:width .4s;}
+  .p-text{text-align:center;font-weight:800;color:var(--ink-soft);margin-top:7px;font-size:.9rem;}
+  .stamp{margin:16px auto 0;max-width:280px;text-align:center;border:3px dashed #c2cad6;border-radius:16px;padding:18px;opacity:.4;transition:.3s;transform:scale(.96);}
+  .stamp.win{opacity:1;border-color:var(--good);background:#f1fbf5;animation:stampPop .6s cubic-bezier(.2,.8,.2,1.4);}
+  @keyframes stampPop{0%{transform:scale(.4) rotate(-12deg);opacity:0;}60%{transform:scale(1.15) rotate(4deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+  .stamp .big{font-size:46px;} .stamp .lbl{font-family:'Oswald';letter-spacing:1px;text-transform:uppercase;font-weight:600;color:var(--good-deep);font-size:1.05rem;margin-top:4px;}
+
+  .ws{text-align:center;padding:18px 14px;}
+  .ws .icon{font-size:54px;} .ws h3{font-family:'Oswald';letter-spacing:.5px;text-transform:uppercase;color:var(--steel2);font-size:1.12rem;margin:8px 0 6px;}
+  .ws .soon{display:inline-block;background:#dfe5ee;color:#5b6470;border-radius:999px;padding:7px 18px;font-weight:800;margin-top:10px;}
+  .ws .note{margin-top:14px;font-size:.9rem;color:var(--ink-soft);font-weight:600;}
+  footer{text-align:center;margin:16px 12px 0;font-size:.82rem;color:var(--ink-soft);font-weight:700;}
+
+  .confetti{position:fixed;top:-14px;width:10px;height:14px;border-radius:2px;z-index:9999;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(106vh) rotate(720deg);}}
+  .spark{position:absolute;pointer-events:none;font-size:14px;z-index:50;animation:sparkpop .7s ease forwards;}
+  @keyframes sparkpop{0%{opacity:0;transform:translate(0,0) scale(.4);}30%{opacity:1;}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.2);}}
+</style>
+</head>
+<body>
+
+<div class="machine">
+  <!-- ════ DISTINCTIVE HEADER ════ -->
+  <header class="fac-head">
+    <div class="hazard"></div>
+    <div class="fac-top">
+      <span class="gear g1">⚙️</span>
+      <span class="gear g2">⚙️</span>
+      <span class="grade-tag">Grade 9 · Writing</span>
+      <h1>The Process Line</h1>
+      <div class="sub">⚙️ Active → Passive for Describing Processes</div>
+      <div class="teacher">FACTORY OF T. WAD REFAE</div>
+    </div>
+    <div class="belt">
+      <span class="box" style="animation-delay:0s">📦</span>
+      <span class="box" style="animation-delay:1.6s">📦</span>
+      <span class="box" style="animation-delay:3.2s">📦</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="show('obj',this)">📌 Objectives</button>
+    <button class="tab-btn" onclick="show('model',this)">⚙️ The Line</button>
+    <button class="tab-btn" onclick="show('build',this)">✏️ Build It</button>
+    <button class="tab-btn" onclick="show('check',this)">✅ Checklist</button>
+    <button class="tab-btn" onclick="show('ws',this)">📝 Worksheet</button>
+  </nav>
+
+  <div class="doc">
+
+    <section id="tab-obj" class="panel active">
+      <h2 class="sh">📌 Lesson Objectives</h2>
+      <p class="hint ar">في نهاية الدرس، رح يكون الطالب قادر على: ✍️</p>
+      <ul class="obj-list">
+        <li><span class="num">1</span>Form the passive: <b>be + past participle</b>.</li>
+        <li><span class="num">2</span>Change active sentences into passive.</li>
+        <li><span class="num">3</span>Use the passive to describe a <b>process</b>.</li>
+        <li><span class="num">4</span>Know when to leave out the doer (agent).</li>
+      </ul>
+      <div class="mission">
+        <div class="ttl">⚙️ Today's Mission</div>
+        <p class="ar" style="margin:0;font-weight:600">في وصف العمليات نهتمّ بـ <b>ما يحدث للشيء</b> لا بمن يفعله. مهمتنا نحوّل الجُمل من المعلوم إلى المجهول لنصف خط الإنتاج خطوة خطوة! 🏭</p>
+      </div>
+    </section>
+
+    <section id="tab-model" class="panel">
+      <h2 class="sh">⚙️ Active → Passive</h2>
+      <p class="hint ar">قارن، اقرأ خطوات العملية، ثم اضغط على كل جزء 👇.</p>
+      <div class="flip">
+        <div class="act"><div class="lbl">⚡ Active</div>Workers <b>make</b> the chocolate. Then they <b>pack</b> it.</div>
+        <div class="pas"><div class="lbl">🏭 Passive</div>The chocolate <span class="be">is</span> <span class="pp">made</span>. Then it <span class="be">is</span> <span class="pp">packed</span>.</div>
+      </div>
+      <div class="process">
+        <div class="lbl">🔧 The Process (passive)</div>
+        First, the beans <span class="be">are</span> <span class="pp">collected</span>. Next, they <span class="be">are</span> <span class="pp">cleaned</span> and <span class="pp">dried</span>. Then they <span class="be">are</span> <span class="pp">ground</span> into powder. Finally, the chocolate <span class="be">is</span> <span class="pp">packed</span> and <span class="pp">sent</span> to shops.
+      </div>
+      <div class="parts">
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🔧 Form — be + past participle</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">is/are + V3: is made, are packed, is sent.</div>
+            <p class="ar">المبني للمجهول = <b>be</b> (is/are) + <b>التصريف الثالث للفعل</b> (past participle): <em>is made, are cleaned</em>.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🔄 Active → Passive</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">The object becomes the subject: They make cars → Cars are made.</div>
+            <p class="ar">المفعول به يصبح فاعلًا: <em>They make cars → Cars are made.</em> نضع الشيء في البداية لأنه محور الاهتمام.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🏭 Why passive for processes?</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">We care about the action/thing, not who does it.</div>
+            <p class="ar">في وصف العمليات يهمّنا <b>ما يحدث</b> وليس <b>من يفعله</b> — لذلك نستخدم المجهول ونحذف الفاعل غالبًا.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>👤 by + agent (optional)</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Add "by …" only if the doer is important: …made by machines.</div>
+            <p class="ar">نضيف <em>by + الفاعل</em> فقط إذا كان مهمًّا: <em>The bottles are filled by machines.</em> وإلا نحذفه.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🕰️ Passive across the four tenses</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Only the form of "be" changes — the past participle (V3) stays the same.</div>
+            <p class="ar">القاعدة الذهبية: نُغيّر <b>صيغة be</b> حسب الزمن فقط، ويبقى <b>التصريف الثالث (V3)</b> ثابتًا. الجدول تحت يوضّح الأزمنة الأربعة.</p>
+          </div></div>
+        </div>
+      </div>
+
+      <h2 class="sh" style="font-size:1rem;margin-top:18px">🕰️ Transformation Across Tenses</h2>
+      <p class="hint ar">نفس الفعل (make → made) في الأزمنة الأربعة: لاحظي كيف تتغيّر <b>be</b> فقط 👇</p>
+      <table class="rtable" style="font-size:.86rem">
+        <thead><tr><th>Tense</th><th>⚡ Active</th><th>🏭 Passive = be + V3</th></tr></thead>
+        <tbody>
+          <tr><td>Present Simple</td><td>They <b>make</b> it.</td><td>It <span class="be">is</span> <span class="pp">made</span>. / They <span class="be">are</span> <span class="pp">made</span>.</td></tr>
+          <tr><td>Past Simple</td><td>They <b>made</b> it.</td><td>It <span class="be">was</span> <span class="pp">made</span>. / They <span class="be">were</span> <span class="pp">made</span>.</td></tr>
+          <tr><td>Present Continuous</td><td>They <b>are making</b> it.</td><td>It <span class="be">is being</span> <span class="pp">made</span>. / They <span class="be">are being</span> <span class="pp">made</span>.</td></tr>
+          <tr><td>Past Continuous</td><td>They <b>were making</b> it.</td><td>It <span class="be">was being</span> <span class="pp">made</span>. / They <span class="be">were being</span> <span class="pp">made</span>.</td></tr>
+        </tbody>
+      </table>
+      <p class="hint ar" style="background:#fdeede;border-right-color:var(--orange)">💡 الخلاصة: <b>Present</b> → is/are (being) + V3 &nbsp;•&nbsp; <b>Past</b> → was/were (being) + V3. الكلمة <b>being</b> تُضاف في الأزمنة المستمرة فقط.</p>
+    </section>
+
+    <section id="tab-build" class="panel">
+      <h2 class="sh">✏️ Run the Line</h2>
+      <p class="hint ar">اختر الصيغة المبنية للمجهول الصحيحة 👇</p>
+      <div class="ex" data-answer="are made"><div class="q">Active: "They make cars here." → "Cars … here."</div><div class="pick"><button onclick="pick(this,'are made')">are made</button><button onclick="pick(this,'are make')">are make</button><button onclick="pick(this,'is made')">is made</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="are filled"><div class="q">The bottles … by machines.</div><div class="pick"><button onclick="pick(this,'fill')">fill</button><button onclick="pick(this,'are filled')">are filled</button><button onclick="pick(this,'are filling')">are filling</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="is baked"><div class="q">The bread … in a big oven.</div><div class="pick"><button onclick="pick(this,'is baked')">is baked</button><button onclick="pick(this,'is bake')">is bake</button><button onclick="pick(this,'bakes')">bakes</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="was built"><div class="q">Past Simple — "They built the house in 1990." → "The house … in 1990."</div><div class="pick"><button onclick="pick(this,'is built')">is built</button><button onclick="pick(this,'was built')">was built</button><button onclick="pick(this,'was build')">was build</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="is being repaired"><div class="q">Present Continuous — "A mechanic is repairing the car." → "The car … now."</div><div class="pick"><button onclick="pick(this,'is repaired')">is repaired</button><button onclick="pick(this,'is being repaired')">is being repaired</button><button onclick="pick(this,'was repaired')">was repaired</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="were being cleaned"><div class="q">Past Continuous — "Workers were cleaning the rooms." → "The rooms … all morning."</div><div class="pick"><button onclick="pick(this,'were cleaned')">were cleaned</button><button onclick="pick(this,'were being cleaned')">were being cleaned</button><button onclick="pick(this,'are being cleaned')">are being cleaned</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="The box is packed."><div class="q">Which sentence is passive?</div><div class="pick"><button onclick="pick(this,'The box is packed.')">The box is packed.</button><button onclick="pick(this,'Someone packs the box.')">Someone packs the box.</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="past participle (V3)"><div class="q">Passive = be + …</div><div class="pick"><button onclick="pick(this,'past participle (V3)')">past participle (V3)</button><button onclick="pick(this,'verb + ing')">verb + ing</button></div><div class="fb"></div></div>
+    </section>
+
+    <section id="tab-check" class="panel">
+      <h2 class="sh">✅ My Process Check</h2>
+      <p class="hint ar">اضغط على كل بند بعد ما تتأكد منه في كتابتك ✍️</p>
+      <ul class="chk" id="chkList">
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I used be + past participle for the passive.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>The thing (object) is the subject of each step.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I described the process in a clear order.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I used sequence words (First, Next, Then, Finally).</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I left out the doer unless it was important.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>Capital letters and full stops are correct.</li>
+      </ul>
+      <div class="progress"><div class="fill" id="pFill"></div></div>
+      <div class="p-text" id="pText">0 / 6</div>
+      <div class="stamp" id="stamp"><div class="big">⚙️</div><div class="lbl">Process Complete!</div></div>
+    </section>
+
+    <section id="tab-ws" class="panel">
+      <h2 class="sh">📝 Worksheet</h2>
+      <div class="ws">
+        <div class="icon">⚙️📄</div>
+        <h3>Practice Worksheet</h3>
+        <p class="ar" style="font-weight:600;color:#5b6470">ورقة عمل الطباعة لهذا الدرس رح تنضاف هنا قريباً.</p>
+        <!-- WORKSHEET-LINK: ضعي رابط Google Drive / PDF هنا لاحقاً، واستبدلي زر "Coming soon" برابط فعلي -->
+        <span class="soon">⏳ Coming soon · قريباً</span>
+        <p class="note ar">سيتم رفع ورقة العمل لاحقاً لتُطبع وتُحلّ في الصف 🌸</p>
+      </div>
+    </section>
+
+  </div><!-- /doc -->
+  <footer>Prepared with care 🌸 by T. Wad Refae</footer>
+</div>
+
+<script>
+  function show(id,btn){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active');
+  }
+  function togglePart(el){ el.classList.toggle('open'); }
+  function sparkle(el){
+    const marks=['✨','⚙️','⭐','🔧'];
+    for(let i=0;i<5;i++){
+      const s=document.createElement('span'); s.className='spark'; s.textContent=marks[i%marks.length];
+      const r=el.getBoundingClientRect(); s.style.left=(r.width/2)+'px'; s.style.top='4px';
+      s.style.setProperty('--dx',(Math.random()*80-40)+'px'); s.style.setProperty('--dy',(-30-Math.random()*40)+'px');
+      el.appendChild(s); setTimeout(()=>s.remove(),700);
+    }
+  }
+  function celebrate(){
+    const cols=['#566173','#f2c200','#2f8a5c','#e07b39','#aab3c0','#1c3e7a'];
+    for(let i=0;i<40;i++){
+      const c=document.createElement('div'); c.className='confetti';
+      c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+      c.style.animationDuration=(1.6+Math.random()*1.4)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
+      c.style.transform='rotate('+(Math.random()*360)+'deg)';
+      document.body.appendChild(c); setTimeout(()=>c.remove(),3200);
+    }
+  }
+  let buildCelebrated=false;
+  function pick(btn,val){
+    const ex=btn.closest('.ex'); const ans=ex.dataset.answer; const fb=ex.querySelector('.fb');
+    ex.querySelectorAll('.pick button').forEach(b=>b.classList.remove('right','wrong'));
+    if(val===ans){
+      btn.classList.add('right'); fb.textContent='✅ Correct — line running!'; fb.style.color='#22683f'; sparkle(btn);
+      const all=[...document.querySelectorAll('.ex')];
+      if(!buildCelebrated && all.every(e=>e.querySelector('.pick button.right'))){ buildCelebrated=true; celebrate(); }
+    } else { btn.classList.add('wrong'); fb.textContent='❌ Check be + V3 — try again.'; fb.style.color='#a82c22'; }
+  }
+  const KEY='write-g9-passive-done';
+  const items=[...document.querySelectorAll('#chkList li')];
+  let wasComplete=false;
+  function refresh(){
+    const done=items.filter(i=>i.classList.contains('done')).length;
+    document.getElementById('pFill').style.width=(done/items.length*100)+'%';
+    document.getElementById('pText').textContent=done+' / '+items.length;
+    const stamp=document.getElementById('stamp');
+    if(done===items.length){ stamp.classList.add('win'); localStorage.setItem(KEY,'1'); if(!wasComplete){ wasComplete=true; celebrate(); } }
+    else { stamp.classList.remove('win'); wasComplete=false; }
+  }
+  function toggleChk(li){ li.classList.toggle('done'); refresh(); }
+  if(localStorage.getItem(KEY)==='1'){ items.forEach(i=>i.classList.add('done')); wasComplete=true; refresh(); }
+</script>
+</body>
+</html>

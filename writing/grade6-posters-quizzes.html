@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade 6 · Writing · Making Posters &amp; Quizzes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --wood:#b9824e; --wood2:#a06f3f; --wood-dark:#7c5430; --screw:#5e3f24;
+    --grass:#5fb15c; --grass2:#4a9748; --sky:#bfe6ff; --sky2:#e4f4ff;
+    --paper:#fdfbf2; --paper-line:#e7dfc6;
+    --green:#3f9a4b; --green-deep:#2f7a39; --red:#e1503b; --gold:#f2c33b;
+    --ink:#2c2820; --ink-soft:#6b6457; --line:#e6dcc4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{font-size:clamp(16px,1.4vw,19px);}
+  body{min-height:100%;font-family:'Nunito',sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,var(--sky) 0%,var(--sky2) 42%,#cdeec4 60%,var(--grass) 100%);
+    padding:22px 12px 70px;-webkit-font-smoothing:antialiased;}
+  .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;}
+
+  /* clouds */
+  body::before{content:"";position:fixed;top:30px;left:8%;width:70px;height:70px;border-radius:50%;
+    background:#fff;opacity:.8;box-shadow:34px 8px 0 -6px #fff,66px 0 0 -12px #fff,180px 18px 0 -6px #fff;z-index:0;pointer-events:none;}
+
+  /* ════════ NOTICE BOARD ════════ */
+  .board-wrap{max-width:880px;margin:0 auto;position:relative;padding-bottom:38px;z-index:1;}
+  .post{position:absolute;bottom:0;width:22px;height:96px;background:linear-gradient(90deg,#8a5e34,#6f4a28);
+    border-radius:5px;box-shadow:0 6px 10px rgba(0,0,0,.25);z-index:0;}
+  .post.l{left:16%;} .post.r{right:16%;}
+  .board{position:relative;z-index:1;border-radius:16px;padding:16px;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 46px),
+      linear-gradient(180deg,var(--wood),var(--wood2));
+    border:7px solid var(--wood-dark);
+    box-shadow:0 16px 40px rgba(60,40,20,.4), inset 0 0 0 2px rgba(255,255,255,.12);
+    animation:drop .6s cubic-bezier(.22,.68,0,1.2) both;}
+  @keyframes drop{from{opacity:0;transform:translateY(-22px);}to{opacity:1;transform:none;}}
+  .screw{position:absolute;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8a6c4a,var(--screw));
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.3);}
+  .screw::after{content:"";position:absolute;inset:4px;border-top:2px solid rgba(0,0,0,.4);transform:rotate(45deg);}
+  .screw.tl{top:8px;left:8px;} .screw.tr{top:8px;right:8px;} .screw.bl{bottom:8px;left:8px;} .screw.br{bottom:8px;right:8px;}
+
+  /* header sign */
+  .sign{background:linear-gradient(180deg,#3f9a4b,#2f7a39);border:3px solid #245e2c;border-radius:12px;
+    text-align:center;padding:14px 16px;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.18);}
+  .sign .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;
+    font-size:.6rem;background:var(--gold);color:#3a2d06;padding:3px 12px;border-radius:20px;}
+  .sign h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.3rem,4.6vw,2rem);margin:7px 0 3px;text-shadow:0 2px 0 rgba(0,0,0,.2);}
+  .sign .teacher{font-size:.72rem;opacity:.92;font-weight:700;}
+
+  /* tabs as little signs */
+  nav.tabs{display:flex;gap:7px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;padding:14px 2px 2px;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex:0 0 auto;cursor:pointer;border:2px solid #245e2c;background:#eaf6e6;color:#2f7a39;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:.78rem;padding:9px 14px;border-radius:9px;transition:.16s;}
+  .tab-btn:hover{background:#dcefd5;}
+  .tab-btn.active{background:#3f9a4b;color:#fff;border-color:#245e2c;}
+  @media(min-width:700px){nav.tabs{flex-wrap:wrap;overflow-x:visible;justify-content:center;}}
+
+  /* paper panel pinned to the board */
+  .paper{position:relative;margin-top:12px;background:
+      repeating-linear-gradient(180deg, transparent 0 30px, var(--paper-line) 30px 31px),
+      var(--paper);
+    border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.28);padding:22px 18px 26px;}
+  .paper::before,.paper::after{content:"";position:absolute;top:-9px;width:64px;height:20px;
+    background:rgba(240,225,150,.55);border:1px solid rgba(200,180,90,.5);transform:rotate(-4deg);}
+  .paper::before{left:26px;} .paper::after{right:26px;transform:rotate(4deg);}
+  .panel{display:none;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  h2.sh{font-family:'Fredoka',sans-serif;font-weight:700;color:var(--green-deep);
+    font-size:1.18rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .hint{background:#eaf6e6;border-right:5px solid var(--green);border-radius:10px;
+    padding:9px 12px;margin:0 0 16px;font-size:.95rem;color:#27602f;font-weight:600;}
+
+  /* Objectives */
+  .obj-list{list-style:none;display:grid;gap:10px;}
+  .obj-list li{display:flex;align-items:flex-start;gap:10px;background:#f7fcf4;border:1px solid var(--line);
+    border-radius:12px;padding:11px 13px;font-weight:700;font-size:.95rem;}
+  .obj-list .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;
+    display:grid;place-items:center;font-family:'Fredoka';font-size:.85rem;}
+  .mission{margin-top:16px;background:linear-gradient(135deg,#fff6e0,#ffedc4);border:2px dashed var(--gold);border-radius:14px;padding:14px 16px;}
+  .mission .ttl{font-family:'Fredoka';font-weight:700;color:#b8870f;font-size:1rem;margin-bottom:4px;}
+
+  /* Model: poster + quiz */
+  .poster{background:#fff;border:2px dashed var(--green);border-radius:12px;padding:16px;margin-bottom:16px;}
+  .poster .pt{font-family:'Fredoka';font-weight:700;color:var(--green-deep);text-align:center;font-size:1.1rem;margin-bottom:10px;}
+  .poster ul{list-style:none;display:grid;gap:8px;}
+  .poster li{font-family:'Fredoka';font-size:1rem;font-weight:500;}
+  .do{color:var(--green-deep);background:#dcf3df;border-radius:6px;padding:1px 7px;font-weight:700;}
+  .dont{color:#b53322;background:#fde0d4;border-radius:6px;padding:1px 7px;font-weight:700;}
+  .please{color:#9a7200;background:#fff1c9;border-radius:6px;padding:1px 7px;font-weight:700;}
+  .qw{color:#2a5fa8;background:#e1ecfb;border-radius:6px;padding:1px 7px;font-weight:700;}
+
+  .parts{display:grid;gap:10px;}
+  .part{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s;}
+  .part:hover{border-color:var(--green);}
+  .part-tag{display:flex;align-items:center;gap:8px;padding:12px 14px;font-weight:800;font-size:.95rem;background:#eef8ea;}
+  .part-tag .arr{transition:transform .2s;color:var(--green);font-size:.7rem;}
+  .part.open .arr{transform:rotate(90deg);}
+  .part-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .part.open .part-body{max-height:320px;}
+  .part-inner{padding:4px 14px 14px;}
+  .en-tip{background:#eef8ea;border-radius:8px;padding:7px 10px;font-weight:700;font-size:.88rem;color:#27602f;margin-bottom:8px;}
+  .part-inner .ar{font-size:.95rem;color:#4a4438;font-weight:600;line-height:1.7;}
+
+  /* Build */
+  .ex{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .ex .tagline{font-size:.72rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px;}
+  .ex .q{font-family:'Fredoka';font-size:1.02rem;font-weight:500;margin-bottom:10px;}
+  .pick{display:flex;gap:8px;flex-wrap:wrap;}
+  .pick button{border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font:inherit;
+    font-weight:800;font-size:.92rem;cursor:pointer;transition:.12s;}
+  .pick button:hover{border-color:var(--green);}
+  .pick button.right{background:#dcf3df;border-color:var(--green);color:var(--green-deep);}
+  .pick button.wrong{background:#fde0d4;border-color:var(--red);color:#b53322;}
+  .fb{margin-top:8px;font-weight:800;font-size:.88rem;min-height:18px;}
+
+  /* Checklist */
+  .chk{list-style:none;display:grid;gap:9px;margin-bottom:18px;}
+  .chk li{display:flex;align-items:center;gap:11px;background:#f7fcf4;border:1px solid var(--line);
+    border-radius:11px;padding:11px 13px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.12s;}
+  .chk li .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #cdd9bf;color:transparent;
+    display:grid;place-items:center;font-weight:900;transition:.12s;}
+  .chk li.done{background:#dcf3df;border-color:var(--green);}
+  .chk li.done .box{background:var(--green);border-color:var(--green);color:#fff;}
+  .progress{background:#e3eddb;border-radius:999px;height:16px;overflow:hidden;}
+  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--green-deep),#7ed06f);transition:width .3s;}
+  .p-text{text-align:center;font-weight:800;color:var(--ink-soft);margin-top:7px;font-size:.9rem;}
+  .stamp{margin:16px auto 0;max-width:300px;text-align:center;border:3px dashed #cdd9bf;border-radius:16px;padding:18px;opacity:.4;transition:.3s;transform:scale(.96);}
+  .stamp.win{opacity:1;transform:scale(1);border-color:var(--green);background:#f1fbee;}
+  .stamp .big{font-size:46px;} .stamp .lbl{font-family:'Fredoka';font-weight:700;color:var(--green-deep);font-size:1.05rem;margin-top:4px;}
+
+  /* Worksheet */
+  .ws{text-align:center;padding:18px 14px;}
+  .ws .icon{font-size:54px;}
+  .ws h3{font-family:'Fredoka';color:var(--green-deep);font-size:1.2rem;margin:8px 0 6px;}
+  .ws .soon{display:inline-block;background:#e3eddb;color:#7c8a72;border-radius:999px;padding:7px 18px;font-weight:800;margin-top:10px;}
+  .ws .note{margin-top:14px;font-size:.9rem;color:var(--ink-soft);font-weight:600;}
+
+  footer{text-align:center;margin-top:20px;font-size:.82rem;color:#3a5e36;font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="board-wrap">
+  <div class="post l"></div><div class="post r"></div>
+
+  <div class="board">
+    <span class="screw tl"></span><span class="screw tr"></span><span class="screw bl"></span><span class="screw br"></span>
+
+    <!-- ════ HEADER SIGN ════ -->
+    <div class="sign">
+      <span class="grade-tag">Grade 6 · Writing</span>
+      <h1>🪧 Park Rules &amp; Quiz Board</h1>
+      <div class="teacher">T. Wad Refae</div>
+    </div>
+
+    <!-- ════ TABS ════ -->
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="show('obj',this)">📌 Objectives</button>
+      <button class="tab-btn" onclick="show('model',this)">🪧 The Board</button>
+      <button class="tab-btn" onclick="show('build',this)">✏️ Build It</button>
+      <button class="tab-btn" onclick="show('check',this)">✅ Checklist</button>
+      <button class="tab-btn" onclick="show('ws',this)">📝 Worksheet</button>
+    </nav>
+
+    <!-- ════ PAPER PANELS ════ -->
+    <div class="paper">
+
+      <!-- ─── TAB 1: OBJECTIVES ─── -->
+      <section id="tab-obj" class="panel active">
+        <h2 class="sh">📌 Lesson Objectives</h2>
+        <p class="hint ar">في نهاية الدرس، رح يكون الطالب قادر على: ✍️</p>
+        <ul class="obj-list">
+          <li><span class="num">1</span>Design a clear <b>instructions poster</b> (park rules).</li>
+          <li><span class="num">2</span>Write rules using <b>imperatives</b> and <b>Don't</b>.</li>
+          <li><span class="num">3</span>Use <b>Please</b> and <b>must / mustn't</b> for polite or strong rules.</li>
+          <li><span class="num">4</span>Write <b>quiz questions</b> with question words and a "?".</li>
+        </ul>
+        <div class="mission">
+          <div class="ttl">🪧 Today's Mission</div>
+          <p class="ar" style="margin:0;font-weight:600">صمّم لوحة قوانين للحديقة 🌳 واكتب أسئلة مسابقة عنها. القانون يبدأ بفعل أمر، والسؤال ينتهي بعلامة استفهام!</p>
+        </div>
+      </section>
+
+      <!-- ─── TAB 2: THE BOARD (MODEL) ─── -->
+      <section id="tab-model" class="panel">
+        <h2 class="sh">🪧 A Model Poster + Quiz</h2>
+        <p class="hint ar">اقرأ الملصق والمسابقة، ثم اضغط على كل جزء 👇.</p>
+
+        <div class="poster">
+          <div class="pt">🌳 PARK RULES 🌳</div>
+          <ul>
+            <li>✅ <span class="do">Keep</span> the park clean.</li>
+            <li>🚫 <span class="dont">Don't pick</span> the flowers.</li>
+            <li>🙏 <span class="please">Please use</span> the bins.</li>
+            <li>⛔ You <span class="do">must</span> keep dogs on a lead.</li>
+          </ul>
+        </div>
+        <div class="poster" style="border-color:#2a5fa8">
+          <div class="pt" style="color:#2a5fa8">❓ PARK QUIZ ❓</div>
+          <ul>
+            <li><span class="qw">How many</span> trees are in the park?</li>
+            <li><span class="qw">When</span> does the park close?</li>
+          </ul>
+        </div>
+
+        <div class="parts">
+          <div class="part" onclick="togglePart(this)">
+            <div class="part-tag"><span class="arr">▶</span>✅ Imperatives — start with a verb</div>
+            <div class="part-body"><div class="part-inner">
+              <div class="en-tip">Keep the park clean. · Use the bins. · Plant a tree.</div>
+              <p class="ar">القانون أو الإرشاد يبدأ بـ <b>فعل أمر</b> مباشرة (بدون فاعل): <em>Keep…, Use…, Close…</em>.</p>
+            </div></div>
+          </div>
+          <div class="part" onclick="togglePart(this)">
+            <div class="part-tag"><span class="arr">▶</span>🚫 Negative rules — Don't</div>
+            <div class="part-body"><div class="part-inner">
+              <div class="en-tip">Don't + verb → Don't drop litter. · Don't pick the flowers.</div>
+              <p class="ar">للمنع نستخدم <b>Don't</b> + الفعل: <em>Don't drop litter.</em> (لا ترمِ النفايات).</p>
+            </div></div>
+          </div>
+          <div class="part" onclick="togglePart(this)">
+            <div class="part-tag"><span class="arr">▶</span>🙏 Polite &amp; strong — Please / must</div>
+            <div class="part-body"><div class="part-inner">
+              <div class="en-tip">Please use the bins. · You must keep dogs on a lead. · You mustn't make fires.</div>
+              <p class="ar"><b>Please</b> تجعل الإرشاد مهذباً. <b>must</b> للقانون القوي (إجباري)، و<b>mustn't</b> للممنوع تماماً.</p>
+            </div></div>
+          </div>
+          <div class="part" onclick="togglePart(this)">
+            <div class="part-tag"><span class="arr">▶</span>❓ Quiz questions — question word + ?</div>
+            <div class="part-body"><div class="part-inner">
+              <div class="en-tip">What / Where / When / Who / How many … ? Always end with "?".</div>
+              <p class="ar">سؤال المسابقة يبدأ بكلمة استفهام (<em>What, Where, When, How many…</em>) وينتهي دائماً بعلامة <b>؟ (?)</b>.</p>
+            </div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── TAB 3: BUILD IT ─── -->
+      <section id="tab-build" class="panel">
+        <h2 class="sh">✏️ Build the Board</h2>
+        <p class="hint ar">الجزء الأول قوانين الملصق، والجزء الثاني أسئلة المسابقة — اختر الصحيح 👇</p>
+
+        <div class="ex" data-answer="Don't drop">
+          <div class="tagline">🪧 Poster rule</div>
+          <div class="q">… litter in the park.</div>
+          <div class="pick"><button onclick="pick(this,'Drops')">Drops</button><button onclick="pick(this,&quot;Don't drop&quot;)">Don't drop</button><button onclick="pick(this,'Dropping')">Dropping</button></div>
+          <div class="fb"></div>
+        </div>
+        <div class="ex" data-answer="use">
+          <div class="tagline">🪧 Poster rule</div>
+          <div class="q">Please … the bins.</div>
+          <div class="pick"><button onclick="pick(this,'using')">using</button><button onclick="pick(this,'use')">use</button><button onclick="pick(this,'used')">used</button></div>
+          <div class="fb"></div>
+        </div>
+        <div class="ex" data-answer="must">
+          <div class="tagline">🪧 Poster rule</div>
+          <div class="q">You … keep dogs on a lead.</div>
+          <div class="pick"><button onclick="pick(this,'must')">must</button><button onclick="pick(this,'musting')">musting</button><button onclick="pick(this,'to must')">to must</button></div>
+          <div class="fb"></div>
+        </div>
+        <div class="ex" data-answer="How many">
+          <div class="tagline">❓ Quiz question</div>
+          <div class="q">… trees are in the park?</div>
+          <div class="pick"><button onclick="pick(this,'What')">What</button><button onclick="pick(this,'How many')">How many</button><button onclick="pick(this,'Who')">Who</button></div>
+          <div class="fb"></div>
+        </div>
+        <div class="ex" data-answer="When">
+          <div class="tagline">❓ Quiz question</div>
+          <div class="q">… does the park close?</div>
+          <div class="pick"><button onclick="pick(this,'When')">When</button><button onclick="pick(this,'Which')">Which</button><button onclick="pick(this,'How')">How</button></div>
+          <div class="fb"></div>
+        </div>
+      </section>
+
+      <!-- ─── TAB 4: CHECKLIST ─── -->
+      <section id="tab-check" class="panel">
+        <h2 class="sh">✅ My Board Check</h2>
+        <p class="hint ar">اضغط على كل بند بعد ما تتأكد منه ✍️</p>
+        <ul class="chk" id="chkList">
+          <li onclick="toggleChk(this)"><span class="box">✓</span>My poster has a clear title.</li>
+          <li onclick="toggleChk(this)"><span class="box">✓</span>Each rule starts with a verb (imperative).</li>
+          <li onclick="toggleChk(this)"><span class="box">✓</span>I used <b>Don't</b> for things not allowed.</li>
+          <li onclick="toggleChk(this)"><span class="box">✓</span>I used <b>Please</b> or <b>must</b> where it fits.</li>
+          <li onclick="toggleChk(this)"><span class="box">✓</span>My quiz questions start with a question word.</li>
+          <li onclick="toggleChk(this)"><span class="box">✓</span>Every quiz question ends with a "?".</li>
+        </ul>
+        <div class="progress"><div class="fill" id="pFill"></div></div>
+        <div class="p-text" id="pText">0 / 6</div>
+        <div class="stamp" id="stamp">
+          <div class="big">🪧</div>
+          <div class="lbl">Poster Pro!</div>
+        </div>
+      </section>
+
+      <!-- ─── TAB 5: WORKSHEET ─── -->
+      <section id="tab-ws" class="panel">
+        <h2 class="sh">📝 Worksheet</h2>
+        <div class="ws">
+          <div class="icon">🪧📄</div>
+          <h3>Practice Worksheet</h3>
+          <p class="ar" style="font-weight:600;color:#6b6457">ورقة عمل الطباعة لهذا الدرس رح تنضاف هنا قريباً.</p>
+          <!-- WORKSHEET-LINK: ضعي رابط Google Drive / PDF هنا لاحقاً، واستبدلي زر "Coming soon" برابط فعلي -->
+          <span class="soon">⏳ Coming soon · قريباً</span>
+          <p class="note ar">سيتم رفع ورقة العمل لاحقاً لتُطبع وتُحلّ في الصف 🌸</p>
+        </div>
+      </section>
+
+    </div><!-- /paper -->
+  </div><!-- /board -->
+
+  <footer>Designed with love 💗 by T. Wad Refae</footer>
+</div><!-- /board-wrap -->
+
+<script>
+  function show(id,btn){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active');
+    btn.classList.add('active');
+  }
+  function togglePart(el){ el.classList.toggle('open'); }
+
+  function pick(btn,val){
+    const ex=btn.closest('.ex'); const ans=ex.dataset.answer; const fb=ex.querySelector('.fb');
+    ex.querySelectorAll('.pick button').forEach(b=>b.classList.remove('right','wrong'));
+    if(val===ans){ btn.classList.add('right'); fb.textContent='✅ Correct! Nice rule.'; fb.style.color='#2f7a39'; }
+    else{ btn.classList.add('wrong'); fb.textContent='❌ Try again.'; fb.style.color='#b53322'; }
+  }
+
+  const KEY='write-g6-posters-quizzes-done';
+  const items=[...document.querySelectorAll('#chkList li')];
+  function refresh(){
+    const done=items.filter(i=>i.classList.contains('done')).length;
+    document.getElementById('pFill').style.width=(done/items.length*100)+'%';
+    document.getElementById('pText').textContent=done+' / '+items.length;
+    const stamp=document.getElementById('stamp');
+    if(done===items.length){ stamp.classList.add('win'); localStorage.setItem(KEY,'1'); }
+    else stamp.classList.remove('win');
+  }
+  function toggleChk(li){ li.classList.toggle('done'); refresh(); }
+  if(localStorage.getItem(KEY)==='1'){ items.forEach(i=>i.classList.add('done')); refresh(); }
+</script>
+</body>
+</html>

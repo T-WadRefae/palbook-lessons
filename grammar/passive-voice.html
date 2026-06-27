@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Passive Voice — PalBook Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --grn:#059669;--grn-d:#065F46;--grn-l:#ECFDF5;--gld:#F59E0B;
+  --txt:#1e293b;--muted:#64748b;--white:#fff;--rad:14px;
+  --shadow:0 4px 18px rgba(5,150,105,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f0fdf4;color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif}
+
+/* ── header ── */
+.hdr{background:linear-gradient(135deg,var(--grn-d) 0%,var(--grn) 60%,#34d399 100%);
+  color:#fff;padding:24px 16px 0;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'🏭';font-size:120px;opacity:.07;position:absolute;top:-10px;right:-10px;line-height:1}
+.hdr h1{font-family:'Fredoka One',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.chip{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.82rem;backdrop-filter:blur(4px)}
+.prog-wrap{background:rgba(0,0,0,.2);height:6px;border-radius:3px;margin:0 16px}
+.prog-fill{height:100%;background:var(--gld);border-radius:3px;transition:width .4s}
+
+/* ── tab bar ── */
+.tab-bar{display:flex;gap:6px;padding:12px 12px 0;background:var(--grn-d);
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex:0 0 auto;background:rgba(255,255,255,.15);border:none;color:#fff;
+  border-radius:10px 10px 0 0;padding:8px 14px;font-family:'Nunito',sans-serif;
+  font-size:.83rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.tab.active,.tab:hover{background:var(--white);color:var(--grn-d)}
+
+/* ── panels ── */
+.panels{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+.panel{display:none}.panel.on{display:block}
+
+/* ── cards ── */
+.card{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.card-title{font-family:'Fredoka One',sans-serif;font-size:1.3rem;color:var(--grn-d);margin-bottom:10px}
+.card-sub{color:var(--muted);font-size:.9rem;margin-bottom:14px}
+
+/* ── Arabic instruction bar ── */
+.q-inst{border-right:5px solid var(--grn);background:var(--grn-l);
+  padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0 10px;
+  font-size:.95rem;direction:rtl;text-align:right;color:var(--grn-d)}
+
+/* ── MCQ ── */
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.opt{background:#f1f5f9;border:2px solid #e2e8f0;border-radius:10px;
+  padding:9px 18px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.93rem;
+  font-weight:600;transition:all .2s}
+.opt:hover:not(:disabled){background:var(--grn-l);border-color:var(--grn)}
+.opt.ok{background:#dcfce7;border-color:#16a34a;color:#14532d}
+.opt.err{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.opt:disabled{cursor:default}
+
+/* ── feedback ── */
+.fb-wrap{display:none;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.9rem}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#dcfce7;border-left:4px solid #16a34a}
+.fb-wrap.err{background:#fee2e2;border-left:4px solid #dc2626}
+.fb-en{font-weight:700;margin-bottom:4px}
+.fb-ar{direction:rtl;text-align:right;font-size:.88rem;opacity:.85}
+
+/* ── word bank ── */
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;padding:12px;
+  background:#f8fafc;border-radius:10px;border:2px dashed #cbd5e1;min-height:48px}
+.wb-chip{background:var(--grn-l);border:2px solid var(--grn);color:var(--grn-d);
+  border-radius:20px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:.88rem;
+  transition:all .2s;user-select:none}
+.wb-chip.used{opacity:.35;pointer-events:none}
+.wb-chip.sel{background:var(--grn);color:#fff;transform:scale(1.05)}
+.blank{display:inline-block;min-width:110px;border-bottom:2.5px solid var(--grn);
+  padding:2px 8px;text-align:center;cursor:pointer;border-radius:4px;margin:0 4px;
+  font-weight:700;color:var(--grn-d);transition:background .2s}
+.blank:hover:not(.filled){background:var(--grn-l)}
+.blank.filled{border-color:#16a34a;color:#15803d;background:#f0fdf4}
+.fill-line{line-height:2.4;margin:8px 0;font-size:.92rem}
+
+/* ── type ── */
+.type-inp{border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;
+  font-family:'Nunito',sans-serif;font-size:.88rem;width:180px;margin:4px 6px;
+  transition:border-color .2s}
+.type-inp:focus{outline:none;border-color:var(--grn)}
+.type-inp.ok{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.type-inp.err{border-color:#dc2626;background:#fef2f2;color:#991b1b}
+.check-btn{background:var(--grn);color:#fff;border:none;border-radius:10px;
+  padding:9px 22px;cursor:pointer;font-family:'Nunito',sans-serif;
+  font-weight:700;font-size:.9rem;margin-top:10px;transition:background .2s}
+.check-btn:hover{background:var(--grn-d)}
+
+/* ── level done ── */
+.lvl-done{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #16a34a;
+  border-radius:12px;padding:14px;text-align:center;display:none;margin-top:14px}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* ── grammar table ── */
+.pv-table{width:100%;border-collapse:collapse;font-size:.87rem;margin:12px 0}
+.pv-table th{background:var(--grn);color:#fff;padding:9px 12px;text-align:left}
+.pv-table td{padding:9px 12px;border-bottom:1px solid #ecfdf5;vertical-align:top}
+.pv-table tr:nth-child(even) td{background:#f0fdf4}
+.pv-table code{background:#dcfce7;color:var(--grn-d);padding:2px 6px;border-radius:4px;font-weight:700}
+
+/* ── active→passive transform visual ── */
+.transform-box{display:flex;align-items:stretch;gap:0;margin:14px 0;border-radius:12px;overflow:hidden;border:2px solid #e2e8f0}
+.tb-act{background:#fff7ed;border-right:2px solid #fed7aa;padding:14px 16px;flex:1}
+.tb-arr{background:#e2e8f0;display:flex;align-items:center;justify-content:center;padding:0 10px;font-size:1.4rem;color:var(--grn-d)}
+.tb-pas{background:var(--grn-l);padding:14px 16px;flex:1}
+.tb-lbl{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+.tb-sent{font-size:.9rem;line-height:1.7}
+.hl-subj{background:#fde68a;border-radius:3px;padding:1px 4px;font-weight:700}
+.hl-verb{background:#a7f3d0;border-radius:3px;padding:1px 4px;font-weight:700}
+.hl-obj{background:#bfdbfe;border-radius:3px;padding:1px 4px;font-weight:700}
+.hl-agent{background:#fecaca;border-radius:3px;padding:1px 4px;font-weight:700}
+
+/* ── flashcards ── */
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+.fc{perspective:600px;cursor:pointer;height:140px}
+.fc-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s;position:relative}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--grn-l),#fff);border:2px solid var(--grn)}
+.fc-back{background:linear-gradient(135deg,var(--grn),#34d399);color:#fff;transform:rotateY(180deg)}
+.fc-front .word{font-size:.95rem;font-weight:800;color:var(--grn-d);margin-top:6px;line-height:1.2}
+.fc-front .emoji{font-size:1.8rem}
+.fc-back .ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;font-weight:700}
+.fc-back .syn{font-size:.75rem;opacity:.85;margin-top:6px;line-height:1.4}
+.tts-btn{background:rgba(5,150,105,.12);border:none;border-radius:20px;
+  padding:3px 10px;font-size:.78rem;cursor:pointer;color:var(--grn-d);
+  margin-top:6px;font-family:'Nunito',sans-serif;font-weight:600}
+
+/* ── pp grid ── */
+.pp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:14px 0}
+.pp-card{background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:10px 14px;font-size:.88rem}
+.pp-card .base{font-weight:800;color:var(--grn-d)}
+.pp-card .arrow{color:var(--grn);margin:0 6px;font-weight:900}
+.pp-card .pp{font-weight:700;color:#15803d}
+
+/* ── speak ── */
+.speak-prompt{background:var(--grn-l);border-left:4px solid var(--grn);
+  border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:.9rem}
+.speak-prompt strong{color:var(--grn-d)}
+.write-area{width:100%;border:2px solid #e2e8f0;border-radius:10px;
+  padding:12px;font-family:'Nunito',sans-serif;font-size:.9rem;
+  min-height:110px;resize:vertical;transition:border-color .2s}
+.write-area:focus{outline:none;border-color:var(--grn)}
+
+/* ── quiz ── */
+.quiz-q{background:#fff;border:2px solid #f1f5f9;border-radius:12px;padding:16px;margin:12px 0;transition:border-color .2s}
+.quiz-q.answered-ok{border-color:#16a34a;background:#f0fdf4}
+.quiz-q.answered-err{border-color:#dc2626;background:#fef2f2}
+.q-num{font-family:'Fredoka One',sans-serif;color:var(--grn);font-size:1rem;margin-bottom:8px}
+.quiz-score{background:linear-gradient(135deg,var(--grn-l),#f0fdf4);
+  border:3px solid var(--grn);border-radius:16px;padding:22px;text-align:center;
+  display:none;margin-top:18px}
+.quiz-score.show{display:block;animation:popIn .5s ease}
+.score-num{font-family:'Fredoka One',sans-serif;font-size:3rem;color:var(--grn)}
+.badge-earned{font-size:3.5rem;display:block;margin:10px 0;animation:bounce .6s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+
+/* ── misc ── */
+.star-fly{position:fixed;pointer-events:none;font-size:1.5rem;z-index:9999;animation:floatStar .9s ease forwards}
+@keyframes floatStar{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-80px) scale(1.5);opacity:0}}
+.confetti-p{position:fixed;pointer-events:none;width:8px;height:8px;z-index:9998;border-radius:2px;animation:confFall 1.2s ease forwards}
+@keyframes confFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s ease}
+.hint-ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right;
+  font-size:.92rem;background:#fff8dc;border-right:4px solid var(--gld);
+  padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0;color:#78350f}
+.divider{height:2px;background:linear-gradient(to right,var(--grn-l),var(--grn),var(--grn-l));
+  border:none;margin:18px 0;border-radius:1px}
+.lbl{font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+.formula-box{background:linear-gradient(135deg,var(--grn-l),#f0fdf4);
+  border:2.5px solid var(--grn);border-radius:12px;padding:16px 20px;text-align:center;margin:14px 0}
+.formula-box h3{font-family:'Fredoka One',sans-serif;color:var(--grn-d);font-size:1.1rem;margin-bottom:8px}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:.82rem}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--grn);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <p style="font-size:.8rem;opacity:.7;letter-spacing:1px;text-transform:uppercase">Grammar • English for Palestine</p>
+  <h1>Passive Voice 🏭</h1>
+  <p class="ar" style="font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;margin-top:4px">المبني للمجهول</p>
+  <div class="chips">
+    <span class="chip">🎯 Grade 9</span>
+    <span class="chip">⏱️ ~40 min</span>
+    <span class="chip">🏭 Processes &amp; Focus</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab active" onclick="go(0)">🚀 Start</button>
+  <button class="tab" onclick="go(1)">📚 Words</button>
+  <button class="tab" onclick="go(2)">🔍 Discover</button>
+  <button class="tab" onclick="go(3)">🧠 Grammar</button>
+  <button class="tab" onclick="go(4)">✏️ Practice</button>
+  <button class="tab" onclick="go(5)">🗣️ Create</button>
+  <button class="tab" onclick="go(6)">🎯 Quiz</button>
+</div>
+
+<div class="panels">
+
+<!-- ══════════════════ TAB 1 — START ══════════════════ -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <div class="card-title">🚀 Who Did It? Does It Matter?</div>
+    <div class="card-sub">Sometimes we care about WHAT happened — not WHO did it.</div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;margin:16px 0">
+      <div style="background:#fff7ed;border-left:4px solid #f97316;border-radius:0 10px 10px 0;padding:12px 16px;font-size:.95rem">
+        📰 Headline: <strong>"The old bridge was destroyed."</strong><br>
+        <em style="color:var(--muted);font-size:.85rem">We focus on the bridge — not on who destroyed it.</em>
+      </div>
+      <div style="background:#eff6ff;border-left:4px solid #3b82f6;border-radius:0 10px 10px 0;padding:12px 16px;font-size:.95rem">
+        🫒 Fact: <strong>"Olive oil is produced in Palestine."</strong><br>
+        <em style="color:var(--muted);font-size:.85rem">The focus is on olive oil — not on the farmers.</em>
+      </div>
+      <div style="background:var(--grn-l);border-left:4px solid var(--grn);border-radius:0 10px 10px 0;padding:12px 16px;font-size:.95rem">
+        🏫 Notice: <strong>"English is spoken in more than 50 countries."</strong><br>
+        <em style="color:var(--muted);font-size:.85rem">The speaker is not important — English is.</em>
+      </div>
+    </div>
+
+    <div class="hint-ar">ما الفرق بين "كتبتُ الرسالة" (مبني للمعلوم) و"كُتبت الرسالة" (مبني للمجهول)؟ اليوم نتعلم كيف نحوّل التركيز في الإنجليزية!</div>
+
+    <hr class="divider"/>
+    <p class="lbl">Warm-up — Choose the right answer</p>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> "The book was written ___ Ghassan Kanafani." — which word fits?</p>
+    <div class="opts" id="s1opts">
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'To shows direction, not the agent.','to تدل على الاتجاه وليس الفاعل.')">to</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,true,'Correct! by + agent introduces who did it.','صحيح! by + الفاعل تُعرِّف من فعل الفعل.')">by</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'From shows origin, not the doer.','from تدل على الأصل وليس الفاعل.')">from</button>
+    </div>
+    <div class="fb-wrap" id="s1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> "Olive oil <u>is produced</u> in Palestine." — what is the focus of this sentence?</p>
+    <div class="opts" id="s2opts">
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'The farmers are not even mentioned — they are not the focus.','المزارعون غير مذكورين — ليسوا محور الجملة.')">The farmers</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,true,'Correct! Olive oil is the subject — it is the focus.','صحيح! زيت الزيتون هو المبتدأ والمحور.')">Olive oil</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Palestine is where it happens, not the main focus.','فلسطين هي المكان وليست المحور الرئيسي.')">Palestine</button>
+    </div>
+    <div class="fb-wrap" id="s2fb"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 2 — WORDS ══════════════════ -->
+<div class="panel" id="p1">
+  <div class="card">
+    <div class="card-title">📚 Key Vocabulary</div>
+    <div class="card-sub">Click a card to flip it. 🔊 to hear the word.</div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📌 Past Participles You Need</div>
+    <div class="hint-ar">المضارع التام (Past Participle) هو الجزء الثالث من الفعل — وهو قلب المبني للمجهول.</div>
+    <div class="pp-grid">
+      <div class="pp-card"><span class="base">build</span><span class="arrow">→</span><span class="pp">built</span></div>
+      <div class="pp-card"><span class="base">write</span><span class="arrow">→</span><span class="pp">written</span></div>
+      <div class="pp-card"><span class="base">make</span><span class="arrow">→</span><span class="pp">made</span></div>
+      <div class="pp-card"><span class="base">break</span><span class="arrow">→</span><span class="pp">broken</span></div>
+      <div class="pp-card"><span class="base">discover</span><span class="arrow">→</span><span class="pp">discovered</span></div>
+      <div class="pp-card"><span class="base">invent</span><span class="arrow">→</span><span class="pp">invented</span></div>
+      <div class="pp-card"><span class="base">publish</span><span class="arrow">→</span><span class="pp">published</span></div>
+      <div class="pp-card"><span class="base">destroy</span><span class="arrow">→</span><span class="pp">destroyed</span></div>
+      <div class="pp-card"><span class="base">plant</span><span class="arrow">→</span><span class="pp">planted</span></div>
+      <div class="pp-card"><span class="base">produce</span><span class="arrow">→</span><span class="pp">produced</span></div>
+      <div class="pp-card"><span class="base">speak</span><span class="arrow">→</span><span class="pp">spoken</span></div>
+      <div class="pp-card"><span class="base">repair</span><span class="arrow">→</span><span class="pp">repaired</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 3 — DISCOVER ══════════════════ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <div class="card-title">🔍 Watch the Transformation!</div>
+    <div class="card-sub">See how active sentences become passive. What changes?</div>
+    <div class="hint-ar">لاحظ كيف تتحول الجملة من المبني للمعلوم إلى المبني للمجهول. ما الذي يتغير؟</div>
+
+    <!-- Pair 1 -->
+    <div style="margin:16px 0">
+      <div style="background:#fef3c7;border-radius:8px;padding:4px 10px;display:inline-block;font-size:.78rem;font-weight:700;color:#92400e;margin-bottom:8px">PAIR 1 — Present Simple</div>
+      <div class="transform-box">
+        <div class="tb-act">
+          <div class="tb-lbl">Active</div>
+          <div class="tb-sent">
+            <span class="hl-subj">People</span> <span class="hl-verb">speak</span> <span class="hl-obj">English</span> here.
+          </div>
+        </div>
+        <div class="tb-arr">→</div>
+        <div class="tb-pas">
+          <div class="tb-lbl">Passive</div>
+          <div class="tb-sent">
+            <span class="hl-obj">English</span> <span class="hl-verb">is spoken</span> here.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pair 2 -->
+    <div style="margin:16px 0">
+      <div style="background:#dbeafe;border-radius:8px;padding:4px 10px;display:inline-block;font-size:.78rem;font-weight:700;color:#1e40af;margin-bottom:8px">PAIR 2 — Past Simple</div>
+      <div class="transform-box">
+        <div class="tb-act">
+          <div class="tb-lbl">Active</div>
+          <div class="tb-sent">
+            <span class="hl-subj">She</span> <span class="hl-verb">wrote</span> <span class="hl-obj">the letter</span>.
+          </div>
+        </div>
+        <div class="tb-arr">→</div>
+        <div class="tb-pas">
+          <div class="tb-lbl">Passive</div>
+          <div class="tb-sent">
+            <span class="hl-obj">The letter</span> <span class="hl-verb">was written</span> <span class="hl-agent">by her</span>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pair 3 -->
+    <div style="margin:16px 0">
+      <div style="background:#dcfce7;border-radius:8px;padding:4px 10px;display:inline-block;font-size:.78rem;font-weight:700;color:#15803d;margin-bottom:8px">PAIR 3 — Future will</div>
+      <div class="transform-box">
+        <div class="tb-act">
+          <div class="tb-lbl">Active</div>
+          <div class="tb-sent">
+            <span class="hl-subj">They</span> <span class="hl-verb">will announce</span> <span class="hl-obj">the results</span>.
+          </div>
+        </div>
+        <div class="tb-arr">→</div>
+        <div class="tb-pas">
+          <div class="tb-lbl">Passive</div>
+          <div class="tb-sent">
+            <span class="hl-obj">The results</span> <span class="hl-verb">will be announced</span>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;font-size:.82rem;display:flex;flex-wrap:wrap;gap:10px">
+      <span><span class="hl-subj">■</span> Subject / Agent</span>
+      <span><span class="hl-verb">■</span> Verb</span>
+      <span><span class="hl-obj">■</span> Object → new subject</span>
+      <span><span class="hl-agent">■</span> by + agent</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 Now You Discover!</div>
+    <div class="hint-ar">ماذا لاحظت؟ ما الذي يصبح المبتدأ في الجملة المبنية للمجهول؟</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> In Pair 1, "English" moved from object to ___.</p>
+    <div class="opts" id="d1opts">
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'The object doesn\'t stay as object — it moves.','المفعول به لا يبقى مفعولاً به.')">Object</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,true,'Correct! The object becomes the subject in passive.','صحيح! المفعول به يصبح الفاعل/مبتدأ في المبني للمجهول.')">Subject</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'The agent comes after "by" — English is the new subject.','الفاعل يأتي بعد by — English هو المبتدأ الجديد.')">Agent (by + doer)</button>
+    </div>
+    <div class="fb-wrap" id="d1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> In all three pairs, what is the passive verb formula?</p>
+    <div class="opts" id="d2opts">
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'be + infinitive is not passive — that\'s future.','be + infinitive ليس مبنيًا للمجهول.')">be + infinitive</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,true,'Correct! be (right tense) + past participle.','صحيح! be بالزمن الصحيح + اسم المفعول.')">be + past participle</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'have + past participle is Present Perfect — not the passive formula.','have + past participle هو المضارع التام وليس صيغة المبني للمجهول.')">have + past participle</button>
+    </div>
+    <div class="fb-wrap" id="d2fb"></div>
+
+    <div class="formula-box" style="margin-top:16px">
+      <h3>⭐ The Passive Formula</h3>
+      <p style="font-size:1.05rem;font-weight:800;color:var(--grn-d);margin:6px 0">
+        Subject + <code style="background:#a7f3d0;color:var(--grn-d);padding:2px 8px;border-radius:6px">be</code> (correct tense) + <code style="background:#a7f3d0;color:var(--grn-d);padding:2px 8px;border-radius:6px">past participle</code> (+ by + agent)
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 4 — GRAMMAR ══════════════════ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <div class="card-title">🧠 Passive Voice — All Tenses</div>
+    <div class="hint-ar">جدول المبني للمجهول في كل الأزمنة.</div>
+    <table class="pv-table">
+      <tr><th>Tense</th><th>Active</th><th>Passive</th></tr>
+      <tr>
+        <td><strong>Present Simple</strong></td>
+        <td>They <em>make</em> soap here.</td>
+        <td>Soap <code>is made</code> here.</td>
+      </tr>
+      <tr>
+        <td><strong>Past Simple</strong></td>
+        <td>She <em>wrote</em> the poem.</td>
+        <td>The poem <code>was written</code> by her.</td>
+      </tr>
+      <tr>
+        <td><strong>Present Perfect</strong></td>
+        <td>They <em>have planted</em> 1000 trees.</td>
+        <td>1000 trees <code>have been planted</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Future (will)</strong></td>
+        <td>They <em>will build</em> a new school.</td>
+        <td>A new school <code>will be built</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Present Continuous</strong></td>
+        <td>They <em>are repairing</em> the road.</td>
+        <td>The road <code>is being repaired</code>.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 How to Transform: 3 Steps</div>
+    <div class="hint-ar">3 خطوات لتحويل الجملة من المبني للمعلوم إلى المبني للمجهول.</div>
+    <ol style="margin-left:18px;line-height:2.4;font-size:.93rem">
+      <li>Move the <strong>object</strong> to the <strong>subject</strong> position.</li>
+      <li>Change the verb to <strong>be + past participle</strong> (keep the same tense).</li>
+      <li>Move the original subject after <strong>by</strong> — or drop it if unknown/unimportant.</li>
+    </ol>
+
+    <div style="background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;padding:16px;margin-top:14px;font-size:.9rem">
+      <p>📌 <em>Workers build houses every year.</em></p>
+      <p style="margin:6px 0;color:var(--muted)">Step 1: Object "houses" → new subject</p>
+      <p style="margin:6px 0;color:var(--muted)">Step 2: build (Present Simple) → <strong>are built</strong></p>
+      <p style="margin:6px 0;color:var(--grn-d);font-weight:700">✅ Houses <strong>are built</strong> (by workers) every year.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 When to Use the Passive</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:12px 0">
+      <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:2rem">🤷</div>
+        <h4 style="font-family:'Fredoka One',sans-serif;color:var(--grn-d);margin:6px 0">Agent unknown</h4>
+        <p style="font-size:.82rem">My bag was stolen.<br><em style="color:var(--muted)">(We don't know who.)</em></p>
+      </div>
+      <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:2rem">🔬</div>
+        <h4 style="font-family:'Fredoka One',sans-serif;color:#1e40af;margin:6px 0">Scientific / Formal</h4>
+        <p style="font-size:.82rem">The samples were tested in the lab.</p>
+      </div>
+      <div style="background:#fef9c3;border:2px solid #fde047;border-radius:12px;padding:12px;text-align:center">
+        <div style="font-size:2rem">📰</div>
+        <h4 style="font-family:'Fredoka One',sans-serif;color:#854d0e;margin:6px 0">News / Focus</h4>
+        <p style="font-size:.82rem">A new hospital will be opened next month.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 5 — PRACTICE ══════════════════ -->
+<div class="panel" id="p4">
+  <div class="card">
+    <div class="card-title">✏️ Level 1 — Choose the Passive Form</div>
+    <div class="hint-ar">اختر الصيغة الصحيحة للمبني للمجهول.</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> The road ___ last year. (Past Simple passive)</p>
+    <div class="opts" id="l1q1opts">
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'Repaired is active past — we need passive.','repaired ماضٍ نشط — نحتاج مبني للمجهول.')">repaired</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,true,'Correct! was + repaired = Past Simple passive.','صحيح! was + repaired = ماضٍ مبني للمجهول.')">was repaired</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'Is repaired is Present Simple passive — not past.','is repaired مضارع مبني للمجهول وليس ماضيًا.')">is repaired</button>
+    </div>
+    <div class="fb-wrap" id="l1q1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> The results ___ announced tomorrow. (Future passive)</p>
+    <div class="opts" id="l1q2opts">
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,true,'Correct! will be + announced = future passive.','صحيح! will be + announced = مستقبل مبني للمجهول.')">will be</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Were announced is past passive — tomorrow needs future.','were announced ماضٍ — tomorrow يحتاج مستقبلاً.')">were</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Are being is present continuous passive — not future.','are being مضارع مستمر — نحتاج مستقبلاً.')">are being</button>
+    </div>
+    <div class="fb-wrap" id="l1q2fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>3)</strong> The novel ___ by Ghassan Kanafani. (Past Simple passive)</p>
+    <div class="opts" id="l1q3opts">
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'Writes is present active — wrong tense and voice.','writes مضارع نشط — خطأ في الزمن والصيغة.')">writes</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'Wrote is active past — we need passive with "by".','wrote ماضٍ نشط — نحتاج مبني للمجهول.')">wrote</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,true,'Correct! was written = Past Simple passive.','صحيح! was written = ماضٍ مبني للمجهول.')">was written</button>
+    </div>
+    <div class="fb-wrap" id="l1q3fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>4)</strong> Many trees ___ in Palestine every year. (Present Simple passive)</p>
+    <div class="opts" id="l1q4opts">
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'Plant is active present — we need passive.','plant نشط مضارع — نحتاج مبني للمجهول.')">plant</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,true,'Correct! are planted = Present Simple passive (plural subject).','صحيح! are planted = مضارع مبني للمجهول للجمع.')">are planted</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'Were planted is past passive — every year needs present.','were planted ماضٍ — every year يحتاج مضارعًا.')">were planted</button>
+    </div>
+    <div class="fb-wrap" id="l1q4fb"></div>
+
+    <div class="lvl-done" id="l1done">🎉 Level 1 done! You know your passive tenses!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 2 — Fill with the Word Bank</div>
+    <div class="hint-ar">اضغط على الكلمة ثم اضغط على الفراغ لوضعها. كل عبارة في البنك هي فعل مبني للمجهول.</div>
+
+    <div class="wb-chips" id="wb2chips">
+      <span class="wb-chip" onclick="pickWb(this,'is made')">is made</span>
+      <span class="wb-chip" onclick="pickWb(this,'were built')">were built</span>
+      <span class="wb-chip" onclick="pickWb(this,'has been discovered')">has been discovered</span>
+      <span class="wb-chip" onclick="pickWb(this,'will be published')">will be published</span>
+      <span class="wb-chip" onclick="pickWb(this,'was planted')">was planted</span>
+    </div>
+
+    <div style="margin:12px 0">
+      <div class="fill-line">1) Nablus soap <span class="blank" id="wb2b1" onclick="dropWb('wb2b1')">______</span> from olive oil.</div>
+      <div class="fill-line">2) These houses <span class="blank" id="wb2b2" onclick="dropWb('wb2b2')">______</span> 100 years ago.</div>
+      <div class="fill-line">3) A new planet <span class="blank" id="wb2b3" onclick="dropWb('wb2b3')">______</span> by scientists.</div>
+      <div class="fill-line">4) Her new novel <span class="blank" id="wb2b4" onclick="dropWb('wb2b4')">______</span> next month.</div>
+      <div class="fill-line">5) This olive tree <span class="blank" id="wb2b5" onclick="dropWb('wb2b5')">______</span> 500 years ago.</div>
+    </div>
+
+    <button class="check-btn" onclick="checkWb2()">Check ✓</button>
+    <div class="fb-wrap" id="wb2fb"></div>
+    <div class="lvl-done" id="l2done">🎉 Level 2 done! Great passive construction!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 3 — Make It Passive</div>
+    <div class="hint-ar">حوّل كل جملة إلى المبني للمجهول. اكتب فقط الفعل المبني للمجهول في الفراغ.</div>
+
+    <div style="margin:10px 0">
+      <div class="fill-line">1) People <u>speak</u> Arabic here. → Arabic <input class="type-inp" id="l3i1" placeholder="…"> here. <em style="font-size:.8rem;color:var(--muted)">(Pres. Simple)</em></div>
+      <div class="fill-line">2) They <u>built</u> this mosque in 1400. → This mosque <input class="type-inp" id="l3i2" placeholder="…"> in 1400. <em style="font-size:.8rem;color:var(--muted)">(Past Simple)</em></div>
+      <div class="fill-line">3) They <u>will deliver</u> the books tomorrow. → The books <input class="type-inp" id="l3i3" placeholder="…"> tomorrow. <em style="font-size:.8rem;color:var(--muted)">(Future)</em></div>
+      <div class="fill-line">4) Scientists <u>have found</u> a new cure. → A new cure <input class="type-inp" id="l3i4" placeholder="…"> by scientists. <em style="font-size:.8rem;color:var(--muted)">(Pres. Perfect)</em></div>
+    </div>
+
+    <button class="check-btn" onclick="checkL3()">Check ✓</button>
+    <div class="fb-wrap" id="l3fb"></div>
+    <div class="lvl-done" id="l3done">🎉 Level 3 done! Excellent transformation skills!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 4 — Spot and Fix the Mistake</div>
+    <div class="hint-ar">كل جملة فيها خطأ. اختر الجملة الصحيحة.</div>
+
+    <p style="font-size:.95rem;margin-bottom:8px">
+      <span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>
+      &nbsp;The letter was write by Sara.
+    </p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q1opts">
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Was write is wrong — need the past participle.','was write خاطئة — نحتاج اسم المفعول.')">The letter was write by Sara.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,true,'Correct! was + written (past participle).','صحيح! was + written (اسم المفعول).')">The letter was written by Sara.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Was writing is past continuous active — not passive.','was writing ماضٍ مستمر نشط وليس مبني للمجهول.')">The letter was writing by Sara.</button>
+    </div>
+    <div class="fb-wrap" id="l4q1fb"></div>
+
+    <hr class="divider"/>
+
+    <p style="font-size:.95rem;margin-bottom:8px">
+      <span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>
+      &nbsp;English are spoken all over the world.
+    </p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q2opts">
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,true,'Correct! English is singular — use is, not are.','صحيح! English مفرد — نستخدم is وليس are.')">English is spoken all over the world.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'Are spoken: English is singular — must use is.','are spoken: English مفرد يحتاج is.')">English are spoken all over the world.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'Was spoken is past — all over the world is a general fact (Present Simple).','was spoken ماضٍ — هذه حقيقة عامة تحتاج مضارعًا.')">English was spoken all over the world.</button>
+    </div>
+    <div class="fb-wrap" id="l4q2fb"></div>
+
+    <div class="lvl-done" id="l4done">🏆 All 4 levels done! You are a Passive Voice master!</div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 6 — CREATE ══════════════════ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <div class="card-title">🗣️ Speaking — Palestinian Products</div>
+    <div class="hint-ar">استخدم المبني للمجهول لوصف المنتجات الفلسطينية. تحدث بصوت عالٍ!</div>
+
+    <div class="speak-prompt">
+      <strong>Round 1:</strong> Describe what olive oil is used for.<br>
+      👉 <em>Olive oil is used for ___. It is produced in ___. It is exported to ___.</em>
+    </div>
+    <div class="speak-prompt">
+      <strong>Round 2:</strong> Talk about Nablus soap using passive.<br>
+      👉 <em>Nablus soap is made from ___. It is produced ___. It is sold ___.</em>
+    </div>
+    <div class="speak-prompt">
+      <strong>Round 3:</strong> Describe your school using passive sentences.<br>
+      👉 <em>Our school was built in ___. It is used by ___. The classrooms are cleaned ___.</em>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✍️ Writing — How Olive Oil Is Made</div>
+    <div class="hint-ar">اكتب فقرة تصف عملية صنع زيت الزيتون. استخدم المبني للمجهول في كل خطوة.</div>
+
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:14px;margin:10px 0;font-size:.88rem">
+      <p style="font-weight:700;margin-bottom:8px">📌 Steps to include (use passive!):</p>
+      <ol style="margin-left:16px;line-height:1.9">
+        <li>Olives are picked from the trees. (October–November)</li>
+        <li>They are cleaned and washed.</li>
+        <li>The olives are crushed into a paste.</li>
+        <li>The oil is separated from the water.</li>
+        <li>It is bottled and labelled.</li>
+        <li>The oil is sold locally and exported abroad.</li>
+      </ol>
+    </div>
+
+    <p class="lbl" style="margin-top:12px">Write your paragraph (use passive throughout):</p>
+    <textarea class="write-area" placeholder="Olive oil is one of Palestine's most famous products. First, the olives are picked from the trees in autumn. Then they are cleaned and washed carefully. After that, the olives are crushed into a thick paste. The oil is then separated from the water by a special machine. Finally, the oil is bottled, labelled, and sold in local markets. Some of it is also exported to countries around the world."></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💬 Challenge — Transform These Sentences</div>
+    <div class="hint-ar">حوّل هذه الجمل النشطة إلى مبني للمجهول وأضفها في الكتابة.</div>
+    <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:10px;padding:14px;margin:10px 0;font-size:.9rem">
+      <ol style="margin-left:16px;line-height:2.2">
+        <li>Farmers grow olives on steep hills.</li>
+        <li>Workers have harvested the crop this week.</li>
+        <li>The company will export the oil to Europe.</li>
+      </ol>
+    </div>
+    <textarea class="write-area" placeholder="1) Olives are grown by farmers on steep hills.&#10;2) The crop has been harvested this week.&#10;3) The oil will be exported to Europe by the company."></textarea>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB 7 — QUIZ ══════════════════ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <div class="card-title">🎯 Quick Check — 5 Questions</div>
+    <div class="hint-ar">أجب على الأسئلة الخمسة ثم اضغط "Check My Score".</div>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="qq1">
+      <div class="q-num">Question 1 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">This church ___ 500 years ago. (Past Simple passive of "build")</p>
+      <div class="opts" id="qq1opts">
+        <button class="opt" onclick="qsc(1,this,'built',event)">built</button>
+        <button class="opt" onclick="qsc(1,this,'was built',event)">was built</button>
+        <button class="opt" onclick="qsc(1,this,'is built',event)">is built</button>
+      </div>
+      <div class="fb-wrap" id="qq1fb"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="qq2">
+      <div class="q-num">Question 2 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Arabic ___ in Palestine, Jordan and many other countries. (Present Simple passive)</p>
+      <div class="opts" id="qq2opts">
+        <button class="opt" onclick="qsc(2,this,'spoke',event)">spoke</button>
+        <button class="opt" onclick="qsc(2,this,'is spoken',event)">is spoken</button>
+        <button class="opt" onclick="qsc(2,this,'was spoken',event)">was spoken</button>
+      </div>
+      <div class="fb-wrap" id="qq2fb"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="qq3">
+      <div class="q-num">Question 3 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Transform: "They will open a new hospital." → A new hospital ___.</p>
+      <div class="opts" id="qq3opts">
+        <button class="opt" onclick="qsc(3,this,'will be opened',event)">will be opened</button>
+        <button class="opt" onclick="qsc(3,this,'will opened',event)">will opened</button>
+        <button class="opt" onclick="qsc(3,this,'was opened',event)">was opened</button>
+      </div>
+      <div class="fb-wrap" id="qq3fb"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="qq4">
+      <div class="q-num">Question 4 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Which sentence is in the passive voice?</p>
+      <div class="opts" id="qq4opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(4,this,'a',event)">Farmers pick the olives in autumn.</button>
+        <button class="opt" onclick="qsc(4,this,'b',event)">The olives are picked in autumn.</button>
+        <button class="opt" onclick="qsc(4,this,'c',event)">We have picked all the olives.</button>
+      </div>
+      <div class="fb-wrap" id="qq4fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="qq5">
+      <div class="q-num">Question 5 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">"Penicillin ___ by Alexander Fleming in 1928." Which passive form is correct?</p>
+      <div class="opts" id="qq5opts">
+        <button class="opt" onclick="qsc(5,this,'was discovered',event)">was discovered</button>
+        <button class="opt" onclick="qsc(5,this,'is discovered',event)">is discovered</button>
+        <button class="opt" onclick="qsc(5,this,'discovered',event)">discovered</button>
+      </div>
+      <div class="fb-wrap" id="qq5fb"></div>
+    </div>
+
+    <button class="check-btn" style="margin-top:16px;width:100%;font-size:1rem" onclick="calcQuiz()">📊 Check My Score</button>
+
+    <div class="quiz-score" id="quizScore">
+      <div class="score-num" id="scoreTxt"></div>
+      <p id="scoreMsg" style="font-size:1rem;margin:6px 0"></p>
+      <span class="badge-earned" id="badgeIcon">🏭</span>
+      <p id="badgeMsg" style="font-size:.85rem;color:var(--muted)"></p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panels -->
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+// ── navigation ───────────────────────────────────────────────────
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+const prog=document.getElementById('progFill');
+function go(i){
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  prog.style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── particles ────────────────────────────────────────────────────
+function launchStar(x,y){
+  const el=document.createElement('div');
+  el.className='star-fly';
+  el.textContent=['⭐','✨','💫','🌟'][Math.floor(Math.random()*4)];
+  el.style.cssText=`left:${x}px;top:${y}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
+}
+function confetti(){
+  const colors=['#059669','#F59E0B','#3b82f6','#ec4899','#f97316','#8b5cf6'];
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div');
+    p.className='confetti-p';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[i%colors.length]};animation-delay:${Math.random()*.8}s;animation-duration:${1+Math.random()}s`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2200);
+  }
+}
+function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
+
+// ── feedback helper ──────────────────────────────────────────────
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅':'❌'} ${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+
+// ── single-choice MCQ ────────────────────────────────────────────
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const opts=document.querySelectorAll(`#${rowId}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  checkL1done();checkL4done();
+}
+
+function checkL1done(){
+  if(['l1q1','l1q2','l1q3','l1q4'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l1done').classList.add('show');confetti();
+  }
+}
+function checkL4done(){
+  if(['l4q1','l4q2'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l4done').classList.add('show');confetti();
+  }
+}
+
+// ── word bank ────────────────────────────────────────────────────
+let wbSel=null;
+const wb2answers={wb2b1:'is made',wb2b2:'were built',wb2b3:'has been discovered',wb2b4:'will be published',wb2b5:'was planted'};
+function pickWb(chip,val){
+  document.querySelectorAll('#wb2chips .wb-chip').forEach(c=>c.classList.remove('sel'));
+  if(wbSel&&wbSel.chip===chip){wbSel=null;return;}
+  chip.classList.add('sel');wbSel={chip,val};
+}
+function dropWb(blankId){
+  if(!wbSel)return;
+  const blank=document.getElementById(blankId);
+  if(blank.classList.contains('filled'))return;
+  blank.textContent=wbSel.val;blank.classList.add('filled');
+  wbSel.chip.classList.add('used');wbSel.chip.classList.remove('sel');wbSel=null;
+}
+function checkWb2(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(wb2answers)){
+    if(document.getElementById(id).textContent.trim()===ans)ok++;
+  }
+  const all=Object.keys(wb2answers).length;
+  if(ok===all){setFb('wb2fb',true,'All correct! Perfect passive constructions!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l2done').classList.add('show');confetti();}
+  else setFb('wb2fb',false,`${ok}/${all} correct. Check again.`,`${ok} من ${all} صحيحة.`);
+}
+
+// ── Level 3 ──────────────────────────────────────────────────────
+const l3answers={l3i1:'is spoken',l3i2:'was built',l3i3:'will be delivered',l3i4:'has been found'};
+function checkL3(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(l3answers)){
+    const inp=document.getElementById(id);
+    const val=inp.value.trim().toLowerCase();
+    const correct=val===ans;
+    inp.className='type-inp '+(correct?'ok':'err');
+    if(correct)ok++;
+  }
+  const all=Object.keys(l3answers).length;
+  if(ok===all){setFb('l3fb',true,'All correct! Excellent passive transformations!','ممتاز! جميع التحويلات صحيحة!');document.getElementById('l3done').classList.add('show');confetti();}
+  else setFb('l3fb',false,`${ok}/${all} correct. Try again.`,`${ok} من ${all} صحيحة.`);
+}
+
+// ── Quiz ─────────────────────────────────────────────────────────
+const qAnswers={1:'was built',2:'is spoken',3:'will be opened',4:'b',5:'was discovered'};
+const qScored={};
+function qsc(qNum,btn,val,evt){
+  const opts=document.querySelectorAll(`#qq${qNum}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  const correct=val===qAnswers[qNum];
+  btn.classList.add(correct?'ok':'err');
+  qScored[qNum]=correct;
+  document.getElementById(`qq${qNum}`).classList.add(correct?'answered-ok':'answered-err');
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  const fb={
+    1:{ok:"Correct! was + built (past participle) = Past Simple passive.",ar:"صحيح! was + built = ماضٍ مبني للمجهول.",no:"Built is active — 500 years ago needs past passive: was built.",nar:"built نشط — 500 عام ماضية تحتاج was built."},
+    2:{ok:"Correct! is + spoken = Present Simple passive.",ar:"صحيح! is spoken = مضارع مبني للمجهول.",no:"We need Present Simple passive for a general fact: is spoken.",nar:"نحتاج مضارعًا مبنيًا للمجهول لحقيقة عامة: is spoken."},
+    3:{ok:"Correct! will + be + opened = future passive.",ar:"صحيح! will be opened = مستقبل مبني للمجهول.",no:"Future passive = will be + past participle.",nar:"المستقبل المبني للمجهول = will be + اسم المفعول."},
+    4:{ok:"Correct! 'are picked' = passive (be + pp).",ar:"صحيح! are picked = مبني للمجهول.",no:"Passive = be + past participle. Look for 'are/is/was + pp'.",nar:"المبني للمجهول = be + اسم المفعول."},
+    5:{ok:"Correct! was + discovered (1928 = past) = Past Simple passive.",ar:"صحيح! was discovered = ماضٍ مبني للمجهول.",no:"1928 is past — use was discovered.",nar:"1928 ماضٍ — استخدم was discovered."}
+  };
+  if(correct)setFb(`qq${qNum}fb`,true,fb[qNum].ok,fb[qNum].ar);
+  else setFb(`qq${qNum}fb`,false,fb[qNum].no,fb[qNum].nar);
+}
+function calcQuiz(){
+  const score=Object.values(qScored).filter(Boolean).length;
+  document.getElementById('scoreTxt').textContent=`${score} / 5`;
+  const msgs=[
+    {e:'Keep going — re-read the Grammar tab!',a:'راجع علامة be + اسم المفعول مرة أخرى.'},
+    {e:'Good effort! Review the tense table.',a:'جهد جيد! راجع جدول الأزمنة.'},
+    {e:'Good! You are getting it.',a:'جيد! أنت تفهم الأساسيات.'},
+    {e:'Great! Almost perfect!',a:'رائع! أنت قريب من الكمال.'},
+    {e:'Perfect! You are a Passive Voice star! ⭐',a:'ممتاز! أنت نجم المبني للمجهول!'}
+  ];
+  const m=msgs[Math.min(score,4)];
+  document.getElementById('scoreMsg').innerHTML=`${m.e}<br><span class="ar">${m.a}</span>`;
+  document.getElementById('badgeMsg').textContent=score>=3?'🏭 Factory Badge earned!':'Keep going — earn the Factory Badge!';
+  document.getElementById('quizScore').classList.add('show');
+  if(score>=3){localStorage.setItem('badge_passive','earned');confetti();}
+}
+
+// ── Flashcards ────────────────────────────────────────────────────
+const cards=[
+  {word:'passive voice',emoji:'🏭',ar:'المبني للمجهول',syn:'be + past participle',ant:'active voice'},
+  {word:'active voice',emoji:'🏃',ar:'المبني للمعلوم',syn:'subject + verb + object',ant:'passive voice'},
+  {word:'past participle',emoji:'📌',ar:'اسم المفعول (الجزء الثالث)',syn:'used in passive & perfect',ant:'—'},
+  {word:'agent',emoji:'👤',ar:'الفاعل الأصلي',syn:'by + doer',ant:'—'},
+  {word:'process',emoji:'⚙️',ar:'عملية / مراحل إنتاج',syn:'procedure — method',ant:'—'},
+  {word:'produced',emoji:'🫒',ar:'أُنتج / صُنع',syn:'made — manufactured',ant:'consumed'},
+];
+const grid=document.getElementById('fcGrid');
+cards.forEach((c,i)=>{
+  grid.innerHTML+=`
+  <div class="fc" id="fc${i}" onclick="flipCard(${i})">
+    <div class="fc-inner">
+      <div class="fc-front">
+        <span class="emoji">${c.emoji}</span>
+        <div class="word">${c.word}</div>
+        <button class="tts-btn" onclick="event.stopPropagation();speak('${c.word}')">🔊 Listen</button>
+      </div>
+      <div class="fc-back">
+        <div class="ar-mean ar">${c.ar}</div>
+        <div class="syn">${c.syn}</div>
+        ${c.ant&&c.ant!=='—'?`<div class="syn" style="opacity:.7">↔ ${c.ant}</div>`:''}
+      </div>
+    </div>
+  </div>`;
+});
+function flipCard(i){document.getElementById('fc'+i).classList.toggle('flipped');}
+function speak(w){
+  const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.9;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+</script>
+</body>
+</html>

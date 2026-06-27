@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Present Simple — Routines &amp; Habits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sun:#FFB347;--sun-d:#E65100;--sky:#87CEEB;--sky-d:#1565C0;
+  --mint:#A8E6CF;--mint-d:#2E7D32;--peach:#FFD3A5;
+  --ink:#2D3748;--ink-s:#5A6782;--bg:#FFF8F0;--card:#fff;
+  --rad:18px;--shad:0 4px 18px rgba(0,0,0,.08);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;min-height:100vh;padding-bottom:40px}
+.ar{font-family:'Baloo Bhaijaan 2',system-ui,sans-serif;direction:rtl;text-align:right}
+img{max-width:100%;height:auto;border-radius:14px;display:block}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#FFE0A3 0%,#FFB347 45%,#FF7043 75%,#E91E63 100%);position:relative;overflow:hidden}
+.hdr-rays{position:absolute;top:-30px;right:-30px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,255,255,.25) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;padding:26px 20px 16px;gap:14px}
+.hdr-text{flex:1}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:5px}
+.hdr-text h1{font-family:'Fredoka One',cursive;font-size:clamp(20px,5vw,32px);color:#fff;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.18)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{background:rgba(255,255,255,.25);color:#fff;border-radius:999px;padding:3px 11px;font-size:11px;font-weight:700;backdrop-filter:blur(4px)}
+.hdr-art{flex-shrink:0;width:clamp(72px,18vw,120px)}
+.hdr-art img{width:100%;border-radius:50%;border:4px solid rgba(255,255,255,.4);aspect-ratio:1;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+
+/* TAB BAR */
+.tab-bar{display:flex;background:#fff;border-bottom:3px solid #FFE0A3;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.t-btn{flex:0 0 auto;padding:13px 14px;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-3px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--ink-s);white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:5px}
+.t-btn:hover{color:var(--sun-d);background:#FFF3E0}
+.t-btn.active{color:var(--sun-d);border-bottom-color:var(--sun-d);background:#FFF3E0}
+.t-btn .em{font-size:16px}
+.prog-wrap{height:5px;background:#FFE0A3}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--sun),var(--sun-d));transition:width .4s ease;border-radius:0 3px 3px 0}
+
+/* PANELS */
+.panel{display:none;padding:20px 16px;max-width:820px;margin:0 auto}
+.panel.on{display:block}
+
+/* CARDS */
+.card{background:var(--card);border-radius:var(--rad);padding:20px 18px;margin-bottom:16px;box-shadow:var(--shad)}
+.ctitle{font-family:'Fredoka One',cursive;font-size:19px;color:var(--sun-d);margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.csub{font-size:12px;color:var(--ink-s);margin-bottom:12px}
+
+/* HINT BOXES */
+.hint{background:linear-gradient(135deg,#FFF9C4,#FFF3CD);border-right:4px solid #F9A825;border-radius:12px;padding:11px 13px;margin:10px 0;font-size:13px;line-height:1.7;color:#5D4037}
+.expl{background:#F3F0FF;border-right:4px solid #7C4DFF;border-radius:12px;padding:11px 13px;margin:10px 0;font-size:13px;line-height:1.7;color:#311B92}
+
+/* SCENARIO */
+.scenario{background:linear-gradient(135deg,#E3F2FD,#F3E5F5);border-radius:16px;padding:18px;margin:12px 0;text-align:center}
+.scenario .big-q{font-family:'Fredoka One',cursive;font-size:20px;color:var(--sky-d);margin-bottom:7px}
+.scenario p{color:#37474F;font-size:14px;line-height:1.6}
+
+/* OPTION BUTTONS (quick checks + practice MCQ) */
+.opt-row{display:flex;flex-direction:column;gap:7px}
+.opt{background:#F8F9FF;border:2px solid #D0D5F0;border-radius:11px;padding:9px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-align:left;transition:all .2s;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--sky-d);background:#EBF5FF}
+.opt.ok{background:#E8F5E9;border-color:#43A047;color:#1B5E20}
+.opt.bad{background:#FFEBEE;border-color:#E53935;color:#B71C1C}
+.fb{font-size:13px;font-weight:700;min-height:18px;margin-top:7px}
+.fb.ok{color:#2E7D32}
+.fb.bad{color:#C62828}
+
+/* VOCAB GRID */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px;margin:12px 0}
+.vc{background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,.07);border:2px solid #FFE082;transition:transform .18s}
+.vc:hover{transform:translateY(-3px)}
+.vc .em2{font-size:26px;margin-bottom:5px}
+.vc .eng{font-family:'Fredoka One',cursive;font-size:15px;color:#E65100}
+.vc .arm{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:12px;color:#5D4037;margin-top:3px;direction:rtl}
+.vc .pct{font-size:10px;font-weight:700;color:#8D6E63;margin-top:2px}
+.fbar-w{background:#F5F5F5;border-radius:999px;height:7px;margin:4px 0 1px;overflow:hidden}
+.fbar{height:100%;border-radius:999px;background:linear-gradient(90deg,#FFB347,#E65100)}
+
+/* DISCOVER TABLE */
+.dtbl{width:100%;border-collapse:collapse;margin:14px 0;border-radius:13px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07);font-size:14px}
+.dtbl th{background:linear-gradient(135deg,#4A9EC7,var(--sky-d));color:#fff;padding:9px 13px;font-family:'Fredoka One',cursive;font-size:14px}
+.dtbl td{padding:9px 13px;border-bottom:1px solid #E3F2FD;color:var(--ink)}
+.dtbl tr:last-child td{border-bottom:none}
+.dtbl tr:nth-child(odd) td{background:#F0F8FF}
+.dtbl tr:nth-child(even) td{background:#fff}
+.hl{color:#C62828;font-weight:800}
+.hlb{color:var(--sky-d);font-weight:800}
+
+/* NOTICE BOX */
+.nbox{background:linear-gradient(135deg,#FFF3E0,#FFF8E1);border:2px dashed #FFB347;border-radius:14px;padding:15px;margin:12px 0;text-align:center}
+.nbox .big{font-family:'Fredoka One',cursive;font-size:17px;color:#E65100;margin-bottom:6px}
+.nbox p{color:#5D4037;font-size:13px}
+
+/* GRAMMAR TABLES */
+.gtbl{width:100%;border-collapse:collapse;margin:10px 0;border-radius:11px;overflow:hidden;font-size:13px}
+.gtbl th{background:linear-gradient(135deg,#FFB347,#E65100);color:#fff;padding:8px 12px;font-family:'Fredoka One',cursive;text-align:left}
+.gtbl td{padding:8px 12px;border-bottom:1px solid #FFE0B2}
+.gtbl tr:last-child td{border-bottom:none}
+.gtbl tr:nth-child(odd) td{background:#FFF8F0}
+.gtbl tr:nth-child(even) td{background:#fff}
+code{background:#FFF3E0;color:#E65100;border-radius:5px;padding:1px 5px;font-size:12px;font-weight:700}
+.rule{background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-left:5px solid #43A047;border-radius:11px;padding:12px 15px;margin:10px 0;font-size:13px;line-height:1.7}
+.rule strong{color:#1B5E20}
+.eg{background:#EDE7F6;border-radius:8px;padding:7px 12px;margin:5px 0;font-size:13px;color:#311B92;font-weight:600;display:block}
+
+/* PRACTICE */
+.lvl{display:inline-block;background:linear-gradient(135deg,#7C4DFF,#512DA8);color:#fff;font-family:'Fredoka One',cursive;font-size:12px;padding:2px 11px;border-radius:999px;margin-bottom:9px}
+.ex{margin-bottom:22px}
+.qt{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:9px;line-height:1.5}
+.fline{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin:7px 0;font-size:14px}
+.finp{border:none;border-bottom:2.5px solid #FFB347;background:#FFF8F0;padding:3px 7px;min-width:85px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:var(--ink);border-radius:5px 5px 0 0;outline:none;transition:border-color .2s}
+.finp:focus{border-bottom-color:var(--sky-d)}
+.finp.ok{background:#E8F5E9;border-bottom-color:#43A047;color:#1B5E20}
+.finp.bad{background:#FFEBEE;border-bottom-color:#E53935;color:#C62828}
+.cbtn{background:linear-gradient(135deg,#FFB347,#E65100);color:#fff;border:none;border-radius:9px;padding:8px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-top:7px;transition:transform .18s,box-shadow .18s;box-shadow:0 3px 10px rgba(230,81,0,.28)}
+.cbtn:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(230,81,0,.38)}
+
+/* WORD BANK (question builder) */
+.wbank{display:flex;flex-wrap:wrap;gap:7px;padding:11px;background:#F3F4FF;border-radius:11px;margin:8px 0}
+.wt{background:linear-gradient(135deg,#7C4DFF,#512DA8);color:#fff;border-radius:7px;padding:4px 11px;font-size:13px;font-weight:700;cursor:pointer;user-select:none;transition:transform .15s}
+.wt:hover{transform:scale(1.05)}
+.wt.used{opacity:.32;pointer-events:none}
+.brow{display:flex;flex-wrap:wrap;gap:5px;min-height:40px;padding:7px 11px;background:#fff;border:2px dashed #C5CAE9;border-radius:11px;align-items:center;margin:7px 0;cursor:pointer}
+.bchip{background:#E3F2FD;color:var(--sky-d);border-radius:6px;padding:3px 9px;font-size:13px;font-weight:700}
+.ph-txt{color:#B0BEC5;font-size:12px}
+
+/* CREATE */
+.speak-wrap{background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-radius:14px;padding:16px;margin:10px 0}
+.speak-wrap h3{font-family:'Fredoka One',cursive;font-size:16px;color:#2E7D32;margin-bottom:8px}
+.qcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin:9px 0}
+.qcard{background:#fff;border-radius:11px;padding:11px;border:2px solid #A5D6A7;font-size:13px;font-weight:600;color:#1B5E20}
+.wtxt{width:100%;min-height:110px;border:2px solid #FFE082;border-radius:11px;padding:11px 13px;font-family:'Nunito',sans-serif;font-size:13px;color:var(--ink);background:#FFFDE7;resize:vertical;outline:none;line-height:1.7}
+.wtxt:focus{border-color:var(--sun)}
+.chklist{list-style:none;margin:9px 0}
+.chklist li{display:flex;align-items:center;gap:7px;padding:5px 0;font-size:13px;color:var(--ink-s)}
+.chklist input[type=checkbox]{width:17px;height:17px;accent-color:var(--sun-d);cursor:pointer}
+.wlevel{border-radius:11px;padding:12px 14px;margin-bottom:10px;font-size:13px}
+.wlevel strong{display:block;margin-bottom:3px}
+
+/* QUIZ */
+.qq{margin-bottom:18px}
+.qnum{display:inline-block;background:linear-gradient(135deg,#FFB347,#E65100);color:#fff;font-family:'Fredoka One',cursive;font-size:13px;padding:2px 9px;border-radius:999px;margin-bottom:5px}
+.qtext{font-weight:700;font-size:14px;margin-bottom:9px}
+.qfill{border:none;border-bottom:2.5px solid #FFB347;background:#FFF8F0;padding:5px 9px;min-width:130px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border-radius:5px 5px 0 0;outline:none;color:var(--ink);transition:border-color .2s}
+.qfill:focus{border-bottom-color:var(--sky-d)}
+.qfill.ok{background:#E8F5E9;border-bottom-color:#43A047;color:#1B5E20}
+.qfill.bad{background:#FFEBEE;border-bottom-color:#E53935;color:#C62828}
+.sub-btn{background:linear-gradient(135deg,#43A047,#2E7D32);color:#fff;border:none;border-radius:13px;padding:13px 32px;font-family:'Fredoka One',cursive;font-size:17px;cursor:pointer;width:100%;margin-top:9px;transition:transform .18s,box-shadow .18s;box-shadow:0 4px 16px rgba(46,125,50,.28)}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(46,125,50,.38)}
+.result-box{display:none;text-align:center;padding:26px 18px;background:linear-gradient(135deg,#FFF8E1,#FFFDE7);border-radius:18px;margin-top:14px;border:3px solid #FFD54F}
+.result-box .snum{font-family:'Fredoka One',cursive;font-size:50px;color:var(--sun-d);line-height:1}
+.result-box .slbl{font-size:13px;color:var(--ink-s);margin-bottom:8px}
+.result-box .smsg{font-family:'Fredoka One',cursive;font-size:19px;color:#5D4037;margin:8px 0}
+.stamp{font-size:54px;margin:8px 0;filter:drop-shadow(0 4px 8px rgba(0,0,0,.2));animation:stmp .6s cubic-bezier(.2,.8,.3,1.3) forwards}
+@keyframes stmp{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+
+/* FOOTER */
+.footer{text-align:center;padding:18px 16px 8px;font-size:12px;color:var(--ink-s)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-rays"></div>
+  <div class="hdr-inner">
+    <div class="hdr-text">
+      <p class="eyebrow">Grammar · English for Palestine</p>
+      <h1>Present Simple<br>Routines &amp; Habits</h1>
+      <div class="chips">
+        <span class="chip">🎯 Grades 5 &amp; 7</span>
+        <span class="chip">⏱ ~30 min</span>
+        <span class="chip ar">المضارع البسيط</span>
+      </div>
+    </div>
+    <div class="hdr-art">
+      <img src="https://i.ibb.co/PszwkcPL/Chat-GPT-Image-Jun-21-2026-12-12-49-AM.png" alt="Daily routine">
+    </div>
+  </div>
+
+  <nav class="tab-bar" id="tabBar">
+    <button class="t-btn active" data-tab="start"><span class="em">🚀</span> Start</button>
+    <button class="t-btn" data-tab="words"><span class="em">📚</span> Words</button>
+    <button class="t-btn" data-tab="discover"><span class="em">🔍</span> Discover</button>
+    <button class="t-btn" data-tab="grammar"><span class="em">🧠</span> Grammar</button>
+    <button class="t-btn" data-tab="practice"><span class="em">✏️</span> Practice</button>
+    <button class="t-btn" data-tab="create"><span class="em">🗣️</span> Create</button>
+    <button class="t-btn" data-tab="quiz"><span class="em">🎯</span> Quiz</button>
+  </nav>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14.28%"></div></div>
+</header>
+
+<!-- ══════════════ TAB 1 · START ══════════════ -->
+<section class="panel on" id="tab-start">
+
+  <div class="card">
+    <p class="ctitle">🌅 Your Daily Routine</p>
+    <p class="csub">A warm-up to get you thinking — 2 to 3 minutes.</p>
+    <img src="https://i.ibb.co/PszwkcPL/Chat-GPT-Image-Jun-21-2026-12-12-49-AM.png" alt="Morning routine" style="margin:8px 0">
+    <p style="font-size:14px;line-height:1.7;margin:10px 0">
+      Every day you do the same things again and again.<br>
+      You <strong>wake up</strong> → you <strong>brush your teeth</strong> → you <strong>go to school</strong>.
+    </p>
+    <div class="hint ar">فكّر: ما الأشياء التي تفعلها <strong>كل يوم</strong> قبل ذهابك إلى المدرسة؟ شاركها مع زميلك.</div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">💭 Think About It</p>
+    <div class="scenario">
+      <div class="big-q">What do you do every morning?</div>
+      <p>I wake up. I eat breakfast. I go to school.<br>
+      <span style="font-size:12px;color:#546E7A;margin-top:6px;display:block">These are <strong>habits</strong> — things we do again and again!</span></p>
+    </div>
+
+    <p style="font-weight:700;font-size:14px;margin:12px 0 8px">❓ Quick check: Which sentence talks about a <em>daily habit</em>?</p>
+    <div class="opt-row" id="qc1-row">
+      <button class="opt" onclick="singleCheck('qc1-row','qc1-fb',this,'bad','That uses Past Simple — it happened once, not as a habit.')">I <strong>played</strong> football yesterday.</button>
+      <button class="opt" onclick="singleCheck('qc1-row','qc1-fb',this,'ok','Yes! This is a repeated habit — Present Simple.')">She <strong>plays</strong> the piano every day.</button>
+      <button class="opt" onclick="singleCheck('qc1-row','qc1-fb',this,'bad','That is a future plan, not a habit.')">They are <strong>going to</strong> visit Jericho.</button>
+    </div>
+    <div class="fb" id="qc1-fb"></div>
+
+    <div class="hint ar" style="margin-top:14px">
+      <strong>هدف الدرس:</strong> نتعلّم المضارع البسيط — الزمن الذي نستخدمه للعادات والروتين والحقائق الثابتة. سنبدأ بملاحظة الأمثلة ثم نكتشف القاعدة بأنفسنا!
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 2 · WORDS ══════════════ -->
+<section class="panel" id="tab-words">
+
+  <div class="card">
+    <p class="ctitle">⏰ Frequency Adverbs</p>
+    <p class="csub">These words tell us <em>how often</em> someone does something.</p>
+    <div class="vgrid">
+      <div class="vc"><div class="em2">💯</div><div class="eng">always</div><div class="fbar-w"><div class="fbar" style="width:100%"></div></div><div class="arm">دائمًا</div><div class="pct">100%</div></div>
+      <div class="vc"><div class="em2">🔄</div><div class="eng">usually</div><div class="fbar-w"><div class="fbar" style="width:80%"></div></div><div class="arm">عادةً</div><div class="pct">~80%</div></div>
+      <div class="vc"><div class="em2">📅</div><div class="eng">often</div><div class="fbar-w"><div class="fbar" style="width:60%"></div></div><div class="arm">غالبًا</div><div class="pct">~60%</div></div>
+      <div class="vc"><div class="em2">🤔</div><div class="eng">sometimes</div><div class="fbar-w"><div class="fbar" style="width:40%"></div></div><div class="arm">أحيانًا</div><div class="pct">~40%</div></div>
+      <div class="vc"><div class="em2">🚫</div><div class="eng">never</div><div class="fbar-w"><div class="fbar" style="width:0%"></div></div><div class="arm">أبدًا</div><div class="pct">0%</div></div>
+    </div>
+    <div class="hint ar">مكانها في الجملة: <strong>قبل الفعل الرئيسي</strong>. مثال: I <em>always</em> eat breakfast. · She <em>never</em> drinks coffee.</div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">🏃 Daily Routine Verbs</p>
+    <p class="csub">Key actions for talking about what you do every day.</p>
+    <div class="vgrid">
+      <div class="vc"><div class="em2">⏰</div><div class="eng">wake up</div><div class="arm">يستيقظ</div></div>
+      <div class="vc"><div class="em2">🪥</div><div class="eng">brush teeth</div><div class="arm">يُنظّف أسنانه</div></div>
+      <div class="vc"><div class="em2">🍳</div><div class="eng">have breakfast</div><div class="arm">يتناول الفطور</div></div>
+      <div class="vc"><div class="em2">🎒</div><div class="eng">go to school</div><div class="arm">يذهب إلى المدرسة</div></div>
+      <div class="vc"><div class="em2">📖</div><div class="eng">do homework</div><div class="arm">يحلّ الواجب</div></div>
+      <div class="vc"><div class="em2">⚽</div><div class="eng">play sports</div><div class="arm">يمارس الرياضة</div></div>
+      <div class="vc"><div class="em2">📺</div><div class="eng">watch TV</div><div class="arm">يشاهد التلفاز</div></div>
+      <div class="vc"><div class="em2">😴</div><div class="eng">go to bed</div><div class="arm">يذهب للنوم</div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 3 · DISCOVER ══════════════ -->
+<section class="panel" id="tab-discover">
+
+  <div class="card">
+    <p class="ctitle">👀 Look at These Sentences</p>
+    <p class="csub">Read carefully — something changes between the two groups!</p>
+
+    <table class="dtbl">
+      <tr><th>I / You / We / They</th><th>He / She / It</th></tr>
+      <tr><td>I <span class="hlb">play</span> football.</td><td>He <span class="hl">play<strong>s</strong></span> football.</td></tr>
+      <tr><td>You <span class="hlb">go</span> to school.</td><td>She <span class="hl">go<strong>es</strong></span> to school.</td></tr>
+      <tr><td>They <span class="hlb">watch</span> TV.</td><td>He <span class="hl">watch<strong>es</strong></span> TV.</td></tr>
+      <tr><td>We <span class="hlb">study</span> English.</td><td>She <span class="hl">studi<strong>es</strong></span> English.</td></tr>
+    </table>
+
+    <div class="nbox">
+      <div class="big">🤔 What did you notice?</div>
+      <p>Look at the red words. What is added to the verb when we use <em>he / she / it</em>?</p>
+    </div>
+
+    <p style="font-weight:700;font-size:14px;margin:12px 0 8px">What changes with <em>he / she / it</em>?</p>
+    <div class="opt-row" id="qc2-row">
+      <button class="opt" onclick="singleCheck('qc2-row','qc2-fb',this,'bad','No — only the verb ending changes, not the whole word.')">We change the verb to a completely different word.</button>
+      <button class="opt" onclick="singleCheck('qc2-row','qc2-fb',this,'ok','Exactly! We add -s or -es to the verb with he/she/it.')">We add <strong>-s</strong> or <strong>-es</strong> to the verb.</button>
+      <button class="opt" onclick="singleCheck('qc2-row','qc2-fb',this,'bad','Does is only for negatives and questions, not positive sentences.')">We put <em>does</em> before the verb every time.</button>
+    </div>
+    <div class="fb" id="qc2-fb"></div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">❓ Negatives &amp; Questions — Spot the Pattern</p>
+    <p class="csub">Now look at what happens with negatives and questions.</p>
+
+    <table class="dtbl">
+      <tr><th>Affirmative ✅</th><th>Negative ❌</th><th>Question ❓</th></tr>
+      <tr>
+        <td>I play.</td>
+        <td>I <span class="hl">don't</span> play.</td>
+        <td><span class="hl">Do</span> you play?</td>
+      </tr>
+      <tr>
+        <td>She play<strong>s</strong>.</td>
+        <td>She <span class="hl">doesn't</span> play.</td>
+        <td><span class="hl">Does</span> she play?</td>
+      </tr>
+    </table>
+
+    <div class="nbox">
+      <div class="big">💡 Did you spot it?</div>
+      <p>With negatives and questions, the verb goes back to its <strong>base form</strong> — no -s!<br>
+      <span style="color:#C62828">She doesn't play<del>s</del></span> &nbsp;·&nbsp; <span style="color:#C62828">Does she play<del>s</del>?</span></p>
+    </div>
+
+    <div class="expl ar">
+      <strong>الخلاصة:</strong> مع النفي والسؤال نستخدم <strong>do / does</strong> كفعل مساعد، والفعل الرئيسي يبقى بصيغته الأصلية بدون -s.<br>
+      ❌ She <em>doesn't plays</em> &nbsp; ✅ She <em>doesn't play</em>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 4 · GRAMMAR ══════════════ -->
+<section class="panel" id="tab-grammar">
+
+  <div class="card">
+    <p class="ctitle">📌 When Do We Use It?</p>
+    <div class="rule">
+      Use <strong>Present Simple</strong> for:<br>
+      ✅ <strong>Habits &amp; routines</strong> — things you do regularly.<br>
+      ✅ <strong>General facts &amp; truths</strong> — things that are always true.<br>
+      ✅ <strong>Fixed timetables</strong> — school starts at 8.
+    </div>
+    <span class="eg">I <strong>go</strong> to school every day. (habit)</span>
+    <span class="eg">The sun <strong>rises</strong> in the east. (fact)</span>
+    <span class="eg">The train <strong>leaves</strong> at 7 a.m. (timetable)</span>
+    <div class="hint ar">نستخدم المضارع البسيط: للعادات اليومية — الحقائق الثابتة — الجداول الزمنية.</div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">📐 How to Form It</p>
+    <table class="gtbl">
+      <tr><th>Subject</th><th>Verb form</th><th>Example</th></tr>
+      <tr><td>I / You / We / They</td><td>base verb</td><td>I <code>play</code>. We <code>study</code>.</td></tr>
+      <tr><td>He / She / It</td><td>verb + <strong>-s</strong></td><td>She <code>plays</code>. He <code>eats</code>.</td></tr>
+      <tr><td>He/She/It + go/do/watch…</td><td>verb + <strong>-es</strong></td><td>He <code>goes</code>. She <code>watches</code>.</td></tr>
+      <tr><td>He/She/It + study/try…</td><td>y → <strong>-ies</strong></td><td>She <code>studies</code>. He <code>tries</code>.</td></tr>
+    </table>
+    <div class="hint ar">القاعدة الذهبية: مع <strong>he / she / it</strong> نضيف <strong>-s</strong> أو <strong>-es</strong>. إذا انتهى الفعل بـ y قبلها ساكن: y → <strong>-ies</strong>.</div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">❌ Negatives &amp; ❓ Questions</p>
+    <table class="gtbl">
+      <tr><th>Type</th><th>I/You/We/They</th><th>He/She/It</th></tr>
+      <tr><td>Negative</td><td>I <code>don't</code> like fish.</td><td>She <code>doesn't</code> like fish.</td></tr>
+      <tr><td>Question</td><td><code>Do</code> you play?</td><td><code>Does</code> she play?</td></tr>
+    </table>
+    <div class="hint ar">
+      ⚠️ بعد <strong>doesn't</strong> نستخدم الفعل بدون -s.<br>
+      ❌ She doesn't <em>likes</em> &nbsp; ✅ She doesn't <em>like</em>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">📊 Frequency Adverbs — Position</p>
+    <div class="rule">
+      Go <strong>before the main verb</strong>, but <strong>after to be</strong>.<br>
+      ✅ I <strong>always</strong> eat breakfast. &nbsp;|&nbsp; She <strong>never</strong> drinks coffee.<br>
+      ✅ He is <strong>usually</strong> late. (after <em>is</em>)
+    </div>
+    <div class="hint ar">ظروف التكرار تأتي <strong>قبل الفعل الرئيسي</strong> وبعد فعل <em>to be</em> مباشرةً.</div>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 5 · PRACTICE ══════════════ -->
+<section class="panel" id="tab-practice">
+
+  <div class="card">
+    <span class="lvl">Level 1 — Choose</span>
+    <div class="ex">
+      <p class="qt">1) My sister ___ to music every evening.</p>
+      <div class="opt-row" id="p1-row">
+        <button class="opt" onclick="singleCheck('p1-row','p1-fb',this,'ok','Yes! She = he/she/it → listen + s = listens.')">listens</button>
+        <button class="opt" onclick="singleCheck('p1-row','p1-fb',this,'bad','With she we add -s → listens.')">listen</button>
+        <button class="opt" onclick="singleCheck('p1-row','p1-fb',this,'bad','We do not use are + verb in Present Simple.')">are listening</button>
+      </div>
+      <div class="fb" id="p1-fb"></div>
+    </div>
+
+    <div class="ex">
+      <p class="qt">2) ___ your brother play football?</p>
+      <div class="opt-row" id="p2-row">
+        <button class="opt" onclick="singleCheck('p2-row','p2-fb',this,'bad','Use Does with he/she/it.')">Do</button>
+        <button class="opt" onclick="singleCheck('p2-row','p2-fb',this,'ok','Correct! Your brother = he → Does.')">Does</button>
+        <button class="opt" onclick="singleCheck('p2-row','p2-fb',this,'bad','Is is not a question helper for Present Simple.')">Is</button>
+      </div>
+      <div class="fb" id="p2-fb"></div>
+    </div>
+
+    <div class="ex">
+      <p class="qt">3) Which sentence is correct?</p>
+      <div class="opt-row" id="p3-row">
+        <button class="opt" onclick="singleCheck('p3-row','p3-fb',this,'bad','He goes — go + es because he = he/she/it.')">He go to school.</button>
+        <button class="opt" onclick="singleCheck('p3-row','p3-fb',this,'ok','Perfect! go + es = goes.')">He goes to school.</button>
+        <button class="opt" onclick="singleCheck('p3-row','p3-fb',this,'bad','He is going = Present Continuous, not Present Simple.')">He is going to school.</button>
+      </div>
+      <div class="fb" id="p3-fb"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="lvl">Level 2 — Fill in the Blank</span>
+    <p class="qt">Write the correct form of the verb in brackets:</p>
+    <div class="fline">1) He <input class="finp" data-ans="goes" id="f1" placeholder="(go)"> to school by bus.</div>
+    <div class="fline">2) We <input class="finp" data-ans="study" id="f2" placeholder="(study)"> English on Sunday.</div>
+    <div class="fline">3) She <input class="finp" data-ans="doesn't|does not" id="f3" placeholder="(not like)"> like fish.</div>
+    <div class="fline">4) My mother <input class="finp" data-ans="teaches" id="f4" placeholder="(teach)"> at our school.</div>
+    <div class="fline">5) <input class="finp" data-ans="do" id="f5" placeholder="(Do/Does?)"> they play tennis?</div>
+    <button class="cbtn" onclick="checkFill(['f1','f2','f3','f4','f5'],'fill-fb')">Check ✓</button>
+    <div class="fb" id="fill-fb"></div>
+  </div>
+
+  <div class="card">
+    <span class="lvl">Level 3 — Build a Question</span>
+    <p class="qt">Click the words in the right order to make a question:</p>
+    <p style="font-size:13px;color:var(--ink-s);margin-bottom:8px">📌 she / does / every day / exercise / ?</p>
+    <div class="wbank" id="wb1">
+      <span class="wt" onclick="addWord(this,'build1')">Does</span>
+      <span class="wt" onclick="addWord(this,'build1')">she</span>
+      <span class="wt" onclick="addWord(this,'build1')">exercise</span>
+      <span class="wt" onclick="addWord(this,'build1')">every</span>
+      <span class="wt" onclick="addWord(this,'build1')">day</span>
+      <span class="wt" onclick="addWord(this,'build1')">?</span>
+    </div>
+    <div class="brow" id="build1" onclick="removeLastWord('build1')">
+      <span class="ph-txt">Click words above to build the question…</span>
+    </div>
+    <button class="cbtn" onclick="checkBuild('build1','Does she exercise every day ?','b1-fb')">Check ✓</button>
+    <div class="fb" id="b1-fb"></div>
+  </div>
+
+  <div class="card">
+    <span class="lvl">Level 4 — Correct the Mistake</span>
+    <p class="qt">Each sentence has ONE mistake. Type the corrected sentence:</p>
+    <p style="font-size:13px;font-weight:700;margin:10px 0 4px">❌ She don't go to school on Fridays.</p>
+    <input type="text" class="finp" style="width:100%;min-width:unset" id="c1" placeholder="She …">
+    <div class="fb" id="c1-fb"></div>
+    <p style="font-size:13px;font-weight:700;margin:14px 0 4px">❌ Does he goes by bus?</p>
+    <input type="text" class="finp" style="width:100%;min-width:unset" id="c2" placeholder="Does he …">
+    <div class="fb" id="c2-fb"></div>
+    <button class="cbtn" style="margin-top:10px" onclick="checkCorrections()">Check ✓</button>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 6 · CREATE ══════════════ -->
+<section class="panel" id="tab-create">
+
+  <div class="card">
+    <p class="ctitle">🗣️ Speaking — Interview a Friend</p>
+    <p class="csub">Ask your classmate these questions. Write their answers below.</p>
+    <div class="speak-wrap">
+      <h3>Question Cards</h3>
+      <div class="qcards">
+        <div class="qcard">Do you play sports? How often?</div>
+        <div class="qcard">What time do you wake up?</div>
+        <div class="qcard">Do you help at home every day?</div>
+        <div class="qcard">Does your father cook?</div>
+        <div class="qcard">How often do you read?</div>
+        <div class="qcard">Does your family eat dinner together?</div>
+      </div>
+    </div>
+    <div class="hint ar" style="margin-bottom:10px">بعد المقابلة: اكتب جملتين عن زميلك. مثال: <em>He always plays football. She sometimes reads at night.</em></div>
+    <textarea class="wtxt" placeholder="My partner is ___. He/She always… He/She never…"></textarea>
+  </div>
+
+  <div class="card">
+    <p class="ctitle">✍️ Writing — My Daily Routine</p>
+    <p class="csub">Choose your level and write your paragraph.</p>
+    <div class="wlevel" style="background:#EDE7F6"><strong style="color:#512DA8">Short (3–4 sentences):</strong><span style="font-size:12px;color:#4527A0"> Write about your morning routine. Use at least one frequency adverb.</span></div>
+    <div class="wlevel" style="background:#E8F5E9"><strong style="color:#2E7D32">Medium (5–7 sentences):</strong><span style="font-size:12px;color:#1B5E20"> Write "My Daily Routine" — from waking up to going to bed.</span></div>
+    <div class="wlevel" style="background:#FFF3E0"><strong style="color:#E65100">Challenge (7+ sentences):</strong><span style="font-size:12px;color:#BF360C"> Write "My Weekend Routine" — how is it different from weekdays?</span></div>
+    <textarea class="wtxt" placeholder="Every morning I wake up at ___. I usually…"></textarea>
+    <p style="font-weight:700;font-size:13px;margin-top:12px">Self-check ✅</p>
+    <ul class="chklist">
+      <li><label><input type="checkbox"> I added <strong>-s</strong> correctly with he/she/it.</label></li>
+      <li><label><input type="checkbox"> I used at least one frequency adverb.</label></li>
+      <li><label><input type="checkbox"> Each sentence starts with a capital letter.</label></li>
+      <li><label><input type="checkbox"> Each sentence ends with a full stop.</label></li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- ══════════════ TAB 7 · QUIZ ══════════════ -->
+<section class="panel" id="tab-quiz">
+
+  <div class="card">
+    <p class="ctitle">🎯 Check Yourself</p>
+    <p class="csub">Answer all 5 questions, then press Submit for your score.</p>
+
+    <div id="quizForm">
+      <div class="qq">
+        <span class="qnum">Q1</span>
+        <p class="qtext">They ___ in Ramallah.</p>
+        <div class="opt-row" id="q1-row">
+          <button class="opt" data-correct onclick="qSel(this,'q1-row',0)">live</button>
+          <button class="opt" onclick="qSel(this,'q1-row',0)">lives</button>
+          <button class="opt" onclick="qSel(this,'q1-row',0)">living</button>
+        </div>
+      </div>
+
+      <div class="qq">
+        <span class="qnum">Q2</span>
+        <p class="qtext">___ she like chocolate?</p>
+        <div class="opt-row" id="q2-row">
+          <button class="opt" onclick="qSel(this,'q2-row',1)">Do</button>
+          <button class="opt" data-correct onclick="qSel(this,'q2-row',1)">Does</button>
+          <button class="opt" onclick="qSel(this,'q2-row',1)">Is</button>
+        </div>
+      </div>
+
+      <div class="qq">
+        <span class="qnum">Q3</span>
+        <p class="qtext">My father ___ (work) in a hospital. <span style="font-size:12px;color:var(--ink-s)">(Write the correct form)</span></p>
+        <input type="text" class="qfill" id="q3f" placeholder="works / work ?">
+      </div>
+
+      <div class="qq">
+        <span class="qnum">Q4</span>
+        <p class="qtext">Where do frequency adverbs usually go?</p>
+        <div class="opt-row" id="q4-row">
+          <button class="opt" data-correct onclick="qSel(this,'q4-row',2)">Before the main verb</button>
+          <button class="opt" onclick="qSel(this,'q4-row',2)">After the object always</button>
+          <button class="opt" onclick="qSel(this,'q4-row',2)">At the very end</button>
+        </div>
+      </div>
+
+      <div class="qq">
+        <span class="qnum">Q5</span>
+        <p class="qtext">We ___ eat meat. <span style="font-size:12px;color:var(--ink-s)">(negative — write don't or do not)</span></p>
+        <input type="text" class="qfill" id="q5f" placeholder="don't / do not">
+      </div>
+
+      <button class="sub-btn" onclick="submitQuiz()">Submit ✓</button>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <div class="stamp" id="stamp">⏰</div>
+      <div class="snum" id="snum">0/5</div>
+      <div class="slbl">Your score</div>
+      <div class="smsg" id="smsg"></div>
+      <div class="hint ar" id="smsg-ar"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+/* ── Tab switching ── */
+const TABS = ['start','words','discover','grammar','practice','create','quiz'];
+function showTab(id) {
+  TABS.forEach(t => {
+    document.getElementById('tab-' + t).classList.remove('on');
+    document.querySelector('[data-tab="' + t + '"]').classList.remove('active');
+  });
+  document.getElementById('tab-' + id).classList.add('on');
+  document.querySelector('[data-tab="' + id + '"]').classList.add('active');
+  const pct = ((TABS.indexOf(id) + 1) / TABS.length * 100).toFixed(1);
+  document.getElementById('progFill').style.width = pct + '%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  const seen = JSON.parse(localStorage.getItem('ps-seen') || '[]');
+  if (!seen.includes(id)) { seen.push(id); localStorage.setItem('ps-seen', JSON.stringify(seen)); }
+}
+document.querySelectorAll('.t-btn').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+
+/* ── Generic single-choice check ── */
+function singleCheck(rowId, fbId, btn, result, msg) {
+  const row = document.getElementById(rowId);
+  row.querySelectorAll('.opt').forEach(b => { b.disabled = true; b.classList.remove('ok','bad'); });
+  btn.classList.add(result);
+  const fb = document.getElementById(fbId);
+  fb.textContent = (result === 'ok' ? '✅ ' : '❌ ') + msg;
+  fb.className = 'fb ' + result;
+}
+
+/* ── Fill blank checker ── */
+function checkFill(ids, fbId) {
+  let score = 0;
+  ids.forEach(id => {
+    const inp = document.getElementById(id);
+    const answers = inp.dataset.ans.split('|').map(a => a.trim().toLowerCase());
+    inp.classList.remove('ok','bad');
+    if (answers.includes(inp.value.trim().toLowerCase())) { inp.classList.add('ok'); score++; }
+    else inp.classList.add('bad');
+  });
+  const fb = document.getElementById(fbId);
+  fb.className = 'fb ' + (score === ids.length ? 'ok' : 'bad');
+  fb.textContent = score === ids.length
+    ? '✅ All correct! Great work!'
+    : score + ' / ' + ids.length + ' correct — check the red ones.';
+}
+
+/* ── Word bank builder ── */
+const stacks = {};
+function addWord(token, buildId) {
+  if (!stacks[buildId]) stacks[buildId] = [];
+  const build = document.getElementById(buildId);
+  const ph = build.querySelector('.ph-txt');
+  if (ph) ph.remove();
+  const chip = document.createElement('span');
+  chip.className = 'bchip';
+  chip.textContent = token.textContent;
+  build.appendChild(chip);
+  token.classList.add('used');
+  stacks[buildId].push(token);
+}
+function removeLastWord(buildId) {
+  const build = document.getElementById(buildId);
+  const chips = build.querySelectorAll('.bchip');
+  if (!chips.length) return;
+  chips[chips.length - 1].remove();
+  const st = stacks[buildId];
+  if (st && st.length) { st[st.length - 1].classList.remove('used'); st.pop(); }
+  if (!build.querySelectorAll('.bchip').length) {
+    const ph = document.createElement('span');
+    ph.className = 'ph-txt';
+    ph.textContent = 'Click words above to build the question…';
+    build.appendChild(ph);
+  }
+}
+function checkBuild(buildId, expected, fbId) {
+  const built = [...document.getElementById(buildId).querySelectorAll('.bchip')].map(c => c.textContent).join(' ');
+  const fb = document.getElementById(fbId);
+  if (built.trim().toLowerCase() === expected.toLowerCase()) {
+    fb.textContent = '✅ Perfect question!'; fb.className = 'fb ok';
+  } else {
+    fb.textContent = '❌ Try: Does she exercise every day?'; fb.className = 'fb bad';
+  }
+}
+
+/* ── Corrections ── */
+function checkCorrections() {
+  const c1v = document.getElementById('c1').value.trim().toLowerCase().replace(/\.$/, '');
+  const ok1 = ["she doesn't go to school on fridays","she does not go to school on fridays"].includes(c1v);
+  document.getElementById('c1').className = 'finp ' + (ok1 ? 'ok' : 'bad');
+  document.getElementById('c1-fb').textContent = ok1 ? '✅ Correct!' : "❌ Hint: She doesn't go… (use doesn't, not don't)";
+  document.getElementById('c1-fb').className = 'fb ' + (ok1 ? 'ok' : 'bad');
+
+  const c2v = document.getElementById('c2').value.trim().toLowerCase().replace(/\?$/, '').trim();
+  const ok2 = ["does he go by bus"].includes(c2v);
+  document.getElementById('c2').className = 'finp ' + (ok2 ? 'ok' : 'bad');
+  document.getElementById('c2-fb').textContent = ok2 ? '✅ Correct!' : '❌ Hint: Does he go… (after Does, no -s: go, not goes)';
+  document.getElementById('c2-fb').className = 'fb ' + (ok2 ? 'ok' : 'bad');
+}
+
+/* ── Quiz ── */
+const qSels = [null, null, null]; // indices for Q1, Q2, Q4
+function qSel(btn, rowId, idx) {
+  document.getElementById(rowId).querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  qSels[idx] = btn;
+}
+function submitQuiz() {
+  let score = 0;
+  // MCQ rows
+  [[0,'q1-row'],[1,'q2-row'],[2,'q4-row']].forEach(([idx, rowId]) => {
+    const row = document.getElementById(rowId);
+    row.querySelectorAll('.opt').forEach(b => {
+      b.disabled = true; b.classList.remove('selected');
+      if (b.dataset.correct) b.classList.add('ok');
+    });
+    const sel = qSels[idx];
+    if (sel) {
+      if (sel.dataset.correct) { score++; }
+      else { sel.classList.remove('ok'); sel.classList.add('bad'); }
+    }
+  });
+  // Q3 fill
+  const q3 = document.getElementById('q3f');
+  if (q3.value.trim().toLowerCase() === 'works') { score++; q3.classList.add('ok'); }
+  else q3.classList.add('bad');
+  q3.disabled = true;
+  // Q5 fill
+  const q5 = document.getElementById('q5f');
+  const v5 = q5.value.trim().toLowerCase();
+  if (v5 === "don't" || v5 === "do not") { score++; q5.classList.add('ok'); }
+  else q5.classList.add('bad');
+  q5.disabled = true;
+
+  document.querySelector('.sub-btn').style.display = 'none';
+  const rb = document.getElementById('resultBox');
+  rb.style.display = 'block';
+  document.getElementById('snum').textContent = score + '/5';
+  const msgs  = ['Keep trying! 💪','Good effort!','Nice work! 👍','Very good! ⭐','Almost there! 🌟','Perfect! 🏆'];
+  const arMsg = ['راجع الدرس وحاول مجددًا.','جيد — راجع القاعدة وأعِد المحاولة.','أداء جيد — تقريبًا هناك!','ممتاز — أنت تفهم القاعدة!','رائع جدًا — تقريبًا كمال!','ممتاز! أتقنت المضارع البسيط! 🎉'];
+  document.getElementById('smsg').textContent = msgs[score];
+  document.getElementById('smsg-ar').textContent = arMsg[score];
+  if (score >= 3) localStorage.setItem('ps-badge','⏰');
+}
+</script>
+
+</body>
+</html>
