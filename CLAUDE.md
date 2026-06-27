@@ -6,7 +6,7 @@ Each lesson is a single self-contained HTML file: `grade<N>/unit<U>p<P>*.html`.
 ## Design guidelines (teacher's standing requirements — apply to ALL new designs)
 
 1. **Tabs**: always in **English**, laid out **left-to-right (LTR)**.
-2. **Page language**: lesson content/pages in **English**; helper instructions and hints in **Arabic**.
+2. **Page language**: lesson content/pages in **English**; helper instructions and hints in **Arabic**. **All Arabic must be correct Modern Standard Arabic (فصحى) — never colloquial/dialect (عامية).** This applies everywhere: hints, tooltips, main ideas, value statements, explanations, etc.
 3. **Comprehension questions**: place inside a **collapsible dropdown** (`<details>`), not always visible.
 4. **Audio**: ALWAYS use the **Google Drive preview iframe player** (`https://drive.google.com/file/d/<ID>/preview`) — compact size (height ≈ 58px, max-width ≈ 480px). Never build a custom player and never use native `<audio controls>`. (No programmatic seeking is possible, so don't build per-segment play buttons.)
 5. **Images**: must be **adaptive/responsive** to page width (`width:100%; height:auto;` — no fixed crops).
