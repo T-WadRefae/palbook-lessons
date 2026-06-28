@@ -69,19 +69,15 @@
   }
 
   /* ───── START SCREEN ───── */
-  .ar-help{font-family:'Cairo',sans-serif;direction:rtl;line-height:1.7;font-size:14px;color:var(--ink-soft);font-weight:600;}
+  .ar-help{font-family:'Cairo',sans-serif;direction:rtl;line-height:1.8;font-size:15px;color:var(--ink-soft);font-weight:600;}
   .ar-help strong{color:var(--honey-deep);}
-  .label{font-family:'Cairo',sans-serif;direction:rtl;font-weight:700;font-size:15px;margin:14px 0 8px;display:block;}
-  .grade-row,.mode-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .lang-row{display:flex;justify-content:center;margin-top:14px;}
   .pill{
     border:2px solid #f0dca0;background:#fff;border-radius:14px;
     padding:9px 16px;font:inherit;font-weight:600;font-size:15px;cursor:pointer;
     color:var(--ink);transition:.15s;min-width:64px;
   }
   .pill:hover{border-color:var(--honey);}
-  .pill.active{background:linear-gradient(135deg,var(--amber),var(--honey));border-color:var(--honey-deep);color:var(--ink);box-shadow:0 4px 10px rgba(226,146,10,.3);}
-  .mode-row .pill{font-family:'Cairo',sans-serif;direction:rtl;font-size:13px;line-height:1.3;min-width:0;flex:1;}
-  .mode-row .pill small{display:block;font-weight:400;opacity:.7;font-size:11px;}
   .btn-big{
     display:block;width:100%;margin-top:18px;padding:15px;border:0;border-radius:16px;
     font:inherit;font-weight:700;font-size:19px;cursor:pointer;color:#fff;
@@ -120,11 +116,11 @@
   .mini-btn{
     border:2px solid #f0dca0;background:#fff;border-radius:12px;padding:7px 14px;
     font:inherit;font-weight:600;font-size:13px;cursor:pointer;color:var(--ink-soft);transition:.15s;
-    font-family:'Cairo',sans-serif;direction:rtl;
+    font-family:'Cairo',sans-serif;
   }
   .mini-btn:hover{border-color:var(--honey);}
   .meaning{font-family:'Cairo',sans-serif;direction:rtl;text-align:center;font-weight:700;font-size:17px;color:var(--honey-deep);margin:12px 0 2px;min-height:24px;}
-  .hint-letters{text-align:center;letter-spacing:8px;font-size:24px;font-weight:600;color:var(--ink-soft);min-height:30px;}
+  .hint-letters{text-align:center;letter-spacing:8px;font-size:24px;font-weight:600;color:var(--ink-soft);min-height:30px;direction:ltr;}
 
   .answer-input{
     width:100%;margin-top:14px;padding:14px;border:3px solid #f0dca0;border-radius:16px;
@@ -150,11 +146,11 @@
   @keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.25);}100%{transform:scale(1);}}
   .end h2{margin:6px 0;font-size:26px;}
   .end .score-big{font-size:48px;font-weight:700;color:var(--honey-deep);line-height:1;}
-  .end .ar{font-family:'Cairo',sans-serif;direction:rtl;font-weight:600;color:var(--ink-soft);}
+  .end .ar{font-family:'Cairo',sans-serif;font-weight:600;color:var(--ink-soft);}
   .stamp{
     display:inline-block;margin:14px auto;padding:10px 22px;border:4px dashed var(--honey-deep);
     border-radius:18px;color:var(--honey-deep);font-weight:700;font-size:18px;transform:rotate(-5deg);
-    font-family:'Cairo',sans-serif;direction:rtl;
+    font-family:'Cairo',sans-serif;
   }
   .review{text-align:left;margin-top:8px;}
   .review .miss{
@@ -186,38 +182,19 @@
 
   <!-- ───── START SCREEN ───── -->
   <section id="start" class="card">
-    <p class="ar-help">
-      🎧 رحّب بك في <strong>نحلة الإملاء</strong>! اضغط الزر الأصفر لتسمع الكلمة بالإنجليزية،
-      ثم اكتبها بشكل صحيح. تستطيع <strong>إعادة السماع</strong> أو سماعها <strong>ببطء</strong>،
-      ورؤية <strong>معناها بالعربية</strong> للمساعدة. كل كلمة صحيحة = نقطة عسل 🍯،
-      ومعك <strong>ثلاث محاولات</strong> ❤️❤️❤️. اجمع أكبر قدر من العسل!
-    </p>
-
-    <label class="label">١. اختر صفّك:</label>
-    <div class="grade-row" id="gradeRow">
-      <button class="pill" data-grade="5">Grade 5</button>
-      <button class="pill" data-grade="6">Grade 6</button>
-      <button class="pill active" data-grade="7">Grade 7</button>
-      <button class="pill" data-grade="8">Grade 8</button>
-      <button class="pill" data-grade="9">Grade 9</button>
+    <p class="ar-help" id="introText"></p>
+    <div class="lang-row">
+      <button class="pill" id="langToggle">English 🌐</button>
     </div>
-
-    <label class="label">٢. اختر مستوى المساعدة:</label>
-    <div class="mode-row" id="modeRow">
-      <button class="pill active" data-mode="easy">سهل<small>يظهر المعنى + أول حرف</small></button>
-      <button class="pill" data-mode="medium">متوسط<small>يظهر المعنى فقط</small></button>
-      <button class="pill" data-mode="hard">صعب<small>سماع فقط 🐝</small></button>
-    </div>
-
     <button class="btn-big" id="startBtn">ابدأ اللعب 🐝</button>
   </section>
 
   <!-- ───── GAME SCREEN ───── -->
   <section id="game" class="hidden">
     <div class="hud">
-      <div class="stat"><b id="hScore">0</b><span>🍯 عسل</span></div>
-      <div class="stat"><b id="hStreak">0</b><span>🔥 متتالية</span></div>
-      <div class="stat"><b class="lives" id="hLives">❤️❤️❤️</b><span>محاولات</span></div>
+      <div class="stat"><b id="hScore">0</b><span id="lblHoney">🍯 عسل</span></div>
+      <div class="stat"><b id="hStreak">0</b><span id="lblStreak">🔥 متتالية</span></div>
+      <div class="stat"><b class="lives" id="hLives">❤️❤️❤️</b><span id="lblLives">محاولات</span></div>
     </div>
     <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
     <div class="qcount" id="qCount"></div>
@@ -250,10 +227,10 @@
     <h2 id="endTitle">رائع!</h2>
     <div class="score-big"><span id="endScore">0</span> / <span id="endTotal">0</span></div>
     <div class="ar" id="endMsg"></div>
-    <div class="stamp hidden" id="badge">🏅 خبير الإملاء</div>
+    <div class="stamp hidden" id="badge">🏅</div>
     <div class="review" id="review"></div>
     <button class="btn-big" id="againBtn">العب مرة أخرى 🔁</button>
-    <button class="btn-big" id="changeBtn" style="background:linear-gradient(135deg,var(--honey),var(--honey-deep))">غيّر الصف / المستوى</button>
+    <button class="btn-big" id="changeBtn" style="background:linear-gradient(135deg,var(--honey),var(--honey-deep))">الشاشة الرئيسية 🏠</button>
   </section>
 
   <footer>Designed with love 💗 by T. Wad Refae</footer>
@@ -262,110 +239,369 @@
 <script>
 'use strict';
 /* ============================================================
-   SPELLING BEE — English for Palestine (Grades 5–9)
-   Word banks tied to the curriculum vocabulary.
-   ar = Arabic meaning, s = example sentence
+   SPELLING BEE — English for Palestine
+   One pool of 300 curriculum words (grades 5–9), shuffled each run.
+   Level: easy→medium with letter help.
+   ar = Arabic meaning (MSA), s = example sentence (British English).
    ============================================================ */
-const BANKS = {
-  5: [
-    {w:"family",     ar:"عائلة",            s:"My family is very kind."},
-    {w:"breakfast",  ar:"فطور",            s:"I eat breakfast at seven."},
-    {w:"teacher",    ar:"معلّم / معلّمة",   s:"Our teacher is friendly."},
-    {w:"morning",    ar:"صباح",            s:"Good morning, everyone!"},
-    {w:"garden",     ar:"حديقة",           s:"There are flowers in the garden."},
-    {w:"football",   ar:"كرة القدم",        s:"We play football after school."},
-    {w:"market",     ar:"سوق",             s:"My mother buys fruit at the market."},
-    {w:"olive",      ar:"زيتون",           s:"Palestine is famous for olive trees."},
-    {w:"weather",    ar:"طقس",             s:"The weather is sunny today."},
-    {w:"clean",      ar:"نظيف / ينظّف",     s:"Please keep the class clean."},
-    {w:"village",    ar:"قرية",            s:"My grandfather lives in a village."},
-    {w:"healthy",    ar:"صحّي",            s:"Fruit is a healthy food."},
-    {w:"friend",     ar:"صديق",            s:"She is my best friend."},
-    {w:"animal",     ar:"حيوان",           s:"The lion is a wild animal."},
-    {w:"holiday",    ar:"عطلة / إجازة",     s:"We visit my aunt on the holiday."},
-  ],
-  6: [
-    {w:"technology", ar:"تكنولوجيا",        s:"Technology helps us learn."},
-    {w:"computer",   ar:"حاسوب",           s:"I use a computer at school."},
-    {w:"internet",   ar:"الإنترنت",         s:"We find information on the internet."},
-    {w:"embroidery", ar:"تطريز",           s:"Palestinian embroidery is beautiful."},
-    {w:"culture",    ar:"ثقافة",           s:"We are proud of our culture."},
-    {w:"jerusalem",  ar:"القدس",           s:"Jerusalem is an old city."},
-    {w:"history",    ar:"تاريخ",           s:"I love history lessons."},
-    {w:"precious",   ar:"ثمين",            s:"Water is a precious resource."},
-    {w:"resource",   ar:"مورد",            s:"Oil is an important resource."},
-    {w:"pollution",  ar:"تلوّث",           s:"Pollution harms the river."},
-    {w:"tradition",  ar:"تقليد / عُرف",     s:"Dabke is an old tradition."},
-    {w:"factory",    ar:"مصنع",            s:"My uncle works in a factory."},
-    {w:"ancient",    ar:"قديم / عتيق",      s:"We visited an ancient mosque."},
-    {w:"protect",    ar:"يحمي",            s:"We must protect water."},
-    {w:"machine",    ar:"آلة",             s:"This machine makes bread."},
-  ],
-  7: [
-    {w:"benefit",    ar:"فائدة",           s:"Reading has many benefits."},
-    {w:"social",     ar:"اجتماعي",         s:"Social media connects people."},
-    {w:"energy",     ar:"طاقة",            s:"The sun gives us energy."},
-    {w:"renewable",  ar:"متجدّد",          s:"Solar power is renewable energy."},
-    {w:"environment",ar:"بيئة",            s:"We should keep the environment clean."},
-    {w:"electricity",ar:"كهرباء",          s:"Solar panels make electricity."},
-    {w:"message",    ar:"رسالة",           s:"She sent me a kind message."},
-    {w:"dangerous",  ar:"خطير",            s:"Too much screen time can be dangerous."},
-    {w:"information",ar:"معلومات",         s:"The website gives useful information."},
-    {w:"festival",   ar:"مهرجان",          s:"The dabke festival was exciting."},
-    {w:"traditional",ar:"تقليدي / تراثي",   s:"They wore traditional clothes."},
-    {w:"performance",ar:"عرض / أداء",       s:"Their performance was wonderful."},
-    {w:"healthy",    ar:"صحّي",            s:"A balanced diet keeps you healthy."},
-    {w:"communicate",ar:"يتواصل",          s:"We communicate by email."},
-    {w:"increase",   ar:"يزيد / يزداد",     s:"Prices increase every year."},
-  ],
-  8: [
-    {w:"wildlife",   ar:"حياة برية",        s:"The forest is full of wildlife."},
-    {w:"waterfall",  ar:"شلال",            s:"We saw a beautiful waterfall."},
-    {w:"national",   ar:"وطني / قومي",      s:"It is a national park."},
-    {w:"ancestor",   ar:"سلف / جدّ قديم",   s:"My ancestors lived here long ago."},
-    {w:"architecture",ar:"فن العمارة",      s:"The architecture is amazing."},
-    {w:"intelligence",ar:"ذكاء",           s:"Artificial intelligence is growing fast."},
-    {w:"artificial", ar:"اصطناعي",         s:"This flower is artificial."},
-    {w:"cuisine",    ar:"مطبخ / فنّ الطهي",  s:"Palestinian cuisine is delicious."},
-    {w:"desert",     ar:"صحراء",           s:"Life in the desert is hard."},
-    {w:"volunteer",  ar:"متطوّع",          s:"She is a volunteer at the centre."},
-    {w:"climate",    ar:"مناخ",            s:"The climate is hot and dry."},
-    {w:"develop",    ar:"يتطوّر / يطوّر",    s:"Cities develop very quickly."},
-    {w:"instrument", ar:"آلة موسيقية",      s:"The oud is a musical instrument."},
-    {w:"heritage",   ar:"تراث",            s:"We must protect our heritage."},
-    {w:"shallow",    ar:"ضحل / غير عميق",   s:"The water here is shallow."},
-  ],
-  9: [
-    {w:"poetry",     ar:"شِعر",            s:"Mahmoud Darwish wrote beautiful poetry."},
-    {w:"identity",   ar:"هوية",            s:"Language is part of our identity."},
-    {w:"landscape",  ar:"منظر طبيعي",       s:"The landscape changed over the years."},
-    {w:"climate",    ar:"مناخ",            s:"Climate change affects everyone."},
-    {w:"technology", ar:"تكنولوجيا",        s:"The tech scene is growing in Palestine."},
-    {w:"innovation", ar:"ابتكار",          s:"Innovation drives the company."},
-    {w:"memory",     ar:"ذاكرة / ذكرى",     s:"These stones hold our memory."},
-    {w:"heritage",   ar:"تراث",            s:"Heritage sites must be preserved."},
-    {w:"resistance", ar:"مقاومة / صمود",    s:"His poems are about resistance."},
-    {w:"generation", ar:"جيل",             s:"Each generation tells the story."},
-    {w:"opportunity",ar:"فرصة",            s:"Education gives young people opportunity."},
-    {w:"agriculture",ar:"زراعة",           s:"Agriculture is important for the economy."},
-    {w:"sustainable",ar:"مستدام",          s:"We need sustainable energy."},
-    {w:"preserve",   ar:"يحافظ على / يصون",  s:"We must preserve old buildings."},
-    {w:"achievement",ar:"إنجاز",           s:"Winning the prize was a great achievement."},
-  ],
+const BANK = [
+  {w:"family",ar:"عائلة",s:"My family is very kind."},
+  {w:"friend",ar:"صديق",s:"She is my best friend."},
+  {w:"teacher",ar:"معلّم",s:"Our teacher is friendly."},
+  {w:"student",ar:"طالب",s:"He is a hard-working student."},
+  {w:"school",ar:"مدرسة",s:"We go to school every day."},
+  {w:"morning",ar:"صباح",s:"Good morning, everyone!"},
+  {w:"evening",ar:"مساء",s:"We read in the evening."},
+  {w:"garden",ar:"حديقة",s:"There are flowers in the garden."},
+  {w:"market",ar:"سوق",s:"My mother buys fruit at the market."},
+  {w:"village",ar:"قرية",s:"My grandfather lives in a village."},
+  {w:"city",ar:"مدينة",s:"Jerusalem is an old city."},
+  {w:"country",ar:"بلد",s:"Palestine is a beautiful country."},
+  {w:"weather",ar:"طقس",s:"The weather is sunny today."},
+  {w:"season",ar:"فصل (من فصول السنة)",s:"Spring is my favourite season."},
+  {w:"winter",ar:"شتاء",s:"It is cold in winter."},
+  {w:"summer",ar:"صيف",s:"We swim in summer."},
+  {w:"autumn",ar:"خريف",s:"Leaves fall in autumn."},
+  {w:"spring",ar:"ربيع",s:"Flowers grow in spring."},
+  {w:"holiday",ar:"عطلة / إجازة",s:"We visit my aunt on the holiday."},
+  {w:"weekend",ar:"عطلة نهاية الأسبوع",s:"We relax at the weekend."},
+  {w:"breakfast",ar:"فطور",s:"I eat breakfast at seven."},
+  {w:"lunch",ar:"غداء",s:"We have lunch at noon."},
+  {w:"dinner",ar:"عشاء",s:"The family eats dinner together."},
+  {w:"kitchen",ar:"مطبخ",s:"Mother is cooking in the kitchen."},
+  {w:"bedroom",ar:"غرفة نوم",s:"My bedroom is tidy."},
+  {w:"window",ar:"نافذة",s:"Please open the window."},
+  {w:"door",ar:"باب",s:"Close the door, please."},
+  {w:"table",ar:"طاولة",s:"The book is on the table."},
+  {w:"chair",ar:"كرسي",s:"He sat on the chair."},
+  {w:"picture",ar:"صورة",s:"This is a lovely picture."},
+  {w:"letter",ar:"رسالة",s:"She sent me a kind letter."},
+  {w:"story",ar:"قصة",s:"Grandma tells us a story."},
+  {w:"book",ar:"كتاب",s:"I am reading an exciting book."},
+  {w:"library",ar:"مكتبة",s:"We borrow books from the library."},
+  {w:"lesson",ar:"درس",s:"The lesson was very useful."},
+  {w:"homework",ar:"واجب منزلي",s:"I finished my homework."},
+  {w:"answer",ar:"إجابة",s:"Write the correct answer."},
+  {w:"question",ar:"سؤال",s:"May I ask a question?"},
+  {w:"example",ar:"مثال",s:"Give me an example, please."},
+  {w:"mistake",ar:"خطأ",s:"Everyone makes a mistake sometimes."},
+  {w:"pencil",ar:"قلم رصاص",s:"My pencil is sharp."},
+  {w:"paper",ar:"ورق",s:"Write on a clean paper."},
+  {w:"number",ar:"رقم / عدد",s:"What is your phone number?"},
+  {w:"word",ar:"كلمة",s:"This is a new word."},
+  {w:"sentence",ar:"جملة",s:"Write a short sentence."},
+  {w:"language",ar:"لغة",s:"English is a world language."},
+  {w:"history",ar:"تاريخ",s:"I love history lessons."},
+  {w:"science",ar:"علم",s:"Science is interesting."},
+  {w:"nature",ar:"طبيعة",s:"We must protect nature."},
+  {w:"animal",ar:"حيوان",s:"The lion is a wild animal."},
+  {w:"bird",ar:"طائر",s:"A small bird sang in the tree."},
+  {w:"fish",ar:"سمكة",s:"The fish swims in the sea."},
+  {w:"horse",ar:"حصان",s:"The horse runs fast."},
+  {w:"camel",ar:"جمل",s:"The camel lives in the desert."},
+  {w:"sheep",ar:"خروف / أغنام",s:"The farmer keeps sheep."},
+  {w:"chicken",ar:"دجاجة",s:"The chicken laid an egg."},
+  {w:"rabbit",ar:"أرنب",s:"The rabbit is white and soft."},
+  {w:"insect",ar:"حشرة",s:"A bee is a useful insect."},
+  {w:"forest",ar:"غابة",s:"The forest is full of trees."},
+  {w:"mountain",ar:"جبل",s:"We climbed a high mountain."},
+  {w:"river",ar:"نهر",s:"The river flows to the sea."},
+  {w:"sea",ar:"بحر",s:"The sea is calm today."},
+  {w:"desert",ar:"صحراء",s:"Life in the desert is hard."},
+  {w:"island",ar:"جزيرة",s:"They live on a small island."},
+  {w:"valley",ar:"وادٍ",s:"The valley is green in spring."},
+  {w:"field",ar:"حقل",s:"The field is full of wheat."},
+  {w:"farm",ar:"مزرعة",s:"My uncle has a farm."},
+  {w:"farmer",ar:"مزارع",s:"The farmer works hard."},
+  {w:"plant",ar:"نبات",s:"Water the plant every day."},
+  {w:"flower",ar:"زهرة",s:"This flower smells lovely."},
+  {w:"tree",ar:"شجرة",s:"The olive tree is old."},
+  {w:"olive",ar:"زيتون",s:"Palestine is famous for olives."},
+  {w:"grape",ar:"عنب",s:"The grape is sweet."},
+  {w:"orange",ar:"برتقال",s:"I drink orange juice."},
+  {w:"apple",ar:"تفاح",s:"An apple a day is healthy."},
+  {w:"banana",ar:"موز",s:"The banana is yellow."},
+  {w:"lemon",ar:"ليمون",s:"The lemon is sour."},
+  {w:"vegetable",ar:"خضار",s:"Eat one vegetable every day."},
+  {w:"fruit",ar:"فاكهة",s:"Fruit is good for you."},
+  {w:"bread",ar:"خبز",s:"We bake fresh bread."},
+  {w:"cheese",ar:"جبن",s:"I like cheese with bread."},
+  {w:"honey",ar:"عسل",s:"Bees make sweet honey."},
+  {w:"water",ar:"ماء",s:"Drink plenty of water."},
+  {w:"milk",ar:"حليب",s:"The baby drinks milk."},
+  {w:"juice",ar:"عصير",s:"This juice is fresh."},
+  {w:"sugar",ar:"سكر",s:"Add a little sugar."},
+  {w:"salt",ar:"ملح",s:"The soup needs salt."},
+  {w:"healthy",ar:"صحّي",s:"Fruit is a healthy food."},
+  {w:"delicious",ar:"لذيذ",s:"The meal was delicious."},
+  {w:"hungry",ar:"جائع",s:"I am very hungry."},
+  {w:"thirsty",ar:"عطشان",s:"The runner felt thirsty."},
+  {w:"clean",ar:"نظيف",s:"Please keep the class clean."},
+  {w:"dirty",ar:"متّسخ",s:"His shoes are dirty."},
+  {w:"quiet",ar:"هادئ",s:"The library is quiet."},
+  {w:"noisy",ar:"صاخب",s:"The street is very noisy."},
+  {w:"happy",ar:"سعيد",s:"She is happy today."},
+  {w:"sad",ar:"حزين",s:"He felt sad after the game."},
+  {w:"angry",ar:"غاضب",s:"Do not be angry."},
+  {w:"afraid",ar:"خائف",s:"The child is afraid of the dark."},
+  {w:"tired",ar:"متعب",s:"I am tired after work."},
+  {w:"strong",ar:"قوي",s:"The man is very strong."},
+  {w:"weak",ar:"ضعيف",s:"The signal is weak here."},
+  {w:"brave",ar:"شجاع",s:"The brave boy helped them."},
+  {w:"kind",ar:"لطيف / عطوف",s:"She is kind to everyone."},
+  {w:"honest",ar:"صادق / أمين",s:"An honest person tells the truth."},
+  {w:"patient",ar:"صبور",s:"A good teacher is patient."},
+  {w:"polite",ar:"مؤدّب",s:"Always be polite to others."},
+  {w:"clever",ar:"ذكي",s:"The clever girl solved it."},
+  {w:"lazy",ar:"كسول",s:"Do not be lazy."},
+  {w:"popular",ar:"شائع / محبوب",s:"Football is a popular game."},
+  {w:"beautiful",ar:"جميل",s:"The garden is beautiful."},
+  {w:"ugly",ar:"قبيح",s:"The old wall looks ugly."},
+  {w:"large",ar:"كبير / واسع",s:"They live in a large house."},
+  {w:"small",ar:"صغير",s:"A small cat sat there."},
+  {w:"heavy",ar:"ثقيل",s:"This bag is too heavy."},
+  {w:"light",ar:"خفيف",s:"The box is light."},
+  {w:"empty",ar:"فارغ",s:"The bottle is empty."},
+  {w:"full",ar:"ممتلئ",s:"The cup is full."},
+  {w:"narrow",ar:"ضيّق",s:"The street is narrow."},
+  {w:"wide",ar:"واسع / عريض",s:"The river is very wide."},
+  {w:"deep",ar:"عميق",s:"The well is deep."},
+  {w:"shallow",ar:"ضحل / غير عميق",s:"The water here is shallow."},
+  {w:"modern",ar:"حديث / عصري",s:"This is a modern building."},
+  {w:"ancient",ar:"قديم / عتيق",s:"We visited an ancient mosque."},
+  {w:"expensive",ar:"غالٍ / باهظ",s:"This car is expensive."},
+  {w:"cheap",ar:"رخيص",s:"These shoes are cheap."},
+  {w:"dangerous",ar:"خطير",s:"The road is dangerous at night."},
+  {w:"safe",ar:"آمن",s:"Keep the children safe."},
+  {w:"difficult",ar:"صعب",s:"The test was difficult."},
+  {w:"simple",ar:"بسيط / سهل",s:"The plan is simple."},
+  {w:"important",ar:"مهم",s:"Sleep is important."},
+  {w:"useful",ar:"مفيد",s:"This tool is very useful."},
+  {w:"special",ar:"مميّز / خاص",s:"Today is a special day."},
+  {w:"different",ar:"مختلف",s:"Our ideas are different."},
+  {w:"similar",ar:"مشابه",s:"The two cars are similar."},
+  {w:"correct",ar:"صحيح",s:"Choose the correct word."},
+  {w:"wrong",ar:"خاطئ",s:"That answer is wrong."},
+  {w:"ready",ar:"جاهز / مستعد",s:"Are you ready to start?"},
+  {w:"busy",ar:"مشغول",s:"My father is busy at work."},
+  {w:"future",ar:"مستقبل",s:"I think about the future."},
+  {w:"present",ar:"حاضر / هدية",s:"She gave me a present."},
+  {w:"century",ar:"قرن",s:"The castle is a century old."},
+  {w:"minute",ar:"دقيقة",s:"Wait a minute, please."},
+  {w:"hour",ar:"ساعة (زمن)",s:"The film lasts an hour."},
+  {w:"moment",ar:"لحظة",s:"Please wait a moment."},
+  {w:"yesterday",ar:"أمس",s:"We met yesterday."},
+  {w:"tomorrow",ar:"غدًا",s:"The trip is tomorrow."},
+  {w:"always",ar:"دائمًا",s:"She is always on time."},
+  {w:"usually",ar:"عادةً",s:"I usually walk to school."},
+  {w:"sometimes",ar:"أحيانًا",s:"Sometimes we play chess."},
+  {w:"never",ar:"أبدًا / لا مطلقًا",s:"He never tells lies."},
+  {w:"often",ar:"غالبًا / كثيرًا",s:"We often visit grandma."},
+  {w:"early",ar:"مبكرًا",s:"I wake up early."},
+  {w:"quickly",ar:"بسرعة",s:"She finished it quickly."},
+  {w:"slowly",ar:"ببطء",s:"Please speak slowly."},
+  {w:"carefully",ar:"بعناية / بحذر",s:"Read the question carefully."},
+  {w:"together",ar:"معًا",s:"We worked together."},
+  {w:"neighbour",ar:"جار",s:"Our neighbour is helpful."},
+  {w:"visitor",ar:"زائر",s:"We had a visitor today."},
+  {w:"guest",ar:"ضيف",s:"The guest arrived early."},
+  {w:"stranger",ar:"غريب",s:"Do not talk to a stranger."},
+  {w:"person",ar:"شخص",s:"She is a kind person."},
+  {w:"people",ar:"ناس / أشخاص",s:"Many people came to the fair."},
+  {w:"child",ar:"طفل",s:"The child is sleeping."},
+  {w:"parent",ar:"والد / والدة",s:"Each parent loves the child."},
+  {w:"brother",ar:"أخ",s:"My brother is older than me."},
+  {w:"sister",ar:"أخت",s:"Her sister is a doctor."},
+  {w:"grandfather",ar:"جدّ",s:"My grandfather tells stories."},
+  {w:"grandmother",ar:"جدّة",s:"My grandmother bakes bread."},
+  {w:"cousin",ar:"ابن العمّ / الخال",s:"My cousin lives nearby."},
+  {w:"doctor",ar:"طبيب",s:"The doctor helped the patient."},
+  {w:"nurse",ar:"ممرّض / ممرّضة",s:"The nurse is very kind."},
+  {w:"engineer",ar:"مهندس",s:"She wants to be an engineer."},
+  {w:"pilot",ar:"طيّار",s:"The pilot flew the plane."},
+  {w:"driver",ar:"سائق",s:"The bus driver was careful."},
+  {w:"worker",ar:"عامل",s:"The worker fixed the road."},
+  {w:"artist",ar:"فنّان",s:"The artist painted the wall."},
+  {w:"writer",ar:"كاتب",s:"The writer wrote a novel."},
+  {w:"singer",ar:"مغنٍّ / مغنية",s:"The singer has a sweet voice."},
+  {w:"player",ar:"لاعب",s:"He is a famous player."},
+  {w:"leader",ar:"قائد / زعيم",s:"A good leader listens well."},
+  {w:"soldier",ar:"جندي",s:"The soldier was brave."},
+  {w:"customer",ar:"زبون / عميل",s:"The customer paid the bill."},
+  {w:"manager",ar:"مدير",s:"The manager is busy."},
+  {w:"scientist",ar:"عالِم",s:"The scientist did an experiment."},
+  {w:"explorer",ar:"مستكشف",s:"The explorer found a cave."},
+  {w:"inventor",ar:"مخترع",s:"The inventor made a new machine."},
+  {w:"hospital",ar:"مستشفى",s:"The hospital is near here."},
+  {w:"mosque",ar:"مسجد",s:"The old mosque is beautiful."},
+  {w:"church",ar:"كنيسة",s:"The church bell rang."},
+  {w:"museum",ar:"متحف",s:"We visited the city museum."},
+  {w:"castle",ar:"قلعة",s:"The castle is on a hill."},
+  {w:"bridge",ar:"جسر",s:"We crossed the old bridge."},
+  {w:"tower",ar:"برج",s:"The tower is very tall."},
+  {w:"building",ar:"مبنى",s:"That building is new."},
+  {w:"factory",ar:"مصنع",s:"This factory makes bread."},
+  {w:"office",ar:"مكتب",s:"My father works in an office."},
+  {w:"station",ar:"محطة",s:"We waited at the station."},
+  {w:"airport",ar:"مطار",s:"The airport is far away."},
+  {w:"street",ar:"شارع",s:"The street is clean."},
+  {w:"road",ar:"طريق",s:"This road leads to the city."},
+  {w:"shop",ar:"متجر / دكان",s:"The shop opens at eight."},
+  {w:"bank",ar:"مصرف / بنك",s:"She works at a bank."},
+  {w:"journey",ar:"رحلة / سَفر",s:"The journey was long."},
+  {w:"traffic",ar:"حركة المرور",s:"The traffic is heavy now."},
+  {w:"engine",ar:"محرّك",s:"The car engine is new."},
+  {w:"machine",ar:"آلة / ماكينة",s:"This machine makes bread."},
+  {w:"metal",ar:"معدن",s:"The gate is made of metal."},
+  {w:"plastic",ar:"بلاستيك",s:"Avoid using too much plastic."},
+  {w:"glass",ar:"زجاج",s:"The window is made of glass."},
+  {w:"wood",ar:"خشب",s:"The chair is made of wood."},
+  {w:"stone",ar:"حجر",s:"The old house is built of stone."},
+  {w:"gold",ar:"ذهب",s:"The ring is made of gold."},
+  {w:"colour",ar:"لون",s:"Green is my favourite colour."},
+  {w:"shape",ar:"شكل",s:"Draw a round shape."},
+  {w:"speed",ar:"سرعة",s:"Reduce your speed near schools."},
+  {w:"energy",ar:"طاقة",s:"The sun gives us energy."},
+  {w:"power",ar:"قوة / طاقة",s:"Wind has great power."},
+  {w:"electricity",ar:"كهرباء",s:"Solar panels make electricity."},
+  {w:"battery",ar:"بطارية",s:"The battery is empty."},
+  {w:"fire",ar:"نار / حريق",s:"The fire kept us warm."},
+  {w:"smoke",ar:"دخان",s:"Smoke filled the room."},
+  {w:"heat",ar:"حرارة",s:"The heat of summer is strong."},
+  {w:"ice",ar:"جليد / ثلج",s:"The ice is very cold."},
+  {w:"snow",ar:"ثلج",s:"Snow covered the mountain."},
+  {w:"rain",ar:"مطر",s:"The rain helped the plants."},
+  {w:"wind",ar:"ريح",s:"The wind is strong today."},
+  {w:"cloud",ar:"سحابة / غيمة",s:"A grey cloud covered the sun."},
+  {w:"storm",ar:"عاصفة",s:"The storm broke the tree."},
+  {w:"thunder",ar:"رعد",s:"We heard loud thunder."},
+  {w:"sky",ar:"سماء",s:"The sky is clear and blue."},
+  {w:"sun",ar:"شمس",s:"The sun rises in the east."},
+  {w:"moon",ar:"قمر",s:"The moon is bright tonight."},
+  {w:"star",ar:"نجمة",s:"I can see one bright star."},
+  {w:"planet",ar:"كوكب",s:"Earth is our planet."},
+  {w:"world",ar:"عالم",s:"English is spoken around the world."},
+  {w:"ocean",ar:"محيط",s:"The ocean is very deep."},
+  {w:"wave",ar:"موجة",s:"A big wave hit the boat."},
+  {w:"sand",ar:"رمل",s:"The children played in the sand."},
+  {w:"rock",ar:"صخرة",s:"A large rock blocked the path."},
+  {w:"cave",ar:"كهف",s:"The bats live in a cave."},
+  {w:"hill",ar:"تلّة / هضبة",s:"The house is on a hill."},
+  {w:"grass",ar:"عشب",s:"The grass is green and soft."},
+  {w:"leaf",ar:"ورقة شجر",s:"A yellow leaf fell down."},
+  {w:"root",ar:"جذر",s:"The tree has deep roots."},
+  {w:"seed",ar:"بذرة",s:"Plant the seed in the soil."},
+  {w:"branch",ar:"غصن",s:"The bird sat on a branch."},
+  {w:"environment",ar:"بيئة",s:"We should keep the environment clean."},
+  {w:"pollution",ar:"تلوّث",s:"Pollution harms the river."},
+  {w:"climate",ar:"مناخ",s:"Climate change affects everyone."},
+  {w:"recycle",ar:"يعيد التدوير",s:"We recycle paper and glass."},
+  {w:"protect",ar:"يحمي",s:"We must protect water."},
+  {w:"develop",ar:"يطوّر / يتطوّر",s:"Cities develop very quickly."},
+  {w:"improve",ar:"يحسّن / يتحسّن",s:"Reading will improve your English."},
+  {w:"increase",ar:"يزيد / يزداد",s:"Prices increase every year."},
+  {w:"reduce",ar:"يقلّل / يخفّض",s:"We should reduce waste."},
+  {w:"produce",ar:"يُنتج",s:"Solar panels produce electricity."},
+  {w:"provide",ar:"يوفّر / يزوّد",s:"Trees provide fresh air."},
+  {w:"discover",ar:"يكتشف",s:"Scientists discover new things."},
+  {w:"explain",ar:"يشرح / يوضّح",s:"Please explain the rule again."},
+  {w:"describe",ar:"يصف",s:"Describe your favourite place."},
+  {w:"imagine",ar:"يتخيّل",s:"Imagine a world without water."},
+  {w:"remember",ar:"يتذكّر",s:"I always remember her advice."},
+  {w:"forget",ar:"ينسى",s:"Do not forget your books."},
+  {w:"believe",ar:"يصدّق / يؤمن",s:"I believe you can do it."},
+  {w:"decide",ar:"يقرّر",s:"We must decide quickly."},
+  {w:"succeed",ar:"ينجح",s:"You will succeed if you try."},
+  {w:"culture",ar:"ثقافة",s:"We are proud of our culture."},
+  {w:"tradition",ar:"تقليد / عُرف",s:"Dabke is an old tradition."},
+  {w:"heritage",ar:"تراث",s:"We must protect our heritage."},
+  {w:"festival",ar:"مهرجان",s:"The festival was exciting."},
+  {w:"embroidery",ar:"تطريز",s:"Palestinian embroidery is beautiful."},
+  {w:"instrument",ar:"آلة موسيقية",s:"The oud is a musical instrument."},
+  {w:"poetry",ar:"شِعر",s:"Mahmoud Darwish wrote beautiful poetry."},
+  {w:"identity",ar:"هوية",s:"Language is part of our identity."},
+  {w:"technology",ar:"تكنولوجيا",s:"Technology helps us learn."},
+  {w:"computer",ar:"حاسوب",s:"I use a computer at school."},
+  {w:"internet",ar:"الإنترنت",s:"We find information on the internet."},
+  {w:"information",ar:"معلومات",s:"The website gives useful information."},
+  {w:"message",ar:"رسالة",s:"She sent me a kind message."},
+  {w:"communicate",ar:"يتواصل",s:"We communicate by email."},
+  {w:"innovation",ar:"ابتكار",s:"Innovation drives the company."},
+  {w:"opportunity",ar:"فرصة",s:"Education gives young people opportunity."},
+  {w:"achievement",ar:"إنجاز",s:"Winning the prize was a great achievement."},
+  {w:"agriculture",ar:"زراعة",s:"Agriculture is important for the economy."},
+  {w:"sustainable",ar:"مستدام",s:"We need sustainable energy."},
+  {w:"renewable",ar:"متجدّد",s:"Solar power is renewable energy."},
+  {w:"resource",ar:"مورد",s:"Water is a precious resource."},
+  {w:"precious",ar:"ثمين / نفيس",s:"Time is precious."},
+  {w:"generation",ar:"جيل",s:"Each generation tells the story."},
+  {w:"resistance",ar:"مقاومة / صمود",s:"His poems are about resistance."},
+  {w:"memory",ar:"ذاكرة / ذكرى",s:"These stones hold our memory."},
+  {w:"landscape",ar:"منظر طبيعي",s:"The landscape changed over the years."},
+  {w:"wildlife",ar:"حياة برية",s:"The forest is full of wildlife."},
+  {w:"national",ar:"وطني / قومي",s:"It is a national park."},
+  {w:"ancestor",ar:"سلف / جدّ قديم",s:"My ancestors lived here long ago."},
+  {w:"intelligence",ar:"ذكاء",s:"Artificial intelligence is growing fast."},
+  {w:"cuisine",ar:"مطبخ / فنّ الطهي",s:"Palestinian cuisine is delicious."},
+  {w:"volunteer",ar:"متطوّع",s:"She is a volunteer at the centre."},
+  {w:"preserve",ar:"يحافظ على / يصون",s:"We must preserve old buildings."},
+];
+
+/* ───── i18n ───── */
+const T = {
+  ar:{
+    intro:'🎧 مرحبًا بك في <strong>نحلة الإملاء</strong>! اضغط الزرّ الأصفر لتسمع الكلمة بالإنجليزية بِلهجة بريطانية، ثم اكتبها بشكلٍ صحيح. يمكنك <strong>إعادة السماع</strong> أو سماعها <strong>ببطء</strong> أو ضمن <strong>جملة</strong>، وسترى <strong>معناها بالعربية</strong> وبعض الحروف للمساعدة. لديك <strong>ثلاث محاولات</strong> ❤️❤️❤️ — اجمع أكبر قدرٍ من العسل 🍯!',
+    lang:'English 🌐', start:'ابدأ اللعب 🐝',
+    honey:'🍯 عسل', streak:'🔥 متتالية', lives:'محاولات',
+    repeat:'🔁 إعادة', slow:'🐌 ببطء', sentence:'💬 في جملة',
+    placeholder:'اكتب الكلمة هنا...', check:'تحقّق ✓', next:'التالي →', result:'النتيجة 🏁',
+    meaning:'المعنى: ', qcount:(i,n)=>'كلمة '+i+' من '+n,
+    correct:w=>['✅ '+w,'أحسنت! +1 عسل 🍯'],
+    wrong:w=>['✏️ '+w,'هذه هي الإجابة الصحيحة. حاول أن تتذكّرها!'],
+    again:'العب مرة أخرى 🔁', change:'الشاشة الرئيسية 🏠', reviewHead:'كلمات لمراجعتها:',
+    end:{
+      over:['انتهت المحاولات!','لا بأس، النحلة المجتهدة تعود أقوى. أعِد المحاولة!'],
+      perfect:['ملكة النحل!','إتقانٌ تام — كل الكلمات صحيحة! خليّة مليئة بالعسل 🍯'],
+      great:['عمل ممتاز!','جمعتَ الكثير من العسل. واصِل التدرّب!'],
+      good:['بداية جيدة!','تتحسّن في كل محاولة. اسمع الكلمة جيدًا قبل أن تكتب.']
+    },
+    perfectBadge:'🏆 ملكة النحل', greatBadge:'🏅 جامع العسل'
+  },
+  en:{
+    intro:'🎧 Welcome to the <strong>Spelling Bee</strong>! Press the yellow button to hear the word in a British accent, then spell it correctly. You can <strong>repeat</strong> it, hear it <strong>slowly</strong> or in a <strong>sentence</strong>, and you will see its <strong>Arabic meaning</strong> and a few letters to help. You have <strong>three lives</strong> ❤️❤️❤️ — collect as much honey as you can 🍯!',
+    lang:'العربية 🌐', start:'Start Game 🐝',
+    honey:'🍯 Honey', streak:'🔥 Streak', lives:'Lives',
+    repeat:'🔁 Repeat', slow:'🐌 Slow', sentence:'💬 Sentence',
+    placeholder:'Type the word here...', check:'Check ✓', next:'Next →', result:'Result 🏁',
+    meaning:'Meaning: ', qcount:(i,n)=>'Word '+i+' of '+n,
+    correct:w=>['✅ '+w,'Well done! +1 honey 🍯'],
+    wrong:w=>['✏️ '+w,'This is the correct spelling. Try to remember it!'],
+    again:'Play again 🔁', change:'Home 🏠', reviewHead:'Words to review:',
+    end:{
+      over:['Out of lives!','No worries — the busy bee comes back stronger. Try again!'],
+      perfect:['Queen Bee!','Perfect — every word correct! A hive full of honey 🍯'],
+      great:['Excellent work!','You collected lots of honey. Keep practising!'],
+      good:['Good start!','You improve every time. Listen carefully before you type.']
+    },
+    perfectBadge:'🏆 Queen Bee', greatBadge:'🏅 Honey Collector'
+  }
 };
 
 /* ───── state ───── */
-let grade=7, mode='easy', words=[], idx=0, score=0, streak=0, lives=3, missed=[];
-let answered=false, voices=[];
-
+let lang='ar', words=[], idx=0, score=0, streak=0, lives=3, missed=[];
+let answered=false, lastResult=null, voices=[];
 const $=id=>document.getElementById(id);
 
-/* voices may load async */
+try{ const saved=localStorage.getItem('spellingBee_lang'); if(saved==='ar'||saved==='en') lang=saved; }catch(e){}
+
+/* ───── speech (British) ───── */
 function loadVoices(){ voices=window.speechSynthesis?window.speechSynthesis.getVoices():[]; }
 if('speechSynthesis' in window){ loadVoices(); window.speechSynthesis.onvoiceschanged=loadVoices; }
 function pickVoice(){
-  return voices.find(v=>/en-GB/i.test(v.lang)) ||
-         voices.find(v=>/en-US/i.test(v.lang)) ||
+  // prefer named British voices, then any en-GB, then any English
+  return voices.find(v=>/en[-_]?GB/i.test(v.lang) && /female|libby|sonia|hazel|kate|serena|google uk english female/i.test(v.name)) ||
+         voices.find(v=>/en[-_]?GB/i.test(v.lang)) ||
+         voices.find(v=>/UK English|British|Daniel|Serena|Kate|Oliver|Arthur|Libby|Sonia|Hazel/i.test(v.name)) ||
          voices.find(v=>/^en/i.test(v.lang)) || null;
 }
 function speak(text,rate){
@@ -373,8 +609,9 @@ function speak(text,rate){
   window.speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
   const v=pickVoice(); if(v) u.voice=v;
-  u.lang=(v&&v.lang)||'en-GB';
-  u.rate=rate||0.92; u.pitch=1;
+  u.lang='en-GB';            // force British English
+  u.rate=rate||0.82;         // slightly slower for clarity
+  u.pitch=1; u.volume=1;
   window.speechSynthesis.speak(u);
 }
 function sayWord(rate){
@@ -383,23 +620,66 @@ function sayWord(rate){
   speak(word,rate);
 }
 
-/* ───── start-screen selectors ───── */
-$('gradeRow').addEventListener('click',e=>{
-  const b=e.target.closest('.pill'); if(!b)return;
-  [...$('gradeRow').children].forEach(p=>p.classList.remove('active'));
-  b.classList.add('active'); grade=+b.dataset.grade;
-});
-$('modeRow').addEventListener('click',e=>{
-  const b=e.target.closest('.pill'); if(!b)return;
-  [...$('modeRow').children].forEach(p=>p.classList.remove('active'));
-  b.classList.add('active'); mode=b.dataset.mode;
-});
+/* ───── sound effects (WebAudio) ───── */
+let actx=null;
+function ensureAudio(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
+function tone(freq,start,dur,type,gain){
+  if(!actx) return;
+  const o=actx.createOscillator(), g=actx.createGain();
+  o.type=type||'sine'; o.frequency.value=freq;
+  const t0=actx.currentTime+start;
+  g.gain.setValueAtTime(0.0001,t0);
+  g.gain.exponentialRampToValueAtTime(gain||0.25,t0+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+  o.connect(g); g.connect(actx.destination);
+  o.start(t0); o.stop(t0+dur+0.02);
+}
+function soundCorrect(){ ensureAudio(); tone(660,0,0.14,'sine',0.3); tone(880,0.12,0.18,'sine',0.3); tone(1320,0.26,0.2,'sine',0.22); }
+function soundWrong(){ ensureAudio(); tone(200,0,0.22,'square',0.22); tone(150,0.16,0.28,'square',0.2); }
 
+/* ───── language ───── */
+function applyLang(){
+  const d=T[lang];
+  $('introText').innerHTML=d.intro;
+  $('introText').style.direction = lang==='ar'?'rtl':'ltr';
+  $('langToggle').textContent=d.lang;
+  $('startBtn').textContent=d.start;
+  $('lblHoney').textContent=d.honey;
+  $('lblStreak').textContent=d.streak;
+  $('lblLives').textContent=d.lives;
+  $('repeatBtn').textContent=d.repeat;
+  $('slowBtn').textContent=d.slow;
+  $('sentBtn').textContent=d.sentence;
+  $('answer').placeholder=d.placeholder;
+  $('checkBtn').textContent=d.check;
+  $('nextBtn').textContent = (lastResult==='over')?d.result:d.next;
+  $('againBtn').textContent=d.again;
+  $('changeBtn').textContent=d.change;
+  // refresh dynamic parts if visible
+  if(!$('game').classList.contains('hidden') && words.length){ renderQuestionText(); }
+  if(!$('end').classList.contains('hidden')) renderEnd();
+}
+$('langToggle').onclick=()=>{
+  lang = (lang==='ar')?'en':'ar';
+  try{ localStorage.setItem('spellingBee_lang',lang); }catch(e){}
+  applyLang();
+};
+
+/* ───── helpers ───── */
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function hint(w){
+  const L=w.length;
+  const reveal = L<=3 ? 0 : (L<=5 ? 1 : 2);   // 4–5 → 1 letter, >5 → 2 letters
+  let out=[];
+  for(let i=0;i<L;i++){ out.push(i<reveal ? w[i] : '_'); }
+  return out.join(' ');
+}
 
+/* ───── start ───── */
 $('startBtn').onclick=()=>{
-  words=shuffle(BANKS[grade]).slice(0,10);
-  idx=0;score=0;streak=0;lives=3;missed=[];
+  ensureAudio();
+  words=shuffle(BANK);          // all 300, shuffled each run
+  idx=0;score=0;streak=0;lives=3;missed=[];lastResult=null;
   $('start').classList.add('hidden');
   $('end').classList.add('hidden');
   $('game').classList.remove('hidden');
@@ -407,30 +687,34 @@ $('startBtn').onclick=()=>{
 };
 
 /* ───── question flow ───── */
+function renderQuestionText(){
+  const item=words[idx]; const d=T[lang];
+  $('qCount').textContent=d.qcount(idx+1, words.length);
+  $('meaning').textContent=d.meaning+item.ar;
+  if(answered && lastResult){
+    const fb=$('feedback');
+    const msg = lastResult==='ok' ? d.correct(item.w) : d.wrong(item.w);
+    fb.innerHTML='<span class="en">'+msg[0]+'</span><span class="ar">'+msg[1]+'</span>';
+  }
+}
 function loadQuestion(){
-  answered=false;
+  answered=false; lastResult=null;
   const item=words[idx];
   $('hScore').textContent=score;
   $('hStreak').textContent=streak;
   $('hLives').textContent='❤️'.repeat(lives)+'🤍'.repeat(3-lives);
   $('pFill').style.width=((idx)/words.length*100)+'%';
-  $('qCount').textContent='كلمة '+(idx+1)+' من '+words.length;
-
-  // help according to mode
-  $('meaning').textContent=(mode==='easy'||mode==='medium')?('المعنى: '+item.ar):'';
-  if(mode==='easy'){
-    $('hintLetters').textContent=item.w[0].toUpperCase()+' '+'_ '.repeat(item.w.length-1).trim();
-  }else{
-    $('hintLetters').textContent=(mode==='medium')?('عدد الحروف: '+item.w.length):'';
-  }
+  renderQuestionText();
+  $('hintLetters').textContent=hint(item.w);
 
   const inp=$('answer');
   inp.value=''; inp.className='answer-input'; inp.disabled=false;
   $('feedback').textContent=''; $('feedback').className='feedback';
   $('checkBtn').classList.remove('hidden');
   $('nextBtn').classList.add('hidden');
+  $('nextBtn').textContent=T[lang].next;
   inp.focus();
-  setTimeout(()=>sayWord(0.9),250);
+  setTimeout(()=>sayWord(0.82),250);
 }
 
 function check(){
@@ -443,21 +727,23 @@ function check(){
   $('checkBtn').classList.add('hidden');
   $('nextBtn').classList.remove('hidden');
 
-  const fb=$('feedback');
+  const fb=$('feedback'); const d=T[lang];
   if(guess===item.w.toLowerCase()){
-    score++; streak++;
+    score++; streak++; lastResult='ok';
     $('answer').classList.add('good');
     fb.className='feedback ok';
-    fb.innerHTML='<span class="en">✅ '+item.w+'</span><span class="ar">أحسنت! +1 عسل 🍯</span>';
-    sparkleBurst();
+    const m=d.correct(item.w);
+    fb.innerHTML='<span class="en">'+m[0]+'</span><span class="ar">'+m[1]+'</span>';
+    soundCorrect(); sparkleBurst();
     if(streak>0 && streak%3===0) confetti(40);
   }else{
-    lives--; streak=0; missed.push(item);
+    lives--; streak=0; missed.push(item); lastResult='no';
     $('answer').classList.add('bad');
     fb.className='feedback no';
-    fb.innerHTML='<span class="en">✏️ '+item.w+'</span><span class="ar">الإجابة الصحيحة. حاول أن تتذكّرها!</span>';
-    speak(item.w,0.85);
-    if(lives<=0){ $('nextBtn').textContent='النتيجة 🏁'; }
+    const m=d.wrong(item.w);
+    fb.innerHTML='<span class="en">'+m[0]+'</span><span class="ar">'+m[1]+'</span>';
+    soundWrong(); speak(item.w,0.7);
+    if(lives<=0){ lastResult='over'; $('nextBtn').textContent=d.result; }
   }
   $('hScore').textContent=score;
   $('hStreak').textContent=streak;
@@ -472,46 +758,55 @@ function next(){
 }
 
 /* ───── end screen ───── */
-function finish(){
-  $('game').classList.add('hidden');
-  $('end').classList.remove('hidden');
-  const total=words.length;
-  $('endScore').textContent=score; $('endTotal').textContent=total;
-  $('pFill').style.width='100%';
-  const pct=score/total;
-  let emoji,title,msg;
-  if(lives<=0 && score<total){ emoji='🐝'; title='انتهت المحاولات!'; msg='لا بأس، النحلة المجتهدة تعود أقوى. أعد المحاولة!'; }
-  else if(pct===1){ emoji='👑'; title='ملكة النحل!'; msg='إتقان تام — كل الكلمات صحيحة! خلية مليئة بالعسل 🍯'; }
-  else if(pct>=0.7){ emoji='🍯'; title='عمل ممتاز!'; msg='جمعتَ الكثير من العسل. استمرّ بالتدرّب!'; }
-  else{ emoji='🌼'; title='بداية جيدة!'; msg='تحسّنٌ في كل محاولة. اسمع الكلمة جيدًا قبل أن تكتب.'; }
-  $('endEmoji').textContent=emoji; $('endTitle').textContent=title; $('endMsg').textContent=msg;
+function renderEnd(){
+  const d=T[lang];
+  const total=idx + (answered?0:0); // answered count handled below
+  const seen = Math.min(idx + (answered?1:0), words.length);
+  $('endScore').textContent=score;
+  $('endTotal').textContent=seen;
+  const pct = seen? score/seen : 0;
+  let key, emoji;
+  if(lives<=0 && pct<1){ key='over'; emoji='🐝'; }
+  else if(pct===1){ key='perfect'; emoji='👑'; }
+  else if(pct>=0.7){ key='great'; emoji='🍯'; }
+  else { key='good'; emoji='🌼'; }
+  $('endEmoji').textContent=emoji;
+  $('endTitle').textContent=d.end[key][0];
+  $('endMsg').textContent=d.end[key][1];
+  $('endMsg').style.direction = lang==='ar'?'rtl':'ltr';
 
-  // badge + persistence (honeycomb theme, per-grade best score)
   const badge=$('badge');
-  if(pct>=0.7){
+  if(pct>=0.7 && seen>0){
     badge.classList.remove('hidden');
-    badge.textContent=(pct===1?'🏆 ملكة النحل':'🏅 جامع العسل')+' — Grade '+grade;
-    confetti(90);
-  } else { badge.classList.add('hidden'); }
-  try{
-    const key='spellingBee_best_g'+grade;
-    const prev=+(localStorage.getItem(key)||0);
-    if(score>prev) localStorage.setItem(key,score);
-  }catch(e){}
+    badge.textContent=(pct===1?d.perfectBadge:d.greatBadge);
+  } else badge.classList.add('hidden');
 
-  // review of missed words
   const rev=$('review'); rev.innerHTML='';
   if(missed.length){
     const h=document.createElement('div');
-    h.style.cssText="font-family:'Cairo';direction:rtl;font-weight:700;margin:14px 0 6px;color:var(--ink-soft)";
-    h.textContent='كلمات لتراجعها:';
+    h.style.cssText="font-family:'Cairo';direction:"+(lang==='ar'?'rtl':'ltr')+";font-weight:700;margin:14px 0 6px;color:var(--ink-soft)";
+    h.textContent=d.reviewHead;
     rev.appendChild(h);
     missed.forEach(m=>{
-      const d=document.createElement('div'); d.className='miss';
-      d.innerHTML='<b>'+m.w+'</b><span class="ar">'+m.ar+'</span>';
-      rev.appendChild(d);
+      const el=document.createElement('div'); el.className='miss';
+      el.innerHTML='<b>'+m.w+'</b><span class="ar">'+m.ar+'</span>';
+      rev.appendChild(el);
     });
   }
+}
+function finish(){
+  $('game').classList.add('hidden');
+  $('end').classList.remove('hidden');
+  $('pFill').style.width='100%';
+  renderEnd();
+  const seen=Math.min(idx+1, words.length);
+  const pct=seen?score/seen:0;
+  if(pct>=0.7 && seen>0) confetti(90);
+  try{
+    const key='spellingBee_best';
+    const prev=+(localStorage.getItem(key)||0);
+    if(score>prev) localStorage.setItem(key,score);
+  }catch(e){}
 }
 
 /* ───── effects ───── */
@@ -543,10 +838,10 @@ function confetti(n){
 }
 
 /* ───── controls ───── */
-$('speakBtn').onclick=()=>sayWord(0.9);
-$('repeatBtn').onclick=()=>sayWord(0.9);
-$('slowBtn').onclick=()=>sayWord(0.55);
-$('sentBtn').onclick=()=>{ speak(words[idx].s,0.9); };
+$('speakBtn').onclick=()=>sayWord(0.82);
+$('repeatBtn').onclick=()=>sayWord(0.82);
+$('slowBtn').onclick=()=>sayWord(0.5);
+$('sentBtn').onclick=()=>{ speak(words[idx].s,0.82); };
 $('checkBtn').onclick=check;
 $('nextBtn').onclick=next;
 $('answer').addEventListener('keydown',e=>{
@@ -554,6 +849,9 @@ $('answer').addEventListener('keydown',e=>{
 });
 $('againBtn').onclick=()=>{ $('startBtn').onclick(); };
 $('changeBtn').onclick=()=>{ $('end').classList.add('hidden'); $('start').classList.remove('hidden'); };
+
+/* init */
+applyLang();
 </script>
 </body>
 </html>
