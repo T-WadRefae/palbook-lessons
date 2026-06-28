@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Spelling Bee 🐝 — English for Palestine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --honey:#f6b819; --honey-deep:#e2920a; --amber:#ffd966;
+    --ink:#3a2a08; --ink-soft:#7a5a1a;
+    --cream:#fff8e6; --paper:#fffdf7;
+    --green:#37b06e; --green-deep:#2a8c56;
+    --red:#e0574f; --red-deep:#c23b34;
+    --comb:#ffe9a8;
+    --radius:22px;
+    --shadow:0 12px 30px rgba(150,110,10,.20);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    font-family:'Fredoka','Segoe UI',system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 20% 10%, #fff3c4 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, #ffe08a 0%, transparent 45%),
+      linear-gradient(160deg,#fff6da,#ffe7a0);
+    min-height:100%;
+    display:flex;flex-direction:column;align-items:center;
+    overflow-x:hidden;
+  }
+  /* floating honeycomb pattern */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.10;
+    background-image:
+      radial-gradient(circle at 0 0, transparent 70%, var(--honey-deep) 71%),
+      radial-gradient(circle at 30px 52px, transparent 70%, var(--honey-deep) 71%);
+    background-size:60px 104px;
+  }
+  .wrap{position:relative;z-index:1;width:100%;max-width:520px;padding:14px;flex:1;display:flex;flex-direction:column;}
+
+  /* ───── HERO HEADER (hive) ───── */
+  .hive{
+    position:relative;border-radius:26px;overflow:hidden;
+    background:linear-gradient(160deg,var(--honey),var(--honey-deep));
+    box-shadow:var(--shadow);
+    padding:22px 18px 18px;text-align:center;color:#fff;
+    border:4px solid #fff3c4;
+  }
+  .hive::before{ /* hive stripes */
+    content:"";position:absolute;inset:0;opacity:.18;
+    background:repeating-linear-gradient(180deg,#fff 0 14px,transparent 14px 30px);
+  }
+  .hive .bee{
+    font-size:46px;display:inline-block;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));
+    animation:fly 3.4s ease-in-out infinite;
+  }
+  @keyframes fly{0%,100%{transform:translateX(-8px) rotate(-4deg);}50%{transform:translateX(8px) rotate(4deg);}}
+  .hive h1{position:relative;margin:6px 0 2px;font-size:30px;font-weight:700;letter-spacing:.5px;text-shadow:0 3px 0 rgba(0,0,0,.15);}
+  .hive .sub{position:relative;font-size:14px;opacity:.95;font-weight:500;}
+  .hive .ar{position:relative;font-family:'Cairo',sans-serif;direction:rtl;font-size:15px;font-weight:700;margin-top:4px;
+    background:rgba(255,255,255,.25);display:inline-block;padding:3px 14px;border-radius:999px;}
+
+  .card{
+    background:var(--paper);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:18px;margin-top:14px;border:2px solid #ffe9a8;
+  }
+
+  /* ───── START SCREEN ───── */
+  .ar-help{font-family:'Cairo',sans-serif;direction:rtl;line-height:1.7;font-size:14px;color:var(--ink-soft);font-weight:600;}
+  .ar-help strong{color:var(--honey-deep);}
+  .label{font-family:'Cairo',sans-serif;direction:rtl;font-weight:700;font-size:15px;margin:14px 0 8px;display:block;}
+  .grade-row,.mode-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .pill{
+    border:2px solid #f0dca0;background:#fff;border-radius:14px;
+    padding:9px 16px;font:inherit;font-weight:600;font-size:15px;cursor:pointer;
+    color:var(--ink);transition:.15s;min-width:64px;
+  }
+  .pill:hover{border-color:var(--honey);}
+  .pill.active{background:linear-gradient(135deg,var(--amber),var(--honey));border-color:var(--honey-deep);color:var(--ink);box-shadow:0 4px 10px rgba(226,146,10,.3);}
+  .mode-row .pill{font-family:'Cairo',sans-serif;direction:rtl;font-size:13px;line-height:1.3;min-width:0;flex:1;}
+  .mode-row .pill small{display:block;font-weight:400;opacity:.7;font-size:11px;}
+  .btn-big{
+    display:block;width:100%;margin-top:18px;padding:15px;border:0;border-radius:16px;
+    font:inherit;font-weight:700;font-size:19px;cursor:pointer;color:#fff;
+    background:linear-gradient(135deg,var(--green),var(--green-deep));
+    box-shadow:0 8px 18px rgba(42,140,86,.35);transition:.15s;
+  }
+  .btn-big:hover{transform:translateY(-2px);}
+  .btn-big:active{transform:translateY(1px);}
+
+  /* ───── GAME HUD ───── */
+  .hud{display:flex;gap:8px;margin-top:14px;}
+  .hud .stat{
+    flex:1;background:var(--paper);border:2px solid #ffe9a8;border-radius:14px;
+    text-align:center;padding:8px 4px;box-shadow:0 4px 10px rgba(150,110,10,.10);
+  }
+  .hud .stat b{display:block;font-size:22px;color:var(--honey-deep);line-height:1;}
+  .hud .stat span{font-size:11px;color:var(--ink-soft);font-weight:600;}
+  .lives{font-size:18px;letter-spacing:2px;}
+
+  .progress-track{height:10px;background:#ffe9a8;border-radius:999px;margin:14px 0 4px;overflow:hidden;}
+  .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--honey),var(--honey-deep));transition:width .4s;}
+  .qcount{text-align:center;font-size:12px;color:var(--ink-soft);font-weight:600;}
+
+  /* listen panel */
+  .listen-box{text-align:center;padding:8px 0 4px;}
+  .speak-btn{
+    width:96px;height:96px;border-radius:50%;border:0;cursor:pointer;font-size:42px;
+    background:radial-gradient(circle at 35% 30%,var(--amber),var(--honey-deep));
+    color:#fff;box-shadow:0 10px 22px rgba(226,146,10,.45);transition:.15s;
+  }
+  .speak-btn:hover{transform:scale(1.05);}
+  .speak-btn:active{transform:scale(.95);}
+  .speak-btn.pulse{animation:ring 1s ease-out;}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(226,146,10,.6),0 10px 22px rgba(226,146,10,.45);}100%{box-shadow:0 0 0 26px rgba(226,146,10,0),0 10px 22px rgba(226,146,10,.45);}}
+  .mini-row{display:flex;gap:8px;justify-content:center;margin-top:10px;}
+  .mini-btn{
+    border:2px solid #f0dca0;background:#fff;border-radius:12px;padding:7px 14px;
+    font:inherit;font-weight:600;font-size:13px;cursor:pointer;color:var(--ink-soft);transition:.15s;
+    font-family:'Cairo',sans-serif;direction:rtl;
+  }
+  .mini-btn:hover{border-color:var(--honey);}
+  .meaning{font-family:'Cairo',sans-serif;direction:rtl;text-align:center;font-weight:700;font-size:17px;color:var(--honey-deep);margin:12px 0 2px;min-height:24px;}
+  .hint-letters{text-align:center;letter-spacing:8px;font-size:24px;font-weight:600;color:var(--ink-soft);min-height:30px;}
+
+  .answer-input{
+    width:100%;margin-top:14px;padding:14px;border:3px solid #f0dca0;border-radius:16px;
+    font:inherit;font-size:24px;text-align:center;font-weight:600;letter-spacing:3px;
+    text-transform:lowercase;outline:none;transition:.15s;background:#fffdf4;color:var(--ink);
+  }
+  .answer-input:focus{border-color:var(--honey);}
+  .answer-input.good{border-color:var(--green);background:#eafaf0;}
+  .answer-input.bad{border-color:var(--red);background:#fdecec;animation:shake .4s;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+
+  .feedback{text-align:center;font-weight:700;min-height:48px;margin-top:10px;}
+  .feedback .en{font-size:20px;letter-spacing:1px;}
+  .feedback .ar{font-family:'Cairo',sans-serif;direction:rtl;font-size:14px;font-weight:600;display:block;margin-top:2px;}
+  .feedback.ok{color:var(--green-deep);}
+  .feedback.no{color:var(--red-deep);}
+  .row-btns{display:flex;gap:8px;margin-top:6px;}
+  .row-btns button{flex:1;}
+
+  /* ───── END SCREEN ───── */
+  .end{text-align:center;}
+  .jar{font-size:80px;animation:pop .6s ease;}
+  @keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.25);}100%{transform:scale(1);}}
+  .end h2{margin:6px 0;font-size:26px;}
+  .end .score-big{font-size:48px;font-weight:700;color:var(--honey-deep);line-height:1;}
+  .end .ar{font-family:'Cairo',sans-serif;direction:rtl;font-weight:600;color:var(--ink-soft);}
+  .stamp{
+    display:inline-block;margin:14px auto;padding:10px 22px;border:4px dashed var(--honey-deep);
+    border-radius:18px;color:var(--honey-deep);font-weight:700;font-size:18px;transform:rotate(-5deg);
+    font-family:'Cairo',sans-serif;direction:rtl;
+  }
+  .review{text-align:left;margin-top:8px;}
+  .review .miss{
+    font-family:'Fredoka';background:#fdecec;border:1px solid #f5c6c6;border-radius:10px;
+    padding:6px 12px;margin:5px 0;display:flex;justify-content:space-between;align-items:center;
+  }
+  .review .miss .ar{font-family:'Cairo',sans-serif;direction:rtl;color:var(--ink-soft);font-size:13px;}
+
+  /* confetti + sparkle */
+  .sparkle{position:fixed;font-size:24px;pointer-events:none;z-index:60;animation:spk .8s ease-out forwards;}
+  @keyframes spk{0%{transform:translate(0,0) scale(.4);opacity:1;}100%{transform:translate(var(--dx),var(--dy)) scale(1.2);opacity:0;}}
+  .conf{position:fixed;top:-12px;width:10px;height:14px;z-index:55;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.9;}}
+
+  footer{text-align:center;font-size:12px;color:var(--ink-soft);font-weight:600;padding:16px 0 10px;position:relative;z-index:1;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="hive">
+    <div class="bee">🐝</div>
+    <h1>Spelling Bee</h1>
+    <div class="sub">Listen · Spell · Collect the Honey</div>
+    <div class="ar">نحلة الإملاء — اسمع الكلمة واكتبها</div>
+  </header>
+
+  <!-- ───── START SCREEN ───── -->
+  <section id="start" class="card">
+    <p class="ar-help">
+      🎧 رحّب بك في <strong>نحلة الإملاء</strong>! اضغط الزر الأصفر لتسمع الكلمة بالإنجليزية،
+      ثم اكتبها بشكل صحيح. تستطيع <strong>إعادة السماع</strong> أو سماعها <strong>ببطء</strong>،
+      ورؤية <strong>معناها بالعربية</strong> للمساعدة. كل كلمة صحيحة = نقطة عسل 🍯،
+      ومعك <strong>ثلاث محاولات</strong> ❤️❤️❤️. اجمع أكبر قدر من العسل!
+    </p>
+
+    <label class="label">١. اختر صفّك:</label>
+    <div class="grade-row" id="gradeRow">
+      <button class="pill" data-grade="5">Grade 5</button>
+      <button class="pill" data-grade="6">Grade 6</button>
+      <button class="pill active" data-grade="7">Grade 7</button>
+      <button class="pill" data-grade="8">Grade 8</button>
+      <button class="pill" data-grade="9">Grade 9</button>
+    </div>
+
+    <label class="label">٢. اختر مستوى المساعدة:</label>
+    <div class="mode-row" id="modeRow">
+      <button class="pill active" data-mode="easy">سهل<small>يظهر المعنى + أول حرف</small></button>
+      <button class="pill" data-mode="medium">متوسط<small>يظهر المعنى فقط</small></button>
+      <button class="pill" data-mode="hard">صعب<small>سماع فقط 🐝</small></button>
+    </div>
+
+    <button class="btn-big" id="startBtn">ابدأ اللعب 🐝</button>
+  </section>
+
+  <!-- ───── GAME SCREEN ───── -->
+  <section id="game" class="hidden">
+    <div class="hud">
+      <div class="stat"><b id="hScore">0</b><span>🍯 عسل</span></div>
+      <div class="stat"><b id="hStreak">0</b><span>🔥 متتالية</span></div>
+      <div class="stat"><b class="lives" id="hLives">❤️❤️❤️</b><span>محاولات</span></div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+    <div class="qcount" id="qCount"></div>
+
+    <div class="card">
+      <div class="listen-box">
+        <button class="speak-btn" id="speakBtn" aria-label="Listen">🔊</button>
+        <div class="mini-row">
+          <button class="mini-btn" id="repeatBtn">🔁 إعادة</button>
+          <button class="mini-btn" id="slowBtn">🐌 ببطء</button>
+          <button class="mini-btn" id="sentBtn">💬 في جملة</button>
+        </div>
+      </div>
+      <div class="meaning" id="meaning"></div>
+      <div class="hint-letters" id="hintLetters"></div>
+
+      <input class="answer-input" id="answer" type="text" autocomplete="off" autocorrect="off"
+             autocapitalize="off" spellcheck="false" placeholder="اكتب الكلمة هنا..." />
+      <div class="feedback" id="feedback"></div>
+      <div class="row-btns">
+        <button class="btn-big" id="checkBtn" style="margin-top:0">تحقّق ✓</button>
+        <button class="btn-big hidden" id="nextBtn" style="margin-top:0;background:linear-gradient(135deg,var(--honey),var(--honey-deep))">التالي →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── END SCREEN ───── -->
+  <section id="end" class="card end hidden">
+    <div class="jar" id="endEmoji">🍯</div>
+    <h2 id="endTitle">رائع!</h2>
+    <div class="score-big"><span id="endScore">0</span> / <span id="endTotal">0</span></div>
+    <div class="ar" id="endMsg"></div>
+    <div class="stamp hidden" id="badge">🏅 خبير الإملاء</div>
+    <div class="review" id="review"></div>
+    <button class="btn-big" id="againBtn">العب مرة أخرى 🔁</button>
+    <button class="btn-big" id="changeBtn" style="background:linear-gradient(135deg,var(--honey),var(--honey-deep))">غيّر الصف / المستوى</button>
+  </section>
+
+  <footer>Designed with love 💗 by T. Wad Refae</footer>
+</div>
+
+<script>
+'use strict';
+/* ============================================================
+   SPELLING BEE — English for Palestine (Grades 5–9)
+   Word banks tied to the curriculum vocabulary.
+   ar = Arabic meaning, s = example sentence
+   ============================================================ */
+const BANKS = {
+  5: [
+    {w:"family",     ar:"عائلة",            s:"My family is very kind."},
+    {w:"breakfast",  ar:"فطور",            s:"I eat breakfast at seven."},
+    {w:"teacher",    ar:"معلّم / معلّمة",   s:"Our teacher is friendly."},
+    {w:"morning",    ar:"صباح",            s:"Good morning, everyone!"},
+    {w:"garden",     ar:"حديقة",           s:"There are flowers in the garden."},
+    {w:"football",   ar:"كرة القدم",        s:"We play football after school."},
+    {w:"market",     ar:"سوق",             s:"My mother buys fruit at the market."},
+    {w:"olive",      ar:"زيتون",           s:"Palestine is famous for olive trees."},
+    {w:"weather",    ar:"طقس",             s:"The weather is sunny today."},
+    {w:"clean",      ar:"نظيف / ينظّف",     s:"Please keep the class clean."},
+    {w:"village",    ar:"قرية",            s:"My grandfather lives in a village."},
+    {w:"healthy",    ar:"صحّي",            s:"Fruit is a healthy food."},
+    {w:"friend",     ar:"صديق",            s:"She is my best friend."},
+    {w:"animal",     ar:"حيوان",           s:"The lion is a wild animal."},
+    {w:"holiday",    ar:"عطلة / إجازة",     s:"We visit my aunt on the holiday."},
+  ],
+  6: [
+    {w:"technology", ar:"تكنولوجيا",        s:"Technology helps us learn."},
+    {w:"computer",   ar:"حاسوب",           s:"I use a computer at school."},
+    {w:"internet",   ar:"الإنترنت",         s:"We find information on the internet."},
+    {w:"embroidery", ar:"تطريز",           s:"Palestinian embroidery is beautiful."},
+    {w:"culture",    ar:"ثقافة",           s:"We are proud of our culture."},
+    {w:"jerusalem",  ar:"القدس",           s:"Jerusalem is an old city."},
+    {w:"history",    ar:"تاريخ",           s:"I love history lessons."},
+    {w:"precious",   ar:"ثمين",            s:"Water is a precious resource."},
+    {w:"resource",   ar:"مورد",            s:"Oil is an important resource."},
+    {w:"pollution",  ar:"تلوّث",           s:"Pollution harms the river."},
+    {w:"tradition",  ar:"تقليد / عُرف",     s:"Dabke is an old tradition."},
+    {w:"factory",    ar:"مصنع",            s:"My uncle works in a factory."},
+    {w:"ancient",    ar:"قديم / عتيق",      s:"We visited an ancient mosque."},
+    {w:"protect",    ar:"يحمي",            s:"We must protect water."},
+    {w:"machine",    ar:"آلة",             s:"This machine makes bread."},
+  ],
+  7: [
+    {w:"benefit",    ar:"فائدة",           s:"Reading has many benefits."},
+    {w:"social",     ar:"اجتماعي",         s:"Social media connects people."},
+    {w:"energy",     ar:"طاقة",            s:"The sun gives us energy."},
+    {w:"renewable",  ar:"متجدّد",          s:"Solar power is renewable energy."},
+    {w:"environment",ar:"بيئة",            s:"We should keep the environment clean."},
+    {w:"electricity",ar:"كهرباء",          s:"Solar panels make electricity."},
+    {w:"message",    ar:"رسالة",           s:"She sent me a kind message."},
+    {w:"dangerous",  ar:"خطير",            s:"Too much screen time can be dangerous."},
+    {w:"information",ar:"معلومات",         s:"The website gives useful information."},
+    {w:"festival",   ar:"مهرجان",          s:"The dabke festival was exciting."},
+    {w:"traditional",ar:"تقليدي / تراثي",   s:"They wore traditional clothes."},
+    {w:"performance",ar:"عرض / أداء",       s:"Their performance was wonderful."},
+    {w:"healthy",    ar:"صحّي",            s:"A balanced diet keeps you healthy."},
+    {w:"communicate",ar:"يتواصل",          s:"We communicate by email."},
+    {w:"increase",   ar:"يزيد / يزداد",     s:"Prices increase every year."},
+  ],
+  8: [
+    {w:"wildlife",   ar:"حياة برية",        s:"The forest is full of wildlife."},
+    {w:"waterfall",  ar:"شلال",            s:"We saw a beautiful waterfall."},
+    {w:"national",   ar:"وطني / قومي",      s:"It is a national park."},
+    {w:"ancestor",   ar:"سلف / جدّ قديم",   s:"My ancestors lived here long ago."},
+    {w:"architecture",ar:"فن العمارة",      s:"The architecture is amazing."},
+    {w:"intelligence",ar:"ذكاء",           s:"Artificial intelligence is growing fast."},
+    {w:"artificial", ar:"اصطناعي",         s:"This flower is artificial."},
+    {w:"cuisine",    ar:"مطبخ / فنّ الطهي",  s:"Palestinian cuisine is delicious."},
+    {w:"desert",     ar:"صحراء",           s:"Life in the desert is hard."},
+    {w:"volunteer",  ar:"متطوّع",          s:"She is a volunteer at the centre."},
+    {w:"climate",    ar:"مناخ",            s:"The climate is hot and dry."},
+    {w:"develop",    ar:"يتطوّر / يطوّر",    s:"Cities develop very quickly."},
+    {w:"instrument", ar:"آلة موسيقية",      s:"The oud is a musical instrument."},
+    {w:"heritage",   ar:"تراث",            s:"We must protect our heritage."},
+    {w:"shallow",    ar:"ضحل / غير عميق",   s:"The water here is shallow."},
+  ],
+  9: [
+    {w:"poetry",     ar:"شِعر",            s:"Mahmoud Darwish wrote beautiful poetry."},
+    {w:"identity",   ar:"هوية",            s:"Language is part of our identity."},
+    {w:"landscape",  ar:"منظر طبيعي",       s:"The landscape changed over the years."},
+    {w:"climate",    ar:"مناخ",            s:"Climate change affects everyone."},
+    {w:"technology", ar:"تكنولوجيا",        s:"The tech scene is growing in Palestine."},
+    {w:"innovation", ar:"ابتكار",          s:"Innovation drives the company."},
+    {w:"memory",     ar:"ذاكرة / ذكرى",     s:"These stones hold our memory."},
+    {w:"heritage",   ar:"تراث",            s:"Heritage sites must be preserved."},
+    {w:"resistance", ar:"مقاومة / صمود",    s:"His poems are about resistance."},
+    {w:"generation", ar:"جيل",             s:"Each generation tells the story."},
+    {w:"opportunity",ar:"فرصة",            s:"Education gives young people opportunity."},
+    {w:"agriculture",ar:"زراعة",           s:"Agriculture is important for the economy."},
+    {w:"sustainable",ar:"مستدام",          s:"We need sustainable energy."},
+    {w:"preserve",   ar:"يحافظ على / يصون",  s:"We must preserve old buildings."},
+    {w:"achievement",ar:"إنجاز",           s:"Winning the prize was a great achievement."},
+  ],
+};
+
+/* ───── state ───── */
+let grade=7, mode='easy', words=[], idx=0, score=0, streak=0, lives=3, missed=[];
+let answered=false, voices=[];
+
+const $=id=>document.getElementById(id);
+
+/* voices may load async */
+function loadVoices(){ voices=window.speechSynthesis?window.speechSynthesis.getVoices():[]; }
+if('speechSynthesis' in window){ loadVoices(); window.speechSynthesis.onvoiceschanged=loadVoices; }
+function pickVoice(){
+  return voices.find(v=>/en-GB/i.test(v.lang)) ||
+         voices.find(v=>/en-US/i.test(v.lang)) ||
+         voices.find(v=>/^en/i.test(v.lang)) || null;
+}
+function speak(text,rate){
+  if(!('speechSynthesis' in window)){ return; }
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  const v=pickVoice(); if(v) u.voice=v;
+  u.lang=(v&&v.lang)||'en-GB';
+  u.rate=rate||0.92; u.pitch=1;
+  window.speechSynthesis.speak(u);
+}
+function sayWord(rate){
+  const word=words[idx].w;
+  $('speakBtn').classList.remove('pulse'); void $('speakBtn').offsetWidth; $('speakBtn').classList.add('pulse');
+  speak(word,rate);
+}
+
+/* ───── start-screen selectors ───── */
+$('gradeRow').addEventListener('click',e=>{
+  const b=e.target.closest('.pill'); if(!b)return;
+  [...$('gradeRow').children].forEach(p=>p.classList.remove('active'));
+  b.classList.add('active'); grade=+b.dataset.grade;
+});
+$('modeRow').addEventListener('click',e=>{
+  const b=e.target.closest('.pill'); if(!b)return;
+  [...$('modeRow').children].forEach(p=>p.classList.remove('active'));
+  b.classList.add('active'); mode=b.dataset.mode;
+});
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+$('startBtn').onclick=()=>{
+  words=shuffle(BANKS[grade]).slice(0,10);
+  idx=0;score=0;streak=0;lives=3;missed=[];
+  $('start').classList.add('hidden');
+  $('end').classList.add('hidden');
+  $('game').classList.remove('hidden');
+  loadQuestion();
+};
+
+/* ───── question flow ───── */
+function loadQuestion(){
+  answered=false;
+  const item=words[idx];
+  $('hScore').textContent=score;
+  $('hStreak').textContent=streak;
+  $('hLives').textContent='❤️'.repeat(lives)+'🤍'.repeat(3-lives);
+  $('pFill').style.width=((idx)/words.length*100)+'%';
+  $('qCount').textContent='كلمة '+(idx+1)+' من '+words.length;
+
+  // help according to mode
+  $('meaning').textContent=(mode==='easy'||mode==='medium')?('المعنى: '+item.ar):'';
+  if(mode==='easy'){
+    $('hintLetters').textContent=item.w[0].toUpperCase()+' '+'_ '.repeat(item.w.length-1).trim();
+  }else{
+    $('hintLetters').textContent=(mode==='medium')?('عدد الحروف: '+item.w.length):'';
+  }
+
+  const inp=$('answer');
+  inp.value=''; inp.className='answer-input'; inp.disabled=false;
+  $('feedback').textContent=''; $('feedback').className='feedback';
+  $('checkBtn').classList.remove('hidden');
+  $('nextBtn').classList.add('hidden');
+  inp.focus();
+  setTimeout(()=>sayWord(0.9),250);
+}
+
+function check(){
+  if(answered) return;
+  const item=words[idx];
+  const guess=$('answer').value.trim().toLowerCase();
+  if(!guess){ $('answer').classList.add('bad'); setTimeout(()=>$('answer').classList.remove('bad'),400); return; }
+  answered=true;
+  $('answer').disabled=true;
+  $('checkBtn').classList.add('hidden');
+  $('nextBtn').classList.remove('hidden');
+
+  const fb=$('feedback');
+  if(guess===item.w.toLowerCase()){
+    score++; streak++;
+    $('answer').classList.add('good');
+    fb.className='feedback ok';
+    fb.innerHTML='<span class="en">✅ '+item.w+'</span><span class="ar">أحسنت! +1 عسل 🍯</span>';
+    sparkleBurst();
+    if(streak>0 && streak%3===0) confetti(40);
+  }else{
+    lives--; streak=0; missed.push(item);
+    $('answer').classList.add('bad');
+    fb.className='feedback no';
+    fb.innerHTML='<span class="en">✏️ '+item.w+'</span><span class="ar">الإجابة الصحيحة. حاول أن تتذكّرها!</span>';
+    speak(item.w,0.85);
+    if(lives<=0){ $('nextBtn').textContent='النتيجة 🏁'; }
+  }
+  $('hScore').textContent=score;
+  $('hStreak').textContent=streak;
+  $('hLives').textContent='❤️'.repeat(Math.max(0,lives))+'🤍'.repeat(3-Math.max(0,lives));
+}
+
+function next(){
+  if(lives<=0){ return finish(); }
+  idx++;
+  if(idx>=words.length) return finish();
+  loadQuestion();
+}
+
+/* ───── end screen ───── */
+function finish(){
+  $('game').classList.add('hidden');
+  $('end').classList.remove('hidden');
+  const total=words.length;
+  $('endScore').textContent=score; $('endTotal').textContent=total;
+  $('pFill').style.width='100%';
+  const pct=score/total;
+  let emoji,title,msg;
+  if(lives<=0 && score<total){ emoji='🐝'; title='انتهت المحاولات!'; msg='لا بأس، النحلة المجتهدة تعود أقوى. أعد المحاولة!'; }
+  else if(pct===1){ emoji='👑'; title='ملكة النحل!'; msg='إتقان تام — كل الكلمات صحيحة! خلية مليئة بالعسل 🍯'; }
+  else if(pct>=0.7){ emoji='🍯'; title='عمل ممتاز!'; msg='جمعتَ الكثير من العسل. استمرّ بالتدرّب!'; }
+  else{ emoji='🌼'; title='بداية جيدة!'; msg='تحسّنٌ في كل محاولة. اسمع الكلمة جيدًا قبل أن تكتب.'; }
+  $('endEmoji').textContent=emoji; $('endTitle').textContent=title; $('endMsg').textContent=msg;
+
+  // badge + persistence (honeycomb theme, per-grade best score)
+  const badge=$('badge');
+  if(pct>=0.7){
+    badge.classList.remove('hidden');
+    badge.textContent=(pct===1?'🏆 ملكة النحل':'🏅 جامع العسل')+' — Grade '+grade;
+    confetti(90);
+  } else { badge.classList.add('hidden'); }
+  try{
+    const key='spellingBee_best_g'+grade;
+    const prev=+(localStorage.getItem(key)||0);
+    if(score>prev) localStorage.setItem(key,score);
+  }catch(e){}
+
+  // review of missed words
+  const rev=$('review'); rev.innerHTML='';
+  if(missed.length){
+    const h=document.createElement('div');
+    h.style.cssText="font-family:'Cairo';direction:rtl;font-weight:700;margin:14px 0 6px;color:var(--ink-soft)";
+    h.textContent='كلمات لتراجعها:';
+    rev.appendChild(h);
+    missed.forEach(m=>{
+      const d=document.createElement('div'); d.className='miss';
+      d.innerHTML='<b>'+m.w+'</b><span class="ar">'+m.ar+'</span>';
+      rev.appendChild(d);
+    });
+  }
+}
+
+/* ───── effects ───── */
+function sparkleBurst(){
+  const rect=$('answer').getBoundingClientRect();
+  const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+  const marks=['✨','⭐','🍯','🐝'];
+  for(let i=0;i<8;i++){
+    const s=document.createElement('div'); s.className='sparkle';
+    s.textContent=marks[i%marks.length];
+    s.style.left=cx+'px'; s.style.top=cy+'px';
+    const ang=Math.random()*Math.PI*2, dist=50+Math.random()*60;
+    s.style.setProperty('--dx',(Math.cos(ang)*dist)+'px');
+    s.style.setProperty('--dy',(Math.sin(ang)*dist)+'px');
+    document.body.appendChild(s); setTimeout(()=>s.remove(),800);
+  }
+}
+function confetti(n){
+  const colors=['#f6b819','#e2920a','#ffd966','#37b06e','#e0574f','#fff'];
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div'); c.className='conf';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(1.6+Math.random()*1.4)+'s';
+    c.style.animationDelay=(Math.random()*.4)+'s';
+    if(Math.random()>.5) c.style.borderRadius='50%';
+    document.body.appendChild(c); setTimeout(()=>c.remove(),3400);
+  }
+}
+
+/* ───── controls ───── */
+$('speakBtn').onclick=()=>sayWord(0.9);
+$('repeatBtn').onclick=()=>sayWord(0.9);
+$('slowBtn').onclick=()=>sayWord(0.55);
+$('sentBtn').onclick=()=>{ speak(words[idx].s,0.9); };
+$('checkBtn').onclick=check;
+$('nextBtn').onclick=next;
+$('answer').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){ e.preventDefault(); answered?next():check(); }
+});
+$('againBtn').onclick=()=>{ $('startBtn').onclick(); };
+$('changeBtn').onclick=()=>{ $('end').classList.add('hidden'); $('start').classList.remove('hidden'); };
+</script>
+</body>
+</html>
