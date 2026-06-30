@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 5 · Unit 3 · Period 4 — Mini-Olympics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html { scroll-behavior:smooth; }
+  :root{
+    --track:#E0552B; --track-d:#BC451E; --grass:#5FA844; --grass-d:#4C8A36;
+    --gold:#FFC93C; --gold-d:#F2B01E; --sky:#7FC8E8; --sky-soft:#CDEBF7; --blue:#2E78C4; --bronze:#D98A4E;
+    --ink:#26303F; --ink-soft:#5C6B7E; --field:#FBFBF6; --line:#E2E6DC; --line-d:#CBD2C2;
+    --green:#2E6B2E; --red:#CE1126; --coral:#E8604C; --wood:#6b4a2a;
+    --hand:'Caveat',cursive; --shadow:0 8px 22px rgba(20,30,40,.2);
+  }
+  body{ font-family:'Nunito','Baloo Bhaijaan 2',sans-serif; color:var(--ink); background-color:#6FB048; background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 44px,rgba(0,0,0,.045) 44px 88px); min-height:100vh; padding:16px 10px; font-size:15px; line-height:1.5; }
+  h1,h2,h3,.tab-btn{ font-family:'Fredoka','Nunito',sans-serif; }
+  [dir="rtl"],.ar{ font-family:'Baloo Bhaijaan 2',sans-serif; } .hand{ font-family:var(--hand); }
+
+  .stadium{ max-width:1040px; margin:0 auto; border-radius:20px; padding:14px; background-image:repeating-linear-gradient(90deg,transparent 0 34px,rgba(255,255,255,.45) 34px 38px),linear-gradient(180deg,var(--track),var(--track-d)); box-shadow:0 20px 44px rgba(20,30,40,.4); }
+  .field{ background:var(--field); border-radius:12px; border:2px solid #fff; padding:20px 15px 24px; position:relative; box-shadow:inset 0 0 0 1px rgba(0,0,0,.04); }
+
+  /* ===== HEADER · EVENTS BOARD ===== */
+  .scrap-hero{ position:relative; padding:8px 6px 6px; margin-bottom:4px; text-align:center; }
+  .sh-title-card{ display:inline-block; position:relative; background:#fff; border:1px solid var(--line); border-radius:12px; padding:13px 30px 12px; box-shadow:0 8px 18px rgba(20,30,40,.18); }
+  .sh-badge{ position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--track); color:#fff; font-family:'Fredoka'; font-weight:600; font-size:.68em; letter-spacing:.5px; padding:4px 15px; border-radius:20px; box-shadow:0 3px 8px rgba(0,0,0,.25); white-space:nowrap; }
+  .sh-title{ font-family:'Fredoka'; font-weight:700; font-size:2.4em; line-height:1; color:var(--track); letter-spacing:.5px; margin-top:8px; text-shadow:0 2px 0 #fff,0 3px 9px rgba(224,85,43,.28); }
+  .sh-ar{ font-family:'Baloo Bhaijaan 2'; font-weight:700; color:var(--blue); font-size:1.02em; margin-top:3px; direction:rtl; }
+  .sh-sub{ display:inline-block; margin-top:9px; background:var(--sky-soft); border:1px solid var(--sky); color:var(--ink); font-family:'Fredoka'; font-size:.8em; padding:4px 14px; border-radius:14px; }
+
+  .events-board{ width:330px; max-width:94%; margin:18px auto 2px; background:linear-gradient(180deg,#2E6B2E,#234f23); border:6px solid var(--wood); border-radius:10px; padding:12px 14px 14px; box-shadow:0 10px 22px rgba(0,0,0,.36), inset 0 0 20px rgba(0,0,0,.35); }
+  .eb-head{ text-align:center; color:var(--gold); font-family:'Fredoka'; font-weight:700; letter-spacing:1.5px; font-size:1.05em; margin-bottom:9px; border-bottom:1px dashed rgba(255,255,255,.32); padding-bottom:7px; text-shadow:0 0 8px rgba(255,201,60,.5); }
+  .eb-row{ display:flex; align-items:center; gap:11px; padding:6px 6px; color:#fff; font-weight:700; border-radius:6px; }
+  .eb-row+.eb-row{ border-top:1px dashed rgba(255,255,255,.14); }
+  .eb-ic{ font-size:1.45em; width:32px; text-align:center; filter:drop-shadow(0 1px 1px rgba(0,0,0,.3)); }
+  .eb-name{ flex:1; color:#e7f3df; font-family:'Nunito'; }
+  .eb-tag{ font-family:'Fredoka'; color:#0f1620; background:var(--gold); border-radius:4px; padding:2px 8px; font-size:.8em; font-weight:700; }
+
+  /* ===== TRACKER ===== */
+  .podium-track{ position:relative; max-width:920px; margin:16px auto 4px; padding:11px 16px 13px; border-radius:12px; background:repeating-linear-gradient(90deg,transparent 0 30px,rgba(255,255,255,.28) 30px 33px),linear-gradient(180deg,var(--track),var(--track-d)); box-shadow:var(--shadow); border:2px solid #fff; text-align:center; }
+  .pt-label{ color:#fff; font-family:'Fredoka'; font-weight:700; display:inline-flex; align-items:center; gap:6px; text-shadow:0 1px 2px rgba(0,0,0,.35); margin-bottom:7px; }
+  .pt-lanes{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; justify-content:center; }
+  .pt-step{ width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.9); border:2px solid #fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:var(--track-d); box-shadow:0 2px 4px rgba(0,0,0,.28); }
+  .pt-step.on{ background:radial-gradient(circle at 40% 35%,#FFF0B0,var(--gold) 75%); color:#7a4d00; box-shadow:0 0 0 3px rgba(255,201,60,.45),0 2px 5px rgba(0,0,0,.3); }
+  .pt-finish{ font-size:1.5em; line-height:1; margin-left:2px; } .pt-count{ color:#fff; font-family:'Fredoka'; font-weight:800; text-shadow:0 1px 2px rgba(0,0,0,.35); }
+
+  /* ===== TABS ===== */
+  .tabs-container{ display:flex; gap:7px; margin:18px 4px 0; padding:5px 4px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; position:relative; z-index:3; }
+  .tabs-container::-webkit-scrollbar{ display:none; }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{ background:#fff; color:var(--ink); border:1px solid var(--line); border-bottom:3px solid var(--line-d); padding:10px 16px; font-size:.88em; font-weight:600; cursor:pointer; box-shadow:0 3px 8px rgba(20,30,40,.1); transition:all .2s ease; border-radius:12px 12px 4px 4px; min-height:44px; white-space:nowrap; flex-shrink:0; transform:translateY(4px); }
+  .tab-btn:nth-child(1){ border-bottom-color:var(--track); } .tab-btn:nth-child(2){ border-bottom-color:var(--grass); } .tab-btn:nth-child(3){ border-bottom-color:var(--blue); } .tab-btn:nth-child(4){ border-bottom-color:var(--bronze); } .tab-btn:nth-child(5){ border-bottom-color:var(--red); }
+  .tab-btn:hover{ transform:translateY(0); }
+  .tab-btn.active{ color:#fff; background:var(--track); border-color:var(--track); border-bottom-color:var(--track-d); transform:translateY(0); box-shadow:0 5px 14px rgba(224,85,43,.35); }
+
+  /* ===== PANELS ===== */
+  .tab-content{ display:none; background:#fff; padding:20px 14px 24px; border-radius:4px 4px 12px 12px; border:1px solid var(--line); box-shadow:0 8px 22px rgba(20,30,40,.14); margin-top:-1px; position:relative; }
+  .tab-content.active{ display:block; animation:fadeIn .4s ease; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+  .page-head{ text-align:center; margin-bottom:18px; }
+  .section-title{ display:inline-block; position:relative; background:var(--sky-soft); color:var(--blue); font-size:1.3em; font-weight:700; padding:9px 22px; border-radius:30px; border:2px solid var(--sky); box-shadow:0 4px 10px rgba(20,30,40,.12); }
+  .info-banner{ text-align:center; background:#FFF3DC; padding:10px 12px; border-radius:8px; margin-bottom:18px; direction:rtl; box-shadow:2px 2px 6px rgba(20,30,40,.08); font-size:.95em; line-height:1.7; border:1px solid var(--gold); } .info-banner strong{ color:var(--track); }
+
+  .aim-card{ background:var(--field); border-left:6px solid var(--gold); padding:14px 14px 14px 18px; margin:12px 0; border-radius:0 8px 8px 0; box-shadow:2px 3px 9px rgba(20,30,40,.1); position:relative; }
+  .aim-card:nth-child(even){ border-left-color:var(--grass); } .aim-card::before{ content:'🏅'; position:absolute; top:-11px; left:12px; font-size:1.25em; }
+  .aim-card .en{ color:var(--ink); font-size:1em; font-weight:bold; margin-bottom:5px; line-height:1.4; } .aim-card .ar{ color:var(--grass-d); font-size:.95em; direction:rtl; line-height:1.65; }
+  .key-language-box{ background:var(--sky-soft); padding:14px; margin-top:20px; border-radius:10px; box-shadow:2px 3px 10px rgba(20,30,40,.1); border:2px dashed var(--blue); }
+  .key-language-box h3{ color:var(--blue); margin-bottom:10px; text-align:center; font-size:1.1em; } .key-language-box .structure{ background:#fff; padding:10px; border-radius:6px; text-align:center; font-size:1em; margin:6px 0; font-weight:bold; }
+  .key-language-box .example{ text-align:center; margin-top:10px; direction:rtl; color:var(--ink-soft); font-size:.95em; } .key-language-box .example strong{ color:var(--track); }
+
+  .drive-audio{ background:#fff; border:2px solid var(--sky); border-radius:12px; padding:10px; margin:0 auto 16px; max-width:500px; text-align:center; box-shadow:2px 2px 8px rgba(20,30,40,.1); }
+  .drive-audio .da-label{ direction:rtl; color:var(--blue); font-weight:700; font-size:.9em; margin-bottom:6px; }
+  .audio-placeholder{ display:flex; align-items:center; justify-content:center; gap:8px; height:58px; max-width:480px; margin:0 auto; border:2px dashed var(--sky); border-radius:8px; color:var(--ink-soft); direction:rtl; font-size:.85em; background:#F2FAFE; }
+
+  /* ===== WORD BANK + images ===== */
+  .bank{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; background:#fff; border:2px dashed var(--grass); border-radius:12px; padding:14px; margin-bottom:16px; box-shadow:2px 2px 8px rgba(20,30,40,.08); }
+  .bank-word{ background:#E7F3E0; border:2px solid var(--grass); border-radius:20px; padding:8px 15px; font-weight:700; font-size:.96em; cursor:pointer; transition:all .15s; }
+  .bank-word:hover{ transform:translateY(-2px); } .bank-word.selected{ background:var(--grass); border-color:var(--grass); color:#fff; box-shadow:0 0 0 3px rgba(95,168,68,.3); }
+  .bank-word.used{ opacity:.4; text-decoration:line-through; cursor:default; }
+  .bank-hint{ text-align:center; direction:rtl; color:var(--track); font-weight:700; min-height:22px; margin:0 0 10px; }
+  .look-item{ background:var(--field); border-radius:10px; padding:12px; margin:11px 0; box-shadow:2px 3px 9px rgba(20,30,40,.1); border-left:5px solid var(--grass); display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .look-pic{ width:74px; height:74px; flex-shrink:0; border-radius:50%; background:radial-gradient(circle at 40% 35%,#fff,#E7F3E0); display:flex; align-items:center; justify-content:center; font-size:2.1em; border:3px solid #fff; box-shadow:0 3px 8px rgba(20,30,40,.14); }
+  .look-q{ flex:1; min-width:190px; line-height:1.95; font-weight:600; }
+  .look-num{ background:var(--grass); color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:.8em; margin-right:6px; }
+  .blank{ display:inline-block; min-width:78px; text-align:center; border-bottom:3px dotted var(--grass-d); color:var(--track); font-weight:800; cursor:pointer; padding:0 5px; }
+  .blank.filled-correct{ border-bottom-style:solid; border-bottom-color:#4caf50; color:#1b5e20; background:#e8f5e9; border-radius:4px 4px 0 0; cursor:default; }
+  .blank.filled-wrong{ border-bottom-color:#d32f2f; color:#b71c1c; background:#ffebee; border-radius:4px 4px 0 0; }
+
+  /* ===== READ & CIRCLE ===== */
+  .rc-item{ background:var(--field); border-radius:10px; padding:13px 14px; margin:10px 0; box-shadow:2px 2px 8px rgba(20,30,40,.12); border-left:5px solid var(--blue); display:flex; flex-wrap:wrap; align-items:center; gap:8px; line-height:1.6; }
+  .rc-num{ background:var(--blue); color:#fff; width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:.85em; flex-shrink:0; }
+  .rc-text{ font-weight:600; }
+  .rc-opt{ border:2px solid var(--line-d); background:#fff; border-radius:20px; padding:7px 16px; cursor:pointer; font-family:inherit; font-weight:700; font-size:.95em; transition:all .15s; min-height:40px; }
+  .rc-opt:hover:not(:disabled){ border-color:var(--gold); background:#fffdf0; }
+  .rc-opt.correct{ background:#c8e6c9; border-color:#4caf50; color:#1b5e20; } .rc-opt.wrong{ background:#ffcdd2; border-color:#d32f2f; color:#b71c1c; text-decoration:line-through; }
+  .rc-sep{ color:var(--ink-soft); font-weight:700; }
+
+  /* ===== PASSAGE + ANSWER ===== */
+  .passage-card{ position:relative; background:var(--field); border-radius:10px; padding:16px 14px; margin:14px 0; box-shadow:0 6px 16px rgba(20,30,40,.14); border:1px solid var(--line); border-top:5px solid var(--track); }
+  .passage-text{ background:#fff; padding:14px; border-radius:8px; line-height:2.05; font-size:.98em; border-left:4px solid var(--gold); }
+  .passage-text p{ margin-bottom:8px; }
+  .hover-word{ background:#fff1a8; border-bottom:2px dotted #b8860b; padding:1px 3px; border-radius:3px; cursor:help; position:relative; font-weight:bold; display:inline-block; }
+  .hover-word:hover,.hover-word.touched{ background:#ffe75e; }
+  .tooltip{ visibility:hidden; background:#1f2733; color:#eef4fa; text-align:center; border-radius:6px; padding:6px 10px; position:absolute; z-index:100; bottom:130%; left:50%; transform:translateX(-50%); font-size:.85em; white-space:nowrap; direction:rtl; box-shadow:0 4px 8px rgba(0,0,0,.3); pointer-events:none; }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; margin-left:-5px; border-width:5px; border-style:solid; border-color:#1f2733 transparent transparent transparent; }
+  .hover-word:hover .tooltip,.hover-word.touched .tooltip{ visibility:visible; }
+  .qa-card{ background:var(--field); padding:14px; border-radius:10px; margin:11px 0; box-shadow:2px 2px 8px rgba(20,30,40,.12); border-left:5px solid var(--bronze); }
+  .qa-q{ font-weight:700; color:#9a5a25; margin-bottom:10px; line-height:1.5; } .qa-num{ background:var(--bronze); color:#fff; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:.8em; margin-right:6px; }
+  .qa-btn{ background:var(--gold); border:none; padding:8px 18px; border-radius:20px; font-family:inherit; font-weight:700; cursor:pointer; min-height:40px; box-shadow:0 2px 6px rgba(20,30,40,.12); } .qa-btn:hover{ background:#ffbe0a; }
+  .qa-ans{ display:none; margin-top:10px; background:#e8f5e9; border-left:4px solid #4caf50; padding:11px; border-radius:6px; color:#1b5e20; font-weight:700; } .qa-ans.show{ display:block; animation:fadeIn .3s ease; } .qa-ans .ar{ display:block; color:var(--grass-d); font-weight:400; font-size:.9em; margin-top:4px; direction:rtl; }
+
+  @keyframes sparklepop{ 0%{transform:scale(.6);} 50%{transform:scale(1.12);} 100%{transform:scale(1);} } .spark{ animation:sparklepop .4s ease; }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{ background:linear-gradient(135deg,#FFF3DC,#fff); padding:16px; border-radius:10px; margin-bottom:18px; text-align:center; border:3px dashed var(--track); box-shadow:2px 2px 10px rgba(20,30,40,.1); }
+  .quiz-intro h3{ color:var(--track); margin-bottom:8px; font-size:1.2em; } .quiz-intro p{ color:var(--grass-d); font-size:.95em; line-height:1.7; direction:rtl; }
+  .quiz-stats{ display:flex; justify-content:space-around; background:#fff; padding:12px; border-radius:8px; margin-bottom:18px; box-shadow:2px 2px 8px rgba(20,30,40,.12); border:2px solid var(--gold); }
+  .quiz-stat{ text-align:center; flex:1; } .quiz-stat-num{ font-size:1.6em; font-weight:bold; color:var(--track); line-height:1; } .quiz-stat-label{ font-size:.78em; color:var(--grass-d); margin-top:4px; }
+  .quiz-question{ background:var(--field); padding:14px; border-radius:8px; margin:12px 0; box-shadow:0 5px 12px rgba(20,30,40,.14); border-left:6px solid var(--blue); display:none; } .quiz-question.active{ display:block; animation:fadeIn .4s ease; }
+  .quiz-q-header{ display:flex; align-items:center; gap:8px; margin-bottom:12px; } .quiz-q-badge{ background:var(--blue); color:#fff; padding:4px 12px; border-radius:12px; font-size:.78em; font-weight:bold; }
+  .quiz-q-text{ font-size:1em; font-weight:bold; color:var(--ink); margin-bottom:12px; line-height:1.5; }
+  .quiz-option{ display:block; width:100%; background:#fff; border:2px solid var(--line-d); padding:11px 12px; margin:6px 0; border-radius:6px; cursor:pointer; text-align:left; font-family:inherit; font-size:.92em; transition:all .2s; min-height:44px; }
+  .quiz-option:hover:not(:disabled){ border-color:var(--blue); background:#eef6ff; }
+  .quiz-option.correct{ background:#c8e6c9; border-color:#4caf50; color:#1b5e20; font-weight:bold; } .quiz-option.wrong{ background:#ffcdd2; border-color:#d32f2f; color:#b71c1c; }
+  .quiz-feedback{ margin-top:12px; padding:12px; border-radius:6px; display:none; font-size:.95em; line-height:1.6; } .quiz-feedback.show{ display:block; animation:fadeIn .3s ease; }
+  .quiz-feedback.correct{ background:#e8f5e9; border-left:5px solid #4caf50; color:#1b5e20; } .quiz-feedback.wrong{ background:#ffebee; border-left:5px solid #f44336; color:#b71c1c; }
+  .quiz-feedback .feedback-title{ font-weight:bold; margin-bottom:4px; } .quiz-feedback .feedback-text{ direction:rtl; }
+  .quiz-next-btn{ background:linear-gradient(135deg,var(--track),var(--track-d)); color:#fff; border:none; padding:12px 24px; border-radius:25px; font-family:inherit; font-size:.95em; font-weight:bold; cursor:pointer; margin-top:12px; box-shadow:2px 2px 8px rgba(0,0,0,.25); width:100%; min-height:44px; display:none; transition:transform .2s; }
+  .quiz-next-btn.show{ display:block; animation:fadeIn .3s ease; } .quiz-next-btn:hover{ transform:scale(1.02); }
+  .quiz-progress-bar{ background:#fff; border-radius:20px; height:18px; overflow:hidden; margin-bottom:16px; border:2px solid var(--gold); box-shadow:inset 2px 2px 4px rgba(0,0,0,.1); }
+  .quiz-progress-fill{ background:linear-gradient(90deg,var(--track),var(--gold)); height:100%; width:0%; transition:width .5s ease; border-radius:20px; }
+  .quiz-results{ background:#fff; padding:20px 14px; border-radius:12px; text-align:center; box-shadow:0 8px 22px rgba(20,30,40,.2); border:4px dashed var(--track); display:none; } .quiz-results.show{ display:block; animation:bounceIn .6s ease; }
+  @keyframes bounceIn{ 0%{transform:scale(.5); opacity:0;} 60%{transform:scale(1.1); opacity:1;} 100%{transform:scale(1);} }
+  .quiz-results-emoji{ font-size:4em; line-height:1; margin-bottom:10px; } .quiz-results h3{ color:var(--track); font-size:1.4em; margin-bottom:8px; }
+  .quiz-results .score{ font-size:2.5em; font-weight:bold; color:#4caf50; margin:12px 0; line-height:1; } .quiz-results .message{ color:var(--grass-d); font-size:1em; line-height:1.7; margin:12px 0; direction:rtl; }
+  .reward-medal{ display:none; margin:14px auto 0; width:96px; height:120px; position:relative; } .reward-medal.show{ display:block; animation:bounceIn .7s ease; }
+  .reward-medal .ribbon{ position:absolute; top:0; left:50%; transform:translateX(-50%); width:0; height:0; border-left:24px solid transparent; border-right:24px solid transparent; border-top:34px solid var(--track); }
+  .reward-medal .disc{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:78px; height:78px; border-radius:50%; background:radial-gradient(circle at 38% 32%,#FFF0B0,var(--gold) 60%,var(--gold-d)); border:4px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,.3); display:flex; align-items:center; justify-content:center; flex-direction:column; }
+  .reward-medal .disc .n{ font-size:1.7em; line-height:1; } .reward-medal .disc .t{ font-size:.55em; font-weight:700; color:#7a4d00; }
+  .quiz-restart-btn{ background:linear-gradient(135deg,#ff9800,#f57c00); color:#fff; border:none; padding:12px 28px; border-radius:25px; font-family:inherit; font-size:1em; font-weight:bold; cursor:pointer; margin-top:14px; box-shadow:2px 2px 8px rgba(0,0,0,.25); min-height:44px; } .quiz-restart-btn:hover{ transform:scale(1.05); }
+  .confetti{ position:fixed; width:10px; height:10px; pointer-events:none; z-index:9999; }
+
+  .footer-tag{ text-align:center; margin-top:22px; padding:14px; background:#fff; border-radius:14px; color:var(--ink-soft); font-size:.88em; box-shadow:var(--shadow); border:1px solid var(--line); line-height:1.6; }
+  .footer-tag .signature{ font-family:var(--hand); color:var(--track); font-weight:700; font-size:1.3em; display:block; margin-top:2px; }
+
+  @media (min-width:768px){ body{ padding:22px; font-size:16px; } .field{ padding:28px 24px 30px; } .sh-title{ font-size:3em; } .events-board{ width:400px; } .tab-btn{ padding:12px 20px; font-size:.92em; } .tab-content{ padding:26px 24px 30px; } .section-title{ font-size:1.45em; } .passage-text{ font-size:1.05em; line-height:2.2; padding:18px; } .quiz-q-text{ font-size:1.08em; } }
+  @media (max-width:600px){ .sh-title{ font-size:2em; } }
+  @media (max-width:360px){ body{ padding:10px 5px; } .field{ padding:14px 9px 18px; } .sh-title{ font-size:1.7em; } .tab-btn{ padding:9px 12px; font-size:.8em; } }
+</style>
+</head>
+<body>
+
+<div class="stadium"><div class="field">
+
+  <!-- ===== HEADER · EVENTS BOARD ===== -->
+  <div class="scrap-hero">
+    <div class="sh-title-card">
+      <span class="sh-badge">UNIT 3 · PERIOD 4</span>
+      <h1 class="sh-title">Mini-Olympics</h1>
+      <div class="sh-ar" dir="rtl">الألعابُ الأولمبيةُ الصغيرة 🏅</div>
+      <div class="sh-sub">Period 4 · Look &amp; Order 🔢</div>
+    </div>
+    <div class="events-board" aria-hidden="true">
+      <div class="eb-head">📋 TODAY'S EVENTS</div>
+      <div class="eb-row"><span class="eb-ic">🏃</span><span class="eb-name">100 metre race</span><span class="eb-tag">1 min</span></div>
+      <div class="eb-row"><span class="eb-ic">🥚</span><span class="eb-name">Egg &amp; spoon race</span><span class="eb-tag">50 m</span></div>
+      <div class="eb-row"><span class="eb-ic">🏊</span><span class="eb-name">Swimming race</span><span class="eb-tag">50 m</span></div>
+      <div class="eb-row"><span class="eb-ic">🏅</span><span class="eb-name">200 metre race</span><span class="eb-tag">girls</span></div>
+    </div>
+  </div>
+
+  <!-- ===== TRACKER ===== -->
+  <div class="podium-track" id="podiumTrack" aria-label="Race to the Podium">
+    <div class="pt-label">🏃 Race to the Podium</div>
+    <div class="pt-lanes"><div class="pt-steps" style="display:contents"></div><span class="pt-finish">🏁</span><span class="pt-count" id="ptCount">0/8</span></div>
+  </div>
+
+  <!-- ===== TABS ===== -->
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="switchTab(0)">🎯 Objectives</button>
+    <button class="tab-btn" onclick="switchTab(1)">🖼️ Word Bank</button>
+    <button class="tab-btn" onclick="switchTab(2)">🔍 Read &amp; Circle</button>
+    <button class="tab-btn" onclick="switchTab(3)">📖 Read &amp; Answer</button>
+    <button class="tab-btn" onclick="switchTab(4)">🏆 Quiz</button>
+  </div>
+
+  <!-- ===== TAB 1: OBJECTIVES ===== -->
+  <div class="tab-content active" id="tab-0">
+    <div class="page-head"><h2 class="section-title">🎯 Lesson Objectives · أهداف الدرس</h2></div>
+    <div class="aim-card"><div class="en">To look at pictures and complete sentences with the correct word.</div><div class="ar" dir="rtl">أن أنظرَ إلى الصُّوَرِ وأُكمِلَ الجُمَلَ بالكلمةِ الصحيحة.</div></div>
+    <div class="aim-card"><div class="en">To use ordinal numbers and <em>minute / minutes</em>.</div><div class="ar" dir="rtl">أن أستخدمَ الأعدادَ الترتيبيةَ و<em>minute / minutes</em>.</div></div>
+    <div class="aim-card"><div class="en">To read sentences and circle the correct word.</div><div class="ar" dir="rtl">أن أقرأَ الجُمَلَ وأختارَ الكلمةَ الصحيحة.</div></div>
+    <div class="aim-card"><div class="en">To read aloud and answer questions.</div><div class="ar" dir="rtl">أن أقرأَ بصوتٍ عالٍ وأجيبَ عن الأسئلة.</div></div>
+    <div class="key-language-box">
+      <h3>⏱️ Time &amp; Order</h3>
+      <div class="structure">one minute · two minutes · I am first in the class.</div>
+      <div class="example" dir="rtl">دقيقة = minute · دقيقتان = two minutes (نضيف s للجمع).</div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 2: WORD BANK ===== -->
+  <div class="tab-content" id="tab-1">
+    <div class="page-head"><h2 class="section-title">🖼️ Look &amp; Complete · انظر وأكمِل</h2></div>
+    <div class="info-banner" dir="rtl">👆 اضغط كلمةً من البنك · ثم اضغط الفراغَ المناسب · استعِن بالصورة</div>
+    <div class="bank" id="bank">
+      <button class="bank-word" onclick="selectWord(this)">first</button>
+      <button class="bank-word" onclick="selectWord(this)">second</button>
+      <button class="bank-word" onclick="selectWord(this)">third</button>
+      <button class="bank-word" onclick="selectWord(this)">fourth</button>
+      <button class="bank-word" onclick="selectWord(this)">fifth</button>
+      <button class="bank-word" onclick="selectWord(this)">seventh</button>
+      <button class="bank-word" onclick="selectWord(this)">minute</button>
+      <button class="bank-word" onclick="selectWord(this)">minutes</button>
+    </div>
+    <div class="bank-hint" id="bankHint"></div>
+    <div class="look-item"><div class="look-pic">📅</div><div class="look-q"><span class="look-num">1</span>Friday is the <span class="blank" data-answer="seventh" onclick="dropWord(this)">______</span> day of the week. The <span class="blank" data-answer="second" onclick="dropWord(this)">______</span> day of the week is Sunday.</div></div>
+    <div class="look-item"><div class="look-pic">⏱️</div><div class="look-q"><span class="look-num">2</span>I can run 100 metres in one <span class="blank" data-answer="minute" onclick="dropWord(this)">______</span>. My friend can run it in two <span class="blank" data-answer="minutes" onclick="dropWord(this)">______</span>.</div></div>
+    <div class="look-item"><div class="look-pic">👨‍👦‍👦</div><div class="look-q"><span class="look-num">3</span>Shadi is 14, Sami is 12, Anas is 10. Anas is the <span class="blank" data-answer="third" onclick="dropWord(this)">______</span> in the family.</div></div>
+    <div class="look-item"><div class="look-pic">💯</div><div class="look-q"><span class="look-num">4</span>I got 100 in English. I am <span class="blank" data-answer="first" onclick="dropWord(this)">______</span> in the class.</div></div>
+    <div class="look-item"><div class="look-pic">✏️</div><div class="look-q"><span class="look-num">5</span>This is the <span class="blank" data-answer="fifth" onclick="dropWord(this)">______</span> sentence.</div></div>
+    <div class="look-item"><div class="look-pic">🐑</div><div class="look-q"><span class="look-num">6</span>The horse, duck, cow, sheep… The sheep is the <span class="blank" data-answer="fourth" onclick="dropWord(this)">______</span> animal.</div></div>
+  </div>
+
+  <!-- ===== TAB 3: READ & CIRCLE ===== -->
+  <div class="tab-content" id="tab-2">
+    <div class="page-head"><h2 class="section-title">🔍 Read &amp; Circle</h2></div>
+    <div class="info-banner" dir="rtl">📖 اقرأ كلَّ جملةٍ واضغط <strong>الكلمةَ الصحيحة</strong> · النتيجةُ فورية ✨</div>
+    <div class="rc-item"><span class="rc-num">1</span><span class="rc-text">Ben is in the 100</span><button class="rc-opt" onclick="rcPick(this,true)">metre</button><span class="rc-sep">/</span><button class="rc-opt" onclick="rcPick(this,false)">minutes</button><span class="rc-text">race.</span></div>
+    <div class="rc-item"><span class="rc-num">2</span><span class="rc-text">Ben runs the 100 metres race in one</span><button class="rc-opt" onclick="rcPick(this,true)">minute</button><span class="rc-sep">/</span><button class="rc-opt" onclick="rcPick(this,false)">metre</button><span class="rc-text">.</span></div>
+    <div class="rc-item"><span class="rc-num">3</span><span class="rc-text">Omar can swim 50</span><button class="rc-opt" onclick="rcPick(this,false)">minutes</button><span class="rc-sep">/</span><button class="rc-opt" onclick="rcPick(this,true)">metres</button><span class="rc-text">.</span></div>
+    <div class="rc-item"><span class="rc-num">4</span><span class="rc-text">Rania is not first in the egg and spoon race, she is</span><button class="rc-opt" onclick="rcPick(this,true)">second</button><span class="rc-sep">/</span><button class="rc-opt" onclick="rcPick(this,false)">third</button><span class="rc-text">.</span></div>
+    <div class="rc-item"><span class="rc-num">5</span><span class="rc-text">Reem is slow in the 200 metres race. She comes</span><button class="rc-opt" onclick="rcPick(this,false)">sixth</button><span class="rc-sep">/</span><button class="rc-opt" onclick="rcPick(this,true)">seventh</button><span class="rc-text">.</span></div>
+  </div>
+
+  <!-- ===== TAB 4: READ & ANSWER ===== -->
+  <div class="tab-content" id="tab-3">
+    <div class="page-head"><h2 class="section-title">📖 Read Aloud &amp; Answer</h2></div>
+    <div class="info-banner" dir="rtl">📢 اقرأ الفقرةَ بصوتٍ عالٍ · 👆 اضغط الكلماتِ الملوّنةَ للمعنى · ثم أجِب</div>
+    <div class="passage-card">
+      <div class="passage-text">
+        <p>Today, look at page 20. What are they doing?</p>
+        <p>Omar and Ben are <span class="hover-word" onclick="toggleTip(this)">running<span class="tooltip">يجريان</span></span> in the 100 metre race. Ben wants to come first.</p>
+        <p>Rania and her friends are in the egg and spoon race. Rania comes <span class="hover-word" onclick="toggleTip(this)">second<span class="tooltip">الثانية</span></span>.</p>
+        <p>Omar is <span class="hover-word" onclick="toggleTip(this)">swimming<span class="tooltip">يسبح</span></span>. He can swim 50 metres. He is <span class="hover-word" onclick="toggleTip(this)">fourth<span class="tooltip">الرابع</span></span>. Ben swims too. He is first.</p>
+        <p>Rania and her friends run in the 200 metre race. Rania comes <span class="hover-word" onclick="toggleTip(this)">fifth<span class="tooltip">الخامسة</span></span>. Reem comes <span class="hover-word" onclick="toggleTip(this)">seventh<span class="tooltip">السابعة</span></span>.</p>
+      </div>
+    </div>
+    <div class="qa-card"><div class="qa-q"><span class="qa-num">1</span>What are Omar and Ben doing?</div><button class="qa-btn" onclick="qaReveal(this)">💡 Show answer</button><div class="qa-ans">They are running in the 100 metre race.<span class="ar" dir="rtl">يجريان في سباق ١٠٠ متر.</span></div></div>
+    <div class="qa-card"><div class="qa-q"><span class="qa-num">2</span>What place does Rania come in the egg and spoon race?</div><button class="qa-btn" onclick="qaReveal(this)">💡 Show answer</button><div class="qa-ans">She comes second.<span class="ar" dir="rtl">تأتي ثانيةً.</span></div></div>
+    <div class="qa-card"><div class="qa-q"><span class="qa-num">3</span>How many metres can Omar swim?</div><button class="qa-btn" onclick="qaReveal(this)">💡 Show answer</button><div class="qa-ans">50 metres.<span class="ar" dir="rtl">٥٠ مترًا.</span></div></div>
+    <div class="qa-card"><div class="qa-q"><span class="qa-num">4</span>Who comes seventh in the 200 metre race?</div><button class="qa-btn" onclick="qaReveal(this)">💡 Show answer</button><div class="qa-ans">Reem.<span class="ar" dir="rtl">ريم.</span></div></div>
+  </div>
+
+  <!-- ===== TAB 5: QUIZ ===== -->
+  <div class="tab-content" id="tab-4">
+    <div class="page-head"><h2 class="section-title">🏆 Final Quiz · التقويم الختامي</h2></div>
+    <div class="quiz-intro" id="quizIntro">
+      <h3>🌟 Let's test what you've learned!</h3>
+      <p dir="rtl">🎯 <strong>٥ أسئلة سريعة</strong> عن الترتيبِ والتوقيت<br>💪 ركّز جيدًا واختر الإجابةَ الصحيحة<br>🏅 اجمَع نقاطَك واكسِب الميدالية!</p>
+      <button class="quiz-restart-btn" onclick="startQuiz()">🚀 Start Quiz</button>
+    </div>
+    <div id="quizContainer" style="display:none;">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="progressFill"></div></div>
+      <div class="quiz-stats">
+        <div class="quiz-stat"><div class="quiz-stat-num" id="currentQ">1</div><div class="quiz-stat-label">Question</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-num" id="totalQ">/ 5</div><div class="quiz-stat-label">Total</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-num" id="scoreDisplay">0</div><div class="quiz-stat-label">Score</div></div>
+      </div>
+      <div id="quizQuestions"></div>
+    </div>
+    <div class="quiz-results" id="quizResults">
+      <div class="quiz-results-emoji" id="resultEmoji">🎉</div>
+      <h3 id="resultTitle">Well done!</h3>
+      <div class="score" id="finalScore">0 / 5</div>
+      <div class="message" id="resultMessage"></div>
+      <div class="reward-medal" id="rewardMedal"><span class="ribbon"></span><span class="disc"><span class="n">🏅</span><span class="t">MINI-OLYMPICS</span></span></div>
+      <button class="quiz-restart-btn" onclick="restartQuiz()">🔄 Try Again</button>
+    </div>
+  </div>
+
+  <div class="footer-tag">
+    🏅 <strong>English for Palestine</strong> · Grade 5 · Unit 3 · Period 4
+    <span class="signature">Prepared with care 🌸 by T. Wad Refae</span>
+  </div>
+
+</div></div>
+
+<script>
+  function switchTab(index){ document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.getElementById('tab-'+index).classList.add('active'); document.querySelectorAll('.tab-btn')[index].classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+  function toggleTip(el){ document.querySelectorAll('.hover-word.touched').forEach(e=>{ if(e!==el) e.classList.remove('touched'); }); el.classList.toggle('touched'); }
+  document.addEventListener('click',(e)=>{ if(!e.target.closest('.hover-word')){ document.querySelectorAll('.hover-word.touched').forEach(el=>el.classList.remove('touched')); } });
+
+  var selectedWord=null;
+  function selectWord(btn){ if(btn.classList.contains('used'))return; if(selectedWord===btn){ btn.classList.remove('selected'); selectedWord=null; return; } document.querySelectorAll('.bank-word.selected').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); selectedWord=btn; document.getElementById('bankHint').textContent=''; }
+  function dropWord(blank){ if(blank.classList.contains('filled-correct'))return; if(!selectedWord){ document.getElementById('bankHint').textContent='👆 اختر كلمةً من البنك أولًا'; return; } var w=selectedWord; if(w.textContent.trim()===blank.dataset.answer){ blank.textContent=w.textContent; blank.classList.remove('filled-wrong'); blank.classList.add('filled-correct','spark'); w.classList.add('used'); w.classList.remove('selected'); selectedWord=null; launchConfetti(); checkAllFilled(); } else { blank.textContent=w.textContent; blank.classList.add('filled-wrong'); w.classList.remove('selected'); selectedWord=null; setTimeout(function(){ blank.textContent='______'; blank.classList.remove('filled-wrong'); },850); } }
+  function checkAllFilled(){ var all=document.querySelectorAll('.blank'); var done=document.querySelectorAll('.blank.filled-correct'); if(all.length===done.length){ bigConfetti(); var h=document.getElementById('bankHint'); h.textContent='🌟 أحسنت! أكملتَ كلَّ الجُمَل.'; h.style.color='#2e7d32'; } }
+  function rcPick(btn, isCorrect){ var row=btn.parentElement; if(row.classList.contains('done'))return; row.classList.add('done'); row.querySelectorAll('.rc-opt').forEach(b=>b.disabled=true); if(isCorrect){ btn.classList.add('correct','spark'); launchConfetti(); } else { btn.classList.add('wrong'); row.querySelectorAll('.rc-opt').forEach(b=>{ if(b.getAttribute('onclick').includes('true')) b.classList.add('correct'); }); } }
+  function qaReveal(btn){ btn.nextElementSibling.classList.add('show'); btn.style.display='none'; }
+
+  const quizData = [
+    { q:"Friday is the ______ day of the week.", options:["fifth","seventh","first"], correct:1, explain:"حسب التقويم (السبت = الأول)، الجمعة هي اليوم السابع (seventh)." },
+    { q:"I can run 100 metres in one ______ .", options:["minute","metre","second"], correct:0, explain:"الزمنُ يُقاسُ بالدقائق: one minute." },
+    { q:"Shadi 14, Sami 12, Anas 10. Anas is the ______ .", options:["first","second","third"], correct:2, explain:"الأكبرُ شادي (أول)، ثم سامي (ثانٍ)، ثم أنس (ثالث = third)." },
+    { q:"Omar can swim 50 ______ .", options:["minutes","metres","seconds"], correct:1, explain:"المسافةُ بالأمتار: 50 metres." },
+    { q:"Rania is not first; she is ______ .", options:["second","third","tenth"], correct:0, explain:"رانيا ثانيةٌ (second) في سباق البيضة والملعقة." }
+  ];
+  let currentQuestion=0, score=0, answered=false;
+  function startQuiz(){ document.getElementById('quizIntro').style.display='none'; document.getElementById('quizContainer').style.display='block'; document.getElementById('totalQ').textContent='/ '+quizData.length; currentQuestion=0; score=0; showQuestion(); }
+  function showQuestion(){ answered=false; const q=quizData[currentQuestion]; document.getElementById('currentQ').textContent=currentQuestion+1; document.getElementById('scoreDisplay').textContent=score; document.getElementById('progressFill').style.width=((currentQuestion)/quizData.length)*100+'%'; let o=''; q.options.forEach((opt,i)=>{ o+=`<button class="quiz-option" onclick="answerQuiz(this, ${i})">${String.fromCharCode(97+i)}) ${opt}</button>`; }); document.getElementById('quizQuestions').innerHTML=`<div class="quiz-question active"><div class="quiz-q-header"><div class="quiz-q-badge">Q ${currentQuestion+1}</div></div><div class="quiz-q-text">${q.q}</div><div>${o}</div><div class="quiz-feedback" id="quizFeedback"></div><button class="quiz-next-btn" id="nextBtn" onclick="nextQuestion()">Next Question ➡️</button></div>`; }
+  function answerQuiz(btn,choice){ if(answered)return; answered=true; const q=quizData[currentQuestion]; const bs=btn.parentElement.querySelectorAll('.quiz-option'); bs.forEach(b=>b.disabled=true); const fb=document.getElementById('quizFeedback'); if(choice===q.correct){ btn.classList.add('correct'); score++; document.getElementById('scoreDisplay').textContent=score; const pr=['🌟 ممتاز!','🎉 رائع!','👏 أحسنت!','💪 عظيم!','🏆 بطل!']; fb.className='quiz-feedback correct show'; fb.innerHTML=`<div class="feedback-title">${pr[Math.floor(Math.random()*pr.length)]}</div><div class="feedback-text" dir="rtl">${q.explain}</div>`; launchConfetti(); } else { btn.classList.add('wrong'); bs[q.correct].classList.add('correct'); fb.className='quiz-feedback wrong show'; fb.innerHTML=`<div class="feedback-title">💡 لا بأس، فلنتعلّم!</div><div class="feedback-text" dir="rtl">${q.explain}</div>`; } document.getElementById('nextBtn').classList.add('show'); }
+  function nextQuestion(){ currentQuestion++; if(currentQuestion>=quizData.length) showResults(); else showQuestion(); }
+  function showResults(){ document.getElementById('quizContainer').style.display='none'; document.getElementById('progressFill').style.width='100%'; document.getElementById('quizResults').classList.add('show'); document.getElementById('finalScore').textContent=score+' / '+quizData.length; const percent=(score/quizData.length)*100; let emoji,title,msg; if(percent===100){ emoji='🏆'; title='Gold Medal!'; msg='ترتيبٌ وتوقيتٌ مثالي! 🥇 أحسنت.'; bigConfetti(); document.getElementById('rewardMedal').classList.add('show'); } else if(percent>=60){ emoji='🥈'; title='Great race!'; msg='عملٌ ممتاز! 💪 راجِع وأعِد المحاولة.'; bigConfetti(); document.getElementById('rewardMedal').classList.add('show'); } else { emoji='💪'; title='Keep Training!'; msg='لا تستسلِم! 🌱 راجِع الترتيبَ والتوقيت، ثم جرّب من جديد.'; document.getElementById('rewardMedal').classList.remove('show'); } document.getElementById('resultEmoji').textContent=emoji; document.getElementById('resultTitle').textContent=title; document.getElementById('resultMessage').textContent=msg; }
+  function restartQuiz(){ document.getElementById('quizResults').classList.remove('show'); document.getElementById('rewardMedal').classList.remove('show'); document.getElementById('quizIntro').style.display='block'; document.getElementById('progressFill').style.width='0%'; document.getElementById('scoreDisplay').textContent='0'; }
+  function launchConfetti(){ const colors=['#FFC93C','#E0552B','#5FA844','#2E78C4','#CE1126','#F2B01E']; for(let i=0;i<24;i++){ const c=document.createElement('div'); c.className='confetti'; c.style.left=Math.random()*100+'%'; c.style.top='-10px'; c.style.background=colors[Math.floor(Math.random()*colors.length)]; c.style.borderRadius=Math.random()>0.5?'50%':'0'; c.style.transform=`rotate(${Math.random()*360}deg)`; document.body.appendChild(c); const fall=c.animate([{top:'-10px',transform:'rotate(0deg)',opacity:1},{top:'100vh',transform:'rotate(720deg)',opacity:0}],{duration:1500+Math.random()*1500,easing:'cubic-bezier(0.4,0,0.6,1)'}); fall.onfinish=()=>c.remove(); } }
+  function bigConfetti(){ launchConfetti(); setTimeout(launchConfetti,300); setTimeout(launchConfetti,600); setTimeout(launchConfetti,900); }
+</script>
+
+<script>(function(){
+  var KEY='g5u3_olympics', THIS=4, em=['🏃','🔗','🏊','🔍','⏱️','🎵','✍️','🐸'];
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var w=document.querySelector('#podiumTrack .pt-steps');
+  for(var i=1;i<=8;i++){ var s=document.createElement('span'); s.className='pt-step'+(got.indexOf(i)>=0?' on':''); s.textContent=got.indexOf(i)>=0?em[i-1]:i; w.appendChild(s); }
+  document.getElementById('ptCount').textContent=got.length+'/8';
+})();</script>
+
+</body>
+</html>
