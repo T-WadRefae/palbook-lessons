@@ -15,6 +15,8 @@ Each lesson is a single self-contained HTML file: `grade<N>/unit<U>p<P>*.html`.
 8. **End every lesson with a 5-point quiz** covering the lesson content.
 9. **Do not invent extra questions/exercises** unless the teacher explicitly asks. E.g. the Words tab contains only the words (no added matching games). Only build questions for activities where the teacher requested them.
 10. Lessons start with an **Objectives tab** (أهداف الدرس), one tab per exercise.
+13. **Primary language of objectives and questions is ENGLISH** — Arabic appears only as a small helper explanation/hint under the English. (Teacher's rule, 2026-07: applies to objectives cards, comprehension questions, quiz items, model answers.)
+14. **Header workflow**: before building ANY new lesson, propose **3 distinctive header concepts** to the teacher and let her pick. The header is top priority — it must grab the student instantly; never start coding a lesson before she approves a header.
 11. **File naming**: exactly `grade<N>/unit<U>p<P>.html` (e.g. `grade7/unit1p1.html`) by unit and lesson number — **no suffixes or additions** to the name.
 12. **Conversation transcripts**: new/difficult words get a **hover tooltip with the Arabic meaning** (yellow highlight); **pronouns get a different highlight color** with a tooltip saying **what the pronoun refers to**. Tooltips must also work on tap (mobile).
 
