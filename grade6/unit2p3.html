@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Good Friends - Unit 2 Period 3 | Hurray or Boo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --plum:#3b2a4a; --plum-d:#2a1d36;
+    --purple:#845ec2; --purple-d:#6a48a0;
+    --coral:#ff6f91; --coral-d:#e04f73;
+    --teal:#00c9a7; --teal-d:#00a388;
+    --gold:#ffc75f; --gold-d:#e0a63e;
+    --cream:#fff5f7; --paper:#fffdfb;
+    --thread:#f9a8c4;
+    --boo:#ff5470; --boo-d:#d63a56;
+    --yay:#22c197; --yay-d:#149073;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--plum); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      repeating-linear-gradient(45deg, rgba(132,94,194,.04) 0 2px, transparent 2px 26px),
+      repeating-linear-gradient(-45deg, rgba(0,201,167,.05) 0 2px, transparent 2px 26px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.22; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(540deg);} }
+
+  /* ===== HEADER : the Cheer-o-meter ===== */
+  .lesson-header{
+    background:linear-gradient(160deg, var(--plum-d) 0%, var(--purple-d) 50%, var(--purple) 130%);
+    padding:26px 16px 44px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--coral) 0 12px, var(--gold) 12px 24px, var(--teal) 24px 36px, var(--purple) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.25);
+  }
+  .header-inner{ max-width:720px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--plum-d);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.25); transform:rotate(-2deg);
+  }
+  .lesson-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(30px,5.6vw,50px); color:#fff; letter-spacing:-.5px;
+    text-shadow:2px 3px 0 var(--plum-d), 5px 6px 18px rgba(0,0,0,.35); margin-bottom:4px;
+  }
+  .lesson-subtitle{ font-size:clamp(16px,3.4vw,22px); color:var(--gold); font-weight:800; margin-bottom:18px; }
+
+  /* pom-poms */
+  .pom{ position:absolute; font-size:44px; z-index:1; animation:pom-shake 1.4s ease-in-out infinite; }
+  .pom.l{ left:3%; top:40%; } .pom.r{ right:3%; top:40%; animation-delay:.5s; }
+  @keyframes pom-shake{ 0%,100%{ transform:rotate(-16deg) scale(1);} 50%{ transform:rotate(16deg) scale(1.12);} }
+
+  /* the gauge */
+  .cheer-meter{
+    position:relative; width:280px; max-width:82vw; height:158px; margin:6px auto 0;
+    filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));
+  }
+  .cm-dial{
+    position:absolute; left:0; right:0; bottom:0; height:140px; border-radius:150px 150px 0 0;
+    background:
+      conic-gradient(from -90deg at 50% 100%,
+        var(--boo) 0deg 54deg, #ff8a5c 54deg 78deg, var(--gold) 78deg 102deg, #8fd97a 102deg 126deg, var(--yay) 126deg 180deg);
+    border:5px solid #fff; border-bottom:none;
+    box-shadow:inset 0 0 22px rgba(0,0,0,.28);
+  }
+  .cm-dial::after{ /* inner cutout */
+    content:''; position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+    width:120px; height:60px; border-radius:120px 120px 0 0; background:var(--plum-d);
+  }
+  .cm-zone{ position:absolute; bottom:14px; font-family:'Fredoka',sans-serif; font-weight:700; font-size:14px; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+  .cm-zone.boo{ left:12px; } .cm-zone.yay{ right:8px; }
+  .cm-face{ position:absolute; top:26px; font-size:26px; }
+  .cm-face.boo{ left:24px; } .cm-face.yay{ right:22px; }
+  .cm-needle{
+    position:absolute; left:50%; bottom:0; width:6px; height:120px; background:linear-gradient(#fff,#ffd0dc);
+    border-radius:4px; transform-origin:50% 100%; transform:translateX(-50%) rotate(0deg);
+    box-shadow:0 0 8px rgba(255,255,255,.8); animation:needle-swing 3.4s ease-in-out infinite; z-index:3;
+  }
+  @keyframes needle-swing{ 0%,100%{ transform:translateX(-50%) rotate(-58deg);} 50%{ transform:translateX(-50%) rotate(58deg);} }
+  .cm-hub{
+    position:absolute; left:50%; bottom:-14px; transform:translateX(-50%); width:44px; height:44px;
+    border-radius:50%; background:radial-gradient(circle at 38% 32%, #fff, var(--gold) 70%);
+    border:4px solid #fff; display:flex; align-items:center; justify-content:center; font-size:20px; z-index:4;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+  }
+
+  /* ===== BRACELET PROGRESS (shared across Unit 2) ===== */
+  .bracelet-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, var(--purple), var(--purple-d));
+    border:2px solid #fff; box-shadow:0 6px 18px rgba(59,42,74,.35);
+  }
+  .bt-label{ color:#fff; font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; text-shadow:0 1px 2px rgba(0,0,0,.35); margin-bottom:9px; font-size:15px; }
+  .bt-string{ display:flex; align-items:center; justify-content:center; gap:6px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .bt-string::before{ content:''; position:absolute; left:4%; right:4%; top:50%; height:3px; background:var(--thread); border-radius:2px; z-index:0; }
+  .bt-bead{
+    width:32px; height:32px; border-radius:50%; position:relative; z-index:1;
+    background:rgba(255,255,255,.92); border:2px solid #fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; color:var(--purple-d); box-shadow:0 2px 4px rgba(0,0,0,.3);
+  }
+  .bt-bead.on{ color:#fff; font-size:15px; box-shadow:0 0 0 3px rgba(255,199,95,.5), 0 2px 5px rgba(0,0,0,.3); }
+  .bt-bead.on:nth-child(4n+1){ background:radial-gradient(circle at 40% 32%, #ffb3c6, var(--coral) 75%); }
+  .bt-bead.on:nth-child(4n+2){ background:radial-gradient(circle at 40% 32%, #7dffe5, var(--teal) 75%); }
+  .bt-bead.on:nth-child(4n+3){ background:radial-gradient(circle at 40% 32%, #c5a8ff, var(--purple) 75%); }
+  .bt-bead.on:nth-child(4n){ background:radial-gradient(circle at 40% 32%, #fff0b0, var(--gold) 75%); }
+  .bt-knot{ font-size:20px; z-index:1; }
+  .bt-count{ background:rgba(255,255,255,.2); color:#fff; border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .bt-done{ margin-top:7px; color:var(--gold); font-weight:800; font-size:14px; display:none; }
+  .bt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 var(--purple-d), 0 14px 34px rgba(59,42,74,.2);
+    display:flex; gap:8px; border:3px solid var(--purple);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:12px 12px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; color:var(--purple-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:86px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(132,94,194,.12); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--coral), var(--purple));
+    color:#fff; box-shadow:0 4px 0 var(--purple-d), 0 6px 14px rgba(132,94,194,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:24px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:29px; color:var(--plum); text-align:center;
+    margin-bottom:22px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--coral) 0 10px, var(--gold) 10px 20px, var(--teal) 20px 30px, var(--purple) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#8a7a9a; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eadcf5; box-shadow:0 6px 0 var(--purple), 0 8px 20px rgba(59,42,74,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--coral)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--coral));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--plum); margin-bottom:9px; }
+  .aim-desc{ color:#5d4a70; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#8a7a9a; margin-top:7px; }
+
+  /* activity lead + audio */
+  .activity-lead{
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--plum); direction:ltr; text-align:left;
+    background:var(--paper); border:3px solid #eadcf5; border-left:6px solid var(--coral);
+    border-radius:14px; padding:15px 18px; margin-bottom:14px; line-height:1.6;
+  }
+  .activity-lead .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13.5px; color:#8a7a9a; margin-top:6px; font-weight:600; }
+  .audio-placeholder{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    min-height:58px; max-width:480px; margin:0 auto 20px; padding:10px 16px;
+    border:2px dashed var(--coral); border-radius:10px; color:var(--purple-d);
+    direction:rtl; font-size:14px; font-weight:600; background:#fff0f4; text-align:center;
+  }
+  .drive-audio{ max-width:500px; margin:0 auto 20px; text-align:center; }
+  .drive-audio iframe{ width:100%; max-width:480px; height:58px; border:0; border-radius:8px; }
+
+  /* ===== HURRAY / BOO CARDS ===== */
+  .hb-card{
+    background:var(--paper); border-radius:18px; border:3px solid #eadcf5; padding:18px 20px; margin-bottom:14px;
+    box-shadow:0 5px 0 var(--purple), 0 7px 16px rgba(59,42,74,.07);
+  }
+  .hb-top{ display:flex; align-items:flex-start; gap:12px; direction:ltr; }
+  .hb-num{
+    flex-shrink:0; width:32px; height:32px; border-radius:50%; background:var(--gold); color:var(--plum-d);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-family:'Fredoka',sans-serif; box-shadow:0 2px 0 var(--gold-d);
+  }
+  .hb-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--plum); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .hb-btns{ display:flex; gap:10px; margin-top:14px; justify-content:center; }
+  .hb-btn{
+    border:none; border-radius:14px; padding:11px 22px; cursor:pointer; font-family:'Fredoka',sans-serif;
+    font-weight:700; font-size:16px; display:flex; align-items:center; gap:8px; transition:transform .15s;
+  }
+  .hb-btn.yay{ background:#d7f5ea; color:var(--yay-d); box-shadow:0 3px 0 #a9e6d2; }
+  .hb-btn.boo{ background:#ffd9e0; color:var(--boo-d); box-shadow:0 3px 0 #f4a9b6; }
+  .hb-btn:hover:not(:disabled){ transform:translateY(-2px); }
+  .hb-btn:disabled{ cursor:default; opacity:.55; }
+  .hb-btn.picked-right{ outline:3px solid currentColor; opacity:1; }
+  .hb-fb{ margin-top:12px; padding:11px 15px; border-radius:10px; font-size:14px; line-height:1.7; display:none; direction:rtl; text-align:right; }
+  .hb-fb.show{ display:block; animation:fadeIn .3s; }
+  .hb-fb.right{ background:#e6faf4; border-right:4px solid var(--yay-d); color:#00614f; }
+  .hb-fb.wrong{ background:#ffeef2; border-right:4px solid var(--boo-d); color:#a1123d; }
+  .hb-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--purple-d); font-weight:600; margin-top:16px; }
+
+  /* ===== TICK CORRECT ===== */
+  .tick-item{
+    background:var(--paper); border-radius:16px; border:3px solid #eadcf5; padding:15px 18px; margin-bottom:12px;
+    box-shadow:0 5px 0 var(--purple), 0 7px 16px rgba(59,42,74,.07);
+    display:flex; align-items:center; gap:12px; direction:ltr;
+  }
+  .tick-item .ti-n{
+    flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--purple); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; font-family:'Fredoka',sans-serif;
+  }
+  .ti-text{ flex:1; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--plum); direction:ltr; text-align:left; line-height:1.5; }
+  .ti-btns{ display:flex; gap:6px; flex-shrink:0; }
+  .ti-btn{
+    width:42px; height:42px; border-radius:12px; border:2.5px solid #eadcf5; background:#fff; cursor:pointer;
+    font-size:20px; display:flex; align-items:center; justify-content:center; transition:all .15s;
+  }
+  .ti-btn.tick:hover{ border-color:var(--yay-d); background:#e6faf4; }
+  .ti-btn.cross:hover{ border-color:var(--boo-d); background:#ffeef2; }
+  .ti-btn.correct{ border-color:var(--yay-d); background:#c8f5e9; }
+  .ti-btn.wrong{ border-color:var(--boo-d); background:#ffd9e2; }
+  .ti-btn:disabled{ cursor:default; }
+  .tick-item.locked-right{ border-color:var(--yay-d); }
+  .tick-item.locked-wrong{ border-color:var(--boo-d); }
+  .tick-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--purple-d); font-weight:600; margin-top:14px; }
+
+  /* ===== WORD BANK GAP FILL ===== */
+  .wordbank{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px;
+    background:var(--paper); border:3px dashed var(--purple); border-radius:16px; padding:16px;
+  }
+  .wb-word{
+    background:linear-gradient(135deg, var(--purple), var(--coral)); color:#fff; border:none;
+    padding:9px 18px; border-radius:22px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; box-shadow:0 3px 0 var(--purple-d); transition:all .15s;
+  }
+  .wb-word:hover:not(.used){ transform:translateY(-2px); }
+  .wb-word.used{ opacity:.35; cursor:default; text-decoration:line-through; }
+  .wb-word.selected{ outline:3px solid var(--gold); transform:translateY(-2px) scale(1.05); }
+  .gap-item{
+    background:var(--paper); border-radius:14px; border:3px solid #eadcf5; padding:15px 18px; margin-bottom:11px;
+    box-shadow:0 4px 0 var(--purple); direction:ltr; text-align:left; font-family:'Fredoka',sans-serif;
+    font-size:16.5px; color:var(--plum); line-height:2;
+  }
+  .gap-item .gi-n{ display:inline-flex; width:26px; height:26px; margin-right:8px; background:var(--coral); color:#fff; border-radius:50%; align-items:center; justify-content:center; font-size:13px; font-weight:700; }
+  .blank{
+    display:inline-block; min-width:96px; border-bottom:3px dashed var(--purple); cursor:pointer;
+    text-align:center; padding:0 8px 2px; margin:0 3px; color:var(--purple-d); font-weight:700; transition:all .15s; vertical-align:middle;
+  }
+  .blank:hover{ background:#f3ecff; }
+  .blank.filled{ border-bottom-style:solid; border-color:var(--yay-d); color:var(--yay-d); background:#e6faf4; border-radius:6px; }
+  .blank.wrong{ border-color:var(--boo-d); color:var(--boo-d); background:#ffeef2; }
+  .gap-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--purple-d); font-weight:600; margin-top:14px; }
+
+  /* ===== WRITE ANSWERS ===== */
+  .final-questions-intro{
+    background:linear-gradient(135deg, var(--coral), var(--purple)); color:#fff; padding:22px;
+    border-radius:18px; text-align:center; margin-bottom:22px; box-shadow:0 6px 0 var(--purple-d);
+  }
+  .final-questions-intro h3{ font-family:'Fredoka',sans-serif; font-size:23px; margin-bottom:6px; }
+  .final-questions-intro p{ font-size:14px; line-height:1.6; }
+  .fq-card{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid #eadcf5; box-shadow:0 6px 0 var(--purple), 0 8px 18px rgba(59,42,74,.08);
+  }
+  .fq-number{
+    display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px;
+    background:var(--coral); color:#fff; border-radius:50%; font-family:'Fredoka',sans-serif;
+    font-weight:700; font-size:18px; margin-bottom:10px; box-shadow:0 3px 0 var(--coral-d);
+  }
+  .fq-question{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--plum); margin-bottom:6px; direction:ltr; text-align:left; }
+  .fq-question-ar{ font-size:13px; color:#8a7a9a; margin-bottom:12px; }
+  .show-answer-btn{
+    background:var(--teal); color:#fff; border:none; padding:9px 19px; border-radius:12px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--teal-d);
+    transition:transform .2s; display:inline-flex; align-items:center; gap:6px;
+  }
+  .show-answer-btn:hover{ transform:translateY(-2px); }
+  .fq-answer{
+    background:linear-gradient(135deg,#e6faf4,#c8f5e9); border-right:4px solid var(--teal-d);
+    padding:14px 17px; border-radius:12px; margin-top:13px; display:none;
+  }
+  .fq-answer.show{ display:block; animation:fadeIn .4s; }
+  .fq-answer-en{ font-family:'Fredoka',sans-serif; font-size:15.5px; color:#00614f; margin-bottom:6px; direction:ltr; text-align:left; font-weight:600; }
+  .fq-answer-ar{ font-size:13.5px; color:var(--plum); line-height:1.7; }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--coral)); color:var(--plum-d); padding:26px 22px;
+    border-radius:22px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--coral-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'📣'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:25px; margin-bottom:8px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.45); height:12px; border-radius:10px; margin-top:16px; overflow:hidden; border:2px solid rgba(255,255,255,.65); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--teal), var(--purple)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid #eadcf5; box-shadow:0 6px 0 var(--purple), 0 8px 18px rgba(59,42,74,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--coral), var(--purple)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--purple-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--plum); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eadcf5; padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--plum);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--purple); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:#eadcf5; color:var(--purple-d); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#c8f5e9; border-color:var(--teal-d); color:#00614f; }
+  .quiz-option.correct .opt-letter{ background:var(--teal-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9e2; border-color:var(--coral-d); color:#a1123d; }
+  .quiz-option.wrong .opt-letter{ background:var(--coral-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e6faf4,#c8f5e9); border-right:4px solid var(--teal-d); color:#00614f; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#ffeef2,#ffd9e2); border-right:4px solid var(--coral-d); color:#a1123d; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:36px 22px; text-align:center;
+    border:3px solid #eadcf5; box-shadow:0 8px 0 var(--purple), 0 12px 28px rgba(59,42,74,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:74px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:29px; color:var(--plum); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:50px; color:var(--coral); margin:16px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:28px; color:#5d4a70; }
+  .result-message{ font-size:16px; line-height:1.7; margin-bottom:22px; font-weight:600; }
+  .reward-bead{
+    display:none; margin:0 auto 18px; width:92px; height:92px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff0b0, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(255,199,95,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:44px;
+  }
+  .reward-bead.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--purple), var(--coral)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--purple-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--plum-d), var(--purple-d)); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--coral) 0 12px, var(--gold) 12px 24px, var(--teal) 24px 36px, var(--purple) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  @media (max-width:768px){
+    .pom{ font-size:32px; }
+    .tick-item{ flex-wrap:wrap; }
+    .ti-text{ order:2; flex-basis:100%; }
+    .gap-item{ font-size:15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : THE CHEER-O-METER ===== -->
+<header class="lesson-header">
+  <span class="pom l">🧶</span>
+  <span class="pom r">🧶</span>
+  <div class="header-inner">
+    <div class="unit-badge"><span>📗</span> UNIT 2 — Period 3</div>
+    <h1 class="lesson-title">Hurray or Boo?</h1>
+    <div class="lesson-subtitle">أصدقاء جيدون · شجّع أو اشجب!</div>
+    <div class="cheer-meter">
+      <div class="cm-dial">
+        <span class="cm-face boo">👎</span>
+        <span class="cm-face yay">👏</span>
+        <span class="cm-zone boo">BOO</span>
+        <span class="cm-zone yay">HURRAY</span>
+      </div>
+      <div class="cm-needle"></div>
+      <div class="cm-hub">📣</div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== BRACELET PROGRESS (shared across Unit 2) ===== -->
+<div class="bracelet-track" id="braceletTrack" aria-label="Friendship Bracelet progress">
+  <div class="bt-label">🧶 اصنع سوارَ الصداقة — Friendship Bracelet</div>
+  <div class="bt-string" id="btString"><span class="bt-knot">🪢</span><span class="bt-count" id="btCount">0/8</span></div>
+  <div class="bt-done" id="btDone">✨ اكتملَ السوار! أنتَ صديقٌ وفيّ 🧶✨</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Objectives</span></button>
+    <button class="tab-btn" data-tab="hb"><span class="tab-icon">📣</span><span>Hurray / Boo</span></button>
+    <button class="tab-btn" data-tab="tick"><span class="tab-icon">✅</span><span>Tick Correct</span></button>
+    <button class="tab-btn" data-tab="complete"><span class="tab-icon">🧩</span><span>Complete</span></button>
+    <button class="tab-btn" data-tab="write"><span class="tab-icon">✍️</span><span>Write Answers</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : OBJECTIVES ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#00c9a7;">
+        <div class="aim-icon-wrap">📣</div>
+        <h3 class="aim-title">Listen &amp; React</h3>
+        <p class="aim-desc">Listen and say <b>Hurray</b> for good friends and <b>Boo</b> for bad behaviour.
+          <span class="ar">أن يستمعَ الطالبُ ويقولَ Hurray للتصرّفِ الجيدِ وBoo للتصرّفِ السيّئ.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#ff6f91;">
+        <div class="aim-icon-wrap">✅</div>
+        <h3 class="aim-title">Reading</h3>
+        <p class="aim-desc">Read and tick the correct sentences about the story.
+          <span class="ar">أن يقرأَ الجملَ ويضعَ علامةَ صحٍّ على الصحيحةِ منها.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#845ec2;">
+        <div class="aim-icon-wrap">✍️</div>
+        <h3 class="aim-title">Writing</h3>
+        <p class="aim-desc">Complete the sentences and write answers to the questions.
+          <span class="ar">أن يُكملَ الجملَ ويكتبَ إجاباتٍ عن الأسئلة.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : HURRAY / BOO ===== -->
+  <section class="tab-content" id="tab-hb">
+    <h2 class="section-title">📣 Say Hurray or Boo<span class="title-sub">شجّع أو اشجب</span></h2>
+    <div class="activity-lead">
+      <b>1)</b> Listen. Say <b>Hurray</b> for a good friend. Say <b>Boo</b> for a bad friend.
+      <span class="ar">استمعْ إلى كلِّ جملة، ثم اختَرْ 👏 Hurray إذا كان تصرُّفاً جيداً، أو 👎 Boo إذا كان سيّئاً.</span>
+    </div>
+    <!-- AUDIO: track 11 — replace this placeholder with the Google Drive /preview iframe (DRIVE_FILE_ID_G6U2P3) -->
+    <div class="audio-placeholder" dir="rtl">🔉 ضعي هنا رابط مشغّل Google Drive (Audio 11 · DRIVE_FILE_ID_G6U2P3)</div>
+
+    <div id="hbList"></div>
+    <div class="hb-score" id="hbScore">Score: 0 / 5</div>
+  </section>
+
+  <!-- ===== TAB 3 : TICK CORRECT ===== -->
+  <section class="tab-content" id="tab-tick">
+    <h2 class="section-title">✅ Tick the Correct Sentences<span class="title-sub">ضع علامة صح للصحيح</span></h2>
+    <div class="activity-lead">
+      <b>2)</b> Read. Then tick ✔ the correct sentences (and ✘ the wrong ones).
+      <span class="ar">اقرأِ الجملة، ثم اضغطْ ✔ إن كانت صحيحةً أو ✘ إن كانت خاطئة.</span>
+    </div>
+    <div id="tickList">
+      <!-- data-ok = the correct mark for this sentence -->
+      <div class="tick-item" data-ok="tick"><span class="ti-n">1</span><span class="ti-text">Rania lent Fatima a book.</span>
+        <span class="ti-btns"><button class="ti-btn tick" onclick="tickAns(this,'tick')">✔️</button><button class="ti-btn cross" onclick="tickAns(this,'cross')">❌</button></span></div>
+      <div class="tick-item" data-ok="cross"><span class="ti-n">2</span><span class="ti-text">Amy and Rania did a quiz about friends.</span>
+        <span class="ti-btns"><button class="ti-btn tick" onclick="tickAns(this,'tick')">✔️</button><button class="ti-btn cross" onclick="tickAns(this,'cross')">❌</button></span></div>
+      <div class="tick-item" data-ok="tick"><span class="ti-n">3</span><span class="ti-text">Fatima wanted to be friends with Rania.</span>
+        <span class="ti-btns"><button class="ti-btn tick" onclick="tickAns(this,'tick')">✔️</button><button class="ti-btn cross" onclick="tickAns(this,'cross')">❌</button></span></div>
+      <div class="tick-item" data-ok="tick"><span class="ti-n">4</span><span class="ti-text">Bilal told Ben 'Go away! You're not my friend.'</span>
+        <span class="ti-btns"><button class="ti-btn tick" onclick="tickAns(this,'tick')">✔️</button><button class="ti-btn cross" onclick="tickAns(this,'cross')">❌</button></span></div>
+      <div class="tick-item" data-ok="cross"><span class="ti-n">5</span><span class="ti-text">Omar did not want Bilal and Ben to be friends.</span>
+        <span class="ti-btns"><button class="ti-btn tick" onclick="tickAns(this,'tick')">✔️</button><button class="ti-btn cross" onclick="tickAns(this,'cross')">❌</button></span></div>
+      <div class="tick-item" data-ok="tick"><span class="ti-n">6</span><span class="ti-text">Bilal said 'I'm sorry!'</span>
+        <span class="ti-btns"><button class="ti-btn tick" onclick="tickAns(this,'tick')">✔️</button><button class="ti-btn cross" onclick="tickAns(this,'cross')">❌</button></span></div>
+    </div>
+    <div class="tick-score" id="tickScore">Answered: 0 / 6</div>
+  </section>
+
+  <!-- ===== TAB 4 : COMPLETE (word bank) ===== -->
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">🧩 Complete the Sentences<span class="title-sub">أكمل الجمل</span></h2>
+    <div class="activity-lead">
+      <b>3)</b> Read and complete the sentences with the correct words.
+      <span class="ar">اضغطْ على الكلمةِ من البنك، ثم اضغطْ على الفراغِ المناسبِ لها.</span>
+    </div>
+    <div class="wordbank" id="wordBank">
+      <button class="wb-word" data-w="quiz">quiz</button>
+      <button class="wb-word" data-w="share">share</button>
+      <button class="wb-word" data-w="invite">invite</button>
+      <button class="wb-word" data-w="problem">problem</button>
+      <button class="wb-word" data-w="but">but</button>
+    </div>
+    <div id="gapList">
+      <div class="gap-item"><span class="gi-n">1</span> Rania, Amy and Fatima were going to do a <span class="blank" data-a="quiz"></span> about friends.</div>
+      <div class="gap-item"><span class="gi-n">2</span> It is good to <span class="blank" data-a="share"></span> your things with your friends.</div>
+      <div class="gap-item"><span class="gi-n">3</span> It is nice to <span class="blank" data-a="invite"></span> your friends to a party.</div>
+      <div class="gap-item"><span class="gi-n">4</span> It is a <span class="blank" data-a="problem"></span> when my friends do not give back my things.</div>
+      <div class="gap-item"><span class="gi-n">5</span> I don't argue with my sister <span class="blank" data-a="but"></span> my friend argues with his.</div>
+    </div>
+    <div class="gap-score" id="gapScore">Filled: 0 / 5</div>
+  </section>
+
+  <!-- ===== TAB 5 : WRITE ANSWERS ===== -->
+  <section class="tab-content" id="tab-write">
+    <h2 class="section-title">✍️ Write the Answers<span class="title-sub">اكتب الإجابات</span></h2>
+    <div class="final-questions-intro">
+      <h3>📖 Read page 12 and answer</h3>
+      <p>Read the story, answer each question, then tap to check the model answer.<br>اقرأِ القصة، أجبْ عن كلِّ سؤال، ثم اضغطْ لرؤيةِ الإجابةِ النموذجية.</p>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">1</div>
+      <p class="fq-question">Why was Rania sad?</p>
+      <p class="fq-question-ar">لماذا كانت رانيا حزينة؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer">
+        <p class="fq-answer-en">She lent Fatima a book and Fatima did not give back the book.</p>
+        <p class="fq-answer-ar">لأنّها أعارت فاطمة كتاباً ولم تُعِدْه فاطمة.</p>
+      </div>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">2</div>
+      <p class="fq-question">What did Fatima do?</p>
+      <p class="fq-question-ar">ماذا فعلت فاطمة؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer">
+        <p class="fq-answer-en">She did not give back the book.</p>
+        <p class="fq-answer-ar">لم تُعِدِ الكتاب.</p>
+      </div>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">3</div>
+      <p class="fq-question">What did Rania, Fatima and Amy do?</p>
+      <p class="fq-question-ar">ماذا فعلت رانيا وفاطمة وآمي؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer">
+        <p class="fq-answer-en">They did a quiz about friends.</p>
+        <p class="fq-answer-ar">أجرَينَ اختباراً قصيراً عن الأصدقاء.</p>
+      </div>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">4</div>
+      <p class="fq-question">What did Bilal say to Ben?</p>
+      <p class="fq-question-ar">ماذا قال بلال لبن؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer">
+        <p class="fq-answer-en">'Go away! You are not my friend.'</p>
+        <p class="fq-answer-ar">"ابتعد! أنتَ لستَ صديقي."</p>
+      </div>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">5</div>
+      <p class="fq-question">What did Omar do?</p>
+      <p class="fq-question-ar">ماذا فعل عمر؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer">
+        <p class="fq-answer-en">He invited Bilal to play basketball.</p>
+        <p class="fq-answer-ar">دعا بلال للعبِ كرةِ السلة.</p>
+      </div>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">6</div>
+      <p class="fq-question">Who do you think is a good friend?</p>
+      <p class="fq-question-ar">من الصديق الجيد برأيك؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer">
+        <p class="fq-answer-en">Omar and Rania are good friends.</p>
+        <p class="fq-answer-ar">عمر ورانيا صديقان جيّدان.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 6 : QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي</span></h2>
+    <div class="quiz-intro">
+      <h3>📣 The Golden Bead Quiz</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفوزَ بخرزةِ هذا الدرسِ الذهبية!</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">Which one deserves a HURRAY 👏?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> Bilal said 'Go away!'</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> Fatima gave back the book and said sorry.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> A friend argues and makes you cry.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">True or false: "Amy and Rania did a quiz about friends."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> True</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> False — it was Rania, Amy and Fatima.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">Complete: "It is good to ______ your things with your friends."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> share</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> argue</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> cry</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">Complete: "It is a ______ when my friends do not give back my things."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> party</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> problem</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> quiz</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">Who invited Bilal to play so they were all friends again?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> Ben</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> Omar</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> Fatima</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-bead" id="rewardBead">🧶</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating yarn */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🧶','📣','👏','✨','🧵','⭐'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(11+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    window.speechSynthesis && speechSynthesis.cancel();
+  });
+});
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','💗','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#ff6f91','#845ec2','#00c9a7','#ffc75f','#4fa3f7'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* ===== HURRAY / BOO ===== */
+var HB=[
+  {t:"Bilal said 'Go away! You're not my friend.'", ok:'boo', why:'تصرُّفٌ سيّئ — الكلامُ الجارحُ يجعلُ الصديقَ حزيناً.'},
+  {t:"Fatima gave back Rania's book and said sorry.", ok:'yay', why:'تصرُّفٌ جيّد — إعادةُ الأشياءِ والاعتذارُ من صفاتِ الصديقِ الوفيّ.'},
+  {t:"My friend argues with me and makes me cry.", ok:'boo', why:'تصرُّفٌ سيّئ — الجدالُ وإبكاءُ الأصدقاءِ ليسَ من الصداقة.'},
+  {t:"Omar invited Bilal to play so they were all friends again.", ok:'yay', why:'تصرُّفٌ جيّد — الدعوةُ للّعبِ تُصلحُ بينَ الأصدقاء.'},
+  {t:"I share my things with my friends.", ok:'yay', why:'تصرُّفٌ جيّد — المشاركةُ أساسُ الصداقةِ الطيّبة.'}
+];
+var hbScore=0, hbDone=0;
+(function(){
+  var box=document.getElementById('hbList');
+  HB.forEach(function(item,i){
+    var card=document.createElement('div'); card.className='hb-card';
+    card.innerHTML=
+      '<div class="hb-top"><span class="hb-num">'+(i+1)+'</span><span class="hb-text">'+item.t+'</span></div>'+
+      '<div class="hb-btns">'+
+        '<button class="hb-btn yay" onclick="hbAns(this,'+i+',\'yay\')">👏 Hurray</button>'+
+        '<button class="hb-btn boo" onclick="hbAns(this,'+i+',\'boo\')">👎 Boo</button>'+
+      '</div><div class="hb-fb"></div>';
+    box.appendChild(card);
+  });
+})();
+function hbAns(btn,i,choice){
+  var card=btn.closest('.hb-card'); if(card.dataset.done) return;
+  card.dataset.done='1'; hbDone++;
+  var ok=HB[i].ok, right=(choice===ok);
+  card.querySelectorAll('.hb-btn').forEach(function(b){ b.disabled=true; });
+  var correctBtn=card.querySelector('.hb-btn.'+ok);
+  correctBtn.classList.add('picked-right'); correctBtn.style.opacity=1;
+  var fb=card.querySelector('.hb-fb');
+  if(right){ hbScore++; sparkleAt(btn); fb.className='hb-fb show right'; fb.textContent='✅ أحسنت! '+HB[i].why; }
+  else{ fb.className='hb-fb show wrong'; fb.textContent='❌ الصواب: '+(ok==='yay'?'👏 Hurray':'👎 Boo')+' — '+HB[i].why; }
+  var sc=document.getElementById('hbScore'); sc.textContent='Score: '+hbScore+' / 5';
+  if(hbDone===5 && hbScore===5){ sc.innerHTML='Score: 5 / 5 — <span style="color:var(--yay-d)">Perfect! 🎉</span>'; confetti(); }
+}
+
+/* ===== TICK CORRECT ===== */
+var tickDone=0, tickRight=0;
+function tickAns(btn,choice){
+  var item=btn.closest('.tick-item'); if(item.dataset.done) return;
+  item.dataset.done='1'; tickDone++;
+  var ok=item.dataset.ok, right=(choice===ok);
+  item.querySelectorAll('.ti-btn').forEach(function(b){ b.disabled=true; });
+  var okBtn=item.querySelector('.ti-btn.'+ok);
+  okBtn.classList.add('correct');
+  if(right){ tickRight++; sparkleAt(btn); item.classList.add('locked-right'); }
+  else{ btn.classList.add('wrong'); item.classList.add('locked-wrong'); }
+  var sc=document.getElementById('tickScore');
+  sc.textContent='Answered: '+tickDone+' / 6';
+  if(tickDone===6){ sc.innerHTML='Correct: '+tickRight+' / 6'+(tickRight===6?' — <span style="color:var(--yay-d)">Perfect! 🎉</span>':''); if(tickRight===6) confetti(); }
+}
+
+/* ===== WORD BANK GAP FILL ===== */
+var selWord=null, gapFilled=0;
+document.querySelectorAll('.wb-word').forEach(function(w){
+  w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return;
+    document.querySelectorAll('.wb-word.selected').forEach(function(x){x.classList.remove('selected')});
+    selWord=w; w.classList.add('selected');
+  });
+});
+document.querySelectorAll('.blank').forEach(function(bl){
+  bl.addEventListener('click',function(){
+    if(!selWord || bl.classList.contains('filled')) return;
+    var val=selWord.dataset.w;
+    bl.textContent=val;
+    if(val===bl.dataset.a){
+      bl.classList.remove('wrong'); bl.classList.add('filled'); sparkleAt(bl);
+      selWord.classList.add('used'); selWord.classList.remove('selected'); selWord=null;
+      gapFilled++;
+      var sc=document.getElementById('gapScore'); sc.textContent='Filled: '+gapFilled+' / 5';
+      if(gapFilled===5){ sc.innerHTML='Filled: 5 / 5 — <span style="color:var(--yay-d)">All correct! 🎉</span>'; confetti(); }
+    } else {
+      bl.classList.add('wrong');
+      setTimeout(function(){ bl.classList.remove('wrong'); bl.textContent=''; },800);
+    }
+  });
+});
+
+/* ===== show model answers ===== */
+function toggleAnswer(btn){
+  var ans=btn.parentElement.querySelector('.fq-answer');
+  ans.classList.toggle('show');
+  btn.textContent=ans.classList.contains('show')?'🙈 Hide answer':'💡 Show answer';
+}
+
+/* ===== FINAL QUIZ ===== */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg;
+  if(pct===100){ emoji='🏆'; title='Golden Bead!'; msg='رائع! فزتَ بالخرزةِ الذهبية 🧶✨ عرفتَ صفاتِ الصديقِ الجيدِ تماماً.'; confetti(); document.getElementById('rewardBead').classList.add('show'); }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ ما أخطأتَ فيه ثم أعدِ المحاولةَ لتفوزَ بالخرزةِ الذهبية.'; confetti(); document.getElementById('rewardBead').classList.add('show'); }
+  else { emoji='💪'; title='Keep trying!'; msg='لا تستسلمْ! 🌱 عُدْ إلى نشاطِ Hurray/Boo ثم جرِّبْ من جديد.'; document.getElementById('rewardBead').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== FRIENDSHIP BRACELET · progress (shared across Unit 2) ===== -->
+<script>(function(){
+  var KEY='g6u2_bracelet', THIS=3, em=['💬','📖','✅','✏️','⏰','🎧','🧩','🎨'];
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var str=document.getElementById('btString'), count=document.getElementById('btCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='bt-bead'+(got.indexOf(i)>=0?' on':'');
+    s.textContent=got.indexOf(i)>=0?em[i-1]:i;
+    str.insertBefore(s, str.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('btDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
