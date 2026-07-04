@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Hopscotch English 🪨 — English for Palestine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Patrick+Hand&family=Baloo+Bhaijaan+2:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --chalk:#fdfdf5;
+  --gold:#ffd34e;
+  --green:#7bd66a;
+  --greenD:#39902d;
+  --pink:#ff7eb6;
+  --blue:#5ec8ff;
+  --red:#ff6b6b;
+  --ink:#20242b;
+}
+html,body{height:100%;overflow:hidden;touch-action:manipulation;}
+body{
+  font-family:'Fredoka',system-ui,sans-serif;
+  color:var(--chalk);
+  user-select:none;
+  /* asphalt playground */
+  background:
+    radial-gradient(120% 90% at 20% 0%, #3a3f47 0%, #2b2f36 45%, #22262c 100%);
+  position:relative;
+}
+body::before{ /* speckled pavement texture */
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;z-index:0;
+  background-image:
+    radial-gradient(rgba(255,255,255,.05) 1px, transparent 1.4px),
+    radial-gradient(rgba(0,0,0,.14) 1px, transparent 1.4px);
+  background-size:9px 9px, 13px 13px;
+  background-position:0 0, 4px 6px;
+}
+.ar{font-family:'Baloo Bhaijaan 2','Fredoka',sans-serif;direction:rtl;}
+.chalk-font{font-family:'Patrick Hand',cursive;}
+
+/* ===================== SCREENS ===================== */
+.screen{position:fixed;inset:0;display:none;flex-direction:column;z-index:2;}
+.screen.active{display:flex;}
+.wrap{width:100%;max-width:920px;margin:0 auto;padding:16px;}
+
+/* ===================== START ===================== */
+#startScreen{align-items:center;justify-content:center;overflow-y:auto;}
+#startScreen .wrap{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;}
+.teacher-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#ffe08a,#ffb43d);
+  color:#3a2a00;padding:5px 16px;border-radius:50px;
+  font-weight:700;font-size:13px;letter-spacing:.4px;
+  box-shadow:0 5px 16px rgba(0,0,0,.35);
+}
+.hero{
+  position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.mini-hop{position:relative;width:118px;height:170px;margin:2px auto 4px;}
+.mini-hop .sq{
+  position:absolute;border:3px solid var(--chalk);border-radius:8px;
+  font-family:'Patrick Hand',cursive;font-size:20px;color:var(--chalk);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 6px rgba(255,255,255,.25) inset;
+}
+.title{
+  font-family:'Patrick Hand',cursive;
+  font-size:clamp(44px,13vw,74px);line-height:.92;font-weight:400;
+  color:var(--chalk);
+  text-shadow:2px 2px 0 rgba(0,0,0,.35), 0 0 18px rgba(255,255,255,.18);
+  letter-spacing:1px;
+}
+.title .en2{color:var(--gold);}
+.subtitle{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:clamp(16px,4.6vw,22px);color:var(--pink);font-weight:700;}
+.card{
+  background:rgba(255,255,255,.06);
+  border:2px dashed rgba(255,255,255,.4);
+  border-radius:18px;padding:16px 18px;width:100%;max-width:560px;
+  backdrop-filter:blur(3px);
+}
+.card h3{font-size:16px;letter-spacing:.5px;color:var(--gold);margin-bottom:10px;text-transform:uppercase;}
+.rules{list-style:none;display:flex;flex-direction:column;gap:9px;text-align:right;}
+.rules li{
+  font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  font-size:15px;line-height:1.5;display:flex;gap:9px;align-items:flex-start;justify-content:flex-end;
+}
+.rules li .ic{font-size:19px;flex:none;}
+.btn{
+  cursor:pointer;border:none;font-family:'Fredoka',sans-serif;font-weight:700;
+  border-radius:50px;transition:transform .12s ease, box-shadow .12s ease, filter .12s;
+}
+.btn:active{transform:translateY(2px) scale(.98);}
+.btn-play{
+  font-size:22px;padding:15px 46px;color:#22160a;
+  background:linear-gradient(135deg,#ffe58a,#ffbf3d);
+  box-shadow:0 8px 0 #b47c12, 0 14px 24px rgba(0,0,0,.4);
+}
+.btn-play:active{box-shadow:0 4px 0 #b47c12, 0 8px 14px rgba(0,0,0,.4);}
+
+/* ===================== TOPIC / LEVEL PICKERS ===================== */
+.picker{align-items:center;justify-content:center;overflow-y:auto;}
+.picker .wrap{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.pick-head{font-family:'Patrick Hand',cursive;font-size:clamp(30px,8vw,46px);text-align:center;line-height:1;}
+.pick-sub{font-family:'Baloo Bhaijaan 2',sans-serif;color:var(--blue);font-size:16px;font-weight:700;margin-top:-4px;}
+.grid-topics{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:100%;max-width:560px;
+}
+@media(min-width:620px){.grid-topics{grid-template-columns:repeat(3,1fr);}}
+.topic-card{
+  cursor:pointer;background:rgba(255,255,255,.07);
+  border:2.5px solid rgba(255,255,255,.35);border-radius:20px;
+  padding:18px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  transition:transform .14s, border-color .14s, background .14s, box-shadow .14s;
+}
+.topic-card:hover,.topic-card:focus{transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.35);}
+.topic-card .t-emo{font-size:44px;line-height:1;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4));}
+.topic-card .t-en{font-weight:700;font-size:18px;}
+.topic-card .t-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:14px;opacity:.85;}
+.topic-card.c0{border-color:#7bd66a;} .topic-card.c1{border-color:#ff7eb6;}
+.topic-card.c2{border-color:#ffb43d;} .topic-card.c3{border-color:#5ec8ff;}
+.topic-card.c4{border-color:#b98cff;} .topic-card.c5{border-color:#ff9d6b;}
+
+.levels{display:flex;flex-direction:column;gap:14px;width:100%;max-width:420px;}
+.level-card{
+  cursor:pointer;display:flex;align-items:center;gap:14px;
+  background:rgba(255,255,255,.07);border:2.5px solid rgba(255,255,255,.35);
+  border-radius:18px;padding:16px 18px;transition:transform .14s, box-shadow .14s;
+}
+.level-card:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.35);}
+.level-card .lv-n{
+  font-family:'Patrick Hand',cursive;font-size:40px;width:56px;height:56px;flex:none;
+  display:flex;align-items:center;justify-content:center;border-radius:14px;color:#22160a;
+}
+.level-card.l1 .lv-n{background:var(--green);} .level-card.l2 .lv-n{background:var(--gold);}
+.level-card.l3 .lv-n{background:var(--red);}
+.level-card .lv-txt{flex:1;display:flex;flex-direction:column;gap:2px;}
+.level-card .lv-en{font-weight:700;font-size:18px;}
+.level-card .lv-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:14px;opacity:.85;}
+.level-card .lv-best{font-family:'Fredoka',sans-serif;font-size:13px;color:var(--gold);}
+.btn-back{
+  background:rgba(255,255,255,.1);color:var(--chalk);border:2px solid rgba(255,255,255,.3);
+  font-size:15px;padding:9px 22px;font-weight:600;
+}
+
+/* ===================== GAME ===================== */
+#gameScreen.active{display:flex;flex-direction:column;padding:8px 10px;gap:6px;}
+.topbar{
+  flex:none;display:flex;align-items:center;gap:8px;justify-content:space-between;
+  padding:2px 4px;
+}
+.topbar .back{
+  cursor:pointer;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);
+  color:var(--chalk);width:38px;height:38px;border-radius:12px;font-size:18px;font-weight:700;
+}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1;}
+.chip{
+  background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.28);
+  padding:5px 12px;border-radius:50px;font-size:13px;font-weight:600;white-space:nowrap;
+}
+.best-chip{color:var(--gold);}
+
+.game{flex:1;display:flex;min-height:0;flex-direction:column;align-items:center;gap:8px;}
+.board-wrap{display:flex;align-items:center;justify-content:center;flex:none;}
+.board{
+  --bh:42dvh;
+  position:relative;
+  height:var(--bh);
+  width:calc(var(--bh) * 2 / 7 + var(--bh)*0.03);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:repeat(7,1fr);
+  gap:calc(var(--bh)*0.012);
+}
+.sq{
+  position:relative;
+  border:calc(var(--bh)*0.008 + 1.4px) solid rgba(253,253,245,.85);
+  border-radius:calc(var(--bh)*0.02 + 3px);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Patrick Hand',cursive;
+  font-size:calc(var(--bh)/10.5);
+  color:rgba(253,253,245,.55);
+  box-shadow:0 0 5px rgba(255,255,255,.15) inset, 0 0 4px rgba(255,255,255,.1);
+  transition:color .25s, border-color .25s, background .25s, transform .18s;
+}
+.sq.single{grid-column:1/3;justify-self:center;width:calc((100% - var(--bh)*0.012)/2);}
+.sq.current{
+  color:var(--gold);border-color:var(--gold);
+  background:rgba(255,211,78,.14);
+  box-shadow:0 0 14px rgba(255,211,78,.45), 0 0 8px rgba(255,211,78,.35) inset;
+}
+.sq.done{
+  color:var(--green);border-color:var(--green);
+  background:rgba(123,214,106,.16);
+}
+.sq.done::after{
+  content:"✓";position:absolute;top:2%;right:8%;
+  font-size:calc(var(--bh)/16);color:var(--green);font-family:'Fredoka';font-weight:700;
+}
+.marker{
+  position:absolute;bottom:8%;left:50%;transform:translateX(-50%);
+  width:calc(var(--bh)/12);height:calc(var(--bh)/12);border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ffe9a8, #e8931f 70%, #a85b06);
+  box-shadow:0 3px 6px rgba(0,0,0,.5), 0 0 10px rgba(255,180,60,.6);
+  animation:hop .5s ease;
+}
+@keyframes hop{0%{transform:translateX(-50%) translateY(-60%) scale(.7);}60%{transform:translateX(-50%) translateY(8%) scale(1.05);}100%{transform:translateX(-50%) translateY(0) scale(1);}}
+
+/* panel */
+.panel{
+  flex:1;min-height:0;width:100%;max-width:560px;
+  display:flex;flex-direction:column;gap:8px;
+  background:rgba(255,255,255,.055);
+  border:2px dashed rgba(255,255,255,.32);border-radius:18px;
+  padding:10px 12px;overflow:hidden;
+}
+.clue{display:flex;align-items:center;justify-content:center;gap:12px;flex:none;}
+.clue-emoji{font-size:clamp(40px,11vw,62px);line-height:1;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));}
+.clue-mid{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.clue-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:clamp(18px,5.5vw,26px);font-weight:700;color:var(--chalk);direction:rtl;}
+.clue-ask{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:13px;color:var(--blue);direction:rtl;}
+.tts{
+  cursor:pointer;flex:none;width:46px;height:46px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,#5ec8ff,#2b8fd6);color:#fff;font-size:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,.35);
+}
+.tts:active{transform:scale(.9);}
+.options{
+  flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.opt{
+  cursor:pointer;border:2.5px solid rgba(255,255,255,.35);border-radius:14px;
+  background:rgba(255,255,255,.08);color:var(--chalk);
+  font-family:'Fredoka',sans-serif;font-weight:600;font-size:clamp(16px,4.6vw,21px);
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;
+  transition:transform .1s, background .15s, border-color .15s;
+  min-height:0;
+}
+.opt:active{transform:scale(.97);}
+.opt.correct{background:rgba(123,214,106,.3);border-color:var(--green);color:#eafff0;animation:pop .3s ease;}
+.opt.wrong{background:rgba(255,107,107,.28);border-color:var(--red);animation:shake .34s;}
+.opt.disabled{pointer-events:none;opacity:.65;}
+@keyframes pop{0%{transform:scale(.9);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
+.feedback{flex:none;text-align:center;font-family:'Baloo Bhaijaan 2',sans-serif;font-size:14px;min-height:20px;font-weight:700;}
+.feedback.ok{color:var(--green);}
+.feedback.no{color:var(--red);}
+
+/* landscape / laptop */
+@media(min-aspect-ratio:1/1){
+  .game{flex-direction:row;align-items:stretch;justify-content:center;gap:20px;}
+  .board-wrap{align-items:center;}
+  .board{--bh:80dvh;}
+  .panel{align-self:center;max-width:520px;flex:0 1 520px;}
+  .options{grid-template-columns:1fr 1fr;}
+}
+
+/* ===================== WIN ===================== */
+#winScreen{align-items:center;justify-content:center;overflow:hidden;}
+#winScreen .wrap{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;}
+.stamp{
+  width:180px;height:180px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  background:radial-gradient(circle at 40% 30%, #ffe9a8, #ffbf3d 60%, #e8931f 100%);
+  border:6px dashed #fff6d6;color:#4a2f00;
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  animation:badgePop .6s cubic-bezier(.2,1.4,.5,1);
+}
+@keyframes badgePop{0%{transform:scale(0) rotate(-25deg);}70%{transform:scale(1.12) rotate(6deg);}100%{transform:scale(1) rotate(0);}}
+.stamp .s-emo{font-size:56px;line-height:1;}
+.stamp .s-lbl{font-family:'Patrick Hand',cursive;font-size:19px;font-weight:700;line-height:1;}
+.win-title{font-family:'Patrick Hand',cursive;font-size:clamp(34px,9vw,52px);}
+.win-score{font-size:clamp(20px,6vw,28px);font-weight:700;color:var(--gold);}
+.win-ar{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:16px;color:var(--pink);direction:rtl;}
+.win-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:4px;}
+.btn-again{background:linear-gradient(135deg,#8ce87b,#39902d);color:#fff;font-size:18px;padding:13px 30px;box-shadow:0 6px 0 #276b1e;}
+.btn-again:active{box-shadow:0 3px 0 #276b1e;}
+.btn-change{background:linear-gradient(135deg,#5ec8ff,#2b8fd6);color:#fff;font-size:18px;padding:13px 30px;box-shadow:0 6px 0 #1c6ba3;}
+.btn-change:active{box-shadow:0 3px 0 #1c6ba3;}
+
+/* confetti + sparkle */
+.confetti{position:fixed;top:-14px;width:10px;height:16px;z-index:50;pointer-events:none;border-radius:2px;}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:1;}}
+.sparkle{position:fixed;pointer-events:none;font-size:26px;z-index:60;animation:spk .7s ease forwards;}
+@keyframes spk{0%{transform:scale(.3) translateY(0);opacity:0;}30%{opacity:1;}100%{transform:scale(1.5) translateY(-40px);opacity:0;}}
+
+footer{flex:none;text-align:center;font-size:12px;color:rgba(255,255,255,.55);padding:6px 0 3px;font-family:'Baloo Bhaijaan 2',sans-serif;}
+</style>
+</head>
+<body>
+
+<!-- ===================== START ===================== -->
+<section id="startScreen" class="screen active">
+  <div class="wrap">
+    <div class="teacher-badge">🍎 English for Palestine</div>
+    <div class="hero">
+      <div class="mini-hop" aria-hidden="true">
+        <div class="sq" style="left:39px;top:0;width:40px;height:40px;">10</div>
+        <div class="sq" style="left:8px;top:44px;width:40px;height:40px;">8</div>
+        <div class="sq" style="left:70px;top:44px;width:40px;height:40px;">9</div>
+        <div class="sq" style="left:39px;top:88px;width:40px;height:40px;">7</div>
+        <div class="sq" style="left:39px;top:132px;width:40px;height:38px;color:#ffd34e;border-color:#ffd34e;">1</div>
+      </div>
+      <h1 class="title">Hopscotch<br><span class="en2">English</span></h1>
+      <div class="subtitle">لعبة الحَجْلة لتعلُّم الإنجليزية 🪨</div>
+    </div>
+
+    <div class="card">
+      <h3>📋 How to play · طريقة اللعب</h3>
+      <ul class="rules">
+        <li><span class="ic">🎯</span><span>اختَرْ موضوعًا ومستوًى، ثم اقفِزْ في مربّعات الحَجْلة من ١ إلى ١٠.</span></li>
+        <li><span class="ic">🖼️</span><span>في كل مربّع تظهر صورةٌ ومعناها بالعربية، فاختَرِ الكلمة الإنجليزية الصحيحة.</span></li>
+        <li><span class="ic">🔊</span><span>اضغطْ زرَّ الصوت لسماع نُطق الكلمة إن أردتَ المساعدة.</span></li>
+        <li><span class="ic">🏁</span><span>كلُّ إجابةٍ صحيحةٍ تنقلك مربّعًا للأمام حتى تصلَ إلى المربّع ١٠ وتفوزَ!</span></li>
+      </ul>
+    </div>
+
+    <button class="btn btn-play" onclick="showTopics()">▶ ابدأ اللعب · Play</button>
+  </div>
+</section>
+
+<!-- ===================== TOPIC PICKER ===================== -->
+<section id="topicScreen" class="screen picker">
+  <div class="wrap">
+    <div class="pick-head">Choose a Topic</div>
+    <div class="pick-sub ar">اختَرِ الموضوع</div>
+    <div class="grid-topics" id="topicGrid"></div>
+    <button class="btn btn-back" onclick="go('startScreen')">↩ رجوع · Back</button>
+  </div>
+</section>
+
+<!-- ===================== LEVEL PICKER ===================== -->
+<section id="levelScreen" class="screen picker">
+  <div class="wrap">
+    <div class="pick-head" id="levelHead">Choose a Level</div>
+    <div class="pick-sub ar" id="levelSub">اختَرِ المستوى</div>
+    <div class="levels" id="levelList"></div>
+    <button class="btn btn-back" onclick="showTopics()">↩ الموضوعات · Topics</button>
+  </div>
+</section>
+
+<!-- ===================== GAME ===================== -->
+<section id="gameScreen" class="screen">
+  <div class="topbar">
+    <button class="back" onclick="showTopics()" title="Back">↩</button>
+    <div class="chips">
+      <span class="chip" id="chipTopic">🌿 Nature</span>
+      <span class="chip" id="chipLevel">Level 1</span>
+      <span class="chip best-chip" id="chipBest">🏅 Best 0/10</span>
+    </div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="game">
+    <div class="board-wrap"><div class="board" id="board"></div></div>
+    <div class="panel">
+      <div class="clue">
+        <div class="clue-emoji" id="clueEmoji">🍎</div>
+        <div class="clue-mid">
+          <div class="clue-ar" id="clueAr">تفّاح</div>
+          <div class="clue-ask ar">ما الكلمة الإنجليزية؟</div>
+        </div>
+        <button class="tts" id="ttsBtn" title="Listen">🔊</button>
+      </div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+  </div>
+  <footer id="gameFoot">Designed with love 💗 by T. Wad Refae</footer>
+</section>
+
+<!-- ===================== WIN ===================== -->
+<section id="winScreen" class="screen">
+  <div class="wrap">
+    <div class="stamp"><div class="s-emo" id="stampEmo">🏆</div><div class="s-lbl" id="stampLbl">HOP<br>CHAMPION</div></div>
+    <div class="win-title" id="winTitle">Well done!</div>
+    <div class="win-score" id="winScore">Score: 10 / 10</div>
+    <div class="win-ar" id="winAr">أحسنتَ! لقد وصلتَ إلى نهاية الحَجْلة 🎉</div>
+    <div class="win-btns">
+      <button class="btn btn-again" onclick="startGame()">🔁 العب مجددًا · Play again</button>
+      <button class="btn btn-change" onclick="showTopics()">🗂️ غيّر الموضوع · Change topic</button>
+    </div>
+  </div>
+  <footer>Prepared with care 🌸 by T. Wad Refae</footer>
+</section>
+
+<script>
+/* ===================== WORD REPOSITORY ===================== */
+/* w = English word, ar = Arabic meaning (فصحى), e = emoji clue */
+const TOPICS = [
+  {key:"nature", en:"Nature", ar:"الطبيعة", emoji:"🌿"},
+  {key:"fruits", en:"Fruits", ar:"الفواكه", emoji:"🍓"},
+  {key:"food",   en:"Food",   ar:"الطعام",  emoji:"🍔"},
+  {key:"animals",en:"Animals",ar:"الحيوانات",emoji:"🐾"},
+  {key:"tech",   en:"Technology", ar:"التكنولوجيا", emoji:"💻"},
+  {key:"home",   en:"Home",   ar:"المنزل",  emoji:"🏠"},
+];
+
+const WORDS = {
+  nature:{
+    1:[{w:"sun",ar:"شمس",e:"☀️"},{w:"tree",ar:"شجرة",e:"🌳"},{w:"sky",ar:"سماء",e:"🌌"},{w:"star",ar:"نجمة",e:"⭐"},{w:"rain",ar:"مطر",e:"🌧️"},{w:"sea",ar:"بحر",e:"🌊"},{w:"moon",ar:"قمر",e:"🌙"},{w:"leaf",ar:"ورقة شجر",e:"🍃"},{w:"sand",ar:"رمل",e:"🏖️"},{w:"rock",ar:"صخرة",e:"🪨"},{w:"hill",ar:"تلّة",e:"⛰️"},{w:"lake",ar:"بحيرة",e:"🏞️"}],
+    2:[{w:"river",ar:"نهر",e:"🏞️"},{w:"forest",ar:"غابة",e:"🌲"},{w:"flower",ar:"زهرة",e:"🌸"},{w:"cloud",ar:"سحابة",e:"☁️"},{w:"mountain",ar:"جبل",e:"🏔️"},{w:"desert",ar:"صحراء",e:"🏜️"},{w:"island",ar:"جزيرة",e:"🏝️"},{w:"valley",ar:"وادٍ",e:"🏞️"},{w:"rainbow",ar:"قوس قزح",e:"🌈"},{w:"thunder",ar:"رعد",e:"⛈️"},{w:"breeze",ar:"نسيم",e:"🍃"},{w:"sunset",ar:"غروب الشمس",e:"🌅"}],
+    3:[{w:"waterfall",ar:"شلّال",e:"💦"},{w:"volcano",ar:"بركان",e:"🌋"},{w:"glacier",ar:"نهر جليدي",e:"🧊"},{w:"horizon",ar:"الأفق",e:"🌄"},{w:"wilderness",ar:"البرّية",e:"🌲"},{w:"avalanche",ar:"انهيار جليدي",e:"🏔️"},{w:"atmosphere",ar:"الغلاف الجوي",e:"🌍"},{w:"peninsula",ar:"شبه جزيرة",e:"🗺️"},{w:"hurricane",ar:"إعصار",e:"🌀"},{w:"landscape",ar:"منظر طبيعي",e:"🖼️"},{w:"blossom",ar:"إزهار",e:"🌺"},{w:"meadow",ar:"مرج",e:"🌾"}],
+  },
+  fruits:{
+    1:[{w:"apple",ar:"تفّاح",e:"🍎"},{w:"banana",ar:"موز",e:"🍌"},{w:"grape",ar:"عنب",e:"🍇"},{w:"lemon",ar:"ليمون",e:"🍋"},{w:"peach",ar:"خوخ",e:"🍑"},{w:"melon",ar:"شمّام",e:"🍈"},{w:"mango",ar:"مانجا",e:"🥭"},{w:"cherry",ar:"كرز",e:"🍒"},{w:"kiwi",ar:"كيوي",e:"🥝"},{w:"pear",ar:"كمّثرى",e:"🍐"},{w:"orange",ar:"برتقال",e:"🍊"},{w:"coconut",ar:"جوز الهند",e:"🥥"}],
+    2:[{w:"strawberry",ar:"فراولة",e:"🍓"},{w:"pineapple",ar:"أناناس",e:"🍍"},{w:"watermelon",ar:"بطّيخ",e:"🍉"},{w:"apricot",ar:"مشمش",e:"🍑"},{w:"avocado",ar:"أفوكادو",e:"🥑"},{w:"blueberry",ar:"توت أزرق",e:"🫐"},{w:"grapefruit",ar:"جريب فروت",e:"🍊"},{w:"tangerine",ar:"يوسفي",e:"🍊"},{w:"raspberry",ar:"توت العلّيق",e:"🍓"},{w:"pomegranate",ar:"رمّان",e:"🍎"},{w:"plum",ar:"برقوق",e:"🟣"},{w:"guava",ar:"جوّافة",e:"🟢"}],
+    3:[{w:"persimmon",ar:"كاكا (خرمالو)",e:"🟠"},{w:"nectarine",ar:"نكتارين",e:"🍑"},{w:"blackberry",ar:"توت أسود",e:"🫐"},{w:"cranberry",ar:"توت بري",e:"🔴"},{w:"clementine",ar:"كلمنتينا",e:"🍊"},{w:"dragonfruit",ar:"فاكهة التنّين",e:"🐉"},{w:"passionfruit",ar:"فاكهة العاطفة",e:"🟣"},{w:"mulberry",ar:"توت شامي",e:"🫐"},{w:"quince",ar:"سفرجل",e:"🟡"},{w:"gooseberry",ar:"عنب الثعلب",e:"🟢"},{w:"lychee",ar:"ليتشي",e:"🔴"},{w:"papaya",ar:"بابايا",e:"🟠"}],
+  },
+  food:{
+    1:[{w:"bread",ar:"خبز",e:"🍞"},{w:"rice",ar:"أرز",e:"🍚"},{w:"egg",ar:"بيضة",e:"🥚"},{w:"milk",ar:"حليب",e:"🥛"},{w:"meat",ar:"لحم",e:"🍖"},{w:"fish",ar:"سمك",e:"🐟"},{w:"soup",ar:"حساء",e:"🍲"},{w:"cake",ar:"كعكة",e:"🍰"},{w:"cheese",ar:"جبن",e:"🧀"},{w:"honey",ar:"عسل",e:"🍯"},{w:"salt",ar:"ملح",e:"🧂"},{w:"cookie",ar:"بسكويت",e:"🍪"}],
+    2:[{w:"chicken",ar:"دجاج",e:"🍗"},{w:"butter",ar:"زبدة",e:"🧈"},{w:"yogurt",ar:"لبن (زبادي)",e:"🥛"},{w:"salad",ar:"سلطة",e:"🥗"},{w:"pasta",ar:"معكرونة",e:"🍝"},{w:"sugar",ar:"سكّر",e:"🍬"},{w:"pepper",ar:"فلفل",e:"🌶️"},{w:"sandwich",ar:"شطيرة",e:"🥪"},{w:"noodles",ar:"نودلز",e:"🍜"},{w:"pancake",ar:"فطيرة محلّاة",e:"🥞"},{w:"omelette",ar:"عجّة (أومليت)",e:"🍳"},{w:"popcorn",ar:"فشار",e:"🍿"}],
+    3:[{w:"vegetable",ar:"خُضار",e:"🥦"},{w:"breakfast",ar:"فطور",e:"🍳"},{w:"dessert",ar:"حلوى (تحلية)",e:"🍮"},{w:"sausage",ar:"نقانق",e:"🌭"},{w:"cinnamon",ar:"قرفة",e:"🟤"},{w:"chocolate",ar:"شوكولاتة",e:"🍫"},{w:"mushroom",ar:"فطر",e:"🍄"},{w:"seafood",ar:"مأكولات بحرية",e:"🦐"},{w:"appetizer",ar:"مقبّلات",e:"🥟"},{w:"spaghetti",ar:"سباغيتي",e:"🍝"},{w:"ingredient",ar:"مُكوِّن",e:"🧂"},{w:"casserole",ar:"طاجن",e:"🍲"}],
+  },
+  animals:{
+    1:[{w:"cat",ar:"قطّة",e:"🐱"},{w:"dog",ar:"كلب",e:"🐶"},{w:"cow",ar:"بقرة",e:"🐮"},{w:"pig",ar:"خنزير",e:"🐷"},{w:"fox",ar:"ثعلب",e:"🦊"},{w:"bee",ar:"نحلة",e:"🐝"},{w:"ant",ar:"نملة",e:"🐜"},{w:"duck",ar:"بطّة",e:"🦆"},{w:"frog",ar:"ضفدع",e:"🐸"},{w:"goat",ar:"عنزة",e:"🐐"},{w:"owl",ar:"بومة",e:"🦉"},{w:"hen",ar:"دجاجة",e:"🐔"}],
+    2:[{w:"rabbit",ar:"أرنب",e:"🐰"},{w:"monkey",ar:"قرد",e:"🐵"},{w:"tiger",ar:"نمر",e:"🐯"},{w:"horse",ar:"حصان",e:"🐴"},{w:"sheep",ar:"خروف",e:"🐑"},{w:"snake",ar:"أفعى",e:"🐍"},{w:"spider",ar:"عنكبوت",e:"🕷️"},{w:"camel",ar:"جمل",e:"🐫"},{w:"turtle",ar:"سلحفاة",e:"🐢"},{w:"parrot",ar:"ببّغاء",e:"🦜"},{w:"dolphin",ar:"دلفين",e:"🐬"},{w:"donkey",ar:"حمار",e:"🫏"}],
+    3:[{w:"elephant",ar:"فيل",e:"🐘"},{w:"crocodile",ar:"تمساح",e:"🐊"},{w:"butterfly",ar:"فراشة",e:"🦋"},{w:"kangaroo",ar:"كنغر",e:"🦘"},{w:"penguin",ar:"بطريق",e:"🐧"},{w:"squirrel",ar:"سنجاب",e:"🐿️"},{w:"giraffe",ar:"زرافة",e:"🦒"},{w:"hedgehog",ar:"قنفذ",e:"🦔"},{w:"rhinoceros",ar:"وحيد القرن",e:"🦏"},{w:"octopus",ar:"أخطبوط",e:"🐙"},{w:"leopard",ar:"فهد",e:"🐆"},{w:"peacock",ar:"طاووس",e:"🦚"}],
+  },
+  tech:{
+    1:[{w:"phone",ar:"هاتف",e:"📱"},{w:"mouse",ar:"فأرة الحاسوب",e:"🖱️"},{w:"screen",ar:"شاشة",e:"🖥️"},{w:"app",ar:"تطبيق",e:"📲"},{w:"wifi",ar:"واي فاي",e:"📶"},{w:"plug",ar:"قابس",e:"🔌"},{w:"code",ar:"شيفرة برمجية",e:"💻"},{w:"disk",ar:"قرص",e:"💽"},{w:"mail",ar:"بريد إلكتروني",e:"📧"},{w:"game",ar:"لعبة",e:"🎮"},{w:"robot",ar:"روبوت",e:"🤖"},{w:"key",ar:"مفتاح (زر)",e:"🔑"}],
+    2:[{w:"laptop",ar:"حاسوب محمول",e:"💻"},{w:"tablet",ar:"لوح إلكتروني",e:"📱"},{w:"keyboard",ar:"لوحة مفاتيح",e:"⌨️"},{w:"camera",ar:"كاميرا",e:"📷"},{w:"printer",ar:"طابعة",e:"🖨️"},{w:"battery",ar:"بطّارية",e:"🔋"},{w:"speaker",ar:"مكبّر صوت",e:"🔊"},{w:"monitor",ar:"شاشة عرض",e:"🖥️"},{w:"network",ar:"شبكة",e:"🌐"},{w:"browser",ar:"متصفّح",e:"🧭"},{w:"charger",ar:"شاحن",e:"🔌"},{w:"headphones",ar:"سمّاعات رأس",e:"🎧"}],
+    3:[{w:"software",ar:"برمجيّات",e:"💾"},{w:"hardware",ar:"عتاد (مكوّنات مادّية)",e:"🖥️"},{w:"internet",ar:"الإنترنت",e:"🌐"},{w:"download",ar:"تنزيل",e:"⬇️"},{w:"password",ar:"كلمة المرور",e:"🔒"},{w:"algorithm",ar:"خوارزمية",e:"🧮"},{w:"processor",ar:"معالج",e:"🧠"},{w:"database",ar:"قاعدة بيانات",e:"🗄️"},{w:"satellite",ar:"قمر صناعي",e:"🛰️"},{w:"bluetooth",ar:"بلوتوث",e:"🔵"},{w:"smartphone",ar:"هاتف ذكي",e:"📱"},{w:"microphone",ar:"ميكروفون",e:"🎙️"}],
+  },
+  home:{
+    1:[{w:"bed",ar:"سرير",e:"🛏️"},{w:"door",ar:"باب",e:"🚪"},{w:"lamp",ar:"مصباح",e:"💡"},{w:"cup",ar:"كوب",e:"☕"},{w:"fork",ar:"شوكة",e:"🍴"},{w:"spoon",ar:"ملعقة",e:"🥄"},{w:"chair",ar:"كرسي",e:"🪑"},{w:"sofa",ar:"أريكة",e:"🛋️"},{w:"clock",ar:"ساعة حائط",e:"🕐"},{w:"plate",ar:"صحن",e:"🍽️"},{w:"knife",ar:"سكّين",e:"🔪"},{w:"soap",ar:"صابون",e:"🧼"}],
+    2:[{w:"window",ar:"نافذة",e:"🪟"},{w:"kitchen",ar:"مطبخ",e:"🍳"},{w:"mirror",ar:"مرآة",e:"🪞"},{w:"pillow",ar:"وسادة",e:"🛏️"},{w:"blanket",ar:"بطّانية",e:"🛌"},{w:"garden",ar:"حديقة",e:"🌷"},{w:"carpet",ar:"سجّادة",e:"🧶"},{w:"curtain",ar:"ستارة",e:"🪟"},{w:"basket",ar:"سلّة",e:"🧺"},{w:"towel",ar:"منشفة",e:"🧻"},{w:"candle",ar:"شمعة",e:"🕯️"},{w:"broom",ar:"مكنسة",e:"🧹"}],
+    3:[{w:"bathroom",ar:"حمّام",e:"🛁"},{w:"bedroom",ar:"غرفة نوم",e:"🛏️"},{w:"furniture",ar:"أثاث",e:"🪑"},{w:"staircase",ar:"درج (سلّم)",e:"🪜"},{w:"wardrobe",ar:"خزانة ملابس",e:"🚪"},{w:"balcony",ar:"شرفة",e:"🏠"},{w:"cushion",ar:"وسادة أريكة",e:"🛋️"},{w:"doorbell",ar:"جرس الباب",e:"🔔"},{w:"refrigerator",ar:"ثلّاجة",e:"🧊"},{w:"microwave",ar:"مايكروويف",e:"📡"},{w:"ceiling",ar:"سقف",e:"⬆️"},{w:"drawer",ar:"درج",e:"🗄️"}],
+  },
+};
+
+const LEVELS = [
+  {n:1, en:"Easy",   ar:"سهل — كلمات قصيرة وشائعة", cls:"l1"},
+  {n:2, en:"Medium", ar:"متوسط — كلمات أطول", cls:"l2"},
+  {n:3, en:"Hard",   ar:"صعب — كلمات متقدّمة", cls:"l3"},
+];
+
+/* board layout (playing order 1..10; rows top->bottom) */
+const LAYOUT = [
+  {n:10, r:1, single:true},
+  {n:8,  r:2, c:1},
+  {n:9,  r:2, c:2},
+  {n:7,  r:3, single:true},
+  {n:5,  r:4, c:1},
+  {n:6,  r:4, c:2},
+  {n:4,  r:5, single:true},
+  {n:2,  r:6, c:1},
+  {n:3,  r:6, c:2},
+  {n:1,  r:7, single:true},
+];
+
+/* ===================== STATE ===================== */
+let state = { topic:null, level:null, seq:[], step:0, score:0 };
+
+/* ===================== HELPERS ===================== */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function bestKey(t,l){return `hop_best_${t}_${l}`;}
+function getBest(t,l){return parseInt(localStorage.getItem(bestKey(t,l))||"0",10);}
+
+/* ===================== NAV ===================== */
+function showTopics(){ buildTopics(); go('topicScreen'); }
+
+function buildTopics(){
+  const grid=document.getElementById('topicGrid');
+  grid.innerHTML='';
+  TOPICS.forEach((t,i)=>{
+    const d=document.createElement('div');
+    d.className='topic-card c'+i; d.tabIndex=0;
+    d.innerHTML=`<div class="t-emo">${t.emoji}</div><div class="t-en">${t.en}</div><div class="t-ar">${t.ar}</div>`;
+    d.onclick=()=>showLevels(t.key);
+    d.onkeydown=e=>{if(e.key==='Enter')showLevels(t.key);};
+    grid.appendChild(d);
+  });
+}
+
+function showLevels(topicKey){
+  state.topic=topicKey;
+  const t=TOPICS.find(x=>x.key===topicKey);
+  document.getElementById('levelHead').textContent=t.en;
+  document.getElementById('levelSub').textContent='اختَرِ المستوى · '+t.ar;
+  const list=document.getElementById('levelList');
+  list.innerHTML='';
+  LEVELS.forEach(lv=>{
+    const best=getBest(topicKey,lv.n);
+    const d=document.createElement('div');
+    d.className='level-card '+lv.cls; d.tabIndex=0;
+    d.innerHTML=`<div class="lv-n">${lv.n}</div>
+      <div class="lv-txt"><div class="lv-en">Level ${lv.n} · ${lv.en}</div>
+      <div class="lv-ar">${lv.ar}</div>
+      <div class="lv-best">🏅 Best: ${best}/10</div></div>`;
+    d.onclick=()=>{state.level=lv.n;startGame();};
+    d.onkeydown=e=>{if(e.key==='Enter'){state.level=lv.n;startGame();}};
+    list.appendChild(d);
+  });
+  go('levelScreen');
+}
+
+/* ===================== GAME ===================== */
+function startGame(){
+  const pool=WORDS[state.topic][state.level];
+  // pick 10 distinct words, shuffled -> no word repeats in a game
+  state.seq = shuffle(pool).slice(0,10);
+  state.step=0; state.score=0;
+  const t=TOPICS.find(x=>x.key===state.topic);
+  document.getElementById('chipTopic').textContent=`${t.emoji} ${t.en}`;
+  document.getElementById('chipLevel').textContent=`Level ${state.level}`;
+  document.getElementById('chipBest').textContent=`🏅 Best ${getBest(state.topic,state.level)}/10`;
+  buildBoard();
+  go('gameScreen');
+  loadStep();
+}
+
+function buildBoard(){
+  const b=document.getElementById('board');
+  b.innerHTML='';
+  LAYOUT.forEach(cell=>{
+    const s=document.createElement('div');
+    s.className='sq'+(cell.single?' single':'');
+    s.dataset.num=cell.n;
+    s.style.gridRow=cell.r;
+    if(cell.single){s.style.gridColumn='1 / 3';}
+    else{s.style.gridColumn=cell.c;}
+    s.textContent=cell.n;
+    b.appendChild(s);
+  });
+}
+
+function squareEl(n){return document.querySelector(`.sq[data-num="${n}"]`);}
+
+function loadStep(){
+  const num=state.step+1;               // playing square 1..10
+  // mark board
+  document.querySelectorAll('.sq').forEach(s=>{
+    s.classList.remove('current');
+    const m=s.querySelector('.marker'); if(m) m.remove();
+  });
+  const cur=squareEl(num);
+  cur.classList.add('current');
+  const mk=document.createElement('div'); mk.className='marker'; cur.appendChild(mk);
+
+  const item=state.seq[state.step];
+  document.getElementById('clueEmoji').textContent=item.e;
+  document.getElementById('clueAr').textContent=item.ar;
+  document.getElementById('feedback').textContent='';
+  document.getElementById('feedback').className='feedback';
+
+  // build 4 options: correct + 3 distractors from same pool
+  const pool=WORDS[state.topic][state.level];
+  const distract=shuffle(pool.filter(x=>x.w!==item.w)).slice(0,3).map(x=>x.w);
+  const opts=shuffle([item.w, ...distract]);
+  const box=document.getElementById('options');
+  box.innerHTML='';
+  let answered=false;
+  opts.forEach(w=>{
+    const o=document.createElement('button');
+    o.className='opt'; o.textContent=w;
+    o.onclick=()=>{
+      if(answered && o.classList.contains('disabled')) return;
+      if(w===item.w){
+        answered=true;
+        o.classList.add('correct');
+        box.querySelectorAll('.opt').forEach(x=>x.classList.add('disabled'));
+        sparkleAt(o);
+        state.score++;
+        const fb=document.getElementById('feedback');
+        fb.textContent='✅ أحسنت! إجابة صحيحة';
+        fb.className='feedback ok';
+        setTimeout(advance, 720);
+      } else {
+        o.classList.add('wrong','disabled');
+        const fb=document.getElementById('feedback');
+        fb.textContent='❌ حاول مرة أخرى';
+        fb.className='feedback no';
+      }
+    };
+    box.appendChild(o);
+  });
+}
+
+function advance(){
+  const num=state.step+1;
+  const cur=squareEl(num);
+  cur.classList.remove('current');
+  cur.classList.add('done');
+  const m=cur.querySelector('.marker'); if(m) m.remove();
+  state.step++;
+  if(state.step>=10){ winGame(); }
+  else { loadStep(); }
+}
+
+/* TTS: hear the current English word */
+document.getElementById('ttsBtn').onclick=()=>{
+  const item=state.seq[state.step];
+  if(!item || !('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(item.w);
+  u.lang='en-US'; u.rate=.85;
+  speechSynthesis.speak(u);
+};
+
+/* ===================== WIN ===================== */
+function winGame(){
+  const t=TOPICS.find(x=>x.key===state.topic);
+  const prevBest=getBest(state.topic,state.level);
+  if(state.score>prevBest){ localStorage.setItem(bestKey(state.topic,state.level), state.score); }
+  document.getElementById('winScore').textContent=`Score: ${state.score} / 10`;
+  document.getElementById('winTitle').textContent = state.score===10 ? 'Perfect! 🌟' : 'Well done!';
+  document.getElementById('winAr').textContent = state.score===10
+    ? `أحسنتَ! عبرتَ الحَجْلة كاملةً في موضوع ${t.ar} 🎉`
+    : `أحسنتَ! وصلتَ إلى نهاية الحَجْلة 🎉`;
+  document.getElementById('stampEmo').textContent = state.score===10 ? '🏆' : '🪨';
+  document.getElementById('stampLbl').innerHTML = state.score===10 ? 'HOP<br>CHAMPION' : 'GREAT<br>HOP!';
+  go('winScreen');
+  confettiBurst();
+}
+
+/* ===================== EFFECTS ===================== */
+function sparkleAt(el){
+  const r=el.getBoundingClientRect();
+  ['✨','⭐','✨'].forEach((s,i)=>{
+    const sp=document.createElement('div');
+    sp.className='sparkle'; sp.textContent=s;
+    sp.style.left=(r.left+r.width/2-13+(i-1)*22)+'px';
+    sp.style.top=(r.top+r.height/2-13)+'px';
+    document.body.appendChild(sp);
+    setTimeout(()=>sp.remove(),720);
+  });
+}
+function confettiBurst(){
+  const colors=['#ffd34e','#ff7eb6','#7bd66a','#5ec8ff','#b98cff','#ff9d6b'];
+  for(let i=0;i<90;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    const dur=2.4+Math.random()*1.8;
+    c.style.animation=`fall ${dur}s linear ${Math.random()*0.5}s forwards`;
+    c.style.opacity=0;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),(dur+0.7)*1000);
+  }
+}
+
+/* footer alternates */
+document.getElementById('gameFoot').textContent =
+  Math.random()<.5 ? 'Designed with love 💗 by T. Wad Refae' : 'Prepared with care 🌸 by T. Wad Refae';
+</script>
+</body>
+</html>
