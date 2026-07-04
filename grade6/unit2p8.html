@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Good Friends - Unit 2 Period 8 | Quiz Time Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --plum:#3b2a4a; --plum-d:#2a1d36;
+    --purple:#845ec2; --purple-d:#6a48a0;
+    --coral:#ff6f91; --coral-d:#e04f73;
+    --teal:#00c9a7; --teal-d:#00a388;
+    --gold:#ffc75f; --gold-d:#e0a63e;
+    --cream:#fff5f7; --paper:#fffdfb;
+    --thread:#f9a8c4;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--plum); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      repeating-linear-gradient(45deg, rgba(132,94,194,.04) 0 2px, transparent 2px 26px),
+      repeating-linear-gradient(-45deg, rgba(0,201,167,.05) 0 2px, transparent 2px 26px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.22; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(540deg);} }
+
+  /* ===== HEADER : QUIZ TIME game board ===== */
+  .lesson-header{
+    background:linear-gradient(160deg, var(--plum-d) 0%, var(--purple-d) 50%, var(--coral) 140%);
+    padding:26px 16px 46px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--coral) 0 12px, var(--gold) 12px 24px, var(--teal) 24px 36px, var(--purple) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.25);
+  }
+  /* marquee lights around the board */
+  .header-inner{ max-width:640px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--plum-d);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.25); transform:rotate(-2deg);
+  }
+  .quiz-board{
+    background:linear-gradient(180deg,#5a3f7d,#3a2856); border-radius:20px; border:4px solid var(--gold);
+    padding:20px 18px 22px; position:relative; box-shadow:0 10px 0 var(--plum-d), 0 16px 34px rgba(0,0,0,.4);
+  }
+  .marquee{ position:absolute; inset:6px; border-radius:14px; pointer-events:none;
+    background:
+      radial-gradient(circle, var(--gold) 40%, transparent 42%) 0 0/22px 22px repeat-x,
+      radial-gradient(circle, var(--gold) 40%, transparent 42%) 0 100%/22px 22px repeat-x,
+      radial-gradient(circle, var(--gold) 40%, transparent 42%) 0 0/22px 22px repeat-y,
+      radial-gradient(circle, var(--gold) 40%, transparent 42%) 100% 0/22px 22px repeat-y;
+    opacity:.55; animation:blink 1.2s steps(2) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:.2; } }
+  .qb-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(32px,7vw,52px); color:var(--gold);
+    letter-spacing:2px; text-shadow:0 0 12px rgba(255,199,95,.8), 3px 3px 0 var(--plum-d); margin-bottom:2px;
+    position:relative; z-index:1;
+  }
+  .qb-sub{ color:#e6dcf5; font-size:clamp(14px,3vw,18px); font-weight:700; margin-bottom:14px; position:relative; z-index:1; }
+  .qb-btns{ display:flex; justify-content:center; gap:10px; position:relative; z-index:1; direction:ltr; }
+  .qb-abtn{
+    width:46px; height:46px; border-radius:50%; border:3px solid #fff; font-family:'Fredoka',sans-serif;
+    font-weight:700; font-size:20px; color:#fff; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 0 rgba(0,0,0,.3), 0 6px 12px rgba(0,0,0,.3); animation:pop 1.8s ease-in-out infinite;
+  }
+  .qb-abtn.a{ background:linear-gradient(135deg,var(--coral),var(--coral-d)); }
+  .qb-abtn.b{ background:linear-gradient(135deg,var(--teal),var(--teal-d)); animation-delay:.2s; }
+  .qb-abtn.c{ background:linear-gradient(135deg,var(--purple),var(--purple-d)); animation-delay:.4s; }
+  @keyframes pop{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-5px);} }
+  .lesson-subtitle{ color:var(--gold); font-weight:800; font-size:clamp(14px,3vw,18px); margin-top:14px; position:relative; z-index:2; }
+
+  /* ===== BRACELET PROGRESS (shared) ===== */
+  .bracelet-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, var(--purple), var(--purple-d));
+    border:2px solid #fff; box-shadow:0 6px 18px rgba(59,42,74,.35);
+  }
+  .bt-label{ color:#fff; font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; text-shadow:0 1px 2px rgba(0,0,0,.35); margin-bottom:9px; font-size:15px; }
+  .bt-string{ display:flex; align-items:center; justify-content:center; gap:6px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .bt-string::before{ content:''; position:absolute; left:4%; right:4%; top:50%; height:3px; background:var(--thread); border-radius:2px; z-index:0; }
+  .bt-bead{
+    width:32px; height:32px; border-radius:50%; position:relative; z-index:1;
+    background:rgba(255,255,255,.92); border:2px solid #fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; color:var(--purple-d); box-shadow:0 2px 4px rgba(0,0,0,.3);
+  }
+  .bt-bead.on{ color:#fff; font-size:15px; box-shadow:0 0 0 3px rgba(255,199,95,.5), 0 2px 5px rgba(0,0,0,.3); }
+  .bt-bead.on:nth-child(4n+1){ background:radial-gradient(circle at 40% 32%, #ffb3c6, var(--coral) 75%); }
+  .bt-bead.on:nth-child(4n+2){ background:radial-gradient(circle at 40% 32%, #7dffe5, var(--teal) 75%); }
+  .bt-bead.on:nth-child(4n+3){ background:radial-gradient(circle at 40% 32%, #c5a8ff, var(--purple) 75%); }
+  .bt-bead.on:nth-child(4n){ background:radial-gradient(circle at 40% 32%, #fff0b0, var(--gold) 75%); }
+  .bt-knot{ font-size:20px; z-index:1; }
+  .bt-count{ background:rgba(255,255,255,.2); color:#fff; border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .bt-done{ margin-top:7px; color:var(--gold); font-weight:800; font-size:14px; display:none; }
+  .bt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 var(--purple-d), 0 14px 34px rgba(59,42,74,.2);
+    display:flex; gap:8px; border:3px solid var(--purple);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:12px 14px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; color:var(--purple-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:92px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(132,94,194,.12); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--coral), var(--purple));
+    color:#fff; box-shadow:0 4px 0 var(--purple-d), 0 6px 14px rgba(132,94,194,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:24px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:29px; color:var(--plum); text-align:center;
+    margin-bottom:22px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--coral) 0 10px, var(--gold) 10px 20px, var(--teal) 20px 30px, var(--purple) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#8a7a9a; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eadcf5; box-shadow:0 6px 0 var(--purple), 0 8px 20px rgba(59,42,74,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--coral)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--coral));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--plum); margin-bottom:9px; }
+  .aim-desc{ color:#5d4a70; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#8a7a9a; margin-top:7px; }
+
+  .activity-lead{
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--plum); direction:ltr; text-align:left;
+    background:var(--paper); border:3px solid #eadcf5; border-left:6px solid var(--coral);
+    border-radius:14px; padding:15px 18px; margin-bottom:18px; line-height:1.6;
+  }
+  .activity-lead .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13.5px; color:#8a7a9a; margin-top:6px; font-weight:600; }
+
+  /* ===== COMPLETE (word bank + emoji cue) ===== */
+  .wordbank{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px;
+    background:var(--paper); border:3px dashed var(--purple); border-radius:16px; padding:16px;
+  }
+  .wb-word{
+    background:linear-gradient(135deg, var(--purple), var(--coral)); color:#fff; border:none;
+    padding:9px 18px; border-radius:22px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; box-shadow:0 3px 0 var(--purple-d); transition:all .15s;
+  }
+  .wb-word:hover:not(.used){ transform:translateY(-2px); }
+  .wb-word.used{ opacity:.35; cursor:default; text-decoration:line-through; }
+  .wb-word.selected{ outline:3px solid var(--gold); transform:translateY(-2px) scale(1.05); }
+  .gap-item{
+    background:var(--paper); border-radius:14px; border:3px solid #eadcf5; padding:15px 18px; margin-bottom:11px;
+    box-shadow:0 4px 0 var(--purple); direction:ltr; text-align:left; font-family:'Fredoka',sans-serif;
+    font-size:16.5px; color:var(--plum); line-height:2; display:flex; align-items:baseline; gap:10px;
+  }
+  .gap-item .cue{ font-size:26px; flex-shrink:0; }
+  .gap-item .gi-n{ display:inline-flex; width:26px; height:26px; margin-right:4px; background:var(--coral); color:#fff; border-radius:50%; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0; }
+  .blank{
+    display:inline-block; min-width:96px; border-bottom:3px dashed var(--purple); cursor:pointer;
+    text-align:center; padding:0 8px 2px; margin:0 3px; color:var(--purple-d); font-weight:700; transition:all .15s; vertical-align:middle;
+  }
+  .blank:hover{ background:#f3ecff; }
+  .blank.filled{ border-bottom-style:solid; border-color:var(--teal-d); color:var(--teal-d); background:#e6faf4; border-radius:6px; }
+  .blank.wrong{ border-color:var(--coral-d); color:var(--coral-d); background:#ffeef2; }
+  .gap-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--purple-d); font-weight:600; margin-top:14px; }
+
+  /* ===== PROJECT ===== */
+  .proj-intro{
+    background:linear-gradient(135deg, var(--gold), var(--coral)); color:var(--plum-d); padding:22px;
+    border-radius:18px; text-align:center; margin-bottom:20px; box-shadow:0 6px 0 var(--coral-d);
+  }
+  .proj-intro h3{ font-family:'Fredoka',sans-serif; font-size:23px; margin-bottom:6px; }
+  .proj-intro p{ font-size:14px; line-height:1.7; font-weight:700; }
+  .steps{ display:grid; gap:12px; margin-bottom:22px; }
+  .step{
+    background:var(--paper); border-radius:14px; border:3px solid #eadcf5; padding:14px 18px;
+    box-shadow:0 4px 0 var(--purple); display:flex; gap:13px; align-items:flex-start;
+  }
+  .step .sn{
+    flex-shrink:0; width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--purple));
+    color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Fredoka'; font-weight:700; box-shadow:0 3px 0 var(--purple-d);
+  }
+  .step .st{ font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--plum); direction:ltr; text-align:left; line-height:1.5; }
+  .step .st .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo'; font-size:12.5px; color:#8a7a9a; margin-top:3px; }
+
+  /* sample quiz card (model) */
+  .qcard{
+    background:linear-gradient(180deg,#fff,#fdf4ff); border-radius:18px; border:3px solid var(--purple);
+    padding:0 0 16px; margin-bottom:18px; box-shadow:0 6px 0 var(--purple-d); overflow:hidden;
+  }
+  .qcard-head{
+    background:linear-gradient(135deg,var(--purple),var(--coral)); color:#fff; font-family:'Fredoka',sans-serif;
+    font-size:18px; padding:12px 18px; text-align:center; letter-spacing:1px;
+  }
+  .qrow{ padding:12px 18px 0; direction:ltr; text-align:left; }
+  .qrow .qq{ font-family:'Fredoka',sans-serif; font-size:15px; color:var(--plum); margin-bottom:8px; display:flex; gap:8px; }
+  .qrow .qq .n{ background:var(--gold); color:var(--plum-d); width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .qopts{ display:flex; flex-wrap:wrap; gap:8px; }
+  .qopt{
+    background:#fff; border:2px solid #ddd0f5; border-radius:20px; padding:5px 14px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:13.5px; color:var(--purple-d); transition:all .15s;
+  }
+  .qopt:hover{ background:#f3ecff; }
+  .qopt.chosen{ background:#c8f5e9; border-color:var(--teal-d); color:#00614f; box-shadow:0 0 0 2px rgba(0,201,167,.3); }
+
+  /* build-your-own */
+  .writer-box{
+    background:var(--paper); border-radius:16px; border:3px solid #eadcf5; padding:16px 18px; margin-bottom:14px;
+    box-shadow:0 5px 0 var(--purple);
+  }
+  .writer-box label{ font-family:'Fredoka',sans-serif; color:var(--purple-d); font-size:14.5px; display:block; margin-bottom:7px; direction:ltr; text-align:left; }
+  .writer-box input, .writer-box textarea{
+    width:100%; border:2px solid #eadcf5; border-radius:10px; padding:9px 12px; font-family:'Fredoka',sans-serif;
+    font-size:15px; color:var(--plum); direction:ltr; text-align:left; margin-bottom:8px;
+  }
+  .writer-box input:focus, .writer-box textarea:focus{ outline:none; border-color:var(--purple); }
+  .opt-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .opt-row input{ flex:1; min-width:110px; }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--coral)); color:var(--plum-d); padding:26px 22px;
+    border-radius:22px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--coral-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'🎯'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:25px; margin-bottom:8px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.45); height:12px; border-radius:10px; margin-top:16px; overflow:hidden; border:2px solid rgba(255,255,255,.65); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--teal), var(--purple)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid #eadcf5; box-shadow:0 6px 0 var(--purple), 0 8px 18px rgba(59,42,74,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--coral), var(--purple)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--purple-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--plum); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eadcf5; padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--plum);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--purple); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:#eadcf5; color:var(--purple-d); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#c8f5e9; border-color:var(--teal-d); color:#00614f; }
+  .quiz-option.correct .opt-letter{ background:var(--teal-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9e2; border-color:var(--coral-d); color:#a1123d; }
+  .quiz-option.wrong .opt-letter{ background:var(--coral-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e6faf4,#c8f5e9); border-right:4px solid var(--teal-d); color:#00614f; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#ffeef2,#ffd9e2); border-right:4px solid var(--coral-d); color:#a1123d; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:36px 22px; text-align:center;
+    border:3px solid #eadcf5; box-shadow:0 8px 0 var(--purple), 0 12px 28px rgba(59,42,74,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:74px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:29px; color:var(--plum); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:50px; color:var(--coral); margin:16px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:28px; color:#5d4a70; }
+  .result-message{ font-size:16px; line-height:1.7; margin-bottom:22px; font-weight:600; }
+  .reward-bead{
+    display:none; margin:0 auto 18px; width:100px; height:100px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff0b0, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(255,199,95,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:48px;
+  }
+  .reward-bead.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--purple), var(--coral)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--purple-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  /* unit complete banner */
+  .unit-complete{
+    display:none; background:linear-gradient(135deg,var(--teal),var(--purple)); color:#fff; border-radius:20px;
+    padding:26px 22px; text-align:center; margin-top:22px; box-shadow:0 8px 0 var(--purple-d);
+  }
+  .unit-complete.show{ display:block; animation:fadeIn .6s; }
+  .unit-complete h3{ font-family:'Fredoka',sans-serif; font-size:24px; margin-bottom:8px; }
+  .unit-complete .bracelet-final{ font-size:40px; letter-spacing:4px; margin:12px 0; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--plum-d), var(--purple-d)); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--coral) 0 12px, var(--gold) 12px 24px, var(--teal) 24px 36px, var(--purple) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : QUIZ TIME BOARD ===== -->
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>📗</span> UNIT 2 — Period 8</div>
+    <div class="quiz-board">
+      <span class="marquee"></span>
+      <div class="qb-title">QUIZ TIME</div>
+      <div class="qb-sub">Make a quiz about your friends! 🎉</div>
+      <div class="qb-btns">
+        <span class="qb-abtn a">A</span><span class="qb-abtn b">B</span><span class="qb-abtn c">C</span>
+      </div>
+    </div>
+    <div class="lesson-subtitle">أصدقاء جيدون · مشروع الوحدة</div>
+  </div>
+</header>
+
+<!-- ===== BRACELET PROGRESS ===== -->
+<div class="bracelet-track" id="braceletTrack" aria-label="Friendship Bracelet progress">
+  <div class="bt-label">🧶 اصنع سوارَ الصداقة — Friendship Bracelet</div>
+  <div class="bt-string" id="btString"><span class="bt-knot">🪢</span><span class="bt-count" id="btCount">0/8</span></div>
+  <div class="bt-done" id="btDone">✨ اكتملَ السوار! أنتَ صديقٌ وفيّ 🧶✨</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Objectives</span></button>
+    <button class="tab-btn" data-tab="complete"><span class="tab-icon">🧩</span><span>Complete</span></button>
+    <button class="tab-btn" data-tab="project"><span class="tab-icon">🎯</span><span>Quiz Project</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : OBJECTIVES ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#845ec2;">
+        <div class="aim-icon-wrap">🧩</div>
+        <h3 class="aim-title">Vocabulary</h3>
+        <p class="aim-desc">Read and complete the sentences. Check your spelling.
+          <span class="ar">أن يقرأَ الطالبُ ويُكملَ الجملَ ويتحقّقَ من الإملاء.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#ff6f91;">
+        <div class="aim-icon-wrap">🎯</div>
+        <h3 class="aim-title">Project</h3>
+        <p class="aim-desc">Work in a group and make a quiz about friends.
+          <span class="ar">أن يعملَ في مجموعةٍ ويصنعَ كويزاً عن الأصدقاء.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#00c9a7;">
+        <div class="aim-icon-wrap">🧶</div>
+        <h3 class="aim-title">Unit Review</h3>
+        <p class="aim-desc">Review all the friendship words from Unit 2 and finish your bracelet!
+          <span class="ar">أن يراجعَ كلماتِ الوحدةِ ويُكملَ سوارَ الصداقة!</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : COMPLETE ===== -->
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">🧩 Complete the Sentences<span class="title-sub">أكمل الجمل وتحقق من الإملاء</span></h2>
+    <div class="activity-lead">
+      <b>1)</b> Read and complete the sentences. Check your spelling.
+      <span class="ar">اضغطْ على الكلمةِ من البنك، ثم اضغطْ على الفراغِ المناسب. الصورةُ التعبيريةُ تساعدك 🎨</span>
+    </div>
+    <div class="wordbank" id="wordBank">
+      <button class="wb-word" data-w="give back">give back</button>
+      <button class="wb-word" data-w="understand">understand</button>
+      <button class="wb-word" data-w="lent">lent</button>
+      <button class="wb-word" data-w="cry">cry</button>
+      <button class="wb-word" data-w="problem">problem</button>
+      <button class="wb-word" data-w="someone">someone</button>
+      <button class="wb-word" data-w="go away">go away</button>
+      <button class="wb-word" data-w="argue">argue</button>
+      <button class="wb-word" data-w="invite">invite</button>
+      <button class="wb-word" data-w="quiz">quiz</button>
+      <button class="wb-word" data-w="share">share</button>
+    </div>
+    <div id="gapList">
+      <div class="gap-item"><span class="cue">📚</span><span class="gi-n">1</span><span>I need to <span class="blank" data-a="give back"></span> the book.</span></div>
+      <div class="gap-item"><span class="cue">🤗</span><span class="gi-n">2</span><span>Rania, I <span class="blank" data-a="understand"></span> you. You <span class="blank" data-a="lent"></span> me the book.</span></div>
+      <div class="gap-item"><span class="cue">😢</span><span class="gi-n">3</span><span>Ben, don't <span class="blank" data-a="cry"></span>. I know it's a <span class="blank" data-a="problem"></span> and it makes you sad.</span></div>
+      <div class="gap-item"><span class="cue">🚫</span><span class="gi-n">4</span><span>When <span class="blank" data-a="someone"></span> says '<span class="blank" data-a="go away"></span>' it makes you feel bad.</span></div>
+      <div class="gap-item"><span class="cue">📝</span><span class="gi-n">5</span><span>Rania let's not <span class="blank" data-a="argue"></span> and <span class="blank" data-a="invite"></span> Fatima to do this <span class="blank" data-a="quiz"></span>.</span></div>
+      <div class="gap-item"><span class="cue">🤝</span><span class="gi-n">6</span><span>Fatima, let's <span class="blank" data-a="share"></span> this quiz.</span></div>
+    </div>
+    <div class="gap-score" id="gapScore">Filled: 0 / 11</div>
+  </section>
+
+  <!-- ===== TAB 3 : QUIZ PROJECT ===== -->
+  <section class="tab-content" id="tab-project">
+    <h2 class="section-title">🎯 Make a Quiz<span class="title-sub">مشروع: اصنع كويزاً</span></h2>
+    <div class="proj-intro">
+      <h3>🎉 QUIZ TIME Project</h3>
+      <p>Work in groups of three or four. Make a quiz about friends or football!<br>اعملوا في مجموعاتٍ من ثلاثةٍ أو أربعة، واصنعوا كويزاً عن الأصدقاءِ أو كرةِ القدم.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><span class="sn">1</span><span class="st">Choose a topic: <b>Good friends</b> or <b>Football</b>.<span class="ar">اختاروا الموضوع: الأصدقاء الجيدون أو كرة القدم.</span></span></div>
+      <div class="step"><span class="sn">2</span><span class="st">Write 4 questions. Give options (a, b, c) for each one.<span class="ar">اكتبوا 4 أسئلة، وضعوا خيارات (a·b·c) لكلِّ سؤال.</span></span></div>
+      <div class="step"><span class="sn">3</span><span class="st">Ask another group your quiz. Count their score!<span class="ar">اطرحوا الكويز على مجموعةٍ أخرى واحسبوا نتيجتها!</span></span></div>
+    </div>
+
+    <div class="qcard">
+      <div class="qcard-head">⭐ MODEL · You are a good friend when …</div>
+      <div class="qrow">
+        <div class="qq"><span class="n">1</span> You say good things to your friends.</div>
+        <div class="qopts"><span class="qopt" onclick="pick(this)">often</span><span class="qopt" onclick="pick(this)">sometimes</span><span class="qopt" onclick="pick(this)">never</span></div>
+      </div>
+      <div class="qrow">
+        <div class="qq"><span class="n">2</span> You give back things when your friends lend them.</div>
+        <div class="qopts"><span class="qopt" onclick="pick(this)">often</span><span class="qopt" onclick="pick(this)">sometimes</span><span class="qopt" onclick="pick(this)">never</span></div>
+      </div>
+      <div class="qrow">
+        <div class="qq"><span class="n">3</span> You share things with your friends.</div>
+        <div class="qopts"><span class="qopt" onclick="pick(this)">often</span><span class="qopt" onclick="pick(this)">sometimes</span><span class="qopt" onclick="pick(this)">never</span></div>
+      </div>
+    </div>
+
+    <div class="writer-box">
+      <label>🖊️ Your quiz title:</label>
+      <input type="text" placeholder="e.g. You are a good friend when …">
+      <label>❓ Question 1:</label>
+      <input type="text" placeholder="Write your question...">
+      <div class="opt-row"><input type="text" placeholder="option a"><input type="text" placeholder="option b"><input type="text" placeholder="option c"></div>
+      <label>❓ Question 2:</label>
+      <input type="text" placeholder="Write your question...">
+      <div class="opt-row"><input type="text" placeholder="option a"><input type="text" placeholder="option b"><input type="text" placeholder="option c"></div>
+    </div>
+    <p style="text-align:center; direction:rtl; color:#8a7a9a; font-size:13.5px;">📝 اكتبوا كويزكم كاملاً في دفاتركم أو على بطاقة، ثم العبوه مع مجموعةٍ أخرى!</p>
+  </section>
+
+  <!-- ===== TAB 4 : FINAL QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي — نهاية الوحدة</span></h2>
+    <div class="quiz-intro">
+      <h3>🎯 The Last Golden Bead!</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفوزَ بالخرزةِ الأخيرةِ وتُكملَ سوارَ الصداقة! 🧶</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">Complete: "I need to ______ the book to my friend."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> give back</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> argue</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> cry</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">Complete: "When someone says '______' it makes you feel bad."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> share</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> go away</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> invite</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">A good friend does NOT …</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> share</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> understand</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">c</span> argue and make problems</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">Complete: "Let's ______ Fatima to do this quiz with us."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> invite</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> go away</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> cry</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">A good friend is someone who ______ and understands you.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> shares</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> argues</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> cries</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-bead" id="rewardBead">🧶</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+      <div class="unit-complete" id="unitComplete">
+        <h3>🎉 Unit 2 Complete!</h3>
+        <div class="bracelet-final">💗⭐🤝⭐💗⭐🧶⭐</div>
+        <p>لقد أكملتَ وحدةَ <b>Good Friends</b> كاملةً وصنعتَ سوارَ الصداقةِ 8/8! أنتَ صديقٌ رائع 🌟</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating yarn */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🧶','🎯','💗','✨','🎉','⭐'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(11+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','💗','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#ff6f91','#845ec2','#00c9a7','#ffc75f','#4fa3f7'];
+  for(var i=0;i<70;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* ===== COMPLETE (word bank) ===== */
+var selWord=null, gapFilled=0, GAP_TOTAL=11;
+document.querySelectorAll('.wb-word').forEach(function(w){
+  w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return;
+    document.querySelectorAll('.wb-word.selected').forEach(function(x){x.classList.remove('selected')});
+    selWord=w; w.classList.add('selected');
+  });
+});
+document.querySelectorAll('.blank').forEach(function(bl){
+  bl.addEventListener('click',function(){
+    if(!selWord || bl.classList.contains('filled')) return;
+    var val=selWord.dataset.w;
+    bl.textContent=val;
+    if(val===bl.dataset.a){
+      bl.classList.remove('wrong'); bl.classList.add('filled'); sparkleAt(bl);
+      selWord.classList.add('used'); selWord.classList.remove('selected'); selWord=null;
+      gapFilled++;
+      var sc=document.getElementById('gapScore'); sc.textContent='Filled: '+gapFilled+' / '+GAP_TOTAL;
+      if(gapFilled===GAP_TOTAL){ sc.innerHTML='Filled: '+GAP_TOTAL+' / '+GAP_TOTAL+' — <span style="color:var(--teal-d)">All correct! 🎉</span>'; confetti(); }
+    } else {
+      bl.classList.add('wrong');
+      setTimeout(function(){ bl.classList.remove('wrong'); bl.textContent=''; },800);
+    }
+  });
+});
+
+/* project model pick */
+function pick(el){
+  el.parentElement.querySelectorAll('.qopt').forEach(function(o){o.classList.remove('chosen')});
+  el.classList.add('chosen'); sparkleAt(el);
+}
+
+/* ===== FINAL QUIZ ===== */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, unitDone=false;
+  if(pct===100){ emoji='🏆'; title='Golden Bead!'; msg='رائع! فزتَ بالخرزةِ الأخيرة 🧶✨'; confetti(); document.getElementById('rewardBead').classList.add('show'); unitDone=true; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ كلماتِ الوحدةِ ثم أعدِ المحاولة.'; confetti(); document.getElementById('rewardBead').classList.add('show'); }
+  else { emoji='💪'; title='Keep trying!'; msg='لا تستسلمْ! 🌱 راجعْ كلماتِ الوحدةِ ثم جرِّبْ من جديد.'; document.getElementById('rewardBead').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  var uc=document.getElementById('unitComplete');
+  if(unitDone) uc.classList.add('show'); else uc.classList.remove('show');
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('unitComplete').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== FRIENDSHIP BRACELET · progress (shared across Unit 2) ===== -->
+<script>(function(){
+  var KEY='g6u2_bracelet', THIS=8, em=['💬','📖','✅','✏️','⏰','🎧','🧩','🎨'];
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var str=document.getElementById('btString'), count=document.getElementById('btCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='bt-bead'+(got.indexOf(i)>=0?' on':'');
+    s.textContent=got.indexOf(i)>=0?em[i-1]:i;
+    str.insertBefore(s, str.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('btDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
