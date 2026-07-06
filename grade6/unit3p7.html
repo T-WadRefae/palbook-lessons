@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Adventures - Unit 3 Period 7 | Write &amp; Dates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --ink:#3d2b1f; --ink-d:#2a1d14;
+    --parch:#f6e8c8; --parch-d:#e8d3a0;
+    --orange:#ff8c42; --orange-d:#e8590c;
+    --forest:#3fa34d; --forest-d:#2e7d32;
+    --river:#4aa3e0; --river-d:#2b7fd6;
+    --gold:#ffc94d; --gold-d:#e0a63e;
+    --red:#d1495b; --red-d:#a1123d;
+    --cream:#fffaf0; --paper:#fffdf8;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(255,140,66,.06) 0%, transparent 45%),
+      radial-gradient(circle at 88% 82%, rgba(74,163,224,.06) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(61,43,31,.03) 0 2px, transparent 2px 24px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.2; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : Adventure Journal ===== */
+  .lesson-header{
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,201,77,.16), transparent 40%),
+      linear-gradient(160deg, var(--ink-d) 0%, #5a3a22 55%, var(--orange-d) 130%);
+    padding:26px 16px 46px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.3);
+  }
+  .header-inner{ max-width:760px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--ink-d);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.25); transform:rotate(-2deg);
+  }
+  .lesson-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(30px,5.8vw,50px); color:#fff; letter-spacing:-.5px;
+    text-shadow:2px 3px 0 var(--ink-d), 5px 6px 18px rgba(0,0,0,.4); margin-bottom:2px;
+  }
+  .lesson-subtitle{ font-size:clamp(15px,3.2vw,21px); color:var(--gold); font-weight:800; margin-bottom:14px; }
+  .journal-wrap{ width:min(360px,90vw); margin:6px auto 0; }
+  .journal-wrap svg{ display:block; width:100%; height:auto; filter:drop-shadow(0 10px 18px rgba(0,0,0,.4)); }
+  .pencil-write{ animation:pencil-move 2.6s ease-in-out infinite; } @keyframes pencil-move{ 0%,100%{ transform:translate(0,0) rotate(0);} 50%{ transform:translate(6px,-2px) rotate(-2deg);} }
+
+  /* ===== MAP PROGRESS TRACKER (shared across Unit 3) ===== */
+  .map-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, #e9d3a3, #d9bd85);
+    border:3px solid #b98a4e; box-shadow:0 6px 18px rgba(61,43,31,.35);
+  }
+  .mt-label{ color:var(--ink); font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
+  .mt-trail{ display:flex; align-items:center; justify-content:center; gap:7px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .mt-trail::before{ content:''; position:absolute; left:4%; right:4%; top:50%; height:0; border-top:3px dashed #9a6f3a; z-index:0; }
+  .mt-pin{
+    width:34px; height:34px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); position:relative; z-index:1;
+    background:#fff7e6; border:2px solid #b98a4e; box-shadow:0 2px 4px rgba(0,0,0,.3);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mt-pin span{ transform:rotate(45deg); font-size:13px; font-weight:800; color:#9a6f3a; }
+  .mt-pin.on{ background:radial-gradient(circle at 60% 40%, #ffd97a, var(--orange) 80%); border-color:#fff; box-shadow:0 0 0 3px rgba(255,201,77,.5), 0 2px 5px rgba(0,0,0,.3); }
+  .mt-pin.on span{ color:#fff; font-size:15px; }
+  .mt-flag{ font-size:22px; z-index:1; }
+  .mt-count{ background:rgba(61,43,31,.15); color:var(--ink); border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .mt-done{ margin-top:7px; color:var(--orange-d); font-weight:800; font-size:14px; display:none; }
+  .mt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 #b98a4e, 0 14px 34px rgba(61,43,31,.2);
+    display:flex; gap:8px; border:3px solid var(--orange);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:12px 12px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; color:var(--orange-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:88px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(255,140,66,.12); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--orange), var(--orange-d));
+    color:#fff; box-shadow:0 4px 0 #b04708, 0 6px 14px rgba(232,89,12,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:24px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); text-align:center;
+    margin-bottom:22px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 10px, var(--gold) 10px 20px, var(--forest) 20px 30px, var(--river) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#8a6a3a; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 20px rgba(61,43,31,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--orange)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--orange));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; }
+  .aim-desc{ color:#6a4a2a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#8a6a3a; margin-top:7px; }
+
+  .activity-lead{
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); direction:ltr; text-align:left;
+    background:var(--paper); border:3px solid var(--parch-d); border-left:6px solid var(--orange);
+    border-radius:14px; padding:15px 18px; margin-bottom:16px; line-height:1.6;
+  }
+  .activity-lead .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13.5px; color:#8a6a3a; margin-top:6px; font-weight:600; }
+
+  /* ===== DATES GAP FILL ===== */
+  .wordbank{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px;
+    background:var(--paper); border:3px dashed var(--orange); border-radius:16px; padding:16px;
+  }
+  .wb-word{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; border:none;
+    padding:9px 18px; border-radius:22px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; box-shadow:0 3px 0 var(--orange-d); transition:all .15s;
+  }
+  .wb-word:hover:not(.used){ transform:translateY(-2px); }
+  .wb-word.used{ opacity:.35; cursor:default; text-decoration:line-through; }
+  .wb-word.selected{ outline:3px solid var(--gold); transform:translateY(-2px) scale(1.05); }
+  .gap-item{
+    background:var(--paper); border-radius:14px; border:3px solid var(--parch-d); padding:15px 18px; margin-bottom:11px;
+    box-shadow:0 4px 0 #d9bd85; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif;
+    font-size:16.5px; color:var(--ink); line-height:2;
+  }
+  .gap-item .gi-n{ display:inline-flex; width:26px; height:26px; margin-right:8px; background:var(--orange); color:#fff; border-radius:50%; align-items:center; justify-content:center; font-size:13px; font-weight:700; }
+  .when-hl{ background:rgba(63,163,77,.18); color:var(--forest-d); border-radius:5px; padding:0 5px; font-weight:700; }
+  .blank{
+    display:inline-block; min-width:120px; border-bottom:3px dashed var(--orange); cursor:pointer;
+    text-align:center; padding:0 8px 2px; margin:0 3px; color:var(--orange-d); font-weight:700; transition:all .15s; vertical-align:middle;
+  }
+  .blank:hover{ background:#fff3e8; }
+  .blank.filled{ border-bottom-style:solid; border-color:var(--forest-d); color:var(--forest-d); background:#e2f5e4; border-radius:6px; }
+  .blank.wrong{ border-color:var(--red-d); color:var(--red-d); background:#fff0f2; }
+  .gap-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--orange-d); font-weight:600; margin-top:14px; }
+
+  /* ===== JOIN WITH WHEN ===== */
+  .rule-tip{
+    background:linear-gradient(135deg,#fff6e5,#ffedc7); border:2px dashed var(--gold-d); border-radius:14px;
+    padding:14px 18px; margin-bottom:18px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif;
+    font-size:14.5px; color:var(--ink); line-height:1.7;
+  }
+  .rule-tip b{ color:var(--forest-d); }
+  .rule-tip .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:#8a6a3a; margin-top:5px; }
+  .join-card{
+    background:var(--paper); border-radius:16px; border:3px solid var(--parch-d); padding:18px 20px; margin-bottom:15px;
+    box-shadow:0 5px 0 #d9bd85;
+  }
+  .join-parts{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; direction:ltr; margin-bottom:12px; font-family:'Fredoka',sans-serif; font-size:15px; color:var(--ink); }
+  .join-chip{ background:#eaf4ff; border:2px solid #cfe4fb; border-radius:10px; padding:6px 12px; }
+  .join-plus{ color:var(--forest-d); font-weight:800; }
+  .show-answer-btn{
+    background:var(--forest); color:#fff; border:none; padding:9px 19px; border-radius:12px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--forest-d);
+    transition:transform .2s; display:inline-flex; align-items:center; gap:6px;
+  }
+  .show-answer-btn:hover{ transform:translateY(-2px); }
+  .join-answer{
+    background:linear-gradient(135deg,#e2f5e4,#d5f0d8); border-right:4px solid var(--forest-d);
+    padding:14px 17px; border-radius:12px; margin-top:12px; display:none; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; color:#1e5620; line-height:1.6;
+  }
+  .join-answer.show{ display:block; animation:fadeIn .4s; }
+  .join-answer b{ color:var(--forest-d); }
+
+  /* ===== ADVENTURE WRITER ===== */
+  .writer-example{
+    background:var(--paper); border-radius:16px; border:3px solid var(--parch-d); padding:18px 20px; margin-bottom:16px;
+    box-shadow:0 5px 0 #d9bd85; direction:ltr; text-align:left;
+  }
+  .writer-example h4{ font-family:'Fredoka',sans-serif; color:var(--orange-d); margin-bottom:8px; }
+  .writer-example p{ font-family:'Fredoka',sans-serif; color:var(--ink); font-size:15px; line-height:1.7; }
+  .writer-example .when-hl{ background:rgba(63,163,77,.18); color:var(--forest-d); border-radius:5px; padding:0 4px; }
+  .writer-box{
+    background:var(--paper); border-radius:16px; border:3px solid var(--parch-d); padding:16px 18px; margin-bottom:14px;
+    box-shadow:0 5px 0 #d9bd85;
+  }
+  .writer-box label{ font-family:'Fredoka',sans-serif; color:var(--orange-d); font-size:14.5px; display:block; margin-bottom:7px; direction:ltr; text-align:left; }
+  .writer-box textarea{
+    width:100%; border:2px solid var(--parch-d); border-radius:10px; padding:10px 12px; font-family:'Fredoka',sans-serif;
+    font-size:15px; color:var(--ink); resize:vertical; min-height:56px; direction:ltr; text-align:left;
+  }
+  .writer-box textarea:focus{ outline:none; border-color:var(--orange); }
+
+  /* ===== HANDWRITING ===== */
+  .hw-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; }
+  .hw-card{
+    background:var(--paper); border-radius:16px; border:3px solid var(--parch-d); padding:14px; text-align:center;
+    box-shadow:0 5px 0 #d9bd85; position:relative;
+  }
+  .hw-word{
+    font-family:'Courier Prime',monospace; font-weight:700; font-size:24px; color:#d3bb8c;
+    letter-spacing:1.5px; direction:ltr; padding:8px 0 4px; border-bottom:2px dashed #d3bb8c; margin-bottom:8px;
+  }
+  .hw-real{ font-family:'Fredoka',sans-serif; color:var(--ink); font-size:15px; direction:ltr; }
+  .hw-spk{
+    position:absolute; top:8px; right:8px; width:30px; height:30px; border-radius:50%; border:none;
+    background:var(--forest); color:#fff; cursor:pointer; font-size:13px; box-shadow:0 2px 0 var(--forest-d);
+  }
+  .hw-spk.playing{ background:var(--red); box-shadow:0 2px 0 var(--red-d); }
+  .hw-note{
+    background:linear-gradient(135deg,#fff6e5,#ffedc7); border:2px dashed var(--orange); border-radius:14px;
+    padding:14px 18px; margin-top:18px; direction:rtl; text-align:right; font-size:13.5px; color:var(--ink); line-height:1.8;
+  }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--orange)); color:var(--ink-d); padding:26px 22px;
+    border-radius:22px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--orange-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'📖'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:25px; margin-bottom:8px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.5); height:12px; border-radius:10px; margin-top:16px; overflow:hidden; border:2px solid rgba(255,255,255,.7); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--forest), var(--river)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 18px rgba(61,43,31,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--red-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid var(--parch-d); padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--orange); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:var(--parch-d); color:var(--ink); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#d5f0d8; border-color:var(--forest-d); color:#1e5620; }
+  .quiz-option.correct .opt-letter{ background:var(--forest-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9de; border-color:var(--red-d); color:#8a0d2c; }
+  .quiz-option.wrong .opt-letter{ background:var(--red-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e2f5e4,#d5f0d8); border-right:4px solid var(--forest-d); color:#1e5620; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#fff0f2,#ffd9de); border-right:4px solid var(--red-d); color:#8a0d2c; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:36px 22px; text-align:center;
+    border:3px solid var(--parch-d); box-shadow:0 8px 0 #d9bd85, 0 12px 28px rgba(61,43,31,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:74px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:50px; color:var(--orange-d); margin:16px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:28px; color:#8a6a3a; }
+  .result-message{ font-size:16px; line-height:1.7; margin-bottom:22px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:96px; height:96px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff2c4, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(255,201,77,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:46px;
+  }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--red-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--ink-d), #5a3a22); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  @media (max-width:768px){ .gap-item{ font-size:15px; } }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : ADVENTURE JOURNAL (SVG) ===== -->
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🧭</span> UNIT 3 — Period 7</div>
+    <h1 class="lesson-title">My Adventure Diary</h1>
+    <div class="lesson-subtitle">مغامرات الصيف · اكتب واملأ التواريخ 📖</div>
+    <div class="journal-wrap">
+      <svg viewBox="0 0 340 170" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pgL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff8ea"/><stop offset="1" stop-color="#f2e2bd"/></linearGradient>
+          <linearGradient id="pgR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf4"/><stop offset="1" stop-color="#f6ead0"/></linearGradient>
+        </defs>
+        <!-- book cover -->
+        <rect x="20" y="20" width="300" height="140" rx="12" fill="#7a3c14" stroke="#5a2c0d" stroke-width="3"/>
+        <!-- left page -->
+        <path d="M32,28 H168 V152 H32 Q28,90 32,28 Z" fill="url(#pgL)" stroke="#d9c49a" stroke-width="1.5"/>
+        <!-- right page -->
+        <path d="M172,28 H308 Q312,90 308,152 H172 V28 Z" fill="url(#pgR)" stroke="#d9c49a" stroke-width="1.5"/>
+        <!-- spine -->
+        <rect x="168" y="26" width="4" height="128" fill="#c9a86a"/>
+        <!-- ruled lines left -->
+        <g stroke="#cbb98c" stroke-width="1.4"><path d="M42,52 H158"/><path d="M42,68 H158"/><path d="M42,84 H158"/><path d="M42,100 H158"/><path d="M42,116 H158"/><path d="M42,132 H158"/></g>
+        <!-- date entries left -->
+        <g font-family="Caveat, cursive" fill="#3a6ea5" font-size="13"><text x="46" y="49">15th July …</text></g>
+        <g font-family="Caveat, cursive" fill="#c95b3c" font-size="13"><text x="46" y="81">13th August …</text></g>
+        <!-- ruled lines right -->
+        <g stroke="#cbb98c" stroke-width="1.4"><path d="M182,52 H298"/><path d="M182,68 H298"/><path d="M182,84 H298"/><path d="M182,100 H298"/><path d="M182,116 H298"/><path d="M182,132 H298"/></g>
+        <g font-family="Caveat, cursive" fill="#2e7d32" font-size="13"><text x="186" y="65">…when the wheel</text><text x="186" y="81">burst!</text></g>
+        <!-- little compass doodle -->
+        <g transform="translate(270,120)"><circle r="13" fill="#fff3d6" stroke="#a0692e" stroke-width="1.5"/><path d="M0,-9 L3,0 L0,9 L-3,0 Z" fill="#d1495b"/><circle r="2" fill="#e0a63e"/></g>
+        <!-- pencil -->
+        <g class="pencil-write" transform="translate(120,120) rotate(40)">
+          <rect x="0" y="0" width="12" height="70" fill="#ffb300"/>
+          <rect x="0" y="0" width="12" height="8" fill="#e0a63e"/>
+          <path d="M0,70 L6,84 L12,70 Z" fill="#f2c79b"/>
+          <path d="M3,78 L6,84 L9,78 Z" fill="#3d2b1f"/>
+          <rect x="0" y="-6" width="12" height="7" rx="2" fill="#ff8f8f"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MAP PROGRESS (shared across Unit 3) ===== -->
+<div class="map-track" id="mapTrack" aria-label="Adventure Map progress">
+  <div class="mt-label">🗺️ خريطة المغامرة — Adventure Map</div>
+  <div class="mt-trail" id="mtTrail"><span class="mt-flag">🚩</span><span class="mt-count" id="mtCount">0/8</span></div>
+  <div class="mt-done" id="mtDone">✨ اكتملتِ الخريطة! أنتَ مستكشفٌ حقيقي 🧭🗺️</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Objectives</span></button>
+    <button class="tab-btn" data-tab="dates"><span class="tab-icon">📅</span><span>Write Dates</span></button>
+    <button class="tab-btn" data-tab="join"><span class="tab-icon">🔗</span><span>Join with when</span></button>
+    <button class="tab-btn" data-tab="writer"><span class="tab-icon">✍️</span><span>My Adventure</span></button>
+    <button class="tab-btn" data-tab="hand"><span class="tab-icon">✒️</span><span>Handwriting</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : OBJECTIVES ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#4aa3e0;">
+        <div class="aim-icon-wrap">📅</div>
+        <h3 class="aim-title">Dates</h3>
+        <p class="aim-desc">Read and write the correct dates (ordinal numbers).
+          <span class="ar">أن يقرأَ الطالبُ ويكتبَ التواريخَ الصحيحةَ (الأعداد الترتيبية).</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#3fa34d;">
+        <div class="aim-icon-wrap">🔗</div>
+        <h3 class="aim-title">Writing</h3>
+        <p class="aim-desc">Join two sentences using <b>when</b>, with a capital letter and a full stop.
+          <span class="ar">أن يربطَ جملتين بكلمة when مع حرفٍ كبيرٍ ونقطة.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#ff8c42;">
+        <div class="aim-icon-wrap">✒️</div>
+        <h3 class="aim-title">Handwriting</h3>
+        <p class="aim-desc">Practise writing the numbers and adventure words neatly.
+          <span class="ar">أن يتدرّبَ على كتابةِ الأعدادِ وكلماتِ المغامرةِ بخطٍّ جميل.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : WRITE DATES ===== -->
+  <section class="tab-content" id="tab-dates">
+    <h2 class="section-title">📅 Read &amp; Write the Dates<span class="title-sub">اكتب التواريخ</span></h2>
+    <div class="activity-lead">
+      <b>1)</b> Read and write the correct dates.
+      <span class="ar">اضغطْ على التاريخِ من البنك، ثم اضغطْ على الفراغِ المناسب.</span>
+    </div>
+    <div class="wordbank" id="wordBank">
+      <button class="wb-word" data-w="fifteenth (15th)">fifteenth (15th)</button>
+      <button class="wb-word" data-w="twenty-first (21st)">twenty-first (21st)</button>
+      <button class="wb-word" data-w="eighteenth (18th)">eighteenth (18th)</button>
+      <button class="wb-word" data-w="thirteenth (13th)">thirteenth (13th)</button>
+      <button class="wb-word" data-w="fourteenth (14th)">fourteenth (14th)</button>
+    </div>
+    <div id="gapList">
+      <div class="gap-item"><span class="gi-n">1</span> Omar's family were staying on the farm from the <span class="blank" data-a="fifteenth (15th)"></span> to the <span class="blank" data-a="twenty-first (21st)"></span> of July.</div>
+      <div class="gap-item"><span class="gi-n">2</span> Rania's family were camping from the fifteenth to the <span class="blank" data-a="eighteenth (18th)"></span> of August.</div>
+      <div class="gap-item"><span class="gi-n">3</span> Amy was playing in the river on the <span class="blank" data-a="thirteenth (13th)"></span> of August when her boat turned over.</div>
+      <div class="gap-item"><span class="gi-n">4</span> Omar was riding his bike in Jericho on the <span class="blank" data-a="fourteenth (14th)"></span> of August <span class="when-hl">when</span> he fell off.</div>
+    </div>
+    <div class="gap-score" id="gapScore">Filled: 0 / 5</div>
+  </section>
+
+  <!-- ===== TAB 3 : JOIN WITH WHEN ===== -->
+  <section class="tab-content" id="tab-join">
+    <h2 class="section-title">🔗 Join with <i>when</i><span class="title-sub">اربط الجمل بـ when</span></h2>
+    <div class="activity-lead">
+      <b>2)</b> Think and write the correct sentences. Join them using <b>when</b>.
+      <span class="ar">اربطِ الجملتين بكلمة when، وابدأْ بحرفٍ كبيرٍ وانتهِ بنقطة.</span>
+    </div>
+    <div class="rule-tip">
+      ✏️ Remember: use a <b>CAPITAL</b> letter at the start and a <b>full stop</b> (.) at the end. Join the sentences using <b>when</b>.
+      <span class="ar">تذكّر: حرفٌ كبيرٌ في البداية، ونقطةٌ في النهاية، ونربط بـ when.</span>
+    </div>
+
+    <div class="join-card">
+      <div class="join-parts">
+        <span class="join-chip">amy was playing in a boat</span>
+        <span class="join-plus">+ when +</span>
+        <span class="join-chip">it turned over</span>
+      </div>
+      <button class="show-answer-btn" onclick="toggleJoin(this)">💡 Show sentence</button>
+      <div class="join-answer"><b>A</b>my was playing in a boat <b>when</b> it turned over<b>.</b></div>
+    </div>
+
+    <div class="join-card">
+      <div class="join-parts">
+        <span class="join-chip">omar was riding his bike</span>
+        <span class="join-plus">+ when +</span>
+        <span class="join-chip">he fell off</span>
+      </div>
+      <button class="show-answer-btn" onclick="toggleJoin(this)">💡 Show sentence</button>
+      <div class="join-answer"><b>O</b>mar was riding his bike <b>when</b> he fell off<b>.</b></div>
+    </div>
+
+    <div class="join-card">
+      <div class="join-parts">
+        <span class="join-chip">the family were driving to the farm</span>
+        <span class="join-plus">+ when +</span>
+        <span class="join-chip">the wheel burst</span>
+      </div>
+      <button class="show-answer-btn" onclick="toggleJoin(this)">💡 Show sentence</button>
+      <div class="join-answer"><b>T</b>he family were driving to the farm <b>when</b> the wheel burst<b>.</b></div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 4 : MY ADVENTURE (writer) ===== -->
+  <section class="tab-content" id="tab-writer">
+    <h2 class="section-title">✍️ Write About an Adventure<span class="title-sub">اكتب عن مغامرة</span></h2>
+    <div class="activity-lead">
+      <b>3)</b> Think and write sentences about an adventure you had.
+      <span class="ar">اكتبْ جملاً عن مغامرةٍ حدثتْ لك، مستخدماً الماضي المستمرَّ و when. اكتبْ في المربّعات ثم انسخْها في دفترك.</span>
+    </div>
+    <div class="writer-example">
+      <h4>⭐ Example</h4>
+      <p>Last summer I had a great adventure. I <span class="when-hl">was hiking</span> in the valley <span class="when-hl">when</span> I saw some baby birds. They were trying to fly. It was wonderful!</p>
+    </div>
+    <div class="writer-box">
+      <label>✏️ Sentence 1 (What were you doing?):</label>
+      <textarea placeholder="I was ..."></textarea>
+    </div>
+    <div class="writer-box">
+      <label>✏️ Sentence 2 (Use "when"):</label>
+      <textarea placeholder="... when ..."></textarea>
+    </div>
+    <div class="writer-box">
+      <label>✏️ Sentence 3 (How was it?):</label>
+      <textarea placeholder="It was ..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===== TAB 5 : HANDWRITING ===== -->
+  <section class="tab-content" id="tab-hand">
+    <h2 class="section-title">✒️ Practise Your Handwriting<span class="title-sub">تدرّب على خط اليد</span></h2>
+    <div class="activity-lead">
+      <b>4)</b> Write the words. Practise your handwriting.
+      <span class="ar">اكتبِ الكلماتِ في دفترك بخطٍّ جميل. اضغطْ 🔊 لسماعِ لفظِ الكلمة.</span>
+    </div>
+    <div class="hw-grid" id="hwGrid"></div>
+    <div class="hw-note">
+      📝 اكتبْ كلَّ كلمةٍ ثلاثَ مرّاتٍ في دفترك بخطٍّ واضحٍ ومرتّب.
+      <!-- WORKSHEET-LINK: the teacher can add a printable handwriting worksheet (Drive/PDF) link here later -->
+    </div>
+  </section>
+
+  <!-- ===== TAB 6 : QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي</span></h2>
+    <div class="quiz-intro">
+      <h3>📖 The Explorer Quiz</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفتحَ المحطةَ السابعةَ على خريطةِ المغامرة!</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">Join with when: "Omar was riding his bike ___ he fell off."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> when</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> but</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> because</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">Which sentence is written correctly?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> amy was playing in a boat when it turned over</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> Amy was playing in a boat when it turned over.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> Amy was playing in a boat when it turned over</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">Omar's family stayed on the farm from the 15th to the ______ of July.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> twenty-first</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> thirteenth</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> thirtieth</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">Amy's boat turned over on the ______ of August.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> thirteenth</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> thirtieth</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> fifteenth</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">Which word is spelled correctly?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> adventuer</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> adventure</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> advenchure</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🧭</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🧭','🗺️','📖','✍️','📅','🚩'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    window.speechSynthesis && speechSynthesis.cancel();
+  });
+});
+
+/* TTS */
+function speakWord(text,btn){
+  if(!window.speechSynthesis) return;
+  if(btn && btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.hw-spk.playing').forEach(function(b){b.classList.remove('playing')});
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','🧭','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#ff8c42','#3fa34d','#4aa3e0','#ffc94d','#d1495b'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* ===== DATES GAP FILL ===== */
+var selWord=null, gapFilled=0, GAP_TOTAL=5;
+document.querySelectorAll('.wb-word').forEach(function(w){
+  w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return;
+    document.querySelectorAll('.wb-word.selected').forEach(function(x){x.classList.remove('selected')});
+    selWord=w; w.classList.add('selected');
+  });
+});
+document.querySelectorAll('.blank').forEach(function(bl){
+  bl.addEventListener('click',function(){
+    if(!selWord || bl.classList.contains('filled')) return;
+    var val=selWord.dataset.w;
+    bl.textContent=val;
+    if(val===bl.dataset.a){
+      bl.classList.remove('wrong'); bl.classList.add('filled'); sparkleAt(bl);
+      selWord.classList.add('used'); selWord.classList.remove('selected'); selWord=null;
+      gapFilled++;
+      var sc=document.getElementById('gapScore'); sc.textContent='Filled: '+gapFilled+' / '+GAP_TOTAL;
+      if(gapFilled===GAP_TOTAL){ sc.innerHTML='Filled: '+GAP_TOTAL+' / '+GAP_TOTAL+' — <span style="color:var(--forest-d)">All correct! 🎉</span>'; confetti(); }
+    } else {
+      bl.classList.add('wrong');
+      setTimeout(function(){ bl.classList.remove('wrong'); bl.textContent=''; },800);
+    }
+  });
+});
+
+/* ===== JOIN WITH WHEN ===== */
+function toggleJoin(btn){
+  var ans=btn.parentElement.querySelector('.join-answer');
+  ans.classList.toggle('show');
+  btn.textContent=ans.classList.contains('show')?'🙈 Hide sentence':'💡 Show sentence';
+  if(ans.classList.contains('show')) sparkleAt(btn);
+}
+
+/* ===== HANDWRITING ===== */
+var HW=['thirteenth','fourteenth','fifteenth','sixteenth','seventeenth','eighteenth','nineteenth','twentieth','twenty-first','thirtieth','when','chase','burst','turn over','adventure'];
+(function(){
+  var grid=document.getElementById('hwGrid');
+  HW.forEach(function(w){
+    var card=document.createElement('div'); card.className='hw-card';
+    card.innerHTML='<button class="hw-spk" aria-label="speak">🔊</button>'+
+      '<div class="hw-word">'+w+'</div><div class="hw-real">'+w+'</div>';
+    card.querySelector('.hw-spk').addEventListener('click',function(){ speakWord(w,this); });
+    grid.appendChild(card);
+  });
+})();
+
+/* ===== FINAL QUIZ ===== */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg;
+  if(pct===100){ emoji='🏆'; title='Explorer Badge!'; msg='رائع! فتحتَ المحطةَ السابعةَ على الخريطة 🧭🗺️ أتقنتَ التواريخَ والكتابةَ بـ when.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ التواريخَ وقاعدةَ when ثم أعدِ المحاولة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else { emoji='💪'; title='Keep writing!'; msg='لا تستسلمْ! 🌱 راجعْ الأعدادَ وطريقةَ الربطِ بـ when ثم جرِّبْ من جديد.'; document.getElementById('rewardBadge').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== ADVENTURE MAP · progress (shared across Unit 3) ===== -->
+<script>(function(){
+  var KEY='g6u3_map', THIS=7, em=['🐑','📅','👏','🧩','⏳','🎧','✍️','🎨'];
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var trail=document.getElementById('mtTrail'), count=document.getElementById('mtCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='mt-pin'+(got.indexOf(i)>=0?' on':'');
+    s.innerHTML='<span>'+(got.indexOf(i)>=0?em[i-1]:i)+'</span>';
+    trail.insertBefore(s, trail.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('mtDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
