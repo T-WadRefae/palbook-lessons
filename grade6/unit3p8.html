@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Adventures - Unit 3 Period 8 | Word Cloud Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --ink:#3d2b1f; --ink-d:#2a1d14;
+    --parch:#f6e8c8; --parch-d:#e8d3a0;
+    --orange:#ff8c42; --orange-d:#e8590c;
+    --forest:#3fa34d; --forest-d:#2e7d32;
+    --river:#4aa3e0; --river-d:#2b7fd6;
+    --gold:#ffc94d; --gold-d:#e0a63e;
+    --red:#d1495b; --red-d:#a1123d;
+    --cream:#fffaf0; --paper:#fffdf8;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(255,140,66,.06) 0%, transparent 45%),
+      radial-gradient(circle at 88% 82%, rgba(74,163,224,.06) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(61,43,31,.03) 0 2px, transparent 2px 24px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.2; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : Word Cloud ===== */
+  .lesson-header{
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,201,77,.16), transparent 40%),
+      linear-gradient(160deg, var(--ink-d) 0%, #5a3a22 55%, var(--orange-d) 130%);
+    padding:26px 16px 48px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.3);
+  }
+  .header-inner{ max-width:760px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--ink-d);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.25); transform:rotate(-2deg);
+  }
+  .lesson-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(30px,5.8vw,50px); color:#fff; letter-spacing:-.5px;
+    text-shadow:2px 3px 0 var(--ink-d), 5px 6px 18px rgba(0,0,0,.4); margin-bottom:2px;
+  }
+  .lesson-subtitle{ font-size:clamp(15px,3.2vw,21px); color:var(--gold); font-weight:800; margin-bottom:12px; }
+  .cloud-wrap{ width:min(430px,92vw); margin:4px auto 0; }
+  .cloud-wrap svg{ display:block; width:100%; height:auto; filter:drop-shadow(0 10px 16px rgba(0,0,0,.35)); }
+  .cw-word{ font-family:'Fredoka',sans-serif; font-weight:700; }
+  .cw-float{ animation:cw-bob 3s ease-in-out infinite; } .cw-float.d1{ animation-delay:.4s; } .cw-float.d2{ animation-delay:.8s; } .cw-float.d3{ animation-delay:1.2s; }
+  @keyframes cw-bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-3px);} }
+
+  /* ===== MAP PROGRESS TRACKER (shared across Unit 3) ===== */
+  .map-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, #e9d3a3, #d9bd85);
+    border:3px solid #b98a4e; box-shadow:0 6px 18px rgba(61,43,31,.35);
+  }
+  .mt-label{ color:var(--ink); font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
+  .mt-trail{ display:flex; align-items:center; justify-content:center; gap:7px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .mt-trail::before{ content:''; position:absolute; left:4%; right:4%; top:50%; height:0; border-top:3px dashed #9a6f3a; z-index:0; }
+  .mt-pin{
+    width:34px; height:34px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); position:relative; z-index:1;
+    background:#fff7e6; border:2px solid #b98a4e; box-shadow:0 2px 4px rgba(0,0,0,.3);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mt-pin span{ transform:rotate(45deg); font-size:13px; font-weight:800; color:#9a6f3a; }
+  .mt-pin.on{ background:radial-gradient(circle at 60% 40%, #ffd97a, var(--orange) 80%); border-color:#fff; box-shadow:0 0 0 3px rgba(255,201,77,.5), 0 2px 5px rgba(0,0,0,.3); }
+  .mt-pin.on span{ color:#fff; font-size:15px; }
+  .mt-flag{ font-size:22px; z-index:1; }
+  .mt-count{ background:rgba(61,43,31,.15); color:var(--ink); border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .mt-done{ margin-top:7px; color:var(--orange-d); font-weight:800; font-size:14px; display:none; }
+  .mt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 #b98a4e, 0 14px 34px rgba(61,43,31,.2);
+    display:flex; gap:8px; border:3px solid var(--orange);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:12px 14px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; color:var(--orange-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:92px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(255,140,66,.12); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--orange), var(--orange-d));
+    color:#fff; box-shadow:0 4px 0 #b04708, 0 6px 14px rgba(232,89,12,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:24px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); text-align:center;
+    margin-bottom:22px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 10px, var(--gold) 10px 20px, var(--forest) 20px 30px, var(--river) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#8a6a3a; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 20px rgba(61,43,31,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--orange)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--orange));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; }
+  .aim-desc{ color:#6a4a2a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#8a6a3a; margin-top:7px; }
+
+  .activity-lead{
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); direction:ltr; text-align:left;
+    background:var(--paper); border:3px solid var(--parch-d); border-left:6px solid var(--orange);
+    border-radius:14px; padding:15px 18px; margin-bottom:16px; line-height:1.6;
+  }
+  .activity-lead .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13.5px; color:#8a6a3a; margin-top:6px; font-weight:600; }
+
+  /* ===== COMPLETE (word bank) ===== */
+  .wordbank{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px;
+    background:var(--paper); border:3px dashed var(--orange); border-radius:16px; padding:16px;
+  }
+  .wb-word{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; border:none;
+    padding:9px 18px; border-radius:22px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; box-shadow:0 3px 0 var(--orange-d); transition:all .15s;
+  }
+  .wb-word:hover:not(.used){ transform:translateY(-2px); }
+  .wb-word.used{ opacity:.35; cursor:default; text-decoration:line-through; }
+  .wb-word.selected{ outline:3px solid var(--gold); transform:translateY(-2px) scale(1.05); }
+  .gap-item{
+    background:var(--paper); border-radius:14px; border:3px solid var(--parch-d); padding:15px 18px; margin-bottom:11px;
+    box-shadow:0 4px 0 #d9bd85; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif;
+    font-size:16.5px; color:var(--ink); line-height:2;
+  }
+  .gap-item .gi-n{ display:inline-flex; width:26px; height:26px; margin-right:8px; background:var(--orange); color:#fff; border-radius:50%; align-items:center; justify-content:center; font-size:13px; font-weight:700; }
+  .when-hl{ background:rgba(63,163,77,.18); color:var(--forest-d); border-radius:5px; padding:0 5px; font-weight:700; }
+  .blank{
+    display:inline-block; min-width:104px; border-bottom:3px dashed var(--orange); cursor:pointer;
+    text-align:center; padding:0 8px 2px; margin:0 3px; color:var(--orange-d); font-weight:700; transition:all .15s; vertical-align:middle;
+  }
+  .blank:hover{ background:#fff3e8; }
+  .blank.filled{ border-bottom-style:solid; border-color:var(--forest-d); color:var(--forest-d); background:#e2f5e4; border-radius:6px; }
+  .blank.wrong{ border-color:var(--red-d); color:var(--red-d); background:#fff0f2; }
+  .gap-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--orange-d); font-weight:600; margin-top:14px; }
+
+  /* ===== PROJECT (word cloud builder) ===== */
+  .proj-intro{
+    background:linear-gradient(135deg, var(--river), var(--forest)); color:#fff; padding:22px;
+    border-radius:18px; text-align:center; margin-bottom:20px; box-shadow:0 6px 0 var(--river-d);
+  }
+  .proj-intro h3{ font-family:'Fredoka',sans-serif; font-size:23px; margin-bottom:6px; }
+  .proj-intro p{ font-size:14px; line-height:1.7; font-weight:700; }
+  .steps{ display:grid; gap:12px; margin-bottom:22px; }
+  .step{
+    background:var(--paper); border-radius:14px; border:3px solid var(--parch-d); padding:14px 18px;
+    box-shadow:0 4px 0 #d9bd85; display:flex; gap:13px; align-items:flex-start;
+  }
+  .step .sn{
+    flex-shrink:0; width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--orange),var(--red));
+    color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Fredoka'; font-weight:700; box-shadow:0 3px 0 var(--red-d);
+  }
+  .step .st{ font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--ink); direction:ltr; text-align:left; line-height:1.5; }
+  .step .st .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo'; font-size:12.5px; color:#8a6a3a; margin-top:3px; }
+
+  .cloud-builder{
+    background:linear-gradient(180deg,#eaf4ff,#fff); border:3px solid var(--river); border-radius:18px;
+    padding:18px; margin-bottom:18px; box-shadow:0 6px 0 var(--river-d);
+  }
+  .cloud-builder h4{ font-family:'Fredoka',sans-serif; text-align:center; color:var(--river-d); margin-bottom:6px; }
+  .cloud-builder .cb-ar{ text-align:center; direction:rtl; font-size:12.5px; color:#8a6a3a; margin-bottom:14px; }
+  .cloud-canvas{
+    min-height:150px; background:#fff; border:2px dashed var(--river); border-radius:14px; padding:16px;
+    display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; justify-content:center;
+  }
+  .cloud-canvas:empty::before{ content:'اضغط على الكلمات لإضافتها إلى سحابتك ☁️'; color:#a99; font-size:14px; }
+  .cloud-tag{
+    font-family:'Fredoka',sans-serif; font-weight:700; cursor:pointer; animation:pop-in .3s ease;
+    transition:transform .15s;
+  }
+  .cloud-tag:hover{ transform:scale(1.12); }
+  @keyframes pop-in{ from{ transform:scale(.4); opacity:0;} to{ transform:scale(1); opacity:1;} }
+  .cloud-pool{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:16px; }
+  .pool-word{
+    background:#fff; border:2px solid var(--parch-d); border-radius:20px; padding:6px 14px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; color:var(--ink); transition:all .15s; box-shadow:0 2px 0 var(--parch-d);
+  }
+  .pool-word:hover{ background:#eaf4ff; border-color:var(--river); transform:translateY(-2px); }
+  .pool-word.added{ opacity:.4; }
+  .cloud-clear{
+    display:block; margin:14px auto 0; background:var(--parch-d); color:var(--ink); border:none; border-radius:12px;
+    padding:8px 18px; cursor:pointer; font-family:'Cairo'; font-weight:700; font-size:13px;
+  }
+  .writer-box{ background:var(--paper); border-radius:16px; border:3px solid var(--parch-d); padding:16px 18px; box-shadow:0 5px 0 #d9bd85; }
+  .writer-box label{ font-family:'Fredoka',sans-serif; color:var(--orange-d); font-size:14.5px; display:block; margin-bottom:7px; direction:ltr; text-align:left; }
+  .writer-box textarea{ width:100%; border:2px solid var(--parch-d); border-radius:10px; padding:10px 12px; font-family:'Fredoka',sans-serif; font-size:15px; color:var(--ink); resize:vertical; min-height:56px; direction:ltr; text-align:left; }
+  .writer-box textarea:focus{ outline:none; border-color:var(--orange); }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--orange)); color:var(--ink-d); padding:26px 22px;
+    border-radius:22px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--orange-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'☁️'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:25px; margin-bottom:8px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.5); height:12px; border-radius:10px; margin-top:16px; overflow:hidden; border:2px solid rgba(255,255,255,.7); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--forest), var(--river)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 18px rgba(61,43,31,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--red-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid var(--parch-d); padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--orange); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:var(--parch-d); color:var(--ink); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#d5f0d8; border-color:var(--forest-d); color:#1e5620; }
+  .quiz-option.correct .opt-letter{ background:var(--forest-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9de; border-color:var(--red-d); color:#8a0d2c; }
+  .quiz-option.wrong .opt-letter{ background:var(--red-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e2f5e4,#d5f0d8); border-right:4px solid var(--forest-d); color:#1e5620; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#fff0f2,#ffd9de); border-right:4px solid var(--red-d); color:#8a0d2c; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:36px 22px; text-align:center;
+    border:3px solid var(--parch-d); box-shadow:0 8px 0 #d9bd85, 0 12px 28px rgba(61,43,31,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:74px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:50px; color:var(--orange-d); margin:16px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:28px; color:#8a6a3a; }
+  .result-message{ font-size:16px; line-height:1.7; margin-bottom:22px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff2c4, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(255,201,77,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:50px;
+  }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--red-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  /* unit complete banner */
+  .unit-complete{
+    display:none; background:linear-gradient(135deg,var(--forest),var(--river)); color:#fff; border-radius:20px;
+    padding:26px 22px; text-align:center; margin-top:22px; box-shadow:0 8px 0 var(--forest-d);
+  }
+  .unit-complete.show{ display:block; animation:fadeIn .6s; }
+  .unit-complete h3{ font-family:'Fredoka',sans-serif; font-size:24px; margin-bottom:8px; }
+  .unit-complete .map-final{ font-size:34px; letter-spacing:3px; margin:12px 0; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--ink-d), #5a3a22); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  @media (max-width:768px){ .gap-item{ font-size:15px; } }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : WORD CLOUD (SVG) ===== -->
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🧭</span> UNIT 3 — Period 8</div>
+    <h1 class="lesson-title">Adventure Word Cloud</h1>
+    <div class="lesson-subtitle">مغامرات الصيف · مشروع سحابة الكلمات ☁️</div>
+    <div class="cloud-wrap">
+      <svg viewBox="0 0 430 150" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="cl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#eaf4ff"/></linearGradient></defs>
+        <!-- cloud shape -->
+        <path d="M110,120 Q60,120 55,90 Q40,88 42,68 Q42,44 72,44 Q80,20 118,24 Q140,4 176,20 Q210,6 234,30 Q280,20 292,52 Q330,44 336,78 Q356,80 352,104 Q352,122 320,120 Z" fill="url(#cl)" stroke="#cfe4fb" stroke-width="3"/>
+        <!-- words -->
+        <text class="cw-word cw-float"    x="120" y="62" font-size="24" fill="#2b7fd6" text-anchor="middle" transform="rotate(-6 120 62)">boat</text>
+        <text class="cw-word cw-float d1" x="235" y="56" font-size="20" fill="#e8590c" text-anchor="middle">river</text>
+        <text class="cw-word cw-float d2" x="180" y="86" font-size="27" fill="#2e7d32" text-anchor="middle" transform="rotate(4 180 86)">swimming</text>
+        <text class="cw-word cw-float d3" x="290" y="86" font-size="17" fill="#a1123d" text-anchor="middle">cold</text>
+        <text class="cw-word cw-float"    x="110" y="102" font-size="16" fill="#8a6a3a" text-anchor="middle">I fell</text>
+        <text class="cw-word cw-float d1" x="185" y="112" font-size="18" fill="#e0a63e" text-anchor="middle">turned over</text>
+        <text class="cw-word cw-float d2" x="290" y="112" font-size="20" fill="#4aa3e0" text-anchor="middle">sweater</text>
+        <text class="cw-word cw-float d3" x="330" y="70" font-size="14" fill="#8a4a12" text-anchor="middle">mum</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MAP PROGRESS (shared across Unit 3) ===== -->
+<div class="map-track" id="mapTrack" aria-label="Adventure Map progress">
+  <div class="mt-label">🗺️ خريطة المغامرة — Adventure Map</div>
+  <div class="mt-trail" id="mtTrail"><span class="mt-flag">🚩</span><span class="mt-count" id="mtCount">0/8</span></div>
+  <div class="mt-done" id="mtDone">✨ اكتملتِ الخريطة! أنتَ مستكشفٌ حقيقي 🧭🗺️</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Objectives</span></button>
+    <button class="tab-btn" data-tab="complete"><span class="tab-icon">✏️</span><span>Complete</span></button>
+    <button class="tab-btn" data-tab="project"><span class="tab-icon">☁️</span><span>Word Cloud</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : OBJECTIVES ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#ff8c42;">
+        <div class="aim-icon-wrap">✏️</div>
+        <h3 class="aim-title">Vocabulary</h3>
+        <p class="aim-desc">Read and complete the sentences. Check your spelling.
+          <span class="ar">أن يقرأَ الطالبُ ويُكملَ الجملَ ويتحقّقَ من الإملاء.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#4aa3e0;">
+        <div class="aim-icon-wrap">☁️</div>
+        <h3 class="aim-title">Project</h3>
+        <p class="aim-desc">Work in a group and make an adventure word cloud.
+          <span class="ar">أن يعملَ في مجموعةٍ ويصنعَ سحابةَ كلماتٍ عن مغامرة.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#3fa34d;">
+        <div class="aim-icon-wrap">🧭</div>
+        <h3 class="aim-title">Unit Review</h3>
+        <p class="aim-desc">Review the whole adventure and finish your map!
+          <span class="ar">أن يراجعَ المغامرةَ كاملةً ويُكملَ خريطتَه!</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : COMPLETE ===== -->
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">✏️ Complete the Sentences<span class="title-sub">أكمل الجمل وتحقق من الإملاء</span></h2>
+    <div class="activity-lead">
+      <b>1)</b> Read and complete the sentences. Check your spelling.
+      <span class="ar">اضغطْ على الكلمةِ من البنك، ثم اضغطْ على الفراغِ المناسب.</span>
+    </div>
+    <div class="wordbank" id="wordBank">
+      <button class="wb-word" data-w="fifteenth">fifteenth</button>
+      <button class="wb-word" data-w="sixteenth">sixteenth</button>
+      <button class="wb-word" data-w="seventeenth">seventeenth</button>
+      <button class="wb-word" data-w="eighteenth">eighteenth</button>
+      <button class="wb-word" data-w="turned over">turned over</button>
+      <button class="wb-word" data-w="thirteenth">thirteenth</button>
+      <button class="wb-word" data-w="adventure">adventure</button>
+      <button class="wb-word" data-w="fourteenth">fourteenth</button>
+      <button class="wb-word" data-w="burst">burst</button>
+      <button class="wb-word" data-w="when">when</button>
+      <button class="wb-word" data-w="chased">chased</button>
+    </div>
+    <div id="gapList">
+      <div class="gap-item"><span class="gi-n">1</span> We were camping on the <span class="blank" data-a="fifteenth"></span>, <span class="blank" data-a="sixteenth"></span>, <span class="blank" data-a="seventeenth"></span> and <span class="blank" data-a="eighteenth"></span> of August.</div>
+      <div class="gap-item"><span class="gi-n">2</span> I was floating in the river when my boat <span class="blank" data-a="turned over"></span> on the <span class="blank" data-a="thirteenth"></span> of August. What an <span class="blank" data-a="adventure"></span>!</div>
+      <div class="gap-item"><span class="gi-n">3</span> Omar was riding his bike in Jericho when he fell. It was the <span class="blank" data-a="fourteenth"></span> of August.</div>
+      <div class="gap-item"><span class="gi-n">4</span> Omar's dad was driving to the farm when his wheel <span class="blank" data-a="burst"></span>.</div>
+      <div class="gap-item"><span class="gi-n">5</span> <span class="blank" data-a="when"></span> the second wheel burst, Omar's dad was driving home.</div>
+      <div class="gap-item"><span class="gi-n">6</span> The sheep were running when the wolf <span class="blank" data-a="chased"></span> them.</div>
+    </div>
+    <div class="gap-score" id="gapScore">Filled: 0 / 11</div>
+  </section>
+
+  <!-- ===== TAB 3 : WORD CLOUD PROJECT ===== -->
+  <section class="tab-content" id="tab-project">
+    <h2 class="section-title">☁️ Make a Word Cloud<span class="title-sub">مشروع: اصنع سحابة كلمات</span></h2>
+    <div class="proj-intro">
+      <h3>🎨 Word Cloud Project</h3>
+      <p>Work in groups of three or four. Make a word cloud about a summer adventure!<br>اعملوا في مجموعاتٍ واصنعوا سحابةَ كلماتٍ عن مغامرةِ صيف.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><span class="sn">1</span><span class="st">Choose an adventure: the river, the bike race or the farm.<span class="ar">اختاروا مغامرة: النهر أو سباق الدراجات أو المزرعة.</span></span></div>
+      <div class="step"><span class="sn">2</span><span class="st">Think of words about it and make them big or small.<span class="ar">فكّروا في كلماتٍ عنها واجعلوها كبيرةً أو صغيرة.</span></span></div>
+      <div class="step"><span class="sn">3</span><span class="st">Draw and colour your word cloud. Show it to the class!<span class="ar">ارسموا ولوّنوا سحابتكم واعرضوها على الصف!</span></span></div>
+    </div>
+
+    <div class="cloud-builder">
+      <h4>☁️ Build your cloud — try it here!</h4>
+      <p class="cb-ar">اضغطْ على الكلماتِ لإضافتِها إلى السحابةِ بأحجامٍ وألوانٍ مختلفة</p>
+      <div class="cloud-canvas" id="cloudCanvas"></div>
+      <div class="cloud-pool" id="cloudPool"></div>
+      <button class="cloud-clear" onclick="clearCloud()">🧹 Clear cloud</button>
+    </div>
+
+    <div class="writer-box">
+      <label>✍️ Write two sentences about your adventure (use the past continuous + when):</label>
+      <textarea placeholder="I was ... when ..."></textarea>
+    </div>
+    <p style="text-align:center; direction:rtl; color:#8a6a3a; font-size:13.5px; margin-top:12px;">🎨 ارسموا سحابةَ كلماتِكم على ورقةٍ كبيرةٍ ولوّنوها، ثم علّقوها في الصف!</p>
+  </section>
+
+  <!-- ===== TAB 4 : FINAL QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي — نهاية الوحدة</span></h2>
+    <div class="quiz-intro">
+      <h3>🧭 The Last Explorer Badge!</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفتحَ المحطةَ الأخيرةَ وتُكملَ خريطةَ المغامرة! 🗺️</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">Complete: "My boat ______ in the river."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> turned over</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> chased</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> burst</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">The wheel ______ when Omar's dad was driving.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> chased</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> burst</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> turned over</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">Which word is spelled correctly?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> thirteeth</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> thirteenth</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> thirtenth</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">The wolf ______ the sheep when they ran away.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> chased</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> burst</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> floated</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">Amy was ______ in a boat when it turned over.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> playing</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> played</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> plays</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🧭</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+      <div class="unit-complete" id="unitComplete">
+        <h3>🎉 Unit 3 Complete!</h3>
+        <div class="map-final">🌲⛰️🏕️🐎🧭🗺️🚩🏆</div>
+        <p>لقد أكملتَ وحدةَ <b>Summer Adventures</b> كاملةً ووصلتَ إلى نهايةِ خريطةِ المغامرة 8/8! أنتَ مستكشفٌ رائع 🌟</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🧭','🗺️','☁️','🎨','🏕️','🚩'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','🧭','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#ff8c42','#3fa34d','#4aa3e0','#ffc94d','#d1495b'];
+  for(var i=0;i<70;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* ===== COMPLETE (word bank) ===== */
+var selWord=null, gapFilled=0, GAP_TOTAL=11;
+document.querySelectorAll('.wb-word').forEach(function(w){
+  w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return;
+    document.querySelectorAll('.wb-word.selected').forEach(function(x){x.classList.remove('selected')});
+    selWord=w; w.classList.add('selected');
+  });
+});
+document.querySelectorAll('.blank').forEach(function(bl){
+  bl.addEventListener('click',function(){
+    if(!selWord || bl.classList.contains('filled')) return;
+    var val=selWord.dataset.w;
+    bl.textContent=val;
+    if(val===bl.dataset.a){
+      bl.classList.remove('wrong'); bl.classList.add('filled'); sparkleAt(bl);
+      selWord.classList.add('used'); selWord.classList.remove('selected'); selWord=null;
+      gapFilled++;
+      var sc=document.getElementById('gapScore'); sc.textContent='Filled: '+gapFilled+' / '+GAP_TOTAL;
+      if(gapFilled===GAP_TOTAL){ sc.innerHTML='Filled: '+GAP_TOTAL+' / '+GAP_TOTAL+' — <span style="color:var(--forest-d)">All correct! 🎉</span>'; confetti(); }
+    } else {
+      bl.classList.add('wrong');
+      setTimeout(function(){ bl.classList.remove('wrong'); bl.textContent=''; },800);
+    }
+  });
+});
+
+/* ===== WORD CLOUD BUILDER ===== */
+var CLOUD_WORDS=['boat','river','swimming','cold','I fell','turned over','sweater','mum','bike','race','farm','wolf','valley','hiking','adventure','burst'];
+var CLOUD_COLORS=['#2b7fd6','#e8590c','#2e7d32','#a1123d','#8a4a12','#4aa3e0','#d1495b','#e0a63e'];
+(function(){
+  var pool=document.getElementById('cloudPool');
+  CLOUD_WORDS.forEach(function(w){
+    var b=document.createElement('button'); b.className='pool-word'; b.textContent=w; b.dataset.w=w;
+    b.addEventListener('click',function(){ addCloud(w,b); });
+    pool.appendChild(b);
+  });
+})();
+function addCloud(w,btn){
+  var canvas=document.getElementById('cloudCanvas');
+  var t=document.createElement('span'); t.className='cloud-tag'; t.textContent=w;
+  t.style.fontSize=(15+Math.floor(Math.random()*22))+'px';
+  t.style.color=CLOUD_COLORS[Math.floor(Math.random()*CLOUD_COLORS.length)];
+  t.style.transform='rotate('+(Math.floor(Math.random()*17)-8)+'deg)';
+  t.addEventListener('click',function(){ t.remove(); });
+  canvas.appendChild(t); sparkleAt(t);
+  if(btn) btn.classList.add('added');
+}
+function clearCloud(){ document.getElementById('cloudCanvas').innerHTML=''; document.querySelectorAll('.pool-word.added').forEach(function(b){b.classList.remove('added')}); }
+
+/* ===== FINAL QUIZ ===== */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, unitDone=false;
+  if(pct===100){ emoji='🏆'; title='Explorer Badge!'; msg='رائع! فتحتَ المحطةَ الأخيرة 🧭🗺️'; confetti(); document.getElementById('rewardBadge').classList.add('show'); unitDone=true; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ كلماتِ الوحدةِ ثم أعدِ المحاولة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else { emoji='💪'; title='Keep exploring!'; msg='لا تستسلمْ! 🌱 راجعْ كلماتِ الوحدةِ ثم جرِّبْ من جديد.'; document.getElementById('rewardBadge').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  var uc=document.getElementById('unitComplete');
+  if(unitDone) uc.classList.add('show'); else uc.classList.remove('show');
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('unitComplete').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== ADVENTURE MAP · progress (shared across Unit 3) ===== -->
+<script>(function(){
+  var KEY='g6u3_map', THIS=8, em=['🐑','📅','👏','🧩','⏳','🎧','✍️','🎨'];
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var trail=document.getElementById('mtTrail'), count=document.getElementById('mtCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='mt-pin'+(got.indexOf(i)>=0?' on':'');
+    s.innerHTML='<span>'+(got.indexOf(i)>=0?em[i-1]:i)+'</span>';
+    trail.insertBefore(s, trail.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('mtDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
