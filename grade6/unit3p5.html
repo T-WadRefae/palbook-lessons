@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Adventures - Unit 3 Period 5 | Past Continuous</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --ink:#3d2b1f; --ink-d:#2a1d14;
+    --parch:#f6e8c8; --parch-d:#e8d3a0;
+    --orange:#ff8c42; --orange-d:#e8590c;
+    --forest:#3fa34d; --forest-d:#2e7d32;
+    --river:#4aa3e0; --river-d:#2b7fd6;
+    --gold:#ffc94d; --gold-d:#e0a63e;
+    --red:#d1495b; --red-d:#a1123d;
+    --cream:#fffaf0; --paper:#fffdf8;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(255,140,66,.06) 0%, transparent 45%),
+      radial-gradient(circle at 88% 82%, rgba(74,163,224,.06) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(61,43,31,.03) 0 2px, transparent 2px 24px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.2; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : Adventure Camera ===== */
+  .lesson-header{
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,201,77,.16), transparent 40%),
+      linear-gradient(160deg, var(--ink-d) 0%, #5a3a22 55%, var(--orange-d) 130%);
+    padding:26px 16px 46px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.3);
+  }
+  .header-inner{ max-width:720px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--ink-d);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.25); transform:rotate(-2deg);
+  }
+  .lesson-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(28px,5.6vw,48px); color:#fff; letter-spacing:-.5px;
+    text-shadow:2px 3px 0 var(--ink-d), 5px 6px 18px rgba(0,0,0,.4); margin-bottom:2px;
+  }
+  .lesson-subtitle{ font-size:clamp(15px,3.2vw,21px); color:var(--gold); font-weight:800; margin-bottom:10px; }
+  .camera-wrap{ width:min(320px,88vw); margin:6px auto 0; }
+  .camera-wrap svg{ display:block; width:100%; height:auto; filter:drop-shadow(0 10px 18px rgba(0,0,0,.4)); }
+  .rec-dot{ animation:rec-blink 1.1s steps(2) infinite; } @keyframes rec-blink{ 50%{ opacity:.15; } }
+  .reel-spin{ transform-box:fill-box; transform-origin:center; animation:reel 3.5s linear infinite; } @keyframes reel{ to{ transform:rotate(360deg);} }
+
+  /* ===== MAP PROGRESS TRACKER (shared across Unit 3) ===== */
+  .map-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, #e9d3a3, #d9bd85);
+    border:3px solid #b98a4e; box-shadow:0 6px 18px rgba(61,43,31,.35);
+  }
+  .mt-label{ color:var(--ink); font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
+  .mt-trail{ display:flex; align-items:center; justify-content:center; gap:7px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .mt-trail::before{ content:''; position:absolute; left:4%; right:4%; top:50%; height:0; border-top:3px dashed #9a6f3a; z-index:0; }
+  .mt-pin{
+    width:34px; height:34px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); position:relative; z-index:1;
+    background:#fff7e6; border:2px solid #b98a4e; box-shadow:0 2px 4px rgba(0,0,0,.3);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mt-pin span{ transform:rotate(45deg); font-size:13px; font-weight:800; color:#9a6f3a; }
+  .mt-pin.on{ background:radial-gradient(circle at 60% 40%, #ffd97a, var(--orange) 80%); border-color:#fff; box-shadow:0 0 0 3px rgba(255,201,77,.5), 0 2px 5px rgba(0,0,0,.3); }
+  .mt-pin.on span{ color:#fff; font-size:15px; }
+  .mt-flag{ font-size:22px; z-index:1; }
+  .mt-count{ background:rgba(61,43,31,.15); color:var(--ink); border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .mt-done{ margin-top:7px; color:var(--orange-d); font-weight:800; font-size:14px; display:none; }
+  .mt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 #b98a4e, 0 14px 34px rgba(61,43,31,.2);
+    display:flex; gap:8px; border:3px solid var(--orange);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:12px 12px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; color:var(--orange-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:88px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(255,140,66,.12); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--orange), var(--orange-d));
+    color:#fff; box-shadow:0 4px 0 #b04708, 0 6px 14px rgba(232,89,12,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:24px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); text-align:center;
+    margin-bottom:22px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 10px, var(--gold) 10px 20px, var(--forest) 20px 30px, var(--river) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#8a6a3a; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 20px rgba(61,43,31,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--orange)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--orange));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; }
+  .aim-desc{ color:#6a4a2a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#8a6a3a; margin-top:7px; }
+
+  .activity-lead{
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); direction:ltr; text-align:left;
+    background:var(--paper); border:3px solid var(--parch-d); border-left:6px solid var(--river);
+    border-radius:14px; padding:15px 18px; margin-bottom:16px; line-height:1.6;
+  }
+  .activity-lead .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13.5px; color:#8a6a3a; margin-top:6px; font-weight:600; }
+
+  /* grammar rule box (past continuous) */
+  .rule-box{
+    background:linear-gradient(135deg,#eaf4ff,#fff0e0); border:3px solid #cfe4fb; border-radius:18px;
+    padding:20px; margin-bottom:22px; box-shadow:0 6px 0 #d7e8fb;
+  }
+  .rule-box h3{ font-family:'Fredoka',sans-serif; text-align:center; color:var(--ink); font-size:19px; margin-bottom:12px; }
+  .formula{ text-align:center; font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); direction:ltr; line-height:2; }
+  .formula .chip{ display:inline-block; border-radius:10px; padding:3px 12px; margin:3px; font-weight:700; color:#fff; }
+  .formula .c-be{ background:var(--river); } .formula .c-ing{ background:var(--orange); } .formula .c-when{ background:var(--forest); }
+  .formula .plus{ color:#8a6a3a; font-weight:700; }
+  .rule-ar{ text-align:center; direction:rtl; font-family:'Cairo',sans-serif; font-size:13.5px; color:#8a6a3a; margin-top:10px; line-height:1.8; }
+  .rule-ar b{ color:var(--orange-d); }
+
+  /* ===== GAP FILL ===== */
+  .wordbank{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px;
+    background:var(--paper); border:3px dashed var(--orange); border-radius:16px; padding:16px;
+  }
+  .wb-word{
+    background:linear-gradient(135deg, var(--river), var(--river-d)); color:#fff; border:none;
+    padding:9px 18px; border-radius:22px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; box-shadow:0 3px 0 var(--river-d); transition:all .15s;
+  }
+  .wb-word:hover:not(.used){ transform:translateY(-2px); }
+  .wb-word.used{ opacity:.35; cursor:default; text-decoration:line-through; }
+  .wb-word.selected{ outline:3px solid var(--gold); transform:translateY(-2px) scale(1.05); }
+  .gap-item{
+    background:var(--paper); border-radius:14px; border:3px solid var(--parch-d); padding:15px 18px; margin-bottom:11px;
+    box-shadow:0 4px 0 #d9bd85; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif;
+    font-size:16.5px; color:var(--ink); line-height:2;
+  }
+  .gap-item .gi-n{ display:inline-flex; width:26px; height:26px; margin-right:8px; background:var(--river); color:#fff; border-radius:50%; align-items:center; justify-content:center; font-size:13px; font-weight:700; }
+  .when-hl{ background:rgba(63,163,77,.18); color:var(--forest-d); border-radius:5px; padding:0 5px; font-weight:700; }
+  .blank{
+    display:inline-block; min-width:104px; border-bottom:3px dashed var(--river); cursor:pointer;
+    text-align:center; padding:0 8px 2px; margin:0 3px; color:var(--river-d); font-weight:700; transition:all .15s; vertical-align:middle;
+  }
+  .blank:hover{ background:#eaf4ff; }
+  .blank.filled{ border-bottom-style:solid; border-color:var(--forest-d); color:var(--forest-d); background:#e2f5e4; border-radius:6px; }
+  .blank.wrong{ border-color:var(--red-d); color:var(--red-d); background:#fff0f2; }
+  .gap-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--river-d); font-weight:600; margin-top:14px; }
+
+  /* ===== QUESTION BUILDER + MATCH ===== */
+  .qb-item{
+    background:var(--paper); border-radius:16px; border:3px solid var(--parch-d); padding:16px 18px; margin-bottom:14px;
+    box-shadow:0 5px 0 #d9bd85;
+  }
+  .qb-scramble{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14px; color:#8a6a3a; margin-bottom:8px; font-style:italic; }
+  .qb-reveal-btn{
+    background:var(--river); color:#fff; border:none; padding:8px 16px; border-radius:11px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13px; box-shadow:0 3px 0 var(--river-d); transition:transform .2s;
+  }
+  .qb-reveal-btn:hover{ transform:translateY(-2px); }
+  .qb-q{ display:none; margin-top:10px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--forest-d); font-weight:600; }
+  .qb-q.show{ display:block; animation:fadeIn .4s; }
+  .qb-match-lead{ font-family:'Fredoka',sans-serif; color:var(--ink); direction:ltr; text-align:left; margin:18px 0 12px; font-weight:600; }
+  .matchwrap{ display:grid; grid-template-columns:1fr 1fr; gap:16px; direction:ltr; }
+  @media (max-width:600px){ .matchwrap{ grid-template-columns:1fr; } }
+  .match-col h3{ font-family:'Fredoka',sans-serif; text-align:center; color:#fff; font-size:14px; letter-spacing:1px; background:linear-gradient(135deg, var(--orange), var(--orange-d)); border-radius:12px; padding:8px; margin-bottom:12px; box-shadow:0 3px 0 #b04708; }
+  .qa-chip{
+    background:var(--paper); border:2.5px solid var(--parch-d); border-radius:12px; padding:12px 14px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; color:var(--ink); text-align:left;
+    margin-bottom:10px; transition:all .2s; box-shadow:0 3px 0 var(--parch-d); display:flex; gap:9px; align-items:flex-start;
+  }
+  .qa-chip .tag{ background:var(--gold); color:var(--ink-d); border-radius:50%; width:24px; height:24px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; }
+  .qa-chip:hover:not(.matched){ border-color:var(--river); transform:translateX(3px); }
+  .qa-chip.selected{ border-color:var(--red); background:#fff2ec; box-shadow:0 3px 0 var(--red), 0 0 0 3px rgba(209,73,91,.22); }
+  .qa-chip.matched{ background:#e2f5e4; border-color:var(--forest-d); color:var(--forest-d); cursor:default; box-shadow:0 3px 0 #b6e0bb; }
+  .qa-chip.matched .tag{ background:var(--forest-d); color:#fff; }
+  .qa-chip.shake{ animation:shake .4s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .match-score{ text-align:center; margin-top:14px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:17px; color:var(--orange-d); }
+
+  /* ===== SPEAK ===== */
+  .speak-intro{
+    background:linear-gradient(135deg, var(--forest), var(--river)); color:#fff; padding:22px;
+    border-radius:18px; text-align:center; margin-bottom:20px; box-shadow:0 6px 0 var(--forest-d);
+    font-size:15px; line-height:1.7;
+  }
+  .bubble-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+  .bubble{
+    background:var(--paper); border:3px solid var(--parch-d); border-radius:18px; padding:16px 18px;
+    box-shadow:0 5px 0 #d9bd85;
+  }
+  .bubble .q{ font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--ink); direction:ltr; text-align:left; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+  .bubble .qspk{ background:var(--gold); color:var(--ink-d); border:none; border-radius:10px; padding:5px 10px; cursor:pointer; font-size:12px; font-weight:700; font-family:'Cairo'; box-shadow:0 2px 0 var(--gold-d); flex-shrink:0; }
+  .bubble .qspk.playing{ background:var(--red); color:#fff; }
+  .bubble .a{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--forest-d); direction:ltr; text-align:left; background:#e2f5e4; border-radius:10px; padding:8px 12px; }
+  .bubble .ar{ font-size:12.5px; color:#8a6a3a; direction:rtl; text-align:right; margin-top:6px; }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--orange)); color:var(--ink-d); padding:26px 22px;
+    border-radius:22px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--orange-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'🎥'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:25px; margin-bottom:8px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.5); height:12px; border-radius:10px; margin-top:16px; overflow:hidden; border:2px solid rgba(255,255,255,.7); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--forest), var(--river)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 18px rgba(61,43,31,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--red-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid var(--parch-d); padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--orange); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:var(--parch-d); color:var(--ink); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#d5f0d8; border-color:var(--forest-d); color:#1e5620; }
+  .quiz-option.correct .opt-letter{ background:var(--forest-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9de; border-color:var(--red-d); color:#8a0d2c; }
+  .quiz-option.wrong .opt-letter{ background:var(--red-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e2f5e4,#d5f0d8); border-right:4px solid var(--forest-d); color:#1e5620; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#fff0f2,#ffd9de); border-right:4px solid var(--red-d); color:#8a0d2c; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:36px 22px; text-align:center;
+    border:3px solid var(--parch-d); box-shadow:0 8px 0 #d9bd85, 0 12px 28px rgba(61,43,31,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:74px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:50px; color:var(--orange-d); margin:16px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:28px; color:#8a6a3a; }
+  .result-message{ font-size:16px; line-height:1.7; margin-bottom:22px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:96px; height:96px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff2c4, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(255,201,77,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:46px;
+  }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--red-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--ink-d), #5a3a22); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  @media (max-width:768px){ .gap-item{ font-size:15px; } }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : ADVENTURE CAMERA (SVG) ===== -->
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🧭</span> UNIT 3 — Period 5</div>
+    <h1 class="lesson-title">Action! Past Continuous</h1>
+    <div class="lesson-subtitle">مغامرات الصيف · was/were + ing 🎥</div>
+    <div class="camera-wrap">
+      <svg viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="scn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe3f7"/><stop offset="1" stop-color="#eaf6d9"/></linearGradient>
+          <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4a52"/><stop offset="1" stop-color="#26262c"/></linearGradient>
+        </defs>
+        <!-- tripod legs -->
+        <path d="M150,118 L120,150 M150,118 L180,150 M150,118 L150,150" stroke="#5a3a22" stroke-width="6" stroke-linecap="round"/>
+        <!-- camera body -->
+        <rect x="70" y="52" width="150" height="66" rx="12" fill="url(#body)" stroke="#111" stroke-width="2"/>
+        <!-- reels -->
+        <g class="reel-spin" style="transform-origin:112px 44px"><circle cx="112" cy="44" r="18" fill="#2c2c33" stroke="#555" stroke-width="2"/><circle cx="112" cy="44" r="5" fill="#777"/><g stroke="#777" stroke-width="2"><path d="M112,30 v8"/><path d="M112,50 v8"/><path d="M98,44 h8"/><path d="M118,44 h8"/></g></circle></g>
+        <g class="reel-spin" style="transform-origin:172px 44px"><circle cx="172" cy="44" r="18" fill="#2c2c33" stroke="#555" stroke-width="2"/><circle cx="172" cy="44" r="5" fill="#777"/><g stroke="#777" stroke-width="2"><path d="M172,30 v8"/><path d="M172,50 v8"/><path d="M158,44 h8"/><path d="M178,44 h8"/></g></circle></g>
+        <!-- lens with mini scene -->
+        <g>
+          <circle cx="230" cy="85" r="30" fill="#111" stroke="#555" stroke-width="3"/>
+          <clipPath id="lensClip"><circle cx="230" cy="85" r="24"/></clipPath>
+          <g clip-path="url(#lensClip)">
+            <rect x="206" y="61" width="48" height="48" fill="url(#scn)"/>
+            <circle cx="246" cy="70" r="6" fill="#ffe08a"/>
+            <path d="M206,96 Q222,88 238,94 T254,92 V109 H206 Z" fill="#7cbf5a"/>
+            <!-- hiker figure -->
+            <g transform="translate(228,84)"><circle cx="0" cy="-6" r="3.4" fill="#f2c79b"/><rect x="-2.4" y="-3" width="5" height="9" rx="2" fill="#d1495b"/><path d="M2.6,-1 l5,2 M-2.4,0 l-5,3" stroke="#f2c79b" stroke-width="2.4" stroke-linecap="round"/><path d="M-1,6 l-3,7 M2,6 l3,7" stroke="#2e7d32" stroke-width="2.6" stroke-linecap="round"/></g>
+          </g>
+          <circle cx="230" cy="85" r="24" fill="none" stroke="#8a8a8a" stroke-width="2"/>
+        </g>
+        <!-- REC light -->
+        <circle class="rec-dot" cx="90" cy="70" r="6" fill="#ff3b30"/>
+        <text x="103" y="74" font-family="Fredoka,sans-serif" font-weight="700" font-size="12" fill="#ff6b60">REC</text>
+        <!-- viewfinder -->
+        <rect x="150" y="40" width="26" height="16" rx="3" fill="#26262c" stroke="#111"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MAP PROGRESS (shared across Unit 3) ===== -->
+<div class="map-track" id="mapTrack" aria-label="Adventure Map progress">
+  <div class="mt-label">🗺️ خريطة المغامرة — Adventure Map</div>
+  <div class="mt-trail" id="mtTrail"><span class="mt-flag">🚩</span><span class="mt-count" id="mtCount">0/8</span></div>
+  <div class="mt-done" id="mtDone">✨ اكتملتِ الخريطة! أنتَ مستكشفٌ حقيقي 🧭🗺️</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Objectives</span></button>
+    <button class="tab-btn" data-tab="rule"><span class="tab-icon">🧠</span><span>Grammar</span></button>
+    <button class="tab-btn" data-tab="complete"><span class="tab-icon">🎬</span><span>Complete</span></button>
+    <button class="tab-btn" data-tab="build"><span class="tab-icon">❓</span><span>Questions</span></button>
+    <button class="tab-btn" data-tab="speak"><span class="tab-icon">🗣️</span><span>Speak</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : OBJECTIVES ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#4aa3e0;">
+        <div class="aim-icon-wrap">🎥</div>
+        <h3 class="aim-title">Grammar</h3>
+        <p class="aim-desc">Use the past continuous: <b>was/were + verb-ing</b> with <b>when</b>.
+          <span class="ar">أن يستخدمَ الطالبُ الماضي المستمرَّ: was/were مع الفعل + ing، مع when.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#ff8c42;">
+        <div class="aim-icon-wrap">❓</div>
+        <h3 class="aim-title">Questions</h3>
+        <p class="aim-desc">Write questions and match them to the answers.
+          <span class="ar">أن يكتبَ أسئلةً ويطابقَها مع أجوبتِها.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#3fa34d;">
+        <div class="aim-icon-wrap">🗣️</div>
+        <h3 class="aim-title">Speaking</h3>
+        <p class="aim-desc">Ask and answer about an adventure you had.
+          <span class="ar">أن يسألَ ويجيبَ عن مغامرةٍ حدثتْ له.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : GRAMMAR RULE ===== -->
+  <section class="tab-content" id="tab-rule">
+    <h2 class="section-title">🧠 Past Continuous<span class="title-sub">الماضي المستمر</span></h2>
+    <div class="rule-box">
+      <h3>🎬 An action that was happening in the past</h3>
+      <div class="formula">
+        <span class="chip c-be">was / were</span> <span class="plus">+</span> <span class="chip c-ing">verb + ing</span>
+        <br><span style="font-size:15px; color:#8a6a3a;">Omar <b style="color:var(--river-d)">was riding</b> his bike</span>
+        <span class="chip c-when">when</span> <span style="font-size:15px; color:#8a6a3a;">he <b style="color:var(--red-d)">fell</b> off. (past simple)</span>
+      </div>
+      <p class="rule-ar">
+        نستخدمُ الماضيَ المستمرَّ لفعلٍ كان <b>مستمرًّا</b> في الماضي. الشكل: <b>was/were + الفعل + ing</b>.
+        وعندما يقطعُه فعلٌ قصيرٌ آخر نستخدمُ <b>when</b> + الماضي البسيط (fell).
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== TAB 3 : COMPLETE ===== -->
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">🎬 Complete the Sentences<span class="title-sub">أكمل بالماضي المستمر</span></h2>
+    <div class="activity-lead">
+      <b>1)</b> Read and think. Complete the sentences with the correct words.
+      <span class="ar">اضغطْ على الفعلِ من البنك، ثم اضغطْ على الفراغ. لاحظِ كلمةَ <span class="when-hl">when</span>.</span>
+    </div>
+    <div class="wordbank" id="wordBank">
+      <button class="wb-word" data-w="were driving">were driving</button>
+      <button class="wb-word" data-w="was chasing">was chasing</button>
+      <button class="wb-word" data-w="was riding">was riding</button>
+      <button class="wb-word" data-w="was raining">was raining</button>
+      <button class="wb-word" data-w="was playing">was playing</button>
+      <button class="wb-word" data-w="hiked">hiked</button>
+    </div>
+    <div id="gapList">
+      <div class="gap-item"><span class="gi-n">1</span> Last summer Omar and his family <span class="blank" data-a="were driving"></span> to the farm <span class="when-hl">when</span> the wheel burst.</div>
+      <div class="gap-item"><span class="gi-n">2</span> The wolf <span class="blank" data-a="was chasing"></span> the sheep at the farm <span class="when-hl">when</span> they ran away.</div>
+      <div class="gap-item"><span class="gi-n">3</span> Omar <span class="blank" data-a="was riding"></span> his bike <span class="when-hl">when</span> he fell off.</div>
+      <div class="gap-item"><span class="gi-n">4</span> It <span class="blank" data-a="was raining"></span> <span class="when-hl">when</span> Amy and Ben went in the river.</div>
+      <div class="gap-item"><span class="gi-n">5</span> Amy <span class="blank" data-a="was playing"></span> in her boat <span class="when-hl">when</span> it turned over.</div>
+      <div class="gap-item"><span class="gi-n">6</span> Rania and her family <span class="blank" data-a="hiked"></span> in a beautiful valley.</div>
+    </div>
+    <div class="gap-score" id="gapScore">Filled: 0 / 6</div>
+  </section>
+
+  <!-- ===== TAB 4 : QUESTION BUILDER + MATCH ===== -->
+  <section class="tab-content" id="tab-build">
+    <h2 class="section-title">❓ Write Questions &amp; Match<span class="title-sub">اكتب الأسئلة وطابقها</span></h2>
+    <div class="activity-lead">
+      <b>2)</b> Think and write the correct questions, then match them to the answers.
+      <span class="ar">رتّبِ الكلماتِ لتكوّنَ سؤالاً صحيحاً (اضغطْ لإظهاره)، ثم طابقِ السؤالَ بالجواب.</span>
+    </div>
+
+    <div class="qb-item">
+      <div class="qb-scramble">1) Rania in the valley and her family doing What were?</div>
+      <button class="qb-reveal-btn" onclick="revealQ(this)">✍️ Show correct question</button>
+      <div class="qb-q">🅰 What were Rania and her family doing in the valley?</div>
+    </div>
+    <div class="qb-item">
+      <div class="qb-scramble">2) was Omar in Jericho doing What?</div>
+      <button class="qb-reveal-btn" onclick="revealQ(this)">✍️ Show correct question</button>
+      <div class="qb-q">🅱 What was Omar doing in Jericho?</div>
+    </div>
+    <div class="qb-item">
+      <div class="qb-scramble">3) was in the river Amy What doing?</div>
+      <button class="qb-reveal-btn" onclick="revealQ(this)">✍️ Show correct question</button>
+      <div class="qb-q">🅲 What was Amy doing in the river?</div>
+    </div>
+
+    <p class="qb-match-lead">🔗 Now match each question with its answer:</p>
+    <div class="matchwrap">
+      <div class="match-col"><h3>QUESTIONS</h3><div id="qCol"></div></div>
+      <div class="match-col"><h3>ANSWERS</h3><div id="aCol"></div></div>
+    </div>
+    <div class="match-score" id="matchScore">Matched: 0 / 3</div>
+  </section>
+
+  <!-- ===== TAB 5 : SPEAK ===== -->
+  <section class="tab-content" id="tab-speak">
+    <h2 class="section-title">🗣️ Ask &amp; Answer<span class="title-sub">اسأل وأجب عن مغامرة</span></h2>
+    <div class="speak-intro">
+      <b>3) Work in pairs.</b> Ask and answer questions about an adventure you had.<br>
+      اعملوا في ثنائيات: اسأل صديقك عن مغامرةٍ حدثتْ له في الصيف. اضغطْ 🔊 لسماعِ السؤال.
+    </div>
+    <div class="bubble-grid">
+      <div class="bubble">
+        <div class="q"><button class="qspk" onclick="speakQ(this,&quot;Did you do something exciting last summer?&quot;)">🔊</button> Did you do something exciting last summer?</div>
+        <div class="a">A: Yes, I did!</div>
+        <div class="ar">هل فعلتَ شيئاً مثيراً الصيفَ الماضي؟</div>
+      </div>
+      <div class="bubble">
+        <div class="q"><button class="qspk" onclick="speakQ(this,&quot;What did you do?&quot;)">🔊</button> What did you do?</div>
+        <div class="a">A: I went hiking in the valley.</div>
+        <div class="ar">ماذا فعلت؟</div>
+      </div>
+      <div class="bubble">
+        <div class="q"><button class="qspk" onclick="speakQ(this,&quot;When did the adventure happen?&quot;)">🔊</button> When did the adventure happen?</div>
+        <div class="a">A: It happened last summer.</div>
+        <div class="ar">متى حدثت المغامرة؟</div>
+      </div>
+      <div class="bubble">
+        <div class="q"><button class="qspk" onclick="speakQ(this,&quot;What were you doing when it happened?&quot;)">🔊</button> What were you doing when it happened?</div>
+        <div class="a">A: I was hiking when I saw some baby birds.</div>
+        <div class="ar">ماذا كنتَ تفعلُ عندما حدث؟</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 6 : QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي</span></h2>
+    <div class="quiz-intro">
+      <h3>🎥 The Explorer Quiz</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفتحَ المحطةَ الخامسةَ على خريطةِ المغامرة!</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">Omar and his family ______ to the farm when the wheel burst.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> was driving</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> were driving</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">Omar ______ his bike when he fell off.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> was riding</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> were riding</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">Which question is correct?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> What was Omar doing in Jericho?</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> What Omar doing was in Jericho?</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> What did Omar doing in Jericho?</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">"What was Amy doing in the river?" — Best answer:</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> She was playing in a boat.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> He was riding a bike.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> They were hiking.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">The wolf ______ the sheep when they ran away.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> was chasing</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> were chasing</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🧭</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🧭','🗺️','🎥','🎬','🐦','🚩'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    window.speechSynthesis && speechSynthesis.cancel();
+  });
+});
+
+/* TTS */
+function speakQ(btn,text){
+  if(!window.speechSynthesis) return;
+  if(btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.qspk.playing').forEach(function(b){b.classList.remove('playing')});
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); };
+  speechSynthesis.speak(u);
+}
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','🧭','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#ff8c42','#3fa34d','#4aa3e0','#ffc94d','#d1495b'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* ===== GAP FILL ===== */
+var selWord=null, gapFilled=0, GAP_TOTAL=6;
+document.querySelectorAll('.wb-word').forEach(function(w){
+  w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return;
+    document.querySelectorAll('.wb-word.selected').forEach(function(x){x.classList.remove('selected')});
+    selWord=w; w.classList.add('selected');
+  });
+});
+document.querySelectorAll('.blank').forEach(function(bl){
+  bl.addEventListener('click',function(){
+    if(!selWord || bl.classList.contains('filled')) return;
+    var val=selWord.dataset.w;
+    bl.textContent=val;
+    if(val===bl.dataset.a){
+      bl.classList.remove('wrong'); bl.classList.add('filled'); sparkleAt(bl);
+      selWord.classList.add('used'); selWord.classList.remove('selected'); selWord=null;
+      gapFilled++;
+      var sc=document.getElementById('gapScore'); sc.textContent='Filled: '+gapFilled+' / '+GAP_TOTAL;
+      if(gapFilled===GAP_TOTAL){ sc.innerHTML='Filled: '+GAP_TOTAL+' / '+GAP_TOTAL+' — <span style="color:var(--forest-d)">All correct! 🎉</span>'; confetti(); }
+    } else {
+      bl.classList.add('wrong');
+      setTimeout(function(){ bl.classList.remove('wrong'); bl.textContent=''; },800);
+    }
+  });
+});
+
+/* ===== QUESTION REVEAL ===== */
+function revealQ(btn){
+  var q=btn.parentElement.querySelector('.qb-q');
+  q.classList.toggle('show');
+  btn.textContent=q.classList.contains('show')?'🙈 Hide question':'✍️ Show correct question';
+  if(q.classList.contains('show')) sparkleAt(btn);
+}
+
+/* ===== MATCH Q & A ===== */
+var QA=[
+  {tag:'A', q:"What were Rania and her family doing in the valley?", a:"They were hiking and watching birds.", al:'b'},
+  {tag:'B', q:"What was Omar doing in Jericho?",                    a:"He was riding his bike in a race.",     al:'c'},
+  {tag:'C', q:"What was Amy doing in the river?",                   a:"She was playing in a boat.",            al:'a'}
+];
+var selQ=null, qaMatched=0;
+(function(){
+  var qCol=document.getElementById('qCol'), aCol=document.getElementById('aCol');
+  QA.forEach(function(item){
+    var q=document.createElement('div'); q.className='qa-chip'; q.dataset.tag=item.tag;
+    q.innerHTML='<span class="tag">'+item.tag+'</span><span>'+item.q+'</span>';
+    q.addEventListener('click',function(){
+      if(q.classList.contains('matched')) return;
+      document.querySelectorAll('#qCol .qa-chip.selected').forEach(function(x){x.classList.remove('selected')});
+      selQ=q; q.classList.add('selected');
+    });
+    qCol.appendChild(q);
+  });
+  var shuffled=QA.slice().sort(function(a,b){ return a.al<b.al?-1:1; });
+  shuffled.forEach(function(item){
+    var a=document.createElement('div'); a.className='qa-chip'; a.dataset.tag=item.tag;
+    a.innerHTML='<span class="tag">'+item.al+'</span><span>'+item.a+'</span>';
+    a.addEventListener('click',function(){
+      if(a.classList.contains('matched')||!selQ) return;
+      if(a.dataset.tag===selQ.dataset.tag){
+        a.classList.add('matched'); selQ.classList.add('matched'); selQ.classList.remove('selected'); selQ=null;
+        qaMatched++; sparkleAt(a);
+        var sc=document.getElementById('matchScore');
+        sc.innerHTML='Matched: '+qaMatched+' / 3'+(qaMatched===3?' — <span style="color:var(--forest-d)">Perfect! 🎉</span>':'');
+        if(qaMatched===3) confetti();
+      } else {
+        a.classList.add('shake'); setTimeout(function(){a.classList.remove('shake')},420);
+      }
+    });
+    aCol.appendChild(a);
+  });
+})();
+
+/* ===== FINAL QUIZ ===== */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg;
+  if(pct===100){ emoji='🏆'; title='Explorer Badge!'; msg='رائع! فتحتَ المحطةَ الخامسةَ على الخريطة 🧭🗺️ أتقنتَ الماضي المستمر.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 تذكّر: was/were + الفعل + ing، ثم أعدِ المحاولة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else { emoji='💪'; title='Keep filming!'; msg='لا تستسلمْ! 🌱 راجعْ قاعدةَ الماضي المستمر ثم جرِّبْ من جديد.'; document.getElementById('rewardBadge').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== ADVENTURE MAP · progress (shared across Unit 3) ===== -->
+<script>(function(){
+  var KEY='g6u3_map', THIS=5, em=['🐑','📅','👏','🧩','⏳','🎧','✍️','🎨'];
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var trail=document.getElementById('mtTrail'), count=document.getElementById('mtCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='mt-pin'+(got.indexOf(i)>=0?' on':'');
+    s.innerHTML='<span>'+(got.indexOf(i)>=0?em[i-1]:i)+'</span>';
+    trail.insertBefore(s, trail.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('mtDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
