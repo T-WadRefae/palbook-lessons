@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Adventures - Unit 3 Period 1 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --ink:#3d2b1f; --ink-d:#2a1d14;
+    --parch:#f6e8c8; --parch-d:#e8d3a0;
+    --orange:#ff8c42; --orange-d:#e8590c;
+    --forest:#3fa34d; --forest-d:#2e7d32;
+    --river:#4aa3e0; --river-d:#2b7fd6;
+    --gold:#ffc94d; --gold-d:#e0a63e;
+    --red:#d1495b; --red-d:#a1123d;
+    --cream:#fffaf0; --paper:#fffdf8;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(255,140,66,.06) 0%, transparent 45%),
+      radial-gradient(circle at 88% 82%, rgba(74,163,224,.06) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(61,43,31,.03) 0 2px, transparent 2px 24px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.2; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : Adventure Compass on a map ===== */
+  .lesson-header{
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,201,77,.18), transparent 40%),
+      linear-gradient(160deg, var(--ink-d) 0%, #5a3a22 55%, var(--orange-d) 130%);
+    padding:26px 16px 46px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.3);
+  }
+  /* dashed route doodles in header */
+  .route{ position:absolute; opacity:.25; pointer-events:none; font-size:30px; }
+  .route.r1{ top:16px; left:8%; } .route.r2{ top:60px; left:20%; } .route.r3{ bottom:40px; right:12%; } .route.r4{ top:30px; right:22%; }
+  .header-inner{ max-width:720px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--ink-d);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.25); transform:rotate(-2deg);
+  }
+  .lesson-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(30px,5.8vw,52px); color:#fff; letter-spacing:-.5px;
+    text-shadow:2px 3px 0 var(--ink-d), 5px 6px 18px rgba(0,0,0,.4); margin-bottom:2px;
+  }
+  .lesson-subtitle{ font-size:clamp(16px,3.4vw,22px); color:var(--gold); font-weight:800; margin-bottom:16px; }
+
+  /* the compass */
+  .compass{ position:relative; width:130px; height:130px; margin:6px auto 0; }
+  .compass-ring{
+    position:absolute; inset:0; border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #fff7e6, var(--parch) 60%, var(--parch-d));
+    border:6px solid #b98a4e; box-shadow:0 8px 22px rgba(0,0,0,.4), inset 0 0 18px rgba(120,80,30,.3);
+  }
+  .compass-ring::before{ /* tick marks ring */
+    content:''; position:absolute; inset:12px; border-radius:50%;
+    background:repeating-conic-gradient(from 0deg, #8a6a3a 0deg 1.5deg, transparent 1.5deg 30deg);
+    -webkit-mask:radial-gradient(circle, transparent 46px, #000 47px); mask:radial-gradient(circle, transparent 46px, #000 47px);
+    opacity:.5;
+  }
+  .cdir{ position:absolute; font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; color:#8a5a2a; }
+  .cdir.n{ top:9px; left:50%; transform:translateX(-50%); color:var(--red); } .cdir.s{ bottom:9px; left:50%; transform:translateX(-50%); }
+  .cdir.e{ right:11px; top:50%; transform:translateY(-50%); } .cdir.w{ left:11px; top:50%; transform:translateY(-50%); }
+  .needle{
+    position:absolute; left:50%; top:50%; width:10px; height:88px; transform:translate(-50%,-50%) rotate(0deg);
+    transform-origin:50% 50%; animation:comp-swing 5s ease-in-out infinite;
+  }
+  .needle::before{ content:''; position:absolute; top:0; left:0; width:10px; height:44px; background:linear-gradient(var(--red),var(--red-d)); clip-path:polygon(50% 0,100% 100%,0 100%); }
+  .needle::after{ content:''; position:absolute; bottom:0; left:0; width:10px; height:44px; background:linear-gradient(#eee,#bbb); clip-path:polygon(0 0,100% 0,50% 100%); }
+  @keyframes comp-swing{ 0%,100%{ transform:translate(-50%,-50%) rotate(-24deg);} 50%{ transform:translate(-50%,-50%) rotate(28deg);} }
+  .compass-hub{ position:absolute; left:50%; top:50%; width:18px; height:18px; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle at 38% 32%, #fff, var(--gold) 70%); border:2px solid #b98a4e; z-index:3; }
+
+  /* ===== MAP PROGRESS TRACKER (shared across Unit 3) ===== */
+  .map-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, #e9d3a3, #d9bd85);
+    border:3px solid #b98a4e; box-shadow:0 6px 18px rgba(61,43,31,.35);
+  }
+  .mt-label{ color:var(--ink); font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
+  .mt-trail{ display:flex; align-items:center; justify-content:center; gap:7px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .mt-trail::before{ content:''; position:absolute; left:4%; right:4%; top:50%; height:0; border-top:3px dashed #9a6f3a; z-index:0; }
+  .mt-pin{
+    width:34px; height:34px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); position:relative; z-index:1;
+    background:#fff7e6; border:2px solid #b98a4e; box-shadow:0 2px 4px rgba(0,0,0,.3);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mt-pin span{ transform:rotate(45deg); font-size:13px; font-weight:800; color:#9a6f3a; }
+  .mt-pin.on{ background:radial-gradient(circle at 60% 40%, #ffd97a, var(--orange) 80%); border-color:#fff; box-shadow:0 0 0 3px rgba(255,201,77,.5), 0 2px 5px rgba(0,0,0,.3); }
+  .mt-pin.on span{ color:#fff; font-size:15px; }
+  .mt-flag{ font-size:22px; z-index:1; transform:rotate(0); }
+  .mt-count{ background:rgba(61,43,31,.15); color:var(--ink); border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .mt-done{ margin-top:7px; color:var(--orange-d); font-weight:800; font-size:14px; display:none; }
+  .mt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 #b98a4e, 0 14px 34px rgba(61,43,31,.2);
+    display:flex; gap:8px; border:3px solid var(--orange);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:13px 14px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; color:var(--orange-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:92px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(255,140,66,.12); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--orange), var(--orange-d));
+    color:#fff; box-shadow:0 4px 0 #b04708, 0 6px 14px rgba(232,89,12,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:26px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:30px; color:var(--ink); text-align:center;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 10px, var(--gold) 10px 20px, var(--forest) 20px 30px, var(--river) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#8a6a3a; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 20px rgba(61,43,31,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--orange)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--orange));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; }
+  .aim-desc{ color:#6a4a2a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#8a6a3a; margin-top:7px; }
+
+  .key-language-box{
+    background:linear-gradient(135deg, var(--forest), var(--river)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--forest-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-family:'Fredoka',sans-serif; font-size:21px; margin-bottom:14px; display:flex; align-items:center; gap:9px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.2); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.35); font-family:'Fredoka',sans-serif; }
+
+  /* ===== WORD CARDS ===== */
+  .cards-instruction{
+    background:var(--gold); color:var(--ink-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--gold-d);
+    display:flex; align-items:center; justify-content:center; gap:9px;
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid var(--parch-d);
+    box-shadow:0 6px 0 #d9bd85, 0 8px 15px rgba(61,43,31,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:172px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); box-shadow:0 10px 0 #d9bd85, 0 14px 24px rgba(61,43,31,.15); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--orange), var(--orange-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); font-weight:600; word-break:break-word; }
+  .word-tap-hint{ font-size:11px; color:var(--orange-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:18px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{ font-size:11.5px; background:rgba(255,255,255,.25); padding:5px 10px; border-radius:10px; margin-top:5px; line-height:1.4; font-weight:600; max-width:100%; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--forest); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--forest-d), 0 4px 8px rgba(0,0,0,.2); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing{ background:var(--orange); box-shadow:0 3px 0 var(--orange-d); animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.15);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(255,140,66,.16); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--orange-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.25); color:#fff; }
+
+  /* ===== STORY ===== */
+  .story-intro{
+    background:linear-gradient(135deg, var(--river), var(--forest)); color:#fff; padding:19px 24px;
+    border-radius:18px; margin-bottom:26px; text-align:center; box-shadow:0 6px 0 var(--river-d);
+    font-size:15.5px; line-height:1.8;
+  }
+  .scene-card{
+    background:var(--paper); border-radius:22px; margin-bottom:28px; border:3px solid var(--parch-d);
+    box-shadow:0 8px 0 #d9bd85, 0 12px 28px rgba(61,43,31,.1);
+  }
+  .scene-header{
+    background:linear-gradient(135deg, var(--orange), var(--red)); padding:14px 19px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    border-radius:18px 18px 0 0;
+  }
+  .scene-number{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-size:17px; }
+  .scene-num-badge{
+    background:var(--gold); color:var(--ink-d); width:35px; height:35px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:17px; box-shadow:0 3px 0 var(--gold-d);
+  }
+  .play-scene-btn{
+    background:var(--gold); color:var(--ink-d); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; display:flex; align-items:center; gap:6px;
+    box-shadow:0 3px 0 var(--gold-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .play-scene-btn.playing{ background:var(--red); color:#fff; box-shadow:0 3px 0 var(--red-d); }
+  .scene-emoji-strip{ text-align:center; padding:16px 12px 4px; font-size:44px; letter-spacing:8px; direction:ltr; }
+  .dialogue-box{ padding:22px; }
+  .dialogue-line{
+    margin-bottom:13px; padding:12px 16px; border-radius:13px; background:#fff;
+    border-right:5px solid var(--accent); box-shadow:0 2px 8px rgba(61,43,31,.06);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.8;
+  }
+  .dialogue-line[data-speaker="Ben"]{ --accent:var(--gold-d); }
+  .dialogue-line[data-speaker="Omar"]{ --accent:var(--river); }
+  .dialogue-line[data-speaker="Rania"]{ --accent:var(--red); }
+  .dialogue-line[data-speaker="Amy"]{ --accent:var(--forest); }
+  .dialogue-line[data-speaker="Mum"]{ --accent:var(--orange); }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:var(--ink); background:#fbf3e2; font-style:italic; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; }
+
+  .hover-word{
+    background:linear-gradient(transparent 60%, rgba(255,201,77,.6) 60%);
+    cursor:help; position:relative; font-weight:600; transition:all .2s;
+  }
+  .hover-word:hover{ background:var(--gold); color:var(--ink-d); padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--ink); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--ink); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip{ opacity:1; }
+  .pronoun{
+    background:rgba(74,163,224,.16); padding:1px 5px; border-radius:4px; cursor:help; position:relative;
+    font-weight:600; color:var(--river-d); border-bottom:2px dotted var(--river); display:inline-block;
+  }
+  .pronoun:hover{ background:var(--river); color:#fff; }
+  .pronoun .tooltip{ background:var(--river-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--river-d); }
+  .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+
+  .comp-details{ background:#fff; border-radius:16px; margin:0 22px 22px; border:2px dashed var(--forest); overflow:visible; }
+  .comp-details summary{
+    list-style:none; background:var(--forest); color:#fff; padding:12px 17px; border-radius:11px; cursor:pointer;
+    font-weight:700; display:flex; justify-content:space-between; align-items:center; font-size:14.5px; margin:9px; transition:background .3s;
+  }
+  .comp-details summary::-webkit-details-marker{ display:none; }
+  .comp-details summary:hover{ background:var(--forest-d); }
+  .comp-details summary .arrow{ transition:transform .3s; font-size:18px; }
+  .comp-details[open] summary .arrow{ transform:rotate(180deg); }
+  .question-block{ padding:14px 18px 6px; }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); margin-bottom:13px; direction:ltr; text-align:left; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; margin-bottom:13px; }
+  .option-btn{
+    background:var(--cream); border:2px solid var(--parch-d); padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover{ background:#fff; border-color:var(--forest); transform:translateX(3px); }
+  .option-btn.correct{ background:#d5f0d8; border-color:var(--forest-d); color:#1e5620; font-weight:700; }
+  .option-btn.wrong{ background:#ffd9de; border-color:var(--red-d); color:#8a0d2c; }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff4e0,#ffe8c4); border-right:4px solid var(--orange-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--orange-d); }
+
+  /* ===== QUESTIONS TAB ===== */
+  .final-questions-intro{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; padding:23px;
+    border-radius:18px; text-align:center; margin-bottom:26px; box-shadow:0 6px 0 var(--red-d);
+  }
+  .final-questions-intro h3{ font-family:'Fredoka',sans-serif; font-size:24px; margin-bottom:7px; }
+  .final-question-card{
+    background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 18px rgba(61,43,31,.08);
+  }
+  .fq-number{
+    display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px;
+    background:var(--orange); color:#fff; border-radius:50%; font-family:'Fredoka',sans-serif;
+    font-weight:700; font-size:19px; margin-bottom:11px; box-shadow:0 3px 0 var(--orange-d);
+  }
+  .fq-question{ font-family:'Fredoka',sans-serif; font-size:17.5px; color:var(--ink); margin-bottom:7px; direction:ltr; text-align:left; }
+  .fq-question-ar{ font-size:13.5px; color:#8a6a3a; margin-bottom:13px; }
+  .show-answer-btn{
+    background:var(--forest); color:#fff; border:none; padding:9px 19px; border-radius:12px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--forest-d);
+    transition:transform .2s; display:inline-flex; align-items:center; gap:6px;
+  }
+  .show-answer-btn:hover{ transform:translateY(-2px); }
+  .fq-answer{
+    background:linear-gradient(135deg,#e2f5e4,#d5f0d8); border-right:4px solid var(--forest-d);
+    padding:14px 17px; border-radius:12px; margin-top:13px; display:none;
+  }
+  .fq-answer.show{ display:block; animation:fadeIn .4s; }
+  .fq-answer-en{ font-family:'Fredoka',sans-serif; font-size:15.5px; color:#1e5620; margin-bottom:6px; direction:ltr; text-align:left; font-weight:600; }
+  .fq-answer-ar{ font-size:13.5px; color:var(--ink); line-height:1.7; }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--orange)); color:var(--ink-d); padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--orange-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'🧭'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.5); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.7); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--forest), var(--river)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 18px rgba(61,43,31,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--red-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid var(--parch-d); padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--orange); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:var(--parch-d); color:var(--ink); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#d5f0d8; border-color:var(--forest-d); color:#1e5620; }
+  .quiz-option.correct .opt-letter{ background:var(--forest-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9de; border-color:var(--red-d); color:#8a0d2c; }
+  .quiz-option.wrong .opt-letter{ background:var(--red-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e2f5e4,#d5f0d8); border-right:4px solid var(--forest-d); color:#1e5620; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#fff0f2,#ffd9de); border-right:4px solid var(--red-d); color:#8a0d2c; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center;
+    border:3px solid var(--parch-d); box-shadow:0 8px 0 #d9bd85, 0 12px 28px rgba(61,43,31,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:76px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--ink); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--orange-d); margin:18px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:30px; color:#8a6a3a; }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:96px; height:96px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff2c4, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(255,201,77,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:46px;
+  }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--red-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--ink-d), #5a3a22); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14px; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(138px,1fr)); }
+    .scene-emoji-strip{ font-size:34px; letter-spacing:5px; }
+    .comp-details{ margin:0 12px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : ADVENTURE COMPASS ===== -->
+<header class="lesson-header">
+  <span class="route r1">🌲</span><span class="route r2">⛰️</span><span class="route r3">🏕️</span><span class="route r4">🐑</span>
+  <div class="header-inner">
+    <div class="unit-badge"><span>🧭</span> UNIT 3 — Period 1</div>
+    <h1 class="lesson-title">Summer Adventures</h1>
+    <div class="lesson-subtitle">مغامرات الصيف 🗺️</div>
+    <div class="compass">
+      <div class="compass-ring"></div>
+      <span class="cdir n">N</span><span class="cdir e">E</span><span class="cdir s">S</span><span class="cdir w">W</span>
+      <div class="needle"></div>
+      <div class="compass-hub"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MAP PROGRESS (shared across Unit 3) ===== -->
+<div class="map-track" id="mapTrack" aria-label="Adventure Map progress">
+  <div class="mt-label">🗺️ خريطة المغامرة — Adventure Map</div>
+  <div class="mt-trail" id="mtTrail"><span class="mt-flag">🚩</span><span class="mt-count" id="mtCount">0/8</span></div>
+  <div class="mt-done" id="mtDone">✨ اكتملتِ الخريطة! أنتَ مستكشفٌ حقيقي 🧭🗺️</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Aims</span></button>
+    <button class="tab-btn" data-tab="words"><span class="tab-icon">📇</span><span>Word Cards</span></button>
+    <button class="tab-btn" data-tab="story"><span class="tab-icon">📖</span><span>Story</span></button>
+    <button class="tab-btn" data-tab="questions"><span class="tab-icon">❓</span><span>Questions</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : AIMS ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#ff8c42;">
+        <div class="aim-icon-wrap">🗣️</div>
+        <h3 class="aim-title">Main Aim</h3>
+        <p class="aim-desc">Talk about summer adventures and when they happened.
+          <span class="ar">أن يتحدّثَ الطالبُ عن مغامراتِ الصيفِ ومتى حدثت.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#3fa34d;">
+        <div class="aim-icon-wrap">🔢</div>
+        <h3 class="aim-title">New Words</h3>
+        <p class="aim-desc">Learn ordinal numbers (13th–30th) and adventure words.
+          <span class="ar">تعلُّم الأعدادِ الترتيبيةِ (13th–30th) وكلماتِ المغامرة.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#4aa3e0;">
+        <div class="aim-icon-wrap">⏳</div>
+        <h3 class="aim-title">Grammar</h3>
+        <p class="aim-desc">Introduce the past continuous with <b>when</b>.
+          <span class="ar">التعرّفُ إلى الماضي المستمرِّ مع كلمة when (عندما).</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#d1495b;">
+        <div class="aim-icon-wrap">👂</div>
+        <h3 class="aim-title">Listening</h3>
+        <p class="aim-desc">Listen to the adventures and answer the questions.
+          <span class="ar">الاستماعُ إلى المغامراتِ والإجابةُ عن الأسئلة.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#ffc94d;">
+        <div class="aim-icon-wrap">📅</div>
+        <h3 class="aim-title">Punctuation</h3>
+        <p class="aim-desc">Use question marks correctly.
+          <span class="ar">استخدامُ علامةِ الاستفهامِ في الأسئلة.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#8a5a2a;">
+        <div class="aim-icon-wrap">🧭</div>
+        <h3 class="aim-title">Value</h3>
+        <p class="aim-desc">Adventures are fun, but stay safe and help each other.
+          <span class="ar">المغامراتُ ممتعةٌ، لكن حافظْ على سلامتِكَ وساعدِ الآخرين.</span></p>
+      </div>
+    </div>
+    <div class="key-language-box">
+      <h3>🔑 الكلمات المفتاحية للدرس</h3>
+      <div class="key-words">
+        <span class="key-word">thirteenth → thirtieth</span><span class="key-word">twenty-first</span>
+        <span class="key-word">adventure</span><span class="key-word">burst</span><span class="key-word">chase</span>
+        <span class="key-word">turn (over)</span><span class="key-word">when</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : WORD CARDS ===== -->
+  <section class="tab-content" id="tab-words">
+    <h2 class="section-title">📇 Word Cards<span class="title-sub">بطاقات الكلمات</span></h2>
+    <div class="cards-instruction"><span>👆</span> اضغط على البطاقة لرؤية المعنى، واضغط 🔊 لسماع اللفظ</div>
+    <div class="word-cards-grid" id="wordCardsGrid"></div>
+  </section>
+
+  <!-- ===== TAB 3 : STORY ===== -->
+  <section class="tab-content" id="tab-story">
+    <h2 class="section-title">📖 The Story<span class="title-sub">المحادثة</span></h2>
+    <div class="story-intro">
+      🗺️ أربعُ مغامراتٍ صيفية: <strong>Omar</strong> في المزرعةِ والذئب، <strong>Amy</strong> في النهرِ والقارب، <strong>Omar</strong> في سباقِ الدراجاتِ بأريحا، و<strong>عائلة Rania</strong> في تخييمِ الوادي. مرِّرْ فوقَ الكلماتِ الملوَّنةِ لمعرفةِ معناها.
+    </div>
+
+    <!-- Scene 1 -->
+    <div class="scene-card">
+      <div class="scene-header">
+        <div class="scene-number"><span class="scene-num-badge">1</span><span>المزرعة والذئب</span></div>
+        <button class="play-scene-btn" onclick="playScene(this,1)"><span>🔊</span> استمع</button>
+      </div>
+      <div class="scene-emoji-strip">🚗💨🐑🐺</div>
+      <div class="dialogue-box">
+        <div class="dialogue-line" data-speaker="Ben">
+          <span class="speaker-name">Ben:</span> You had some <span class="hover-word">adventures<span class="tooltip">مغامرات</span></span> last summer.
+        </div>
+        <div class="dialogue-line" data-speaker="Omar">
+          <span class="speaker-name">Omar:</span> Two of the car wheels <span class="hover-word">burst<span class="tooltip">انفجرت</span></span>! The first on the day <span class="pronoun">we<span class="tooltip">تعود على Omar وعائلته</span></span> were travelling to the farm and the second on the day we left the farm.
+        </div>
+        <div class="dialogue-line" data-speaker="Narrator">
+          <span class="speaker-name">Narrator:</span> Omar's family <span class="hover-word">stayed<span class="tooltip">أقاموا / مكثوا</span></span> at their aunt's sheep farm from the 15th–21st of July. A <span class="hover-word">wolf<span class="tooltip">ذئب</span></span> was <span class="hover-word">chasing<span class="tooltip">يطارد</span></span> the sheep when <span class="pronoun">they<span class="tooltip">تعود على the sheep (الأغنام)</span></span> ran away.
+        </div>
+      </div>
+      <details class="comp-details">
+        <summary><span>📝 أسئلة فهم المشهد الأول</span><span class="arrow">▼</span></summary>
+        <div class="question-block">
+          <p class="question-text">1. What happened to the car wheels?</p>
+          <div class="options-list">
+            <button class="option-btn" onclick="checkAnswer(this,true)">Two of them burst.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">They turned over.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">A wolf chased them.</button>
+          </div>
+          <div class="explanation"><strong>✅ الإجابة:</strong> Two of them burst — انفجرت عجلتان من عجلاتِ السيارة، الأولى في الذهابِ والثانيةُ في العودة.</div>
+        </div>
+        <div class="question-block">
+          <p class="question-text">2. What was the wolf doing to the sheep?</p>
+          <div class="options-list">
+            <button class="option-btn" onclick="checkAnswer(this,false)">Feeding them.</button>
+            <button class="option-btn" onclick="checkAnswer(this,true)">Chasing them.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">Riding them.</button>
+          </div>
+          <div class="explanation"><strong>✅ الإجابة:</strong> Chasing them — كان الذئبُ يطاردُ الأغنامَ فهربت (<em>A wolf was chasing the sheep</em>).</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Scene 2 -->
+    <div class="scene-card">
+      <div class="scene-header">
+        <div class="scene-number"><span class="scene-num-badge">2</span><span>النهر والقارب</span></div>
+        <button class="play-scene-btn" onclick="playScene(this,2)"><span>🔊</span> استمع</button>
+      </div>
+      <div class="scene-emoji-strip">🛶🌊👟💦</div>
+      <div class="dialogue-box">
+        <div class="dialogue-line" data-speaker="Rania">
+          <span class="speaker-name">Rania:</span> Oh Amy, what are <span class="pronoun">you<span class="tooltip">تعود على Amy</span></span> doing? Why are you in the river?
+        </div>
+        <div class="dialogue-line" data-speaker="Amy">
+          <span class="speaker-name">Amy:</span> We were going down the river when the boat <span class="hover-word">turned over<span class="tooltip">انقلب</span></span>. My shoes <span class="hover-word">floated<span class="tooltip">طفت / عامت</span></span> in the water!
+        </div>
+        <div class="dialogue-line" data-speaker="Narrator">
+          <span class="speaker-name">Narrator:</span> Amy had an <span class="hover-word">adventure<span class="tooltip">مغامرة</span></span> on the 13th of August in England. <span class="pronoun">It<span class="tooltip">تعود على the adventure (المغامرة)</span></span> was great fun.
+        </div>
+      </div>
+      <details class="comp-details">
+        <summary><span>📝 أسئلة فهم المشهد الثاني</span><span class="arrow">▼</span></summary>
+        <div class="question-block">
+          <p class="question-text">1. What happened to Amy's boat?</p>
+          <div class="options-list">
+            <button class="option-btn" onclick="checkAnswer(this,false)">It burst.</button>
+            <button class="option-btn" onclick="checkAnswer(this,true)">It turned over.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">A wolf chased it.</button>
+          </div>
+          <div class="explanation"><strong>✅ الإجابة:</strong> It turned over — انقلبَ القاربُ بينما كانوا ينزلون النهر، فطفتْ حذاءُ Amy في الماء.</div>
+        </div>
+        <div class="question-block">
+          <p class="question-text">2. When did Amy's adventure happen?</p>
+          <div class="options-list">
+            <button class="option-btn" onclick="checkAnswer(this,true)">On the 13th of August.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">On the 30th of August.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">On the 15th of July.</button>
+          </div>
+          <div class="explanation"><strong>✅ الإجابة:</strong> On the 13th of August — حدثتِ المغامرةُ في الثالثَ عشرَ من آب في إنجلترا.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Scene 3 -->
+    <div class="scene-card">
+      <div class="scene-header">
+        <div class="scene-number"><span class="scene-num-badge">3</span><span>سباق الدراجات في أريحا</span></div>
+        <button class="play-scene-btn" onclick="playScene(this,3)"><span>🔊</span> استمع</button>
+      </div>
+      <div class="scene-emoji-strip">🚴🏆😅🩹</div>
+      <div class="dialogue-box">
+        <div class="dialogue-line" data-speaker="Ben">
+          <span class="speaker-name">Ben:</span> Ouch! That hurt!
+        </div>
+        <div class="dialogue-line" data-speaker="Omar">
+          <span class="speaker-name">Omar:</span> Oh it did! I went to Jericho and <span class="hover-word">won<span class="tooltip">فزتُ / ربحتُ</span></span> a bike race. I was looking at my parents and sister when <span class="pronoun">I<span class="tooltip">تعود على Omar</span></span> <span class="hover-word">fell off<span class="tooltip">سقطتُ عن</span></span> my bike. Everyone <span class="hover-word">laughed<span class="tooltip">ضحكوا</span></span>.
+        </div>
+        <div class="dialogue-line" data-speaker="Narrator">
+          <span class="speaker-name">Narrator:</span> Omar was <span class="hover-word">telling<span class="tooltip">يحكي / يخبر</span></span> Ben about his biking holiday on the 14th of August.
+        </div>
+      </div>
+      <details class="comp-details">
+        <summary><span>📝 أسئلة فهم المشهد الثالث</span><span class="arrow">▼</span></summary>
+        <div class="question-block">
+          <p class="question-text">1. Where did Omar win a bike race?</p>
+          <div class="options-list">
+            <button class="option-btn" onclick="checkAnswer(this,true)">In Jericho.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">In England.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">On the farm.</button>
+          </div>
+          <div class="explanation"><strong>✅ الإجابة:</strong> In Jericho — ذهبَ Omar إلى أريحا وفازَ بسباقِ الدراجات.</div>
+        </div>
+        <div class="question-block">
+          <p class="question-text">2. What was Omar doing when he fell off his bike?</p>
+          <div class="options-list">
+            <button class="option-btn" onclick="checkAnswer(this,false)">Eating.</button>
+            <button class="option-btn" onclick="checkAnswer(this,true)">Looking at his parents and sister.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">Sleeping.</button>
+          </div>
+          <div class="explanation"><strong>✅ الإجابة:</strong> He was looking at his parents and sister when he fell off — لاحظِ استخدامَ الماضي المستمرِّ مع when.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Scene 4 -->
+    <div class="scene-card">
+      <div class="scene-header">
+        <div class="scene-number"><span class="scene-num-badge">4</span><span>تخييم الوادي وركوب الخيل</span></div>
+        <button class="play-scene-btn" onclick="playScene(this,4)"><span>🔊</span> استمع</button>
+      </div>
+      <div class="scene-emoji-strip">🏕️🥾🐦🐎</div>
+      <div class="dialogue-box">
+        <div class="dialogue-line" data-speaker="Mum">
+          <span class="speaker-name">Rania's mum:</span> We stayed in a beautiful <span class="hover-word">valley<span class="tooltip">وادٍ</span></span> for three days on summer camp. We were <span class="hover-word">hiking<span class="tooltip">نتنزّه / نمشي في الطبيعة</span></span> when we saw some baby birds <span class="hover-word">trying<span class="tooltip">تحاول</span></span> to fly.
+        </div>
+        <div class="dialogue-line" data-speaker="Mum">
+          <span class="speaker-name">Amy's mum:</span> How wonderful! Well, we were <span class="hover-word">riding<span class="tooltip">نركب</span></span> horses in England when we <span class="hover-word">lost our way<span class="tooltip">ضللنا الطريق</span></span>. The <span class="hover-word">clever<span class="tooltip">الأذكياء</span></span> horses took <span class="pronoun">us<span class="tooltip">تعود على Amy's mum وعائلتها</span></span> back to the farm.
+        </div>
+        <div class="dialogue-line" data-speaker="Narrator">
+          <span class="speaker-name">Narrator:</span> Rania's family went on holiday from the 15th to the 18th of August. Amy's family went <span class="hover-word">horse riding<span class="tooltip">ركوب الخيل</span></span> on the 30th of August.
+        </div>
+      </div>
+      <details class="comp-details">
+        <summary><span>📝 أسئلة فهم المشهد الرابع</span><span class="arrow">▼</span></summary>
+        <div class="question-block">
+          <p class="question-text">1. What were they doing when they saw the baby birds?</p>
+          <div class="options-list">
+            <button class="option-btn" onclick="checkAnswer(this,true)">Hiking.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">Swimming.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">Sleeping.</button>
+          </div>
+          <div class="explanation"><strong>✅ الإجابة:</strong> Hiking — كانوا يتنزّهون في الوادي عندما رأوا فِراخَ الطيورِ تحاولُ الطيران.</div>
+        </div>
+        <div class="question-block">
+          <p class="question-text">2. Who took Amy's family back to the farm?</p>
+          <div class="options-list">
+            <button class="option-btn" onclick="checkAnswer(this,false)">A wolf.</button>
+            <button class="option-btn" onclick="checkAnswer(this,true)">The clever horses.</button>
+            <button class="option-btn" onclick="checkAnswer(this,false)">Their aunt.</button>
+          </div>
+          <div class="explanation"><strong>✅ الإجابة:</strong> The clever horses — أعادتِ الخيولُ الذكيةُ العائلةَ إلى المزرعةِ عندما ضلّوا الطريق.</div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== TAB 4 : QUESTIONS ===== -->
+  <section class="tab-content" id="tab-questions">
+    <h2 class="section-title">❓ Questions<span class="title-sub">أسئلة الدرس</span></h2>
+    <div class="final-questions-intro">
+      <h3>🎧 Listen and answer the questions</h3>
+      <p>استمعْ إلى المغامراتِ ثم أجبْ عن الأسئلةِ الآتيةِ شفهياً، وبعدَها اضغطْ لرؤيةِ الإجابة.</p>
+    </div>
+
+    <div class="final-question-card">
+      <div class="fq-number">1</div>
+      <p class="fq-question">When did the family travel to the farm?</p>
+      <p class="fq-question-ar">متى سافرتِ العائلةُ إلى المزرعة؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer"><p class="fq-answer-en">On the 15th of July.</p><p class="fq-answer-ar">في الخامسَ عشرَ من تموز (يوليو).</p></div>
+    </div>
+
+    <div class="final-question-card">
+      <div class="fq-number">2</div>
+      <p class="fq-question">What days did Omar's family stay at the farm last July?</p>
+      <p class="fq-question-ar">أيَّ أيامٍ أقامت عائلةُ عمر في المزرعة؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer"><p class="fq-answer-en">From the 15th to the 21st.</p><p class="fq-answer-ar">من الخامسَ عشرَ إلى الحادي والعشرين.</p></div>
+    </div>
+
+    <div class="final-question-card">
+      <div class="fq-number">3</div>
+      <p class="fq-question">When did Amy go in the boat?</p>
+      <p class="fq-question-ar">متى ركبت آمي القارب؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer"><p class="fq-answer-en">On the 13th of August.</p><p class="fq-answer-ar">في الثالثَ عشرَ من آب (أغسطس).</p></div>
+    </div>
+
+    <div class="final-question-card">
+      <div class="fq-number">4</div>
+      <p class="fq-question">When did Omar fall?</p>
+      <p class="fq-question-ar">متى سقط عمر؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer"><p class="fq-answer-en">On the 14th of August.</p><p class="fq-answer-ar">في الرابعَ عشرَ من آب (أغسطس).</p></div>
+    </div>
+
+    <div class="final-question-card">
+      <div class="fq-number">5</div>
+      <p class="fq-question">When did Ben's family go horse riding?</p>
+      <p class="fq-question-ar">متى ذهبت عائلة بن لركوب الخيل؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer"><p class="fq-answer-en">On the 30th of August.</p><p class="fq-answer-ar">في الثلاثين من آب (أغسطس).</p></div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 5 : QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي</span></h2>
+    <div class="quiz-intro">
+      <h3>🧭 The Explorer Quiz</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفتحَ أولَ محطةٍ على خريطةِ المغامرة!</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">What happened to two of the car wheels?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> They burst.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> They floated.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> They chased the sheep.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">What was the wolf doing?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> Riding a bike.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> Chasing the sheep.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> Hiking in the valley.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">What is the ordinal number 13?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> thirtieth</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> thirteenth</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> thirteen</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">Complete: "We were going down the river ______ the boat turned over."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> when</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> but</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> because</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">When did Amy's family go horse riding?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> On the 13th of August.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> On the 30th of August.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> On the 15th of July.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🧭</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🧭','🗺️','🌲','⛰️','🏕️','🚩'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    window.speechSynthesis && speechSynthesis.cancel();
+  });
+});
+
+/* word cards */
+var WORDS=[
+  {en:'thirteenth', emoji:'1️⃣3️⃣', ar:'الثالث عشر', syn:'13th'},
+  {en:'fourteenth', emoji:'1️⃣4️⃣', ar:'الرابع عشر', syn:'14th'},
+  {en:'fifteenth', emoji:'1️⃣5️⃣', ar:'الخامس عشر', syn:'15th'},
+  {en:'sixteenth', emoji:'1️⃣6️⃣', ar:'السادس عشر', syn:'16th'},
+  {en:'seventeenth', emoji:'1️⃣7️⃣', ar:'السابع عشر', syn:'17th'},
+  {en:'eighteenth', emoji:'1️⃣8️⃣', ar:'الثامن عشر', syn:'18th'},
+  {en:'nineteenth', emoji:'1️⃣9️⃣', ar:'التاسع عشر', syn:'19th'},
+  {en:'twentieth', emoji:'2️⃣0️⃣', ar:'العشرون', syn:'20th'},
+  {en:'twenty-first', emoji:'2️⃣1️⃣', ar:'الحادي والعشرون', syn:'21st'},
+  {en:'thirtieth', emoji:'3️⃣0️⃣', ar:'الثلاثون', syn:'30th'},
+  {en:'adventure', emoji:'🧭', ar:'مغامرة', syn:'مرادف: journey'},
+  {en:'burst', emoji:'💥', ar:'انفجر / انفجرت', syn:'الماضي: burst'},
+  {en:'chase', emoji:'🏃', ar:'يطارد', syn:'الماضي: chased'},
+  {en:'turn over', emoji:'🔄', ar:'ينقلب', syn:'الماضي: turned over'},
+  {en:'when', emoji:'⏳', ar:'عندما', syn:'أداة ربط زمنية'}
+];
+(function(){
+  var grid=document.getElementById('wordCardsGrid');
+  WORDS.forEach(function(w){
+    var card=document.createElement('div'); card.className='word-card';
+    card.innerHTML=
+      '<button class="speaker-icon" aria-label="speak">🔊</button>'+
+      '<span class="flip-icon">↻</span>'+
+      '<div class="card-front"><div class="word-emoji">'+w.emoji+'</div><div class="word-en">'+w.en+'</div><div class="word-tap-hint">اضغط لرؤية المعنى 👆</div></div>'+
+      '<div class="card-back"><div class="word-ar">'+w.ar+'</div><div class="word-syn">'+w.syn+'</div></div>';
+    card.addEventListener('click',function(){ card.classList.toggle('flipped'); });
+    card.querySelector('.speaker-icon').addEventListener('click',function(e){ e.stopPropagation(); speak(w.en,this); });
+    grid.appendChild(card);
+  });
+})();
+
+/* TTS */
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+var SCENES={
+  1:"Ben: You had some adventures last summer. Omar: Two of the car wheels burst! The first on the day we were travelling to the farm and the second on the day we left the farm. Omar's family stayed at their aunt's sheep farm from the fifteenth to the twenty-first of July. A wolf was chasing the sheep when they ran away.",
+  2:"Rania: Oh Amy, what are you doing? Why are you in the river? Amy: We were going down the river when the boat turned over. My shoes floated in the water! Amy had an adventure on the thirteenth of August in England. It was great fun.",
+  3:"Ben: Ouch! That hurt! Omar: Oh it did! I went to Jericho and won a bike race. I was looking at my parents and sister when I fell off my bike. Everyone laughed. Omar was telling Ben about his biking holiday on the fourteenth of August.",
+  4:"Rania's mum: We stayed in a beautiful valley for three days on summer camp. We were hiking when we saw some baby birds trying to fly. Amy's mum: How wonderful! We were riding horses in England when we lost our way. The clever horses took us back to the farm."
+};
+function playScene(btn,n){
+  if(!window.speechSynthesis) return;
+  if(btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  document.querySelectorAll('.play-scene-btn.playing').forEach(function(b){b.classList.remove('playing')});
+  speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(SCENES[n]); u.lang='en-US'; u.rate=.85;
+  btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); };
+  speechSynthesis.speak(u);
+}
+
+/* tap tooltips */
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','🧭','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#ff8c42','#3fa34d','#4aa3e0','#ffc94d','#d1495b'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* comprehension MCQ */
+function checkAnswer(btn,correct){
+  var list=btn.parentElement;
+  list.querySelectorAll('.option-btn').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+  });
+  if(!correct){
+    list.querySelectorAll('.option-btn').forEach(function(b){
+      if(b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+    });
+  } else { sparkleAt(btn); }
+  var exp=list.parentElement.querySelector('.explanation');
+  if(exp) exp.classList.add('show');
+}
+
+/* show answers */
+function toggleAnswer(btn){
+  var ans=btn.parentElement.querySelector('.fq-answer');
+  ans.classList.toggle('show');
+  btn.textContent=ans.classList.contains('show')?'🙈 Hide answer':'💡 Show answer';
+}
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg;
+  if(pct===100){ emoji='🏆'; title='Explorer Badge!'; msg='رائع! فتحتَ أولَ محطةٍ على خريطةِ المغامرة 🧭🗺️ عرفتَ كلَّ الأحداثِ والأعداد.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ القصةَ والأعدادَ ثم أعدِ المحاولة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else { emoji='💪'; title='Keep exploring!'; msg='لا تستسلمْ! 🌱 عُدْ إلى القصةِ وبطاقاتِ الكلماتِ ثم جرِّبْ من جديد.'; document.getElementById('rewardBadge').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== ADVENTURE MAP · progress (shared across Unit 3) ===== -->
+<script>(function(){
+  var KEY='g6u3_map', THIS=1, em=['🐑','📅','👏','🧩','⏳','🎧','✍️','🎨'];
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var trail=document.getElementById('mtTrail'), count=document.getElementById('mtCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='mt-pin'+(got.indexOf(i)>=0?' on':'');
+    s.innerHTML='<span>'+(got.indexOf(i)>=0?em[i-1]:i)+'</span>';
+    trail.insertBefore(s, trail.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('mtDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
