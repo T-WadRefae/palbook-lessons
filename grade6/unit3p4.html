@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Adventures - Unit 3 Period 4 | was or were</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --ink:#3d2b1f; --ink-d:#2a1d14;
+    --parch:#f6e8c8; --parch-d:#e8d3a0;
+    --orange:#ff8c42; --orange-d:#e8590c;
+    --forest:#3fa34d; --forest-d:#2e7d32;
+    --river:#4aa3e0; --river-d:#2b7fd6;
+    --gold:#ffc94d; --gold-d:#e0a63e;
+    --red:#d1495b; --red-d:#a1123d;
+    --cream:#fffaf0; --paper:#fffdf8;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(255,140,66,.06) 0%, transparent 45%),
+      radial-gradient(circle at 88% 82%, rgba(74,163,224,.06) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(61,43,31,.03) 0 2px, transparent 2px 24px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.2; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : "WHEN" film strip ===== */
+  .lesson-header{
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,201,77,.16), transparent 40%),
+      linear-gradient(160deg, var(--ink-d) 0%, #5a3a22 55%, var(--orange-d) 130%);
+    padding:26px 16px 46px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.3);
+  }
+  .header-inner{ max-width:760px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--ink-d);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.25); transform:rotate(-2deg);
+  }
+  .lesson-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(30px,5.8vw,50px); color:#fff; letter-spacing:-.5px;
+    text-shadow:2px 3px 0 var(--ink-d), 5px 6px 18px rgba(0,0,0,.4); margin-bottom:2px;
+  }
+  .lesson-subtitle{ font-size:clamp(15px,3.2vw,21px); color:var(--gold); font-weight:800; margin-bottom:16px; }
+
+  /* film strip */
+  .filmstrip{
+    position:relative; display:inline-flex; gap:0; padding:16px 10px; background:#1c1712; border-radius:12px;
+    box-shadow:0 10px 26px rgba(0,0,0,.5); transform:rotate(-1deg); max-width:96vw; overflow:hidden;
+  }
+  .filmstrip::before, .filmstrip::after{ /* sprocket rows */
+    content:''; position:absolute; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(90deg, transparent 0 8px, #f4ecd8 8px 15px, transparent 15px 23px);
+    -webkit-mask:linear-gradient(#000,#000);
+  }
+  .filmstrip::before{ top:3px; } .filmstrip::after{ bottom:3px; }
+  .film-frame{
+    width:118px; height:92px; margin:0 5px; border-radius:6px; overflow:hidden; border:2px solid #3a2f24;
+    background:#0d0b09; box-shadow:inset 0 0 0 2px #000; position:relative;
+  }
+  .film-frame svg{ display:block; width:100%; height:100%; }
+  .film-cap{
+    position:absolute; left:0; right:0; bottom:0; background:rgba(0,0,0,.62); color:var(--gold);
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:10px; letter-spacing:.5px; padding:2px 0; text-align:center;
+  }
+  @media (max-width:620px){ .film-frame:nth-child(3){ display:none; } }
+  @media (max-width:420px){ .film-frame:nth-child(2){ display:none; } }
+
+  /* ===== MAP PROGRESS TRACKER (shared across Unit 3) ===== */
+  .map-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, #e9d3a3, #d9bd85);
+    border:3px solid #b98a4e; box-shadow:0 6px 18px rgba(61,43,31,.35);
+  }
+  .mt-label{ color:var(--ink); font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
+  .mt-trail{ display:flex; align-items:center; justify-content:center; gap:7px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .mt-trail::before{ content:''; position:absolute; left:4%; right:4%; top:50%; height:0; border-top:3px dashed #9a6f3a; z-index:0; }
+  .mt-pin{
+    width:34px; height:34px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); position:relative; z-index:1;
+    background:#fff7e6; border:2px solid #b98a4e; box-shadow:0 2px 4px rgba(0,0,0,.3);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .mt-pin span{ transform:rotate(45deg); font-size:13px; font-weight:800; color:#9a6f3a; }
+  .mt-pin.on{ background:radial-gradient(circle at 60% 40%, #ffd97a, var(--orange) 80%); border-color:#fff; box-shadow:0 0 0 3px rgba(255,201,77,.5), 0 2px 5px rgba(0,0,0,.3); }
+  .mt-pin.on span{ color:#fff; font-size:15px; }
+  .mt-flag{ font-size:22px; z-index:1; }
+  .mt-count{ background:rgba(61,43,31,.15); color:var(--ink); border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .mt-done{ margin-top:7px; color:var(--orange-d); font-weight:800; font-size:14px; display:none; }
+  .mt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 #b98a4e, 0 14px 34px rgba(61,43,31,.2);
+    display:flex; gap:8px; border:3px solid var(--orange);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:12px 13px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; color:var(--orange-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:90px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(255,140,66,.12); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--orange), var(--orange-d));
+    color:#fff; box-shadow:0 4px 0 #b04708, 0 6px 14px rgba(232,89,12,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:24px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); text-align:center;
+    margin-bottom:22px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 10px, var(--gold) 10px 20px, var(--forest) 20px 30px, var(--river) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#8a6a3a; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 20px rgba(61,43,31,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--orange)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--orange));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; }
+  .aim-desc{ color:#6a4a2a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#8a6a3a; margin-top:7px; }
+
+  .activity-lead{
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); direction:ltr; text-align:left;
+    background:var(--paper); border:3px solid var(--parch-d); border-left:6px solid var(--orange);
+    border-radius:14px; padding:15px 18px; margin-bottom:16px; line-height:1.6;
+  }
+  .activity-lead .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13.5px; color:#8a6a3a; margin-top:6px; font-weight:600; }
+
+  /* was/were rule box */
+  .rule-box{
+    background:linear-gradient(135deg,#eaf4ff,#fff0e0); border:3px solid #cfe4fb; border-radius:18px;
+    padding:18px; margin-bottom:22px; box-shadow:0 6px 0 #d7e8fb;
+  }
+  .rule-cols{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:540px){ .rule-cols{ grid-template-columns:1fr; } }
+  .rule-col{ background:#fff; border-radius:12px; padding:12px; text-align:center; box-shadow:0 3px 8px rgba(0,0,0,.06); direction:ltr; }
+  .rule-col.was{ border-top:5px solid var(--river); } .rule-col.were{ border-top:5px solid var(--orange); }
+  .rule-col .word{ font-family:'Fredoka',sans-serif; font-size:24px; font-weight:700; } .rule-col.was .word{ color:var(--river-d); } .rule-col.were .word{ color:var(--orange-d); }
+  .rule-col .pron{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); margin-top:5px; }
+  .rule-col .ar{ font-size:12.5px; color:#8a6a3a; margin-top:3px; }
+
+  /* ===== PICTURE-CUE GAP FILL ===== */
+  .wordbank{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:22px;
+    background:var(--paper); border:3px dashed var(--orange); border-radius:16px; padding:16px;
+  }
+  .wb-word{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; border:none;
+    padding:9px 18px; border-radius:22px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; box-shadow:0 3px 0 var(--orange-d); transition:all .15s;
+  }
+  .wb-word:hover:not(.used){ transform:translateY(-2px); }
+  .wb-word.used{ opacity:.35; cursor:default; text-decoration:line-through; }
+  .wb-word.selected{ outline:3px solid var(--gold); transform:translateY(-2px) scale(1.05); }
+  .gap-item{
+    background:var(--paper); border-radius:16px; border:3px solid var(--parch-d); padding:15px 18px; margin-bottom:13px;
+    box-shadow:0 5px 0 #d9bd85; display:flex; gap:15px; align-items:center;
+  }
+  .gap-cue{ flex-shrink:0; width:96px; height:74px; border-radius:12px; overflow:hidden; border:2px solid var(--parch-d); box-shadow:0 2px 6px rgba(0,0,0,.12); background:#eaf4ff; }
+  .gap-cue svg{ display:block; width:100%; height:100%; }
+  .gap-txt{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:2; }
+  .gap-txt .gi-n{ display:inline-flex; width:24px; height:24px; margin-right:6px; background:var(--orange); color:#fff; border-radius:50%; align-items:center; justify-content:center; font-size:12px; font-weight:700; }
+  .blank{
+    display:inline-block; min-width:88px; border-bottom:3px dashed var(--orange); cursor:pointer;
+    text-align:center; padding:0 8px 2px; margin:0 3px; color:var(--orange-d); font-weight:700; transition:all .15s; vertical-align:middle;
+  }
+  .blank:hover{ background:#fff3e8; }
+  .blank.filled{ border-bottom-style:solid; border-color:var(--forest-d); color:var(--forest-d); background:#e2f5e4; border-radius:6px; }
+  .blank.wrong{ border-color:var(--red-d); color:var(--red-d); background:#fff0f2; }
+  .gap-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--orange-d); font-weight:600; margin-top:14px; }
+
+  /* ===== was/were CHOOSER ===== */
+  .cc-item{
+    background:var(--paper); border-radius:16px; border:3px solid var(--parch-d); padding:18px 20px; margin-bottom:14px;
+    box-shadow:0 5px 0 #d9bd85, 0 7px 16px rgba(61,43,31,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16.5px; line-height:2.1; color:var(--ink);
+  }
+  .cc-item .n{
+    display:inline-flex; align-items:center; justify-content:center; width:27px; height:27px; margin-right:9px;
+    background:var(--orange); color:#fff; border-radius:50%; font-size:14px; font-weight:700; box-shadow:0 2px 0 var(--orange-d);
+  }
+  .cc-choice{
+    display:inline-block; background:#fff; border:2.5px solid var(--orange); border-radius:22px;
+    padding:3px 16px; margin:0 3px; cursor:pointer; font-weight:700; font-size:15px; color:var(--orange-d);
+    transition:all .2s; box-shadow:0 2px 0 var(--orange);
+  }
+  .cc-choice:hover:not(.locked){ background:#fff2e8; transform:translateY(-2px); }
+  .cc-choice.correct{ background:#d5f0d8; border-color:var(--forest-d); color:#1e5620; box-shadow:0 2px 0 var(--forest-d); }
+  .cc-choice.wrong{ background:#ffd9de; border-color:var(--red-d); color:#8a0d2c; box-shadow:0 2px 0 var(--red-d); text-decoration:line-through; }
+  .cc-choice.locked{ cursor:default; }
+  .cc-or{ color:#c0a878; font-size:13px; margin:0 2px; }
+  .cc-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--orange-d); font-weight:600; margin-top:16px; }
+
+  /* ===== READ & ANSWER ===== */
+  .final-questions-intro{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; padding:22px;
+    border-radius:18px; text-align:center; margin-bottom:22px; box-shadow:0 6px 0 var(--red-d);
+  }
+  .final-questions-intro h3{ font-family:'Fredoka',sans-serif; font-size:23px; margin-bottom:6px; }
+  .final-questions-intro p{ font-size:14px; line-height:1.6; }
+  .fq-card{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 18px rgba(61,43,31,.08);
+  }
+  .fq-number{
+    display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px;
+    background:var(--orange); color:#fff; border-radius:50%; font-family:'Fredoka',sans-serif;
+    font-weight:700; font-size:18px; margin-bottom:10px; box-shadow:0 3px 0 var(--orange-d);
+  }
+  .fq-question{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); margin-bottom:6px; direction:ltr; text-align:left; }
+  .fq-question-ar{ font-size:13px; color:#8a6a3a; margin-bottom:12px; }
+  .fq-speak{
+    background:var(--gold); color:var(--ink-d); border:none; padding:8px 14px; border-radius:12px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13px; box-shadow:0 3px 0 var(--gold-d);
+    margin-left:6px; transition:transform .2s; display:inline-flex; align-items:center; gap:5px;
+  }
+  .fq-speak:hover{ transform:translateY(-2px); }
+  .fq-speak.playing{ background:var(--red); color:#fff; box-shadow:0 3px 0 var(--red-d); }
+  .show-answer-btn{
+    background:var(--forest); color:#fff; border:none; padding:9px 19px; border-radius:12px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--forest-d);
+    transition:transform .2s; display:inline-flex; align-items:center; gap:6px;
+  }
+  .show-answer-btn:hover{ transform:translateY(-2px); }
+  .fq-answer{
+    background:linear-gradient(135deg,#e2f5e4,#d5f0d8); border-right:4px solid var(--forest-d);
+    padding:14px 17px; border-radius:12px; margin-top:13px; display:none;
+  }
+  .fq-answer.show{ display:block; animation:fadeIn .4s; }
+  .fq-answer-en{ font-family:'Fredoka',sans-serif; font-size:15.5px; color:#1e5620; margin-bottom:6px; direction:ltr; text-align:left; font-weight:600; }
+  .fq-answer-ar{ font-size:13.5px; color:var(--ink); line-height:1.7; }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--orange)); color:var(--ink-d); padding:26px 22px;
+    border-radius:22px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--orange-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'🎬'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:25px; margin-bottom:8px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.5); height:12px; border-radius:10px; margin-top:16px; overflow:hidden; border:2px solid rgba(255,255,255,.7); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--forest), var(--river)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid var(--parch-d); box-shadow:0 6px 0 #d9bd85, 0 8px 18px rgba(61,43,31,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--red-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid var(--parch-d); padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--orange); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:var(--parch-d); color:var(--ink); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#d5f0d8; border-color:var(--forest-d); color:#1e5620; }
+  .quiz-option.correct .opt-letter{ background:var(--forest-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9de; border-color:var(--red-d); color:#8a0d2c; }
+  .quiz-option.wrong .opt-letter{ background:var(--red-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e2f5e4,#d5f0d8); border-right:4px solid var(--forest-d); color:#1e5620; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#fff0f2,#ffd9de); border-right:4px solid var(--red-d); color:#8a0d2c; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:36px 22px; text-align:center;
+    border:3px solid var(--parch-d); box-shadow:0 8px 0 #d9bd85, 0 12px 28px rgba(61,43,31,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:74px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:50px; color:var(--orange-d); margin:16px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:28px; color:#8a6a3a; }
+  .result-message{ font-size:16px; line-height:1.7; margin-bottom:22px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:96px; height:96px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff2c4, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(255,201,77,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:46px;
+  }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--orange), var(--red)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--red-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--ink-d), #5a3a22); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--orange) 0 12px, var(--gold) 12px 24px, var(--forest) 24px 36px, var(--river) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  @media (max-width:768px){
+    .cc-item{ font-size:14.5px; } .gap-item{ flex-direction:column; align-items:flex-start; } .gap-cue{ width:100%; height:120px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : "WHEN" FILM STRIP (SVG scenes) ===== -->
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🧭</span> UNIT 3 — Period 4</div>
+    <h1 class="lesson-title">Was or Were?</h1>
+    <div class="lesson-subtitle">مغامرات الصيف · لحظات المغامرة 🎬</div>
+    <div class="filmstrip">
+      <!-- Frame 1: wolf chasing sheep -->
+      <div class="film-frame">
+        <svg viewBox="0 0 120 92" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe3f7"/><stop offset="1" stop-color="#eaf6d9"/></linearGradient></defs>
+          <rect width="120" height="92" fill="url(#sky1)"/>
+          <circle cx="98" cy="18" r="10" fill="#ffe08a"/>
+          <path d="M0,70 Q30,58 62,66 T120,64 V92 H0 Z" fill="#7cbf5a"/>
+          <path d="M0,78 Q40,70 80,76 T120,74 V92 H0 Z" fill="#5aa544"/>
+          <!-- sheep -->
+          <g transform="translate(72,54)">
+            <ellipse cx="0" cy="0" rx="13" ry="9" fill="#fdfdfd"/>
+            <circle cx="-9" cy="-2" r="4.5" fill="#5b4636"/>
+            <rect x="-11" y="1" width="2.4" height="8" rx="1" fill="#5b4636"/>
+            <rect x="-3" y="3" width="2.4" height="8" rx="1" fill="#5b4636"/>
+            <rect x="6" y="3" width="2.4" height="8" rx="1" fill="#5b4636"/>
+            <circle cx="-11" cy="-3" r="1" fill="#000"/>
+          </g>
+          <!-- wolf -->
+          <g transform="translate(30,56)">
+            <ellipse cx="0" cy="0" rx="15" ry="8" fill="#8d8f96"/>
+            <path d="M12,-3 l9,-3 l-3,6 Z" fill="#8d8f96"/>
+            <path d="M18,-4 l4,-6 l1,6 Z" fill="#6f7178"/>
+            <path d="M-14,-2 l-8,-2 l6,6 Z" fill="#6f7178"/>
+            <rect x="-4" y="6" width="2.6" height="8" rx="1" fill="#6f7178"/>
+            <rect x="7" y="6" width="2.6" height="8" rx="1" fill="#6f7178"/>
+            <circle cx="19" cy="-3" r="1" fill="#000"/>
+            <path d="M20,-1 l4,0" stroke="#000" stroke-width="1"/>
+          </g>
+          <!-- motion lines -->
+          <g stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"><path d="M8,50 h8"/><path d="M6,58 h10"/></g>
+          <rect x="0" y="0" width="120" height="92" fill="none"/>
+        </svg>
+        <div class="film-cap">chasing…</div>
+      </div>
+      <!-- Frame 2: boat turning over -->
+      <div class="film-frame">
+        <svg viewBox="0 0 120 92" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cdeafb"/><stop offset="1" stop-color="#9fd3f2"/></linearGradient></defs>
+          <rect width="120" height="92" fill="url(#sky2)"/>
+          <path d="M0,52 H120 V92 H0 Z" fill="#4aa3e0"/>
+          <path d="M0,52 q15,-6 30,0 t30,0 t30,0 t30,0 V60 H0 Z" fill="#66b7ea"/>
+          <g stroke="#bfe6fb" stroke-width="2" fill="none" opacity=".8"><path d="M12,66 q6,-4 12,0"/><path d="M84,72 q6,-4 12,0"/></g>
+          <!-- boat tilted -->
+          <g transform="translate(60,50) rotate(38)">
+            <path d="M-22,0 q22,14 44,0 q-4,7 -22,7 q-18,0 -22,-7 Z" fill="#c97b3c"/>
+            <path d="M-22,0 q22,10 44,0" fill="none" stroke="#8a4e1e" stroke-width="2"/>
+          </g>
+          <!-- person + splash -->
+          <circle cx="70" cy="40" r="4" fill="#f2c79b"/><rect x="67" y="43" width="6" height="8" rx="2" fill="#e94f5a"/>
+          <g fill="#eaf6ff"><circle cx="46" cy="46" r="2"/><circle cx="52" cy="40" r="1.6"/><circle cx="40" cy="52" r="1.4"/></g>
+          <rect x="6" y="6" width="14" height="12" rx="2" fill="rgba(0,0,0,.55)"/><text x="13" y="15" font-size="8" fill="#ffd94d" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700">13</text>
+        </svg>
+        <div class="film-cap">turning over…</div>
+      </div>
+      <!-- Frame 3: bike falling -->
+      <div class="film-frame">
+        <svg viewBox="0 0 120 92" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe6c2"/><stop offset="1" stop-color="#ffd59e"/></linearGradient></defs>
+          <rect width="120" height="92" fill="url(#sky3)"/>
+          <path d="M0,74 H120 V92 H0 Z" fill="#c79a5e"/>
+          <path d="M0,74 H120 V80 H0 Z" fill="#b5844a"/>
+          <!-- bike tilted -->
+          <g transform="translate(58,58) rotate(20)">
+            <circle cx="-16" cy="12" r="11" fill="none" stroke="#333" stroke-width="3"/>
+            <circle cx="16" cy="12" r="11" fill="none" stroke="#333" stroke-width="3"/>
+            <path d="M-16,12 L0,0 L16,12 M0,0 L2,-8 M-16,12 L2,-8" fill="none" stroke="#e8590c" stroke-width="3" stroke-linejoin="round"/>
+          </g>
+          <!-- falling rider -->
+          <g transform="translate(72,34) rotate(30)">
+            <circle cx="0" cy="0" r="5" fill="#f2c79b"/>
+            <rect x="-3" y="5" width="7" height="11" rx="3" fill="#2e7d32"/>
+            <path d="M4,7 l8,-3 M-3,8 l-7,2" stroke="#f2c79b" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <text x="94" y="26" font-size="13" fill="#d1495b" font-family="Fredoka,sans-serif" font-weight="700">!</text>
+          <g stroke="#fff" stroke-width="2" opacity=".8" stroke-linecap="round"><path d="M86,40 l6,-4"/><path d="M88,48 l7,-3"/></g>
+        </svg>
+        <div class="film-cap">…when I fell</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MAP PROGRESS (shared across Unit 3) ===== -->
+<div class="map-track" id="mapTrack" aria-label="Adventure Map progress">
+  <div class="mt-label">🗺️ خريطة المغامرة — Adventure Map</div>
+  <div class="mt-trail" id="mtTrail"><span class="mt-flag">🚩</span><span class="mt-count" id="mtCount">0/8</span></div>
+  <div class="mt-done" id="mtDone">✨ اكتملتِ الخريطة! أنتَ مستكشفٌ حقيقي 🧭🗺️</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Objectives</span></button>
+    <button class="tab-btn" data-tab="complete"><span class="tab-icon">🖼️</span><span>Complete</span></button>
+    <button class="tab-btn" data-tab="circle"><span class="tab-icon">⭕</span><span>was or were</span></button>
+    <button class="tab-btn" data-tab="answer"><span class="tab-icon">🗣️</span><span>Read &amp; Answer</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : OBJECTIVES ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#ff8c42;">
+        <div class="aim-icon-wrap">🖼️</div>
+        <h3 class="aim-title">Vocabulary</h3>
+        <p class="aim-desc">Look at the pictures and complete the sentences.
+          <span class="ar">أن ينظرَ الطالبُ إلى الصورِ ويُكملَ الجملَ بالكلماتِ الصحيحة.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#4aa3e0;">
+        <div class="aim-icon-wrap">🧠</div>
+        <h3 class="aim-title">Grammar</h3>
+        <p class="aim-desc">Choose <b>was</b> or <b>were</b> for the past.
+          <span class="ar">أن يختارَ was أو were في الماضي.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#3fa34d;">
+        <div class="aim-icon-wrap">🗣️</div>
+        <h3 class="aim-title">Speaking</h3>
+        <p class="aim-desc">Read aloud and answer questions about the adventures.
+          <span class="ar">أن يقرأَ بصوتٍ مرتفعٍ ويجيبَ عن أسئلةِ المغامرات.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : COMPLETE (picture cues) ===== -->
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">🖼️ Look &amp; Complete<span class="title-sub">انظر وأكمل</span></h2>
+    <div class="activity-lead">
+      <b>1)</b> Look and complete the sentences with the correct words.
+      <span class="ar">اضغطْ على الكلمةِ من البنك، ثم اضغطْ على الفراغِ المناسب. الصورةُ تساعدك 🖼️</span>
+    </div>
+    <div class="wordbank" id="wordBank">
+      <button class="wb-word" data-w="chasing">chasing</button>
+      <button class="wb-word" data-w="sixteenth">sixteenth</button>
+      <button class="wb-word" data-w="turned over">turned over</button>
+      <button class="wb-word" data-w="twenty-first">twenty-first</button>
+      <button class="wb-word" data-w="thirteenth">thirteenth</button>
+      <button class="wb-word" data-w="thirtieth">thirtieth</button>
+      <button class="wb-word" data-w="burst">burst</button>
+      <button class="wb-word" data-w="when">when</button>
+    </div>
+    <div id="gapList">
+      <div class="gap-item">
+        <div class="gap-cue">
+          <svg viewBox="0 0 120 92"><rect width="120" height="92" fill="#eaf6d9"/><path d="M0,70 Q40,60 80,68 T120,66 V92 H0Z" fill="#7cbf5a"/><g transform="translate(78,52)"><ellipse rx="11" ry="7" fill="#e8a15a"/><path d="M9,-2 l7,-2 l-2,5Z" fill="#e8a15a"/><rect x="-9" y="4" width="2" height="7" fill="#b5763a"/><rect x="4" y="4" width="2" height="7" fill="#b5763a"/><circle cx="14" cy="-2" r="1" fill="#000"/></g><g transform="translate(40,56)"><ellipse rx="8" ry="5" fill="#c98a4a"/><circle cx="7" cy="-1" r="3" fill="#c98a4a"/><rect x="-6" y="3" width="1.6" height="6" fill="#9a6531"/><rect x="3" y="3" width="1.6" height="6" fill="#9a6531"/></g><rect x="94" y="40" width="8" height="30" fill="#7a4a1e"/><ellipse cx="98" cy="36" rx="12" ry="9" fill="#3fa34d"/></svg>
+        </div>
+        <div class="gap-txt"><span class="gi-n">1</span> The small dog was <span class="blank" data-a="chasing"></span> the big dog <span class="blank" data-a="when"></span> it crashed into a tree.</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-cue">
+          <svg viewBox="0 0 120 92"><rect width="120" height="92" fill="#fff6e0"/><rect x="18" y="14" width="84" height="66" rx="6" fill="#fff" stroke="#e0a63e" stroke-width="3"/><rect x="18" y="14" width="84" height="16" rx="6" fill="#ff8c42"/><text x="60" y="26" font-size="9" fill="#fff" text-anchor="middle" font-family="Fredoka" font-weight="700">MONTH</text><g fill="#8a6a3a" font-size="8" font-family="Fredoka" text-anchor="middle"><text x="34" y="44">S</text><text x="47" y="44">M</text><text x="60" y="44">T</text><text x="73" y="44">W</text><text x="86" y="44">T</text></g><circle cx="47" cy="58" r="7" fill="none" stroke="#d1495b" stroke-width="2"/><text x="47" y="61" font-size="7" fill="#3d2b1f" text-anchor="middle" font-family="Fredoka">16</text><circle cx="86" cy="70" r="7" fill="none" stroke="#d1495b" stroke-width="2"/><text x="86" y="73" font-size="7" fill="#3d2b1f" text-anchor="middle" font-family="Fredoka">30</text></svg>
+        </div>
+        <div class="gap-txt"><span class="gi-n">2</span> Amy's mum was looking at her calendar. 'Amy, you have the dentist on the <span class="blank" data-a="sixteenth"></span> and swimming on the <span class="blank" data-a="thirtieth"></span>.'</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-cue">
+          <svg viewBox="0 0 120 92"><rect width="120" height="92" fill="#cdeafb"/><path d="M0,50 H120 V92 H0Z" fill="#4aa3e0"/><path d="M0,50 q15,-5 30,0 t30,0 t30,0 t30,0 V58 H0Z" fill="#66b7ea"/><g transform="translate(60,48) rotate(36)"><path d="M-20,0 q20,13 40,0 q-4,6 -20,6 q-16,0 -20,-6Z" fill="#c97b3c"/></g><circle cx="70" cy="38" r="4" fill="#f2c79b"/><g fill="#eaf6ff"><circle cx="46" cy="46" r="2"/><circle cx="52" cy="40" r="1.5"/></g><rect x="6" y="6" width="16" height="13" rx="2" fill="rgba(0,0,0,.5)"/><text x="14" y="16" font-size="8" fill="#ffd94d" text-anchor="middle" font-family="Fredoka" font-weight="700">13</text></svg>
+        </div>
+        <div class="gap-txt"><span class="gi-n">3</span> 'Oh no, that's when I was in the river and my boat <span class="blank" data-a="turned over"></span>. That was the <span class="blank" data-a="thirteenth"></span> of August.'</div>
+      </div>
+      <div class="gap-item">
+        <div class="gap-cue">
+          <svg viewBox="0 0 120 92"><rect width="120" height="92" fill="#ffe6c2"/><path d="M0,74 H120 V92 H0Z" fill="#c79a5e"/><rect x="26" y="40" width="60" height="22" rx="8" fill="#e8590c"/><rect x="38" y="30" width="34" height="16" rx="6" fill="#ff8c42"/><rect x="42" y="33" width="12" height="10" rx="2" fill="#bfe3f7"/><rect x="58" y="33" width="12" height="10" rx="2" fill="#bfe3f7"/><circle cx="40" cy="64" r="10" fill="#333"/><circle cx="40" cy="64" r="4" fill="#888"/><circle cx="76" cy="64" r="10" fill="#333"/><g transform="translate(88,60)"><path d="M0,0 l6,-4 l-1,5 l6,-2 l-4,5" fill="none" stroke="#d1495b" stroke-width="2.4" stroke-linejoin="round"/></g><text x="98" y="30" font-size="12" fill="#d1495b" font-family="Fredoka" font-weight="700">💥</text></svg>
+        </div>
+        <div class="gap-txt"><span class="gi-n">4</span> We left the farm on the <span class="blank" data-a="twenty-first"></span> and the wheel <span class="blank" data-a="burst"></span>.</div>
+      </div>
+    </div>
+    <div class="gap-score" id="gapScore">Filled: 0 / 8</div>
+  </section>
+
+  <!-- ===== TAB 3 : was or were ===== -->
+  <section class="tab-content" id="tab-circle">
+    <h2 class="section-title">⭕ was or were?<span class="title-sub">اختر was أو were</span></h2>
+    <div class="rule-box">
+      <div class="rule-cols">
+        <div class="rule-col was"><div class="word">was</div><div class="pron">I · he · she · it 🧍</div><div class="ar">للمفرد</div></div>
+        <div class="rule-col were"><div class="word">were</div><div class="pron">we · you · they 🧑‍🤝‍🧑</div><div class="ar">للجمع</div></div>
+      </div>
+    </div>
+    <div class="activity-lead">
+      <b>3)</b> Read and circle the correct words.
+      <span class="ar">اضغطْ على الكلمةِ الصحيحة: was للمفرد، were للجمع.</span>
+    </div>
+    <div id="ccList">
+      <div class="cc-item"><span class="n">1</span> The sheep <button class="cc-choice">was</button><span class="cc-or">/</span><button class="cc-choice" data-ok="1">were</button> running when the wolf chased them.</div>
+      <div class="cc-item"><span class="n">2</span> Omar's dad <button class="cc-choice">were</button><span class="cc-or">/</span><button class="cc-choice" data-ok="1">was</button> driving to the farm when the wheel burst.</div>
+      <div class="cc-item"><span class="n">3</span> Omar <button class="cc-choice" data-ok="1">was</button><span class="cc-or">/</span><button class="cc-choice">were</button> riding his bike when he fell.</div>
+      <div class="cc-item"><span class="n">4</span> Amy <button class="cc-choice">were</button><span class="cc-or">/</span><button class="cc-choice" data-ok="1">was</button> playing in a boat when it turned over.</div>
+      <div class="cc-item"><span class="n">5</span> Ben and his family <button class="cc-choice">was</button><span class="cc-or">/</span><button class="cc-choice" data-ok="1">were</button> riding horses when they were on holiday.</div>
+    </div>
+    <div class="cc-score" id="ccScore">Answered: 0 / 5</div>
+  </section>
+
+  <!-- ===== TAB 4 : READ & ANSWER ===== -->
+  <section class="tab-content" id="tab-answer">
+    <h2 class="section-title">🗣️ Read Aloud &amp; Answer<span class="title-sub">اقرأ وأجب</span></h2>
+    <div class="final-questions-intro">
+      <h3>📖 Read aloud. Then answer the questions</h3>
+      <p>Tap 🔊 to hear the question, answer, then check the model answer.<br>اضغطْ 🔊 لسماعِ السؤال، أجبْ، ثم اضغطْ لرؤيةِ الإجابة.</p>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">1</div>
+      <p class="fq-question">When did the wheels on the car burst?
+        <button class="fq-speak" onclick="speakQ(this,&quot;When did the wheels on the car burst?&quot;)">🔊 say</button></p>
+      <p class="fq-question-ar">متى انفجرت عجلات السيارة؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer"><p class="fq-answer-en">They burst on the 15th and the 21st.</p><p class="fq-answer-ar">انفجرتا في الخامسَ عشرَ والحادي والعشرين.</p></div>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">2</div>
+      <p class="fq-question">What did the wolf do?
+        <button class="fq-speak" onclick="speakQ(this,&quot;What did the wolf do?&quot;)">🔊 say</button></p>
+      <p class="fq-question-ar">ماذا فعل الذئب؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer"><p class="fq-answer-en">The wolf chased the sheep.</p><p class="fq-answer-ar">طاردَ الذئبُ الأغنام.</p></div>
+    </div>
+
+    <div class="fq-card">
+      <div class="fq-number">3</div>
+      <p class="fq-question">What happened to Amy's boat?
+        <button class="fq-speak" onclick="speakQ(this,&quot;What happened to Amy's boat?&quot;)">🔊 say</button></p>
+      <p class="fq-question-ar">ماذا حدث لقارب آمي؟</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">💡 Show answer</button>
+      <div class="fq-answer"><p class="fq-answer-en">It turned over in the river.</p><p class="fq-answer-ar">انقلبَ في النهر.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 5 : QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي</span></h2>
+    <div class="quiz-intro">
+      <h3>🎬 The Explorer Quiz</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفتحَ المحطةَ الرابعةَ على خريطةِ المغامرة!</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">The sheep ______ running when the wolf chased them.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> was</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> were</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">Omar ______ riding his bike when he fell off.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> was</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> were</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">Complete: "The small dog was ______ the big dog."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> chasing</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> burst</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> turned over</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">What happened to Amy's boat?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> It burst.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> It turned over.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> It chased the sheep.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">Ben and his family ______ riding horses on holiday.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> was</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> were</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🧭</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🧭','🗺️','🎬','🎞️','🏕️','🚩'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    window.speechSynthesis && speechSynthesis.cancel();
+  });
+});
+
+/* TTS */
+function speakQ(btn,text){
+  if(!window.speechSynthesis) return;
+  if(btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.fq-speak.playing').forEach(function(b){b.classList.remove('playing')});
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); };
+  speechSynthesis.speak(u);
+}
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','🧭','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#ff8c42','#3fa34d','#4aa3e0','#ffc94d','#d1495b'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* ===== PICTURE-CUE GAP FILL ===== */
+var selWord=null, gapFilled=0, GAP_TOTAL=8;
+document.querySelectorAll('.wb-word').forEach(function(w){
+  w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return;
+    document.querySelectorAll('.wb-word.selected').forEach(function(x){x.classList.remove('selected')});
+    selWord=w; w.classList.add('selected');
+  });
+});
+document.querySelectorAll('.blank').forEach(function(bl){
+  bl.addEventListener('click',function(){
+    if(!selWord || bl.classList.contains('filled')) return;
+    var val=selWord.dataset.w;
+    bl.textContent=val;
+    if(val===bl.dataset.a){
+      bl.classList.remove('wrong'); bl.classList.add('filled'); sparkleAt(bl);
+      selWord.classList.add('used'); selWord.classList.remove('selected'); selWord=null;
+      gapFilled++;
+      var sc=document.getElementById('gapScore'); sc.textContent='Filled: '+gapFilled+' / '+GAP_TOTAL;
+      if(gapFilled===GAP_TOTAL){ sc.innerHTML='Filled: '+GAP_TOTAL+' / '+GAP_TOTAL+' — <span style="color:var(--forest-d)">All correct! 🎉</span>'; confetti(); }
+    } else {
+      bl.classList.add('wrong');
+      setTimeout(function(){ bl.classList.remove('wrong'); bl.textContent=''; },800);
+    }
+  });
+});
+
+/* ===== was/were CHOOSER ===== */
+var ccDone=0, ccRight=0;
+document.querySelectorAll('.cc-item').forEach(function(item){
+  item.querySelectorAll('.cc-choice').forEach(function(ch){
+    ch.addEventListener('click',function(){
+      if(item.dataset.done) return;
+      item.dataset.done='1'; ccDone++;
+      var ok=ch.dataset.ok==='1';
+      item.querySelectorAll('.cc-choice').forEach(function(b){ b.classList.add('locked'); if(b.dataset.ok==='1') b.classList.add('correct'); });
+      if(!ok) ch.classList.add('wrong'); else { ccRight++; sparkleAt(ch); }
+      var sc=document.getElementById('ccScore'); sc.textContent='Answered: '+ccDone+' / 5';
+      if(ccDone===5){ sc.innerHTML='Correct: '+ccRight+' / 5'+(ccRight===5?' — <span style="color:var(--forest-d)">Perfect! 🎉</span>':''); if(ccRight===5) confetti(); }
+    });
+  });
+});
+
+/* show model answers */
+function toggleAnswer(btn){
+  var ans=btn.parentElement.querySelector('.fq-answer');
+  ans.classList.toggle('show');
+  btn.textContent=ans.classList.contains('show')?'🙈 Hide answer':'💡 Show answer';
+}
+
+/* ===== FINAL QUIZ ===== */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg;
+  if(pct===100){ emoji='🏆'; title='Explorer Badge!'; msg='رائع! فتحتَ المحطةَ الرابعةَ على الخريطة 🧭🗺️ أتقنتَ was و were.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 تذكّر: was للمفرد و were للجمع، ثم أعدِ المحاولة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else { emoji='💪'; title='Keep exploring!'; msg='لا تستسلمْ! 🌱 راجعْ قاعدةَ was/were ثم جرِّبْ من جديد.'; document.getElementById('rewardBadge').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== ADVENTURE MAP · progress (shared across Unit 3) ===== -->
+<script>(function(){
+  var KEY='g6u3_map', THIS=4, em=['🐑','📅','👏','🧩','⏳','🎧','✍️','🎨'];
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var trail=document.getElementById('mtTrail'), count=document.getElementById('mtCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='mt-pin'+(got.indexOf(i)>=0?' on':'');
+    s.innerHTML='<span>'+(got.indexOf(i)>=0?em[i-1]:i)+'</span>';
+    trail.insertBefore(s, trail.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('mtDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
