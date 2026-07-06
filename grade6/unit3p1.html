@@ -60,30 +60,51 @@
   }
   .lesson-subtitle{ font-size:clamp(16px,3.4vw,22px); color:var(--gold); font-weight:800; margin-bottom:16px; }
 
-  /* the compass */
-  .compass{ position:relative; width:130px; height:130px; margin:6px auto 0; }
-  .compass-ring{
-    position:absolute; inset:0; border-radius:50%;
-    background:radial-gradient(circle at 40% 35%, #fff7e6, var(--parch) 60%, var(--parch-d));
-    border:6px solid #b98a4e; box-shadow:0 8px 22px rgba(0,0,0,.4), inset 0 0 18px rgba(120,80,30,.3);
+  /* the adventurer's backpack */
+  .backpack{ position:relative; width:190px; height:196px; margin:4px auto 0; animation:pack-bob 3.2s ease-in-out infinite; }
+  @keyframes pack-bob{ 0%,100%{ transform:translateY(0) rotate(-1deg);} 50%{ transform:translateY(-6px) rotate(1deg);} }
+  /* bedroll on top */
+  .bp-bedroll{
+    position:absolute; top:6px; left:50%; transform:translateX(-50%); width:150px; height:26px; border-radius:14px;
+    background:repeating-linear-gradient(90deg, var(--forest) 0 12px, var(--forest-d) 12px 24px);
+    border:3px solid #2a1d14; box-shadow:0 3px 6px rgba(0,0,0,.35); z-index:1;
   }
-  .compass-ring::before{ /* tick marks ring */
-    content:''; position:absolute; inset:12px; border-radius:50%;
-    background:repeating-conic-gradient(from 0deg, #8a6a3a 0deg 1.5deg, transparent 1.5deg 30deg);
-    -webkit-mask:radial-gradient(circle, transparent 46px, #000 47px); mask:radial-gradient(circle, transparent 46px, #000 47px);
-    opacity:.5;
+  /* items sticking out */
+  .bp-item{ position:absolute; z-index:1; font-size:34px; filter:drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
+  .bp-item.map{ top:-16px; left:26px; transform:rotate(-18deg); animation:sway 3s ease-in-out infinite; }
+  .bp-item.comp{ top:-20px; right:30px; transform:rotate(14deg); animation:sway 3.4s ease-in-out infinite; }
+  @keyframes sway{ 0%,100%{ transform:rotate(-14deg);} 50%{ transform:rotate(10deg);} }
+  /* main body */
+  .bp-body{
+    position:absolute; top:28px; left:50%; transform:translateX(-50%); width:172px; height:158px;
+    border-radius:34px 34px 40px 40px;
+    background:linear-gradient(160deg, #ff9d55, var(--orange) 45%, var(--orange-d));
+    border:4px solid #7a3c08; box-shadow:0 8px 22px rgba(0,0,0,.4), inset 0 -10px 18px rgba(120,50,0,.35);
+    z-index:2;
   }
-  .cdir{ position:absolute; font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; color:#8a5a2a; }
-  .cdir.n{ top:9px; left:50%; transform:translateX(-50%); color:var(--red); } .cdir.s{ bottom:9px; left:50%; transform:translateX(-50%); }
-  .cdir.e{ right:11px; top:50%; transform:translateY(-50%); } .cdir.w{ left:11px; top:50%; transform:translateY(-50%); }
-  .needle{
-    position:absolute; left:50%; top:50%; width:10px; height:88px; transform:translate(-50%,-50%) rotate(0deg);
-    transform-origin:50% 50%; animation:comp-swing 5s ease-in-out infinite;
+  /* front pocket */
+  .bp-pocket{
+    position:absolute; bottom:14px; left:50%; transform:translateX(-50%); width:112px; height:78px;
+    border-radius:16px 16px 20px 20px; background:linear-gradient(160deg,#ffb877,#f07f2e);
+    border:4px solid #7a3c08; box-shadow:inset 0 3px 6px rgba(255,255,255,.3), 0 3px 6px rgba(0,0,0,.25); z-index:3;
   }
-  .needle::before{ content:''; position:absolute; top:0; left:0; width:10px; height:44px; background:linear-gradient(var(--red),var(--red-d)); clip-path:polygon(50% 0,100% 100%,0 100%); }
-  .needle::after{ content:''; position:absolute; bottom:0; left:0; width:10px; height:44px; background:linear-gradient(#eee,#bbb); clip-path:polygon(0 0,100% 0,50% 100%); }
-  @keyframes comp-swing{ 0%,100%{ transform:translate(-50%,-50%) rotate(-24deg);} 50%{ transform:translate(-50%,-50%) rotate(28deg);} }
-  .compass-hub{ position:absolute; left:50%; top:50%; width:18px; height:18px; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle at 38% 32%, #fff, var(--gold) 70%); border:2px solid #b98a4e; z-index:3; }
+  .bp-pocket::after{ /* flap line */
+    content:''; position:absolute; top:-4px; left:-4px; right:-4px; height:26px; border-radius:16px 16px 0 0;
+    border:4px solid #7a3c08; border-bottom:none; background:linear-gradient(#ffa860,#f78c3a);
+  }
+  /* buckles */
+  .bp-buckle{ position:absolute; width:20px; height:24px; background:var(--gold); border:2px solid #7a3c08; border-radius:4px; z-index:5; box-shadow:0 2px 3px rgba(0,0,0,.3); }
+  .bp-buckle.l{ bottom:60px; left:44px; } .bp-buckle.r{ bottom:60px; right:44px; }
+  .bp-buckle::after{ content:''; position:absolute; inset:5px 4px; border:2px solid #7a3c08; border-radius:1px; }
+  /* straps */
+  .bp-strap{ position:absolute; top:22px; width:20px; height:120px; background:linear-gradient(#c9701f,#9a530f); border:3px solid #7a3c08; border-radius:12px; z-index:1; }
+  .bp-strap.l{ left:20px; transform:rotate(6deg); } .bp-strap.r{ right:20px; transform:rotate(-6deg); }
+  /* badge patch on pocket */
+  .bp-patch{
+    position:absolute; bottom:30px; left:50%; transform:translateX(-50%); width:46px; height:46px; border-radius:50%;
+    background:radial-gradient(circle at 38% 32%, #fff3c4, var(--gold) 72%); border:3px solid #7a3c08;
+    display:flex; align-items:center; justify-content:center; font-size:24px; z-index:6; box-shadow:0 2px 5px rgba(0,0,0,.3);
+  }
 
   /* ===== MAP PROGRESS TRACKER (shared across Unit 3) ===== */
   .map-track{
@@ -437,11 +458,17 @@
     <div class="unit-badge"><span>🧭</span> UNIT 3 — Period 1</div>
     <h1 class="lesson-title">Summer Adventures</h1>
     <div class="lesson-subtitle">مغامرات الصيف 🗺️</div>
-    <div class="compass">
-      <div class="compass-ring"></div>
-      <span class="cdir n">N</span><span class="cdir e">E</span><span class="cdir s">S</span><span class="cdir w">W</span>
-      <div class="needle"></div>
-      <div class="compass-hub"></div>
+    <div class="backpack">
+      <span class="bp-item map">🗺️</span>
+      <span class="bp-item comp">🧭</span>
+      <div class="bp-bedroll"></div>
+      <div class="bp-strap l"></div>
+      <div class="bp-strap r"></div>
+      <div class="bp-body"></div>
+      <div class="bp-buckle l"></div>
+      <div class="bp-buckle r"></div>
+      <div class="bp-pocket"></div>
+      <div class="bp-patch">⛺</div>
     </div>
   </div>
 </header>
