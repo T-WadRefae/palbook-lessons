@@ -60,51 +60,36 @@
   }
   .lesson-subtitle{ font-size:clamp(16px,3.4vw,22px); color:var(--gold); font-weight:800; margin-bottom:16px; }
 
-  /* the adventurer's backpack */
-  .backpack{ position:relative; width:190px; height:196px; margin:4px auto 0; animation:pack-bob 3.2s ease-in-out infinite; }
-  @keyframes pack-bob{ 0%,100%{ transform:translateY(0) rotate(-1deg);} 50%{ transform:translateY(-6px) rotate(1deg);} }
-  /* bedroll on top */
-  .bp-bedroll{
-    position:absolute; top:6px; left:50%; transform:translateX(-50%); width:150px; height:26px; border-radius:14px;
-    background:repeating-linear-gradient(90deg, var(--forest) 0 12px, var(--forest-d) 12px 24px);
-    border:3px solid #2a1d14; box-shadow:0 3px 6px rgba(0,0,0,.35); z-index:1;
+  /* the open treasure map */
+  .treasure-map{
+    position:relative; width:min(440px,86vw); height:214px; margin:6px auto 0;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(180,130,60,.25), transparent 45%),
+      radial-gradient(circle at 75% 70%, rgba(150,100,40,.22), transparent 40%),
+      linear-gradient(135deg, #f6e4bd 0%, #efd7a4 55%, #e6c88a 100%);
+    border-radius:8px; transform:rotate(-1.5deg);
+    box-shadow:0 10px 26px rgba(0,0,0,.45), inset 0 0 40px rgba(120,80,30,.28);
   }
-  /* items sticking out */
-  .bp-item{ position:absolute; z-index:1; font-size:34px; filter:drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
-  .bp-item.map{ top:-16px; left:26px; transform:rotate(-18deg); animation:sway 3s ease-in-out infinite; }
-  .bp-item.comp{ top:-20px; right:30px; transform:rotate(14deg); animation:sway 3.4s ease-in-out infinite; }
-  @keyframes sway{ 0%,100%{ transform:rotate(-14deg);} 50%{ transform:rotate(10deg);} }
-  /* main body */
-  .bp-body{
-    position:absolute; top:28px; left:50%; transform:translateX(-50%); width:172px; height:158px;
-    border-radius:34px 34px 40px 40px;
-    background:linear-gradient(160deg, #ff9d55, var(--orange) 45%, var(--orange-d));
-    border:4px solid #7a3c08; box-shadow:0 8px 22px rgba(0,0,0,.4), inset 0 -10px 18px rgba(120,50,0,.35);
-    z-index:2;
+  .treasure-map::before{ /* burnt border */
+    content:''; position:absolute; inset:0; border-radius:8px;
+    box-shadow:inset 0 0 0 3px rgba(120,70,20,.35), inset 0 0 22px rgba(90,50,10,.4); pointer-events:none;
   }
-  /* front pocket */
-  .bp-pocket{
-    position:absolute; bottom:14px; left:50%; transform:translateX(-50%); width:112px; height:78px;
-    border-radius:16px 16px 20px 20px; background:linear-gradient(160deg,#ffb877,#f07f2e);
-    border:4px solid #7a3c08; box-shadow:inset 0 3px 6px rgba(255,255,255,.3), 0 3px 6px rgba(0,0,0,.25); z-index:3;
-  }
-  .bp-pocket::after{ /* flap line */
-    content:''; position:absolute; top:-4px; left:-4px; right:-4px; height:26px; border-radius:16px 16px 0 0;
-    border:4px solid #7a3c08; border-bottom:none; background:linear-gradient(#ffa860,#f78c3a);
-  }
-  /* buckles */
-  .bp-buckle{ position:absolute; width:20px; height:24px; background:var(--gold); border:2px solid #7a3c08; border-radius:4px; z-index:5; box-shadow:0 2px 3px rgba(0,0,0,.3); }
-  .bp-buckle.l{ bottom:60px; left:44px; } .bp-buckle.r{ bottom:60px; right:44px; }
-  .bp-buckle::after{ content:''; position:absolute; inset:5px 4px; border:2px solid #7a3c08; border-radius:1px; }
-  /* straps */
-  .bp-strap{ position:absolute; top:22px; width:20px; height:120px; background:linear-gradient(#c9701f,#9a530f); border:3px solid #7a3c08; border-radius:12px; z-index:1; }
-  .bp-strap.l{ left:20px; transform:rotate(6deg); } .bp-strap.r{ right:20px; transform:rotate(-6deg); }
-  /* badge patch on pocket */
-  .bp-patch{
-    position:absolute; bottom:30px; left:50%; transform:translateX(-50%); width:46px; height:46px; border-radius:50%;
-    background:radial-gradient(circle at 38% 32%, #fff3c4, var(--gold) 72%); border:3px solid #7a3c08;
-    display:flex; align-items:center; justify-content:center; font-size:24px; z-index:6; box-shadow:0 2px 5px rgba(0,0,0,.3);
-  }
+  .tm-fold{ position:absolute; background:rgba(120,80,30,.14); z-index:1; }
+  .tm-fold.v{ top:0; bottom:0; width:2px; left:50%; } .tm-fold.h{ left:0; right:0; height:2px; top:50%; }
+  .tm-route{ position:absolute; inset:0; z-index:2; pointer-events:none; }
+  .tm-route path{ fill:none; stroke:#a04a12; stroke-width:3.5; stroke-dasharray:8 7; stroke-linecap:round; }
+  .tm-mark{ position:absolute; z-index:3; font-size:30px; filter:drop-shadow(0 2px 2px rgba(0,0,0,.3)); }
+  .tm-mark.m1{ top:22px; left:34px; } .tm-mark.m2{ top:104px; left:150px; } .tm-mark.m3{ top:40px; right:74px; }
+  .tm-x{ position:absolute; bottom:26px; right:44px; z-index:4; font-family:'Fredoka',sans-serif; font-weight:700;
+    font-size:40px; color:var(--red); text-shadow:0 2px 3px rgba(0,0,0,.35); animation:x-pulse 1.4s ease-in-out infinite; }
+  @keyframes x-pulse{ 0%,100%{ transform:scale(1) rotate(-6deg);} 50%{ transform:scale(1.18) rotate(-6deg);} }
+  .tm-rose{ position:absolute; top:14px; right:14px; width:52px; height:52px; z-index:4; border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #fff7e6, #e6c88a 70%); border:2px solid #a0692e;
+    display:flex; align-items:center; justify-content:center; font-size:26px;
+    box-shadow:0 2px 6px rgba(0,0,0,.3); animation:rose-spin 14s linear infinite; }
+  @keyframes rose-spin{ to{ transform:rotate(360deg); } }
+  .tm-title-badge{ position:absolute; bottom:14px; left:16px; z-index:4; background:rgba(61,43,31,.82); color:var(--gold);
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:12.5px; padding:4px 12px; border-radius:6px; transform:rotate(-2deg); }
 
   /* ===== MAP PROGRESS TRACKER (shared across Unit 3) ===== */
   .map-track{
@@ -458,17 +443,17 @@
     <div class="unit-badge"><span>🧭</span> UNIT 3 — Period 1</div>
     <h1 class="lesson-title">Summer Adventures</h1>
     <div class="lesson-subtitle">مغامرات الصيف 🗺️</div>
-    <div class="backpack">
-      <span class="bp-item map">🗺️</span>
-      <span class="bp-item comp">🧭</span>
-      <div class="bp-bedroll"></div>
-      <div class="bp-strap l"></div>
-      <div class="bp-strap r"></div>
-      <div class="bp-body"></div>
-      <div class="bp-buckle l"></div>
-      <div class="bp-buckle r"></div>
-      <div class="bp-pocket"></div>
-      <div class="bp-patch">⛺</div>
+    <div class="treasure-map">
+      <span class="tm-fold v"></span><span class="tm-fold h"></span>
+      <svg class="tm-route" viewBox="0 0 440 214" preserveAspectRatio="none">
+        <path d="M50,50 C110,30 120,110 165,120 C220,132 250,60 300,90 C350,120 360,150 388,168"/>
+      </svg>
+      <span class="tm-mark m1">🌲</span>
+      <span class="tm-mark m2">⛰️</span>
+      <span class="tm-mark m3">🏕️</span>
+      <div class="tm-rose">🧭</div>
+      <span class="tm-x">✕</span>
+      <span class="tm-title-badge">🗺️ Adventure Map</span>
     </div>
   </div>
 </header>
