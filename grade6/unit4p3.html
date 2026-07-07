@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Films I Like - Unit 4 Period 3 | Read &amp; Answer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --midnight:#141d33; --midnight-d:#0c1320;
+    --navy:#233657; --navy-l:#2f4771;
+    --curtain:#c0392b; --curtain-d:#8e2820;
+    --gold:#f2c94c; --gold-d:#d4a72a;
+    --screen:#eaf1ff; --pop:#ff6b6b;
+    --teal:#22c1b6; --teal-d:#149088;
+    --cream:#fbf7ef; --paper:#fffdf9;
+    --ink:#20283a;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 12% 16%, rgba(242,201,76,.08) 0%, transparent 45%),
+      radial-gradient(circle at 88% 84%, rgba(34,193,182,.07) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(20,29,51,.03) 0 2px, transparent 2px 24px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.2; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : CINEMA TICKET + NOW SHOWING MARQUEE ===== */
+  .lesson-header{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(242,201,76,.14), transparent 45%),
+      linear-gradient(170deg, var(--midnight) 0%, var(--navy) 60%, var(--midnight-d) 130%);
+    padding:26px 16px 48px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--curtain) 0 12px, var(--gold) 12px 24px, var(--teal) 24px 36px, var(--navy-l) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.35);
+  }
+  .lesson-header::before{
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:radial-gradient(1.4px 1.4px at 20% 30%, #fff, transparent), radial-gradient(1.2px 1.2px at 70% 20%, #fff, transparent), radial-gradient(1.3px 1.3px at 85% 55%, #fff, transparent), radial-gradient(1.2px 1.2px at 12% 60%, #fff, transparent);
+  }
+  .header-inner{ max-width:720px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--midnight);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.35); transform:rotate(-2deg);
+  }
+  .lesson-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(30px,5.6vw,50px); color:#fff; letter-spacing:-.5px;
+    text-shadow:2px 3px 0 var(--midnight-d), 5px 6px 18px rgba(0,0,0,.5); margin-bottom:4px;
+  }
+  .lesson-subtitle{ font-size:clamp(15px,3.2vw,22px); color:var(--gold); font-weight:800; margin-bottom:18px; }
+
+  /* cinema hero */
+  .cinema-hero{ width:min(460px,92vw); margin:2px auto 0; }
+  .marquee-sign{
+    background:linear-gradient(180deg,#3a1550,#220d36); border:3px solid var(--gold);
+    border-radius:14px; padding:9px 16px 10px; text-align:center; position:relative;
+    box-shadow:0 8px 22px rgba(0,0,0,.5), inset 0 0 26px rgba(242,201,76,.14);
+  }
+  .bulbs{ height:12px; background-image:radial-gradient(circle, #fff2b0 0 3.5px, rgba(242,201,76,.3) 4.5px, transparent 5.5px);
+    background-size:18px 12px; background-repeat:repeat-x; background-position:center; }
+  .bulbs.b1{ animation:chase 1.1s steps(2) infinite; } .bulbs.b2{ animation:chase 1.1s steps(2) infinite reverse; }
+  @keyframes chase{ 50%{ background-position:9px center; filter:brightness(.55); } }
+  .marquee-text{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:clamp(20px,4.6vw,28px); color:var(--gold); letter-spacing:2px; text-shadow:0 0 10px rgba(242,201,76,.7); margin:6px 0 1px; }
+  .marquee-sub{ font-family:'Fredoka',sans-serif; font-size:12px; letter-spacing:4px; color:#f6d9ff; opacity:.85; }
+
+  .ticket{ display:flex; margin-top:16px; filter:drop-shadow(0 10px 22px rgba(0,0,0,.45)); }
+  .ticket-main{
+    flex:1; background:linear-gradient(135deg,#fff7ea,#ffe6c4); border-radius:12px 0 0 12px;
+    padding:14px 18px; text-align:left; direction:ltr;
+  }
+  .tk-top{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:12px; letter-spacing:2px; color:var(--curtain); }
+  .tk-title{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; color:var(--midnight); line-height:1.1; margin:3px 0 5px; }
+  .tk-row{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12.5px; letter-spacing:1px; color:var(--navy); }
+  .barcode{ margin-top:9px; height:26px; width:130px;
+    background:repeating-linear-gradient(90deg,#20283a 0 2px, transparent 2px 4px, #20283a 4px 5px, transparent 5px 8px); }
+  .perf{ width:0; border-left:3px dashed rgba(20,29,51,.35); position:relative; z-index:2; }
+  .perf::before,.perf::after{ content:''; position:absolute; left:-9px; width:18px; height:18px; border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, #1a2540, var(--midnight-d)); }
+  .perf::before{ top:-9px; } .perf::after{ bottom:-9px; }
+  .ticket-stub{
+    width:90px; background:linear-gradient(135deg,var(--curtain),var(--curtain-d)); color:#fff;
+    border-radius:0 12px 12px 0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; padding:10px 6px;
+  }
+  .stub-txt{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:14px; letter-spacing:2px; text-align:center; line-height:1.15; }
+  .stub-no{ font-family:'Fredoka',sans-serif; font-size:12px; background:rgba(255,255,255,.22); padding:2px 9px; border-radius:20px; }
+
+  /* ===== FILM-REEL PROGRESS TRACKER (shared across Unit 4) ===== */
+  .reel-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, #2a2a30, #17171b);
+    border:3px solid var(--gold); box-shadow:0 6px 18px rgba(0,0,0,.4);
+  }
+  .rt-label{ color:var(--gold); font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
+  .rt-strip{ display:flex; align-items:center; justify-content:center; gap:6px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .rt-frame{
+    width:38px; height:34px; border-radius:5px; position:relative; z-index:1; background:#0d0d10;
+    border:2px solid #444; display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; color:#666; font-family:'Fredoka',sans-serif;
+    box-shadow:inset 0 0 0 3px #17171b, inset 0 0 0 4px #333;
+  }
+  .rt-frame.on{ background:radial-gradient(circle at 55% 40%, #fff2c4, var(--gold) 82%); color:var(--midnight); border-color:#fff; box-shadow:0 0 0 2px rgba(242,201,76,.5), inset 0 0 0 2px #fff; }
+  .rt-perf{ font-size:16px; color:#555; letter-spacing:-2px; z-index:1; }
+  .rt-count{ background:rgba(255,255,255,.12); color:var(--gold); border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .rt-done{ margin-top:7px; color:var(--gold); font-weight:800; font-size:14px; display:none; }
+  .rt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 var(--navy), 0 14px 34px rgba(20,29,51,.2);
+    display:flex; gap:8px; border:3px solid var(--curtain);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:12px 14px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; color:var(--curtain-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:92px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(192,57,43,.1); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--curtain), var(--curtain-d));
+    color:#fff; box-shadow:0 4px 0 #6e1f18, 0 6px 14px rgba(192,57,43,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:26px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); text-align:center;
+    margin-bottom:22px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--curtain) 0 10px, var(--gold) 10px 20px, var(--teal) 20px 30px, var(--navy) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#7a86a0; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #e6ddf0; box-shadow:0 6px 0 #d9d2ea, 0 8px 20px rgba(20,29,51,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--curtain)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--curtain));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; }
+  .aim-desc{ color:#4a5573; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#7a86a0; margin-top:7px; }
+
+  /* activity lead + audio */
+  .activity-lead{
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); direction:ltr; text-align:left;
+    background:var(--paper); border:3px solid #e6ddf0; border-left:6px solid var(--teal);
+    border-radius:14px; padding:15px 18px; margin-bottom:14px; line-height:1.6;
+  }
+  .activity-lead .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13.5px; color:#7a86a0; margin-top:6px; font-weight:600; }
+  .audio-placeholder{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    min-height:58px; max-width:480px; margin:0 auto 20px; padding:10px 16px;
+    border:2px dashed var(--curtain); border-radius:10px; color:var(--navy);
+    direction:rtl; font-size:14px; font-weight:600; background:#fff2f0; text-align:center;
+  }
+
+  /* ===== THUMBS UP / DOWN (listen) ===== */
+  .tud-item{ display:flex; align-items:center; gap:12px; background:var(--paper); border:3px solid #e6ddf0; border-radius:16px; padding:13px 16px; margin-bottom:12px; box-shadow:0 4px 0 #d9d2ea; flex-wrap:wrap; }
+  .tud-num{ width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;flex-shrink:0; }
+  .tud-hear{ background:var(--teal);color:#fff;border:none;border-radius:22px;padding:9px 18px;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 3px 0 var(--teal-d);display:inline-flex;align-items:center;gap:7px;transition:transform .2s; }
+  .tud-hear:hover{ transform:translateY(-2px); }
+  .tud-hear.playing{ background:var(--curtain); box-shadow:0 3px 0 var(--curtain-d); }
+  .tud-spacer{ flex:1 1 20px; }
+  .tud-btns{ display:flex; gap:9px; }
+  .tud-btn{ width:46px;height:46px;border-radius:50%;border:2.5px solid #e6ddf0;background:#fff;font-size:21px;cursor:pointer;transition:all .2s; box-shadow:0 3px 0 #e6ddf0; }
+  .tud-btn:hover:not(.locked){ transform:translateY(-2px); border-color:var(--gold-d); }
+  .tud-btn.chosen.correct{ background:#cdeee9;border-color:var(--teal-d); box-shadow:0 3px 0 var(--teal-d); }
+  .tud-btn.chosen.wrong{ background:#ffd9de;border-color:var(--curtain-d); box-shadow:0 3px 0 var(--curtain-d); }
+  .tud-btn.reveal{ background:#e8fff9; border-color:var(--teal-d); box-shadow:0 0 0 3px rgba(34,193,182,.25), 0 3px 0 var(--teal-d); }
+  .tud-btn.locked{ cursor:default; }
+
+  /* ===== TICK / cc pattern ===== */
+  .cc-item{
+    background:var(--paper); border-radius:16px; border:3px solid #e6ddf0; padding:16px 20px; margin-bottom:14px;
+    box-shadow:0 5px 0 #d9d2ea, 0 7px 16px rgba(20,29,51,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; line-height:1.9; color:var(--ink);
+  }
+  .cc-item .n{
+    display:inline-flex; align-items:center; justify-content:center; width:27px; height:27px; margin-right:9px;
+    background:var(--curtain); color:#fff; border-radius:50%; font-size:14px; font-weight:700; box-shadow:0 2px 0 var(--curtain-d);
+  }
+  .cc-row{ margin-top:11px; display:flex; gap:10px; }
+  .cc-choice{
+    background:#fff; border:2.5px solid var(--navy); border-radius:22px;
+    padding:6px 18px; cursor:pointer; font-weight:700; font-size:15px; color:var(--navy);
+    transition:all .2s; box-shadow:0 2px 0 var(--navy); font-family:'Fredoka',sans-serif;
+  }
+  .cc-choice:hover:not(.locked){ background:#eef1fb; transform:translateY(-2px); }
+  .cc-choice.correct{ background:#cdeee9; border-color:var(--teal-d); color:#0c5a54; box-shadow:0 2px 0 var(--teal-d); }
+  .cc-choice.wrong{ background:#ffd9de; border-color:var(--curtain-d); color:#7c1a12; box-shadow:0 2px 0 var(--curtain-d); }
+  .cc-choice.locked{ cursor:default; }
+  .cc-score, .match-score{ text-align:center; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--navy); font-weight:600; margin-top:16px; }
+  .cc-score .done, .match-score .done{ color:var(--teal-d); font-weight:800; }
+  .hover-word{
+    background:linear-gradient(transparent 60%, rgba(242,201,76,.6) 60%);
+    cursor:help; position:relative; font-weight:600; transition:all .2s;
+  }
+  .hover-word:hover{ background:var(--gold); color:var(--midnight); padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--midnight); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--midnight); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip{ opacity:1; }
+
+  /* ===== WORD-BANK FILL (complete) ===== */
+  .wb-bank{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; background:var(--paper); border:3px dashed var(--gold-d); border-radius:16px; padding:16px; margin-bottom:20px; }
+  .wb-word{ background:var(--gold); color:var(--midnight); border:none; padding:8px 17px; border-radius:22px; font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; cursor:pointer; box-shadow:0 3px 0 var(--gold-d); transition:transform .15s; }
+  .wb-word:hover:not(.used){ transform:translateY(-2px); }
+  .wb-word.selected{ outline:3px solid var(--curtain); outline-offset:2px; }
+  .wb-word.used{ opacity:.34; cursor:default; text-decoration:line-through; }
+  .wb-item{ background:var(--paper); border:3px solid #e6ddf0; border-radius:14px; padding:14px 18px; margin-bottom:12px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; line-height:2.3; color:var(--ink); box-shadow:0 4px 0 #d9d2ea; }
+  .wb-item .n{ display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; margin-right:8px; background:var(--navy); color:#fff; border-radius:50%; font-size:13px; font-weight:700; }
+  .wb-blank{ display:inline-block; min-width:96px; border-bottom:3px solid var(--curtain); text-align:center; font-weight:700; color:var(--curtain-d); cursor:pointer; padding:0 8px; transition:all .15s; }
+  .wb-blank:hover{ background:rgba(242,201,76,.25); }
+  .wb-blank.filled{ border-bottom-color:var(--teal-d); color:var(--teal-d); cursor:default; }
+  .wb-blank.wrong{ animation:shake .4s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+  /* ===== ANSWER (write) ===== */
+  .qa-item{ background:var(--paper);border:3px solid #e6ddf0;border-radius:16px;padding:16px 18px;margin-bottom:14px;box-shadow:0 4px 0 #d9d2ea; }
+  .qa-q{ font-family:'Fredoka',sans-serif;font-size:16px;color:var(--ink);direction:ltr;text-align:left;display:flex;gap:9px;margin-bottom:4px;align-items:flex-start; }
+  .qa-qn{ background:var(--curtain);color:#fff;width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:13px;margin-top:1px; }
+  .qa-ar{ font-family:'Cairo',sans-serif;font-size:13px;color:#7a86a0;margin:0 0 10px 35px;direction:rtl;text-align:right; }
+  .qa-input{ width:100%;padding:11px 14px;border:2px solid #e6ddf0;border-radius:10px;font-family:'Fredoka',sans-serif;font-size:15px;direction:ltr;color:var(--ink);margin-bottom:9px; }
+  .qa-input:focus{ outline:none;border-color:var(--teal); }
+  .qa-model{ border:2px dashed var(--teal-d);border-radius:10px;overflow:hidden; }
+  .qa-model summary{ background:#e0f5f2;color:var(--teal-d);padding:9px 14px;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;cursor:pointer;list-style:none; }
+  .qa-model summary::-webkit-details-marker{ display:none; }
+  .qa-model .ma{ padding:11px 15px;direction:ltr;text-align:left;font-family:'Fredoka',sans-serif;font-size:15px;color:var(--ink); }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--curtain)); color:#fff; padding:26px 22px;
+    border-radius:22px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--curtain-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'🎟️'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:25px; margin-bottom:8px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.4); height:12px; border-radius:10px; margin-top:16px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--teal), var(--navy)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid #e6ddf0; box-shadow:0 6px 0 #d9d2ea, 0 8px 18px rgba(20,29,51,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--curtain), var(--navy)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--midnight-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #e6ddf0; padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--curtain); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:#e6ddf0; color:var(--navy); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#cdeee9; border-color:var(--teal-d); color:#0c5a54; }
+  .quiz-option.correct .opt-letter{ background:var(--teal-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9de; border-color:var(--curtain-d); color:#7c1a12; }
+  .quiz-option.wrong .opt-letter{ background:var(--curtain-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e0f5f2,#cdeee9); border-right:4px solid var(--teal-d); color:#0c5a54; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#fff0f2,#ffd9de); border-right:4px solid var(--curtain-d); color:#7c1a12; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:36px 22px; text-align:center;
+    border:3px solid #e6ddf0; box-shadow:0 8px 0 #d9d2ea, 0 12px 28px rgba(20,29,51,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:74px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:50px; color:var(--curtain); margin:16px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:28px; color:#7a86a0; }
+  .result-message{ font-size:16px; line-height:1.7; margin-bottom:22px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:96px; height:96px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff4cc, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(242,201,76,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:46px;
+  }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--curtain), var(--navy)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--midnight-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--midnight-d), var(--navy)); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--curtain) 0 12px, var(--gold) 12px 24px, var(--teal) 24px 36px, var(--navy-l) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : CINEMA TICKET + NOW SHOWING MARQUEE ===== -->
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🎬</span> UNIT 4 — Period 3</div>
+    <h1 class="lesson-title">Read &amp; Answer</h1>
+    <div class="lesson-subtitle">الأفلام التي أحبها · اقرأ وأجب 🎟️</div>
+    <div class="cinema-hero">
+      <div class="marquee-sign">
+        <div class="bulbs b1"></div>
+        <div class="marquee-text">🎬 NOW SHOWING</div>
+        <div class="marquee-sub">FILMS I LIKE</div>
+        <div class="bulbs b2"></div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-main">
+          <div class="tk-top">🎟️ ADMIT ONE</div>
+          <div class="tk-title">Read &amp; Answer</div>
+          <div class="tk-row">UNIT 4 · PERIOD 3</div>
+          <div class="barcode"></div>
+        </div>
+        <div class="perf"></div>
+        <div class="ticket-stub">
+          <div class="stub-txt">ADMIT<br>ONE</div>
+          <div class="stub-no">№ 03</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== FILM-REEL PROGRESS (shared across Unit 4) ===== -->
+<div class="reel-track" id="reelTrack" aria-label="Film Reel progress">
+  <div class="rt-label">🎞️ بكرة الأفلام — Film Reel</div>
+  <div class="rt-strip" id="rtStrip"><span class="rt-perf">::</span><span class="rt-count" id="rtCount">0/8</span></div>
+  <div class="rt-done" id="rtDone">✨ اكتملَ الفيلم! أنتَ نجمُ السينما 🎬🌟</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Objectives</span></button>
+    <button class="tab-btn" data-tab="listen"><span class="tab-icon">👂</span><span>Listen 👍👎</span></button>
+    <button class="tab-btn" data-tab="tick"><span class="tab-icon">✅</span><span>Tick Correct</span></button>
+    <button class="tab-btn" data-tab="complete"><span class="tab-icon">✏️</span><span>Complete</span></button>
+    <button class="tab-btn" data-tab="answer"><span class="tab-icon">💬</span><span>Answer</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : OBJECTIVES ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#22c1b6;">
+        <div class="aim-icon-wrap">👂</div>
+        <h3 class="aim-title">Listening</h3>
+        <p class="aim-desc">Listen to the sentences and show thumbs up 👍 or thumbs down 👎.
+          <span class="ar">أن يستمعَ الطالبُ إلى الجُملِ ويحكمَ إن كانت صحيحةً أم خاطئةً.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#c0392b;">
+        <div class="aim-icon-wrap">📖</div>
+        <h3 class="aim-title">Reading</h3>
+        <p class="aim-desc">Read the story sentences, tick the correct ones and complete them.
+          <span class="ar">أن يقرأَ جملَ القصةِ ويختارَ الصحيحةَ ويكملَ الفراغات.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#233657;">
+        <div class="aim-icon-wrap">✍️</div>
+        <h3 class="aim-title">Writing</h3>
+        <p class="aim-desc">Read page 28 and write full answers to the questions.
+          <span class="ar">أن يقرأَ صفحةَ 28 ويكتبَ إجاباتٍ كاملةً عن الأسئلة.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : LISTEN (thumbs up / down) ===== -->
+  <section class="tab-content" id="tab-listen">
+    <h2 class="section-title">👂 Listen — Thumbs Up or Down<span class="title-sub">استمع ثم احكم</span></h2>
+    <div class="activity-lead">
+      <b>1)</b> Listen. Show <b>thumbs up 👍</b> if the sentence is right, <b>thumbs down 👎</b> if it is wrong.
+      <span class="ar">استمعْ إلى كلِّ جملةٍ (اضغطْ 🔊)، ثم اختر 👍 إذا كانت صحيحةً أو 👎 إذا كانت خاطئةً. (المهارة استماعٌ — النصُّ غيرُ ظاهر)</span>
+    </div>
+    <!-- AUDIO: track 25 — replace this placeholder with the Google Drive /preview iframe (DRIVE_FILE_ID_G6U4P3_TUD) -->
+    <div class="audio-placeholder" dir="rtl">🔉 ضعي هنا رابط مشغّل Google Drive للاستماع (Audio 25 · DRIVE_FILE_ID_G6U4P3_TUD)</div>
+    <div id="tudList"></div>
+    <div class="match-score" id="tudScore">Answered: 0 / 5</div>
+  </section>
+
+  <!-- ===== TAB 3 : TICK CORRECT ===== -->
+  <section class="tab-content" id="tab-tick">
+    <h2 class="section-title">✅ Tick the Correct Sentences<span class="title-sub">حدّد الصحيح</span></h2>
+    <div class="activity-lead">
+      <b>2)</b> Read. Is the sentence <b>right</b> or <b>wrong</b>? Choose ✔ or ✘.
+      <span class="ar">اقرأِ الجملةَ ثم اختر ✔ إن كانت صحيحةً أو ✘ إن كانت خاطئةً.</span>
+    </div>
+    <div id="ccList">
+      <div class="cc-item"><span class="n">1</span> The dolphin pushed the diver to his <span class="hover-word">boat<span class="tooltip">قارب</span></span>.
+        <div class="cc-row"><button class="cc-choice" data-ok="1">✔ Right</button><button class="cc-choice">✘ Wrong</button></div></div>
+      <div class="cc-item"><span class="n">2</span> The small fish took the food <span class="hover-word">while<span class="tooltip">بينما</span></span> the big fish were sleeping.
+        <div class="cc-row"><button class="cc-choice">✔ Right</button><button class="cc-choice" data-ok="1">✘ Wrong</button></div></div>
+      <div class="cc-item"><span class="n">3</span> The tiger <span class="hover-word">attacked<span class="tooltip">هاجم</span></span> the ox.
+        <div class="cc-row"><button class="cc-choice" data-ok="1">✔ Right</button><button class="cc-choice">✘ Wrong</button></div></div>
+      <div class="cc-item"><span class="n">4</span> The oxen <span class="hover-word">always<span class="tooltip">دائماً</span></span> stay together.
+        <div class="cc-row"><button class="cc-choice">✔ Right</button><button class="cc-choice" data-ok="1">✘ Wrong</button></div></div>
+      <div class="cc-item"><span class="n">5</span> The mouse, dog and cat <span class="hover-word">made<span class="tooltip">صنعوا / أحدثوا</span></span> lots of noise and the man got angry.
+        <div class="cc-row"><button class="cc-choice" data-ok="1">✔ Right</button><button class="cc-choice">✘ Wrong</button></div></div>
+      <div class="cc-item"><span class="n">6</span> Amy <span class="hover-word">said<span class="tooltip">قالت</span></span> 'The cartoon about the cat, dog and mouse is funny.'
+        <div class="cc-row"><button class="cc-choice" data-ok="1">✔ Right</button><button class="cc-choice">✘ Wrong</button></div></div>
+    </div>
+    <div class="cc-score" id="ccScore">Answered: 0 / 6</div>
+  </section>
+
+  <!-- ===== TAB 4 : COMPLETE (word bank) ===== -->
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">✏️ Read and Complete<span class="title-sub">أكمل الجُمل</span></h2>
+    <div class="activity-lead">
+      <b>3)</b> Read and complete the sentences. Tap a word, then tap the blank.
+      <span class="ar">اقرأِ الجملةَ، اضغطْ على الكلمةِ من البنكِ ثم اضغطْ على الفراغِ المناسب.</span>
+    </div>
+    <div class="wb-bank" id="wbBank"></div>
+    <div id="wbList">
+      <div class="wb-item"><span class="n">1</span> The dog chased the cat while the cat was chasing the <span class="wb-blank" data-answer="mouse">?</span>.</div>
+      <div class="wb-item"><span class="n">2</span> The dolphin <span class="wb-blank" data-answer="pushed">?</span> the diver to his boat.</div>
+      <div class="wb-item"><span class="n">3</span> The <span class="wb-blank" data-answer="diver">?</span> was tired and stopped swimming.</div>
+      <div class="wb-item"><span class="n">4</span> The small orange fish was <span class="wb-blank" data-answer="safe">?</span> under the green plant.</div>
+      <div class="wb-item"><span class="n">5</span> The dog, cat and mouse made lots of <span class="wb-blank" data-answer="noise">?</span>.</div>
+      <div class="wb-item"><span class="n">6</span> The tiger attacked the <span class="wb-blank" data-answer="ox">?</span>.</div>
+    </div>
+    <div class="match-score" id="wbScore">Completed: 0 / 6</div>
+  </section>
+
+  <!-- ===== TAB 5 : ANSWER (write) ===== -->
+  <section class="tab-content" id="tab-answer">
+    <h2 class="section-title">💬 Read &amp; Write Answers<span class="title-sub">اقرأ صفحة 28 وأجب</span></h2>
+    <div class="activity-lead">
+      <b>4)</b> Read page 28 and write full answers to the questions. Then check the model answer.
+      <span class="ar">اقرأِ القصةَ في صفحة 28 واكتبْ إجابةً كاملةً، ثم افتحِ «الإجابة النموذجية» لتتأكد.</span>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">1</span> What was the dolphin doing to the diver?</div>
+      <div class="qa-ar">ماذا كان الدولفين يفعل للغطّاس؟</div>
+      <input class="qa-input" type="text" placeholder="Write your answer…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">The dolphin was pushing him to his boat.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">2</span> What was the cat chasing?</div>
+      <div class="qa-ar">ماذا كانت القطة تطارد؟</div>
+      <input class="qa-input" type="text" placeholder="Write your answer…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">The cat was chasing the mouse.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">3</span> What was the tiger attacking?</div>
+      <div class="qa-ar">ماذا كان النمر يهاجم؟</div>
+      <input class="qa-input" type="text" placeholder="Write your answer…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">The tiger was attacking the ox.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">4</span> Why was the small orange fish under the plant?</div>
+      <div class="qa-ar">لماذا كانت السمكة البرتقالية الصغيرة تحت النبتة؟</div>
+      <input class="qa-input" type="text" placeholder="Write your answer…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">It was hiding. It was safe there.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">5</span> What did Amy think about the cartoon?</div>
+      <div class="qa-ar">ماذا كانت إيمي تظن عن الرسوم المتحركة؟</div>
+      <input class="qa-input" type="text" placeholder="Write your answer…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">Amy thought the cartoon was funny.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">6</span> What do oxen need to do to stay safe?</div>
+      <div class="qa-ar">ماذا تحتاج الثيران أن تفعل لتبقى آمنة؟</div>
+      <input class="qa-input" type="text" placeholder="Write your answer…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">Oxen need to stay together.</div></details>
+    </div>
+  </section>
+
+  <!-- ===== TAB 6 : QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي</span></h2>
+    <div class="quiz-intro">
+      <h3>🎟️ The Story Quiz</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتُضيءَ اللقطةَ الثالثةَ على بكرةِ الأفلام!</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">What was the dolphin doing to the diver?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> It was pushing him to the boat.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> It was attacking him.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> It was chasing him.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">The tiger attacked the ______.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> mouse</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> ox</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> diver</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">Why was the small orange fish under the plant?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> It was hungry.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> It was safe there.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> It was sleeping.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">What do oxen need to do to stay safe?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> run away fast</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> stay together</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> hide alone</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">How did Amy find the cartoon?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> boring</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> funny</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> sad</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🎟️</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🎬','🎞️','🍿','⭐','🎥','🎟️'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    window.speechSynthesis && speechSynthesis.cancel();
+  });
+});
+
+/* TTS */
+function speakText(text,btn,rate){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=rate||.85;
+  if(btn){ document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')}); btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+
+/* tap tooltips */
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','🎬','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#c0392b','#22c1b6','#233657','#f2c94c','#ff6b6b'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* ===== THUMBS UP / DOWN (pure listening — text hidden, read via TTS) ===== */
+var TUD=[
+  {t:"The diver pushed the dolphin to the boat.",              a:"down"},
+  {t:"The cat was chasing the dog.",                            a:"down"},
+  {t:"The tiger attacked the mouse.",                           a:"down"},
+  {t:"The orange fish was safe under the plant.",               a:"up"},
+  {t:"The dog, the cat and the mouse made lots of noise.",      a:"up"}
+];
+var tudDone=0;
+(function(){
+  var list=document.getElementById('tudList');
+  TUD.forEach(function(item,idx){
+    var row=document.createElement('div'); row.className='tud-item';
+    row.innerHTML='<span class="tud-num">'+(idx+1)+'</span>'+
+      '<button class="tud-hear">🔊 استمع</button><span class="tud-spacer"></span>'+
+      '<div class="tud-btns"><button class="tud-btn up" data-c="up">👍</button>'+
+      '<button class="tud-btn down" data-c="down">👎</button></div>';
+    row.querySelector('.tud-hear').addEventListener('click',function(){ speakText(item.t,this,.82); });
+    row.querySelectorAll('.tud-btn').forEach(function(b){
+      b.addEventListener('click',function(){
+        if(row.dataset.done) return; row.dataset.done='1'; tudDone++;
+        var ok=b.dataset.c===item.a;
+        row.querySelectorAll('.tud-btn').forEach(function(x){ x.classList.add('locked'); });
+        b.classList.add('chosen', ok?'correct':'wrong');
+        if(!ok){ row.querySelector('.tud-btn[data-c="'+item.a+'"]').classList.add('reveal'); }
+        else sparkleAt(b);
+        var sc=document.getElementById('tudScore'); sc.textContent='Answered: '+tudDone+' / 5';
+        if(tudDone===5){ sc.innerHTML='Done! <span class="done">أحسنت 🎉</span>'; confetti(); }
+      });
+    });
+    list.appendChild(row);
+  });
+})();
+
+/* ===== TICK CORRECT (cc pattern) ===== */
+var ccDone=0, ccRight=0;
+document.querySelectorAll('.cc-item').forEach(function(item){
+  item.querySelectorAll('.cc-choice').forEach(function(ch){
+    ch.addEventListener('click',function(){
+      if(item.dataset.done) return;
+      item.dataset.done='1'; ccDone++;
+      var ok=ch.dataset.ok==='1';
+      item.querySelectorAll('.cc-choice').forEach(function(b){ b.classList.add('locked'); if(b.dataset.ok==='1') b.classList.add('correct'); });
+      if(!ok) ch.classList.add('wrong'); else { ccRight++; sparkleAt(ch); }
+      var sc=document.getElementById('ccScore'); sc.textContent='Answered: '+ccDone+' / 6';
+      if(ccDone===6){ sc.innerHTML='Correct: '+ccRight+' / 6'+(ccRight===6?' — <span class="done">Perfect! 🎉</span>':''); if(ccRight===6) confetti(); }
+    });
+  });
+});
+
+/* ===== WORD-BANK FILL (complete) ===== */
+var WB_WORDS=['mouse','pushed','diver','safe','noise','ox'];
+var wbSel=null, wbDone=0;
+(function(){
+  var bank=document.getElementById('wbBank');
+  WB_WORDS.slice().sort(function(){return Math.random()-.5}).forEach(function(w){
+    var b=document.createElement('button'); b.className='wb-word'; b.dataset.w=w; b.textContent=w;
+    b.addEventListener('click',function(){
+      if(b.classList.contains('used')) return;
+      speakText(w,null,.85);
+      document.querySelectorAll('.wb-word.selected').forEach(function(x){x.classList.remove('selected')});
+      wbSel=b; b.classList.add('selected');
+    });
+    bank.appendChild(b);
+  });
+  document.querySelectorAll('.wb-blank').forEach(function(bl){
+    bl.addEventListener('click',function(){
+      if(bl.classList.contains('filled')||!wbSel) return;
+      if(wbSel.dataset.w===bl.dataset.answer){
+        bl.textContent=bl.dataset.answer; bl.classList.add('filled');
+        wbSel.classList.remove('selected'); wbSel.classList.add('used'); wbSel=null;
+        wbDone++; sparkleAt(bl);
+        var sc=document.getElementById('wbScore'); sc.textContent='Completed: '+wbDone+' / 6';
+        if(wbDone===6){ sc.innerHTML='Completed: 6 / 6 — <span class="done">Perfect! 🎉</span>'; confetti(); }
+      } else { bl.classList.add('wrong'); setTimeout(function(){bl.classList.remove('wrong')},420); }
+    });
+  });
+})();
+
+/* ===== FINAL QUIZ ===== */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg;
+  if(pct===100){ emoji='🏆'; title='Movie Star!'; msg='رائع! أضأتَ اللقطةَ الثالثةَ على البكرة 🎬🌟 أتقنتَ القصة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعِ القصةَ ثم أعدِ المحاولة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else { emoji='💪'; title='Keep watching!'; msg='لا تستسلمْ! 🌱 عُدْ إلى القصةِ ثم جرِّبْ من جديد.'; document.getElementById('rewardBadge').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== FILM REEL · progress (shared across Unit 4) ===== -->
+<script>(function(){
+  var KEY='g6u4_reel', THIS=3;
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var strip=document.getElementById('rtStrip'), count=document.getElementById('rtCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='rt-frame'+(got.indexOf(i)>=0?' on':'');
+    s.textContent=got.indexOf(i)>=0?'★':i;
+    strip.insertBefore(s, strip.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('rtDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
