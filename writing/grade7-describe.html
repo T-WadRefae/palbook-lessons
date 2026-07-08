@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grade 7 · Writing · Descriptive Writing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --wood:#8a5a34; --wood2:#6e4526; --wood-edge:#5a3a1e; --sill:#a9723f;
+    --sky:#8fc7f0; --sky2:#d6ecfb; --hill:#bcd98f; --sun:#ffd66b;
+    --cream:#fdf8ee; --line:#e7dcc6;
+    --ink:#2c2620; --ink-soft:#6b5f4e; --good:#2f8a6b; --good-deep:#216a52; --red:#c0392b; --accent:#2b7a9e; --accent-deep:#1d5b78; --rose:#d76a8a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{font-size:clamp(16px,1.4vw,19px);}
+  body{min-height:100%;font-family:'Nunito',sans-serif;color:var(--ink);overflow-x:hidden;
+    background:
+      radial-gradient(circle at 82% 16%, rgba(255,214,107,.5), transparent 16%),
+      linear-gradient(180deg,#a9d6f2 0%,#cfe8fa 46%,#d9ecc6 60%,#c2b58f 100%);
+    padding:26px 12px 64px;-webkit-font-smoothing:antialiased;}
+  .ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;}
+
+  /* ════════ ROOM WALL PANEL ════════ */
+  .room{max-width:840px;margin:0 auto;position:relative;background:linear-gradient(180deg,var(--cream),#f6eedd);
+    border-radius:16px;padding:14px;border:3px solid var(--wood-edge);
+    box-shadow:0 20px 46px rgba(80,50,25,.42);
+    animation:open .6s cubic-bezier(.22,.68,0,1.2) both;}
+  @keyframes open{from{opacity:0;transform:translateY(-18px) scale(.98);}to{opacity:1;transform:none;}}
+
+  /* ════ DISTINCTIVE HEADER — a window onto a scene ════ */
+  .win-head{position:relative;border:9px solid var(--wood);border-radius:14px 14px 10px 10px;
+    background:linear-gradient(180deg,var(--sky),var(--sky2) 55%,var(--hill));overflow:hidden;
+    box-shadow:inset 0 0 0 3px #b98a5c, 0 6px 14px rgba(0,0,0,.25);min-height:190px;}
+  /* sun + hills scene */
+  .win-head .sun{position:absolute;right:16px;top:14px;width:46px;height:46px;border-radius:50%;background:radial-gradient(circle,#fff2c4,var(--sun));box-shadow:0 0 26px rgba(255,214,107,.9);}
+  .win-head .hills{position:absolute;left:0;right:0;bottom:0;height:60px;
+    background:radial-gradient(60px 40px at 20% 100%, #a9cf78 60%, transparent 61%),
+              radial-gradient(80px 52px at 60% 100%, #98c465 60%, transparent 61%),
+              radial-gradient(70px 44px at 92% 100%, #a9cf78 60%, transparent 61%),
+              linear-gradient(180deg, transparent, #bcd98f);}
+  .win-head .bird{position:absolute;font-size:.9rem;color:#3c4a55;opacity:.7;top:40px;left:22%;animation:fly 6s ease-in-out infinite;}
+  .win-head .bird.b2{top:58px;left:40%;animation-delay:1.5s;font-size:.7rem;}
+  @keyframes fly{0%,100%{transform:translate(0,0);}50%{transform:translate(30px,-10px);}}
+  /* window cross bars */
+  .win-head .barV{position:absolute;left:50%;top:0;bottom:0;width:8px;background:var(--wood);transform:translateX(-50%);box-shadow:0 0 0 2px #b98a5c inset;}
+  .win-head .barH{position:absolute;left:0;right:0;top:52%;height:8px;background:var(--wood);transform:translateY(-50%);box-shadow:0 0 0 2px #b98a5c inset;}
+  /* title plate on the sill */
+  .win-head .plate{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);text-align:center;z-index:3;
+    background:rgba(46,34,20,.82);border-radius:12px;padding:8px 16px;color:#fff;border:2px solid #b98a5c;min-width:74%;}
+  .win-head .grade-tag{display:inline-block;font-family:'Fredoka';font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:.56rem;background:var(--sun);color:#5a4206;padding:2px 11px;border-radius:20px;}
+  .win-head h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(1.2rem,4.6vw,1.85rem);margin:5px 0 1px;color:#fff;text-shadow:0 2px 3px rgba(0,0,0,.5);}
+  .win-head .sub{font-family:'Fredoka';font-weight:500;font-size:.78rem;color:#ffe9b8;}
+  .win-head .teacher{font-size:.68rem;color:#e9dcc4;font-weight:700;margin-top:2px;}
+
+  nav.tabs{display:flex;gap:7px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;padding:13px 2px 2px;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{flex:0 0 auto;cursor:pointer;border:2px solid var(--wood);background:#f7ede0;color:var(--wood2);
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:.8rem;padding:9px 14px;border-radius:9px;transition:.15s;}
+  .tab-btn:hover{background:#f0e2cf;}
+  .tab-btn.active{background:var(--wood);color:#fff;border-color:var(--wood-edge);}
+  @media(min-width:700px){nav.tabs{flex-wrap:wrap;overflow-x:visible;justify-content:center;}}
+
+  .inside{margin-top:10px;background:#fffdf7;border-radius:12px;border:2px solid var(--line);padding:8px 12px;}
+  .panel{display:none;padding:16px 6px 22px;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  h2.sh{font-family:'Fredoka',sans-serif;font-weight:700;color:var(--accent-deep);font-size:1.16rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .hint{background:#e6f3f8;border-right:5px solid var(--accent);border-radius:10px;padding:9px 12px;margin:0 0 16px;font-size:.95rem;color:#17505f;font-weight:600;}
+
+  .obj-list{list-style:none;display:grid;gap:10px;}
+  .obj-list li{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:700;font-size:.95rem;}
+  .obj-list .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:'Fredoka';font-size:.85rem;}
+  .mission{margin-top:16px;background:linear-gradient(135deg,#fdeaf0,#fbe0e8);border:2px dashed var(--rose);border-radius:14px;padding:14px 16px;}
+  .mission .ttl{font-family:'Fredoka';font-weight:700;color:#b64f6e;font-size:1rem;margin-bottom:4px;}
+
+  /* model description with sense tags */
+  .scene{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px;font-family:'Fredoka';font-weight:500;line-height:2;font-size:1.02rem;}
+  .s-see{background:#e6f3f8;border-radius:6px;padding:1px 6px;font-weight:700;color:var(--accent-deep);}
+  .s-hear{background:#efe6fb;border-radius:6px;padding:1px 6px;font-weight:700;color:#5c3d9a;}
+  .s-smell{background:#fdeef0;border-radius:6px;padding:1px 6px;font-weight:700;color:#b64f6e;}
+  .s-touch{background:#fff2cf;border-radius:6px;padding:1px 6px;font-weight:700;color:#8a6408;}
+  .s-adj{background:#e7f6ec;border-radius:6px;padding:1px 6px;font-weight:700;color:var(--good-deep);}
+  .senses{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+  .sense-chip{font-size:.8rem;font-weight:800;border-radius:999px;padding:5px 12px;font-family:'Fredoka';}
+  .sc1{background:#e6f3f8;color:var(--accent-deep);} .sc2{background:#efe6fb;color:#5c3d9a;}
+  .sc3{background:#fdeef0;color:#b64f6e;} .sc4{background:#fff2cf;color:#8a6408;} .sc5{background:#e7f6ec;color:var(--good-deep);}
+
+  .parts{display:grid;gap:10px;}
+  .part{border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s;}
+  .part:hover{border-color:var(--accent);}
+  .part-tag{display:flex;align-items:center;gap:8px;padding:12px 14px;font-weight:800;font-size:.95rem;background:#e9f4f8;}
+  .part-tag .arr{transition:transform .2s;color:var(--accent);font-size:.7rem;}
+  .part.open .arr{transform:rotate(90deg);}
+  .part-body{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .part.open .part-body{max-height:360px;}
+  .part-inner{padding:4px 14px 14px;}
+  .en-tip{background:#e9f4f8;border-radius:8px;padding:7px 10px;font-weight:700;font-size:.88rem;color:var(--accent-deep);margin-bottom:8px;}
+  .part-inner .ar{font-size:.95rem;color:#3f4b43;font-weight:600;line-height:1.7;}
+
+  .ex{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .ex .q{font-family:'Fredoka';font-size:16px;font-weight:600;margin-bottom:10px;}
+  .pick{display:flex;gap:8px;flex-wrap:wrap;}
+  .pick button{position:relative;border:2px solid var(--line);background:#fff;border-radius:10px;padding:8px 16px;font:inherit;font-weight:800;font-size:.92rem;cursor:pointer;transition:.12s;}
+  .pick button:hover{border-color:var(--accent);}
+  .pick button.right{background:#dff0e9;border-color:var(--good);color:var(--good-deep);animation:pop .4s ease;}
+  .pick button.wrong{background:#fde3df;border-color:var(--red);color:#a82c22;animation:shake .3s ease;}
+  @keyframes pop{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .fb{margin-top:8px;font-weight:800;font-size:.88rem;min-height:18px;}
+
+  .chk{list-style:none;display:grid;gap:9px;margin:0 0 18px;}
+  .chk li{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.12s;}
+  .chk li .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #d4c9b2;color:transparent;display:grid;place-items:center;font-weight:900;transition:.12s;}
+  .chk li.done{background:#dff0e9;border-color:var(--good);}
+  .chk li.done .box{background:var(--good);border-color:var(--good);color:#fff;animation:pop .4s ease;}
+  .progress{background:#e6ddc7;border-radius:999px;height:16px;overflow:hidden;}
+  .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--good-deep),#6cc4a6);transition:width .4s;}
+  .p-text{text-align:center;font-weight:800;color:var(--ink-soft);margin-top:7px;font-size:.9rem;}
+  .stamp{margin:16px auto 0;max-width:280px;text-align:center;border:3px dashed #d4c9b2;border-radius:16px;padding:18px;opacity:.4;transition:.3s;transform:scale(.96);}
+  .stamp.win{opacity:1;border-color:var(--good);background:#f1fbf6;animation:stampPop .6s cubic-bezier(.2,.8,.2,1.4);}
+  @keyframes stampPop{0%{transform:scale(.4) rotate(-12deg);opacity:0;}60%{transform:scale(1.15) rotate(4deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+  .stamp .big{font-size:46px;} .stamp .lbl{font-family:'Fredoka';font-weight:700;color:var(--good-deep);font-size:1.2rem;margin-top:2px;}
+
+  footer{text-align:center;margin-top:18px;font-size:.82rem;color:#6b5f4e;font-weight:700;}
+
+  .confetti{position:fixed;top:-14px;width:10px;height:14px;border-radius:2px;z-index:9999;pointer-events:none;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(106vh) rotate(720deg);}}
+  .spark{position:absolute;pointer-events:none;font-size:14px;z-index:50;animation:sparkpop .7s ease forwards;}
+  @keyframes sparkpop{0%{opacity:0;transform:translate(0,0) scale(.4);}30%{opacity:1;}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.2);}}
+</style>
+</head>
+<body>
+
+<div class="room">
+  <!-- ════ DISTINCTIVE HEADER — window onto a scene ════ -->
+  <header class="win-head">
+    <span class="sun"></span>
+    <span class="bird">🕊️</span><span class="bird b2">🕊️</span>
+    <div class="hills"></div>
+    <div class="barV"></div>
+    <div class="barH"></div>
+    <div class="plate">
+      <span class="grade-tag">Grade 7 · Writing</span>
+      <h1>Through the Window</h1>
+      <div class="sub">🪟 Painting a place with words &amp; senses</div>
+      <div class="teacher">T. Wad Refae</div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="show('obj',this)">📌 Objectives</button>
+    <button class="tab-btn" onclick="show('model',this)">🪟 The View</button>
+    <button class="tab-btn" onclick="show('build',this)">✏️ Build It</button>
+    <button class="tab-btn" onclick="show('check',this)">✅ Checklist</button>
+  </nav>
+
+  <div class="inside">
+
+    <section id="tab-obj" class="panel active">
+      <h2 class="sh">📌 Lesson Objectives</h2>
+      <p class="hint ar">في نهاية الدرس، سيكون الطالب قادراً على: ✍️</p>
+      <ul class="obj-list">
+        <li><span class="num">1</span>Describe a place or a person using the <b>five senses</b>.</li>
+        <li><span class="num">2</span>Use <b>strong adjectives</b> (not just "nice / good").</li>
+        <li><span class="num">3</span>Add a <b>simile</b> (like / as … as) to paint a picture.</li>
+        <li><span class="num">4</span>Organise the description in a clear order.</li>
+      </ul>
+      <div class="mission">
+        <div class="ttl">🪟 Today's Mission</div>
+        <p class="ar" style="margin:0;font-weight:600">تخيّل أنّك تنظر من نافذة! 🪟 الكتابة الوصفية ترسم المشهد في ذهن القارئ. مهمتنا نستخدم <b>الحواس الخمس</b> و<b>الصفات القوية</b> و<b>التشبيه</b> لنجعل الوصف حيّاً كأنّ القارئ يراه.</p>
+      </div>
+    </section>
+
+    <section id="tab-model" class="panel">
+      <h2 class="sh">🪟 A Model Description</h2>
+      <p class="hint ar">اقرأ وصف السوق القديم، لاحظ ألوان الحواس، ثم اضغط على كل جزء 👇.</p>
+      <div class="senses">
+        <span class="sense-chip sc1">👁️ see</span>
+        <span class="sense-chip sc2">👂 hear</span>
+        <span class="sense-chip sc3">👃 smell</span>
+        <span class="sense-chip sc4">✋ touch</span>
+        <span class="sense-chip sc5">💪 strong adjective</span>
+      </div>
+      <div class="scene">
+        The old market is a <span class="s-adj">busy, colourful</span> place. I can <span class="s-see">see baskets of red apples and golden dates</span>. I can <span class="s-hear">hear sellers calling and children laughing</span>. The air <span class="s-smell">smells of fresh bread and mint</span>. The ground feels <span class="s-touch">warm and dusty</span> under my feet. The whole market is alive, <span class="s-adj">like a beating heart</span>.
+      </div>
+      <div class="parts">
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🖐️ Use the five senses</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">see, hear, smell, taste, touch — don&rsquo;t only say what you see.</div>
+            <p class="ar">لا تكتفِ بما <b>تراه</b>؛ استخدم الحواس الخمس: <em>see</em> (يرى)، <em>hear</em> (يسمع)، <em>smell</em> (يشمّ)، <em>taste</em> (يتذوّق)، <em>touch/feel</em> (يلمس). كلّما زادت الحواس، صار الوصف أحيا.</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>💪 Strong adjectives</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">Swap weak words for vivid ones: nice &rarr; peaceful, ancient, colourful.</div>
+            <p class="ar">استبدل الكلمات الضعيفة (<em>nice, good, big</em>) بصفات قويّة ودقيقة: <em>ancient</em> (قديم عريق)، <em>peaceful</em> (هادئ)، <em>colourful</em> (زاهي الألوان)، <em>huge</em> (ضخم).</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🎨 Similes — paint with "like / as"</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">as white as snow · like a golden carpet · as busy as a bee.</div>
+            <p class="ar">التشبيه يرسم صورة بمقارنة شيء بشيء: <em>as … as</em> أو <em>like</em>. أمثلة: <em>as white as snow</em> (أبيض كالثلج)، <em>like a golden carpet</em> (كبساط ذهبي).</p>
+          </div></div>
+        </div>
+        <div class="part" onclick="togglePart(this)">
+          <div class="part-tag"><span class="arr">▶</span>🗺️ Order your description</div>
+          <div class="part-body"><div class="part-inner">
+            <div class="en-tip">General first, then details — top to bottom, or near to far.</div>
+            <p class="ar">ابدأ بجملة عامة تقدّم المكان أو الشخص، ثم انتقل إلى التفاصيل بترتيب واضح: من الأعلى إلى الأسفل، أو من القريب إلى البعيد، حتى لا يتشتّت القارئ.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-build" class="panel">
+      <h2 class="sh">✏️ Paint the Picture</h2>
+      <p class="hint ar">اختر الخيار الذي يصنع وصفاً أحيا وأوضح 👇</p>
+      <div class="ex" data-answer="ancient"><div class="q">A stronger adjective for a very old castle:</div><div class="pick"><button onclick="pick(this,'nice')">nice</button><button onclick="pick(this,'ancient')">ancient</button><button onclick="pick(this,'big')">big</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="I can smell fresh bread."><div class="q">Which sentence uses a sense?</div><div class="pick"><button onclick="pick(this,'The shop is there.')">The shop is there.</button><button onclick="pick(this,'I can smell fresh bread.')">I can smell fresh bread.</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="as white as snow"><div class="q">Which one is a simile?</div><div class="pick"><button onclick="pick(this,'very white')">very white</button><button onclick="pick(this,'as white as snow')">as white as snow</button><button onclick="pick(this,'white')">white</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="She has kind, sparkling eyes."><div class="q">Better describing sentence for a person:</div><div class="pick"><button onclick="pick(this,'She is a girl.')">She is a girl.</button><button onclick="pick(this,'She has kind, sparkling eyes.')">She has kind, sparkling eyes.</button></div><div class="fb"></div></div>
+      <div class="ex" data-answer="hearing"><div class="q">"The music was loud." — this describes …</div><div class="pick"><button onclick="pick(this,'hearing')">hearing</button><button onclick="pick(this,'taste')">taste</button><button onclick="pick(this,'smell')">smell</button></div><div class="fb"></div></div>
+    </section>
+
+    <section id="tab-check" class="panel">
+      <h2 class="sh">✅ My Description Check</h2>
+      <p class="hint ar">اضغط على كل بند بعد ما تتأكد منه في كتابتك ✍️</p>
+      <ul class="chk" id="chkList">
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I described a place or a person.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I used more than one sense (see, hear, smell…).</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I used strong adjectives (not just nice/good).</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>I added a simile (like / as … as).</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>My description follows a clear order.</li>
+        <li onclick="toggleChk(this)"><span class="box">✓</span>Capital letters and full stops are correct.</li>
+      </ul>
+      <div class="progress"><div class="fill" id="pFill"></div></div>
+      <div class="p-text" id="pText">0 / 6</div>
+      <div class="stamp" id="stamp"><div class="big">🪟</div><div class="lbl">Vivid View!</div></div>
+    </section>
+
+  </div><!-- /inside -->
+  <footer>Prepared with care 🌸 by T. Wad Refae</footer>
+</div>
+
+<script>
+  function show(id,btn){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active');
+  }
+  function togglePart(el){ el.classList.toggle('open'); }
+  function sparkle(el){
+    const marks=['✨','🎨','⭐','🖌️'];
+    for(let i=0;i<5;i++){
+      const s=document.createElement('span'); s.className='spark'; s.textContent=marks[i%marks.length];
+      const r=el.getBoundingClientRect(); s.style.left=(r.width/2)+'px'; s.style.top='4px';
+      s.style.setProperty('--dx',(Math.random()*80-40)+'px'); s.style.setProperty('--dy',(-30-Math.random()*40)+'px');
+      el.appendChild(s); setTimeout(()=>s.remove(),700);
+    }
+  }
+  function celebrate(){
+    const cols=['#2b7a9e','#d76a8a','#2f8a6b','#ffd66b','#8a5a34','#5c3d9a'];
+    for(let i=0;i<40;i++){
+      const c=document.createElement('div'); c.className='confetti';
+      c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+      c.style.animationDuration=(1.6+Math.random()*1.4)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
+      c.style.transform='rotate('+(Math.random()*360)+'deg)';
+      document.body.appendChild(c); setTimeout(()=>c.remove(),3200);
+    }
+  }
+  let buildCelebrated=false;
+  function pick(btn,val){
+    const ex=btn.closest('.ex'); const ans=ex.dataset.answer; const fb=ex.querySelector('.fb');
+    ex.querySelectorAll('.pick button').forEach(b=>b.classList.remove('right','wrong'));
+    if(val===ans){
+      btn.classList.add('right'); fb.textContent='✅ Beautiful — the picture comes alive!'; fb.style.color='#216a52'; sparkle(btn);
+      const all=[...document.querySelectorAll('.ex')];
+      if(!buildCelebrated && all.every(e=>e.querySelector('.pick button.right'))){ buildCelebrated=true; celebrate(); }
+    } else { btn.classList.add('wrong'); fb.textContent='❌ Which choice helps the reader SEE it? Try again.'; fb.style.color='#a82c22'; }
+  }
+  const KEY='write-g7-describe-done';
+  const items=[...document.querySelectorAll('#chkList li')];
+  let wasComplete=false;
+  function refresh(){
+    const done=items.filter(i=>i.classList.contains('done')).length;
+    document.getElementById('pFill').style.width=(done/items.length*100)+'%';
+    document.getElementById('pText').textContent=done+' / '+items.length;
+    const stamp=document.getElementById('stamp');
+    if(done===items.length){ stamp.classList.add('win'); localStorage.setItem(KEY,'1'); if(!wasComplete){ wasComplete=true; celebrate(); } }
+    else { stamp.classList.remove('win'); wasComplete=false; }
+  }
+  function toggleChk(li){ li.classList.toggle('done'); refresh(); }
+  if(localStorage.getItem(KEY)==='1'){ items.forEach(i=>i.classList.add('done')); wasComplete=true; refresh(); }
+</script>
+</body>
+</html>
