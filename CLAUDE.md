@@ -50,7 +50,7 @@ All grammar lessons in `/grammar/` must follow this **student-journey** model. B
 
 Writing lessons live in `/writing/` and are listed in `writing/index.html` (the hub: header + grade 5–9 filter + preview). They also appear in the live app `palbook-live` under **General → Writing** (add each new lesson to `src/data/writingLessons.js` there). The teacher gave explicit permission to push **palbook-live to `main`** for the writing section so it deploys live.
 
-**Tab template (5 tabs, NO quiz):**
+**Tab template (4 tabs, NO quiz, NO worksheet tab):**
 
 | # | Tab | Emoji | Purpose |
 |---|-----|-------|---------|
@@ -58,10 +58,11 @@ Writing lessons live in `/writing/` and are listed in `writing/index.html` (the 
 | 2 | Model / Look | 📖 | Annotated model text — each part opens on click with an English tip + Arabic explanation (like the formal-letter "Letter Guide"). |
 | 3 | Build It | ✏️ | Guided construction — word banks, sentence frames, levelled practice with instant feedback. |
 | 4 | Checklist | ✅ | Tappable self-check + progress bar — **this replaces the quiz** (live grading is hard). |
-| 5 | Worksheet | 📝 | Placeholder tab holding a `<!-- WORKSHEET-LINK -->` comment; the teacher drops the printable worksheet (Drive/PDF) link here later. |
+
+**No Worksheet tab (teacher's rule, 2026-07):** the per-lesson Worksheet placeholder tab was removed from all writing lessons — printables will get their own dedicated section later instead of a tab per lesson. Do not add a Worksheet tab to new writing lessons.
 
 ### Writing lesson rules
-- **NO quiz.** Writing is assessed by the printable worksheet (uploaded later) + the self-check Checklist. Never add a scored quiz to a writing lesson.
+- **NO quiz.** Writing is assessed by the self-check Checklist (printables will move to a future dedicated Printables section, not a per-lesson tab). Never add a scored quiz to a writing lesson.
 - **The theme must wrap the WHOLE page — immersive, not just a themed header + plain tabs.** Build each lesson as a single themed "object": a thematic full-page background/environment + a framed container whose frame motif IS the theme, with header, tabs and panels living inside it. Reference standard: the formal-letter envelope (`grade8/unit12p12.html`), the Past Simple **film reel** (sprocket holes on both edges + clapperboard), and the Posters **notice board** (wooden posts + screws). Header, tab style, and panels all match the theme.
 - **Always give MAXIMUM effort on layout** — every writing lesson is a polished, immersive showpiece, not a quick template fill.
 - **The HEADER must NEVER be ordinary/traditional** (teacher's emphasised standing rule, applies to ALL lessons). It is the very first thing that grabs the student's attention, so make it a bold, distinctive, theme-driven hero (e.g. a clapperboard, a CASE FILE with a CONFIDENTIAL stamp & magnifier, an airmail envelope with stamp & postmark, a locked diary cover). Never reuse a header design between lessons.
