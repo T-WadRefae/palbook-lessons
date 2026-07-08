@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>used to — PalBook Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --sky:#b45309;--sky-d:#78350f;--sky-l:#fef6ec;--sun:#0d9488;
+  --txt:#1e293b;--muted:#78716c;--white:#fff;--rad:14px;
+  --shadow:0 4px 18px rgba(180,83,9,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#fef6ec;color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif}
+.hdr{background:linear-gradient(135deg,var(--sky-d) 0%,var(--sky) 55%,#f59e0b 100%);color:#fff;padding:24px 16px 0;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'⏮️';font-size:120px;opacity:.08;position:absolute;top:-6px;right:-8px;line-height:1}
+.hdr h1{font-family:'Fredoka One',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.chip{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.82rem;backdrop-filter:blur(4px)}
+.prog-wrap{background:rgba(0,0,0,.2);height:6px;border-radius:3px;margin:0 16px}
+.prog-fill{height:100%;background:var(--sun);border-radius:3px;transition:width .4s}
+.tab-bar{display:flex;gap:6px;padding:12px 12px 0;background:var(--sky-d);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex:0 0 auto;background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:10px 10px 0 0;padding:8px 14px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.tab.active,.tab:hover{background:var(--white);color:var(--sky-d)}
+.panels{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+.panel{display:none}.panel.on{display:block}
+.card{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.card-title{font-family:'Fredoka One',sans-serif;font-size:1.3rem;color:var(--sky-d);margin-bottom:10px}
+.card-sub{color:var(--muted);font-size:.9rem;margin-bottom:14px}
+.q-inst{border-right:5px solid var(--sky);background:var(--sky-l);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0 10px;font-size:.95rem;direction:rtl;text-align:right;color:var(--sky-d)}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.opt{background:#f1f5f9;border:2px solid #e2e8f0;border-radius:10px;padding:9px 18px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:600;transition:all .2s}
+.opt:hover:not(:disabled){background:var(--sky-l);border-color:var(--sky)}
+.opt.ok{background:#dcfce7;border-color:#16a34a;color:#14532d}
+.opt.err{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.opt:disabled{cursor:default}
+.fb-wrap{display:none;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.9rem}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#dcfce7;border-left:4px solid #16a34a}
+.fb-wrap.err{background:#fee2e2;border-left:4px solid #dc2626}
+.fb-en{font-weight:700;margin-bottom:4px}
+.fb-ar{direction:rtl;text-align:right;font-size:.88rem;opacity:.85}
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;padding:12px;background:#f8fafc;border-radius:10px;border:2px dashed #cbd5e1;min-height:48px}
+.wb-chip{background:var(--sky-l);border:2px solid var(--sky);color:var(--sky-d);border-radius:20px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:.88rem;transition:all .2s;user-select:none}
+.wb-chip.used{opacity:.35;pointer-events:none}
+.wb-chip.sel{background:var(--sky);color:#fff;transform:scale(1.05)}
+.blank{display:inline-block;min-width:110px;border-bottom:2.5px solid var(--sky);padding:2px 8px;text-align:center;cursor:pointer;border-radius:4px;margin:0 4px;font-weight:700;color:var(--sky-d);transition:background .2s}
+.blank:hover:not(.filled){background:var(--sky-l)}
+.blank.filled{border-color:#16a34a;color:#15803d;background:#f0fdf4}
+.fill-line{line-height:2.4;margin:8px 0;font-size:.92rem}
+.type-inp{border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-family:'Nunito',sans-serif;font-size:.88rem;width:170px;margin:4px 6px;transition:border-color .2s}
+.type-inp:focus{outline:none;border-color:var(--sky)}
+.type-inp.ok{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.type-inp.err{border-color:#dc2626;background:#fef2f2;color:#991b1b}
+.check-btn{background:var(--sky);color:#fff;border:none;border-radius:10px;padding:9px 22px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;margin-top:10px;transition:background .2s}
+.check-btn:hover{background:var(--sky-d)}
+.lvl-done{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #16a34a;border-radius:12px;padding:14px;text-align:center;display:none;margin-top:14px}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.tn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:520px){.tn-grid{grid-template-columns:1fr}}
+.tn-box{border-radius:12px;padding:14px;font-size:.92rem}
+.tn-then{background:#f5ede0;border:2px solid #d6a860}
+.tn-now{background:#e6faf6;border:2px solid #5eead4}
+.tn-box .tn-h{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.tn-then .tn-h{color:#92400e}.tn-now .tn-h{color:#0f766e}
+.tn-box .tn-sent{line-height:1.7}
+.hl-u{font-weight:800;color:#b45309}.hl-n{font-weight:800;color:#0d9488}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+.fc{perspective:600px;cursor:pointer;height:140px}
+.fc-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s;position:relative}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--sky-l),#fff);border:2px solid var(--sky)}
+.fc-back{background:linear-gradient(135deg,var(--sky),#f59e0b);color:#fff;transform:rotateY(180deg)}
+.fc-front .word{font-size:.95rem;font-weight:800;color:var(--sky-d);margin-top:6px;line-height:1.2}
+.fc-front .emoji{font-size:1.8rem}
+.fc-back .ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;font-weight:700}
+.fc-back .syn{font-size:.75rem;opacity:.85;margin-top:6px;line-height:1.4}
+.tts-btn{background:rgba(180,83,9,.12);border:none;border-radius:20px;padding:3px 10px;font-size:.78rem;cursor:pointer;color:var(--sky-d);margin-top:6px;font-family:'Nunito',sans-serif;font-weight:600}
+.speak-prompt{background:var(--sky-l);border-left:4px solid var(--sky);border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:.9rem}
+.speak-prompt strong{color:var(--sky-d)}
+.write-area{width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:12px;font-family:'Nunito',sans-serif;font-size:.9rem;min-height:110px;resize:vertical;transition:border-color .2s}
+.write-area:focus{outline:none;border-color:var(--sky)}
+.quiz-q{background:#fff;border:2px solid #f1f5f9;border-radius:12px;padding:16px;margin:12px 0;transition:border-color .2s}
+.quiz-q.answered-ok{border-color:#16a34a;background:#f0fdf4}
+.quiz-q.answered-err{border-color:#dc2626;background:#fef2f2}
+.q-num{font-family:'Fredoka One',sans-serif;color:var(--sky);font-size:1rem;margin-bottom:8px}
+.quiz-score{background:linear-gradient(135deg,var(--sky-l),#fde9c8);border:3px solid var(--sky);border-radius:16px;padding:22px;text-align:center;display:none;margin-top:18px}
+.quiz-score.show{display:block;animation:popIn .5s ease}
+.score-num{font-family:'Fredoka One',sans-serif;font-size:3rem;color:var(--sky)}
+.badge-earned{font-size:3.5rem;display:block;margin:10px 0;animation:bounce .6s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.star-fly{position:fixed;pointer-events:none;font-size:1.5rem;z-index:9999;animation:floatStar .9s ease forwards}
+@keyframes floatStar{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-80px) scale(1.5);opacity:0}}
+.confetti-p{position:fixed;pointer-events:none;width:8px;height:8px;z-index:9998;border-radius:2px;animation:confFall 1.2s ease forwards}
+@keyframes confFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s ease}
+.hint-ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right;font-size:.92rem;background:#fff8dc;border-right:4px solid #f59e0b;padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0;color:#78350f}
+.divider{height:2px;background:linear-gradient(to right,var(--sky-l),var(--sky),var(--sky-l));border:none;margin:18px 0;border-radius:1px}
+.lbl{font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+.note{border-radius:0 10px 10px 0;padding:12px 16px;font-size:.9rem;margin:10px 0}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:.82rem}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--sky);border-radius:3px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <p style="font-size:.8rem;opacity:.7;letter-spacing:1px;text-transform:uppercase">Grammar • English for Palestine</p>
+  <h1>used to ⏮️</h1>
+  <p class="ar" style="font-size:1rem;margin-top:4px">عادات الماضي — «كنّا نفعل… لكن لم نعد»</p>
+  <div class="chips">
+    <span class="chip">🎯 Grades 7 &amp; 8</span>
+    <span class="chip">⏱️ ~35 min</span>
+    <span class="chip">⏮️ Then vs Now</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="go(0)">🚀 Start</button>
+  <button class="tab" onclick="go(1)">📚 Words</button>
+  <button class="tab" onclick="go(2)">🔍 Discover</button>
+  <button class="tab" onclick="go(3)">🧠 Grammar</button>
+  <button class="tab" onclick="go(4)">✏️ Practice</button>
+  <button class="tab" onclick="go(5)">🗣️ Create</button>
+  <button class="tab" onclick="go(6)">🎯 Quiz</button>
+</div>
+
+<div class="panels">
+
+<!-- TAB 1 — START -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <div class="card-title">🚀 Then vs Now</div>
+    <div class="card-sub">We use "used to" for habits and situations that were true in the past — but not any more.</div>
+
+    <div class="tn-grid" style="margin-top:14px">
+      <div class="tn-box tn-then"><div class="tn-h">⏮️ Then (past)</div><div class="tn-sent">I <span class="hl-u">used to walk</span> to school.</div></div>
+      <div class="tn-box tn-now"><div class="tn-h">▶️ Now</div><div class="tn-sent">But now I <span class="hl-n">take</span> the bus.</div></div>
+    </div>
+
+    <div class="hint-ar">«used to» تصف عادةً أو حالةً كانت صحيحة في الماضي وتوقّفت. المعنى: كان يفعل… لكنه لم يعد يفعل الآن. لنكتشف الشكل!</div>
+
+    <hr class="divider"/>
+    <p class="lbl">Warm-up — Choose the right form</p>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> When I was young, I ___ cartoons every morning. (past habit, stopped)</p>
+    <div class="opts" id="s1opts">
+      <button class="opt" onclick="sc('s1','s1fb',this,true,'Correct! used to + base verb = a past habit that stopped.','صحيح! used to + الفعل المصدري = عادة ماضية توقّفت.')">used to watch</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Use to (without -d) is only after did/didn\'t — here we need used to.','use to بدون d تأتي بعد did فقط — هنا نحتاج used to.')">use to watch</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Am used to = accustomed — a different meaning. Here we mean a past habit.','am used to = معتاد على — معنى آخر. هنا نقصد عادة ماضية.')">am used to watch</button>
+    </div>
+    <div class="fb-wrap" id="s1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> ___ you ___ play in that park? (past habit question)</p>
+    <div class="opts" id="s2opts">
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'\"Did you used to\" keeps the -d — after did we drop it: use to.','\"Did you used to\" خطأ — بعد did نحذف d: use to.')">Did … used to</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,true,'Correct! Question = Did + subject + use to + base (no -d after did).','صحيح! السؤال = Did + الفاعل + use to + الفعل (بلا d بعد did).')">Did … use to</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'\"Do you use to\" is present — used to is always about the past.','\"Do you use to\" مضارع — used to دائمًا عن الماضي.')">Do … use to</button>
+    </div>
+    <div class="fb-wrap" id="s2fb"></div>
+  </div>
+</div>
+
+<!-- TAB 2 — WORDS -->
+<div class="panel" id="p1">
+  <div class="card">
+    <div class="card-title">📚 Key Vocabulary</div>
+    <div class="card-sub">Click a card to flip it. 🔊 to hear the word.</div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📌 The Three Forms — at a Glance</div>
+    <div class="hint-ar">ملخّص الأشكال الثلاثة قبل الاكتشاف.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+      <div class="tn-box tn-then"><div class="tn-h">➕ Positive</div><div class="tn-sent">I <b>used to</b> + base &nbsp;→&nbsp; <em>She used to live in Gaza.</em></div></div>
+      <div class="tn-box tn-then"><div class="tn-h">➖ Negative</div><div class="tn-sent">I <b>didn't use to</b> + base &nbsp;→&nbsp; <em>He didn't use to like tea.</em></div></div>
+      <div class="tn-box tn-then"><div class="tn-h">❓ Question</div><div class="tn-sent"><b>Did … use to</b> + base? &nbsp;→&nbsp; <em>Did you use to play football?</em></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3 — DISCOVER -->
+<div class="panel" id="p2">
+  <div class="card">
+    <div class="card-title">🔍 What Changed?</div>
+    <div class="card-sub">Compare "then" and "now". What form follows "used to"?</div>
+    <div class="hint-ar">قارن الماضي بالحاضر. ما الفعل الذي يأتي بعد used to؟ وهل يتغيّر مع الضمائر؟</div>
+
+    <div class="tn-grid" style="margin-top:14px">
+      <div class="tn-box tn-then"><div class="tn-h">Then</div><div class="tn-sent">She <strong style="color:#b45309">used to have</strong> [used to + base] long hair.</div></div>
+      <div class="tn-box tn-now"><div class="tn-h">Now</div><div class="tn-sent">Now she <strong style="color:#0d9488">has</strong> short hair.</div></div>
+    </div>
+    <div class="tn-grid">
+      <div class="tn-box tn-then"><div class="tn-h">Then</div><div class="tn-sent">They <strong style="color:#b45309">used to live</strong> in a village.</div></div>
+      <div class="tn-box tn-now"><div class="tn-h">Now</div><div class="tn-sent">Now they <strong style="color:#0d9488">live</strong> in the city.</div></div>
+    </div>
+
+    <div style="background:#fef6ec;border:2px solid #fed7aa;border-radius:12px;padding:14px;margin-top:14px;font-size:.88rem">
+      <strong>💡 Notice:</strong> the verb after <b>used to</b> is always the <b>base form</b> (no -s, no -ed) — and it's the same for <em>I, you, he, she, we, they</em>.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 Now You Discover!</div>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> "He used to ___ a bike." — which verb form is correct?</p>
+    <div class="opts" id="d1opts">
+      <button class="opt" onclick="sc('d1','d1fb',this,true,'Correct! used to + base verb (ride) — no -s, no -ed.','صحيح! used to + الفعل المصدري (ride) — بلا s وبلا ed.')">ride</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Rides adds -s — after used to we use the base verb.','rides فيها s — بعد used to نستخدم الفعل المجرّد.')">rides</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Rode is past — used to already shows the past, so keep the base.','rode ماضٍ — used to تدلّ على الماضي، فنبقي الفعل مجرّدًا.')">rode</button>
+    </div>
+    <div class="fb-wrap" id="d1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> Negative: "We ___ eat fast food." (but we didn't, in the past)</p>
+    <div class="opts" id="d2opts">
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'\"usedn\'t\" is very old/rare — the normal negative is didn\'t use to.','\"usedn\'t\" نادرة جدًا — النفي المعتاد didn\'t use to.')">usedn't to</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,true,'Correct! Negative = didn\'t use to + base (drop the -d after did).','صحيح! النفي = didn\'t use to + الفعل (نحذف d بعد did).')">didn't use to</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'\"didn\'t used to\" keeps the -d — after didn\'t it becomes use to.','\"didn\'t used to\" خطأ — بعد didn\'t تصبح use to.')">didn't used to</button>
+    </div>
+    <div class="fb-wrap" id="d2fb"></div>
+
+    <div style="background:linear-gradient(135deg,var(--sky-l),#fde9c8);border:2.5px solid var(--sky);border-radius:12px;padding:16px;text-align:center;margin-top:16px">
+      <div style="font-family:'Fredoka One',sans-serif;color:var(--sky-d);font-size:1.1rem;margin-bottom:8px">⭐ The Pattern</div>
+      <p style="font-size:.93rem;line-height:1.9">➕ <strong>used to</strong> + base &nbsp;·&nbsp; ➖ <strong>didn't use to</strong> + base &nbsp;·&nbsp; ❓ <strong>Did … use to</strong> + base?</p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4 — GRAMMAR -->
+<div class="panel" id="p3">
+  <div class="card">
+    <div class="card-title">🧠 The Full Rule</div>
+    <div class="hint-ar">القاعدة الكاملة لـ used to مع الأمثلة.</div>
+    <div style="background:#fef6ec;border:3px solid #f59e0b;border-radius:14px;padding:16px;margin:12px 0;text-align:center">
+      <div style="font-size:1.05rem;font-weight:800;color:var(--sky-d);line-height:2">
+        ➕ used to + <span style="color:#b45309">base verb</span><br>
+        ➖ didn't use to + <span style="color:#b45309">base verb</span><br>
+        ❓ Did + subject + use to + <span style="color:#b45309">base verb</span>?
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="tn-box tn-then"><div class="tn-sent">I <b>used to be</b> afraid of the dark. <em style="color:var(--muted);font-size:.8rem">(a past state)</em></div></div>
+      <div class="tn-box tn-then"><div class="tn-sent">We <b>used to play</b> in the street every evening. <em style="color:var(--muted);font-size:.8rem">(a past habit)</em></div></div>
+      <div class="tn-box tn-then"><div class="tn-sent"><b>Did</b> you <b>use to</b> collect stamps?</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Important Notes</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin:12px 0">
+      <div class="note" style="background:#fffbeb;border-left:4px solid #f59e0b">
+        ⚠️ <strong>After did/didn't → use to</strong> (drop the -d):<br>
+        ✗ Did you <u>used</u> to… &nbsp;|&nbsp; ✓ Did you <strong>use</strong> to…<br>
+        ✗ I didn't <u>used</u> to… &nbsp;|&nbsp; ✓ I didn't <strong>use</strong> to…
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">بعد did/didn't نحذف الـ d فتصبح use to.</span>
+      </div>
+      <div class="note" style="background:#f0fdf4;border-left:4px solid #16a34a">
+        ✅ <strong>Same for all subjects</strong> — no -s, no -ed on the main verb:<br>
+        I / you / he / she / we / they <strong>used to</strong> <em>go</em>.
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">الشكل نفسه مع كل الضمائر، والفعل يبقى مجرّدًا.</span>
+      </div>
+      <div class="note" style="background:#eef7ff;border-left:4px solid #60a5fa">
+        💡 <strong>used to</strong> (past habit) ≠ <strong>be used to</strong> (accustomed):<br>
+        "I <b>used to</b> live here." (past) &nbsp;·&nbsp; "I <b>am used to</b> the noise." (I'm accustomed to it now)
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">used to = عادة ماضية، أمّا be used to = معتاد على (الآن).</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5 — PRACTICE -->
+<div class="panel" id="p4">
+  <div class="card">
+    <div class="card-title">✏️ Level 1 — Choose the Form</div>
+    <div class="hint-ar">اختر الشكل الصحيح لكل جملة.</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> My grandfather ___ tell us stories at night.</p>
+    <div class="opts" id="l1q1opts">
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,true,'Correct! used to + base (tell).','صحيح! used to + الفعل المصدري (tell).')">used to</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'\"use to\" without -d is only after did/didn\'t.','\"use to\" بلا d تأتي بعد did فقط.')">use to</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'\"is used to\" = accustomed — here it is a past habit.','\"is used to\" = معتاد — لكن هنا عادة ماضية.')">is used to</button>
+    </div>
+    <div class="fb-wrap" id="l1q1fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> ___ your family ___ live near the sea?</p>
+    <div class="opts" id="l1q2opts">
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'After Did, drop the -d: use to (not used to).','بعد Did نحذف d: use to وليس used to.')">Did … used to</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,true,'Correct! Did + subject + use to + base.','صحيح! Did + الفاعل + use to + الفعل.')">Did … use to</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Do is present — used to is about the past.','Do مضارع — used to عن الماضي.')">Do … use to</button>
+    </div>
+    <div class="fb-wrap" id="l1q2fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>3)</strong> She used to ___ very shy, but now she is confident.</p>
+    <div class="opts" id="l1q3opts">
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,true,'Correct! used to + base (be).','صحيح! used to + الفعل المصدري (be).')">be</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'\"was\" is past — after used to use the base form: be.','\"was\" ماضٍ — بعد used to نستخدم الفعل المجرّد: be.')">was</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'\"is\" is present — used to is about the past.','\"is\" مضارع — used to عن الماضي.')">is</button>
+    </div>
+    <div class="fb-wrap" id="l1q3fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>4)</strong> I ___ like vegetables when I was a child.</p>
+    <div class="opts" id="l1q4opts">
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'\"didn\'t used to\" keeps the -d — it should be use to.','\"didn\'t used to\" خطأ — الصواب use to.')">didn't used to</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,true,'Correct! didn\'t use to + base.','صحيح! didn\'t use to + الفعل.')">didn't use to</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'\"don\'t use to\" is present — used to is about the past.','\"don\'t use to\" مضارع — used to عن الماضي.')">don't use to</button>
+    </div>
+    <div class="fb-wrap" id="l1q4fb"></div>
+
+    <div class="lvl-done" id="l1done">🎉 Level 1 done! You know the three forms!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 2 — Fill with the Word Bank</div>
+    <div class="hint-ar">اضغط على الكلمة ثم اضغط على الفراغ لوضعها.</div>
+    <div class="wb-chips" id="wb2chips">
+      <span class="wb-chip" onclick="pickWb(this,'used to')">used to</span>
+      <span class="wb-chip" onclick="pickWb(this,'didn't use to')">didn't use to</span>
+      <span class="wb-chip" onclick="pickWb(this,'Did')">Did</span>
+      <span class="wb-chip" onclick="pickWb(this,'use to')">use to</span>
+      <span class="wb-chip" onclick="pickWb(this,'be')">be</span>
+    </div>
+    <div style="margin:12px 0">
+      <div class="fill-line">1) We <span class="blank" id="wb2b1" onclick="dropWb('wb2b1')">______</span> visit our grandparents every Friday.</div>
+      <div class="fill-line">2) He <span class="blank" id="wb2b2" onclick="dropWb('wb2b2')">______</span> like coffee, but now he loves it.</div>
+      <div class="fill-line">3) <span class="blank" id="wb2b3" onclick="dropWb('wb2b3')">______</span> you use to walk to school?</div>
+      <div class="fill-line">4) Did they <span class="blank" id="wb2b4" onclick="dropWb('wb2b4')">______</span> live in Nablus?</div>
+      <div class="fill-line">5) There used to <span class="blank" id="wb2b5" onclick="dropWb('wb2b5')">______</span> a big tree here.</div>
+    </div>
+    <button class="check-btn" onclick="checkWb2()">Check ✓</button>
+    <div class="fb-wrap" id="wb2fb"></div>
+    <div class="lvl-done" id="l2done">🎉 Level 2 done! Great work!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 3 — Write the Correct Form</div>
+    <div class="hint-ar">اكتب الشكل الصحيح (used to / didn't use to / use to + الفعل).</div>
+    <div style="margin:10px 0">
+      <div class="fill-line">1) I <input class="type-inp" id="l3i1" placeholder="(play) football"> when I was ten. <em style="font-size:.78rem;color:var(--muted)">(used to + base)</em></div>
+      <div class="fill-line">2) She <input class="type-inp" id="l3i2" placeholder="(not / wear) glasses"> . <em style="font-size:.78rem;color:var(--muted)">(didn't use to + base)</em></div>
+      <div class="fill-line">3) <input class="type-inp" id="l3i3" placeholder="(you) like"> milk as a child? <em style="font-size:.78rem;color:var(--muted)">(Did … use to)</em></div>
+      <div class="fill-line">4) This street <input class="type-inp" id="l3i4" placeholder="(be) very quiet"> . <em style="font-size:.78rem;color:var(--muted)">(used to + base)</em></div>
+    </div>
+    <button class="check-btn" onclick="checkL3()">Check ✓</button>
+    <div class="fb-wrap" id="l3fb"></div>
+    <div class="lvl-done" id="l3done">🎉 Level 3 done! Excellent forms!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 4 — Spot and Fix the Mistake</div>
+    <div class="hint-ar">كل جملة فيها خطأ. اختر الجملة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>&nbsp;Did you used to live here?</p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q1opts">
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,true,'Correct! After Did, drop the -d → use to.','صحيح! بعد Did نحذف d ← use to.')">Did you use to live here?</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Do is present — used to is about the past.','Do مضارع — used to عن الماضي.')">Do you use to live here?</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'This still keeps used after Did — wrong.','لا تزال used بعد Did — خطأ.')">Did you used to lived here?</button>
+    </div>
+    <div class="fb-wrap" id="l4q1fb"></div>
+
+    <hr class="divider"/>
+    <p style="font-size:.95rem;margin-bottom:8px"><span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>&nbsp;She used to played the piano.</p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q2opts">
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'\"used to plays\" adds -s — after used to use the base verb.','\"used to plays\" فيها s — بعد used to نستخدم الفعل المجرّد.')">She used to plays the piano.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,true,'Correct! used to + base verb (play), never past or -s.','صحيح! used to + الفعل المصدري (play)، لا ماضٍ ولا s.')">She used to play the piano.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'\"use to\" (no -d) is only after did — the positive keeps used to.','\"use to\" بلا d تأتي بعد did فقط — المثبت used to.')">She use to play the piano.</button>
+    </div>
+    <div class="fb-wrap" id="l4q2fb"></div>
+
+    <div class="lvl-done" id="l4done">🏆 All 4 levels done! You are a "used to" champion!</div>
+  </div>
+</div>
+
+<!-- TAB 6 — CREATE -->
+<div class="panel" id="p5">
+  <div class="card">
+    <div class="card-title">🗣️ Speaking — When I Was Younger</div>
+    <div class="hint-ar">تحدّث عن عاداتك القديمة وكيف تغيّرت.</div>
+    <div class="speak-prompt"><strong>Round 1 — Habits:</strong> 👉 <em>When I was little, I used to ___ , but now I ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 2 — Places:</strong> 👉 <em>My family used to live in ___ . / Our town used to have ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 3 — You &amp; food:</strong> 👉 <em>I didn't use to like ___ , but now I love it.</em></div>
+    <div class="speak-prompt"><strong>Round 4 — Ask a partner:</strong> <em>Did you use to …?</em> Ask 3 questions about their childhood!</div>
+  </div>
+  <div class="card">
+    <div class="card-title">✍️ Writing — Then and Now</div>
+    <div class="hint-ar">اكتب فقرة تقارن حياتك أو مدينتك في الماضي بالحاضر.</div>
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:14px;margin:10px 0;font-size:.88rem">
+      <p style="font-weight:700;margin-bottom:6px">📌 Your paragraph must include:</p>
+      <ul style="margin-left:16px;line-height:1.9">
+        <li>At least <strong>three</strong> "used to" sentences</li>
+        <li>One <strong>negative</strong> (didn't use to)</li>
+        <li>One contrast with "but now …"</li>
+      </ul>
+    </div>
+    <textarea class="write-area" placeholder="When I was a child, life was different. I used to walk to school with my cousins, and we used to play in the fields all afternoon. I didn't use to have a phone, so I used to read many books. Our town used to be very small, but now it has grown a lot. I miss those days!"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-title">💬 Challenge — Complete the Sentences</div>
+    <div class="hint-ar">أكمل هذه الجمل بأفكارك الخاصة.</div>
+    <div style="background:#fef6ec;border:2px solid #fed7aa;border-radius:10px;padding:14px;margin:10px 0;font-size:.9rem">
+      <ol style="margin-left:16px;line-height:2.2">
+        <li>People used to … before mobile phones.</li>
+        <li>I didn't use to … , but now I do.</li>
+        <li>Did you use to … ?</li>
+      </ol>
+    </div>
+    <textarea class="write-area" placeholder="1) People used to write letters and wait weeks for a reply.&#10;2) I didn't use to help at home, but now I cook and clean.&#10;3) Did you use to be afraid of dogs?"></textarea>
+  </div>
+</div>
+
+<!-- TAB 7 — QUIZ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <div class="card-title">🎯 Quick Check — 5 Questions</div>
+    <div class="hint-ar">أجب على الأسئلة الخمسة ثم اضغط "Check My Score".</div>
+
+    <div class="quiz-q" id="qq1">
+      <div class="q-num">Question 1 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">When I was young, I ___ a lot of sweets.</p>
+      <div class="opts" id="qq1opts">
+        <button class="opt" onclick="qsc(1,this,'a',event)">used to eat</button>
+        <button class="opt" onclick="qsc(1,this,'b',event)">used to ate</button>
+        <button class="opt" onclick="qsc(1,this,'c',event)">use to eat</button>
+      </div>
+      <div class="fb-wrap" id="qq1fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq2">
+      <div class="q-num">Question 2 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">___ he ___ play the guitar?</p>
+      <div class="opts" id="qq2opts">
+        <button class="opt" onclick="qsc(2,this,'a',event)">Did … used to</button>
+        <button class="opt" onclick="qsc(2,this,'b',event)">Did … use to</button>
+        <button class="opt" onclick="qsc(2,this,'c',event)">Do … use to</button>
+      </div>
+      <div class="fb-wrap" id="qq2fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq3">
+      <div class="q-num">Question 3 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">"used to" is used for …</p>
+      <div class="opts" id="qq3opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(3,this,'a',event)">past habits/states that stopped</button>
+        <button class="opt" onclick="qsc(3,this,'b',event)">actions happening right now</button>
+        <button class="opt" onclick="qsc(3,this,'c',event)">future plans</button>
+      </div>
+      <div class="fb-wrap" id="qq3fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq4">
+      <div class="q-num">Question 4 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Which sentence is correct?</p>
+      <div class="opts" id="qq4opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(4,this,'a',event)">I didn't used to like it.</button>
+        <button class="opt" onclick="qsc(4,this,'b',event)">I didn't use to like it.</button>
+        <button class="opt" onclick="qsc(4,this,'c',event)">I don't used to like it.</button>
+      </div>
+      <div class="fb-wrap" id="qq4fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq5">
+      <div class="q-num">Question 5 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">There ___ a cinema in our town, but it closed.</p>
+      <div class="opts" id="qq5opts">
+        <button class="opt" onclick="qsc(5,this,'a',event)">used to be</button>
+        <button class="opt" onclick="qsc(5,this,'b',event)">used to been</button>
+        <button class="opt" onclick="qsc(5,this,'c',event)">uses to be</button>
+      </div>
+      <div class="fb-wrap" id="qq5fb"></div>
+    </div>
+
+    <button class="check-btn" style="margin-top:16px;width:100%;font-size:1rem" onclick="calcQuiz()">📊 Check My Score</button>
+    <div class="quiz-score" id="quizScore">
+      <div class="score-num" id="scoreTxt"></div>
+      <p id="scoreMsg" style="font-size:1rem;margin:6px 0"></p>
+      <span class="badge-earned" id="badgeIcon">⏮️</span>
+      <p id="badgeMsg" style="font-size:.85rem;color:var(--muted)"></p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+const prog=document.getElementById('progFill');
+function go(i){
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  prog.style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function launchStar(x,y){
+  const el=document.createElement('div');el.className='star-fly';
+  el.textContent=['⭐','✨','💫','🌟'][Math.floor(Math.random()*4)];
+  el.style.cssText=`left:${x}px;top:${y}px`;document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
+}
+function confetti(){
+  const colors=['#b45309','#0d9488','#ec4899','#16a34a','#f59e0b','#f97316'];
+  for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-p';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[i%colors.length]};animation-delay:${Math.random()*.8}s;animation-duration:${1+Math.random()}s`;
+    document.body.appendChild(p);setTimeout(()=>p.remove(),2200);}
+}
+function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅':'❌'} ${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const opts=document.querySelectorAll(`#${rowId}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  checkL1done();checkL4done();
+}
+function checkL1done(){
+  if(['l1q1','l1q2','l1q3','l1q4'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l1done').classList.add('show');confetti();}
+}
+function checkL4done(){
+  if(['l4q1','l4q2'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l4done').classList.add('show');confetti();}
+}
+let wbSel=null;
+const wb2answers={wb2b1:'used to',wb2b2:"didn't use to",wb2b3:'Did',wb2b4:'use to',wb2b5:'be'};
+function pickWb(chip,val){
+  document.querySelectorAll('#wb2chips .wb-chip').forEach(c=>c.classList.remove('sel'));
+  if(wbSel&&wbSel.chip===chip){wbSel=null;return;}
+  chip.classList.add('sel');wbSel={chip,val};
+}
+function dropWb(blankId){
+  if(!wbSel)return;const blank=document.getElementById(blankId);
+  if(blank.classList.contains('filled'))return;
+  blank.textContent=wbSel.val;blank.classList.add('filled');
+  wbSel.chip.classList.add('used');wbSel.chip.classList.remove('sel');wbSel=null;
+}
+function checkWb2(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(wb2answers)){
+    if(document.getElementById(id).textContent.trim()===ans)ok++;}
+  const all=Object.keys(wb2answers).length;
+  if(ok===all){setFb('wb2fb',true,'All correct! Great work!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l2done').classList.add('show');confetti();}
+  else setFb('wb2fb',false,`${ok}/${all} correct. Check again.`,`${ok} من ${all} صحيحة.`);
+}
+const l3answers={l3i1:['used to play'],l3i2:["didn't use to wear",'did not use to wear'],l3i3:['did you use to'],l3i4:['used to be']};
+function checkL3(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(l3answers)){
+    const inp=document.getElementById(id);
+    const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
+    const correct=ans.some(a=>a.toLowerCase()===val);
+    inp.className='type-inp '+(correct?'ok':'err');
+    if(correct)ok++;}
+  const all=Object.keys(l3answers).length;
+  if(ok===all){setFb('l3fb',true,'All correct! Perfect!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l3done').classList.add('show');confetti();}
+  else setFb('l3fb',false,`${ok}/${all} correct. Try again.`,`${ok} من ${all} صحيحة.`);
+}
+const qAnswers={1:'a',2:'b',3:'a',4:'b',5:'a'};
+const qScored={};
+function qsc(qNum,btn,val,evt){
+  const opts=document.querySelectorAll(`#qq${qNum}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  const correct=val===qAnswers[qNum];
+  btn.classList.add(correct?'ok':'err');
+  qScored[qNum]=correct;
+  document.getElementById(`qq${qNum}`).classList.add(correct?'answered-ok':'answered-err');
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  const fb={
+    1:{ok:"Correct! used to + base verb (eat).",ar:"صحيح! used to + الفعل المصدري (eat).",no:"used to is followed by the base verb: used to eat.",nar:"بعد used to يأتي الفعل المجرّد: used to eat."},
+    2:{ok:"Correct! Did + subject + use to + base.",ar:"صحيح! Did + الفاعل + use to + الفعل.",no:"After Did, drop the -d: Did … use to.",nar:"بعد Did نحذف d: Did … use to."},
+    3:{ok:"Correct! It describes past habits/states that stopped.",ar:"صحيح! تصف عادات أو حالات ماضية توقّفت.",no:"used to = a past habit or state, now finished.",nar:"used to = عادة أو حالة ماضية انتهت."},
+    4:{ok:"Correct! didn't use to (no -d after didn't).",ar:"صحيح! didn't use to (بلا d بعد didn't).",no:"After didn't, use 'use to' (no -d).",nar:"بعد didn't نستخدم use to بلا d."},
+    5:{ok:"Correct! used to be — base verb after used to.",ar:"صحيح! used to be — الفعل المجرّد بعد used to.",no:"used to + base verb (be), not been or uses.",nar:"used to + الفعل المجرّد (be) وليس been."}
+  };
+  if(correct)setFb(`qq${qNum}fb`,true,fb[qNum].ok,fb[qNum].ar);
+  else setFb(`qq${qNum}fb`,false,fb[qNum].no,fb[qNum].nar);
+}
+function calcQuiz(){
+  const score=Object.values(qScored).filter(Boolean).length;
+  document.getElementById('scoreTxt').textContent=`${score} / 5`;
+  const msgs=[
+    {e:'Keep going — review used to / didn\'t use to / Did … use to!',a:'راجع الأشكال الثلاثة.'},
+    {e:'Good try! Remember: after did/didn\'t → use to.',a:'تذكّر: بعد did/didn\'t ← use to.'},
+    {e:'Good! You are getting there.',a:'جيد! أنت في الطريق الصحيح.'},
+    {e:'Great! Almost perfect!',a:'رائع! تقريبًا مثالي.'},
+    {e:'Perfect! You mastered "used to"! ⏮️',a:'ممتاز! أتقنت used to!'}
+  ];
+  const m=msgs[Math.min(score,4)];
+  document.getElementById('scoreMsg').innerHTML=`${m.e}<br><span class="ar">${m.a}</span>`;
+  document.getElementById('badgeMsg').textContent=score>=3?'⏮️ Then &amp; Now Badge earned!':'Keep going — earn the Then &amp; Now Badge!';
+  document.getElementById('quizScore').classList.add('show');
+  if(score>=3){localStorage.setItem('badge_used_to','earned');confetti();}
+}
+const cards=[
+  {word:'used to',emoji:'⏮️',ar:'كان (يفعل) في الماضي',syn:'past habit — no longer true',ant:'now / these days'},
+  {word:'habit',emoji:'🔁',ar:'عادة',syn:'routine — custom',ant:'one-off'},
+  {word:'no longer',emoji:'🚫',ar:'لم يعد',syn:'not any more',ant:'still'},
+  {word:'in the past',emoji:'📜',ar:'في الماضي',syn:'formerly — once',ant:'nowadays'},
+  {word:'still',emoji:'♾️',ar:'ما زال',syn:'continues now',ant:'no longer'},
+  {word:'these days',emoji:'📅',ar:'هذه الأيام / الآن',syn:'nowadays — now',ant:'in the past'},
+];
+const grid=document.getElementById('fcGrid');
+cards.forEach((c,i)=>{
+  grid.innerHTML+=`
+  <div class="fc" id="fc${i}" onclick="flipCard(${i})">
+    <div class="fc-inner">
+      <div class="fc-front"><span class="emoji">${c.emoji}</span><div class="word">${c.word}</div>
+        <button class="tts-btn" onclick="event.stopPropagation();speak('${c.word}')">🔊 Listen</button></div>
+      <div class="fc-back"><div class="ar-mean ar">${c.ar}</div><div class="syn">${c.syn}</div>
+        ${c.ant&&c.ant!=='—'?`<div class="syn" style="opacity:.7">↔ ${c.ant}</div>`:''}</div>
+    </div>
+  </div>`;
+});
+function flipCard(i){document.getElementById('fc'+i).classList.toggle('flipped');}
+function speak(w){const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u);}
+</script>
+</body>
+</html>

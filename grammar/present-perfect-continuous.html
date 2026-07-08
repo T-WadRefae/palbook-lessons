@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Present Perfect Continuous — PalBook Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --sky:#0d9488;--sky-d:#134e4a;--sky-l:#f0fdfa;--sun:#f59e0b;
+  --txt:#1e293b;--muted:#64748b;--white:#fff;--rad:14px;
+  --shadow:0 4px 18px rgba(13,148,136,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f0fdfa;color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif}
+.hdr{background:linear-gradient(135deg,var(--sky-d) 0%,var(--sky) 55%,#2dd4bf 100%);color:#fff;padding:24px 16px 0;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'⏱️';font-size:120px;opacity:.09;position:absolute;top:-6px;right:-8px;line-height:1}
+.hdr h1{font-family:'Fredoka One',sans-serif;font-size:clamp(1.3rem,4vw,2.1rem);letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.chip{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.82rem;backdrop-filter:blur(4px)}
+.prog-wrap{background:rgba(0,0,0,.2);height:6px;border-radius:3px;margin:0 16px}
+.prog-fill{height:100%;background:var(--sun);border-radius:3px;transition:width .4s}
+.tab-bar{display:flex;gap:6px;padding:12px 12px 0;background:var(--sky-d);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex:0 0 auto;background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:10px 10px 0 0;padding:8px 14px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.tab.active,.tab:hover{background:var(--white);color:var(--sky-d)}
+.panels{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+.panel{display:none}.panel.on{display:block}
+.card{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.card-title{font-family:'Fredoka One',sans-serif;font-size:1.3rem;color:var(--sky-d);margin-bottom:10px}
+.card-sub{color:var(--muted);font-size:.9rem;margin-bottom:14px}
+.q-inst{border-right:5px solid var(--sky);background:var(--sky-l);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0 10px;font-size:.95rem;direction:rtl;text-align:right;color:var(--sky-d)}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.opt{background:#f1f5f9;border:2px solid #e2e8f0;border-radius:10px;padding:9px 18px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:600;transition:all .2s}
+.opt:hover:not(:disabled){background:var(--sky-l);border-color:var(--sky)}
+.opt.ok{background:#dcfce7;border-color:#16a34a;color:#14532d}
+.opt.err{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.opt:disabled{cursor:default}
+.fb-wrap{display:none;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.9rem}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#dcfce7;border-left:4px solid #16a34a}
+.fb-wrap.err{background:#fee2e2;border-left:4px solid #dc2626}
+.fb-en{font-weight:700;margin-bottom:4px}
+.fb-ar{direction:rtl;text-align:right;font-size:.88rem;opacity:.85}
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;padding:12px;background:#f8fafc;border-radius:10px;border:2px dashed #cbd5e1;min-height:48px}
+.wb-chip{background:var(--sky-l);border:2px solid var(--sky);color:var(--sky-d);border-radius:20px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:.88rem;transition:all .2s;user-select:none}
+.wb-chip.used{opacity:.35;pointer-events:none}
+.wb-chip.sel{background:var(--sky);color:#fff;transform:scale(1.05)}
+.blank{display:inline-block;min-width:120px;border-bottom:2.5px solid var(--sky);padding:2px 8px;text-align:center;cursor:pointer;border-radius:4px;margin:0 4px;font-weight:700;color:var(--sky-d);transition:background .2s}
+.blank:hover:not(.filled){background:var(--sky-l)}
+.blank.filled{border-color:#16a34a;color:#15803d;background:#f0fdf4}
+.fill-line{line-height:2.4;margin:8px 0;font-size:.92rem}
+.type-inp{border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-family:'Nunito',sans-serif;font-size:.88rem;width:180px;margin:4px 6px;transition:border-color .2s}
+.type-inp:focus{outline:none;border-color:var(--sky)}
+.type-inp.ok{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.type-inp.err{border-color:#dc2626;background:#fef2f2;color:#991b1b}
+.check-btn{background:var(--sky);color:#fff;border:none;border-radius:10px;padding:9px 22px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;margin-top:10px;transition:background .2s}
+.check-btn:hover{background:var(--sky-d)}
+.lvl-done{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #16a34a;border-radius:12px;padding:14px;text-align:center;display:none;margin-top:14px}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.cond-box{border-radius:12px;padding:14px;margin:10px 0;font-size:.92rem}
+.cond-box.dur{background:#f0fdfa;border-left:5px solid #2dd4bf}
+.cond-box.res{background:#fff7ed;border-left:5px solid #fb923c}
+.cond-box .cb-type{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.dur .cb-type{color:#0f766e}.res .cb-type{color:#ea580c}
+.cond-box .cb-sent{line-height:1.85}
+.hl-a{font-weight:800;color:#0d9488}.hl-b{font-weight:800;color:#ea580c}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+.fc{perspective:600px;cursor:pointer;height:140px}
+.fc-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s;position:relative}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--sky-l),#fff);border:2px solid var(--sky)}
+.fc-back{background:linear-gradient(135deg,var(--sky),#2dd4bf);color:#fff;transform:rotateY(180deg)}
+.fc-front .word{font-size:.95rem;font-weight:800;color:var(--sky-d);margin-top:6px;line-height:1.2}
+.fc-front .emoji{font-size:1.8rem}
+.fc-back .ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;font-weight:700}
+.fc-back .syn{font-size:.75rem;opacity:.85;margin-top:6px;line-height:1.4}
+.tts-btn{background:rgba(13,148,136,.12);border:none;border-radius:20px;padding:3px 10px;font-size:.78rem;cursor:pointer;color:var(--sky-d);margin-top:6px;font-family:'Nunito',sans-serif;font-weight:600}
+.speak-prompt{background:var(--sky-l);border-left:4px solid var(--sky);border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:.9rem}
+.speak-prompt strong{color:var(--sky-d)}
+.write-area{width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:12px;font-family:'Nunito',sans-serif;font-size:.9rem;min-height:110px;resize:vertical;transition:border-color .2s}
+.write-area:focus{outline:none;border-color:var(--sky)}
+.quiz-q{background:#fff;border:2px solid #f1f5f9;border-radius:12px;padding:16px;margin:12px 0;transition:border-color .2s}
+.quiz-q.answered-ok{border-color:#16a34a;background:#f0fdf4}
+.quiz-q.answered-err{border-color:#dc2626;background:#fef2f2}
+.q-num{font-family:'Fredoka One',sans-serif;color:var(--sky);font-size:1rem;margin-bottom:8px}
+.quiz-score{background:linear-gradient(135deg,var(--sky-l),#ccfbf1);border:3px solid var(--sky);border-radius:16px;padding:22px;text-align:center;display:none;margin-top:18px}
+.quiz-score.show{display:block;animation:popIn .5s ease}
+.score-num{font-family:'Fredoka One',sans-serif;font-size:3rem;color:var(--sky)}
+.badge-earned{font-size:3.5rem;display:block;margin:10px 0;animation:bounce .6s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.star-fly{position:fixed;pointer-events:none;font-size:1.5rem;z-index:9999;animation:floatStar .9s ease forwards}
+@keyframes floatStar{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-80px) scale(1.5);opacity:0}}
+.confetti-p{position:fixed;pointer-events:none;width:8px;height:8px;z-index:9998;border-radius:2px;animation:confFall 1.2s ease forwards}
+@keyframes confFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s ease}
+.hint-ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right;font-size:.92rem;background:#fff8dc;border-right:4px solid var(--sun);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0;color:#78350f}
+.divider{height:2px;background:linear-gradient(to right,var(--sky-l),var(--sky),var(--sky-l));border:none;margin:18px 0;border-radius:1px}
+.lbl{font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+.note{border-radius:0 10px 10px 0;padding:12px 16px;font-size:.9rem;margin:10px 0}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:.82rem}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--sky);border-radius:3px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <p style="font-size:.8rem;opacity:.7;letter-spacing:1px;text-transform:uppercase">Grammar • English for Palestine</p>
+  <h1>Present Perfect Continuous ⏱️</h1>
+  <p class="ar" style="font-size:1rem;margin-top:4px">المضارع التام المستمر — فعلٌ بدأ واستمرّ حتى الآن</p>
+  <div class="chips">
+    <span class="chip">🎯 Grade 9</span>
+    <span class="chip">⏱️ ~40 min</span>
+    <span class="chip">⏱️ have been + -ing</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="go(0)">🚀 Start</button>
+  <button class="tab" onclick="go(1)">📚 Words</button>
+  <button class="tab" onclick="go(2)">🔍 Discover</button>
+  <button class="tab" onclick="go(3)">🧠 Grammar</button>
+  <button class="tab" onclick="go(4)">✏️ Practice</button>
+  <button class="tab" onclick="go(5)">🗣️ Create</button>
+  <button class="tab" onclick="go(6)">🎯 Quiz</button>
+</div>
+
+<div class="panels">
+
+<!-- TAB 1 — START -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <div class="card-title">🚀 Still Going… ⏱️</div>
+    <div class="card-sub">We use the Present Perfect Continuous for an action that started in the past and is STILL happening now.</div>
+
+    <div class="cond-box dur" style="margin-top:14px">
+      <div class="cb-type">⏱️ Started before → still now</div>
+      <div class="cb-sent">I <span class="hl-a">have been studying</span> <span class="hl-b">for two hours</span>. (…and I'm still studying!)</div>
+    </div>
+
+    <div class="hint-ar">المضارع التام المستمر يصف فعلاً <b>بدأ في الماضي وما زال مستمرًّا</b> حتى الآن، ونركّز على <b>مدّته</b> (for/since). لنكتشف الشكل!</div>
+
+    <hr class="divider"/>
+    <p class="lbl">Warm-up — Choose the right form</p>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> She ___ English since 2019 (and continues now).</p>
+    <div class="opts" id="s1opts">
+      <button class="opt" onclick="sc('s1','s1fb',this,true,'Correct! has been + -ing shows an action continuing up to now.','صحيح! has been + ing تدلّ على فعل مستمرّ حتى الآن.')">has been learning</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Is learning (present continuous) misses the duration since 2019.','is learning (مضارع مستمر) لا يُظهر المدّة منذ 2019.')">is learning</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Learned (past simple) means it is finished — but it continues.','learned ماضٍ بسيط يعني أنه انتهى — لكنه مستمرّ.')">learned</button>
+    </div>
+    <div class="fb-wrap" id="s1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> Your shoes are muddy! ___ you ___ in the garden?</p>
+    <div class="opts" id="s2opts">
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Did you work is past simple — the muddy shoes are a present result.','Did you work ماضٍ بسيط — لكن الحذاء الموحل نتيجة حاضرة.')">Did … work</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,true,'Correct! Have you been + -ing — a recent activity with a present result.','صحيح! Have you been + ing — نشاط حديث له أثر حاضر.')">Have … been working</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Are you working (present continuous) misses the just-finished result.','Are you working (مضارع مستمر) لا يُظهر الأثر الذي ظهر للتوّ.')">Are … working</button>
+    </div>
+    <div class="fb-wrap" id="s2fb"></div>
+  </div>
+</div>
+
+<!-- TAB 2 — WORDS -->
+<div class="panel" id="p1">
+  <div class="card">
+    <div class="card-title">📚 Key Vocabulary</div>
+    <div class="card-sub">Click a card to flip it. 🔊 to hear the word.</div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📌 for vs since — at a Glance</div>
+    <div class="hint-ar">for للمدّة (كم من الوقت)، و since لنقطة البداية (متى بدأ).</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+      <div class="cond-box dur"><div class="cb-type">⏳ for = how long (a period)</div><div class="cb-sent"><em>for two hours · for three days · for a long time</em></div></div>
+      <div class="cond-box res"><div class="cb-type">📍 since = starting point</div><div class="cb-sent"><em>since 2019 · since Monday · since I was ten</em></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3 — DISCOVER -->
+<div class="panel" id="p2">
+  <div class="card">
+    <div class="card-title">🔍 What Do You Notice?</div>
+    <div class="card-sub">Look at the two helping verbs and the -ing form.</div>
+    <div class="hint-ar">لاحظ الفعلين المساعدين (have/has + been) ثم الفعل بصيغة ing.</div>
+
+    <div class="cond-box dur" style="margin-top:14px">
+      <div class="cb-type">Duration — still happening</div>
+      <div class="cb-sent">They <strong style="color:#0d9488">have been waiting</strong> [have + been + -ing] <strong style="color:#ea580c">for an hour</strong>.</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px">Started an hour ago — and they are still waiting.</div>
+    </div>
+    <div class="cond-box res">
+      <div class="cb-type">Recent activity — present result</div>
+      <div class="cb-sent">I'm tired because I <strong style="color:#0d9488">have been running</strong>.</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px">The activity explains why I'm tired NOW.</div>
+    </div>
+
+    <div style="background:#f0fdfa;border:2px solid #99f6e4;border-radius:12px;padding:14px;margin-top:14px;font-size:.88rem">
+      <strong>💡 The shape:</strong> subject + <b>have/has been</b> + verb-<b>ing</b>.<br>
+      Use <b>has been</b> with he/she/it, and <b>have been</b> with I/you/we/they.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 Now You Discover!</div>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> "He ___ football since 4 o'clock." — which helper is correct?</p>
+    <div class="opts" id="d1opts">
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Have been is for I/you/we/they — he needs HAS been.','have been لضمائر I/you/we/they — أمّا he فيحتاج has been.')">have been playing</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,true,'Correct! he/she/it → has been + -ing.','صحيح! he/she/it ← has been + ing.')">has been playing</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Been playing without has/have is not a full verb.','been playing بلا has/have ليست فعلاً كاملاً.')">been playing</button>
+    </div>
+    <div class="fb-wrap" id="d1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> "We have been friends ___ 2015." — for or since?</p>
+    <div class="opts" id="d2opts">
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'For is used with a period (for 8 years) — 2015 is a starting point.','for للمدّة (for 8 years) — لكن 2015 نقطة بداية.')">for</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,true,'Correct! since + a starting point (a date/time).','صحيح! since + نقطة بداية (تاريخ/وقت).')">since</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'From is not used here — we say since + a point in time.','from لا تُستخدم هنا — نقول since + نقطة زمنية.')">from</button>
+    </div>
+    <div class="fb-wrap" id="d2fb"></div>
+
+    <div style="background:linear-gradient(135deg,var(--sky-l),#ccfbf1);border:2.5px solid var(--sky);border-radius:12px;padding:16px;text-align:center;margin-top:16px">
+      <div style="font-family:'Fredoka One',sans-serif;color:var(--sky-d);font-size:1.1rem;margin-bottom:8px">⭐ The Pattern</div>
+      <p style="font-size:.93rem;line-height:1.9">have/has been + verb-<strong>ing</strong> &nbsp;·&nbsp; <strong>for</strong> + period &nbsp;·&nbsp; <strong>since</strong> + start point</p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4 — GRAMMAR -->
+<div class="panel" id="p3">
+  <div class="card">
+    <div class="card-title">🧠 The Full Rule</div>
+    <div class="hint-ar">القاعدة الكاملة للمضارع التام المستمر.</div>
+    <div style="background:#f0fdfa;border:3px solid #2dd4bf;border-radius:14px;padding:16px;margin:12px 0;text-align:center">
+      <div style="font-size:1.05rem;font-weight:800;color:var(--sky-d);line-height:2">
+        ➕ have/has been + <span style="color:#0d9488">verb-ing</span><br>
+        ➖ haven't/hasn't been + <span style="color:#0d9488">verb-ing</span><br>
+        ❓ Have/Has + subject + been + <span style="color:#0d9488">verb-ing</span>?
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="cond-box dur"><div class="cb-sent">It <b>has been raining</b> all morning.</div></div>
+      <div class="cond-box dur"><div class="cb-sent">I <b>haven't been sleeping</b> well lately.</div></div>
+      <div class="cond-box dur"><div class="cb-sent"><b>How long have</b> you <b>been waiting</b>?</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Important Notes</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin:12px 0">
+      <div class="note" style="background:#fffbeb;border-left:4px solid #f59e0b">
+        ⚠️ <strong>Focus = the activity &amp; its duration</strong>, not the finished number:<br>
+        "I <b>have been reading</b> this book." (activity, maybe not finished)<br>
+        "I <b>have read</b> three books." (finished result — present perfect simple)
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">المستمر يركّز على النشاط ومدّته، والبسيط على النتيجة المكتملة.</span>
+      </div>
+      <div class="note" style="background:#f0fdf4;border-left:4px solid #16a34a">
+        ✅ <strong>Great with:</strong> for, since, all day, all morning, lately, recently, How long…?
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">يكثر استخدامه مع for / since / all day / How long…؟</span>
+      </div>
+      <div class="note" style="background:#eef7ff;border-left:4px solid #60a5fa">
+        💡 <strong>Not with stative verbs</strong> (know, like, believe): use the simple form.<br>
+        ✗ I have been knowing… &nbsp;|&nbsp; ✓ I <b>have known</b> him for years.
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">لا نستخدمه مع أفعال الحالة (know, like) — نستعمل التام البسيط.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5 — PRACTICE -->
+<div class="panel" id="p4">
+  <div class="card">
+    <div class="card-title">✏️ Level 1 — Choose the Form</div>
+    <div class="hint-ar">اختر الشكل الصحيح للمضارع التام المستمر.</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> They ___ for the bus for 20 minutes.</p>
+    <div class="opts" id="l1q1opts">
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,true,'Correct! have been + -ing = have been waiting.','صحيح! have been + ing = have been waiting.')">have been waiting</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'Has been is for he/she/it — they needs have been.','has been لـ he/she/it — أمّا they فتحتاج have been.')">has been waiting</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'Are waiting misses the duration (20 minutes up to now).','are waiting لا يُظهر المدّة (20 دقيقة حتى الآن).')">are waiting</button>
+    </div>
+    <div class="fb-wrap" id="l1q1fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> My eyes hurt because I ___ at the screen too long.</p>
+    <div class="opts" id="l1q2opts">
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Looked (past simple) misses the present result (my eyes hurt now).','looked ماضٍ بسيط لا يُظهر الأثر الحاضر (عيناي تؤلمانني الآن).')">looked</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,true,'Correct! have been looking — recent activity, present result.','صحيح! have been looking — نشاط حديث بأثر حاضر.')">have been looking</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'Am looking (present continuous) misses the up-to-now cause.','am looking لا يُظهر السبب الممتدّ حتى الآن.')">am looking</button>
+    </div>
+    <div class="fb-wrap" id="l1q2fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر for أو since.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>3)</strong> She has been working here ___ March.</p>
+    <div class="opts" id="l1q3opts">
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'For is for a period — March is a starting point.','for للمدّة — لكن March نقطة بداية.')">for</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,true,'Correct! since + a starting point (March).','صحيح! since + نقطة بداية (March).')">since</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'During is not used with the start point here.','during لا تُستخدم مع نقطة البداية هنا.')">during</button>
+    </div>
+    <div class="fb-wrap" id="l1q3fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>4)</strong> ___ it ___ all day? (the ground is wet)</p>
+    <div class="opts" id="l1q4opts">
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'Have it been is wrong — it takes HAS.','Have it been خطأ — الضمير it يأخذ has.')">Have … been raining</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,true,'Correct! it → Has it been raining?','صحيح! الضمير it ← Has it been raining؟')">Has … been raining</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'Did it rain is past simple — the wet ground is a present result.','Did it rain ماضٍ بسيط — لكن الأرض المبلّلة نتيجة حاضرة.')">Did … rain</button>
+    </div>
+    <div class="fb-wrap" id="l1q4fb"></div>
+
+    <div class="lvl-done" id="l1done">🎉 Level 1 done! You know the shape!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 2 — Fill with the Word Bank</div>
+    <div class="hint-ar">اضغط على الكلمة ثم اضغط على الفراغ لوضعها.</div>
+    <div class="wb-chips" id="wb2chips">
+      <span class="wb-chip" onclick="pickWb(this,'have been')">have been</span>
+      <span class="wb-chip" onclick="pickWb(this,'has been')">has been</span>
+      <span class="wb-chip" onclick="pickWb(this,'for')">for</span>
+      <span class="wb-chip" onclick="pickWb(this,'since')">since</span>
+      <span class="wb-chip" onclick="pickWb(this,'been')">been</span>
+    </div>
+    <div style="margin:12px 0">
+      <div class="fill-line">1) I <span class="blank" id="wb2b1" onclick="dropWb('wb2b1')">______</span> studying all evening.</div>
+      <div class="fill-line">2) He <span class="blank" id="wb2b2" onclick="dropWb('wb2b2')">______</span> feeling tired lately.</div>
+      <div class="fill-line">3) We have been living here <span class="blank" id="wb2b3" onclick="dropWb('wb2b3')">______</span> five years.</div>
+      <div class="fill-line">4) She has been teaching <span class="blank" id="wb2b4" onclick="dropWb('wb2b4')">______</span> 2018.</div>
+      <div class="fill-line">5) Have you <span class="blank" id="wb2b5" onclick="dropWb('wb2b5')">______</span> waiting long?</div>
+    </div>
+    <button class="check-btn" onclick="checkWb2()">Check ✓</button>
+    <div class="fb-wrap" id="wb2fb"></div>
+    <div class="lvl-done" id="l2done">🎉 Level 2 done! Great work!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 3 — Write the Correct Form</div>
+    <div class="hint-ar">اكتب المضارع التام المستمر للفعل بين القوسين.</div>
+    <div style="margin:10px 0">
+      <div class="fill-line">1) I <input class="type-inp" id="l3i1" placeholder="(read) this book"> all day. <em style="font-size:.78rem;color:var(--muted)">(have been + -ing)</em></div>
+      <div class="fill-line">2) She <input class="type-inp" id="l3i2" placeholder="(work) hard"> recently. <em style="font-size:.78rem;color:var(--muted)">(has been + -ing)</em></div>
+      <div class="fill-line">3) They <input class="type-inp" id="l3i3" placeholder="(play) football"> for an hour. <em style="font-size:.78rem;color:var(--muted)">(have been + -ing)</em></div>
+      <div class="fill-line">4) It <input class="type-inp" id="l3i4" placeholder="(snow) since noon"> . <em style="font-size:.78rem;color:var(--muted)">(has been + -ing)</em></div>
+    </div>
+    <button class="check-btn" onclick="checkL3()">Check ✓</button>
+    <div class="fb-wrap" id="l3fb"></div>
+    <div class="lvl-done" id="l3done">🎉 Level 3 done! Excellent forms!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 4 — Spot and Fix the Mistake</div>
+    <div class="hint-ar">كل جملة فيها خطأ. اختر الجملة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>&nbsp;She has been work here for two years.</p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q1opts">
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,true,'Correct! After has been we need the -ing form: working.','صحيح! بعد has been نحتاج صيغة ing: working.')">She has been working here for two years.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Has working is missing been — it must be has been working.','has working ناقصة been — الصواب has been working.')">She has working here for two years.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Have is wrong for she — use has.','have خطأ مع she — نستخدم has.')">She have been working here for two years.</button>
+    </div>
+    <div class="fb-wrap" id="l4q1fb"></div>
+
+    <hr class="divider"/>
+    <p style="font-size:.95rem;margin-bottom:8px"><span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>&nbsp;We have been waiting since three hours.</p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q2opts">
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,true,'Correct! for a period (three hours), since a start point.','صحيح! for للمدّة (three hours)، و since لنقطة البداية.')">We have been waiting for three hours.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'Since three hours is wrong — three hours is a period, so use for.','since three hours خطأ — three hours مدّة فنستخدم for.')">We have been waiting since three hours.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'Are waiting misses the duration up to now.','are waiting لا يُظهر المدّة حتى الآن.')">We are waiting for three hours.</button>
+    </div>
+    <div class="fb-wrap" id="l4q2fb"></div>
+
+    <div class="lvl-done" id="l4done">🏆 All 4 levels done! You are a Present Perfect Continuous champion!</div>
+  </div>
+</div>
+
+<!-- TAB 6 — CREATE -->
+<div class="panel" id="p5">
+  <div class="card">
+    <div class="card-title">🗣️ Speaking — How Long…?</div>
+    <div class="hint-ar">تحدّث عن أنشطة بدأت واستمرّت حتى الآن.</div>
+    <div class="speak-prompt"><strong>Round 1 — You:</strong> 👉 <em>I have been learning English for ___ / since ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 2 — Today:</strong> 👉 <em>I have been ___ all morning.</em> (studying, helping, playing…)</div>
+    <div class="speak-prompt"><strong>Round 3 — Results:</strong> 👉 <em>I'm tired/hungry/happy because I have been ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 4 — Ask a partner:</strong> <em>How long have you been …?</em> Ask about their hobby, their school, their town.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">✍️ Writing — My Ongoing Life</div>
+    <div class="hint-ar">اكتب فقرة عن أشياء بدأتها وما زلت تفعلها.</div>
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:14px;margin:10px 0;font-size:.88rem">
+      <p style="font-weight:700;margin-bottom:6px">📌 Your paragraph must include:</p>
+      <ul style="margin-left:16px;line-height:1.9">
+        <li>At least <strong>three</strong> present perfect continuous sentences</li>
+        <li>One with <strong>for</strong> and one with <strong>since</strong></li>
+        <li>One that explains a present result (…because I have been…)</li>
+      </ul>
+    </div>
+    <textarea class="write-area" placeholder="This year has been very busy. I have been studying hard for my exams since September. I have been practising English every day for three months, and I feel much more confident. I have also been helping my father in his shop after school. Right now I am a little tired because I have been working since early morning — but I am proud of my effort!"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-title">💬 Challenge — Complete the Sentences</div>
+    <div class="hint-ar">أكمل هذه الجمل بأفكارك الخاصة.</div>
+    <div style="background:#f0fdfa;border:2px solid #99f6e4;border-radius:10px;padding:14px;margin:10px 0;font-size:.9rem">
+      <ol style="margin-left:16px;line-height:2.2">
+        <li>I'm out of breath because …</li>
+        <li>How long …?</li>
+        <li>It has been … all day.</li>
+      </ol>
+    </div>
+    <textarea class="write-area" placeholder="1) I'm out of breath because I have been running to catch the bus.&#10;2) How long have you been playing the piano?&#10;3) It has been raining all day, so the streets are flooded."></textarea>
+  </div>
+</div>
+
+<!-- TAB 7 — QUIZ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <div class="card-title">🎯 Quick Check — 5 Questions</div>
+    <div class="hint-ar">أجب على الأسئلة الخمسة ثم اضغط "Check My Score".</div>
+
+    <div class="quiz-q" id="qq1">
+      <div class="q-num">Question 1 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">I ___ my homework for two hours.</p>
+      <div class="opts" id="qq1opts">
+        <button class="opt" onclick="qsc(1,this,'a',event)">have been doing</button>
+        <button class="opt" onclick="qsc(1,this,'b',event)">has been doing</button>
+        <button class="opt" onclick="qsc(1,this,'c',event)">am doing</button>
+      </div>
+      <div class="fb-wrap" id="qq1fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq2">
+      <div class="q-num">Question 2 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">He has been living in Hebron ___ 2010.</p>
+      <div class="opts" id="qq2opts">
+        <button class="opt" onclick="qsc(2,this,'a',event)">for</button>
+        <button class="opt" onclick="qsc(2,this,'b',event)">since</button>
+        <button class="opt" onclick="qsc(2,this,'c',event)">from</button>
+      </div>
+      <div class="fb-wrap" id="qq2fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq3">
+      <div class="q-num">Question 3 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">The present perfect continuous is formed with …</p>
+      <div class="opts" id="qq3opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(3,this,'a',event)">have/has been + verb-ing</button>
+        <button class="opt" onclick="qsc(3,this,'b',event)">have/has + past participle</button>
+        <button class="opt" onclick="qsc(3,this,'c',event)">will + be + verb-ing</button>
+      </div>
+      <div class="fb-wrap" id="qq3fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq4">
+      <div class="q-num">Question 4 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Which sentence is correct?</p>
+      <div class="opts" id="qq4opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(4,this,'a',event)">She has been work all day.</button>
+        <button class="opt" onclick="qsc(4,this,'b',event)">She has been working all day.</button>
+        <button class="opt" onclick="qsc(4,this,'c',event)">She have been working all day.</button>
+      </div>
+      <div class="fb-wrap" id="qq4fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq5">
+      <div class="q-num">Question 5 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Which verb should NOT be used in the continuous?</p>
+      <div class="opts" id="qq5opts">
+        <button class="opt" onclick="qsc(5,this,'a',event)">know</button>
+        <button class="opt" onclick="qsc(5,this,'b',event)">run</button>
+        <button class="opt" onclick="qsc(5,this,'c',event)">study</button>
+      </div>
+      <div class="fb-wrap" id="qq5fb"></div>
+    </div>
+
+    <button class="check-btn" style="margin-top:16px;width:100%;font-size:1rem" onclick="calcQuiz()">📊 Check My Score</button>
+    <div class="quiz-score" id="quizScore">
+      <div class="score-num" id="scoreTxt"></div>
+      <p id="scoreMsg" style="font-size:1rem;margin:6px 0"></p>
+      <span class="badge-earned" id="badgeIcon">⏱️</span>
+      <p id="badgeMsg" style="font-size:.85rem;color:var(--muted)"></p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>Prepared with care 🌸 by T. Wad Refae</footer>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+const prog=document.getElementById('progFill');
+function go(i){
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  prog.style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function launchStar(x,y){
+  const el=document.createElement('div');el.className='star-fly';
+  el.textContent=['⭐','✨','💫','🌟'][Math.floor(Math.random()*4)];
+  el.style.cssText=`left:${x}px;top:${y}px`;document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
+}
+function confetti(){
+  const colors=['#0d9488','#f59e0b','#ec4899','#16a34a','#2dd4bf','#f97316'];
+  for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-p';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[i%colors.length]};animation-delay:${Math.random()*.8}s;animation-duration:${1+Math.random()}s`;
+    document.body.appendChild(p);setTimeout(()=>p.remove(),2200);}
+}
+function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅':'❌'} ${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const opts=document.querySelectorAll(`#${rowId}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  checkL1done();checkL4done();
+}
+function checkL1done(){
+  if(['l1q1','l1q2','l1q3','l1q4'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l1done').classList.add('show');confetti();}
+}
+function checkL4done(){
+  if(['l4q1','l4q2'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l4done').classList.add('show');confetti();}
+}
+let wbSel=null;
+const wb2answers={wb2b1:'have been',wb2b2:'has been',wb2b3:'for',wb2b4:'since',wb2b5:'been'};
+function pickWb(chip,val){
+  document.querySelectorAll('#wb2chips .wb-chip').forEach(c=>c.classList.remove('sel'));
+  if(wbSel&&wbSel.chip===chip){wbSel=null;return;}
+  chip.classList.add('sel');wbSel={chip,val};
+}
+function dropWb(blankId){
+  if(!wbSel)return;const blank=document.getElementById(blankId);
+  if(blank.classList.contains('filled'))return;
+  blank.textContent=wbSel.val;blank.classList.add('filled');
+  wbSel.chip.classList.add('used');wbSel.chip.classList.remove('sel');wbSel=null;
+}
+function checkWb2(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(wb2answers)){
+    if(document.getElementById(id).textContent.trim()===ans)ok++;}
+  const all=Object.keys(wb2answers).length;
+  if(ok===all){setFb('wb2fb',true,'All correct! Great work!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l2done').classList.add('show');confetti();}
+  else setFb('wb2fb',false,`${ok}/${all} correct. Check again.`,`${ok} من ${all} صحيحة.`);
+}
+const l3answers={l3i1:['have been reading'],l3i2:['has been working'],l3i3:['have been playing'],l3i4:['has been snowing']};
+function checkL3(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(l3answers)){
+    const inp=document.getElementById(id);
+    const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ').replace(/\.$/,'');
+    const correct=ans.some(a=>val.startsWith(a.toLowerCase()));
+    inp.className='type-inp '+(correct?'ok':'err');
+    if(correct)ok++;}
+  const all=Object.keys(l3answers).length;
+  if(ok===all){setFb('l3fb',true,'All correct! Perfect!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l3done').classList.add('show');confetti();}
+  else setFb('l3fb',false,`${ok}/${all} correct. Try again.`,`${ok} من ${all} صحيحة.`);
+}
+const qAnswers={1:'a',2:'b',3:'a',4:'b',5:'a'};
+const qScored={};
+function qsc(qNum,btn,val,evt){
+  const opts=document.querySelectorAll(`#qq${qNum}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  const correct=val===qAnswers[qNum];
+  btn.classList.add(correct?'ok':'err');
+  qScored[qNum]=correct;
+  document.getElementById(`qq${qNum}`).classList.add(correct?'answered-ok':'answered-err');
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  const fb={
+    1:{ok:"Correct! I → have been + -ing.",ar:"صحيح! I ← have been + ing.",no:"Use have been + verb-ing with I.",nar:"مع I نستخدم have been + الفعل ing."},
+    2:{ok:"Correct! since + a starting point (2010).",ar:"صحيح! since + نقطة بداية (2010).",no:"2010 is a start point → since.",nar:"2010 نقطة بداية ← since."},
+    3:{ok:"Correct! have/has been + verb-ing.",ar:"صحيح! have/has been + الفعل ing.",no:"The form is have/has been + verb-ing.",nar:"الصيغة have/has been + الفعل ing."},
+    4:{ok:"Correct! has been + working (-ing form).",ar:"صحيح! has been + working (صيغة ing).",no:"Use has been + the -ing form for she.",nar:"مع she نستخدم has been + صيغة ing."},
+    5:{ok:"Correct! 'know' is a stative verb — not used in the continuous.",ar:"صحيح! know فعل حالة — لا يُستخدم في المستمر.",no:"Stative verbs like 'know' are not used in the continuous.",nar:"أفعال الحالة مثل know لا تُستخدم في المستمر."}
+  };
+  if(correct)setFb(`qq${qNum}fb`,true,fb[qNum].ok,fb[qNum].ar);
+  else setFb(`qq${qNum}fb`,false,fb[qNum].no,fb[qNum].nar);
+}
+function calcQuiz(){
+  const score=Object.values(qScored).filter(Boolean).length;
+  document.getElementById('scoreTxt').textContent=`${score} / 5`;
+  const msgs=[
+    {e:'Keep going — review have/has been + -ing!',a:'راجع القاعدة: have/has been + ing.'},
+    {e:'Good try! Remember for (period) vs since (start).',a:'تذكّر for للمدّة و since للبداية.'},
+    {e:'Good! You are getting there.',a:'جيد! أنت في الطريق الصحيح.'},
+    {e:'Great! Almost perfect!',a:'رائع! تقريبًا مثالي.'},
+    {e:'Perfect! The stopwatch never stopped! ⏱️',a:'ممتاز! ساعة الإيقاف لم تتوقّف!'}
+  ];
+  const m=msgs[Math.min(score,4)];
+  document.getElementById('scoreMsg').innerHTML=`${m.e}<br><span class="ar">${m.a}</span>`;
+  document.getElementById('badgeMsg').textContent=score>=3?'⏱️ Stopwatch Badge earned!':'Keep going — earn the Stopwatch Badge!';
+  document.getElementById('quizScore').classList.add('show');
+  if(score>=3){localStorage.setItem('badge_present_perfect_continuous','earned');confetti();}
+}
+const cards=[
+  {word:'have been',emoji:'⏱️',ar:'ما زلتُ (منذ مدّة)',syn:'auxiliary for I/you/we/they',ant:'has been'},
+  {word:'has been',emoji:'⏱️',ar:'ما زال (منذ مدّة)',syn:'auxiliary for he/she/it',ant:'have been'},
+  {word:'for',emoji:'⏳',ar:'لمدّة',syn:'a length of time',ant:'since'},
+  {word:'since',emoji:'📍',ar:'منذ',syn:'a starting point',ant:'for'},
+  {word:'duration',emoji:'📏',ar:'مدّة',syn:'how long',ant:'moment'},
+  {word:'recently',emoji:'🕐',ar:'مؤخّرًا',syn:'lately — not long ago',ant:'long ago'},
+];
+const grid=document.getElementById('fcGrid');
+cards.forEach((c,i)=>{
+  grid.innerHTML+=`
+  <div class="fc" id="fc${i}" onclick="flipCard(${i})">
+    <div class="fc-inner">
+      <div class="fc-front"><span class="emoji">${c.emoji}</span><div class="word">${c.word}</div>
+        <button class="tts-btn" onclick="event.stopPropagation();speak('${c.word}')">🔊 Listen</button></div>
+      <div class="fc-back"><div class="ar-mean ar">${c.ar}</div><div class="syn">${c.syn}</div>
+        ${c.ant&&c.ant!=='—'?`<div class="syn" style="opacity:.7">↔ ${c.ant}</div>`:''}</div>
+    </div>
+  </div>`;
+});
+function flipCard(i){document.getElementById('fc'+i).classList.toggle('flipped');}
+function speak(w){const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u);}
+</script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Third Conditional — PalBook Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --sky:#6d28d9;--sky-d:#3b0764;--sky-l:#f5f3ff;--sun:#f59e0b;
+  --txt:#1e293b;--muted:#64748b;--white:#fff;--rad:14px;
+  --shadow:0 4px 18px rgba(109,40,217,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f5f3ff;color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif}
+.hdr{background:linear-gradient(135deg,var(--sky-d) 0%,var(--sky) 55%,#a78bfa 100%);
+  color:#fff;padding:24px 16px 0;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'⏳';font-size:120px;opacity:.08;position:absolute;top:-6px;right:-8px;line-height:1}
+.hdr::after{content:'⏳';font-size:90px;opacity:.06;position:absolute;bottom:-30px;left:-10px;line-height:1}
+.hdr h1{font-family:'Fredoka One',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.chip{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.82rem;backdrop-filter:blur(4px)}
+.prog-wrap{background:rgba(0,0,0,.2);height:6px;border-radius:3px;margin:0 16px}
+.prog-fill{height:100%;background:var(--sun);border-radius:3px;transition:width .4s}
+.tab-bar{display:flex;gap:6px;padding:12px 12px 0;background:var(--sky-d);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex:0 0 auto;background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:10px 10px 0 0;padding:8px 14px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.tab.active,.tab:hover{background:var(--white);color:var(--sky-d)}
+.panels{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+.panel{display:none}.panel.on{display:block}
+.card{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.card-title{font-family:'Fredoka One',sans-serif;font-size:1.3rem;color:var(--sky-d);margin-bottom:10px}
+.card-sub{color:var(--muted);font-size:.9rem;margin-bottom:14px}
+.q-inst{border-right:5px solid var(--sky);background:var(--sky-l);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0 10px;font-size:.95rem;direction:rtl;text-align:right;color:var(--sky-d)}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.opt{background:#f1f5f9;border:2px solid #e2e8f0;border-radius:10px;padding:9px 18px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:600;transition:all .2s}
+.opt:hover:not(:disabled){background:var(--sky-l);border-color:var(--sky)}
+.opt.ok{background:#dcfce7;border-color:#16a34a;color:#14532d}
+.opt.err{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.opt:disabled{cursor:default}
+.fb-wrap{display:none;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.9rem}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#dcfce7;border-left:4px solid #16a34a}
+.fb-wrap.err{background:#fee2e2;border-left:4px solid #dc2626}
+.fb-en{font-weight:700;margin-bottom:4px}
+.fb-ar{direction:rtl;text-align:right;font-size:.88rem;opacity:.85}
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;padding:12px;background:#f8fafc;border-radius:10px;border:2px dashed #cbd5e1;min-height:48px}
+.wb-chip{background:var(--sky-l);border:2px solid var(--sky);color:var(--sky-d);border-radius:20px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:.88rem;transition:all .2s;user-select:none}
+.wb-chip.used{opacity:.35;pointer-events:none}
+.wb-chip.sel{background:var(--sky);color:#fff;transform:scale(1.05)}
+.blank{display:inline-block;min-width:110px;border-bottom:2.5px solid var(--sky);padding:2px 8px;text-align:center;cursor:pointer;border-radius:4px;margin:0 4px;font-weight:700;color:var(--sky-d);transition:background .2s}
+.blank:hover:not(.filled){background:var(--sky-l)}
+.blank.filled{border-color:#16a34a;color:#15803d;background:#f0fdf4}
+.fill-line{line-height:2.4;margin:8px 0;font-size:.92rem}
+.type-inp{border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-family:'Nunito',sans-serif;font-size:.88rem;width:170px;margin:4px 6px;transition:border-color .2s}
+.type-inp:focus{outline:none;border-color:var(--sky)}
+.type-inp.ok{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.type-inp.err{border-color:#dc2626;background:#fef2f2;color:#991b1b}
+.check-btn{background:var(--sky);color:#fff;border:none;border-radius:10px;padding:9px 22px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;margin-top:10px;transition:background .2s}
+.check-btn:hover{background:var(--sky-d)}
+.lvl-done{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #16a34a;border-radius:12px;padding:14px;text-align:center;display:none;margin-top:14px}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.cond-box{border-radius:12px;padding:14px;margin:10px 0;font-size:.92rem}
+.cond-box.second{background:#eff6ff;border-left:5px solid #60a5fa}
+.cond-box.third{background:#f5f3ff;border-left:5px solid #a78bfa}
+.cond-box .cb-type{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.second .cb-type{color:#2563eb}.third .cb-type{color:#7c3aed}
+.cond-box .cb-sent{line-height:1.85}
+.hl-if{font-weight:800;color:#7c3aed}.hl-cond{font-weight:800;color:#2563eb}.hl-res{font-weight:800;color:#db2777}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+.fc{perspective:600px;cursor:pointer;height:140px}
+.fc-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s;position:relative}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--sky-l),#fff);border:2px solid var(--sky)}
+.fc-back{background:linear-gradient(135deg,var(--sky),#a78bfa);color:#fff;transform:rotateY(180deg)}
+.fc-front .word{font-size:.95rem;font-weight:800;color:var(--sky-d);margin-top:6px;line-height:1.2}
+.fc-front .emoji{font-size:1.8rem}
+.fc-back .ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;font-weight:700}
+.fc-back .syn{font-size:.75rem;opacity:.85;margin-top:6px;line-height:1.4}
+.tts-btn{background:rgba(109,40,217,.12);border:none;border-radius:20px;padding:3px 10px;font-size:.78rem;cursor:pointer;color:var(--sky-d);margin-top:6px;font-family:'Nunito',sans-serif;font-weight:600}
+.speak-prompt{background:var(--sky-l);border-left:4px solid var(--sky);border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:.9rem}
+.speak-prompt strong{color:var(--sky-d)}
+.write-area{width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:12px;font-family:'Nunito',sans-serif;font-size:.9rem;min-height:110px;resize:vertical;transition:border-color .2s}
+.write-area:focus{outline:none;border-color:var(--sky)}
+.quiz-q{background:#fff;border:2px solid #f1f5f9;border-radius:12px;padding:16px;margin:12px 0;transition:border-color .2s}
+.quiz-q.answered-ok{border-color:#16a34a;background:#f0fdf4}
+.quiz-q.answered-err{border-color:#dc2626;background:#fef2f2}
+.q-num{font-family:'Fredoka One',sans-serif;color:var(--sky);font-size:1rem;margin-bottom:8px}
+.quiz-score{background:linear-gradient(135deg,var(--sky-l),#ede9fe);border:3px solid var(--sky);border-radius:16px;padding:22px;text-align:center;display:none;margin-top:18px}
+.quiz-score.show{display:block;animation:popIn .5s ease}
+.score-num{font-family:'Fredoka One',sans-serif;font-size:3rem;color:var(--sky)}
+.badge-earned{font-size:3.5rem;display:block;margin:10px 0;animation:bounce .6s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.star-fly{position:fixed;pointer-events:none;font-size:1.5rem;z-index:9999;animation:floatStar .9s ease forwards}
+@keyframes floatStar{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-80px) scale(1.5);opacity:0}}
+.confetti-p{position:fixed;pointer-events:none;width:8px;height:8px;z-index:9998;border-radius:2px;animation:confFall 1.2s ease forwards}
+@keyframes confFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s ease}
+.hint-ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right;font-size:.92rem;background:#fff8dc;border-right:4px solid var(--sun);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0;color:#78350f}
+.divider{height:2px;background:linear-gradient(to right,var(--sky-l),var(--sky),var(--sky-l));border:none;margin:18px 0;border-radius:1px}
+.lbl{font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+.note{border-radius:0 10px 10px 0;padding:12px 16px;font-size:.9rem;margin:10px 0}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:.82rem}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--sky);border-radius:3px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <p style="font-size:.8rem;opacity:.7;letter-spacing:1px;text-transform:uppercase">Grammar • English for Palestine</p>
+  <h1>Third Conditional ⏳</h1>
+  <p class="ar" style="font-size:1rem;margin-top:4px">الشرطي الثالث — ماضٍ خيالي لم يحدث</p>
+  <div class="chips">
+    <span class="chip">🎯 Grade 9</span>
+    <span class="chip">⏱️ ~40 min</span>
+    <span class="chip">⏳ If I had… I would have…</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="go(0)">🚀 Start</button>
+  <button class="tab" onclick="go(1)">📚 Words</button>
+  <button class="tab" onclick="go(2)">🔍 Discover</button>
+  <button class="tab" onclick="go(3)">🧠 Grammar</button>
+  <button class="tab" onclick="go(4)">✏️ Practice</button>
+  <button class="tab" onclick="go(5)">🗣️ Create</button>
+  <button class="tab" onclick="go(6)">🎯 Quiz</button>
+</div>
+
+<div class="panels">
+
+<!-- TAB 1 — START -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <div class="card-title">🚀 If Only the Past Had Been Different…</div>
+    <div class="card-sub">We use the Third Conditional to imagine a different PAST — and to talk about regrets.</div>
+
+    <div class="cond-box third" style="margin-top:14px">
+      <div class="cb-type">⏳ Imaginary Past (impossible now)</div>
+      <div class="cb-sent"><span class="hl-if">If</span> I <span class="hl-cond">had studied</span> harder, I <span class="hl-res">would have passed</span> the exam.</div>
+      <div style="font-size:.82rem;color:var(--muted);margin-top:5px">…but I didn't study, so I didn't pass. It cannot change now.</div>
+    </div>
+
+    <div class="hint-ar">الشرطي الثالث يتحدّث عن ماضٍ <b>لم يحدث</b> — نتخيّل نتيجة مختلفة لما مضى، وغالبًا للتعبير عن النَّدم. لنكتشف القاعدة!</div>
+
+    <hr class="divider"/>
+    <p class="lbl">Warm-up — Choose the right form</p>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> If I had known you were sick, I ___ you. (but I didn't know)</p>
+    <div class="opts" id="s1opts">
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Will visit is future — the third conditional talks about an imaginary past.','will visit للمستقبل — الشرطي الثالث يتحدّث عن ماضٍ خيالي.')">will visit</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,true,'Correct! Third conditional main clause = would have + past participle.','صحيح! الجملة الرئيسية في الشرطي الثالث = would have + التصريف الثالث.')">would have visited</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'Would visit is Type 2 (imaginary present) — here we mean the past.','would visit للشرطي الثاني (حاضر خيالي) — لكننا نقصد الماضي.')">would visit</button>
+    </div>
+    <div class="fb-wrap" id="s1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> If we ___ earlier, we would have caught the bus. (but we left late)</p>
+    <div class="opts" id="s2opts">
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Left (past simple) is Type 2/3 mix — the if-clause here needs the past perfect.','left ماضٍ بسيط — لكن if-clause في الشرطي الثالث يحتاج الماضي التام.')">left</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,true,'Correct! Third conditional if-clause = had + past participle (had left).','صحيح! if-clause في الشرطي الثالث = had + التصريف الثالث (had left).')">had left</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'Will leave is future — this is about a missed past event.','will leave للمستقبل — لكن الحديث عن حدث ماضٍ فائت.')">will leave</button>
+    </div>
+    <div class="fb-wrap" id="s2fb"></div>
+  </div>
+</div>
+
+<!-- TAB 2 — WORDS -->
+<div class="panel" id="p1">
+  <div class="card">
+    <div class="card-title">📚 Key Vocabulary</div>
+    <div class="card-sub">Click a card to flip it. 🔊 to hear the word.</div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📌 Second vs Third — at a Glance</div>
+    <div class="hint-ar">فرّق بين الشرطي الثاني (حاضر خيالي) والشرطي الثالث (ماضٍ خيالي) قبل الاكتشاف.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+      <div class="cond-box second"><div class="cb-type">🟦 Second (imaginary present)</div><div class="cb-sent">If + <b>past simple</b> → <b>would</b> + base<br><em>If I <b>had</b> money, I <b>would buy</b> a car.</em> (now/always)</div></div>
+      <div class="cond-box third"><div class="cb-type">🟪 Third (imaginary past)</div><div class="cb-sent">If + <b>past perfect</b> → <b>would have</b> + V3<br><em>If I <b>had had</b> money, I <b>would have bought</b> a car.</em> (in the past)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3 — DISCOVER -->
+<div class="panel" id="p2">
+  <div class="card">
+    <div class="card-title">🔍 Spot the Difference!</div>
+    <div class="card-sub">Look at the verbs. What tense is in the if-clause? What comes after "would"?</div>
+    <div class="hint-ar">لاحظ الأفعال: ما زمن الفعل بعد if؟ وماذا يأتي بعد would؟</div>
+
+    <div class="cond-box second" style="margin-top:14px">
+      <div class="cb-type">Type 2 — imaginary NOW</div>
+      <div class="cb-sent">If I <strong style="color:#2563eb">knew</strong> [past simple] the answer, I <strong style="color:#2563eb">would tell</strong> [would + base] you.</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px">About now: I don't know it now.</div>
+    </div>
+    <div class="cond-box third">
+      <div class="cb-type">Type 3 — imaginary PAST</div>
+      <div class="cb-sent">If I <strong style="color:#7c3aed">had known</strong> [past perfect] the answer, I <strong style="color:#7c3aed">would have told</strong> [would have + V3] you.</div>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px">About the past: I didn't know it then — and it's finished.</div>
+    </div>
+
+    <div style="background:#f5f3ff;border:2px solid #ddd6fe;border-radius:12px;padding:14px;margin-top:14px;font-size:.88rem">
+      <strong>💡 The signal:</strong> two "haves" = the past.<br>
+      if-clause: <strong>had</strong> + V3 &nbsp;·&nbsp; main clause: <strong>would have</strong> + V3.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 Now You Discover!</div>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> "If she <u>had trained</u>, she ___ the race." — which form completes the past?</p>
+    <div class="opts" id="d1opts">
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Would win = Type 2 (imaginary present). The if-clause is past perfect, so use would have won.','would win للشرطي الثاني — لكن if-clause ماضٍ تام إذن نحتاج would have won.')">would win</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,true,'Correct! had + V3 → would have + V3 = Third conditional (imaginary past).','صحيح! had + V3 ← would have + V3 = الشرطي الثالث (ماضٍ خيالي).')">would have won</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'Will win is future — this is a finished, unreal past.','will win للمستقبل — لكن هذا ماضٍ منتهٍ غير حقيقي.')">will win</button>
+    </div>
+    <div class="fb-wrap" id="d1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> "If they ___ a map, they wouldn't have got lost." — the if-clause form:</p>
+    <div class="opts" id="d2opts">
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'Had (past simple) is Type 2 — the past needs the past perfect: had had / had taken.','had ماضٍ بسيط للشرطي الثاني — الماضي يحتاج الماضي التام: had had.')">had</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,true,'Correct! Third conditional if-clause = had + past participle (had had a map).','صحيح! if-clause الشرطي الثالث = had + التصريف الثالث (had had a map).')">had had</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'Have is present — the third conditional is about the past.','have مضارع — الشرطي الثالث يتحدّث عن الماضي.')">have had</button>
+    </div>
+    <div class="fb-wrap" id="d2fb"></div>
+
+    <div style="background:linear-gradient(135deg,var(--sky-l),#ede9fe);border:2.5px solid var(--sky);border-radius:12px;padding:16px;text-align:center;margin-top:16px">
+      <div style="font-family:'Fredoka One',sans-serif;color:var(--sky-d);font-size:1.1rem;margin-bottom:8px">⭐ The Pattern</div>
+      <p style="font-size:.95rem;line-height:1.9">🟪 <strong>Third:</strong> If + <em>had</em> + V3 → <strong>would have</strong> + V3</p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4 — GRAMMAR -->
+<div class="panel" id="p3">
+  <div class="card">
+    <div class="card-title">🧠 The Full Rule</div>
+    <div class="hint-ar">القاعدة الكاملة للشرطي الثالث مع الأمثلة.</div>
+    <div style="background:#f5f3ff;border:3px solid #a78bfa;border-radius:14px;padding:16px;margin:12px 0;text-align:center">
+      <div style="font-size:1.05rem;font-weight:800;color:var(--sky-d);line-height:2">
+        If + <span style="color:#7c3aed">past perfect (had + V3)</span>,<br>would have + <span style="color:#7c3aed">past participle (V3)</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="cond-box third"><div class="cb-sent">If I <b>had woken</b> up early, I <b>would have caught</b> the bus.</div></div>
+      <div class="cond-box third"><div class="cb-sent">If you <b>had asked</b> me, I <b>would have helped</b> you.</div></div>
+      <div class="cond-box third"><div class="cb-sent">She <b>would have passed</b> if she <b>had revised</b>. <em style="color:var(--muted);font-size:.8rem">(if-clause can come second — no comma)</em></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Important Notes</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin:12px 0">
+      <div class="note" style="background:#fffbeb;border-left:4px solid #f59e0b">
+        ⚠️ <strong>It is UNREAL &amp; finished:</strong> the opposite really happened.<br>
+        "If I <b>had</b> saved money, I <b>would have</b> bought it." → <em>I didn't save, so I didn't buy.</em>
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">النتيجة الحقيقية دائمًا عكس الجملة — الحدث انتهى ولا يمكن تغييره.</span>
+      </div>
+      <div class="note" style="background:#f0fdf4;border-left:4px solid #16a34a">
+        ✅ <strong>could have / might have</strong> can replace <em>would have</em>:<br>
+        "If he had trained, he <b>could have</b> won." / "…he <b>might have</b> won."
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">could have (كان بإمكانه) و might have (ربّما) بديلان عن would have.</span>
+      </div>
+      <div class="note" style="background:#eff6ff;border-left:4px solid #60a5fa">
+        💡 <strong>Contractions:</strong> I'd have = I would have. Don't write "would of" ✗ — it is "would <b>have</b>" ✓.
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">الاختصار I'd have، والخطأ الشائع "would of" صوابه would have.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5 — PRACTICE -->
+<div class="panel" id="p4">
+  <div class="card">
+    <div class="card-title">✏️ Level 1 — Choose the Form</div>
+    <div class="hint-ar">اختر الشكل الصحيح لإكمال الشرطي الثالث.</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> If it hadn't rained, we ___ football.</p>
+    <div class="opts" id="l1q1opts">
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,true,'Correct! would have + V3 = would have played.','صحيح! would have + V3 = would have played.')">would have played</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'would play is Type 2 — the past needs would have + V3.','would play للشرطي الثاني — الماضي يحتاج would have + V3.')">would play</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'will play is future — this is an unreal past.','will play للمستقبل — لكن هذا ماضٍ غير حقيقي.')">will play</button>
+    </div>
+    <div class="fb-wrap" id="l1q1fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> If she ___ the message, she would have replied.</p>
+    <div class="opts" id="l1q2opts">
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'saw (past simple) is Type 2 — use the past perfect: had seen.','saw ماضٍ بسيط للشرطي الثاني — استخدم الماضي التام: had seen.')">saw</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,true,'Correct! if-clause = had + V3 = had seen.','صحيح! if-clause = had + V3 = had seen.')">had seen</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'has seen is present perfect — the third conditional uses past perfect.','has seen مضارع تام — الشرطي الثالث يستخدم الماضي التام.')">has seen</button>
+    </div>
+    <div class="fb-wrap" id="l1q2fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>3)</strong> They would have won if they ___ harder.</p>
+    <div class="opts" id="l1q3opts">
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'try is present — use the past perfect: had tried.','try مضارع — استخدم الماضي التام: had tried.')">try</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'tried (past simple) is not enough — third conditional needs had tried.','tried ماضٍ بسيط لا يكفي — الشرطي الثالث يحتاج had tried.')">tried</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,true,'Correct! had + V3 = had tried.','صحيح! had + V3 = had tried.')">had tried</button>
+    </div>
+    <div class="fb-wrap" id="l1q3fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>4)</strong> If I had had your number, I ___ you.</p>
+    <div class="opts" id="l1q4opts">
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'would call is Type 2 — the past needs would have called.','would call للشرطي الثاني — الماضي يحتاج would have called.')">would call</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,true,'Correct! would have + V3 = would have called.','صحيح! would have + V3 = would have called.')">would have called</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'called (past simple) alone is not the third conditional main clause.','called وحده ليس الجملة الرئيسية للشرطي الثالث.')">called</button>
+    </div>
+    <div class="fb-wrap" id="l1q4fb"></div>
+
+    <div class="lvl-done" id="l1done">🎉 Level 1 done! You know the third conditional shape!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 2 — Fill with the Word Bank</div>
+    <div class="hint-ar">اضغط على الكلمة ثم اضغط على الفراغ لوضعها.</div>
+    <div class="wb-chips" id="wb2chips">
+      <span class="wb-chip" onclick="pickWb(this,'had studied')">had studied</span>
+      <span class="wb-chip" onclick="pickWb(this,'would have passed')">would have passed</span>
+      <span class="wb-chip" onclick="pickWb(this,'had left')">had left</span>
+      <span class="wb-chip" onclick="pickWb(this,'would have helped')">would have helped</span>
+      <span class="wb-chip" onclick="pickWb(this,'had known')">had known</span>
+    </div>
+    <div style="margin:12px 0">
+      <div class="fill-line">1) If he <span class="blank" id="wb2b1" onclick="dropWb('wb2b1')">______</span>, he would have passed. <em style="font-size:.78rem;color:var(--muted)">(if-clause)</em></div>
+      <div class="fill-line">2) If I had revised, I <span class="blank" id="wb2b2" onclick="dropWb('wb2b2')">______</span> the test. <em style="font-size:.78rem;color:var(--muted)">(main)</em></div>
+      <div class="fill-line">3) If we <span class="blank" id="wb2b3" onclick="dropWb('wb2b3')">______</span> early, we would have caught it. <em style="font-size:.78rem;color:var(--muted)">(if-clause)</em></div>
+      <div class="fill-line">4) If you had asked, I <span class="blank" id="wb2b4" onclick="dropWb('wb2b4')">______</span> you. <em style="font-size:.78rem;color:var(--muted)">(main)</em></div>
+      <div class="fill-line">5) If she <span class="blank" id="wb2b5" onclick="dropWb('wb2b5')">______</span>, she would have come. <em style="font-size:.78rem;color:var(--muted)">(if-clause)</em></div>
+    </div>
+    <button class="check-btn" onclick="checkWb2()">Check ✓</button>
+    <div class="fb-wrap" id="wb2fb"></div>
+    <div class="lvl-done" id="l2done">🎉 Level 2 done! Great past-perfect work!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 3 — Write the Correct Form</div>
+    <div class="hint-ar">اكتب شكل الفعل الصحيح بين القوسين (ماضٍ تام أو would have + V3).</div>
+    <div style="margin:10px 0">
+      <div class="fill-line">1) If I <input class="type-inp" id="l3i1" placeholder="(know)"> , I would have told you. <em style="font-size:.78rem;color:var(--muted)">(had + V3)</em></div>
+      <div class="fill-line">2) If they had hurried, they <input class="type-inp" id="l3i2" placeholder="(catch) the train"> . <em style="font-size:.78rem;color:var(--muted)">(would have + V3)</em></div>
+      <div class="fill-line">3) If she <input class="type-inp" id="l3i3" placeholder="(not / miss)"> the bus, she would have arrived. <em style="font-size:.78rem;color:var(--muted)">(hadn't + V3)</em></div>
+      <div class="fill-line">4) We would have won if we <input class="type-inp" id="l3i4" placeholder="(play) better"> . <em style="font-size:.78rem;color:var(--muted)">(had + V3)</em></div>
+    </div>
+    <button class="check-btn" onclick="checkL3()">Check ✓</button>
+    <div class="fb-wrap" id="l3fb"></div>
+    <div class="lvl-done" id="l3done">🎉 Level 3 done! Excellent forms!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 4 — Spot and Fix the Mistake</div>
+    <div class="hint-ar">كل جملة فيها خطأ. اختر الجملة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>&nbsp;If I would have known, I would have come.</p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q1opts">
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,true,'Correct! The if-clause uses had + V3, never would have.','صحيح! if-clause تستخدم had + V3، وليس would have.')">If I had known, I would have come.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'Never put would in the if-clause of a conditional.','لا نضع would داخل if-clause أبدًا.')">If I would have known, I had come.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'knew (past simple) is Type 2 — the past needs had known.','knew ماضٍ بسيط للشرطي الثاني — الماضي يحتاج had known.')">If I knew, I would have come.</button>
+    </div>
+    <div class="fb-wrap" id="l4q1fb"></div>
+
+    <hr class="divider"/>
+    <p style="font-size:.95rem;margin-bottom:8px"><span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>&nbsp;If she had asked, I would of helped her.</p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q2opts">
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'would helped is missing have — it must be would have helped.','would helped ناقصة have — الصواب would have helped.')">If she had asked, I would helped her.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,true,'Correct! It is would HAVE helped (never "would of").','صحيح! الصواب would have helped وليس would of.')">If she had asked, I would have helped her.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'will help is future — this is an unreal past.','will help للمستقبل — لكن هذا ماضٍ غير حقيقي.')">If she had asked, I will help her.</button>
+    </div>
+    <div class="fb-wrap" id="l4q2fb"></div>
+
+    <div class="lvl-done" id="l4done">🏆 All 4 levels done! You are a Third Conditional champion!</div>
+  </div>
+</div>
+
+<!-- TAB 6 — CREATE -->
+<div class="panel" id="p5">
+  <div class="card">
+    <div class="card-title">🗣️ Speaking — Past Regrets &amp; What-Ifs</div>
+    <div class="hint-ar">تحدّث عن ماضٍ لم يحدث — ندم أو نتيجة مختلفة.</div>
+    <div class="speak-prompt"><strong>Round 1 — Your day:</strong> 👉 <em>If I had woken up earlier today, I would have ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 2 — School:</strong> 👉 <em>If I had studied more last year, I would have ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 3 — History:</strong> 👉 <em>If people had protected the old city better, it would have ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 4 — Partner game:</strong> Say a real past fact. Your partner turns it into a third conditional!<br><em>"I didn't bring an umbrella." → "If you had brought an umbrella, you wouldn't have got wet."</em></div>
+  </div>
+  <div class="card">
+    <div class="card-title">✍️ Writing — My "If Only" Story</div>
+    <div class="hint-ar">اكتب فقرة قصيرة عن يوم لم يسر كما أردت، مستخدمًا الشرطي الثالث.</div>
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:14px;margin:10px 0;font-size:.88rem">
+      <p style="font-weight:700;margin-bottom:6px">📌 Your paragraph must include:</p>
+      <ul style="margin-left:16px;line-height:1.9">
+        <li>At least <strong>three</strong> third-conditional sentences</li>
+        <li>One with <strong>could have</strong> or <strong>might have</strong></li>
+        <li>One where the if-clause comes <strong>second</strong> (no comma)</li>
+      </ul>
+    </div>
+    <textarea class="write-area" placeholder="Last Saturday was not my best day. If I had set my alarm, I would have woken up on time. If I hadn't missed the bus, I would have arrived at the match early. My team lost, but we could have won if I had been there to help. If only I had been more careful, the whole day would have gone better!"></textarea>
+  </div>
+  <div class="card">
+    <div class="card-title">💬 Challenge — Complete the Sentences</div>
+    <div class="hint-ar">أكمل هذه الجمل بأفكارك الخاصة.</div>
+    <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:10px;padding:14px;margin:10px 0;font-size:.9rem">
+      <ol style="margin-left:16px;line-height:2.2">
+        <li>If I had been born 100 years ago, …</li>
+        <li>If humans had never invented the internet, …</li>
+        <li>… , I would have travelled around the world.</li>
+      </ol>
+    </div>
+    <textarea class="write-area" placeholder="1) If I had been born 100 years ago, I would have ridden a horse to school.&#10;2) If humans had never invented the internet, we would have written more letters.&#10;3) If I had won the prize, I would have travelled around the world."></textarea>
+  </div>
+</div>
+
+<!-- TAB 7 — QUIZ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <div class="card-title">🎯 Quick Check — 5 Questions</div>
+    <div class="hint-ar">أجب على الأسئلة الخمسة ثم اضغط "Check My Score".</div>
+
+    <div class="quiz-q" id="qq1">
+      <div class="q-num">Question 1 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">If I had seen the sign, I ___ down.</p>
+      <div class="opts" id="qq1opts">
+        <button class="opt" onclick="qsc(1,this,'a',event)">would have slowed</button>
+        <button class="opt" onclick="qsc(1,this,'b',event)">would slow</button>
+        <button class="opt" onclick="qsc(1,this,'c',event)">will slow</button>
+      </div>
+      <div class="fb-wrap" id="qq1fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq2">
+      <div class="q-num">Question 2 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">If they ___ the map, they wouldn't have got lost.</p>
+      <div class="opts" id="qq2opts">
+        <button class="opt" onclick="qsc(2,this,'a',event)">read</button>
+        <button class="opt" onclick="qsc(2,this,'b',event)">had read</button>
+        <button class="opt" onclick="qsc(2,this,'c',event)">have read</button>
+      </div>
+      <div class="fb-wrap" id="qq2fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq3">
+      <div class="q-num">Question 3 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">The third conditional talks about …</p>
+      <div class="opts" id="qq3opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(3,this,'a',event)">an imaginary, unreal PAST (and regrets)</button>
+        <button class="opt" onclick="qsc(3,this,'b',event)">a real future plan</button>
+        <button class="opt" onclick="qsc(3,this,'c',event)">a present habit</button>
+      </div>
+      <div class="fb-wrap" id="qq3fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq4">
+      <div class="q-num">Question 4 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Which sentence is correct?</p>
+      <div class="opts" id="qq4opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(4,this,'a',event)">If I would have known, I would have come.</button>
+        <button class="opt" onclick="qsc(4,this,'b',event)">If I had known, I would have come.</button>
+        <button class="opt" onclick="qsc(4,this,'c',event)">If I had known, I would of come.</button>
+      </div>
+      <div class="fb-wrap" id="qq4fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq5">
+      <div class="q-num">Question 5 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">"If she had trained, she ___ have won." (a possibility)</p>
+      <div class="opts" id="qq5opts">
+        <button class="opt" onclick="qsc(5,this,'a',event)">could</button>
+        <button class="opt" onclick="qsc(5,this,'b',event)">will</button>
+        <button class="opt" onclick="qsc(5,this,'c',event)">is</button>
+      </div>
+      <div class="fb-wrap" id="qq5fb"></div>
+    </div>
+
+    <button class="check-btn" style="margin-top:16px;width:100%;font-size:1rem" onclick="calcQuiz()">📊 Check My Score</button>
+    <div class="quiz-score" id="quizScore">
+      <div class="score-num" id="scoreTxt"></div>
+      <p id="scoreMsg" style="font-size:1rem;margin:6px 0"></p>
+      <span class="badge-earned" id="badgeIcon">⏳</span>
+      <p id="badgeMsg" style="font-size:.85rem;color:var(--muted)"></p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>Prepared with care 🌸 by T. Wad Refae</footer>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+const prog=document.getElementById('progFill');
+function go(i){
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  prog.style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function launchStar(x,y){
+  const el=document.createElement('div');el.className='star-fly';
+  el.textContent=['⭐','✨','💫','🌟'][Math.floor(Math.random()*4)];
+  el.style.cssText=`left:${x}px;top:${y}px`;document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
+}
+function confetti(){
+  const colors=['#6d28d9','#F59E0B','#ec4899','#16a34a','#a78bfa','#f97316'];
+  for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-p';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[i%colors.length]};animation-delay:${Math.random()*.8}s;animation-duration:${1+Math.random()}s`;
+    document.body.appendChild(p);setTimeout(()=>p.remove(),2200);}
+}
+function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅':'❌'} ${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const opts=document.querySelectorAll(`#${rowId}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  checkL1done();checkL4done();
+}
+function checkL1done(){
+  if(['l1q1','l1q2','l1q3','l1q4'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l1done').classList.add('show');confetti();}
+}
+function checkL4done(){
+  if(['l4q1','l4q2'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l4done').classList.add('show');confetti();}
+}
+let wbSel=null;
+const wb2answers={wb2b1:'had studied',wb2b2:'would have passed',wb2b3:'had left',wb2b4:'would have helped',wb2b5:'had known'};
+function pickWb(chip,val){
+  document.querySelectorAll('#wb2chips .wb-chip').forEach(c=>c.classList.remove('sel'));
+  if(wbSel&&wbSel.chip===chip){wbSel=null;return;}
+  chip.classList.add('sel');wbSel={chip,val};
+}
+function dropWb(blankId){
+  if(!wbSel)return;const blank=document.getElementById(blankId);
+  if(blank.classList.contains('filled'))return;
+  blank.textContent=wbSel.val;blank.classList.add('filled');
+  wbSel.chip.classList.add('used');wbSel.chip.classList.remove('sel');wbSel=null;
+}
+function checkWb2(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(wb2answers)){
+    if(document.getElementById(id).textContent.trim()===ans)ok++;}
+  const all=Object.keys(wb2answers).length;
+  if(ok===all){setFb('wb2fb',true,'All correct! Great third-conditional work!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l2done').classList.add('show');confetti();}
+  else setFb('wb2fb',false,`${ok}/${all} correct. Check again.`,`${ok} من ${all} صحيحة.`);
+}
+const l3answers={l3i1:['had known'],l3i2:['would have caught the train','would have caught'],l3i3:["hadn't missed",'had not missed'],l3i4:['had played better','had played']};
+function checkL3(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(l3answers)){
+    const inp=document.getElementById(id);
+    const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
+    const correct=ans.some(a=>a.toLowerCase()===val);
+    inp.className='type-inp '+(correct?'ok':'err');
+    if(correct)ok++;}
+  const all=Object.keys(l3answers).length;
+  if(ok===all){setFb('l3fb',true,'All correct! Perfect third conditionals!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l3done').classList.add('show');confetti();}
+  else setFb('l3fb',false,`${ok}/${all} correct. Try again.`,`${ok} من ${all} صحيحة.`);
+}
+const qAnswers={1:'a',2:'b',3:'a',4:'b',5:'a'};
+const qScored={};
+function qsc(qNum,btn,val,evt){
+  const opts=document.querySelectorAll(`#qq${qNum}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  const correct=val===qAnswers[qNum];
+  btn.classList.add(correct?'ok':'err');
+  qScored[qNum]=correct;
+  document.getElementById(`qq${qNum}`).classList.add(correct?'answered-ok':'answered-err');
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  const fb={
+    1:{ok:"Correct! would have + V3 = would have slowed.",ar:"صحيح! would have + V3 = would have slowed.",no:"The past needs would have + V3.",nar:"الماضي يحتاج would have + V3."},
+    2:{ok:"Correct! if-clause = had + V3 = had read.",ar:"صحيح! if-clause = had + V3 = had read.",no:"The if-clause uses the past perfect: had read.",nar:"if-clause تستخدم الماضي التام: had read."},
+    3:{ok:"Correct! It is about an unreal, finished past.",ar:"صحيح! يتحدّث عن ماضٍ غير حقيقي منتهٍ.",no:"The third conditional is about an imaginary PAST.",nar:"الشرطي الثالث يتحدّث عن ماضٍ خيالي."},
+    4:{ok:"Correct! if + had + V3 → would have + V3.",ar:"صحيح! if + had + V3 ← would have + V3.",no:"Never use 'would have' in the if-clause or 'would of'.",nar:"لا نستخدم would have داخل if ولا would of."},
+    5:{ok:"Correct! could have is a possible past result.",ar:"صحيح! could have نتيجة ماضية ممكنة.",no:"Use could have / might have / would have + V3.",nar:"نستخدم could/might/would have + V3."}
+  };
+  if(correct)setFb(`qq${qNum}fb`,true,fb[qNum].ok,fb[qNum].ar);
+  else setFb(`qq${qNum}fb`,false,fb[qNum].no,fb[qNum].nar);
+}
+function calcQuiz(){
+  const score=Object.values(qScored).filter(Boolean).length;
+  document.getElementById('scoreTxt').textContent=`${score} / 5`;
+  const msgs=[
+    {e:'Keep going — review had + V3 → would have + V3!',a:'راجع القاعدة: had + V3 ← would have + V3.'},
+    {e:'Good try! Remember the two "haves".',a:'تذكّر وجود have مرتين.'},
+    {e:'Good! You are getting there.',a:'جيد! أنت في الطريق الصحيح.'},
+    {e:'Great! Almost perfect!',a:'رائع! تقريبًا مثالي.'},
+    {e:'Perfect! You are a Time Traveller! ⏳',a:'ممتاز! أنت مسافر عبر الزمن!'}
+  ];
+  const m=msgs[Math.min(score,4)];
+  document.getElementById('scoreMsg').innerHTML=`${m.e}<br><span class="ar">${m.a}</span>`;
+  document.getElementById('badgeMsg').textContent=score>=3?'⏳ Time Traveller Badge earned!':'Keep going — earn the Time Traveller Badge!';
+  document.getElementById('quizScore').classList.add('show');
+  if(score>=3){localStorage.setItem('badge_third_conditional','earned');confetti();}
+}
+const cards=[
+  {word:'past perfect',emoji:'⏮️',ar:'الماضي التام (had + V3)',syn:'had + past participle',ant:'—'},
+  {word:'would have',emoji:'⏳',ar:'كان سيـ (في الماضي)',syn:'imaginary past result',ant:'would (Type 2)'},
+  {word:'regret',emoji:'😔',ar:'نَدَم',syn:'wish it were different',ant:'satisfaction'},
+  {word:'if only',emoji:'🙏',ar:'ليت / لو أنّ',syn:'I wish … had',ant:'—'},
+  {word:'consequence',emoji:'➡️',ar:'نتيجة',syn:'result — outcome',ant:'cause'},
+  {word:'unreal',emoji:'💭',ar:'غير حقيقي / خيالي',syn:'imaginary — hypothetical',ant:'real'},
+];
+const grid=document.getElementById('fcGrid');
+cards.forEach((c,i)=>{
+  grid.innerHTML+=`
+  <div class="fc" id="fc${i}" onclick="flipCard(${i})">
+    <div class="fc-inner">
+      <div class="fc-front"><span class="emoji">${c.emoji}</span><div class="word">${c.word}</div>
+        <button class="tts-btn" onclick="event.stopPropagation();speak('${c.word}')">🔊 Listen</button></div>
+      <div class="fc-back"><div class="ar-mean ar">${c.ar}</div><div class="syn">${c.syn}</div>
+        ${c.ant&&c.ant!=='—'?`<div class="syn" style="opacity:.7">↔ ${c.ant}</div>`:''}</div>
+    </div>
+  </div>`;
+});
+function flipCard(i){document.getElementById('fc'+i).classList.toggle('flipped');}
+function speak(w){const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u);}
+</script>
+</body>
+</html>

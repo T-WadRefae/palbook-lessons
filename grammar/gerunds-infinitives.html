@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Gerunds &amp; Infinitives — PalBook Grammar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --sky:#15803d;--sky-d:#14532d;--sky-l:#f0fdf4;--sun:#f59e0b;
+  --txt:#1e293b;--muted:#64748b;--white:#fff;--rad:14px;
+  --shadow:0 4px 18px rgba(21,128,61,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f0fdf4;color:var(--txt);min-height:100vh}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif}
+.hdr{background:linear-gradient(135deg,var(--sky-d) 0%,var(--sky) 55%,#4ade80 100%);color:#fff;padding:24px 16px 0;text-align:center;position:relative;overflow:hidden}
+.hdr::before{content:'🪧';font-size:120px;opacity:.09;position:absolute;top:-6px;right:-8px;line-height:1}
+.hdr h1{font-family:'Fredoka One',sans-serif;font-size:clamp(1.3rem,4vw,2.1rem);letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.chip{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.82rem;backdrop-filter:blur(4px)}
+.prog-wrap{background:rgba(0,0,0,.2);height:6px;border-radius:3px;margin:0 16px}
+.prog-fill{height:100%;background:var(--sun);border-radius:3px;transition:width .4s}
+.tab-bar{display:flex;gap:6px;padding:12px 12px 0;background:var(--sky-d);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+@media(min-width:700px){.tab-bar{flex-wrap:wrap;overflow-x:visible;justify-content:center}}
+.tab{flex:0 0 auto;background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:10px 10px 0 0;padding:8px 14px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:700;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.tab.active,.tab:hover{background:var(--white);color:var(--sky-d)}
+.panels{max-width:860px;margin:0 auto;padding:20px 14px 60px}
+.panel{display:none}.panel.on{display:block}
+.card{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:22px;margin-bottom:18px}
+.card-title{font-family:'Fredoka One',sans-serif;font-size:1.3rem;color:var(--sky-d);margin-bottom:10px}
+.card-sub{color:var(--muted);font-size:.9rem;margin-bottom:14px}
+.q-inst{border-right:5px solid var(--sky);background:var(--sky-l);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0 10px;font-size:.95rem;direction:rtl;text-align:right;color:var(--sky-d)}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.opt{background:#f1f5f9;border:2px solid #e2e8f0;border-radius:10px;padding:9px 18px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:600;transition:all .2s}
+.opt:hover:not(:disabled){background:var(--sky-l);border-color:var(--sky)}
+.opt.ok{background:#dcfce7;border-color:#16a34a;color:#14532d}
+.opt.err{background:#fee2e2;border-color:#dc2626;color:#7f1d1d}
+.opt:disabled{cursor:default}
+.fb-wrap{display:none;border-radius:10px;padding:10px 14px;margin-top:8px;font-size:.9rem}
+.fb-wrap.show{display:block}
+.fb-wrap.ok{background:#dcfce7;border-left:4px solid #16a34a}
+.fb-wrap.err{background:#fee2e2;border-left:4px solid #dc2626}
+.fb-en{font-weight:700;margin-bottom:4px}
+.fb-ar{direction:rtl;text-align:right;font-size:.88rem;opacity:.85}
+.wb-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;padding:12px;background:#f8fafc;border-radius:10px;border:2px dashed #cbd5e1;min-height:48px}
+.wb-chip{background:var(--sky-l);border:2px solid var(--sky);color:var(--sky-d);border-radius:20px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:.88rem;transition:all .2s;user-select:none}
+.wb-chip.used{opacity:.35;pointer-events:none}
+.wb-chip.sel{background:var(--sky);color:#fff;transform:scale(1.05)}
+.blank{display:inline-block;min-width:120px;border-bottom:2.5px solid var(--sky);padding:2px 8px;text-align:center;cursor:pointer;border-radius:4px;margin:0 4px;font-weight:700;color:var(--sky-d);transition:background .2s}
+.blank:hover:not(.filled){background:var(--sky-l)}
+.blank.filled{border-color:#16a34a;color:#15803d;background:#f0fdf4}
+.fill-line{line-height:2.4;margin:8px 0;font-size:.92rem}
+.type-inp{border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-family:'Nunito',sans-serif;font-size:.88rem;width:160px;margin:4px 6px;transition:border-color .2s}
+.type-inp:focus{outline:none;border-color:var(--sky)}
+.type-inp.ok{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.type-inp.err{border-color:#dc2626;background:#fef2f2;color:#991b1b}
+.check-btn{background:var(--sky);color:#fff;border:none;border-radius:10px;padding:9px 22px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;margin-top:10px;transition:background .2s}
+.check-btn:hover{background:var(--sky-d)}
+.lvl-done{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #16a34a;border-radius:12px;padding:14px;text-align:center;display:none;margin-top:14px}
+.lvl-done.show{display:block;animation:popIn .4s ease}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.lane-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:520px){.lane-grid{grid-template-columns:1fr}}
+.lane{border-radius:12px;padding:14px;font-size:.9rem}
+.lane-ing{background:#eff6ff;border:2px solid #60a5fa}
+.lane-to{background:#f0fdf4;border:2px solid #4ade80}
+.lane .lane-h{font-family:'Fredoka One',sans-serif;margin-bottom:6px}
+.lane-ing .lane-h{color:#2563eb}.lane-to .lane-h{color:#15803d}
+.lane .verbs{font-size:.82rem;line-height:1.8}
+.hl-g{font-weight:800;color:#2563eb}.hl-i{font-weight:800;color:#15803d}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:14px 0}
+.fc{perspective:600px;cursor:pointer;height:140px}
+.fc-inner{width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s;position:relative}
+.fc.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--sky-l),#fff);border:2px solid var(--sky)}
+.fc-back{background:linear-gradient(135deg,var(--sky),#4ade80);color:#fff;transform:rotateY(180deg)}
+.fc-front .word{font-size:.95rem;font-weight:800;color:var(--sky-d);margin-top:6px;line-height:1.2}
+.fc-front .emoji{font-size:1.8rem}
+.fc-back .ar-mean{font-family:'Baloo Bhaijaan 2',sans-serif;font-size:1rem;font-weight:700}
+.fc-back .syn{font-size:.75rem;opacity:.85;margin-top:6px;line-height:1.4}
+.tts-btn{background:rgba(21,128,61,.12);border:none;border-radius:20px;padding:3px 10px;font-size:.78rem;cursor:pointer;color:var(--sky-d);margin-top:6px;font-family:'Nunito',sans-serif;font-weight:600}
+.speak-prompt{background:var(--sky-l);border-left:4px solid var(--sky);border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0;font-size:.9rem}
+.speak-prompt strong{color:var(--sky-d)}
+.write-area{width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:12px;font-family:'Nunito',sans-serif;font-size:.9rem;min-height:110px;resize:vertical;transition:border-color .2s}
+.write-area:focus{outline:none;border-color:var(--sky)}
+.quiz-q{background:#fff;border:2px solid #f1f5f9;border-radius:12px;padding:16px;margin:12px 0;transition:border-color .2s}
+.quiz-q.answered-ok{border-color:#16a34a;background:#f0fdf4}
+.quiz-q.answered-err{border-color:#dc2626;background:#fef2f2}
+.q-num{font-family:'Fredoka One',sans-serif;color:var(--sky);font-size:1rem;margin-bottom:8px}
+.quiz-score{background:linear-gradient(135deg,var(--sky-l),#dcfce7);border:3px solid var(--sky);border-radius:16px;padding:22px;text-align:center;display:none;margin-top:18px}
+.quiz-score.show{display:block;animation:popIn .5s ease}
+.score-num{font-family:'Fredoka One',sans-serif;font-size:3rem;color:var(--sky)}
+.badge-earned{font-size:3.5rem;display:block;margin:10px 0;animation:bounce .6s ease infinite alternate}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.star-fly{position:fixed;pointer-events:none;font-size:1.5rem;z-index:9999;animation:floatStar .9s ease forwards}
+@keyframes floatStar{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-80px) scale(1.5);opacity:0}}
+.confetti-p{position:fixed;pointer-events:none;width:8px;height:8px;z-index:9998;border-radius:2px;animation:confFall 1.2s ease forwards}
+@keyframes confFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shake{animation:shake .3s ease}
+.hint-ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;text-align:right;font-size:.92rem;background:#fff8dc;border-right:4px solid var(--sun);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0;color:#78350f}
+.divider{height:2px;background:linear-gradient(to right,var(--sky-l),var(--sky),var(--sky-l));border:none;margin:18px 0;border-radius:1px}
+.lbl{font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px}
+.note{border-radius:0 10px 10px 0;padding:12px 16px;font-size:.9rem;margin:10px 0}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:.82rem}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--sky);border-radius:3px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <p style="font-size:.8rem;opacity:.7;letter-spacing:1px;text-transform:uppercase">Grammar • English for Palestine</p>
+  <h1>Gerunds &amp; Infinitives 🪧</h1>
+  <p class="ar" style="font-size:1rem;margin-top:4px">المصدر بـ ing مقابل to + الفعل</p>
+  <div class="chips">
+    <span class="chip">🎯 Grades 8 &amp; 9</span>
+    <span class="chip">⏱️ ~40 min</span>
+    <span class="chip">🪧 -ing vs to</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:14%"></div></div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="go(0)">🚀 Start</button>
+  <button class="tab" onclick="go(1)">📚 Words</button>
+  <button class="tab" onclick="go(2)">🔍 Discover</button>
+  <button class="tab" onclick="go(3)">🧠 Grammar</button>
+  <button class="tab" onclick="go(4)">✏️ Practice</button>
+  <button class="tab" onclick="go(5)">🗣️ Create</button>
+  <button class="tab" onclick="go(6)">🎯 Quiz</button>
+</div>
+
+<div class="panels">
+
+<!-- TAB 1 — START -->
+<div class="panel on" id="p0">
+  <div class="card">
+    <div class="card-title">🪧 Two Lanes — Which Way?</div>
+    <div class="card-sub">Some verbs are followed by <b>-ing</b> (a gerund); others by <b>to + verb</b> (an infinitive).</div>
+
+    <div class="lane-grid" style="margin-top:14px">
+      <div class="lane lane-ing"><div class="lane-h">🔵 -ing lane</div><div class="verbs">I <span class="hl-g">enjoy playing</span> football.</div></div>
+      <div class="lane lane-to"><div class="lane-h">🟢 to lane</div><div class="verbs">I <span class="hl-i">want to play</span> football.</div></div>
+    </div>
+
+    <div class="hint-ar">بعض الأفعال يتبعها الفعل بصيغة <b>ing</b> (gerund)، وأخرى يتبعها <b>to + الفعل</b> (infinitive). المفتاح: الفعل الأول هو الذي يقرّر المسار. لنكتشف!</div>
+
+    <hr class="divider"/>
+    <p class="lbl">Warm-up — Choose the right form</p>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> I enjoy ___ books in my free time.</p>
+    <div class="opts" id="s1opts">
+      <button class="opt" onclick="sc('s1','s1fb',this,true,'Correct! enjoy + gerund (-ing) → enjoy reading.','صحيح! enjoy + المصدر بـ ing ← enjoy reading.')">reading</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'enjoy is not followed by to + verb.','enjoy لا يتبعها to + الفعل.')">to read</button>
+      <button class="opt" onclick="sc('s1','s1fb',this,false,'read (base) alone is not used after enjoy.','read المجرّد لا يأتي بعد enjoy.')">read</button>
+    </div>
+    <div class="fb-wrap" id="s1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> She decided ___ a doctor.</p>
+    <div class="opts" id="s2opts">
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'decide is not followed by the -ing form.','decide لا يتبعها صيغة ing.')">becoming</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,true,'Correct! decide + to + verb → decided to become.','صحيح! decide + to + الفعل ← decided to become.')">to become</button>
+      <button class="opt" onclick="sc('s2','s2fb',this,false,'become (base) alone is not used after decided.','become المجرّد لا يأتي بعد decided.')">become</button>
+    </div>
+    <div class="fb-wrap" id="s2fb"></div>
+  </div>
+</div>
+
+<!-- TAB 2 — WORDS -->
+<div class="panel" id="p1">
+  <div class="card">
+    <div class="card-title">📚 Key Vocabulary</div>
+    <div class="card-sub">Click a card to flip it. 🔊 to hear the word.</div>
+    <div class="fc-grid" id="fcGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📌 The Two Lanes — Common Verbs</div>
+    <div class="hint-ar">قائمة سريعة بأشهر الأفعال في كل مسار.</div>
+    <div class="lane-grid" style="margin-top:8px">
+      <div class="lane lane-ing"><div class="lane-h">🔵 verb + -ing</div><div class="verbs">enjoy · finish · avoid · mind · keep · practise · suggest · miss<br><em>+ after prepositions:</em> good at <b>swimming</b></div></div>
+      <div class="lane lane-to"><div class="lane-h">🟢 verb + to</div><div class="verbs">want · need · decide · hope · plan · would like · promise · agree · learn · offer</div></div>
+    </div>
+    <div style="background:#fffbeb;border:2px solid #fde68a;border-radius:10px;padding:11px;margin-top:10px;font-size:.85rem">
+      💛 <strong>Both (little change):</strong> like · love · hate · start · begin — "I like <b>swimming</b>" = "I like <b>to swim</b>."
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3 — DISCOVER -->
+<div class="panel" id="p2">
+  <div class="card">
+    <div class="card-title">🔍 What Decides the Lane?</div>
+    <div class="card-sub">Look at the FIRST verb. It chooses -ing or to.</div>
+    <div class="hint-ar">انظر إلى الفعل الأول — هو الذي يحدّد المسار (ing أو to).</div>
+
+    <div class="lane-grid" style="margin-top:14px">
+      <div class="lane lane-ing"><div class="lane-h">🔵 -ing</div><div class="verbs">She <strong style="color:#2563eb">finished</strong> <strong style="color:#2563eb">doing</strong> her homework.<br>They <strong style="color:#2563eb">avoid</strong> <strong style="color:#2563eb">eating</strong> junk food.</div></div>
+      <div class="lane lane-to"><div class="lane-h">🟢 to</div><div class="verbs">He <strong style="color:#15803d">hopes</strong> <strong style="color:#15803d">to win</strong> the match.<br>We <strong style="color:#15803d">agreed</strong> <strong style="color:#15803d">to help</strong>.</div></div>
+    </div>
+
+    <div style="background:#eff6ff;border:2px solid #bfdbfe;border-radius:12px;padding:14px;margin-top:14px;font-size:.88rem">
+      <strong>💡 Two more -ing rules:</strong><br>
+      1) After a <b>preposition</b> → -ing: <em>interested in <b>learning</b>, good at <b>drawing</b>.</em><br>
+      2) As the <b>subject</b> → -ing: <em><b>Swimming</b> is good exercise.</em>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 Now You Discover!</div>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> "They want ___ home." — which lane does <em>want</em> take?</p>
+    <div class="opts" id="d1opts">
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'want is not followed by -ing.','want لا يتبعها ing.')">going</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,true,'Correct! want → to + verb (to go).','صحيح! want ← to + الفعل (to go).')">to go</button>
+      <button class="opt" onclick="sc('d1','d1fb',this,false,'go (base) alone is not used after want here.','go المجرّد لا يأتي بعد want هنا.')">go</button>
+    </div>
+    <div class="fb-wrap" id="d1fb"></div>
+
+    <hr class="divider"/>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> "She is good at ___ ." — after a preposition, we use…</p>
+    <div class="opts" id="d2opts">
+      <button class="opt" onclick="sc('d2','d2fb',this,true,'Correct! After a preposition (at) → -ing: cooking.','صحيح! بعد حرف الجر (at) ← ing: cooking.')">cooking</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'After a preposition we do not use to + verb.','بعد حرف الجر لا نستخدم to + الفعل.')">to cook</button>
+      <button class="opt" onclick="sc('d2','d2fb',this,false,'The base verb is not used after a preposition.','الفعل المجرّد لا يأتي بعد حرف الجر.')">cook</button>
+    </div>
+    <div class="fb-wrap" id="d2fb"></div>
+
+    <div style="background:linear-gradient(135deg,var(--sky-l),#dcfce7);border:2.5px solid var(--sky);border-radius:12px;padding:16px;text-align:center;margin-top:16px">
+      <div style="font-family:'Fredoka One',sans-serif;color:var(--sky-d);font-size:1.1rem;margin-bottom:8px">⭐ The Pattern</div>
+      <p style="font-size:.92rem;line-height:1.9">🔵 enjoy/finish/avoid + <strong>-ing</strong> · after a preposition → <strong>-ing</strong><br>🟢 want/decide/hope + <strong>to</strong> + verb</p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4 — GRAMMAR -->
+<div class="panel" id="p3">
+  <div class="card">
+    <div class="card-title">🧠 The Full Rules</div>
+    <div class="hint-ar">القواعد الكاملة للمصدر بـ ing و to + الفعل.</div>
+    <div class="lane-grid">
+      <div class="lane lane-ing" style="border-width:3px">
+        <div class="lane-h" style="font-size:1.05rem">🔵 Gerund (verb + -ing)</div>
+        <div class="verbs">
+          • After: enjoy, finish, avoid, mind, keep, practise, suggest, miss<br>
+          • After a <b>preposition</b>: <em>good at, interested in, before, after</em><br>
+          • As the <b>subject</b>: <em>Reading is fun.</em>
+        </div>
+      </div>
+      <div class="lane lane-to" style="border-width:3px">
+        <div class="lane-h" style="font-size:1.05rem">🟢 Infinitive (to + verb)</div>
+        <div class="verbs">
+          • After: want, need, decide, hope, plan, promise, agree, learn, offer<br>
+          • After <em>would like/love</em>: <em>I would like to go.</em><br>
+          • To show <b>purpose</b> (why): <em>I went out <b>to buy</b> bread.</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧠 Important Notes</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin:12px 0">
+      <div class="note" style="background:#fffbeb;border-left:4px solid #f59e0b">
+        ⚠️ <strong>The FIRST verb decides:</strong> ✗ I want <u>going</u> · ✓ I want <b>to go</b>. ✗ I enjoy <u>to swim</u> · ✓ I enjoy <b>swimming</b>.
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">الفعل الأول هو الذي يحدّد المسار.</span>
+      </div>
+      <div class="note" style="background:#f0fdf4;border-left:4px solid #16a34a">
+        ✅ <strong>like / love / hate / start / begin</strong> can take BOTH with almost the same meaning:<br>
+        "I like <b>cooking</b>." = "I like <b>to cook</b>."
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">هذه الأفعال تقبل الشكلين بمعنى واحد تقريبًا.</span>
+      </div>
+      <div class="note" style="background:#eef7ff;border-left:4px solid #60a5fa">
+        💡 <strong>Spelling of the -ing:</strong> make → mak<b>ing</b> (drop e) · run → run<b>ning</b> (double) · study → study<b>ing</b>.
+        <span class="ar" style="display:block;font-size:.85rem;margin-top:4px">إملاء ing: نحذف e، ونضاعف الحرف الساكن أحيانًا.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5 — PRACTICE -->
+<div class="panel" id="p4">
+  <div class="card">
+    <div class="card-title">✏️ Level 1 — Choose the Form</div>
+    <div class="hint-ar">اختر الشكل الصحيح بعد الفعل الأول.</div>
+
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>1)</strong> I have finished ___ my room.</p>
+    <div class="opts" id="l1q1opts">
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,true,'Correct! finish + -ing → finished cleaning.','صحيح! finish + ing ← finished cleaning.')">cleaning</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'finish is not followed by to + verb.','finish لا يتبعها to + الفعل.')">to clean</button>
+      <button class="opt" onclick="sc('l1q1','l1q1fb',this,false,'The base verb is not used after finish.','الفعل المجرّد لا يأتي بعد finish.')">clean</button>
+    </div>
+    <div class="fb-wrap" id="l1q1fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>2)</strong> We hope ___ you again soon.</p>
+    <div class="opts" id="l1q2opts">
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'hope is not followed by -ing.','hope لا يتبعها ing.')">seeing</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,true,'Correct! hope + to + verb → hope to see.','صحيح! hope + to + الفعل ← hope to see.')">to see</button>
+      <button class="opt" onclick="sc('l1q2','l1q2fb',this,false,'The base verb alone is not used after hope.','الفعل المجرّد لا يأتي بعد hope.')">see</button>
+    </div>
+    <div class="fb-wrap" id="l1q2fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>3)</strong> ___ every day keeps you healthy. (subject)</p>
+    <div class="opts" id="l1q3opts">
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,true,'Correct! A gerund (-ing) can be the subject → Walking.','صحيح! المصدر بـ ing يصلح فاعلًا ← Walking.')">Walking</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'We don\'t start the subject with to walk here.','لا نبدأ الفاعل بـ to walk هنا.')">To walk</button>
+      <button class="opt" onclick="sc('l1q3','l1q3fb',this,false,'The base verb Walk is not the subject form here.','الفعل المجرّد Walk ليس صيغة الفاعل هنا.')">Walk</button>
+    </div>
+    <div class="fb-wrap" id="l1q3fb"></div>
+
+    <hr class="divider"/>
+    <div class="q-inst ar">اختر الإجابة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><strong>4)</strong> He is interested in ___ languages.</p>
+    <div class="opts" id="l1q4opts">
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'After a preposition (in) we do not use to + verb.','بعد حرف الجر (in) لا نستخدم to + الفعل.')">to learn</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,true,'Correct! After a preposition → -ing (learning).','صحيح! بعد حرف الجر ← ing (learning).')">learning</button>
+      <button class="opt" onclick="sc('l1q4','l1q4fb',this,false,'The base verb is not used after a preposition.','الفعل المجرّد لا يأتي بعد حرف الجر.')">learn</button>
+    </div>
+    <div class="fb-wrap" id="l1q4fb"></div>
+
+    <div class="lvl-done" id="l1done">🎉 Level 1 done! You can pick the lane!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 2 — Sort with the Word Bank</div>
+    <div class="hint-ar">اضغط على الشكل الصحيح ثم اضغط على الفراغ.</div>
+    <div class="wb-chips" id="wb2chips">
+      <span class="wb-chip" onclick="pickWb(this,'to travel')">to travel</span>
+      <span class="wb-chip" onclick="pickWb(this,'watching')">watching</span>
+      <span class="wb-chip" onclick="pickWb(this,'to pass')">to pass</span>
+      <span class="wb-chip" onclick="pickWb(this,'smoking')">smoking</span>
+      <span class="wb-chip" onclick="pickWb(this,'playing')">playing</span>
+    </div>
+    <div style="margin:12px 0">
+      <div class="fill-line">1) They plan <span class="blank" id="wb2b1" onclick="dropWb('wb2b1')">______</span> to Italy. <em style="font-size:.78rem;color:var(--muted)">(plan → to)</em></div>
+      <div class="fill-line">2) I enjoy <span class="blank" id="wb2b2" onclick="dropWb('wb2b2')">______</span> films. <em style="font-size:.78rem;color:var(--muted)">(enjoy → -ing)</em></div>
+      <div class="fill-line">3) She needs <span class="blank" id="wb2b3" onclick="dropWb('wb2b3')">______</span> the exam. <em style="font-size:.78rem;color:var(--muted)">(need → to)</em></div>
+      <div class="fill-line">4) You should avoid <span class="blank" id="wb2b4" onclick="dropWb('wb2b4')">______</span>. <em style="font-size:.78rem;color:var(--muted)">(avoid → -ing)</em></div>
+      <div class="fill-line">5) He is good at <span class="blank" id="wb2b5" onclick="dropWb('wb2b5')">______</span> chess. <em style="font-size:.78rem;color:var(--muted)">(preposition → -ing)</em></div>
+    </div>
+    <button class="check-btn" onclick="checkWb2()">Check ✓</button>
+    <div class="fb-wrap" id="wb2fb"></div>
+    <div class="lvl-done" id="l2done">🎉 Level 2 done! Well sorted!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 3 — Write the Correct Form</div>
+    <div class="hint-ar">اكتب الفعل بين القوسين بالشكل الصحيح (ing أو to + الفعل).</div>
+    <div style="margin:10px 0">
+      <div class="fill-line">1) I want <input class="type-inp" id="l3i1" placeholder="(visit)"> Jerusalem. <em style="font-size:.78rem;color:var(--muted)">(to + verb)</em></div>
+      <div class="fill-line">2) She avoided <input class="type-inp" id="l3i2" placeholder="(eat)"> too much sugar. <em style="font-size:.78rem;color:var(--muted)">(-ing)</em></div>
+      <div class="fill-line">3) <input class="type-inp" id="l3i3" placeholder="(read)"> is my favourite hobby. <em style="font-size:.78rem;color:var(--muted)">(subject: -ing)</em></div>
+      <div class="fill-line">4) We decided <input class="type-inp" id="l3i4" placeholder="(help)"> them. <em style="font-size:.78rem;color:var(--muted)">(to + verb)</em></div>
+    </div>
+    <button class="check-btn" onclick="checkL3()">Check ✓</button>
+    <div class="fb-wrap" id="l3fb"></div>
+    <div class="lvl-done" id="l3done">🎉 Level 3 done! Excellent forms!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">✏️ Level 4 — Spot and Fix the Mistake</div>
+    <div class="hint-ar">كل جملة فيها خطأ. اختر الجملة الصحيحة.</div>
+    <p style="font-size:.95rem;margin-bottom:8px"><span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>&nbsp;I enjoy to play basketball.</p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q1opts">
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,true,'Correct! enjoy + -ing → enjoy playing.','صحيح! enjoy + ing ← enjoy playing.')">I enjoy playing basketball.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'enjoy is never followed by to + verb.','enjoy لا يتبعها to + الفعل أبدًا.')">I enjoy to playing basketball.</button>
+      <button class="opt" onclick="sc('l4q1','l4q1fb',this,false,'The base verb is not used after enjoy.','الفعل المجرّد لا يأتي بعد enjoy.')">I enjoy play basketball.</button>
+    </div>
+    <div class="fb-wrap" id="l4q1fb"></div>
+
+    <hr class="divider"/>
+    <p style="font-size:.95rem;margin-bottom:8px"><span style="background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:2px 8px;font-weight:700;color:#991b1b">WRONG</span>&nbsp;She decided studying medicine.</p>
+    <div class="q-inst ar">اختر الجملة الصحيحة.</div>
+    <div class="opts" id="l4q2opts">
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,true,'Correct! decide + to + verb → decided to study.','صحيح! decide + to + الفعل ← decided to study.')">She decided to study medicine.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'decide is not followed by -ing.','decide لا يتبعها ing.')">She decided studying medicine.</button>
+      <button class="opt" onclick="sc('l4q2','l4q2fb',this,false,'The base verb alone is not used after decided.','الفعل المجرّد لا يأتي بعد decided.')">She decided study medicine.</button>
+    </div>
+    <div class="fb-wrap" id="l4q2fb"></div>
+
+    <div class="lvl-done" id="l4done">🏆 All 4 levels done! You are a Gerund &amp; Infinitive champion!</div>
+  </div>
+</div>
+
+<!-- TAB 6 — CREATE -->
+<div class="panel" id="p5">
+  <div class="card">
+    <div class="card-title">🗣️ Speaking — Likes &amp; Plans</div>
+    <div class="hint-ar">تحدّث عن هواياتك وخططك مستخدمًا الشكلين.</div>
+    <div class="speak-prompt"><strong>Round 1 — Gerunds:</strong> 👉 <em>I enjoy ___ . / I don't mind ___ . / I'm good at ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 2 — Infinitives:</strong> 👉 <em>I want to ___ . / I hope to ___ . / I plan to ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 3 — Purpose:</strong> 👉 <em>I study English to ___ . / I use the internet to ___ .</em></div>
+    <div class="speak-prompt"><strong>Round 4 — Partner game:</strong> Say a verb (enjoy, want, avoid, hope…). Your partner must add the correct form!</div>
+  </div>
+  <div class="card">
+    <div class="card-title">✍️ Writing — About Me</div>
+    <div class="hint-ar">اكتب فقرة عن هواياتك وأهدافك مستخدمًا المصدر بنوعيه.</div>
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:14px;margin:10px 0;font-size:.88rem">
+      <p style="font-weight:700;margin-bottom:6px">📌 Your paragraph must include:</p>
+      <ul style="margin-left:16px;line-height:1.9">
+        <li>At least <strong>three gerunds</strong> (enjoy/avoid/good at + -ing)</li>
+        <li>At least <strong>three infinitives</strong> (want/hope/plan + to)</li>
+        <li>One gerund used as the <strong>subject</strong></li>
+      </ul>
+    </div>
+    <textarea class="write-area" placeholder="Reading is my favourite hobby, and I also enjoy playing football with my friends. I am good at drawing, but I try to avoid wasting time on my phone. In the future, I want to study engineering, and I hope to build useful things for my city. I have decided to work hard this year, because learning new skills makes me happy."></textarea>
+  </div>
+  <div class="card">
+    <div class="card-title">💬 Challenge — Complete the Sentences</div>
+    <div class="hint-ar">أكمل هذه الجمل بالشكل الصحيح.</div>
+    <div style="background:#eff6ff;border:2px solid #bfdbfe;border-radius:10px;padding:14px;margin:10px 0;font-size:.9rem">
+      <ol style="margin-left:16px;line-height:2.2">
+        <li>I have decided to …</li>
+        <li>My family enjoys …</li>
+        <li>… is good for your health.</li>
+      </ol>
+    </div>
+    <textarea class="write-area" placeholder="1) I have decided to save money for a new bike.&#10;2) My family enjoys visiting our grandparents on Fridays.&#10;3) Eating vegetables is good for your health."></textarea>
+  </div>
+</div>
+
+<!-- TAB 7 — QUIZ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <div class="card-title">🎯 Quick Check — 5 Questions</div>
+    <div class="hint-ar">أجب على الأسئلة الخمسة ثم اضغط "Check My Score".</div>
+
+    <div class="quiz-q" id="qq1">
+      <div class="q-num">Question 1 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">I want ___ a new phone.</p>
+      <div class="opts" id="qq1opts">
+        <button class="opt" onclick="qsc(1,this,'a',event)">to buy</button>
+        <button class="opt" onclick="qsc(1,this,'b',event)">buying</button>
+        <button class="opt" onclick="qsc(1,this,'c',event)">buy</button>
+      </div>
+      <div class="fb-wrap" id="qq1fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq2">
+      <div class="q-num">Question 2 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">She avoids ___ late at night.</p>
+      <div class="opts" id="qq2opts">
+        <button class="opt" onclick="qsc(2,this,'a',event)">to eat</button>
+        <button class="opt" onclick="qsc(2,this,'b',event)">eating</button>
+        <button class="opt" onclick="qsc(2,this,'c',event)">eat</button>
+      </div>
+      <div class="fb-wrap" id="qq2fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq3">
+      <div class="q-num">Question 3 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">After a preposition (e.g. "good at"), we use …</p>
+      <div class="opts" id="qq3opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(3,this,'a',event)">the -ing form (gerund)</button>
+        <button class="opt" onclick="qsc(3,this,'b',event)">to + verb (infinitive)</button>
+        <button class="opt" onclick="qsc(3,this,'c',event)">the base verb</button>
+      </div>
+      <div class="fb-wrap" id="qq3fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq4">
+      <div class="q-num">Question 4 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">Which sentence is correct?</p>
+      <div class="opts" id="qq4opts" style="flex-direction:column">
+        <button class="opt" onclick="qsc(4,this,'a',event)">I hope seeing you soon.</button>
+        <button class="opt" onclick="qsc(4,this,'b',event)">I hope to see you soon.</button>
+        <button class="opt" onclick="qsc(4,this,'c',event)">I hope see you soon.</button>
+      </div>
+      <div class="fb-wrap" id="qq4fb"></div>
+    </div>
+
+    <div class="quiz-q" id="qq5">
+      <div class="q-num">Question 5 / 5</div>
+      <p style="font-size:.95rem;margin-bottom:8px">___ is good exercise. (as the subject)</p>
+      <div class="opts" id="qq5opts">
+        <button class="opt" onclick="qsc(5,this,'a',event)">Swimming</button>
+        <button class="opt" onclick="qsc(5,this,'b',event)">To swim it</button>
+        <button class="opt" onclick="qsc(5,this,'c',event)">Swim</button>
+      </div>
+      <div class="fb-wrap" id="qq5fb"></div>
+    </div>
+
+    <button class="check-btn" style="margin-top:16px;width:100%;font-size:1rem" onclick="calcQuiz()">📊 Check My Score</button>
+    <div class="quiz-score" id="quizScore">
+      <div class="score-num" id="scoreTxt"></div>
+      <p id="scoreMsg" style="font-size:1rem;margin:6px 0"></p>
+      <span class="badge-earned" id="badgeIcon">🪧</span>
+      <p id="badgeMsg" style="font-size:.85rem;color:var(--muted)"></p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>Designed with love 💗 by T. Wad Refae</footer>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const panels=document.querySelectorAll('.panel');
+const prog=document.getElementById('progFill');
+function go(i){
+  tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+  panels.forEach((p,j)=>p.classList.toggle('on',j===i));
+  prog.style.width=((i+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function launchStar(x,y){
+  const el=document.createElement('div');el.className='star-fly';
+  el.textContent=['⭐','✨','💫','🌟'][Math.floor(Math.random()*4)];
+  el.style.cssText=`left:${x}px;top:${y}px`;document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
+}
+function confetti(){
+  const colors=['#15803d','#f59e0b','#ec4899','#2563eb','#4ade80','#f97316'];
+  for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-p';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${colors[i%colors.length]};animation-delay:${Math.random()*.8}s;animation-duration:${1+Math.random()}s`;
+    document.body.appendChild(p);setTimeout(()=>p.remove(),2200);}
+}
+function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
+function setFb(id,ok,en,ar){
+  const el=document.getElementById(id);
+  el.className='fb-wrap show '+(ok?'ok':'err');
+  el.innerHTML=`<div class="fb-en">${ok?'✅':'❌'} ${en}</div><div class="fb-ar ar">${ar}</div>`;
+}
+function sc(rowId,fbId,btn,correct,enMsg,arMsg){
+  const opts=document.querySelectorAll(`#${rowId}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  btn.classList.add(correct?'ok':'err');
+  setFb(fbId,correct,enMsg,arMsg);
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  checkL1done();checkL4done();
+}
+function checkL1done(){
+  if(['l1q1','l1q2','l1q3','l1q4'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l1done').classList.add('show');confetti();}
+}
+function checkL4done(){
+  if(['l4q1','l4q2'].every(id=>document.querySelector(`#${id}opts .opt.ok`))){
+    document.getElementById('l4done').classList.add('show');confetti();}
+}
+let wbSel=null;
+const wb2answers={wb2b1:'to travel',wb2b2:'watching',wb2b3:'to pass',wb2b4:'smoking',wb2b5:'playing'};
+function pickWb(chip,val){
+  document.querySelectorAll('#wb2chips .wb-chip').forEach(c=>c.classList.remove('sel'));
+  if(wbSel&&wbSel.chip===chip){wbSel=null;return;}
+  chip.classList.add('sel');wbSel={chip,val};
+}
+function dropWb(blankId){
+  if(!wbSel)return;const blank=document.getElementById(blankId);
+  if(blank.classList.contains('filled'))return;
+  blank.textContent=wbSel.val;blank.classList.add('filled');
+  wbSel.chip.classList.add('used');wbSel.chip.classList.remove('sel');wbSel=null;
+}
+function checkWb2(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(wb2answers)){
+    if(document.getElementById(id).textContent.trim()===ans)ok++;}
+  const all=Object.keys(wb2answers).length;
+  if(ok===all){setFb('wb2fb',true,'All correct! Well sorted!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l2done').classList.add('show');confetti();}
+  else setFb('wb2fb',false,`${ok}/${all} correct. Check again.`,`${ok} من ${all} صحيحة.`);
+}
+const l3answers={l3i1:['to visit'],l3i2:['eating'],l3i3:['reading'],l3i4:['to help']};
+function checkL3(){
+  let ok=0;
+  for(const[id,ans] of Object.entries(l3answers)){
+    const inp=document.getElementById(id);
+    const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
+    const correct=ans.some(a=>a.toLowerCase()===val);
+    inp.className='type-inp '+(correct?'ok':'err');
+    if(correct)ok++;}
+  const all=Object.keys(l3answers).length;
+  if(ok===all){setFb('l3fb',true,'All correct! Perfect!','ممتاز! جميع الإجابات صحيحة!');document.getElementById('l3done').classList.add('show');confetti();}
+  else setFb('l3fb',false,`${ok}/${all} correct. Try again.`,`${ok} من ${all} صحيحة.`);
+}
+const qAnswers={1:'a',2:'b',3:'a',4:'b',5:'a'};
+const qScored={};
+function qsc(qNum,btn,val,evt){
+  const opts=document.querySelectorAll(`#qq${qNum}opts .opt`);
+  if([...opts].some(b=>b.disabled))return;
+  opts.forEach(b=>b.disabled=true);
+  const correct=val===qAnswers[qNum];
+  btn.classList.add(correct?'ok':'err');
+  qScored[qNum]=correct;
+  document.getElementById(`qq${qNum}`).classList.add(correct?'answered-ok':'answered-err');
+  if(correct){const r=btn.getBoundingClientRect();launchStar(r.left+r.width/2,r.top+window.scrollY);}
+  else shake(btn);
+  const fb={
+    1:{ok:"Correct! want + to + verb.",ar:"صحيح! want + to + الفعل.",no:"want is followed by to + verb.",nar:"want يتبعها to + الفعل."},
+    2:{ok:"Correct! avoid + -ing.",ar:"صحيح! avoid + ing.",no:"avoid is followed by the -ing form.",nar:"avoid يتبعها صيغة ing."},
+    3:{ok:"Correct! After a preposition → the -ing form.",ar:"صحيح! بعد حرف الجر ← صيغة ing.",no:"After a preposition we use the -ing form.",nar:"بعد حرف الجر نستخدم صيغة ing."},
+    4:{ok:"Correct! hope + to + verb.",ar:"صحيح! hope + to + الفعل.",no:"hope is followed by to + verb.",nar:"hope يتبعها to + الفعل."},
+    5:{ok:"Correct! A gerund (-ing) can be the subject.",ar:"صحيح! المصدر بـ ing يصلح فاعلًا.",no:"Use the -ing form as the subject: Swimming.",nar:"نستخدم صيغة ing فاعلًا: Swimming."}
+  };
+  if(correct)setFb(`qq${qNum}fb`,true,fb[qNum].ok,fb[qNum].ar);
+  else setFb(`qq${qNum}fb`,false,fb[qNum].no,fb[qNum].nar);
+}
+function calcQuiz(){
+  const score=Object.values(qScored).filter(Boolean).length;
+  document.getElementById('scoreTxt').textContent=`${score} / 5`;
+  const msgs=[
+    {e:'Keep going — remember which verb takes -ing or to!',a:'راجع أي فعل يتبعه ing وأيّها to.'},
+    {e:'Good try! The first verb decides the lane.',a:'الفعل الأول يحدّد المسار.'},
+    {e:'Good! You are getting there.',a:'جيد! أنت في الطريق الصحيح.'},
+    {e:'Great! Almost perfect!',a:'رائع! تقريبًا مثالي.'},
+    {e:'Perfect! You sorted every sign! 🪧',a:'ممتاز! فرزت كل اللافتات!'}
+  ];
+  const m=msgs[Math.min(score,4)];
+  document.getElementById('scoreMsg').innerHTML=`${m.e}<br><span class="ar">${m.a}</span>`;
+  document.getElementById('badgeMsg').textContent=score>=3?'🪧 Sign Sorter Badge earned!':'Keep going — earn the Sign Sorter Badge!';
+  document.getElementById('quizScore').classList.add('show');
+  if(score>=3){localStorage.setItem('badge_gerunds_infinitives','earned');confetti();}
+}
+const cards=[
+  {word:'gerund',emoji:'🔵',ar:'المصدر بـ ing (اسم)',syn:'verb + -ing as a noun',ant:'infinitive'},
+  {word:'infinitive',emoji:'🟢',ar:'to + الفعل',syn:'to + base verb',ant:'gerund'},
+  {word:'enjoy',emoji:'😊',ar:'يستمتع بـ',syn:'+ -ing (enjoy playing)',ant:'dislike'},
+  {word:'decide',emoji:'✅',ar:'يقرّر',syn:'+ to (decide to go)',ant:'hesitate'},
+  {word:'avoid',emoji:'🚫',ar:'يتجنّب',syn:'+ -ing (avoid eating)',ant:'seek'},
+  {word:'preposition',emoji:'🔗',ar:'حرف جر',syn:'at, in, of → + -ing',ant:'—'},
+];
+const grid=document.getElementById('fcGrid');
+cards.forEach((c,i)=>{
+  grid.innerHTML+=`
+  <div class="fc" id="fc${i}" onclick="flipCard(${i})">
+    <div class="fc-inner">
+      <div class="fc-front"><span class="emoji">${c.emoji}</span><div class="word">${c.word}</div>
+        <button class="tts-btn" onclick="event.stopPropagation();speak('${c.word}')">🔊 Listen</button></div>
+      <div class="fc-back"><div class="ar-mean ar">${c.ar}</div><div class="syn">${c.syn}</div>
+        ${c.ant&&c.ant!=='—'?`<div class="syn" style="opacity:.7">↔ ${c.ant}</div>`:''}</div>
+    </div>
+  </div>`;
+});
+function flipCard(i){document.getElementById('fc'+i).classList.toggle('flipped');}
+function speak(w){const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u);}
+</script>
+</body>
+</html>
