@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Films I Like - Unit 4 Period 7 | Join with While</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --midnight:#141d33; --midnight-d:#0c1320;
+    --navy:#233657; --navy-l:#2f4771;
+    --curtain:#c0392b; --curtain-d:#8e2820;
+    --gold:#f2c94c; --gold-d:#d4a72a;
+    --screen:#eaf1ff; --pop:#ff6b6b;
+    --teal:#22c1b6; --teal-d:#149088;
+    --cream:#fbf7ef; --paper:#fffdf9;
+    --ink:#20283a;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh;
+    background:var(--cream);
+    background-image:
+      radial-gradient(circle at 12% 16%, rgba(242,201,76,.08) 0%, transparent 45%),
+      radial-gradient(circle at 88% 84%, rgba(34,193,182,.07) 0%, transparent 45%),
+      repeating-linear-gradient(45deg, rgba(20,29,51,.03) 0 2px, transparent 2px 24px);
+    overflow-x:hidden; position:relative;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.2; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : MOVIE CAMERA ON TRIPOD ===== */
+  .lesson-header{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(242,201,76,.14), transparent 45%),
+      linear-gradient(170deg, var(--midnight) 0%, var(--navy) 60%, var(--midnight-d) 130%);
+    padding:26px 16px 50px; position:relative; overflow:hidden;
+  }
+  .lesson-header::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:16px;
+    background:repeating-linear-gradient(60deg, var(--curtain) 0 12px, var(--gold) 12px 24px, var(--teal) 24px 36px, var(--navy-l) 36px 48px);
+    box-shadow:0 -3px 8px rgba(0,0,0,.35);
+  }
+  .lesson-header::before{
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:radial-gradient(1.4px 1.4px at 20% 30%, #fff, transparent), radial-gradient(1.2px 1.2px at 70% 20%, #fff, transparent), radial-gradient(1.3px 1.3px at 85% 55%, #fff, transparent), radial-gradient(1.2px 1.2px at 12% 60%, #fff, transparent);
+  }
+  .header-inner{ max-width:720px; margin:0 auto; position:relative; z-index:2; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--gold); color:var(--midnight);
+    padding:7px 18px; border-radius:50px; font-weight:700; font-size:13.5px; margin-bottom:14px;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--gold-d), 0 8px 20px rgba(0,0,0,.35); transform:rotate(-2deg);
+  }
+  .lesson-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(28px,5.4vw,48px); color:#fff; letter-spacing:-.5px;
+    text-shadow:2px 3px 0 var(--midnight-d), 5px 6px 18px rgba(0,0,0,.5); margin-bottom:4px;
+  }
+  .lesson-subtitle{ font-size:clamp(15px,3.2vw,22px); color:var(--gold); font-weight:800; margin-bottom:18px; }
+
+  /* camera */
+  .camera{ width:min(300px,80vw); margin:2px auto 0; position:relative; }
+  .cam-reels{ position:relative; height:30px; }
+  .cam-reel{ position:absolute; top:0; width:44px; height:44px; border-radius:50%;
+    background:radial-gradient(circle at 42% 38%, #52525b, #1c1c22 78%); border:3px solid #5f5f68;
+    box-shadow:0 4px 10px rgba(0,0,0,.5); animation:reelspin 3s linear infinite; z-index:1; }
+  .cam-reel.a{ left:calc(50% - 58px); } .cam-reel.b{ left:calc(50% + 14px); }
+  .cam-reel::before{ content:''; position:absolute; inset:16px; border-radius:50%; background:#7a7a85; }
+  .cam-reel i{ position:absolute; top:50%; left:50%; width:2.5px; height:18px; background:#3f3f47; transform-origin:center; }
+  .cam-reel i:nth-child(1){ transform:translate(-50%,-50%) rotate(0deg);} .cam-reel i:nth-child(2){ transform:translate(-50%,-50%) rotate(60deg);} .cam-reel i:nth-child(3){ transform:translate(-50%,-50%) rotate(120deg);}
+  @keyframes reelspin{ to{ transform:rotate(360deg);} }
+  .cam-body{ position:relative; width:180px; height:66px; margin:0 auto; border-radius:12px;
+    background:linear-gradient(160deg,#3b404b,#1c2028); border:2px solid #10131a; box-shadow:0 8px 18px rgba(0,0,0,.5); z-index:2; }
+  .cam-rec{ position:absolute; left:11px; top:11px; display:flex; align-items:center; gap:5px; color:#ff7a6b; font-family:'Fredoka',sans-serif; font-size:10px; letter-spacing:1px; }
+  .cam-rec .dot{ width:8px; height:8px; border-radius:50%; background:#ff6b6b; animation:blink 1s steps(2) infinite; }
+  @keyframes blink{ 50%{ opacity:.2; } }
+  .cam-tag{ position:absolute; left:11px; bottom:9px; color:#cfd3db; font-family:'Fredoka',sans-serif; font-size:11px; letter-spacing:1px; }
+  .cam-vf{ position:absolute; left:-15px; top:16px; width:18px; height:26px; background:linear-gradient(#2b2f38,#14171d); border:2px solid #10131a; border-radius:5px; z-index:2; }
+  .cam-lens{ position:absolute; right:-24px; top:50%; transform:translateY(-50%); width:38px; height:38px; border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #6b7280, #14171d 75%); border:3px solid #0e1116; z-index:3; box-shadow:0 4px 10px rgba(0,0,0,.5); }
+  .cam-lens::after{ content:''; position:absolute; inset:9px; border-radius:50%; background:radial-gradient(circle at 40% 35%, #9ec5ff, #1a3a66); }
+  .tripod{ position:relative; width:170px; height:70px; margin:-2px auto 0; z-index:1; }
+  .leg{ position:absolute; top:0; width:7px; height:74px; background:linear-gradient(#3a3f4a,#1c2028); border:1px solid #10131a; border-radius:4px; transform-origin:top center; }
+  .leg.l{ left:calc(50% - 40px); transform:rotate(20deg); } .leg.m{ left:calc(50% - 3px); } .leg.r{ left:calc(50% + 34px); transform:rotate(-20deg); }
+  .tri-hub{ position:absolute; top:-6px; left:50%; transform:translateX(-50%); width:24px; height:14px; background:#2b2f38; border:2px solid #10131a; border-radius:5px; z-index:2; }
+
+  /* ===== FILM-REEL PROGRESS TRACKER (shared across Unit 4) ===== */
+  .reel-track{
+    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
+    border-radius:14px; text-align:center; z-index:5;
+    background:linear-gradient(180deg, #2a2a30, #17171b);
+    border:3px solid var(--gold); box-shadow:0 6px 18px rgba(0,0,0,.4);
+  }
+  .rt-label{ color:var(--gold); font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
+  .rt-strip{ display:flex; align-items:center; justify-content:center; gap:6px; position:relative; direction:ltr; flex-wrap:wrap; }
+  .rt-frame{
+    width:38px; height:34px; border-radius:5px; position:relative; z-index:1; background:#0d0d10;
+    border:2px solid #444; display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; color:#666; font-family:'Fredoka',sans-serif;
+    box-shadow:inset 0 0 0 3px #17171b, inset 0 0 0 4px #333;
+  }
+  .rt-frame.on{ background:radial-gradient(circle at 55% 40%, #fff2c4, var(--gold) 82%); color:var(--midnight); border-color:#fff; box-shadow:0 0 0 2px rgba(242,201,76,.5), inset 0 0 0 2px #fff; }
+  .rt-perf{ font-size:16px; color:#555; letter-spacing:-2px; z-index:1; }
+  .rt-count{ background:rgba(255,255,255,.12); color:var(--gold); border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
+  .rt-done{ margin-top:7px; color:var(--gold); font-weight:800; font-size:14px; display:none; }
+  .rt-done.show{ display:block; animation:fadeIn .6s; }
+
+  /* ===== TABS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:var(--paper); border-radius:22px; padding:10px;
+    box-shadow:0 7px 0 var(--navy), 0 14px 34px rgba(20,29,51,.2);
+    display:flex; gap:8px; border:3px solid var(--curtain);
+    direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    background:transparent; border:none; padding:12px 14px; border-radius:15px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; color:var(--curtain-d);
+    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:92px;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ background:rgba(192,57,43,.1); transform:translateY(-2px); }
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--curtain), var(--curtain-d));
+    color:#fff; box-shadow:0 4px 0 #6e1f18, 0 6px 14px rgba(192,57,43,.4); transform:translateY(-2px);
+  }
+  .tab-icon{ font-size:26px; line-height:1; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); text-align:center;
+    margin-bottom:22px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:110px; height:6px; border-radius:3px;
+    background:repeating-linear-gradient(60deg, var(--curtain) 0 10px, var(--gold) 10px 20px, var(--teal) 20px 30px, var(--navy) 30px 40px);
+  }
+  .title-sub{ display:block; font-size:15px; color:#7a86a0; font-family:'Cairo',sans-serif; margin-top:4px; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #e6ddf0; box-shadow:0 6px 0 #d9d2ea, 0 8px 20px rgba(20,29,51,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--curtain)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--curtain));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; }
+  .aim-desc{ color:#4a5573; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:#7a86a0; margin-top:7px; }
+
+  /* activity lead */
+  .activity-lead{
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); direction:ltr; text-align:left;
+    background:var(--paper); border:3px solid #e6ddf0; border-left:6px solid var(--teal);
+    border-radius:14px; padding:15px 18px; margin-bottom:14px; line-height:1.6;
+  }
+  .activity-lead .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13.5px; color:#7a86a0; margin-top:6px; font-weight:600; }
+  .tip-box{ background:linear-gradient(135deg,#fff5da,#ffedb8); border:2px dashed var(--gold-d); border-radius:14px; padding:13px 18px; margin-bottom:18px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; line-height:1.7; color:var(--ink); }
+  .tip-box b{ color:var(--curtain-d); }
+  .tip-box .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; color:#7a86a0; font-size:13px; margin-top:5px; }
+
+  /* scene bubbles */
+  .scene-bubbles{ display:flex; flex-direction:column; gap:10px; max-width:560px; margin:0 auto 18px; }
+  .bub{ font-family:'Fredoka',sans-serif; font-size:14.5px; direction:ltr; padding:11px 15px; border-radius:16px; position:relative; max-width:88%; line-height:1.5; }
+  .bub .face{ margin-right:6px; }
+  .bub.b1{ background:#eef2fb; border:2px solid #cdd8ef; align-self:flex-start; border-bottom-left-radius:4px; color:var(--navy); }
+  .bub.b2{ background:#fff6e6; border:2px solid #f2dfb0; align-self:flex-end; border-bottom-right-radius:4px; color:var(--curtain-d); }
+
+  /* write items */
+  .qa-item{ background:var(--paper);border:3px solid #e6ddf0;border-radius:16px;padding:16px 18px;margin-bottom:14px;box-shadow:0 4px 0 #d9d2ea; }
+  .qa-q{ font-family:'Fredoka',sans-serif;font-size:16px;color:var(--ink);direction:ltr;text-align:left;display:flex;gap:9px;margin-bottom:4px;align-items:flex-start; }
+  .qa-qn{ background:var(--curtain);color:#fff;width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',sans-serif;font-weight:700;font-size:13px;margin-top:1px; }
+  .qa-ar{ font-family:'Cairo',sans-serif;font-size:13px;color:#7a86a0;margin:0 0 10px 35px;direction:rtl;text-align:right; }
+  .qa-frag{ font-family:'Fredoka',sans-serif; color:var(--navy); direction:ltr; text-align:left; margin:0 0 8px 35px; font-size:14.5px; background:#eef2fb; border-radius:8px; padding:6px 12px; display:inline-block; }
+  .qa-input{ width:100%;padding:11px 14px;border:2px solid #e6ddf0;border-radius:10px;font-family:'Fredoka',sans-serif;font-size:15px;direction:ltr;color:var(--ink);margin-bottom:9px; }
+  .qa-input:focus{ outline:none;border-color:var(--teal); }
+  .qa-model{ border:2px dashed var(--teal-d);border-radius:10px;overflow:hidden; }
+  .qa-model summary{ background:#e0f5f2;color:var(--teal-d);padding:9px 14px;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;cursor:pointer;list-style:none; }
+  .qa-model summary::-webkit-details-marker{ display:none; }
+  .qa-model .ma{ padding:11px 15px;direction:ltr;text-align:left;font-family:'Fredoka',sans-serif;font-size:15px;color:var(--ink); }
+  .qa-textarea{ width:100%; min-height:120px; padding:13px 15px; border:2px solid #e6ddf0; border-radius:12px; font-family:'Fredoka',sans-serif; font-size:15px; direction:ltr; color:var(--ink); resize:vertical; line-height:1.7; }
+  .qa-textarea:focus{ outline:none; border-color:var(--teal); }
+  .frames-box{ background:#eef2fb; border:2px solid #cdd8ef; border-radius:12px; padding:12px 16px; margin-top:12px; direction:ltr; text-align:left; }
+  .frames-box h4{ font-family:'Fredoka',sans-serif; color:var(--navy); margin-bottom:6px; }
+  .frames-box li{ font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); list-style:none; padding:3px 0; }
+  .frames-box b{ color:var(--teal-d); }
+
+  /* word practice */
+  .wp-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; }
+  .wp-tile{ background:var(--paper); border:3px solid #e6ddf0; border-radius:14px; padding:14px 10px 10px; text-align:center; box-shadow:0 4px 0 #d9d2ea; }
+  .wp-word{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:20px; color:var(--ink); direction:ltr; letter-spacing:1px; border-bottom:2px dashed #cdd3e0; padding-bottom:8px; margin-bottom:8px; }
+  .wp-btn{ background:var(--teal); color:#fff; border:none; border-radius:20px; padding:6px 16px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:13px; box-shadow:0 3px 0 var(--teal-d); }
+  .wp-btn:hover{ transform:translateY(-2px); }
+
+  /* ===== QUIZ ===== */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--gold), var(--curtain)); color:#fff; padding:26px 22px;
+    border-radius:22px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden;
+    box-shadow:0 6px 0 var(--curtain-d), 0 10px 24px rgba(0,0,0,.15);
+  }
+  .quiz-intro::before{ content:'🎥'; position:absolute; top:-18px; right:-14px; font-size:110px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:25px; margin-bottom:8px; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.4); height:12px; border-radius:10px; margin-top:16px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--teal), var(--navy)); }
+  .quiz-question{
+    background:var(--paper); border-radius:18px; padding:20px; margin-bottom:16px;
+    border:3px solid #e6ddf0; box-shadow:0 6px 0 #d9d2ea, 0 8px 18px rgba(20,29,51,.08);
+  }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; }
+  .quiz-q-number{
+    background:linear-gradient(135deg, var(--curtain), var(--navy)); color:#fff; width:40px; height:40px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; box-shadow:0 3px 0 var(--midnight-d); flex-shrink:0;
+  }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.5; direction:ltr; text-align:left; flex:1; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #e6ddf0; padding:13px 17px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:var(--cream); border-color:var(--curtain); transform:translateX(3px); }
+  .quiz-option .opt-letter{
+    background:#e6ddf0; color:var(--navy); width:27px; height:27px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; transition:all .2s;
+  }
+  .quiz-option.correct{ background:#cdeee9; border-color:var(--teal-d); color:#0c5a54; }
+  .quiz-option.correct .opt-letter{ background:var(--teal-d); color:#fff; }
+  .quiz-option.wrong{ background:#ffd9de; border-color:var(--curtain-d); color:#7c1a12; }
+  .quiz-option.wrong .opt-letter{ background:var(--curtain-d); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:linear-gradient(135deg,#e0f5f2,#cdeee9); border-right:4px solid var(--teal-d); color:#0c5a54; }
+  .quiz-feedback.wrong{ background:linear-gradient(135deg,#fff0f2,#ffd9de); border-right:4px solid var(--curtain-d); color:#7c1a12; }
+  .quiz-result{
+    background:var(--paper); border-radius:22px; padding:36px 22px; text-align:center;
+    border:3px solid #e6ddf0; box-shadow:0 8px 0 #d9d2ea, 0 12px 28px rgba(20,29,51,.15); display:none;
+  }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:74px; margin-bottom:14px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:29px; color:var(--ink); margin-bottom:9px; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:50px; color:var(--curtain); margin:16px 0; text-shadow:3px 3px 0 var(--gold); }
+  .result-score span{ font-size:28px; color:#7a86a0; }
+  .result-message{ font-size:16px; line-height:1.7; margin-bottom:22px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:96px; height:96px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #fff4cc, var(--gold) 72%);
+    border:4px solid #fff; box-shadow:0 0 0 5px rgba(242,201,76,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; font-size:46px;
+  }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) } to{ transform:translateY(-13px) } }
+  .retry-btn{
+    background:linear-gradient(135deg, var(--curtain), var(--navy)); color:#fff; border:none;
+    padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700;
+    font-size:15px; box-shadow:0 4px 0 var(--midnight-d); transition:transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .retry-btn:hover{ transform:translateY(-2px); }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{
+    background:linear-gradient(135deg, var(--midnight-d), var(--navy)); color:#fff;
+    padding:26px 20px; text-align:center; margin-top:46px; position:relative;
+  }
+  .lesson-footer::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(60deg, var(--curtain) 0 12px, var(--gold) 12px 24px, var(--teal) 24px 36px, var(--navy-l) 36px 48px);
+  }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HEADER : MOVIE CAMERA ===== -->
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🎬</span> UNIT 4 — Period 7</div>
+    <h1 class="lesson-title">Join with "While"</h1>
+    <div class="lesson-subtitle">الأفلام التي أحبها · اربط الجُمل واكتب 🎥</div>
+    <div class="camera">
+      <div class="cam-reels">
+        <div class="cam-reel a"><i></i><i></i><i></i></div>
+        <div class="cam-reel b"><i></i><i></i><i></i></div>
+      </div>
+      <div class="cam-body">
+        <div class="cam-vf"></div>
+        <div class="cam-rec"><span class="dot"></span> REC</div>
+        <div class="cam-tag">🎬 SCENE 7</div>
+        <div class="cam-lens"></div>
+      </div>
+      <div class="tripod">
+        <div class="tri-hub"></div>
+        <div class="leg l"></div><div class="leg m"></div><div class="leg r"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== FILM-REEL PROGRESS (shared across Unit 4) ===== -->
+<div class="reel-track" id="reelTrack" aria-label="Film Reel progress">
+  <div class="rt-label">🎞️ بكرة الأفلام — Film Reel</div>
+  <div class="rt-strip" id="rtStrip"><span class="rt-perf">::</span><span class="rt-count" id="rtCount">0/8</span></div>
+  <div class="rt-done" id="rtDone">✨ اكتملَ الفيلم! أنتَ نجمُ السينما 🎬🌟</div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Objectives</span></button>
+    <button class="tab-btn" data-tab="rw"><span class="tab-icon">📖</span><span>Read &amp; Write</span></button>
+    <button class="tab-btn" data-tab="join"><span class="tab-icon">🔗</span><span>Join · While</span></button>
+    <button class="tab-btn" data-tab="create"><span class="tab-icon">✍️</span><span>Write &amp; Practise</span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- ===== TAB 1 : OBJECTIVES ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#c0392b;">
+        <div class="aim-icon-wrap">📖</div>
+        <h3 class="aim-title">Reading</h3>
+        <p class="aim-desc">Read the pictures and write full answers.
+          <span class="ar">أن يقرأَ الطالبُ الصورَ ويكتبَ إجاباتٍ كاملة.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#233657;">
+        <div class="aim-icon-wrap">🔗</div>
+        <h3 class="aim-title">Writing</h3>
+        <p class="aim-desc">Join two sentences using <b>while</b> — capital letter + full stop.
+          <span class="ar">أن يربطَ جملتينِ باستخدام while مع حرفٍ كبيرٍ ونقطةٍ في النهاية.</span></p>
+      </div>
+      <div class="aim-card" style="--ac:#22c1b6;">
+        <div class="aim-icon-wrap">✍️</div>
+        <h3 class="aim-title">Handwriting</h3>
+        <p class="aim-desc">Write about a film you saw and practise the unit words.
+          <span class="ar">أن يكتبَ عن فيلمٍ شاهده ويتدرّبَ على كلماتِ الوحدة.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TAB 2 : READ & WRITE ===== -->
+  <section class="tab-content" id="tab-rw">
+    <h2 class="section-title">📖 Read &amp; Write<span class="title-sub">اقرأ واكتب الإجابة</span></h2>
+    <div class="activity-lead">
+      <b>1)</b> Read and write full answers about the pictures.
+      <span class="ar">اقرأِ الصورَ واكتبْ إجابةً كاملةً، ثم افتحِ الإجابةَ النموذجيةَ للتأكد.</span>
+    </div>
+    <div class="scene-bubbles">
+      <div class="bub b1"><span class="face">🐬</span>"I pushed the diver while the other divers were watching."</div>
+      <div class="bub b2"><span class="face">🐟</span>"I wasn't safe. They were attacking the plants together!"</div>
+      <div class="bub b1"><span class="face">🐭</span>"Stop that noise!"</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">1</span> What did the dolphin do?</div>
+      <div class="qa-ar">ماذا فعل الدولفين؟</div>
+      <input class="qa-input" type="text" placeholder="The dolphin …">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">The dolphin pushed the diver while the other divers were watching.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">2</span> Why was the orange fish hiding?</div>
+      <div class="qa-ar">لماذا كانت السمكة البرتقالية مختبئة؟</div>
+      <input class="qa-input" type="text" placeholder="The orange fish …">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">The orange fish hid while the green fish were fighting.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">3</span> Why was the mouse angry?</div>
+      <div class="qa-ar">لماذا كان الفأر غاضباً؟</div>
+      <input class="qa-input" type="text" placeholder="The mouse was angry because …">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">The mouse was angry because the oxen were fighting / making a noise.</div></details>
+    </div>
+  </section>
+
+  <!-- ===== TAB 3 : JOIN WITH WHILE ===== -->
+  <section class="tab-content" id="tab-join">
+    <h2 class="section-title">🔗 Join with "While"<span class="title-sub">اربط بـ while</span></h2>
+    <div class="activity-lead">
+      <b>2)</b> Think and write the correct sentences. Join the two parts using <b>while</b>.
+      <span class="ar">فكّرْ واكتبِ الجملةَ الصحيحةَ بربطِ الجزأينِ بكلمةِ while.</span>
+    </div>
+    <div class="tip-box">
+      💡 <b>Remember:</b> use a <b>CAPITAL</b> letter at the start of a sentence. Use a <b>full stop</b> at the end. Join the sentences using <b>while</b>.
+      <span class="ar">تذكّرْ: حرفٌ كبيرٌ في البداية، ونقطةٌ في النهاية، والربطُ بكلمةِ while.</span>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">1</span> Join the two parts:</div>
+      <div class="qa-frag">amy's parents watched a film&nbsp; + &nbsp;she was doing her homework</div>
+      <input class="qa-input" type="text" placeholder="Write the joined sentence…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">Amy's parents watched a film while she was doing her homework.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">2</span> Join the two parts:</div>
+      <div class="qa-frag">the orange fish took the food&nbsp; + &nbsp;the green fish were fighting</div>
+      <input class="qa-input" type="text" placeholder="Write the joined sentence…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">The orange fish took the food while the green fish were fighting.</div></details>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q"><span class="qa-qn">3</span> Join the two parts:</div>
+      <div class="qa-frag">the wheel burst&nbsp; + &nbsp;the family were driving to the farm</div>
+      <input class="qa-input" type="text" placeholder="Write the joined sentence…">
+      <details class="qa-model"><summary>💡 Show model answer</summary><div class="ma">The wheel burst while the family were driving to the farm.</div></details>
+    </div>
+  </section>
+
+  <!-- ===== TAB 4 : WRITE & PRACTISE ===== -->
+  <section class="tab-content" id="tab-create">
+    <h2 class="section-title">✍️ Write &amp; Practise<span class="title-sub">اكتب وتدرّب</span></h2>
+    <div class="activity-lead">
+      <b>3)</b> Think and write sentences about a film you saw.
+      <span class="ar">فكّرْ واكتبْ جُملاً عن فيلمٍ شاهدته. استعنْ بالإطاراتِ أدناه.</span>
+    </div>
+    <textarea class="qa-textarea" placeholder="Last week I watched a film about … . It was … . While … , … ."></textarea>
+    <div class="frames-box">
+      <h4>🎬 Sentence frames:</h4>
+      <ul>
+        <li>Last week I watched a film about <b>…</b> .</li>
+        <li>It was <b>funny / exciting / sad</b> .</li>
+        <li>While the <b>…</b> was <b>…</b> , the <b>…</b> <b>…</b> .</li>
+      </ul>
+    </div>
+
+    <div class="activity-lead" style="margin-top:26px;">
+      <b>4)</b> Write the words. Practise your handwriting. Tap 🔊 to hear each word.
+      <span class="ar">اكتبِ الكلماتِ وتدرّبْ على خطِّك. اضغطْ 🔊 لسماعِ كلِّ كلمة.</span>
+    </div>
+    <div class="wp-grid" id="wpGrid"></div>
+  </section>
+
+  <!-- ===== TAB 5 : QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي</span></h2>
+    <div class="quiz-intro">
+      <h3>🎥 The Writing Quiz</h3>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتُضيءَ اللقطةَ السابعةَ على بكرةِ الأفلام!</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">1</div>
+          <p class="quiz-q-text">Which word joins the two sentences? "Amy watched a film ______ she was doing her homework."</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> while</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> because</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> and</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">2</div>
+          <p class="quiz-q-text">The wheel burst while the family ______ driving to the farm.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> was</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> were</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> is</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">3</div>
+          <p class="quiz-q-text">Which sentence is written correctly?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> amy watched a film while she read</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> Amy watched a film while she read.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> amy watched a film while she read.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">4</div>
+          <p class="quiz-q-text">The dolphin pushed the diver while the other divers ______ watching.</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">a</span> was</button>
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">b</span> were</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> is</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question">
+        <div class="quiz-q-header"><div class="quiz-q-number">5</div>
+          <p class="quiz-q-text">Why was the mouse angry?</p></div>
+        <div class="quiz-options">
+          <button class="quiz-option" onclick="quizAnswer(this,true)"><span class="opt-letter">a</span> Because the oxen were making a noise.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">b</span> Because it was hungry.</button>
+          <button class="quiz-option" onclick="quizAnswer(this,false)"><span class="opt-letter">c</span> Because the diver was safe.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🎥</div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-message" id="resultMessage"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 أعد المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+</footer>
+
+<script>
+/* floating */
+(function(){
+  var box=document.getElementById('floaties'), ems=['🎬','🎞️','🍿','⭐','🎥','🎟️'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    window.speechSynthesis && speechSynthesis.cancel();
+  });
+});
+
+/* TTS */
+function speakLine(text){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  speechSynthesis.speak(u);
+}
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','🎬','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#c0392b','#22c1b6','#233657','#f2c94c','#ff6b6b'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* ===== WORD PRACTICE ===== */
+var WP_WORDS=['ox','attack','noise','fight','funny','while','other','together','mouse','diver','push','safe'];
+(function(){
+  var grid=document.getElementById('wpGrid');
+  WP_WORDS.forEach(function(w){
+    var t=document.createElement('div'); t.className='wp-tile';
+    t.innerHTML='<div class="wp-word">'+w+'</div><button class="wp-btn">🔊 Listen</button>';
+    t.querySelector('.wp-btn').addEventListener('click',function(){ speakLine(w); sparkleAt(t); });
+    grid.appendChild(t);
+  });
+})();
+
+/* ===== FINAL QUIZ ===== */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابة صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابة الصحيحة — الإجابة الصحيحة مظلَّلة بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg;
+  if(pct===100){ emoji='🏆'; title='Movie Star!'; msg='رائع! أضأتَ اللقطةَ السابعةَ على البكرة 🎬🌟 كتابةٌ ممتازة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعِ الربطَ بـ while ثم أعدِ المحاولة.'; confetti(); document.getElementById('rewardBadge').classList.add('show'); }
+  else { emoji='💪'; title='Keep writing!'; msg='لا تستسلمْ! 🌱 راجعِ القاعدةَ ثم جرِّبْ من جديد.'; document.getElementById('rewardBadge').classList.remove('show'); }
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+</script>
+
+<!-- ===== FILM REEL · progress (shared across Unit 4) ===== -->
+<script>(function(){
+  var KEY='g6u4_reel', THIS=7;
+  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
+  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
+  var strip=document.getElementById('rtStrip'), count=document.getElementById('rtCount');
+  for(var i=8;i>=1;i--){
+    var s=document.createElement('span');
+    s.className='rt-frame'+(got.indexOf(i)>=0?' on':'');
+    s.textContent=got.indexOf(i)>=0?'★':i;
+    strip.insertBefore(s, strip.children[1]);
+  }
+  count.textContent=got.length+'/8';
+  if(got.length===8) document.getElementById('rtDone').classList.add('show');
+})();</script>
+
+</body>
+</html>
