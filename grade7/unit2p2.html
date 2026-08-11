@@ -126,6 +126,20 @@
     text-shadow:0 1px 2px rgba(0,0,0,.4); box-shadow:0 0 12px rgba(47,157,240,.8);
   }
   .ot-slot.on::after{ border-color:rgba(245,197,66,.8); }
+  .ot-slot.on::before{                      /* star badge — the number stays readable */
+    content:'★'; position:absolute; top:-8px; right:-6px; font-size:13px; line-height:1;
+    color:var(--gold); text-shadow:0 1px 3px rgba(0,0,0,.75);
+  }
+  .ot-slot.now{                             /* the period you are on right now */
+    transform:scale(1.14); border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(245,197,66,.35), 0 0 14px rgba(245,197,66,.75);
+  }
+  .ot-slot.now:not(.on){ color:var(--gold); }
+  .ot-legend{
+    display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+    margin-top:10px; font-size:11px; font-weight:700; color:#7d8cc4;
+  }
+  .ot-legend .done{ color:var(--gold); }
   .ot-dot{ color:#3a4a86; font-size:12px; }
   .ot-count{ background:rgba(255,255,255,.12); color:#9fd4ff; border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; }
   .ot-done{ margin-top:7px; color:var(--gold); font-weight:800; font-size:14px; display:none; }
@@ -529,6 +543,7 @@
 <div class="orbit-track" id="orbitTrack" aria-label="Language Orbit progress">
   <div class="ot-label">🛰️ مدارُ اللغات — Language Orbit</div>
   <div class="ot-strip" id="otStrip"><span class="ot-dot">·</span><span class="ot-count" id="otCount">0/8</span></div>
+  <div class="ot-legend"><span class="done">★ حصةٌ أنجزتَها</span><span>◉ حصتُك الحالية</span></div>
   <div class="ot-done" id="otDone">✨ اكتملَ المدار! أنتَ سفيرُ اللغاتِ العالميُّ 🌍🏆</div>
 </div>
 
@@ -1130,8 +1145,9 @@ function resetQuiz(){
   var strip=document.getElementById('otStrip'), count=document.getElementById('otCount');
   for(var i=8;i>=1;i--){
     var s=document.createElement('span');
-    s.className='ot-slot'+(got.indexOf(i)>=0?' on':'');
-    s.textContent=got.indexOf(i)>=0?'★':i;
+    s.className='ot-slot'+(got.indexOf(i)>=0?' on':'')+(i===THIS?' now':'');
+    s.textContent=i;
+    s.title='Period '+i;
     strip.insertBefore(s, strip.children[1]);
   }
   count.textContent=got.length+'/8';
