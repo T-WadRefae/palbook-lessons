@@ -126,10 +126,7 @@
     text-shadow:0 1px 2px rgba(0,0,0,.4); box-shadow:0 0 12px rgba(47,157,240,.8);
   }
   .ot-slot.on::after{ border-color:rgba(245,197,66,.8); }
-  .ot-slot.on::before{                      /* star badge — the number stays readable */
-    content:'★'; position:absolute; top:-8px; right:-6px; font-size:13px; line-height:1;
-    color:var(--gold); text-shadow:0 1px 3px rgba(0,0,0,.75);
-  }
+  .ot-slot.on{ font-size:17px; }            /* the star sits where the number was */
   .ot-slot.now{                             /* the period you are on right now */
     transform:scale(1.14); border-color:var(--gold);
     box-shadow:0 0 0 3px rgba(245,197,66,.35), 0 0 14px rgba(245,197,66,.75);
@@ -543,7 +540,7 @@
 <div class="orbit-track" id="orbitTrack" aria-label="Language Orbit progress">
   <div class="ot-label">🛰️ مدارُ اللغات — Language Orbit</div>
   <div class="ot-strip" id="otStrip"><span class="ot-dot">·</span><span class="ot-count" id="otCount">0/8</span></div>
-  <div class="ot-legend"><span class="done">★ حصةٌ أنجزتَها</span><span>◉ حصتُك الحالية</span></div>
+  <div class="ot-legend"><span class="done">★ حصةٌ أنجزتَها</span><span>◉ الدائرة الذهبية = حصتُك الحالية</span></div>
   <div class="ot-done" id="otDone">✨ اكتملَ المدار! أنتَ سفيرُ اللغاتِ العالميُّ 🌍🏆</div>
 </div>
 
@@ -1146,7 +1143,7 @@ function resetQuiz(){
   for(var i=8;i>=1;i--){
     var s=document.createElement('span');
     s.className='ot-slot'+(got.indexOf(i)>=0?' on':'')+(i===THIS?' now':'');
-    s.textContent=i;
+    s.textContent=got.indexOf(i)>=0?'★':i;
     s.title='Period '+i;
     strip.insertBefore(s, strip.children[1]);
   }
