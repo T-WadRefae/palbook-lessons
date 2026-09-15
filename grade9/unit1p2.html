@@ -198,6 +198,62 @@ nav::-webkit-scrollbar{display:none}
 
 footer{text-align:center;margin-top:40px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#74839a;font-size:.95rem}
 footer b{color:var(--red-deep)}
+
+/* ═══════════ HEADER RESKIN ═══════════ */
+header{
+  position:relative;z-index:1;margin:6px 0 18px;padding:18px 16px 22px;
+  border-radius:22px;overflow:hidden;text-align:center;
+  background:
+    linear-gradient(180deg,rgba(63,124,178,.22),transparent 40%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 58px),
+    linear-gradient(172deg,#1b2735 0%, #131c27 52%, #0c131b 100%);
+  border:3px solid #0a1019;
+  box-shadow:0 22px 46px rgba(12,19,27,.4), inset 0 1px 0 rgba(255,255,255,.07);
+}
+header::before{ /* terminal window band */
+  content:"";position:absolute;top:0;left:0;right:0;height:38%;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(120,180,225,.16), transparent 88%),
+    repeating-linear-gradient(90deg, transparent 0 74px, rgba(255,255,255,.09) 74px 77px);
+}
+header::after{ /* runway strip */
+  content:"";position:absolute;left:0;right:0;bottom:0;height:9px;pointer-events:none;
+  background:repeating-linear-gradient(90deg,#e0a82e 0 26px, transparent 26px 50px);
+  opacity:.5;
+}
+.htitle2{position:relative;z-index:3;margin-bottom:14px}
+.htitle2 .tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(224,168,46,.14);color:#ffd36b;border:1.5px solid rgba(224,168,46,.5);
+  font-weight:600;font-size:.7rem;letter-spacing:.2em;border-radius:999px;padding:5px 15px;
+  text-transform:uppercase}
+.htitle2 .tag i{width:7px;height:7px;border-radius:50%;background:#39d98a;
+  box-shadow:0 0 8px #39d98a;animation:blink 1.3s steps(1) infinite;font-style:normal}
+.flapline{display:flex;justify-content:center;gap:3px;flex-wrap:wrap;margin:13px 0 4px}
+.flapline span{
+  display:inline-block;min-width:.72em;padding:6px 4px;border-radius:4px;
+  background:linear-gradient(180deg,#2a3746 0 49%, #1d2835 49% 100%);
+  color:#ffd36b;font-family:'Fredoka',monospace;font-weight:700;
+  font-size:clamp(1rem,3.7vw,1.6rem);line-height:1;letter-spacing:.02em;
+  box-shadow:inset 0 -1px 0 rgba(0,0,0,.6), 0 2px 4px rgba(0,0,0,.4);
+  animation:flapIn .42s ease backwards}
+.flapline .wd{display:inline-flex;gap:3px}
+@keyframes flapIn{0%{transform:rotateX(-92deg);opacity:0}100%{transform:none;opacity:1}}
+.htitle2 .sub{color:#9fc0dd;font-weight:600;font-size:.9rem;margin-top:9px;letter-spacing:.02em}
+.htitle2 .sub b{color:#ffd36b;font-weight:700}
+header .board{position:relative;z-index:3;border-color:#0a1019;
+  box-shadow:0 12px 26px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.07)}
+
+header .board{width:100%;max-width:460px}
+@media (max-width:480px){
+  header{padding:16px 10px 20px}
+  header .board{padding:12px 10px 14px}
+  header .brow{grid-template-columns:56px 1fr 46px 64px;gap:5px}
+  header .brow .fl-from{font-size:.82rem}
+  header .brow.head{font-size:.58rem}
+  header .flap{min-width:60px;font-size:.6rem;padding:3px 4px}
+  header .board .bh{font-size:.82rem;letter-spacing:1px}
+}
 </style>
 </head>
 <body>
@@ -206,10 +262,10 @@ footer b{color:var(--red-deep)}
 
 <div class="wrap">
 <header>
-  <div class="htitle">
-    <span class="tag">UNIT 1 · PERIOD 2 · GRADE 9</span>
-    <h1>Getting to Palestine</h1>
-    <div class="sub">On the plane &amp; at Arrivals · PB page 5</div>
+  <div class="htitle2">
+    <span class="tag"><i></i>Unit 1 · Period 2 · Grade 9</span>
+    <div class="flapline" id="flapTitle2"></div>
+    <div class="sub">On the plane &amp; at Arrivals · <b>PB page 5</b></div>
   </div>
   <div class="board" id="board">
     <div class="bh">✈ ARRIVALS <span class="live"><i></i> LIVE</span></div>
@@ -618,6 +674,26 @@ document.getElementById('quizCheck').addEventListener('click',()=>{
   box.classList.add('show');award('quiz');
   box.scrollIntoView({behavior:'smooth',block:'center'});
 });
+</script>
+
+<script>
+/* split-flap headline */
+(function(){
+  const box=document.getElementById('flapTitle2');
+  if(!box) return;
+  const txt='Getting to Palestine';
+  let n=0;
+  txt.split(' ').forEach(function(word){
+    const w=document.createElement('span');
+    w.className='wd';
+    word.split('').forEach(function(ch){
+      const s=document.createElement('span');
+      s.textContent=ch; s.style.animationDelay=(n*0.045)+'s'; n++;
+      w.appendChild(s);
+    });
+    box.appendChild(w);
+  });
+})();
 </script>
 </body>
 </html>
