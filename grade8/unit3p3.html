@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 3 — Just · Already · Yet | Grade 8 · Period 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --pine:#1f5132; --pine-d:#123320; --pine-l:#3e7c4f; --moss:#6f9a54;
+  --granite:#8c969c; --granite-d:#5a656c; --granite-l:#b9c1c5;
+  --wood:#8b5a2b; --wood-d:#4e2d13; --wood-l:#b07a3c;
+  --sky:#9ed3e8; --sky-d:#3b7fa0; --falls:#d8eef7;
+  --sun:#e2952c; --sun-l:#f7cd77; --sun-d:#9c5f12;
+  --paper:#fdf9f0; --card:#fffdf6; --edge:#e0d3ba; --edge-d:#c6b493;
+  --ink:#24301f; --muted:#6d7a63;
+  --ok:#2e7d4f; --no:#b3261e;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background-color:#e6ecdb;
+  background-image:
+    repeating-radial-gradient(circle at 18% 22%, transparent 0 26px, rgba(31,81,50,.075) 26px 28px),
+    repeating-radial-gradient(circle at 82% 74%, transparent 0 32px, rgba(59,127,160,.07) 32px 34px),
+    repeating-radial-gradient(circle at 55% 110%, transparent 0 40px, rgba(139,90,43,.055) 40px 42px);
+  padding:16px 12px 40px;
+}
+.wrap{max-width:1000px;margin:0 auto}
+.frame{
+  background:var(--paper);
+  border:13px solid transparent;
+  border-image:repeating-linear-gradient(50deg,
+      var(--wood-d) 0 9px, var(--wood) 9px 17px,
+      var(--wood-l) 17px 22px, var(--wood) 22px 30px) 13;
+  border-radius:5px; box-shadow:0 12px 34px rgba(18,51,32,.28); padding:0 0 26px;
+}
+.eyebrow{position:relative;z-index:6;font-family:'Fredoka',sans-serif;font-size:.7rem;
+  letter-spacing:.24em;color:#123320;font-weight:600;text-transform:uppercase;
+  background:rgba(255,255,255,.66);display:inline-block;padding:4px 14px;border-radius:999px;
+  border:1.5px solid rgba(18,51,32,.22)}
+.plaque{position:relative;z-index:6;margin:18px auto 0;max-width:620px;
+  background:rgba(253,249,240,.94);border:3px solid var(--wood-d);border-radius:15px;
+  padding:11px 18px 13px;box-shadow:0 10px 22px rgba(18,51,32,.34), inset 0 0 0 2px rgba(139,90,43,.3)}
+.plaque::before,.plaque::after{content:"";position:absolute;top:-10px;width:9px;height:9px;
+  border-radius:50%;background:radial-gradient(circle at 34% 30%,#f2e6c8,#8d7a4f 70%,#5b4c2b)}
+.plaque::before{left:16px}.plaque::after{right:16px}
+h1{margin:0 0 3px;font-family:'Fredoka',sans-serif;
+  font-size:clamp(1.22rem,5vw,1.8rem);color:#0f2e1c;line-height:1.25}
+.sub{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  font-size:.95rem;color:#2c4a34;font-weight:600}
+
+/* ═══════════ PROGRESS METER (header) ═══════════ */
+.meter{position:relative;z-index:6;display:flex;justify-content:center;gap:12px;
+  flex-wrap:wrap;margin:16px auto 0;max-width:540px}
+.mcount{position:relative;z-index:6;margin-top:10px;display:inline-block;
+  font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:600;color:#123320;
+  background:rgba(255,255,255,.74);border:1.5px solid rgba(18,51,32,.25);
+  border-radius:999px;padding:5px 15px}
+
+/* ═══════════ TABS ═══════════ */
+nav{display:flex;gap:9px;padding:16px 14px 4px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){ nav{flex-wrap:wrap;overflow-x:visible;justify-content:center} }
+.tab{flex:0 0 auto;cursor:pointer;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;font-weight:600;color:var(--pine-d);padding:11px 16px 12px;
+  background:linear-gradient(180deg,#f4ecd9,#e3d7bb);border:2px solid var(--edge-d);
+  border-radius:12px 12px 8px 8px;
+  box-shadow:inset 0 3px 8px rgba(255,255,255,.6),0 2px 4px rgba(18,51,32,.14);
+  transition:transform .18s,background .2s,color .2s;white-space:nowrap}
+.tab:hover{transform:translateY(-3px)}
+.tab.on{background:linear-gradient(180deg,var(--pine-l),var(--pine));color:#f3fbf4;
+  border-color:var(--pine-d);box-shadow:inset 0 3px 10px rgba(0,0,0,.22),0 4px 10px rgba(31,81,50,.4)}
+
+/* ═══════════ PANELS ═══════════ */
+.panel{display:none;padding:18px 18px 6px;animation:fade .32s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.sec{font-family:'Fredoka',sans-serif;font-size:1.22rem;color:var(--pine);
+  margin:0 0 4px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+h2.sec::before{content:"";width:0;height:0;flex:0 0 auto;
+  border-left:9px solid transparent;border-right:9px solid transparent;
+  border-bottom:16px solid var(--pine-l)}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.94rem;line-height:1.85;margin:2px 0 16px}
+.card{background:var(--card);border:2px solid var(--edge);border-radius:14px;
+  padding:16px;margin-bottom:16px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:12px}
+.goal{background:var(--card);border:2px solid var(--edge);border-left:6px solid var(--pine-l);
+  border-radius:12px;padding:13px 15px;box-shadow:0 3px 0 var(--edge)}
+.goal .ico{font-size:1.5rem;display:block;margin-bottom:5px}
+.goal b{font-family:'Fredoka',sans-serif;color:var(--pine);font-size:.98rem}
+.goal .ar{margin:5px 0 0;font-size:.87rem}
+
+/* audio */
+.audio{margin:12px 0 16px;text-align:center}
+.audio .lbl{display:block;font-family:'Fredoka',sans-serif;font-size:.82rem;
+  color:var(--wood-d);font-weight:600;margin-bottom:6px}
+.audio iframe{width:100%;max-width:480px;height:58px;border:0;border-radius:9px}
+.noaudio{max-width:480px;margin:0 auto;background:#fdf3e2;border:2px dashed var(--wood-l);
+  border-radius:11px;padding:10px 14px;font-family:'Baloo Bhaijaan 2',sans-serif;
+  direction:rtl;font-size:.87rem;color:var(--wood-d)}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px}
+.flip{perspective:1100px;height:200px}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:15px;padding:12px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:5px;
+  border:2.5px solid var(--wood-d);box-shadow:0 5px 0 rgba(78,45,19,.35)}
+.face.front{background:linear-gradient(170deg,#fffdf4,#f2e8d2);cursor:pointer}
+.face.front .em{font-size:2.5rem}
+.face.front .w{font-family:'Fredoka',sans-serif;font-size:1.12rem;color:var(--pine);font-weight:700}
+.face.front .hint{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.74rem;color:var(--muted)}
+.face.back{transform:rotateY(180deg);background:linear-gradient(170deg,var(--pine),var(--pine-d));color:#eaf6ec;cursor:pointer}
+.face.back .mean{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:1.1rem;font-weight:700;color:#ffe6b3}
+.face.back .sa{font-size:.82rem;line-height:1.7}
+.face.back .sa b{color:#ffd88f}
+.tts{border:0;cursor:pointer;background:var(--sun);color:#3a2306;font-family:'Fredoka',sans-serif;
+  font-size:.76rem;font-weight:600;border-radius:999px;padding:5px 13px;box-shadow:0 2px 0 var(--sun-d)}
+.tts:active{transform:translateY(2px);box-shadow:none}
+.tts.playing{background:var(--no);color:#fff;box-shadow:0 2px 0 #7d1a14}
+
+/* ═══════════ WORD BANK + BLANKS ═══════════ */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;padding:14px;
+  background:linear-gradient(170deg,#eef6e7,#dcebd6);border:2px dashed var(--pine-l);
+  border-radius:14px;margin-bottom:16px}
+.bank .bl{font-family:'Fredoka',sans-serif;font-size:.86rem;cursor:pointer;border:2px solid var(--pine-l);
+  background:#fff;color:var(--pine);border-radius:999px;padding:8px 15px;
+  box-shadow:0 3px 0 rgba(31,81,50,.25);transition:transform .15s,background .2s}
+.bank .bl:hover{transform:translateY(-3px)}
+.bank .bl.sel{background:var(--pine);color:#fff}
+.bank .bl.used{opacity:.32;pointer-events:none;text-decoration:line-through}
+.mline{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:14px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);
+  font-size:1.02rem;line-height:2.1;transition:border-color .3s,background .3s}
+.mline.done{border-color:var(--ok);background:#f2faf4}
+.mline .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--pine);color:#fff;font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.blank{display:inline-block;min-width:110px;border-bottom:3px dotted var(--wood);
+  cursor:pointer;text-align:center;padding:2px 8px;font-weight:700;color:var(--wood-d);
+  transition:background .2s,border-color .2s}
+.blank:hover{background:#fdf1dc}
+.blank.right{border-bottom:3px solid var(--ok);color:var(--ok);background:#eaf6ee;cursor:default;border-radius:6px}
+
+/* reveal questions */
+.oq{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.oq.done{border-color:var(--ok);background:#f2faf4}
+.oq .qq{font-size:1rem;font-weight:600;color:var(--pine);margin-bottom:9px}
+.oq .qq .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--pine);color:#fff;font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.oq .model{display:none;background:#eaf6ee;border-left:4px solid var(--ok);
+  border-radius:0 9px 9px 0;padding:9px 12px;font-size:.96rem;color:#1d5c38;font-weight:600;margin-bottom:9px}
+.oq .model.on{display:block;animation:fade .3s ease}
+
+/* MCQ picks */
+.nw{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.nw.done{border-color:var(--ok);background:#f2faf4}
+.nw .w{font-family:'Fredoka',sans-serif;font-size:1.04rem;color:var(--pine);margin-bottom:4px}
+.nw .line{font-size:.92rem;color:var(--muted);margin-bottom:9px;font-style:italic}
+.picks{display:flex;flex-direction:column;gap:8px}
+.pk{font-family:'Nunito',sans-serif;font-size:.95rem;text-align:left;cursor:pointer;background:#fff;
+  border:2px solid var(--edge-d);border-radius:10px;padding:9px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.pk:hover{transform:translateX(4px);border-color:var(--wood-l)}
+.pk.right{background:#eaf6ee;border-color:var(--ok);color:#1d5c38;font-weight:700;transform:none}
+.pk.wrong{background:#fceceb;border-color:var(--no);color:#8c1d17}
+.pk:disabled{cursor:default;transform:none}
+
+/* ═══════════ TRANSCRIPT / DIALOGUE ═══════════ */
+.script{background:var(--card);border:2px solid var(--edge);border-radius:15px;
+  padding:16px 14px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.narr{font-style:italic;color:var(--muted);background:#eef3e8;border-radius:9px;
+  padding:9px 12px;margin:0 0 12px;font-size:.94rem}
+.ln{display:flex;gap:10px;margin-bottom:11px;align-items:flex-start;line-height:1.95}
+.who{flex:0 0 auto;font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:600;
+  min-width:74px;border-radius:999px;padding:3px 9px;text-align:center;color:#fff;margin-top:3px}
+.w-omar{background:#b3651e}.w-uncle{background:#2f6690}.w-aunt{background:#8c3f6d}
+.w-yas{background:#256d54}.w-adn{background:#6b5aa8}
+.w-a{background:#2f6690}.w-b{background:#b3651e}
+.sp{font-size:1rem}
+.key{position:relative;cursor:pointer;border-radius:5px;padding:0 4px;font-weight:700;
+  background:#fff0b8;border-bottom:2px dashed var(--sun-d);color:#7d5300}
+.key.got{background:#d6f0de;border-bottom:2px solid var(--ok);color:#1d5c38}
+.key::after,.pp::after{content:attr(data-t);position:absolute;left:50%;bottom:145%;
+  transform:translateX(-50%) translateY(5px);
+  background:#123320;color:#eaf6ec;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:min(230px,68vw);white-space:normal;text-align:center;line-height:1.6;
+  font-size:.84rem;font-weight:600;padding:6px 12px;border-radius:10px;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;
+  box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.key:hover::after,.key.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.pp{position:relative;cursor:pointer;border-radius:5px;padding:0 4px;font-weight:700;
+  background:#ece6ff;border-bottom:2px dashed #5a41b8;color:#452f9b}
+.pp::after{background:#2f2260;color:#eee9ff}
+.pp:hover::after,.pp.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.83rem;color:var(--muted)}
+.legend span i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-left:5px}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;background:var(--card);
+  border:2px solid var(--edge);border-radius:12px;overflow:hidden;font-size:.95rem}
+.tblwrap{overflow-x:auto;margin-bottom:16px;border-radius:12px}
+.tbl th{background:var(--pine);color:#eaf6ec;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;padding:10px 12px;text-align:left}
+.tbl td{padding:10px 12px;border-top:1.5px solid var(--edge)}
+.tbl tr:nth-child(even) td{background:#f7f3e8}
+
+.btn{border:0;font-family:'Fredoka',sans-serif;font-size:.9rem;cursor:pointer;color:#fff;
+  background:var(--pine);border-radius:24px;padding:9px 18px;box-shadow:0 3px 0 var(--pine-d)}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.btn.small{font-size:.8rem;padding:7px 14px}
+.btn.wood{background:var(--wood);box-shadow:0 3px 0 var(--wood-d)}
+.btn:disabled{opacity:.5;cursor:default}
+details{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:0;margin-bottom:13px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+details>summary{cursor:pointer;list-style:none;padding:13px 15px;
+  font-family:'Fredoka',sans-serif;font-size:.98rem;color:var(--pine);font-weight:600}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";color:var(--wood)}
+details[open]>summary::before{content:"▾ "}
+details .dbody{padding:0 15px 14px}
+
+/* quiz */
+.q{background:var(--card);border:2px solid var(--edge);border-radius:13px;padding:14px;margin-bottom:13px}
+.q p.qt{font-weight:700;margin:0 0 4px;font-size:1rem}
+.q p.qar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.86rem;margin:0 0 10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font-family:'Nunito',sans-serif;font-size:.95rem;cursor:pointer;
+  background:#fff;border:2px solid var(--edge-d);border-radius:9px;padding:10px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.opt:hover{transform:translateX(4px);border-color:var(--wood-l)}
+.opt.right{background:#eaf6ee;border-color:var(--ok);color:#1d5c38;font-weight:700}
+.opt.wrong{background:#fceceb;border-color:var(--no);color:#8c1d17}
+.opt:disabled{cursor:default;transform:none}
+.qfb{margin-top:9px;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.9rem;display:none}
+.qfb.on{display:block}
+.score{text-align:center;background:linear-gradient(160deg,#28563a,#122f1d);
+  color:#eef7ef;border-radius:16px;padding:22px 16px;margin-top:6px;display:none}
+.score.on{display:block}
+.score .n{font-family:'Fredoka',sans-serif;font-size:2.6rem;font-weight:700;color:var(--sun-l)}
+.badge{margin:14px auto 0;width:132px;height:132px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f7e2b2,var(--sun) 70%,var(--sun-d));
+  border:6px solid #122f1d;display:none;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;box-shadow:0 8px 22px rgba(0,0,0,.45);
+  animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1) rotate(0)}}
+.badge .bi{font-size:2.3rem}
+.badge .bt{font-family:'Fredoka',sans-serif;font-size:.62rem;letter-spacing:.05em;color:#3d2a06;
+  line-height:1.3;padding:0 8px;text-align:center}
+
+.pop-note{position:fixed;pointer-events:none;font-size:1.5rem;z-index:80;animation:rise 1s ease-out forwards}
+@keyframes rise{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-70px) scale(1.3)}}
+.confetti{position:fixed;top:-12px;width:11px;height:11px;z-index:70;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(660deg);opacity:.15}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shakeit{animation:shake .34s}
+
+footer{text-align:center;margin-top:30px;font-family:'Fredoka',sans-serif;font-weight:600;
+  color:#5f6d55;font-size:.95rem}
+
+@media (max-width:560px){
+  body{padding:10px 8px 34px}
+  .panel{padding:15px 13px 6px}
+  .who{min-width:64px;font-size:.72rem}
+  .blank{min-width:95px}
+}
+
+
+/* ═══════════ HEADER : THE CAMP CLOCK ═══════════ */
+header{position:relative;padding:18px 14px 26px;text-align:center;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 26%, #4a6f52 0%, #2c4a33 46%, #1a3122 100%)}
+header::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;
+  background:repeating-linear-gradient(0deg, rgba(255,255,255,.4) 0 1px, transparent 1px 30px),
+             repeating-linear-gradient(90deg, rgba(255,255,255,.4) 0 1px, transparent 1px 30px)}
+.clockwrap{position:relative;z-index:6;margin:16px auto 0;width:clamp(180px,52vw,236px)}
+.clock{position:relative;width:100%;aspect-ratio:1;border-radius:50%;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%, rgba(120,80,36,.14) 0 4deg, transparent 4deg 9deg),
+    radial-gradient(circle at 38% 32%, #f0dcb4 0%, #dcbf8a 52%, #b98f52 100%);
+  border:11px solid #5e3a17;
+  box-shadow:0 16px 32px rgba(0,0,0,.5), inset 0 0 0 5px rgba(255,244,214,.45),
+             inset 0 0 26px rgba(94,58,23,.4)}
+.clock i.tick{position:absolute;left:50%;top:0;width:3px;height:100%;margin-left:-1.5px;
+  transform-origin:50% 50%;background:transparent}
+.hand{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;border-radius:4px;
+  background:#4a2d10;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.hand.h{width:7px;height:26%;margin-left:-3.5px;animation:swingH 2s cubic-bezier(.2,1.3,.3,1) forwards}
+.hand.m{width:5px;height:36%;margin-left:-2.5px;background:#8c2f1a;animation:swingM 2s cubic-bezier(.2,1.3,.3,1) forwards}
+@keyframes swingH{from{transform:rotate(-120deg)}to{transform:rotate(245deg)}}
+@keyframes swingM{from{transform:rotate(-200deg)}to{transform:rotate(60deg)}}
+.pivot{position:absolute;left:50%;top:50%;width:15px;height:15px;margin:-7.5px 0 0 -7.5px;
+  border-radius:50%;background:radial-gradient(circle at 34% 30%,#f2e6c8,#8d7a4f 70%,#5b4c2b);
+  box-shadow:0 1px 3px rgba(0,0,0,.5)}
+.clabel{position:absolute;left:50%;top:66%;transform:translateX(-50%);
+  font-family:'Fredoka',sans-serif;font-size:.6rem;letter-spacing:.16em;
+  color:#6b451c;text-transform:uppercase;white-space:nowrap}
+.words3{position:relative;z-index:6;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+.words3 span{font-family:'Fredoka',sans-serif;font-size:.8rem;font-weight:600;
+  border-radius:999px;padding:6px 15px;border:2px solid;animation:tickIn .5s backwards}
+.words3 .jj{background:#fff2cf;color:#7d5300;border-color:#c99a2e;animation-delay:.9s}
+.words3 .al{background:#e2f0e5;color:#1d5c38;border-color:#5d9a72;animation-delay:1.1s}
+.words3 .yt{background:#f2e3ee;color:#7a2f61;border-color:#b478a1;animation-delay:1.3s}
+@keyframes tickIn{from{opacity:0;transform:translateY(-10px) scale(.7)}to{opacity:1;transform:none}}
+
+/* wooden signposts = progress */
+.mk{position:relative;width:66px;text-align:center;padding-bottom:16px}
+.mk::after{content:"";position:absolute;bottom:0;left:50%;width:6px;height:16px;
+  transform:translateX(-50%);background:linear-gradient(90deg,#3f2a12,#6d4720,#3f2a12);border-radius:0 0 2px 2px}
+.mk .plank{height:34px;border-radius:5px;display:grid;place-items:center;font-size:1rem;
+  border:2.5px solid #3f2a12;transition:.45s;
+  background:linear-gradient(180deg,#b9c1c5,#7b858b)}
+.mk.lit .plank{background:linear-gradient(180deg,#f7cd77,var(--sun));
+  box-shadow:0 0 20px 6px rgba(247,205,119,.6);transform:translateY(-3px)}
+.mk .lbl{font-family:'Fredoka',sans-serif;font-size:.55rem;letter-spacing:.05em;
+  color:#e9f3e6;margin-top:4px;text-transform:uppercase;opacity:.75}
+.mk.lit .lbl{opacity:1;font-weight:700;color:#ffe6b3}
+@media (max-width:560px){ .mk{width:58px} }
+
+/* grammar boxes */
+.gbox{background:linear-gradient(170deg,#eef6e7,#dcebd6);border:2px solid var(--pine-l);
+  border-radius:14px;padding:15px 16px;margin-bottom:14px}
+.gbox h3{margin:0 0 8px;font-family:'Fredoka',sans-serif;font-size:1.02rem;color:var(--pine)}
+.forms{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.forms b{font-family:'Fredoka',sans-serif;font-size:.92rem;background:#fff;border:2px solid var(--pine-l);
+  border-radius:9px;padding:7px 13px;color:var(--pine)}
+.forms .plus{align-self:center;color:var(--wood);font-weight:700}
+.hl-j{background:#fff2cf;border-bottom:2px solid #c99a2e;border-radius:4px;padding:0 4px;font-weight:700;color:#7d5300}
+.hl-a{background:#e2f0e5;border-bottom:2px solid #5d9a72;border-radius:4px;padding:0 4px;font-weight:700;color:#1d5c38}
+.hl-y{background:#f2e3ee;border-bottom:2px solid #b478a1;border-radius:4px;padding:0 4px;font-weight:700;color:#7a2f61}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="frame">
+
+  <!-- ══════════ HEADER : THE CAMP CLOCK ══════════ -->
+  <header>
+    <div class="eyebrow">Unit 3 · Period 3 · Grade 8</div>
+
+    <div class="clockwrap">
+      <div class="clock" id="clock">
+        <span class="hand h"></span><span class="hand m"></span><span class="pivot"></span>
+        <span class="clabel">Camp Time</span>
+      </div>
+    </div>
+
+    <div class="words3">
+      <span class="jj">just</span><span class="al">already</span><span class="yt">not … yet</span>
+    </div>
+
+    <div class="meter">
+      <div class="mk"><div class="plank">🔍</div><div class="lbl">Discover</div></div>
+      <div class="mk"><div class="plank">🧠</div><div class="lbl">Rule</div></div>
+      <div class="mk"><div class="plank">⏰</div><div class="lbl">Just/Yet</div></div>
+      <div class="mk"><div class="plank">✅</div><div class="lbl">Already</div></div>
+    </div>
+    <div class="mcount" id="mCount">🪵 0 / 4 signposts raised</div>
+
+    <div class="plaque">
+      <h1>Just · Already · Yet</h1>
+      <div class="sub">المضارعُ التامُّ للحديثِ عمّا انتهى قريبًا وما لم يَنتهِ بعد</div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab on" data-p="p1">📌 Objectives</button>
+    <button class="tab" data-p="p2">🔍 Discover</button>
+    <button class="tab" data-p="p3">🧠 The Rule</button>
+    <button class="tab" data-p="p4">⏰ Just or Yet?</button>
+    <button class="tab" data-p="p5">✅ Already</button>
+    <button class="tab" data-p="p6">🎯 Quiz</button>
+  </nav>
+
+  <!-- ══════════ 1 · OBJECTIVES ══════════ -->
+  <section class="panel on" id="p1">
+    <h2 class="sec">Lesson Objectives</h2>
+    <p class="ar">أهدافُ الدرس — نكتشفُ زمنَ المضارعِ التامِّ من جملِ قصّةِ عُمَر، ثمَّ نتدرَّبُ عليه.</p>
+    <div class="goals">
+      <div class="goal"><span class="ico">🔍</span><b>Find the pattern in sentences from the story.</b>
+        <p class="ar">أكتشفُ القاعدةَ بنفسي من جملٍ وردَتْ في محادثةِ الدرسِ الأوّل.</p></div>
+      <div class="goal"><span class="ico">🧠</span><b>Learn how we form the present perfect.</b>
+        <p class="ar">أتعرَّفُ على صيغةِ المضارعِ التامّ: have / has + التصريفِ الثالثِ للفعل.</p></div>
+      <div class="goal"><span class="ico">⏰</span><b>Ask and answer with <i>just</i> and <i>(not) yet</i>.</b>
+        <p class="ar">أسألُ وأُجيبُ مستعملًا just لِما انتهى قبلَ قليل، و(not) yet لِما لم يَنتهِ بعد.</p></div>
+      <div class="goal"><span class="ico">✅</span><b>Write replies with <i>already</i>.</b>
+        <p class="ar">أكتبُ ردودًا باستعمالِ already للدلالةِ على أنَّ العملَ تمَّ من قبل.</p></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 2 · DISCOVER ══════════ -->
+  <section class="panel" id="p2">
+    <h2 class="sec">Read the sentences · What do you notice?</h2>
+    <p class="ar">هذه جملٌ حقيقيّةٌ من محادثةِ عُمَرَ وأقاربِه. انظرْ إلى صيغةِ الفعلِ في كلِّ جملة،
+    ثمَّ اختَرْ ما تعنيه.</p>
+    <div id="disc"></div>
+    <details>
+      <summary>💡 What did you notice? — ماذا لاحظت؟</summary>
+      <div class="dbody">
+        <p style="font-size:1rem;margin:0 0 8px">All the sentences use <b>have / has + the third form of the verb</b>
+        (<i>done, arrived, passed, eaten, found, put</i>). We use this tense for actions that happened
+        <b>before now</b> and are still important <b>now</b>.</p>
+        <p class="ar" style="margin:0">جميعُ الجملِ تستعملُ have / has مع التصريفِ الثالثِ للفعل.
+        نستعملُ هذا الزمنَ لأفعالٍ حدثَتْ قبلَ الآنَ ولها أثرٌ في الحاضر.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ══════════ 3 · THE RULE ══════════ -->
+  <section class="panel" id="p3">
+    <h2 class="sec">The present perfect</h2>
+    <p class="ar">اقرأِ القاعدةَ بتمعُّن، ثمَّ اضغطْ على كلِّ صندوقٍ لتراهُ مُفصَّلًا.</p>
+
+    <div class="gbox">
+      <h3>How we make it — كيف نُكوِّنه</h3>
+      <div class="forms">
+        <b>I / You / We / They</b><span class="plus">+</span><b>have</b>
+        <span class="plus">+</span><b>3rd form</b>
+      </div>
+      <div class="forms">
+        <b>He / She / It</b><span class="plus">+</span><b>has</b>
+        <span class="plus">+</span><b>3rd form</b>
+      </div>
+      <p class="ar" style="margin:8px 0 0">have / has ثمَّ التصريفُ الثالثُ للفعل.
+      وفي الحديثِ نختصرُ: I have → I've · he has → he's · we have → we've.</p>
+    </div>
+
+    <div id="rules"></div>
+
+    <div class="tblwrap">
+      <table class="tbl">
+        <tr><th>Word</th><th>Where it goes</th><th>Example from the story</th></tr>
+        <tr><td><span class="hl-j">just</span></td><td>between <b>have/has</b> and the verb</td>
+            <td>Yes, I've <span class="hl-j">just</span> done that.</td></tr>
+        <tr><td><span class="hl-a">already</span></td><td>between <b>have/has</b> and the verb</td>
+            <td>We've <span class="hl-a">already</span> passed the sign.</td></tr>
+        <tr><td><span class="hl-y">yet</span></td><td>at the <b>end</b> of the sentence</td>
+            <td>I haven't found my trainers <span class="hl-y">yet</span>.</td></tr>
+      </table>
+    </div>
+    <p class="ar">انتبهْ: just و already تأتيان في الوسطِ بعدَ have / has،
+    أمّا yet فتأتي في آخرِ الجملة، وتُستعملُ في النفيِ والسؤالِ فقط.</p>
+  </section>
+
+  <!-- ══════════ 4 · JUST OR NOT YET ══════════ -->
+  <section class="panel" id="p4">
+    <h2 class="sec">Work in pairs · Ask and answer</h2>
+    <p class="ar">انظرْ إلى قائمةِ الاستعدادِ للرحلة. اسألْ زميلَك <b>Have they …?</b>
+    وأجِبْ بـ <b>just</b> لِما تمَّ قبلَ قليل، وبـ <b>not … yet</b> لِما لم يَتِمَّ بعد.
+    اختَرِ الإجابةَ الصحيحةَ لكلِّ سطر.</p>
+    <div id="jy"></div>
+  </section>
+
+  <!-- ══════════ 5 · ALREADY ══════════ -->
+  <section class="panel" id="p5">
+    <h2 class="sec">Write replies with <i>already</i></h2>
+    <p class="ar">اقرأْ ما يقولُه الشخصُ الأوّل، ثمَّ أكملِ الردَّ بالتصريفِ الثالثِ المناسب
+    من بنكِ الأفعال: اضغطِ الفعلَ أوَّلًا ثمَّ اضغطِ الفراغ.</p>
+    <div class="bank" id="abank"></div>
+    <div id="alr"></div>
+  </section>
+
+  <!-- ══════════ 6 · QUIZ ══════════ -->
+  <section class="panel" id="p6">
+    <h2 class="sec">Quiz — 5 questions</h2>
+    <p class="ar">اختبارٌ قصيرٌ من خمسةِ أسئلةٍ حولَ الدرس. أجِبْ عن الأسئلةِ كلِّها ثمَّ اضغطْ زرَّ النتيجة.</p>
+    <div id="quiz"></div>
+    <div style="text-align:center;margin:8px 0 14px">
+      <button class="btn wood" id="check" disabled>⏰ Show my score</button>
+    </div>
+    <div class="score" id="score">
+      <div class="n" id="scoreN">0 / 5</div>
+      <div id="scoreMsg" style="font-size:1rem"></div>
+      <div class="badge" id="badge"><span class="bi">⏰</span><span class="bt">CAMP<br>TIMEKEEPER</span></div>
+    </div>
+  </section>
+
+  <footer>Designed with love 💗 by T. Wad Refae</footer>
+</div>
+</div>
+
+<script>
+
+const TASKS=['discover','rule','justyet','already'];
+const METER_ICON='🪵', METER_WORD='signposts raised';
+const BKEY='g8u3p3_badge';
+const PERFECT='Perfect! Your camp clock keeps perfect time! ⏰';
+
+/* clock ticks */
+(function(){
+  const c=document.getElementById('clock');
+  for(let i=0;i<12;i++){
+    const t=document.createElement('i'); t.className='tick';
+    t.style.transform='rotate('+(i*30)+'deg)';
+    const inner=document.createElement('b');
+    inner.style.cssText='position:absolute;top:9px;left:0;width:3px;height:11px;border-radius:2px;background:#5e3a17;opacity:.75';
+    if(i%3===0){ inner.style.height='16px'; inner.style.width='4px'; inner.style.left='-.5px'; inner.style.opacity='1'; }
+    t.appendChild(inner);
+    c.appendChild(t);
+  }
+})();
+
+/* ═══════════ 2 · DISCOVER ═══════════ */
+buildPicks('disc',[
+ {q:'Yasmeen: &ldquo;Yes, I&rsquo;ve <b>just</b> done that.&rdquo;',
+  line:'(Has everyone put their things in the car yet?)',
+  o:['She finished it a moment ago.','She has never done it.','She will do it tomorrow.'], a:0},
+ {q:'Narrator: &ldquo;They have <b>just</b> arrived at the entrance.&rdquo;',
+  o:['They arrived a very short time ago.','They arrived last year.','They are still driving.'], a:0},
+ {q:'Uncle: &ldquo;We&rsquo;ve <b>already</b> passed the sign for Yosemite.&rdquo;',
+  o:['They will pass it soon.','They passed it before now — sooner than you thought.','They never saw the sign.'], a:1},
+ {q:'Adnan: &ldquo;We&rsquo;ve <b>already</b> eaten them!&rdquo;',
+  line:'(You can eat the sandwiches in the bag.)',
+  o:['The sandwiches are gone — they ate them before now.','They will eat them later.','They do not like sandwiches.'], a:0},
+ {q:'Adnan: &ldquo;I haven&rsquo;t found my trainers <b>yet</b>.&rdquo;',
+  o:['He found them this morning.','He has not found them up to now.','He does not need them.'], a:1},
+ {q:'Aunt: &ldquo;Has everyone put their things in the car <b>yet</b>?&rdquo;',
+  o:['She is asking if it is done up to now.','She is telling them to stop.','She did it herself yesterday.'], a:0}
+],'discover');
+
+/* ═══════════ 3 · THE RULE ═══════════ */
+buildPicks('rules',[
+ {q:'We use the present perfect for things that …',
+  o:['happened at a clear time in the past and finished there',
+     'started in the past and are still true now',
+     'will happen next week'], a:1},
+ {q:'We use <b>yet</b> …',
+  o:['only in negatives and questions, at the end of the sentence',
+     'only in affirmative sentences, in the middle',
+     'with the past simple only'], a:0},
+ {q:'We use <b>already</b> to say that something …',
+  o:['is going to happen','happened before now, perhaps sooner than expected','never happens'], a:1}
+],'rule');
+
+/* ═══════════ 4 · JUST OR NOT YET ═══════════ */
+buildPicks('jy',[
+ {q:'Have they put their things in the car?',
+  line:'✔ Yasmeen finished this a moment ago.',
+  o:['Yes, they’ve just put their things in the car.','No, they haven’t put their things in the car yet.'], a:0},
+ {q:'Has Adnan found his trainers?',
+  line:'✘ He is still looking for them.',
+  o:['Yes, he’s just found them.','No, he hasn’t found them yet.'], a:1},
+ {q:'Have they passed the sign for Yosemite?',
+  line:'✔ They passed it before now.',
+  o:['Yes, they’ve already passed it.','No, they haven’t passed it yet.'], a:0},
+ {q:'Have they eaten the sandwiches?',
+  line:'✔ The bag is empty!',
+  o:['No, they haven’t eaten them yet.','Yes, they’ve already eaten them.'], a:1},
+ {q:'Have they arrived at the entrance?',
+  line:'✔ They arrived a moment ago.',
+  o:['Yes, they’ve just arrived.','No, they haven’t arrived yet.'], a:0}
+],'justyet');
+
+/* ═══════════ 5 · ALREADY ═══════════ */
+const ALR=[
+ {say:'Can you find a bus to take us to the Park?',
+  pre:'I’ve already ', v:'found', post:' one to take us.'},
+ {say:'Please ask your sister to take the photos.',
+  pre:'She’s already ', v:'taken', post:' them.'},
+ {say:'You must clean the campsite before you leave.',
+  pre:'We’ve already ', v:'cleaned', post:' it.'},
+ {say:'Why don’t you write to the Park office?',
+  pre:'I’ve already ', v:'written', post:' to them.'}
+];
+(function(){
+  const bank=makeBank('abank',ALR.map(function(o){return o.v;}).sort(function(){return Math.random()-.5;}));
+  const box=document.getElementById('alr'); let left=ALR.length;
+  ALR.forEach(function(o,i){
+    const d=document.createElement('div'); d.className='mline';
+    d.innerHTML='<span class="n">'+(i+1)+'</span>'+
+      '<div class="ln"><span class="who w-a">A</span><span class="sp">'+o.say+'</span></div>';
+    const lb=document.createElement('div'); lb.className='ln';
+    lb.innerHTML='<span class="who w-b">B</span>';
+    const sb=document.createElement('span'); sb.className='sp';
+    sb.appendChild(document.createTextNode(o.pre));
+    sb.appendChild(makeBlank(bank,o.v,function(e){
+      d.classList.add('done');
+      if(--left===0) light('already',e.clientX,e.clientY);
+    },'100px'));
+    sb.appendChild(document.createTextNode(o.post));
+    lb.appendChild(sb); d.appendChild(lb);
+    box.appendChild(d);
+  });
+})();
+
+/* ═══════════ QUIZ ═══════════ */
+const QUIZ=[
+ {t:'Choose the correct sentence.',
+  ar:'اختَرِ الجملةَ الصحيحة.',
+  o:['They have arrive at the entrance.','They have just arrived at the entrance.','They has just arrive at the entrance.'], a:1,
+  fb:'have / has + التصريفِ الثالثِ للفعل: have just arrived.'},
+ {t:'Adnan is still looking for his trainers. What does he say?',
+  ar:'عدنانُ ما زال يبحثُ عن حذائِه. ماذا يقول؟',
+  o:['I haven’t found my trainers yet.','I’ve already found my trainers.','I have just found my trainers.'], a:0,
+  fb:'yet تأتي في آخرِ الجملةِ المنفيّةِ لِما لم يَتِمَّ بعد.'},
+ {t:'Where does <b>already</b> go?',
+  ar:'أينَ موقعُ already في الجملة؟',
+  o:['At the end of the sentence','Between have/has and the verb','Before the subject'], a:1,
+  fb:'already و just تأتيان بينَ have / has والفعل.'},
+ {t:'The sandwich bag is empty. Complete: &ldquo;We’ve ____ eaten them!&rdquo;',
+  ar:'أكملِ الجملة.',
+  o:['yet','already','never'], a:1,
+  fb:'already تدلُّ على أنَّ العملَ تمَّ قبلَ الآن.'},
+ {t:'Which word means the action finished <b>a very short time ago</b>?',
+  ar:'أيُّ كلمةٍ تعني أنَّ العملَ انتهى قبلَ قليلٍ جدًّا؟',
+  o:['yet','already','just'], a:2,
+  fb:'just = لِلتَّوّ / قبلَ قليل.'}
+];
+
+
+/* ═══════════ PROGRESS METER ═══════════ */
+const MARKS=document.querySelectorAll('.mk');
+const done=new Set();
+function light(t,x,y){
+  if(done.has(t)) return;
+  done.add(t);
+  const i=TASKS.indexOf(t);
+  if(MARKS[i]) MARKS[i].classList.add('lit');
+  document.getElementById('mCount').textContent=METER_ICON+' '+done.size+' / '+TASKS.length+' '+METER_WORD;
+  note(x,y,METER_ICON);
+  if(done.size===TASKS.length) burst();
+}
+function note(x,y,ch){
+  const p=document.createElement('div');
+  p.className='pop-note'; p.textContent=ch||'✨';
+  p.style.left=((x||innerWidth/2)-10)+'px'; p.style.top=((y||140)-10)+'px';
+  document.body.appendChild(p); setTimeout(function(){p.remove();},1000);
+}
+function burst(){
+  const cols=['#1f5132','#3e7c4f','#e2952c','#f7cd77','#3b7fa0','#8b5a2b'];
+  for(let i=0;i<70;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDuration=(2.4+Math.random()*1.8)+'s';
+    c.style.animationDelay=(Math.random()*.5)+'s';
+    if(i%3===0) c.style.borderRadius='50%';
+    document.body.appendChild(c); setTimeout(function(){c.remove();},4800);
+  }
+}
+
+/* ═══════════ TABS ═══════════ */
+document.querySelectorAll('.tab').forEach(function(b){
+  b.onclick=function(){
+    stopTTS();
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); document.getElementById(b.dataset.p).classList.add('on');
+    scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* ═══════════ SPEECH ═══════════ */
+let ttsBtn=null;
+function stopTTS(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(ttsBtn){ ttsBtn.classList.remove('playing'); ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊'; ttsBtn=null; }
+}
+function speakBtn(btn,txt){
+  if(ttsBtn===btn){ stopTTS(); return; }
+  stopTTS();
+  if(!('speechSynthesis' in window)) return;
+  btn.dataset.label=btn.innerHTML;
+  const u=new SpeechSynthesisUtterance(txt); u.lang='en-US'; u.rate=.8;
+  u.onend=function(){ if(ttsBtn===btn) stopTTS(); };
+  ttsBtn=btn; btn.classList.add('playing'); btn.innerHTML='⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* ═══════════ FLASHCARD BUILDER ═══════════ */
+function buildCards(boxId,words,task){
+  const box=document.getElementById(boxId); let flipped=0;
+  words.forEach(function(o){
+    const d=document.createElement('div'); d.className='flip';
+    const inn=document.createElement('div'); inn.className='flip-in';
+    const f=document.createElement('div'); f.className='face front';
+    f.innerHTML='<div class="em">'+o.em+'</div><div class="w">'+o.w+'</div><div class="hint">'+o.hint+'</div>';
+    const tb=document.createElement('button'); tb.className='tts'; tb.innerHTML='🔊 Say it';
+    tb.onclick=function(e){ e.stopPropagation(); speakBtn(this,o.say||o.w); };
+    f.appendChild(tb);
+    const b=document.createElement('div'); b.className='face back';
+    let extra='<div class="sa"><b>synonym:</b> '+o.syn+'</div>';
+    if(o.ant) extra+='<div class="sa"><b>opposite:</b> '+o.ant+'</div>';
+    b.innerHTML='<div class="mean">'+o.ar+'</div>'+extra;
+    inn.appendChild(f); inn.appendChild(b); d.appendChild(inn);
+    d.onclick=function(e){
+      d.classList.toggle('on');
+      if(d.classList.contains('on') && !d.dataset.seen){
+        d.dataset.seen='1'; flipped++;
+        note(e.clientX,e.clientY,'🌲');
+        if(task && flipped===words.length) light(task,e.clientX,e.clientY);
+      }
+    };
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ SHARED WORD BANK ═══════════ */
+function makeBank(boxId,items){
+  const bank=document.getElementById(boxId); bank.sel=null;
+  items.forEach(function(t){
+    const s=document.createElement('button'); s.className='bl'; s.textContent=t;
+    s.onclick=function(){
+      if(s.classList.contains('used')) return;
+      if(bank.sel===s){ s.classList.remove('sel'); bank.sel=null; return; }
+      bank.querySelectorAll('.bl').forEach(function(x){x.classList.remove('sel');});
+      s.classList.add('sel'); bank.sel=s;
+    };
+    bank.appendChild(s);
+  });
+  return bank;
+}
+function makeBlank(bank,answer,onRight,minw){
+  const sp=document.createElement('span'); sp.className='blank'; sp.textContent='      ';
+  if(minw) sp.style.minWidth=minw;
+  sp.onclick=function(e){
+    if(sp.classList.contains('right')) return;
+    const pick=bank.sel; if(!pick) return;
+    if(pick.textContent===answer){
+      sp.textContent=answer; sp.classList.add('right');
+      pick.classList.add('used'); pick.classList.remove('sel'); bank.sel=null;
+      note(e.clientX,e.clientY,'✨');
+      onRight&&onRight(e);
+    }else{
+      sp.classList.add('shakeit'); setTimeout(function(){sp.classList.remove('shakeit');},360);
+    }
+  };
+  return sp;
+}
+
+/* ═══════════ REVEAL QUESTIONS ═══════════ */
+function buildReveal(boxId,items,task,icon){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='oq';
+    d.innerHTML='<div class="qq"><span class="n">'+(i+1)+'</span>'+it.q+'</div>';
+    const m=document.createElement('div'); m.className='model';
+    m.innerHTML='✔ '+it.a+(it.ar?'<div class="ar" style="margin:5px 0 0;font-size:.85rem;color:#3f6b52">'+it.ar+'</div>':'');
+    const b=document.createElement('button'); b.className='btn small wood';
+    b.textContent='👁️ Show the answer';
+    b.onclick=function(e){
+      if(d.classList.contains('done')) return;
+      d.classList.add('done'); m.classList.add('on'); this.remove();
+      note(e.clientX,e.clientY,icon||'💡');
+      if(task && --left===0) light(task,e.clientX,e.clientY);
+    };
+    d.appendChild(m); d.appendChild(b);
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ MCQ BLOCK ═══════════ */
+function buildPicks(boxId,items,task){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='nw';
+    d.innerHTML='<div class="w">'+(i+1)+'. '+it.q+'</div>'+(it.line?'<div class="line">'+it.line+'</div>':'');
+    const ps=document.createElement('div'); ps.className='picks';
+    it.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='pk'; b.innerHTML=o;
+      b.onclick=function(e){
+        if(d.classList.contains('done')) return;
+        if(j===it.a){
+          b.classList.add('right'); d.classList.add('done');
+          ps.querySelectorAll('.pk').forEach(function(x){x.disabled=true;});
+          note(e.clientX,e.clientY,'✨');
+          if(task && --left===0) light(task,e.clientX,e.clientY);
+        }else{
+          b.classList.add('wrong'); b.disabled=true;
+          d.classList.add('shakeit'); setTimeout(function(){d.classList.remove('shakeit');},360);
+        }
+      };
+      ps.appendChild(b);
+    });
+    d.appendChild(ps); box.appendChild(d);
+  });
+}
+
+/* ═══════════ TOOLTIPS ON TAP ═══════════ */
+document.addEventListener('click',function(e){
+  const g=e.target.closest('.key,.pp');
+  document.querySelectorAll('.key.ton,.pp.ton').forEach(function(x){ if(x!==g) x.classList.remove('ton'); });
+  if(g) g.classList.toggle('ton');
+});
+
+/* ═══════════ QUIZ ═══════════ */
+(function(){
+  const quizBox=document.getElementById('quiz');
+  const answers=new Array(QUIZ.length).fill(null);
+  QUIZ.forEach(function(q,i){
+    const d=document.createElement('div'); d.className='q';
+    d.innerHTML='<p class="qt">'+(i+1)+'. '+q.t+'</p><p class="qar">'+q.ar+'</p>';
+    const opts=document.createElement('div'); opts.className='opts';
+    const fb=document.createElement('div'); fb.className='qfb'; fb.textContent='💡 '+q.fb;
+    q.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='opt'; b.innerHTML=o;
+      b.onclick=function(){
+        if(answers[i]!==null) return;
+        answers[i]=j;
+        opts.querySelectorAll('.opt').forEach(function(x){x.disabled=true;});
+        if(j===q.a) b.classList.add('right');
+        else{ b.classList.add('wrong'); opts.children[q.a].classList.add('right'); }
+        fb.classList.add('on');
+        if(answers.every(function(a){return a!==null;})) document.getElementById('check').disabled=false;
+      };
+      opts.appendChild(b);
+    });
+    d.appendChild(opts); d.appendChild(fb);
+    quizBox.appendChild(d);
+  });
+  document.getElementById('check').onclick=function(){
+    const n=answers.reduce(function(s,a,i){return s+(a===QUIZ[i].a?1:0);},0);
+    const box=document.getElementById('score');
+    document.getElementById('scoreN').textContent=n+' / 5';
+    document.getElementById('scoreMsg').textContent=
+      n===5 ? PERFECT : n>=3 ? 'Well done! Look at the lesson once more and try again.' :
+              'Good try — go through the lesson again and come back.';
+    box.classList.add('on');
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    if(n===5){
+      document.getElementById('badge').style.display='flex';
+      burst();
+      try{ localStorage.setItem(BKEY,'1'); }catch(e){}
+    }
+  };
+  try{
+    if(localStorage.getItem(BKEY)){
+      document.getElementById('score').classList.add('on');
+      document.getElementById('badge').style.display='flex';
+      document.getElementById('scoreMsg').textContent='You already earned this badge! 🏞️';
+    }
+  }catch(e){}
+})();
+
+</script>
+</body>
+</html>
