@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 3 — Ever · Never · For · Since | Grade 8 · Period 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --pine:#1f5132; --pine-d:#123320; --pine-l:#3e7c4f; --moss:#6f9a54;
+  --granite:#8c969c; --granite-d:#5a656c; --granite-l:#b9c1c5;
+  --wood:#8b5a2b; --wood-d:#4e2d13; --wood-l:#b07a3c;
+  --sky:#9ed3e8; --sky-d:#3b7fa0; --falls:#d8eef7;
+  --sun:#e2952c; --sun-l:#f7cd77; --sun-d:#9c5f12;
+  --paper:#fdf9f0; --card:#fffdf6; --edge:#e0d3ba; --edge-d:#c6b493;
+  --ink:#24301f; --muted:#6d7a63;
+  --ok:#2e7d4f; --no:#b3261e;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background-color:#e6ecdb;
+  background-image:
+    repeating-radial-gradient(circle at 18% 22%, transparent 0 26px, rgba(31,81,50,.075) 26px 28px),
+    repeating-radial-gradient(circle at 82% 74%, transparent 0 32px, rgba(59,127,160,.07) 32px 34px),
+    repeating-radial-gradient(circle at 55% 110%, transparent 0 40px, rgba(139,90,43,.055) 40px 42px);
+  padding:16px 12px 40px;
+}
+.wrap{max-width:1000px;margin:0 auto}
+.frame{
+  background:var(--paper);
+  border:13px solid transparent;
+  border-image:repeating-linear-gradient(50deg,
+      var(--wood-d) 0 9px, var(--wood) 9px 17px,
+      var(--wood-l) 17px 22px, var(--wood) 22px 30px) 13;
+  border-radius:5px; box-shadow:0 12px 34px rgba(18,51,32,.28); padding:0 0 26px;
+}
+.eyebrow{position:relative;z-index:6;font-family:'Fredoka',sans-serif;font-size:.7rem;
+  letter-spacing:.24em;color:#123320;font-weight:600;text-transform:uppercase;
+  background:rgba(255,255,255,.66);display:inline-block;padding:4px 14px;border-radius:999px;
+  border:1.5px solid rgba(18,51,32,.22)}
+.plaque{position:relative;z-index:6;margin:18px auto 0;max-width:620px;
+  background:rgba(253,249,240,.94);border:3px solid var(--wood-d);border-radius:15px;
+  padding:11px 18px 13px;box-shadow:0 10px 22px rgba(18,51,32,.34), inset 0 0 0 2px rgba(139,90,43,.3)}
+.plaque::before,.plaque::after{content:"";position:absolute;top:-10px;width:9px;height:9px;
+  border-radius:50%;background:radial-gradient(circle at 34% 30%,#f2e6c8,#8d7a4f 70%,#5b4c2b)}
+.plaque::before{left:16px}.plaque::after{right:16px}
+h1{margin:0 0 3px;font-family:'Fredoka',sans-serif;
+  font-size:clamp(1.22rem,5vw,1.8rem);color:#0f2e1c;line-height:1.25}
+.sub{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  font-size:.95rem;color:#2c4a34;font-weight:600}
+
+/* ═══════════ PROGRESS METER (header) ═══════════ */
+.meter{position:relative;z-index:6;display:flex;justify-content:center;gap:12px;
+  flex-wrap:wrap;margin:16px auto 0;max-width:540px}
+.mcount{position:relative;z-index:6;margin-top:10px;display:inline-block;
+  font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:600;color:#123320;
+  background:rgba(255,255,255,.74);border:1.5px solid rgba(18,51,32,.25);
+  border-radius:999px;padding:5px 15px}
+
+/* ═══════════ TABS ═══════════ */
+nav{display:flex;gap:9px;padding:16px 14px 4px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){ nav{flex-wrap:wrap;overflow-x:visible;justify-content:center} }
+.tab{flex:0 0 auto;cursor:pointer;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;font-weight:600;color:var(--pine-d);padding:11px 16px 12px;
+  background:linear-gradient(180deg,#f4ecd9,#e3d7bb);border:2px solid var(--edge-d);
+  border-radius:12px 12px 8px 8px;
+  box-shadow:inset 0 3px 8px rgba(255,255,255,.6),0 2px 4px rgba(18,51,32,.14);
+  transition:transform .18s,background .2s,color .2s;white-space:nowrap}
+.tab:hover{transform:translateY(-3px)}
+.tab.on{background:linear-gradient(180deg,var(--pine-l),var(--pine));color:#f3fbf4;
+  border-color:var(--pine-d);box-shadow:inset 0 3px 10px rgba(0,0,0,.22),0 4px 10px rgba(31,81,50,.4)}
+
+/* ═══════════ PANELS ═══════════ */
+.panel{display:none;padding:18px 18px 6px;animation:fade .32s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.sec{font-family:'Fredoka',sans-serif;font-size:1.22rem;color:var(--pine);
+  margin:0 0 4px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+h2.sec::before{content:"";width:0;height:0;flex:0 0 auto;
+  border-left:9px solid transparent;border-right:9px solid transparent;
+  border-bottom:16px solid var(--pine-l)}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.94rem;line-height:1.85;margin:2px 0 16px}
+.card{background:var(--card);border:2px solid var(--edge);border-radius:14px;
+  padding:16px;margin-bottom:16px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:12px}
+.goal{background:var(--card);border:2px solid var(--edge);border-left:6px solid var(--pine-l);
+  border-radius:12px;padding:13px 15px;box-shadow:0 3px 0 var(--edge)}
+.goal .ico{font-size:1.5rem;display:block;margin-bottom:5px}
+.goal b{font-family:'Fredoka',sans-serif;color:var(--pine);font-size:.98rem}
+.goal .ar{margin:5px 0 0;font-size:.87rem}
+
+/* audio */
+.audio{margin:12px 0 16px;text-align:center}
+.audio .lbl{display:block;font-family:'Fredoka',sans-serif;font-size:.82rem;
+  color:var(--wood-d);font-weight:600;margin-bottom:6px}
+.audio iframe{width:100%;max-width:480px;height:58px;border:0;border-radius:9px}
+.noaudio{max-width:480px;margin:0 auto;background:#fdf3e2;border:2px dashed var(--wood-l);
+  border-radius:11px;padding:10px 14px;font-family:'Baloo Bhaijaan 2',sans-serif;
+  direction:rtl;font-size:.87rem;color:var(--wood-d)}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px}
+.flip{perspective:1100px;height:200px}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:15px;padding:12px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:5px;
+  border:2.5px solid var(--wood-d);box-shadow:0 5px 0 rgba(78,45,19,.35)}
+.face.front{background:linear-gradient(170deg,#fffdf4,#f2e8d2);cursor:pointer}
+.face.front .em{font-size:2.5rem}
+.face.front .w{font-family:'Fredoka',sans-serif;font-size:1.12rem;color:var(--pine);font-weight:700}
+.face.front .hint{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.74rem;color:var(--muted)}
+.face.back{transform:rotateY(180deg);background:linear-gradient(170deg,var(--pine),var(--pine-d));color:#eaf6ec;cursor:pointer}
+.face.back .mean{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:1.1rem;font-weight:700;color:#ffe6b3}
+.face.back .sa{font-size:.82rem;line-height:1.7}
+.face.back .sa b{color:#ffd88f}
+.tts{border:0;cursor:pointer;background:var(--sun);color:#3a2306;font-family:'Fredoka',sans-serif;
+  font-size:.76rem;font-weight:600;border-radius:999px;padding:5px 13px;box-shadow:0 2px 0 var(--sun-d)}
+.tts:active{transform:translateY(2px);box-shadow:none}
+.tts.playing{background:var(--no);color:#fff;box-shadow:0 2px 0 #7d1a14}
+
+/* ═══════════ WORD BANK + BLANKS ═══════════ */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;padding:14px;
+  background:linear-gradient(170deg,#eef6e7,#dcebd6);border:2px dashed var(--pine-l);
+  border-radius:14px;margin-bottom:16px}
+.bank .bl{font-family:'Fredoka',sans-serif;font-size:.86rem;cursor:pointer;border:2px solid var(--pine-l);
+  background:#fff;color:var(--pine);border-radius:999px;padding:8px 15px;
+  box-shadow:0 3px 0 rgba(31,81,50,.25);transition:transform .15s,background .2s}
+.bank .bl:hover{transform:translateY(-3px)}
+.bank .bl.sel{background:var(--pine);color:#fff}
+.bank .bl.used{opacity:.32;pointer-events:none;text-decoration:line-through}
+.mline{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:14px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);
+  font-size:1.02rem;line-height:2.1;transition:border-color .3s,background .3s}
+.mline.done{border-color:var(--ok);background:#f2faf4}
+.mline .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--pine);color:#fff;font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.blank{display:inline-block;min-width:110px;border-bottom:3px dotted var(--wood);
+  cursor:pointer;text-align:center;padding:2px 8px;font-weight:700;color:var(--wood-d);
+  transition:background .2s,border-color .2s}
+.blank:hover{background:#fdf1dc}
+.blank.right{border-bottom:3px solid var(--ok);color:var(--ok);background:#eaf6ee;cursor:default;border-radius:6px}
+
+/* reveal questions */
+.oq{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.oq.done{border-color:var(--ok);background:#f2faf4}
+.oq .qq{font-size:1rem;font-weight:600;color:var(--pine);margin-bottom:9px}
+.oq .qq .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--pine);color:#fff;font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.oq .model{display:none;background:#eaf6ee;border-left:4px solid var(--ok);
+  border-radius:0 9px 9px 0;padding:9px 12px;font-size:.96rem;color:#1d5c38;font-weight:600;margin-bottom:9px}
+.oq .model.on{display:block;animation:fade .3s ease}
+
+/* MCQ picks */
+.nw{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.nw.done{border-color:var(--ok);background:#f2faf4}
+.nw .w{font-family:'Fredoka',sans-serif;font-size:1.04rem;color:var(--pine);margin-bottom:4px}
+.nw .line{font-size:.92rem;color:var(--muted);margin-bottom:9px;font-style:italic}
+.picks{display:flex;flex-direction:column;gap:8px}
+.pk{font-family:'Nunito',sans-serif;font-size:.95rem;text-align:left;cursor:pointer;background:#fff;
+  border:2px solid var(--edge-d);border-radius:10px;padding:9px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.pk:hover{transform:translateX(4px);border-color:var(--wood-l)}
+.pk.right{background:#eaf6ee;border-color:var(--ok);color:#1d5c38;font-weight:700;transform:none}
+.pk.wrong{background:#fceceb;border-color:var(--no);color:#8c1d17}
+.pk:disabled{cursor:default;transform:none}
+
+/* ═══════════ TRANSCRIPT / DIALOGUE ═══════════ */
+.script{background:var(--card);border:2px solid var(--edge);border-radius:15px;
+  padding:16px 14px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.narr{font-style:italic;color:var(--muted);background:#eef3e8;border-radius:9px;
+  padding:9px 12px;margin:0 0 12px;font-size:.94rem}
+.ln{display:flex;gap:10px;margin-bottom:11px;align-items:flex-start;line-height:1.95}
+.who{flex:0 0 auto;font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:600;
+  min-width:74px;border-radius:999px;padding:3px 9px;text-align:center;color:#fff;margin-top:3px}
+.w-omar{background:#b3651e}.w-uncle{background:#2f6690}.w-aunt{background:#8c3f6d}
+.w-yas{background:#256d54}.w-adn{background:#6b5aa8}
+.w-a{background:#2f6690}.w-b{background:#b3651e}
+.sp{font-size:1rem}
+.key{position:relative;cursor:pointer;border-radius:5px;padding:0 4px;font-weight:700;
+  background:#fff0b8;border-bottom:2px dashed var(--sun-d);color:#7d5300}
+.key.got{background:#d6f0de;border-bottom:2px solid var(--ok);color:#1d5c38}
+.key::after,.pp::after{content:attr(data-t);position:absolute;left:50%;bottom:145%;
+  transform:translateX(-50%) translateY(5px);
+  background:#123320;color:#eaf6ec;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:min(230px,68vw);white-space:normal;text-align:center;line-height:1.6;
+  font-size:.84rem;font-weight:600;padding:6px 12px;border-radius:10px;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;
+  box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.key:hover::after,.key.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.pp{position:relative;cursor:pointer;border-radius:5px;padding:0 4px;font-weight:700;
+  background:#ece6ff;border-bottom:2px dashed #5a41b8;color:#452f9b}
+.pp::after{background:#2f2260;color:#eee9ff}
+.pp:hover::after,.pp.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.83rem;color:var(--muted)}
+.legend span i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-left:5px}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;background:var(--card);
+  border:2px solid var(--edge);border-radius:12px;overflow:hidden;font-size:.95rem}
+.tblwrap{overflow-x:auto;margin-bottom:16px;border-radius:12px}
+.tbl th{background:var(--pine);color:#eaf6ec;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;padding:10px 12px;text-align:left}
+.tbl td{padding:10px 12px;border-top:1.5px solid var(--edge)}
+.tbl tr:nth-child(even) td{background:#f7f3e8}
+
+.btn{border:0;font-family:'Fredoka',sans-serif;font-size:.9rem;cursor:pointer;color:#fff;
+  background:var(--pine);border-radius:24px;padding:9px 18px;box-shadow:0 3px 0 var(--pine-d)}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.btn.small{font-size:.8rem;padding:7px 14px}
+.btn.wood{background:var(--wood);box-shadow:0 3px 0 var(--wood-d)}
+.btn:disabled{opacity:.5;cursor:default}
+details{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:0;margin-bottom:13px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+details>summary{cursor:pointer;list-style:none;padding:13px 15px;
+  font-family:'Fredoka',sans-serif;font-size:.98rem;color:var(--pine);font-weight:600}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";color:var(--wood)}
+details[open]>summary::before{content:"▾ "}
+details .dbody{padding:0 15px 14px}
+
+/* quiz */
+.q{background:var(--card);border:2px solid var(--edge);border-radius:13px;padding:14px;margin-bottom:13px}
+.q p.qt{font-weight:700;margin:0 0 4px;font-size:1rem}
+.q p.qar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.86rem;margin:0 0 10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font-family:'Nunito',sans-serif;font-size:.95rem;cursor:pointer;
+  background:#fff;border:2px solid var(--edge-d);border-radius:9px;padding:10px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.opt:hover{transform:translateX(4px);border-color:var(--wood-l)}
+.opt.right{background:#eaf6ee;border-color:var(--ok);color:#1d5c38;font-weight:700}
+.opt.wrong{background:#fceceb;border-color:var(--no);color:#8c1d17}
+.opt:disabled{cursor:default;transform:none}
+.qfb{margin-top:9px;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.9rem;display:none}
+.qfb.on{display:block}
+.score{text-align:center;background:linear-gradient(160deg,#28563a,#122f1d);
+  color:#eef7ef;border-radius:16px;padding:22px 16px;margin-top:6px;display:none}
+.score.on{display:block}
+.score .n{font-family:'Fredoka',sans-serif;font-size:2.6rem;font-weight:700;color:var(--sun-l)}
+.badge{margin:14px auto 0;width:132px;height:132px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f7e2b2,var(--sun) 70%,var(--sun-d));
+  border:6px solid #122f1d;display:none;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;box-shadow:0 8px 22px rgba(0,0,0,.45);
+  animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1) rotate(0)}}
+.badge .bi{font-size:2.3rem}
+.badge .bt{font-family:'Fredoka',sans-serif;font-size:.62rem;letter-spacing:.05em;color:#3d2a06;
+  line-height:1.3;padding:0 8px;text-align:center}
+
+.pop-note{position:fixed;pointer-events:none;font-size:1.5rem;z-index:80;animation:rise 1s ease-out forwards}
+@keyframes rise{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-70px) scale(1.3)}}
+.confetti{position:fixed;top:-12px;width:11px;height:11px;z-index:70;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(660deg);opacity:.15}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shakeit{animation:shake .34s}
+
+footer{text-align:center;margin-top:30px;font-family:'Fredoka',sans-serif;font-weight:600;
+  color:#5f6d55;font-size:.95rem}
+
+@media (max-width:560px){
+  body{padding:10px 8px 34px}
+  .panel{padding:15px 13px 6px}
+  .who{min-width:64px;font-size:.72rem}
+  .blank{min-width:95px}
+}
+
+
+/* ═══════════ HEADER : THE TREE RINGS ═══════════ */
+header{position:relative;padding:18px 14px 26px;text-align:center;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 30%, #3c6444 0%, #24462d 48%, #16301e 100%)}
+header::before{content:"";position:absolute;inset:0;opacity:.13;pointer-events:none;
+  background:repeating-linear-gradient(60deg, rgba(255,255,255,.35) 0 1px, transparent 1px 22px)}
+.trunk{position:relative;z-index:6;margin:16px auto 0;width:clamp(178px,50vw,230px);aspect-ratio:1;
+  border-radius:50%;border:10px solid #4e2d13;
+  background:
+    repeating-radial-gradient(circle at 46% 44%,
+      #e0c08c 0 6px, #cfa96f 6px 9px, #e6caa0 9px 15px, #c99b5d 15px 18px);
+  box-shadow:0 16px 32px rgba(0,0,0,.5), inset 0 0 26px rgba(94,58,23,.45);
+  display:grid;place-items:center}
+.trunk::after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle at 30% 26%, rgba(255,255,255,.28), transparent 52%)}
+.heart{position:relative;z-index:2;width:22%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 38% 34%,#a9702f,#5e3a17);
+  box-shadow:0 0 0 4px rgba(94,58,23,.5)}
+.ringlbl{position:absolute;z-index:3;font-family:'Fredoka',sans-serif;font-size:.62rem;
+  font-weight:700;background:rgba(253,249,240,.94);border:2px solid #5e3a17;border-radius:999px;
+  padding:3px 10px;color:var(--pine);white-space:nowrap}
+.ringlbl.a{top:8%;left:50%;transform:translateX(-50%)}
+.ringlbl.b{bottom:7%;left:50%;transform:translateX(-50%)}
+.axe{position:absolute;z-index:4;font-size:1.5rem;top:-6px;right:6%}
+
+/* tree rings = progress */
+.mk{position:relative;width:68px;text-align:center}
+.mk .ring{width:42px;height:42px;margin:0 auto;border-radius:50%;
+  display:grid;place-items:center;font-size:1rem;transition:.45s;
+  border:4px solid #7d8a80;background:rgba(255,255,255,.1);color:#dceee4}
+.mk.lit .ring{border-color:var(--sun);
+  background:radial-gradient(circle at 40% 34%,#fff6d6,var(--sun-l) 58%,var(--sun) 100%);
+  box-shadow:0 0 20px 6px rgba(247,205,119,.65);transform:scale(1.1)}
+.mk .lbl{font-family:'Fredoka',sans-serif;font-size:.55rem;letter-spacing:.05em;
+  color:#dceee4;margin-top:6px;text-transform:uppercase;opacity:.75}
+.mk.lit .lbl{opacity:1;font-weight:700;color:#ffe6b3}
+@media (max-width:560px){ .mk{width:58px} }
+
+/* grammar boxes */
+.gbox{background:linear-gradient(170deg,#eef6e7,#dcebd6);border:2px solid var(--pine-l);
+  border-radius:14px;padding:15px 16px;margin-bottom:14px}
+.gbox h3{margin:0;font-family:'Fredoka',sans-serif;font-size:1rem;color:var(--pine);line-height:1.6}
+
+/* writing frames */
+.wf{background:var(--card);border:2px solid var(--edge);border-radius:13px;
+  padding:13px 15px;margin-bottom:12px;box-shadow:0 3px 0 var(--edge)}
+.wf .lead{font-size:1rem;font-weight:600;color:var(--pine);margin-bottom:8px}
+.wf textarea{width:100%;min-height:62px;border:2px solid var(--edge-d);border-radius:10px;
+  padding:9px 11px;font-family:'Nunito',sans-serif;font-size:.97rem;resize:vertical;
+  background:#fff;color:var(--ink)}
+.wf textarea:focus{outline:none;border-color:var(--pine-l)}
+.wf .ex{display:none;margin-top:9px;background:#eaf6ee;border-left:4px solid var(--ok);
+  border-radius:0 9px 9px 0;padding:9px 12px;font-size:.95rem;color:#1d5c38;font-weight:600}
+.wf .ex.on{display:block;animation:fade .3s ease}
+.saved{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.8rem;
+  color:var(--ok);margin-top:5px;display:none}
+.saved.on{display:block}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="frame">
+
+  <!-- ══════════ HEADER : THE TREE RINGS ══════════ -->
+  <header>
+    <div class="eyebrow">Unit 3 · Period 8 · Grade 8</div>
+
+    <div class="trunk">
+      <span class="axe">🪓</span>
+      <span class="ringlbl a">for = a period of time</span>
+      <span class="heart"></span>
+      <span class="ringlbl b">since = a point in time</span>
+    </div>
+
+    <div class="meter">
+      <div class="mk"><div class="ring">🔍</div><div class="lbl">Ever</div></div>
+      <div class="mk"><div class="ring">❓</div><div class="lbl">Ask</div></div>
+      <div class="mk"><div class="ring">⏳</div><div class="lbl">For/Since</div></div>
+      <div class="mk"><div class="ring">🎂</div><div class="lbl">Omar</div></div>
+    </div>
+    <div class="mcount" id="mCount">🌳 0 / 4 rings counted</div>
+
+    <div class="plaque">
+      <h1>Ever · Never · For · Since</h1>
+      <div class="sub">نسألُ بـ ever، ونَنفي بـ never، ونُحدِّدُ المدّةَ بـ for والبدايةَ بـ since</div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab on" data-p="p1">📌 Objectives</button>
+    <button class="tab" data-p="p2">🔍 Ever &amp; Never</button>
+    <button class="tab" data-p="p3">❓ Ask with Ever</button>
+    <button class="tab" data-p="p4">⏳ For or Since?</button>
+    <button class="tab" data-p="p5">🎂 Omar's Years</button>
+    <button class="tab" data-p="p6">✍️ About You</button>
+    <button class="tab" data-p="p7">🎯 Quiz</button>
+  </nav>
+
+  <!-- ══════════ 1 · OBJECTIVES ══════════ -->
+  <section class="panel on" id="p1">
+    <h2 class="sec">Lesson Objectives</h2>
+    <p class="ar">أهدافُ الدرس — نُكملُ رحلتَنا مع المضارعِ التامّ: السؤالُ والنفيُ وتحديدُ الزمن.</p>
+    <div class="goals">
+      <div class="goal"><span class="ico">🔍</span><b>Learn how we use <i>ever</i> and <i>never</i>.</b>
+        <p class="ar">أتعلَّمُ استعمالَ ever في السؤالِ و never في النفي.</p></div>
+      <div class="goal"><span class="ico">❓</span><b>Write questions with <i>ever</i> and true answers.</b>
+        <p class="ar">أُكوِّنُ أسئلةً بـ ever وأُجيبُ عنها إجاباتٍ صادقةً عن نفسي.</p></div>
+      <div class="goal"><span class="ico">⏳</span><b>Learn the difference between <i>for</i> and <i>since</i>.</b>
+        <p class="ar">أُفرِّقُ بينَ for لمُدّةِ الزمنِ و since لنقطةِ بدايتِه.</p></div>
+      <div class="goal"><span class="ico">🎂</span><b>Write sentences about Omar with <i>for</i> and <i>since</i>.</b>
+        <p class="ar">أكتبُ جملًا عن عُمَرَ بالصيغتينِ معًا، ثمَّ جملًا عن نفسي.</p></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 2 · EVER & NEVER ══════════ -->
+  <section class="panel" id="p2">
+    <h2 class="sec">Read the sentences · Ever and never</h2>
+    <p class="ar">هاتانِ جملتانِ من محادثةِ الدرسِ الأوّل. انظرْ إلى صيغةِ الفعلِ ثمَّ أكملِ العبارات.</p>
+
+    <div class="gbox" style="background:linear-gradient(170deg,#fff5da,#f7e8c3);border-color:var(--sun)">
+      <h3>1 &nbsp;Adnan: &ldquo;Have you <b>ever</b> seen pictures of it?&rdquo;</h3>
+      <h3 style="margin-top:6px">2 &nbsp;Omar: &ldquo;I&rsquo;ve <b>never</b> heard of Yosemite.&rdquo;</h3>
+    </div>
+
+    <div id="evn"></div>
+
+    <div class="tblwrap">
+      <table class="tbl">
+        <tr><th>Word</th><th>Where we use it</th><th>Meaning</th></tr>
+        <tr><td><b>ever</b></td><td>in <b>questions</b>, after the subject</td><td>at any time in your life — في أيِّ وقتٍ من حياتِك</td></tr>
+        <tr><td><b>never</b></td><td>in <b>affirmative</b> form, but with a negative meaning</td><td>not at any time — لم يحدثْ قطُّ</td></tr>
+      </table>
+    </div>
+    <p class="ar">انتبهْ: نقولُ <b>I've never heard</b> ولا نقولُ I haven't never heard،
+    لأنَّ never تحملُ معنى النفيِ وحدَها.</p>
+  </section>
+
+  <!-- ══════════ 3 · ASK WITH EVER ══════════ -->
+  <section class="panel" id="p3">
+    <h2 class="sec">Write the questions · Then write true answers</h2>
+    <p class="ar">أكملِ السؤالَ بالتصريفِ الثالثِ المناسبِ من البنك، ثمَّ اختَرِ الإجابةَ الصادقةَ عنك:
+    <b>Yes, I have</b> أو <b>No, I never have</b>.</p>
+    <div class="bank" id="ebank"></div>
+    <div id="evq"></div>
+  </section>
+
+  <!-- ══════════ 4 · FOR OR SINCE ══════════ -->
+  <section class="panel" id="p4">
+    <h2 class="sec">Read the sentences · For and since</h2>
+    <p class="ar">اقرأْ هاتينِ الجملتينِ من صفحةِ توني روس، ثمَّ أكملِ العبارات.</p>
+
+    <div class="gbox" style="background:linear-gradient(170deg,#e9f1fb,#d5e5f5);border-color:#5d86b4">
+      <h3>1 &nbsp;&ldquo;My group have been here <b>for</b> three weeks now.&rdquo;</h3>
+      <h3 style="margin-top:6px">2 &nbsp;&ldquo;<b>Since</b> our group started working together, we&rsquo;ve become great friends.&rdquo;</h3>
+    </div>
+
+    <div id="fs"></div>
+
+    <div class="tblwrap">
+      <table class="tbl">
+        <tr><th>Word</th><th>We use it with</th><th>Examples</th></tr>
+        <tr><td><b>for</b></td><td>a <b>period</b> of time — مُدّة</td>
+            <td>for three weeks · for eight years · for a long time</td></tr>
+        <tr><td><b>since</b></td><td>a <b>point</b> in time — نقطةُ بداية</td>
+            <td>since 1890 · since he was five · since Saturday</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════ 5 · OMAR'S YEARS ══════════ -->
+  <section class="panel" id="p5">
+    <h2 class="sec">Write sentences about Omar</h2>
+    <p class="ar">عُمَرُ عمرُه الآن ثلاثةَ عشرَ عامًا. اكتبِ الجملةَ مرّتين: مرّةً بـ for ومرّةً بـ since.
+    اضغطِ العبارةَ في البنكِ أوَّلًا ثمَّ اضغطِ الفراغ.</p>
+    <div class="card" style="text-align:center;background:linear-gradient(170deg,#fff5da,#f7e8c3);border-color:var(--sun)">
+      <div style="font-size:2.4rem">🎂</div>
+      <div style="font-family:'Fredoka',sans-serif;font-size:1.06rem;color:var(--pine)">Omar is 13 years old now.</div>
+      <p class="ar" style="margin:6px 0 0">عُمَرُ يبلغُ الآنَ من العمرِ ثلاثةَ عشرَ عامًا.</p>
+    </div>
+    <div class="bank" id="obank"></div>
+    <div id="omar"></div>
+  </section>
+
+  <!-- ══════════ 6 · ABOUT YOU ══════════ -->
+  <section class="panel" id="p6">
+    <h2 class="sec">Write similar pairs of sentences about yourself</h2>
+    <p class="ar">اكتبْ عن نفسِك زوجًا من الجملِ في كلِّ فقرة: واحدةً بـ for وأخرى بـ since.
+    ما تكتبُه يُحفظُ في متصفِّحِك، ويمكنُك نقلُه إلى دفترِك.</p>
+    <div id="you"></div>
+  </section>
+
+  <!-- ══════════ 7 · QUIZ ══════════ -->
+  <section class="panel" id="p7">
+    <h2 class="sec">Quiz — 5 questions</h2>
+    <p class="ar">اختبارٌ قصيرٌ من خمسةِ أسئلةٍ حولَ الدرس. أجِبْ عن الأسئلةِ كلِّها ثمَّ اضغطْ زرَّ النتيجة.</p>
+    <div id="quiz"></div>
+    <div style="text-align:center;margin:8px 0 14px">
+      <button class="btn wood" id="check" disabled>🌳 Show my score</button>
+    </div>
+    <div class="score" id="score">
+      <div class="n" id="scoreN">0 / 5</div>
+      <div id="scoreMsg" style="font-size:1rem"></div>
+      <div class="badge" id="badge"><span class="bi">🌳</span><span class="bt">TIME<br>KEEPER</span></div>
+    </div>
+  </section>
+
+  <footer>Prepared with care 🌸 by T. Wad Refae</footer>
+</div>
+</div>
+
+<script>
+
+const TASKS=['ever','ask','forsince','omar'];
+const METER_ICON='🌳', METER_WORD='rings counted';
+const BKEY='g8u3p8_badge';
+const PERFECT='Perfect! You can count every ring! 🌳';
+
+/* ═══════════ 2 · EVER & NEVER ═══════════ */
+buildPicks('evn',[
+ {q:'We use <b>ever</b> …',
+  o:['in questions, to mean &ldquo;at any time in your life&rdquo;',
+     'in affirmative sentences, to mean &ldquo;always&rdquo;',
+     'only with the past simple'], a:0},
+ {q:'We use <b>never</b> to say that something …',
+  o:['happened a long time ago','has not happened at any time','happens every day'], a:1}
+],'ever');
+
+/* ═══════════ 3 · ASK WITH EVER ═══════════ */
+const EVQ=[
+ {pre:'Have you ever ', v:'been', post:' to a national park?',
+  yes:'Yes, I have. I went there last summer.',
+  no:'No, I never have. I’ve never been to a national park.'},
+ {pre:'Have you ever ', v:'seen', post:' a very high waterfall?',
+  yes:'Yes, I have. I saw one on a school trip.',
+  no:'No, I never have. I’ve never seen a very high waterfall.'},
+ {pre:'Have you ever ', v:'gone', post:' camping in the mountains?',
+  yes:'Yes, I have. We slept in a tent.',
+  no:'No, I never have. I’ve never gone camping in the mountains.'},
+ {pre:'Have you ever ', v:'done', post:' voluntary work?',
+  yes:'Yes, I have. I helped to clean our school.',
+  no:'No, I never have. I’ve never done voluntary work.'}
+];
+(function(){
+  const bank=makeBank('ebank',EVQ.map(function(o){return o.v;}).sort(function(){return Math.random()-.5;}));
+  const box=document.getElementById('evq'); let left=EVQ.length;
+  EVQ.forEach(function(o,i){
+    const d=document.createElement('div'); d.className='nw';
+    const q=document.createElement('div'); q.className='w';
+    q.appendChild(document.createTextNode((i+1)+'. '+o.pre));
+    const ansBox=document.createElement('div'); ansBox.className='picks'; ansBox.style.display='none';
+    q.appendChild(makeBlank(bank,o.v,function(e){
+      ansBox.style.display='flex';
+      note(e.clientX,e.clientY,'✨');
+    },'110px'));
+    q.appendChild(document.createTextNode(o.post));
+    d.appendChild(q);
+    const model=document.createElement('div'); model.className='model';
+    [['✔ Yes, I have.',o.yes],['✘ No, I never have.',o.no]].forEach(function(pair){
+      const b=document.createElement('button'); b.className='pk'; b.textContent=pair[0];
+      b.onclick=function(e){
+        if(d.classList.contains('done')) return;
+        d.classList.add('done');
+        ansBox.querySelectorAll('.pk').forEach(function(x){x.disabled=true;});
+        b.classList.add('right');
+        model.classList.add('on'); model.innerHTML='🗣️ '+pair[1];
+        note(e.clientX,e.clientY,'💬');
+        if(--left===0) light('ask',e.clientX,e.clientY);
+      };
+      ansBox.appendChild(b);
+    });
+    d.appendChild(ansBox); d.appendChild(model);
+    box.appendChild(d);
+  });
+})();
+
+/* ═══════════ 4 · FOR OR SINCE ═══════════ */
+buildPicks('fs',[
+ {q:'Omar is in Yosemite now. Which sentence is correct?',
+  o:['Omar went on a trip to Yosemite.','Omar has gone on a trip to Yosemite.'], a:1},
+ {q:'We use <b>since</b> with …',
+  o:['a period of time (three weeks, eight years)','a point in time (1890, Saturday, he was five)'], a:1},
+ {q:'We use <b>for</b> with …',
+  o:['a period of time (three weeks, eight years)','a point in time (1890, Saturday, he was five)'], a:0}
+],'forsince');
+
+/* ═══════════ 5 · OMAR'S YEARS ═══════════ */
+const OMAR=[
+ {fact:'Omar started school when he was five.',
+  pre:'a) He has been at school ', f:'for eight years',
+  pre2:'b) He has been at school ', s:'since he was five'},
+ {fact:'Omar moved to Jenin when he was eight.',
+  pre:'a) He has lived in Jenin ', f:'for five years',
+  pre2:'b) He has lived in Jenin ', s:'since he was eight'},
+ {fact:'Omar met Ahmad when he was ten.',
+  pre:'a) He has known Ahmad ', f:'for three years',
+  pre2:'b) He has known Ahmad ', s:'since he was ten'},
+ {fact:'Omar joined the school football team when he was twelve.',
+  pre:'a) He has been in his school football team ', f:'for a year',
+  pre2:'b) He has been in his school football team ', s:'since he was twelve'}
+];
+(function(){
+  const chips=[];
+  OMAR.forEach(function(o){ chips.push(o.f,o.s); });
+  const bank=makeBank('obank',chips.slice().sort(function(){return Math.random()-.5;}));
+  const box=document.getElementById('omar'); let left=chips.length;
+  function fin(e){ if(--left===0) light('omar',e.clientX,e.clientY); }
+  OMAR.forEach(function(o,i){
+    const d=document.createElement('div'); d.className='mline';
+    d.innerHTML='<span class="n">'+(i+1)+'</span><i style="color:#6d7a63">'+o.fact+'</i>';
+    const l1=document.createElement('div'); l1.style.marginTop='8px';
+    l1.appendChild(document.createTextNode(o.pre));
+    l1.appendChild(makeBlank(bank,o.f,fin,'160px'));
+    l1.appendChild(document.createTextNode('.'));
+    const l2=document.createElement('div');
+    l2.appendChild(document.createTextNode(o.pre2));
+    l2.appendChild(makeBlank(bank,o.s,fin,'175px'));
+    l2.appendChild(document.createTextNode('.'));
+    d.appendChild(l1); d.appendChild(l2);
+    box.appendChild(d);
+  });
+})();
+
+/* ═══════════ 6 · ABOUT YOU ═══════════ */
+const YOU=[
+ {lead:'1. Your school', ex:'I have been at this school for three years. I have been at this school since I was ten.'},
+ {lead:'2. Your town or village', ex:'I have lived in my town for thirteen years. I have lived in my town since I was born.'},
+ {lead:'3. Your best friend', ex:'I have known my best friend for six years. I have known my best friend since I was seven.'},
+ {lead:'4. A hobby or a team', ex:'I have played football for two years. I have played football since last year.'}
+];
+(function(){
+  const box=document.getElementById('you');
+  YOU.forEach(function(o,i){
+    const d=document.createElement('div'); d.className='wf';
+    d.innerHTML='<div class="lead">'+o.lead+' — write one sentence with <b>for</b> and one with <b>since</b>.</div>';
+    const ta=document.createElement('textarea');
+    ta.placeholder='I have … for … / I have … since …';
+    const key='g8u3p8_you'+i;
+    try{ ta.value=localStorage.getItem(key)||''; }catch(e){}
+    const sv=document.createElement('div'); sv.className='saved'; sv.textContent='✔ حُفِظَ في متصفِّحك';
+    ta.oninput=function(){
+      try{ localStorage.setItem(key,ta.value); sv.classList.add('on'); }catch(e){}
+    };
+    const ex=document.createElement('div'); ex.className='ex';
+    ex.innerHTML='💡 '+o.ex;
+    const b=document.createElement('button'); b.className='btn small wood'; b.style.marginTop='9px';
+    b.textContent='👁️ See an example';
+    b.onclick=function(){ ex.classList.add('on'); this.remove(); };
+    d.appendChild(ta); d.appendChild(sv); d.appendChild(ex); d.appendChild(b);
+    box.appendChild(d);
+  });
+})();
+
+/* ═══════════ QUIZ ═══════════ */
+const QUIZ=[
+ {t:'Which sentence is correct?',
+  ar:'أيُّ جملةٍ صحيحة؟',
+  o:['Have you ever seen a waterfall?','Have you never seen a waterfall?','Did you ever have seen a waterfall?'], a:0,
+  fb:'نستعملُ ever في السؤالِ بعدَ الفاعل: Have you ever …?'},
+ {t:'Omar does not know Yosemite. What does he say?',
+  ar:'ماذا يقولُ عُمَرُ وهو لا يعرفُ يوسمايت؟',
+  o:['I haven’t never heard of Yosemite.','I’ve never heard of Yosemite.','I’ve ever heard of Yosemite.'], a:1,
+  fb:'never وحدَها تكفي للنفي، فلا نُضيفُ not.'},
+ {t:'Choose: &ldquo;My group have been here ____ three weeks.&rdquo;',
+  ar:'اختَرِ الكلمةَ المناسبة.',
+  o:['since','for','yet'], a:1,
+  fb:'three weeks مُدّةٌ زمنيّة، فنستعملُ for.'},
+ {t:'Choose: &ldquo;Yosemite has been a national park ____ 1890.&rdquo;',
+  ar:'اختَرِ الكلمةَ المناسبة.',
+  o:['for','since','already'], a:1,
+  fb:'1890 نقطةُ بدايةٍ في الزمن، فنستعملُ since.'},
+ {t:'Omar is 13 and started school at five. Which is true?',
+  ar:'عُمَرُ عمرُه 13 وبدأَ المدرسةَ في الخامسة. أيُّ جملةٍ صحيحة؟',
+  o:['He has been at school for five years.','He has been at school since eight years.','He has been at school for eight years.'], a:2,
+  fb:'13 − 5 = 8، والمدّةُ تأتي مع for: for eight years.'}
+];
+
+
+/* ═══════════ PROGRESS METER ═══════════ */
+const MARKS=document.querySelectorAll('.mk');
+const done=new Set();
+function light(t,x,y){
+  if(done.has(t)) return;
+  done.add(t);
+  const i=TASKS.indexOf(t);
+  if(MARKS[i]) MARKS[i].classList.add('lit');
+  document.getElementById('mCount').textContent=METER_ICON+' '+done.size+' / '+TASKS.length+' '+METER_WORD;
+  note(x,y,METER_ICON);
+  if(done.size===TASKS.length) burst();
+}
+function note(x,y,ch){
+  const p=document.createElement('div');
+  p.className='pop-note'; p.textContent=ch||'✨';
+  p.style.left=((x||innerWidth/2)-10)+'px'; p.style.top=((y||140)-10)+'px';
+  document.body.appendChild(p); setTimeout(function(){p.remove();},1000);
+}
+function burst(){
+  const cols=['#1f5132','#3e7c4f','#e2952c','#f7cd77','#3b7fa0','#8b5a2b'];
+  for(let i=0;i<70;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDuration=(2.4+Math.random()*1.8)+'s';
+    c.style.animationDelay=(Math.random()*.5)+'s';
+    if(i%3===0) c.style.borderRadius='50%';
+    document.body.appendChild(c); setTimeout(function(){c.remove();},4800);
+  }
+}
+
+/* ═══════════ TABS ═══════════ */
+document.querySelectorAll('.tab').forEach(function(b){
+  b.onclick=function(){
+    stopTTS();
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); document.getElementById(b.dataset.p).classList.add('on');
+    scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* ═══════════ SPEECH ═══════════ */
+let ttsBtn=null;
+function stopTTS(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(ttsBtn){ ttsBtn.classList.remove('playing'); ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊'; ttsBtn=null; }
+}
+function speakBtn(btn,txt){
+  if(ttsBtn===btn){ stopTTS(); return; }
+  stopTTS();
+  if(!('speechSynthesis' in window)) return;
+  btn.dataset.label=btn.innerHTML;
+  const u=new SpeechSynthesisUtterance(txt); u.lang='en-US'; u.rate=.8;
+  u.onend=function(){ if(ttsBtn===btn) stopTTS(); };
+  ttsBtn=btn; btn.classList.add('playing'); btn.innerHTML='⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* ═══════════ FLASHCARD BUILDER ═══════════ */
+function buildCards(boxId,words,task){
+  const box=document.getElementById(boxId); let flipped=0;
+  words.forEach(function(o){
+    const d=document.createElement('div'); d.className='flip';
+    const inn=document.createElement('div'); inn.className='flip-in';
+    const f=document.createElement('div'); f.className='face front';
+    f.innerHTML='<div class="em">'+o.em+'</div><div class="w">'+o.w+'</div><div class="hint">'+o.hint+'</div>';
+    const tb=document.createElement('button'); tb.className='tts'; tb.innerHTML='🔊 Say it';
+    tb.onclick=function(e){ e.stopPropagation(); speakBtn(this,o.say||o.w); };
+    f.appendChild(tb);
+    const b=document.createElement('div'); b.className='face back';
+    let extra='<div class="sa"><b>synonym:</b> '+o.syn+'</div>';
+    if(o.ant) extra+='<div class="sa"><b>opposite:</b> '+o.ant+'</div>';
+    b.innerHTML='<div class="mean">'+o.ar+'</div>'+extra;
+    inn.appendChild(f); inn.appendChild(b); d.appendChild(inn);
+    d.onclick=function(e){
+      d.classList.toggle('on');
+      if(d.classList.contains('on') && !d.dataset.seen){
+        d.dataset.seen='1'; flipped++;
+        note(e.clientX,e.clientY,'🌲');
+        if(task && flipped===words.length) light(task,e.clientX,e.clientY);
+      }
+    };
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ SHARED WORD BANK ═══════════ */
+function makeBank(boxId,items){
+  const bank=document.getElementById(boxId); bank.sel=null;
+  items.forEach(function(t){
+    const s=document.createElement('button'); s.className='bl'; s.textContent=t;
+    s.onclick=function(){
+      if(s.classList.contains('used')) return;
+      if(bank.sel===s){ s.classList.remove('sel'); bank.sel=null; return; }
+      bank.querySelectorAll('.bl').forEach(function(x){x.classList.remove('sel');});
+      s.classList.add('sel'); bank.sel=s;
+    };
+    bank.appendChild(s);
+  });
+  return bank;
+}
+function makeBlank(bank,answer,onRight,minw){
+  const sp=document.createElement('span'); sp.className='blank'; sp.textContent='      ';
+  if(minw) sp.style.minWidth=minw;
+  sp.onclick=function(e){
+    if(sp.classList.contains('right')) return;
+    const pick=bank.sel; if(!pick) return;
+    if(pick.textContent===answer){
+      sp.textContent=answer; sp.classList.add('right');
+      pick.classList.add('used'); pick.classList.remove('sel'); bank.sel=null;
+      note(e.clientX,e.clientY,'✨');
+      onRight&&onRight(e);
+    }else{
+      sp.classList.add('shakeit'); setTimeout(function(){sp.classList.remove('shakeit');},360);
+    }
+  };
+  return sp;
+}
+
+/* ═══════════ REVEAL QUESTIONS ═══════════ */
+function buildReveal(boxId,items,task,icon){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='oq';
+    d.innerHTML='<div class="qq"><span class="n">'+(i+1)+'</span>'+it.q+'</div>';
+    const m=document.createElement('div'); m.className='model';
+    m.innerHTML='✔ '+it.a+(it.ar?'<div class="ar" style="margin:5px 0 0;font-size:.85rem;color:#3f6b52">'+it.ar+'</div>':'');
+    const b=document.createElement('button'); b.className='btn small wood';
+    b.textContent='👁️ Show the answer';
+    b.onclick=function(e){
+      if(d.classList.contains('done')) return;
+      d.classList.add('done'); m.classList.add('on'); this.remove();
+      note(e.clientX,e.clientY,icon||'💡');
+      if(task && --left===0) light(task,e.clientX,e.clientY);
+    };
+    d.appendChild(m); d.appendChild(b);
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ MCQ BLOCK ═══════════ */
+function buildPicks(boxId,items,task){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='nw';
+    d.innerHTML='<div class="w">'+(i+1)+'. '+it.q+'</div>'+(it.line?'<div class="line">'+it.line+'</div>':'');
+    const ps=document.createElement('div'); ps.className='picks';
+    it.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='pk'; b.innerHTML=o;
+      b.onclick=function(e){
+        if(d.classList.contains('done')) return;
+        if(j===it.a){
+          b.classList.add('right'); d.classList.add('done');
+          ps.querySelectorAll('.pk').forEach(function(x){x.disabled=true;});
+          note(e.clientX,e.clientY,'✨');
+          if(task && --left===0) light(task,e.clientX,e.clientY);
+        }else{
+          b.classList.add('wrong'); b.disabled=true;
+          d.classList.add('shakeit'); setTimeout(function(){d.classList.remove('shakeit');},360);
+        }
+      };
+      ps.appendChild(b);
+    });
+    d.appendChild(ps); box.appendChild(d);
+  });
+}
+
+/* ═══════════ TOOLTIPS ON TAP ═══════════ */
+document.addEventListener('click',function(e){
+  const g=e.target.closest('.key,.pp');
+  document.querySelectorAll('.key.ton,.pp.ton').forEach(function(x){ if(x!==g) x.classList.remove('ton'); });
+  if(g) g.classList.toggle('ton');
+});
+
+/* ═══════════ QUIZ ═══════════ */
+(function(){
+  const quizBox=document.getElementById('quiz');
+  const answers=new Array(QUIZ.length).fill(null);
+  QUIZ.forEach(function(q,i){
+    const d=document.createElement('div'); d.className='q';
+    d.innerHTML='<p class="qt">'+(i+1)+'. '+q.t+'</p><p class="qar">'+q.ar+'</p>';
+    const opts=document.createElement('div'); opts.className='opts';
+    const fb=document.createElement('div'); fb.className='qfb'; fb.textContent='💡 '+q.fb;
+    q.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='opt'; b.innerHTML=o;
+      b.onclick=function(){
+        if(answers[i]!==null) return;
+        answers[i]=j;
+        opts.querySelectorAll('.opt').forEach(function(x){x.disabled=true;});
+        if(j===q.a) b.classList.add('right');
+        else{ b.classList.add('wrong'); opts.children[q.a].classList.add('right'); }
+        fb.classList.add('on');
+        if(answers.every(function(a){return a!==null;})) document.getElementById('check').disabled=false;
+      };
+      opts.appendChild(b);
+    });
+    d.appendChild(opts); d.appendChild(fb);
+    quizBox.appendChild(d);
+  });
+  document.getElementById('check').onclick=function(){
+    const n=answers.reduce(function(s,a,i){return s+(a===QUIZ[i].a?1:0);},0);
+    const box=document.getElementById('score');
+    document.getElementById('scoreN').textContent=n+' / 5';
+    document.getElementById('scoreMsg').textContent=
+      n===5 ? PERFECT : n>=3 ? 'Well done! Look at the lesson once more and try again.' :
+              'Good try — go through the lesson again and come back.';
+    box.classList.add('on');
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    if(n===5){
+      document.getElementById('badge').style.display='flex';
+      burst();
+      try{ localStorage.setItem(BKEY,'1'); }catch(e){}
+    }
+  };
+  try{
+    if(localStorage.getItem(BKEY)){
+      document.getElementById('score').classList.add('on');
+      document.getElementById('badge').style.display='flex';
+      document.getElementById('scoreMsg').textContent='You already earned this badge! 🏞️';
+    }
+  }catch(e){}
+})();
+
+</script>
+</body>
+</html>
