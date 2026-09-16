@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 2 — A School Creed | Grade 9 · Period 10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --cloth:#3d5266; --cloth-d:#2a3a49; --cloth-l:#546d84;
+  --kraft:#c9aa7c; --kraft-d:#9c8054; --kraft-dd:#6e5936;
+  --paper:#fdfaf1; --paper-2:#f4edde; --paper-3:#e9e0cb;
+  --rule:#bccada; --margin:#d98a7c;
+  --ink:#2b323e; --muted:#6f7a88; --pencil:#5d6773;
+  --accent:#b4614f; --accent-d:#8c4636;
+  --gold:#d9a441; --gold-d:#a97b1e; --gold-l:#f0cd83;
+  --ok:#3f8f5b; --ok-d:#2c6b42; --no:#c4553f;
+  --edge:#ded2b8; --edge-d:#c6b696;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background-color:#d9cdb6;
+  background-image:
+    repeating-linear-gradient(92deg, rgba(0,0,0,.05) 0 2px, transparent 2px 13px),
+    radial-gradient(ellipse at 22% 12%, rgba(255,255,255,.4), transparent 58%),
+    linear-gradient(170deg,#e0d4bd 0%, #cfc0a4 55%, #bdae91 100%);
+  padding:16px 12px 40px;
+}
+.wrap{max-width:1000px;margin:0 auto}
+.frame{
+  position:relative;background:var(--paper);
+  border:12px solid transparent;
+  border-image:repeating-linear-gradient(45deg,
+      var(--kraft-dd) 0 8px, var(--kraft) 8px 16px,
+      var(--kraft-d) 16px 22px, var(--kraft) 22px 30px) 12;
+  border-radius:4px; box-shadow:0 14px 34px rgba(60,48,28,.32); padding:0 0 26px;
+}
+.eyebrow{position:relative;z-index:6;font-family:'Fredoka',sans-serif;font-size:.68rem;
+  letter-spacing:.24em;color:var(--cloth-d);font-weight:600;text-transform:uppercase;
+  background:rgba(253,250,241,.9);display:inline-block;padding:4px 14px;border-radius:999px;
+  border:1.5px solid rgba(43,58,73,.25)}
+.plaque{position:relative;z-index:6;margin:18px auto 0;max-width:620px;
+  background:rgba(253,250,241,.96);border:3px solid var(--kraft-dd);border-radius:6px;
+  padding:11px 18px 13px;box-shadow:0 10px 22px rgba(40,32,18,.34), inset 0 0 0 2px rgba(156,128,84,.3)}
+.plaque::before,.plaque::after{content:"";position:absolute;top:-9px;width:9px;height:9px;
+  border-radius:50%;background:radial-gradient(circle at 34% 30%,#f2e6c8,#8d7a4f 70%,#5b4c2b)}
+.plaque::before{left:16px}.plaque::after{right:16px}
+h1{margin:0 0 3px;font-family:'Fredoka',sans-serif;
+  font-size:clamp(1.22rem,5vw,1.8rem);color:var(--cloth-d);line-height:1.25}
+.sub{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  font-size:.95rem;color:var(--accent-d);font-weight:600}
+
+/* ═══════════ PROGRESS METER ═══════════ */
+.meter{position:relative;z-index:6;display:flex;justify-content:center;gap:10px;
+  flex-wrap:wrap;margin:16px auto 0;max-width:560px}
+.mcount{position:relative;z-index:6;margin-top:10px;display:inline-block;
+  font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:600;color:var(--cloth-d);
+  background:rgba(253,250,241,.92);border:1.5px solid rgba(43,58,73,.25);
+  border-radius:999px;padding:5px 15px}
+
+/* ═══════════ TABS ═══════════ */
+nav{display:flex;gap:9px;padding:16px 14px 4px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){ nav{flex-wrap:wrap;overflow-x:visible;justify-content:center} }
+.tab{flex:0 0 auto;cursor:pointer;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;font-weight:600;color:var(--cloth-d);padding:11px 16px 12px;
+  background:linear-gradient(180deg,#fdfaf1,#eee5d1);border:2px solid var(--edge-d);
+  border-radius:4px 12px 4px 4px;
+  box-shadow:inset 0 3px 8px rgba(255,255,255,.6),0 2px 4px rgba(60,48,28,.16);
+  transition:transform .18s,background .2s,color .2s;white-space:nowrap}
+.tab:hover{transform:translateY(-3px)}
+.tab.on{background:linear-gradient(180deg,var(--cloth-l),var(--cloth));color:#fdfaf1;
+  border-color:var(--cloth-d);box-shadow:inset 0 3px 10px rgba(0,0,0,.22),0 4px 10px rgba(43,58,73,.36)}
+
+/* ═══════════ PANELS ═══════════ */
+.panel{display:none;padding:18px 18px 6px;animation:fade .32s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.sec{font-family:'Fredoka',sans-serif;font-size:1.22rem;color:var(--cloth-d);
+  margin:0 0 4px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+h2.sec::before{content:"";width:15px;height:15px;flex:0 0 auto;border-radius:3px;
+  background:linear-gradient(135deg,var(--accent),var(--gold));transform:rotate(12deg)}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.94rem;line-height:1.85;margin:2px 0 16px}
+.card{background:#fffdf7;border:2px solid var(--edge);border-radius:8px;
+  padding:16px;margin-bottom:16px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:12px}
+.goal{background:#fffdf7;border:2px solid var(--edge);border-left:6px solid var(--cloth-l);
+  border-radius:6px;padding:13px 15px;box-shadow:0 3px 0 var(--edge)}
+.goal .ico{font-size:1.5rem;display:block;margin-bottom:5px}
+.goal b{font-family:'Fredoka',sans-serif;color:var(--cloth-d);font-size:.98rem}
+.goal .ar{margin:5px 0 0;font-size:.87rem}
+
+/* audio */
+.audio{margin:12px 0 16px;text-align:center}
+.audio .lbl{display:block;font-family:'Fredoka',sans-serif;font-size:.82rem;
+  color:var(--accent-d);font-weight:600;margin-bottom:6px}
+.audio iframe{width:100%;max-width:480px;height:58px;border:0;border-radius:6px}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px}
+.flip{perspective:1100px;height:200px}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:6px;padding:12px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:5px;
+  border:2.5px solid var(--kraft-dd);box-shadow:0 5px 0 rgba(110,89,54,.35)}
+.face.front{background:linear-gradient(170deg,#fffdf6,#f1e8d3);cursor:pointer}
+.face.front .em{font-size:2.5rem}
+.face.front .w{font-family:'Fredoka',sans-serif;font-size:1.1rem;color:var(--cloth-d);font-weight:700}
+.face.front .hint{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.74rem;color:var(--muted)}
+.face.back{transform:rotateY(180deg);background:linear-gradient(170deg,var(--cloth),var(--cloth-d));color:#f0f5fa;cursor:pointer}
+.face.back .mean{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:1.08rem;font-weight:700;color:var(--gold-l)}
+.face.back .sa{font-size:.82rem;line-height:1.7}
+.face.back .sa b{color:var(--gold-l)}
+.tts{border:0;cursor:pointer;background:var(--gold);color:#3a2a06;font-family:'Fredoka',sans-serif;
+  font-size:.76rem;font-weight:600;border-radius:999px;padding:5px 13px;box-shadow:0 2px 0 var(--gold-d)}
+.tts:active{transform:translateY(2px);box-shadow:none}
+.tts.playing{background:var(--no);color:#fff;box-shadow:0 2px 0 #8c3524}
+
+/* ═══════════ WORD BANK + BLANKS ═══════════ */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;padding:14px;
+  background:linear-gradient(170deg,#f2f6fa,#e3ebf3);border:2px dashed var(--cloth-l);
+  border-radius:8px;margin-bottom:16px}
+.bank .bl{font-family:'Fredoka',sans-serif;font-size:.86rem;cursor:pointer;border:2px solid var(--cloth-l);
+  background:#fff;color:var(--cloth-d);border-radius:999px;padding:8px 15px;
+  box-shadow:0 3px 0 rgba(61,82,102,.25);transition:transform .15s,background .2s}
+.bank .bl:hover{transform:translateY(-3px)}
+.bank .bl.sel{background:var(--cloth);color:#fff}
+.bank .bl.used{opacity:.32;pointer-events:none;text-decoration:line-through}
+.mline{position:relative;background:#fffdf7;border:2px solid var(--edge);border-radius:6px;
+  padding:14px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);
+  font-size:1.02rem;line-height:2.1;transition:border-color .3s,background .3s}
+.mline.done{border-color:var(--ok);background:#f1f9f3}
+.mline .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:5px;
+  background:var(--cloth);color:#fff;font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.blank{display:inline-block;min-width:110px;border-bottom:3px dotted var(--kraft-d);
+  cursor:pointer;text-align:center;padding:2px 8px;font-weight:700;color:var(--kraft-dd);
+  transition:background .2s,border-color .2s}
+.blank:hover{background:#f6efdd}
+.blank.right{border-bottom:3px solid var(--ok);color:var(--ok-d);background:#eaf6ee;cursor:default;border-radius:4px}
+
+/* reveal questions */
+.oq{background:#fffdf7;border:2px solid var(--edge);border-radius:6px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.oq.done{border-color:var(--ok);background:#f1f9f3}
+.oq .qq{font-size:1rem;font-weight:600;color:var(--cloth-d);margin-bottom:9px}
+.oq .qq .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:5px;
+  background:var(--cloth);color:#fff;font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.oq .model{display:none;background:#eaf6ee;border-left:4px solid var(--ok);
+  border-radius:0 6px 6px 0;padding:9px 12px;font-size:.96rem;color:var(--ok-d);font-weight:600;margin-bottom:9px}
+.oq .model.on{display:block;animation:fade .3s ease}
+
+/* MCQ picks */
+.nw{background:#fffdf7;border:2px solid var(--edge);border-radius:6px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.nw.done{border-color:var(--ok);background:#f1f9f3}
+.nw .w{font-family:'Fredoka',sans-serif;font-size:1.04rem;color:var(--cloth-d);margin-bottom:4px}
+.nw .line{font-size:.92rem;color:var(--muted);margin-bottom:9px;font-style:italic}
+.picks{display:flex;flex-direction:column;gap:8px}
+.pk{font-family:'Nunito',sans-serif;font-size:.95rem;text-align:left;cursor:pointer;background:#fff;
+  border:2px solid var(--edge-d);border-radius:6px;padding:9px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.pk:hover{transform:translateX(4px);border-color:var(--kraft-d)}
+.pk.right{background:#eaf6ee;border-color:var(--ok);color:var(--ok-d);font-weight:700;transform:none}
+.pk.wrong{background:#fceceb;border-color:var(--no);color:#8c3524}
+.pk:disabled{cursor:default;transform:none}
+
+/* ═══════════ TRANSCRIPT ═══════════ */
+.script{background:#fffdf7;border:2px solid var(--edge);border-radius:8px;
+  padding:16px 14px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.narr{font-style:italic;color:var(--muted);background:#eef2f7;border-radius:6px;
+  padding:9px 12px;margin:0 0 12px;font-size:.94rem}
+.ln{display:flex;gap:10px;margin-bottom:11px;align-items:flex-start;line-height:1.95}
+.who{flex:0 0 auto;font-family:'Fredoka',sans-serif;font-size:.76rem;font-weight:600;
+  min-width:84px;border-radius:4px;padding:3px 9px;text-align:center;color:#fff;margin-top:3px}
+.w-dad{background:#2f6690}.w-mum{background:#8c3f6d}.w-wal{background:#b3651e}
+.w-lana{background:#256d54}.w-gran{background:#6b5aa8}.w-nar{background:#5d6773}
+.w-a{background:#2f6690}.w-b{background:#b3651e}
+.sp{font-size:1rem}
+.key{position:relative;cursor:pointer;border-radius:4px;padding:0 4px;font-weight:700;
+  background:#fff0b8;border-bottom:2px dashed var(--gold-d);color:#7d5300}
+.key.got{background:#d6f0de;border-bottom:2px solid var(--ok);color:var(--ok-d)}
+.key::after,.pp::after{content:attr(data-t);position:absolute;left:50%;bottom:145%;
+  transform:translateX(-50%) translateY(5px);
+  background:var(--cloth-d);color:#eef4f9;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:min(230px,68vw);white-space:normal;text-align:center;line-height:1.6;
+  font-size:.84rem;font-weight:600;padding:6px 12px;border-radius:8px;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;
+  box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.key:hover::after,.key.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.pp{position:relative;cursor:pointer;border-radius:4px;padding:0 4px;font-weight:700;
+  background:#ece6ff;border-bottom:2px dashed #5a41b8;color:#452f9b}
+.pp::after{background:#2f2260;color:#eee9ff}
+.pp:hover::after,.pp.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.83rem;color:var(--muted)}
+.legend span i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-left:5px}
+
+/* word hunt chips */
+.hunt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:13px;
+  background:linear-gradient(170deg,#fdf6e6,#f5e9cf);border:2px solid var(--edge-d);
+  border-radius:8px;margin-bottom:14px}
+.hunt .ht{font-family:'Fredoka',sans-serif;font-size:.83rem;border:2px solid var(--kraft-d);
+  background:#fff;color:var(--kraft-dd);border-radius:999px;padding:6px 13px;transition:.3s}
+.hunt .ht.got{background:var(--ok);border-color:var(--ok-d);color:#fff}
+.hunt .ht.got::before{content:"✔ "}
+
+/* tables */
+.tblwrap{overflow-x:auto;margin-bottom:16px;border-radius:6px}
+.tbl{width:100%;border-collapse:collapse;background:#fffdf7;
+  border:2px solid var(--edge);border-radius:6px;overflow:hidden;font-size:.95rem}
+.tbl th{background:var(--cloth);color:#f0f5fa;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;padding:10px 12px;text-align:left}
+.tbl td{padding:10px 12px;border-top:1.5px solid var(--edge)}
+.tbl tr:nth-child(even) td{background:#f6f1e4}
+
+.btn{border:0;font-family:'Fredoka',sans-serif;font-size:.9rem;cursor:pointer;color:#fff;
+  background:var(--cloth);border-radius:6px;padding:9px 18px;box-shadow:0 3px 0 var(--cloth-d)}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.btn.small{font-size:.8rem;padding:7px 14px}
+.btn.kraft{background:var(--kraft-d);box-shadow:0 3px 0 var(--kraft-dd)}
+.btn:disabled{opacity:.5;cursor:default}
+details{background:#fffdf7;border:2px solid var(--edge);border-radius:6px;
+  padding:0;margin-bottom:13px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+details>summary{cursor:pointer;list-style:none;padding:13px 15px;
+  font-family:'Fredoka',sans-serif;font-size:.98rem;color:var(--cloth-d);font-weight:600}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";color:var(--accent)}
+details[open]>summary::before{content:"▾ "}
+details .dbody{padding:0 15px 14px}
+
+/* quiz */
+.q{background:#fffdf7;border:2px solid var(--edge);border-radius:6px;padding:14px;margin-bottom:13px}
+.q p.qt{font-weight:700;margin:0 0 4px;font-size:1rem}
+.q p.qar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.86rem;margin:0 0 10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font-family:'Nunito',sans-serif;font-size:.95rem;cursor:pointer;
+  background:#fff;border:2px solid var(--edge-d);border-radius:6px;padding:10px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.opt:hover{transform:translateX(4px);border-color:var(--kraft-d)}
+.opt.right{background:#eaf6ee;border-color:var(--ok);color:var(--ok-d);font-weight:700}
+.opt.wrong{background:#fceceb;border-color:var(--no);color:#8c3524}
+.opt:disabled{cursor:default;transform:none}
+.qfb{margin-top:9px;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.9rem;display:none}
+.qfb.on{display:block}
+.score{text-align:center;background:linear-gradient(160deg,var(--cloth),var(--cloth-d));
+  color:#eef4f9;border-radius:8px;padding:22px 16px;margin-top:6px;display:none}
+.score.on{display:block}
+.score .n{font-family:'Fredoka',sans-serif;font-size:2.6rem;font-weight:700;color:var(--gold-l)}
+.badge{margin:14px auto 0;width:132px;height:132px;border-radius:8px;
+  background:linear-gradient(170deg,#fffdf6,#eee2c6);
+  border:5px solid var(--kraft-dd);display:none;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;box-shadow:0 8px 22px rgba(0,0,0,.4);
+  animation:pop .6s cubic-bezier(.2,1.6,.4,1);transform:rotate(-3deg)}
+@keyframes pop{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1) rotate(-3deg)}}
+.badge .bi{font-size:2.3rem}
+.badge .bt{font-family:'Fredoka',sans-serif;font-size:.62rem;letter-spacing:.05em;color:var(--kraft-dd);
+  line-height:1.3;padding:0 8px;text-align:center;font-weight:700}
+
+.pop-note{position:fixed;pointer-events:none;font-size:1.5rem;z-index:80;animation:rise 1s ease-out forwards}
+@keyframes rise{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-70px) scale(1.3)}}
+.confetti{position:fixed;top:-12px;width:11px;height:11px;z-index:70;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(660deg);opacity:.15}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shakeit{animation:shake .34s}
+
+footer{text-align:center;margin-top:30px;font-family:'Fredoka',sans-serif;font-weight:600;
+  color:var(--kraft-dd);font-size:.95rem}
+
+@media (max-width:560px){
+  body{padding:10px 8px 34px}
+  .panel{padding:15px 13px 6px}
+  .who{min-width:70px;font-size:.7rem}
+  .blank{min-width:95px}
+}
+
+
+/* ═══════════ HEADER : THE EMBROIDERED SAMPLER ═══════════ */
+header{position:relative;padding:20px 14px 26px;text-align:center;overflow:hidden;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.045) 0 2px, transparent 2px 38px),
+    linear-gradient(170deg,#4a5f53 0%, #374a40 50%, #26342c 100%)}
+header::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 16%, rgba(255,246,222,.2), transparent 62%)}
+.hooknail{position:relative;z-index:7;width:12px;height:12px;margin:6px auto 0;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#f2e6c8,#8d7a4f 68%,#4a3f20);
+  box-shadow:0 3px 6px rgba(0,0,0,.6)}
+.sampler{position:relative;z-index:6;max-width:420px;margin:-3px auto 0;padding:13px;
+  border-radius:4px;
+  background:linear-gradient(170deg,#8a5a2e,#6b4220 60%,#4d2e14);
+  box-shadow:0 18px 34px rgba(0,0,0,.52), inset 0 0 0 3px rgba(255,225,180,.18);
+  animation:hangS 5.5s ease-in-out infinite;transform-origin:50% 0}
+@keyframes hangS{0%,100%{transform:rotate(-.9deg)}50%{transform:rotate(.9deg)}}
+.linen{position:relative;border-radius:2px;padding:17px 15px 19px;
+  background:
+    repeating-linear-gradient(0deg, rgba(160,140,110,.14) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(160,140,110,.14) 0 1px, transparent 1px 4px),
+    linear-gradient(170deg,#f7eddb,#eadfc6)}
+.tatreez2{height:11px;background:
+  repeating-linear-gradient(90deg, var(--accent) 0 7px, transparent 7px 11px,
+    var(--cloth) 11px 18px, transparent 18px 22px);opacity:.85;border-radius:2px}
+.creed{font-family:'Fredoka',sans-serif;color:var(--cloth-d);margin:13px 0}
+.creed .ttl{font-size:clamp(1rem,4vw,1.34rem);font-weight:700;letter-spacing:.06em}
+.creed .ln2{display:block;font-size:clamp(.7rem,2.9vw,.85rem);color:var(--accent-d);
+  margin-top:7px;letter-spacing:.03em;font-weight:600;
+  animation:stitch .5s ease var(--d) backwards}
+@keyframes stitch{from{opacity:0;letter-spacing:.3em;filter:blur(2px)}}
+.hearts{margin-top:9px;font-size:.95rem;letter-spacing:5px}
+
+/* stitches = progress */
+.mk{position:relative;width:64px;text-align:center}
+.mk .st2{width:38px;height:38px;margin:0 auto;border-radius:4px;display:grid;place-items:center;
+  font-size:.98rem;transition:.45s;border:2px dashed rgba(253,250,241,.4);
+  background:rgba(255,255,255,.1);color:#eef4ef}
+.mk.lit .st2{background:linear-gradient(160deg,#fff3d8,var(--gold));border:2px solid var(--gold-d);
+  color:#3a2a06;box-shadow:0 0 18px 5px rgba(217,164,65,.55);transform:rotate(-6deg) scale(1.08)}
+.mk .lbl{font-family:'Fredoka',sans-serif;font-size:.54rem;letter-spacing:.05em;
+  color:#e7efe9;margin-top:6px;text-transform:uppercase;opacity:.78}
+.mk.lit .lbl{opacity:1;font-weight:700;color:#ffe6b3}
+@media (max-width:560px){ .mk{width:58px} }
+
+/* the poem */
+.poem{background:linear-gradient(170deg,#fffdf7,#f5eee0);border:2px solid var(--edge);
+  border-radius:8px;padding:20px 18px;box-shadow:0 3px 0 var(--edge);text-align:center;
+  margin-bottom:16px;overflow:visible}
+.poem h3{margin:0 0 4px;font-family:'Fredoka',sans-serif;font-size:1.28rem;color:var(--accent-d)}
+.poem .by2{font-family:'Fredoka',sans-serif;font-size:.6rem;letter-spacing:.2em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.pline{display:flex;align-items:baseline;justify-content:center;gap:9px;margin-bottom:9px;
+  font-size:1.04rem;line-height:1.9;transition:.3s;border-radius:4px;padding:2px 6px}
+.pline .no2{flex:0 0 auto;font-family:'Fredoka',sans-serif;font-size:.62rem;color:var(--muted);
+  min-width:16px;text-align:right}
+.pline.hi1{background:#fdeef1;box-shadow:inset 0 0 0 1.5px #e4a9b6}
+.pline.hi2{background:#e8f2ea;box-shadow:inset 0 0 0 1.5px #9dc5aa}
+.wordbox{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 0}
+.wordbox span{font-family:'Fredoka',sans-serif;font-size:.74rem;background:#eef3f7;
+  border:1.5px solid #c3d2dc;color:var(--cloth-d);border-radius:999px;padding:4px 11px}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="frame">
+
+  <!-- ══════════ HEADER : THE EMBROIDERED SAMPLER ══════════ -->
+  <header>
+    <div class="eyebrow">Unit 2 · Period 10 · Grade 9</div>
+
+    <div class="hooknail"></div>
+    <div class="sampler">
+      <div class="linen">
+        <div class="tatreez2"></div>
+        <div class="creed">
+          <span class="ttl">A School Creed</span>
+          <span class="ln2" style="--d:.6s">Let peace dwell here</span>
+          <span class="ln2" style="--d:.95s">Let love abide here</span>
+          <span class="ln2" style="--d:1.3s">So many hearts make a school</span>
+        </div>
+        <div class="hearts">💗 💚 💛</div>
+        <div class="tatreez2"></div>
+      </div>
+    </div>
+
+    <div class="meter">
+      <div class="mk"><div class="st2">🖼️</div><div class="lbl">Picture</div></div>
+      <div class="mk"><div class="st2">🎧</div><div class="lbl">Meaning</div></div>
+      <div class="mk"><div class="st2">🔤</div><div class="lbl">Words</div></div>
+      <div class="mk"><div class="st2">📜</div><div class="lbl">Lines</div></div>
+    </div>
+    <div class="mcount" id="mCount">🧵 0 / 4 stitches sewn</div>
+
+    <div class="plaque">
+      <h1>A School Creed</h1>
+      <div class="sub">قصيدةٌ عن المدرسةِ بيتًا ثانيًا تصنعُه القلوب</div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab on" data-p="p1">📌 Objectives</button>
+    <button class="tab" data-p="p2">🖼️ The Picture</button>
+    <button class="tab" data-p="p3">📜 The Poem</button>
+    <button class="tab" data-p="p4">🔤 New Words</button>
+    <button class="tab" data-p="p5">✨ Find the Lines</button>
+    <button class="tab" data-p="p6">🎯 Quiz</button>
+  </nav>
+
+  <!-- ══════════ 1 · OBJECTIVES ══════════ -->
+  <section class="panel on" id="p1">
+    <h2 class="sec">Lesson Objectives</h2>
+    <p class="ar">أهدافُ الدرس — قصيدةٌ قصيرةٌ تنقلُ معنى البيتِ إلى المدرسة.</p>
+    <div class="goals">
+      <div class="goal"><span class="ico">🖼️</span><b>Talk about the picture.</b>
+        <p class="ar">أتأمَّلُ الصورةَ وأتحدَّثُ عمّا أراهُ فيها.</p></div>
+      <div class="goal"><span class="ico">🎧</span><b>Listen to the poem and say what it is about.</b>
+        <p class="ar">أستمعُ إلى القصيدةِ وأُحدِّدُ موضوعَها.</p></div>
+      <div class="goal"><span class="ico">🔤</span><b>Learn the words <i>one another</i>, <i>as</i> and <i>so</i>.</b>
+        <p class="ar">أتعلَّمُ معنى one another و as و so في سياقِ القصيدة.</p></div>
+      <div class="goal"><span class="ico">📜</span><b>Find the lines about love and about a good school.</b>
+        <p class="ar">أُحدِّدُ الأسطرَ التي تتحدَّثُ عن المحبّةِ وعن المدرسةِ الطيّبة.</p></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 2 · THE PICTURE ══════════ -->
+  <section class="panel" id="p2">
+    <h2 class="sec">Look at the picture · Do the tasks</h2>
+    <p class="ar">انظرْ إلى صورةِ الصفِّ وفكِّرْ في الأسئلة، ثمَّ اضغطْ لترى إجابةً نموذجيّةً تُعينُك.</p>
+    <div class="card" style="text-align:center;background:linear-gradient(170deg,#eef3f7,#dfe8ee);border-color:#b8cad6">
+      <div style="font-size:2.3rem;letter-spacing:6px;line-height:1.7">🏫<br>👧 👦 👩‍🏫 👦 👧</div>
+      <p class="ar" style="margin:8px 0 0">صفٌّ فيه معلّمةٌ وطلّابٌ يعملونَ معًا في جوٍّ من الألفة.</p>
+    </div>
+    <div id="pic"></div>
+  </section>
+
+  <!-- ══════════ 3 · THE POEM ══════════ -->
+  <section class="panel" id="p3">
+    <h2 class="sec">Listen to the poem · What is it about?</h2>
+    <p class="ar">استمعْ إلى القصيدةِ ثمَّ اختَرْ ما تتحدَّثُ عنه.</p>
+    <div class="audio"><span class="lbl">🎧 CD 1 · Audio 19 — A School Creed</span><iframe src="https://drive.google.com/file/d/1J1DZAigLlED77jbfsOjzoeAz2vPgsAuK/preview" allow="autoplay" title="CD 1 · Audio 19 — A School Creed"></iframe></div>
+
+    <div class="poem" id="poem">
+      <h3>A School Creed</h3>
+      <div class="by2">a poem about our school</div>
+      <div class="pline" data-n="1"><span class="no2">1</span><span>This is our school.</span></div>
+      <div class="pline" data-n="2"><span class="no2">2</span><span>Let peace dwell here,</span></div>
+      <div class="pline" data-n="3"><span class="no2">3</span><span>Let the rooms be full of contentment,</span></div>
+      <div class="pline" data-n="4"><span class="no2">4</span><span>Let love abide here,</span></div>
+      <div class="pline" data-n="5"><span class="no2">5</span><span>Love of one another,</span></div>
+      <div class="pline" data-n="6"><span class="no2">6</span><span>Love of mankind,</span></div>
+      <div class="pline" data-n="7"><span class="no2">7</span><span>Love of life itself,</span></div>
+      <div class="pline" data-n="8"><span class="no2">8</span><span>And love of God.</span></div>
+      <div class="pline" data-n="9"><span class="no2">9</span><span>Let us remember</span></div>
+      <div class="pline" data-n="10"><span class="no2">10</span><span>That, as many hands build a house,</span></div>
+      <div class="pline" data-n="11"><span class="no2">11</span><span>So many hearts make a school.</span></div>
+      <div style="margin-top:14px"><button class="tts" id="readPoem">🔊 Read the poem aloud</button></div>
+    </div>
+
+    <details>
+      <summary>📖 Difficult words — كلماتٌ صعبة</summary>
+      <div class="dbody">
+        <div class="wordbox">
+          <span>abide = live</span><span>contentment = happiness</span>
+          <span>creed = a set of beliefs</span><span>dwell = live</span>
+          <span>let = to make something possible</span><span>mankind = the human race</span>
+        </div>
+      </div>
+    </details>
+
+    <div id="about"></div>
+  </section>
+
+  <!-- ══════════ 4 · NEW WORDS ══════════ -->
+  <section class="panel" id="p4">
+    <h2 class="sec">Listen again · Decide the meanings</h2>
+    <p class="ar">ثلاثُ كلماتٍ من القصيدة. اختَرِ المعنى الصحيحَ لكلٍّ منها.</p>
+    <div id="words"></div>
+  </section>
+
+  <!-- ══════════ 5 · THE LINES ══════════ -->
+  <section class="panel" id="p5">
+    <h2 class="sec">Listen again · Find the lines</h2>
+    <p class="ar">اضغطْ على الزرِّ لترى الأسطرَ المقصودةَ مُظلَّلةً في القصيدةِ أعلاه.</p>
+    <div id="lines"></div>
+    <div class="card" style="margin-top:14px">
+      <h2 class="sec" style="font-size:1.02rem">Read the poem to a partner</h2>
+      <p class="ar">اقرأِ القصيدةَ لزميلِك مراعيًا الإيقاعَ والوقف، ثمَّ تبادلا الدَّور.</p>
+      <div id="alines"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 6 · QUIZ ══════════ -->
+  <section class="panel" id="p6">
+    <h2 class="sec">Quiz — 5 questions</h2>
+    <p class="ar">اختبارٌ قصيرٌ من خمسةِ أسئلةٍ حولَ الدرس. أجِبْ عن الأسئلةِ كلِّها ثمَّ اضغطْ زرَّ النتيجة.</p>
+    <div id="quiz"></div>
+    <div style="text-align:center;margin:8px 0 14px">
+      <button class="btn kraft" id="check" disabled>🧵 Show my score</button>
+    </div>
+    <div class="score" id="score">
+      <div class="n" id="scoreN">0 / 5</div>
+      <div id="scoreMsg" style="font-size:1rem"></div>
+      <div class="badge" id="badge"><span class="bi">🧵</span><span class="bt">MANY HEARTS<br>ONE SCHOOL</span></div>
+    </div>
+  </section>
+
+  <footer>Prepared with care 🌸 by T. Wad Refae</footer>
+</div>
+</div>
+
+<script>
+
+const TASKS=['picture','about','words','lines'];
+const METER_ICON='🧵', METER_WORD='stitches sewn';
+const BKEY='g9u2p10_badge';
+const PERFECT='Perfect! Many hearts make a school! 🧵';
+
+/* ═══════════ 2 · THE PICTURE ═══════════ */
+buildReveal('pic',[
+ {q:'What can you see in the picture?',
+  a:'A classroom with a teacher and her pupils. They are working together and they look happy.',
+  ar:'صفٌّ فيه معلّمةٌ وطلّابُها يعملونَ معًا ويبدونَ سعداء.'},
+ {q:'How do the people in the picture feel about their school?',
+  a:'They feel it is a friendly, peaceful place — almost like a second home.',
+  ar:'يشعرونَ أنَّها مكانٌ ودودٌ هادئ، أشبهُ ببيتٍ ثانٍ.'},
+ {q:'What makes a school a good place to be?',
+  a:'The people in it: kind teachers, friends who help one another, and respect between everyone.',
+  ar:'أهلُها: معلّمونَ طيّبون، وأصدقاءُ يُعينُ بعضُهم بعضًا، واحترامٌ بينَ الجميع.'}
+],'picture','🖼️');
+
+/* ═══════════ 3 · WHAT IS IT ABOUT ═══════════ */
+buildPicks('about',[
+ {q:'What does the poem seem to be about?',
+  line:'Listen to the whole poem, then choose.',
+  o:['the buildings and classrooms of a school',
+     'the rules that pupils must follow',
+     'the feelings and values that make a school'], a:2}
+],'about');
+
+document.getElementById('readPoem').onclick=function(e){
+  const t=document.getElementById('poem').cloneNode(true);
+  t.querySelectorAll('button,.no2,.by2').forEach(function(x){x.remove();});
+  speakBtn(this,t.innerText.replace(/\s+/g,' ').trim());
+};
+
+/* ═══════════ 4 · NEW WORDS ═══════════ */
+buildPicks('words',[
+ {q:'<b>one another</b> — &ldquo;Love of one another&rdquo;',
+  o:['love of one person only','each person loving the others','love of a single idea'], a:1},
+ {q:'<b>as</b> — &ldquo;as many hands build a house&rdquo;',
+  o:['because','in the same way that','while we wait'], a:1},
+ {q:'<b>so</b> — &ldquo;So many hearts make a school&rdquo;',
+  o:['very','in the same way','therefore we must stop'], a:1}
+],'words');
+
+/* ═══════════ 5 · THE LINES ═══════════ */
+(function(){
+  const box=document.getElementById('lines');
+  const ITEMS=[
+   {q:'Which lines say <b>who and what we should love</b>?', lines:[4,5,6], cls:'hi1',
+    a:'Lines 4, 5 and 6: &ldquo;Let love abide here, Love of one another, Love of mankind.&rdquo;',
+    ar:'الأسطرُ ٤ و٥ و٦: محبّةٌ تسكنُ هنا، محبّةُ بعضِنا بعضًا، ومحبّةُ الناسِ جميعًا.'},
+   {q:'Which lines describe <b>a good school</b>?', lines:[2,3,7,8,11], cls:'hi2',
+    a:'Lines 2, 3, 7, 8 and 11: peace, contentment, love of life, love of God, and many hearts making a school.',
+    ar:'الأسطرُ ٢ و٣ و٧ و٨ و١١: السلامُ والرضا ومحبّةُ الحياةِ ومحبّةُ الله، والقلوبُ التي تصنعُ المدرسة.'}
+  ];
+  let left=ITEMS.length;
+  ITEMS.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='oq';
+    d.innerHTML='<div class="qq"><span class="n">'+(i+1)+'</span>'+it.q+'</div>';
+    const m=document.createElement('div'); m.className='model';
+    m.innerHTML='✔ '+it.a+'<div class="ar" style="margin:5px 0 0;font-size:.85rem;color:#2c6b42">'+it.ar+'</div>';
+    const b=document.createElement('button'); b.className='btn small kraft';
+    b.textContent='✨ Show the lines';
+    b.onclick=function(e){
+      if(d.classList.contains('done')) return;
+      d.classList.add('done'); m.classList.add('on'); this.remove();
+      it.lines.forEach(function(n){
+        const p=document.querySelector('.pline[data-n="'+n+'"]');
+        if(p) p.classList.add(it.cls);
+      });
+      note(e.clientX,e.clientY,'📜');
+      if(--left===0) light('lines',e.clientX,e.clientY);
+    };
+    d.appendChild(m); d.appendChild(b); box.appendChild(d);
+  });
+
+  /* read-aloud chunks for pair practice */
+  const ab=document.getElementById('alines');
+  [['Lines 1–4','This is our school. Let peace dwell here, Let the rooms be full of contentment, Let love abide here,'],
+   ['Lines 5–8','Love of one another, Love of mankind, Love of life itself, And love of God.'],
+   ['Lines 9–11','Let us remember That, as many hands build a house, So many hearts make a school.']]
+  .forEach(function(pair){
+    const b=document.createElement('button'); b.className='tts'; b.style.margin='4px';
+    b.innerHTML='🔊 '+pair[0];
+    b.onclick=function(e){ e.stopPropagation(); speakBtn(this,pair[1]); };
+    ab.appendChild(b);
+  });
+})();
+
+/* ═══════════ QUIZ ═══════════ */
+const QUIZ=[
+ {t:'What is a <b>creed</b>?',
+  ar:'ما معنى creed؟',
+  o:['a set of beliefs','a school building','a school timetable'], a:0,
+  fb:'creed = مجموعةُ مبادئَ ومعتقدات.'},
+ {t:'&ldquo;Let peace <b>dwell</b> here&rdquo; — <i>dwell</i> means …',
+  ar:'ما معنى dwell؟',
+  o:['leave','live','sleep'], a:1,
+  fb:'dwell = يَسكنُ ويُقيم، ومثلُها abide.'},
+ {t:'&ldquo;Love of <b>one another</b>&rdquo; means …',
+  ar:'ما معنى one another؟',
+  o:['each person loving the others','loving only one friend','loving oneself'], a:0,
+  fb:'يُحبُّ بعضُنا بعضًا.'},
+ {t:'&ldquo;<b>As</b> many hands build a house, <b>so</b> many hearts make a school.&rdquo; This compares …',
+  ar:'ماذا يُقارِنُ السطران الأخيران؟',
+  o:['a house and a school','builders and teachers','hands and hearts only'], a:0,
+  fb:'كما تبني الأيدي الكثيرةُ بيتًا، تصنعُ القلوبُ الكثيرةُ مدرسة.'},
+ {t:'What is the poem mainly about?',
+  ar:'ما الفكرةُ الأساسيّةُ للقصيدة؟',
+  o:['school rules','the values that make a school a good place','the school building'], a:1,
+  fb:'القيمُ التي تجعلُ المدرسةَ مكانًا طيّبًا: السلامُ والرضا والمحبّة.'}
+];
+
+
+/* ═══════════ PROGRESS METER ═══════════ */
+const MARKS=document.querySelectorAll('.mk');
+const done=new Set();
+function light(t,x,y){
+  if(done.has(t)) return;
+  done.add(t);
+  const i=TASKS.indexOf(t);
+  if(MARKS[i]) MARKS[i].classList.add('lit');
+  document.getElementById('mCount').textContent=METER_ICON+' '+done.size+' / '+TASKS.length+' '+METER_WORD;
+  note(x,y,METER_ICON);
+  if(done.size===TASKS.length) burst();
+}
+function note(x,y,ch){
+  const p=document.createElement('div');
+  p.className='pop-note'; p.textContent=ch||'✨';
+  p.style.left=((x||innerWidth/2)-10)+'px'; p.style.top=((y||140)-10)+'px';
+  document.body.appendChild(p); setTimeout(function(){p.remove();},1000);
+}
+function burst(){
+  const cols=['#3d5266','#b4614f','#d9a441','#3f8f5b','#c9aa7c','#f0cd83'];
+  for(let i=0;i<70;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDuration=(2.4+Math.random()*1.8)+'s';
+    c.style.animationDelay=(Math.random()*.5)+'s';
+    if(i%3===0) c.style.borderRadius='50%';
+    document.body.appendChild(c); setTimeout(function(){c.remove();},4800);
+  }
+}
+
+/* ═══════════ TABS ═══════════ */
+document.querySelectorAll('.tab').forEach(function(b){
+  b.onclick=function(){
+    stopTTS();
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); document.getElementById(b.dataset.p).classList.add('on');
+    scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* ═══════════ SPEECH ═══════════ */
+let ttsBtn=null;
+function stopTTS(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(ttsBtn){ ttsBtn.classList.remove('playing'); ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊'; ttsBtn=null; }
+}
+function speakBtn(btn,txt){
+  if(ttsBtn===btn){ stopTTS(); return; }
+  stopTTS();
+  if(!('speechSynthesis' in window)) return;
+  btn.dataset.label=btn.innerHTML;
+  const u=new SpeechSynthesisUtterance(txt); u.lang='en-GB'; u.rate=.8;
+  u.onend=function(){ if(ttsBtn===btn) stopTTS(); };
+  ttsBtn=btn; btn.classList.add('playing'); btn.innerHTML='⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+function buildCards(boxId,words,task){
+  const box=document.getElementById(boxId); let flipped=0;
+  words.forEach(function(o){
+    const d=document.createElement('div'); d.className='flip';
+    const inn=document.createElement('div'); inn.className='flip-in';
+    const f=document.createElement('div'); f.className='face front';
+    f.innerHTML='<div class="em">'+o.em+'</div><div class="w">'+o.w+'</div><div class="hint">'+o.hint+'</div>';
+    const tb=document.createElement('button'); tb.className='tts'; tb.innerHTML='🔊 Say it';
+    tb.onclick=function(e){ e.stopPropagation(); speakBtn(this,o.say||o.w); };
+    f.appendChild(tb);
+    const b=document.createElement('div'); b.className='face back';
+    let extra=o.syn?'<div class="sa"><b>synonym:</b> '+o.syn+'</div>':'';
+    if(o.ant) extra+='<div class="sa"><b>opposite:</b> '+o.ant+'</div>';
+    b.innerHTML='<div class="mean">'+o.ar+'</div>'+extra;
+    inn.appendChild(f); inn.appendChild(b); d.appendChild(inn);
+    d.onclick=function(e){
+      d.classList.toggle('on');
+      if(d.classList.contains('on') && !d.dataset.seen){
+        d.dataset.seen='1'; flipped++;
+        note(e.clientX,e.clientY,'📒');
+        if(task && flipped===words.length) light(task,e.clientX,e.clientY);
+      }
+    };
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ SHARED WORD BANK ═══════════ */
+function makeBank(boxId,items){
+  const bank=document.getElementById(boxId); bank.sel=null;
+  items.forEach(function(t){
+    const s=document.createElement('button'); s.className='bl'; s.textContent=t;
+    s.onclick=function(){
+      if(s.classList.contains('used')) return;
+      if(bank.sel===s){ s.classList.remove('sel'); bank.sel=null; return; }
+      bank.querySelectorAll('.bl').forEach(function(x){x.classList.remove('sel');});
+      s.classList.add('sel'); bank.sel=s;
+    };
+    bank.appendChild(s);
+  });
+  return bank;
+}
+function makeBlank(bank,answer,onRight,minw){
+  const sp=document.createElement('span'); sp.className='blank'; sp.textContent='      ';
+  if(minw) sp.style.minWidth=minw;
+  sp.onclick=function(e){
+    if(sp.classList.contains('right')) return;
+    const pick=bank.sel; if(!pick) return;
+    if(pick.textContent===answer){
+      sp.textContent=answer; sp.classList.add('right');
+      pick.classList.add('used'); pick.classList.remove('sel'); bank.sel=null;
+      note(e.clientX,e.clientY,'✔');
+      onRight&&onRight(e);
+    }else{
+      sp.classList.add('shakeit'); setTimeout(function(){sp.classList.remove('shakeit');},360);
+    }
+  };
+  return sp;
+}
+
+/* ═══════════ REVEAL QUESTIONS ═══════════ */
+function buildReveal(boxId,items,task,icon){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='oq';
+    d.innerHTML='<div class="qq"><span class="n">'+(i+1)+'</span>'+it.q+'</div>';
+    const m=document.createElement('div'); m.className='model';
+    m.innerHTML='✔ '+it.a+(it.ar?'<div class="ar" style="margin:5px 0 0;font-size:.85rem;color:#2c6b42">'+it.ar+'</div>':'');
+    const b=document.createElement('button'); b.className='btn small kraft';
+    b.textContent='👁️ Show the answer';
+    b.onclick=function(e){
+      if(d.classList.contains('done')) return;
+      d.classList.add('done'); m.classList.add('on'); this.remove();
+      note(e.clientX,e.clientY,icon||'💡');
+      if(task && --left===0) light(task,e.clientX,e.clientY);
+    };
+    d.appendChild(m); d.appendChild(b);
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ MCQ BLOCK ═══════════ */
+function buildPicks(boxId,items,task){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='nw';
+    d.innerHTML='<div class="w">'+(i+1)+'. '+it.q+'</div>'+(it.line?'<div class="line">'+it.line+'</div>':'');
+    const ps=document.createElement('div'); ps.className='picks';
+    it.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='pk'; b.innerHTML=o;
+      b.onclick=function(e){
+        if(d.classList.contains('done')) return;
+        if(j===it.a){
+          b.classList.add('right'); d.classList.add('done');
+          ps.querySelectorAll('.pk').forEach(function(x){x.disabled=true;});
+          note(e.clientX,e.clientY,'✔');
+          if(task && --left===0) light(task,e.clientX,e.clientY);
+        }else{
+          b.classList.add('wrong'); b.disabled=true;
+          d.classList.add('shakeit'); setTimeout(function(){d.classList.remove('shakeit');},360);
+        }
+      };
+      ps.appendChild(b);
+    });
+    d.appendChild(ps); box.appendChild(d);
+  });
+}
+
+/* ═══════════ TOOLTIPS ON TAP ═══════════ */
+document.addEventListener('click',function(e){
+  const g=e.target.closest('.key,.pp');
+  document.querySelectorAll('.key.ton,.pp.ton').forEach(function(x){ if(x!==g) x.classList.remove('ton'); });
+  if(g) g.classList.toggle('ton');
+});
+
+/* ═══════════ QUIZ ═══════════ */
+(function(){
+  const quizBox=document.getElementById('quiz');
+  const answers=new Array(QUIZ.length).fill(null);
+  QUIZ.forEach(function(q,i){
+    const d=document.createElement('div'); d.className='q';
+    d.innerHTML='<p class="qt">'+(i+1)+'. '+q.t+'</p><p class="qar">'+q.ar+'</p>';
+    const opts=document.createElement('div'); opts.className='opts';
+    const fb=document.createElement('div'); fb.className='qfb'; fb.textContent='💡 '+q.fb;
+    q.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='opt'; b.innerHTML=o;
+      b.onclick=function(){
+        if(answers[i]!==null) return;
+        answers[i]=j;
+        opts.querySelectorAll('.opt').forEach(function(x){x.disabled=true;});
+        if(j===q.a) b.classList.add('right');
+        else{ b.classList.add('wrong'); opts.children[q.a].classList.add('right'); }
+        fb.classList.add('on');
+        if(answers.every(function(a){return a!==null;})) document.getElementById('check').disabled=false;
+      };
+      opts.appendChild(b);
+    });
+    d.appendChild(opts); d.appendChild(fb);
+    quizBox.appendChild(d);
+  });
+  document.getElementById('check').onclick=function(){
+    const n=answers.reduce(function(s,a,i){return s+(a===QUIZ[i].a?1:0);},0);
+    const box=document.getElementById('score');
+    document.getElementById('scoreN').textContent=n+' / 5';
+    document.getElementById('scoreMsg').textContent=
+      n===5 ? PERFECT : n>=3 ? 'Well done! Look through the lesson once more and try again.' :
+              'Good try — go through the lesson again and come back.';
+    box.classList.add('on');
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    if(n===5){
+      document.getElementById('badge').style.display='flex';
+      burst();
+      try{ localStorage.setItem(BKEY,'1'); }catch(e){}
+    }
+  };
+  try{
+    if(localStorage.getItem(BKEY)){
+      document.getElementById('score').classList.add('on');
+      document.getElementById('badge').style.display='flex';
+      document.getElementById('scoreMsg').textContent='You already earned this badge! 📒';
+    }
+  }catch(e){}
+})();
+
+</script>
+</body>
+</html>
