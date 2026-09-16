@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 2 — Summarise and Look Closer | Grade 9 · Period 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --cloth:#3d5266; --cloth-d:#2a3a49; --cloth-l:#546d84;
+  --kraft:#c9aa7c; --kraft-d:#9c8054; --kraft-dd:#6e5936;
+  --paper:#fdfaf1; --paper-2:#f4edde; --paper-3:#e9e0cb;
+  --rule:#bccada; --margin:#d98a7c;
+  --ink:#2b323e; --muted:#6f7a88; --pencil:#5d6773;
+  --accent:#b4614f; --accent-d:#8c4636;
+  --gold:#d9a441; --gold-d:#a97b1e; --gold-l:#f0cd83;
+  --ok:#3f8f5b; --ok-d:#2c6b42; --no:#c4553f;
+  --edge:#ded2b8; --edge-d:#c6b696;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background-color:#d9cdb6;
+  background-image:
+    repeating-linear-gradient(92deg, rgba(0,0,0,.05) 0 2px, transparent 2px 13px),
+    radial-gradient(ellipse at 22% 12%, rgba(255,255,255,.4), transparent 58%),
+    linear-gradient(170deg,#e0d4bd 0%, #cfc0a4 55%, #bdae91 100%);
+  padding:16px 12px 40px;
+}
+.wrap{max-width:1000px;margin:0 auto}
+.frame{
+  position:relative;background:var(--paper);
+  border:12px solid transparent;
+  border-image:repeating-linear-gradient(45deg,
+      var(--kraft-dd) 0 8px, var(--kraft) 8px 16px,
+      var(--kraft-d) 16px 22px, var(--kraft) 22px 30px) 12;
+  border-radius:4px; box-shadow:0 14px 34px rgba(60,48,28,.32); padding:0 0 26px;
+}
+.eyebrow{position:relative;z-index:6;font-family:'Fredoka',sans-serif;font-size:.68rem;
+  letter-spacing:.24em;color:var(--cloth-d);font-weight:600;text-transform:uppercase;
+  background:rgba(253,250,241,.9);display:inline-block;padding:4px 14px;border-radius:999px;
+  border:1.5px solid rgba(43,58,73,.25)}
+.plaque{position:relative;z-index:6;margin:18px auto 0;max-width:620px;
+  background:rgba(253,250,241,.96);border:3px solid var(--kraft-dd);border-radius:6px;
+  padding:11px 18px 13px;box-shadow:0 10px 22px rgba(40,32,18,.34), inset 0 0 0 2px rgba(156,128,84,.3)}
+.plaque::before,.plaque::after{content:"";position:absolute;top:-9px;width:9px;height:9px;
+  border-radius:50%;background:radial-gradient(circle at 34% 30%,#f2e6c8,#8d7a4f 70%,#5b4c2b)}
+.plaque::before{left:16px}.plaque::after{right:16px}
+h1{margin:0 0 3px;font-family:'Fredoka',sans-serif;
+  font-size:clamp(1.22rem,5vw,1.8rem);color:var(--cloth-d);line-height:1.25}
+.sub{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  font-size:.95rem;color:var(--accent-d);font-weight:600}
+
+/* ═══════════ PROGRESS METER ═══════════ */
+.meter{position:relative;z-index:6;display:flex;justify-content:center;gap:10px;
+  flex-wrap:wrap;margin:16px auto 0;max-width:560px}
+.mcount{position:relative;z-index:6;margin-top:10px;display:inline-block;
+  font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:600;color:var(--cloth-d);
+  background:rgba(253,250,241,.92);border:1.5px solid rgba(43,58,73,.25);
+  border-radius:999px;padding:5px 15px}
+
+/* ═══════════ TABS ═══════════ */
+nav{display:flex;gap:9px;padding:16px 14px 4px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){ nav{flex-wrap:wrap;overflow-x:visible;justify-content:center} }
+.tab{flex:0 0 auto;cursor:pointer;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;font-weight:600;color:var(--cloth-d);padding:11px 16px 12px;
+  background:linear-gradient(180deg,#fdfaf1,#eee5d1);border:2px solid var(--edge-d);
+  border-radius:4px 12px 4px 4px;
+  box-shadow:inset 0 3px 8px rgba(255,255,255,.6),0 2px 4px rgba(60,48,28,.16);
+  transition:transform .18s,background .2s,color .2s;white-space:nowrap}
+.tab:hover{transform:translateY(-3px)}
+.tab.on{background:linear-gradient(180deg,var(--cloth-l),var(--cloth));color:#fdfaf1;
+  border-color:var(--cloth-d);box-shadow:inset 0 3px 10px rgba(0,0,0,.22),0 4px 10px rgba(43,58,73,.36)}
+
+/* ═══════════ PANELS ═══════════ */
+.panel{display:none;padding:18px 18px 6px;animation:fade .32s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.sec{font-family:'Fredoka',sans-serif;font-size:1.22rem;color:var(--cloth-d);
+  margin:0 0 4px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+h2.sec::before{content:"";width:15px;height:15px;flex:0 0 auto;border-radius:3px;
+  background:linear-gradient(135deg,var(--accent),var(--gold));transform:rotate(12deg)}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.94rem;line-height:1.85;margin:2px 0 16px}
+.card{background:#fffdf7;border:2px solid var(--edge);border-radius:8px;
+  padding:16px;margin-bottom:16px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:12px}
+.goal{background:#fffdf7;border:2px solid var(--edge);border-left:6px solid var(--cloth-l);
+  border-radius:6px;padding:13px 15px;box-shadow:0 3px 0 var(--edge)}
+.goal .ico{font-size:1.5rem;display:block;margin-bottom:5px}
+.goal b{font-family:'Fredoka',sans-serif;color:var(--cloth-d);font-size:.98rem}
+.goal .ar{margin:5px 0 0;font-size:.87rem}
+
+/* audio */
+.audio{margin:12px 0 16px;text-align:center}
+.audio .lbl{display:block;font-family:'Fredoka',sans-serif;font-size:.82rem;
+  color:var(--accent-d);font-weight:600;margin-bottom:6px}
+.audio iframe{width:100%;max-width:480px;height:58px;border:0;border-radius:6px}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px}
+.flip{perspective:1100px;height:200px}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:6px;padding:12px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:5px;
+  border:2.5px solid var(--kraft-dd);box-shadow:0 5px 0 rgba(110,89,54,.35)}
+.face.front{background:linear-gradient(170deg,#fffdf6,#f1e8d3);cursor:pointer}
+.face.front .em{font-size:2.5rem}
+.face.front .w{font-family:'Fredoka',sans-serif;font-size:1.1rem;color:var(--cloth-d);font-weight:700}
+.face.front .hint{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.74rem;color:var(--muted)}
+.face.back{transform:rotateY(180deg);background:linear-gradient(170deg,var(--cloth),var(--cloth-d));color:#f0f5fa;cursor:pointer}
+.face.back .mean{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:1.08rem;font-weight:700;color:var(--gold-l)}
+.face.back .sa{font-size:.82rem;line-height:1.7}
+.face.back .sa b{color:var(--gold-l)}
+.tts{border:0;cursor:pointer;background:var(--gold);color:#3a2a06;font-family:'Fredoka',sans-serif;
+  font-size:.76rem;font-weight:600;border-radius:999px;padding:5px 13px;box-shadow:0 2px 0 var(--gold-d)}
+.tts:active{transform:translateY(2px);box-shadow:none}
+.tts.playing{background:var(--no);color:#fff;box-shadow:0 2px 0 #8c3524}
+
+/* ═══════════ WORD BANK + BLANKS ═══════════ */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;padding:14px;
+  background:linear-gradient(170deg,#f2f6fa,#e3ebf3);border:2px dashed var(--cloth-l);
+  border-radius:8px;margin-bottom:16px}
+.bank .bl{font-family:'Fredoka',sans-serif;font-size:.86rem;cursor:pointer;border:2px solid var(--cloth-l);
+  background:#fff;color:var(--cloth-d);border-radius:999px;padding:8px 15px;
+  box-shadow:0 3px 0 rgba(61,82,102,.25);transition:transform .15s,background .2s}
+.bank .bl:hover{transform:translateY(-3px)}
+.bank .bl.sel{background:var(--cloth);color:#fff}
+.bank .bl.used{opacity:.32;pointer-events:none;text-decoration:line-through}
+.mline{position:relative;background:#fffdf7;border:2px solid var(--edge);border-radius:6px;
+  padding:14px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);
+  font-size:1.02rem;line-height:2.1;transition:border-color .3s,background .3s}
+.mline.done{border-color:var(--ok);background:#f1f9f3}
+.mline .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:5px;
+  background:var(--cloth);color:#fff;font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.blank{display:inline-block;min-width:110px;border-bottom:3px dotted var(--kraft-d);
+  cursor:pointer;text-align:center;padding:2px 8px;font-weight:700;color:var(--kraft-dd);
+  transition:background .2s,border-color .2s}
+.blank:hover{background:#f6efdd}
+.blank.right{border-bottom:3px solid var(--ok);color:var(--ok-d);background:#eaf6ee;cursor:default;border-radius:4px}
+
+/* reveal questions */
+.oq{background:#fffdf7;border:2px solid var(--edge);border-radius:6px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.oq.done{border-color:var(--ok);background:#f1f9f3}
+.oq .qq{font-size:1rem;font-weight:600;color:var(--cloth-d);margin-bottom:9px}
+.oq .qq .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:5px;
+  background:var(--cloth);color:#fff;font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.oq .model{display:none;background:#eaf6ee;border-left:4px solid var(--ok);
+  border-radius:0 6px 6px 0;padding:9px 12px;font-size:.96rem;color:var(--ok-d);font-weight:600;margin-bottom:9px}
+.oq .model.on{display:block;animation:fade .3s ease}
+
+/* MCQ picks */
+.nw{background:#fffdf7;border:2px solid var(--edge);border-radius:6px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.nw.done{border-color:var(--ok);background:#f1f9f3}
+.nw .w{font-family:'Fredoka',sans-serif;font-size:1.04rem;color:var(--cloth-d);margin-bottom:4px}
+.nw .line{font-size:.92rem;color:var(--muted);margin-bottom:9px;font-style:italic}
+.picks{display:flex;flex-direction:column;gap:8px}
+.pk{font-family:'Nunito',sans-serif;font-size:.95rem;text-align:left;cursor:pointer;background:#fff;
+  border:2px solid var(--edge-d);border-radius:6px;padding:9px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.pk:hover{transform:translateX(4px);border-color:var(--kraft-d)}
+.pk.right{background:#eaf6ee;border-color:var(--ok);color:var(--ok-d);font-weight:700;transform:none}
+.pk.wrong{background:#fceceb;border-color:var(--no);color:#8c3524}
+.pk:disabled{cursor:default;transform:none}
+
+/* ═══════════ TRANSCRIPT ═══════════ */
+.script{background:#fffdf7;border:2px solid var(--edge);border-radius:8px;
+  padding:16px 14px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.narr{font-style:italic;color:var(--muted);background:#eef2f7;border-radius:6px;
+  padding:9px 12px;margin:0 0 12px;font-size:.94rem}
+.ln{display:flex;gap:10px;margin-bottom:11px;align-items:flex-start;line-height:1.95}
+.who{flex:0 0 auto;font-family:'Fredoka',sans-serif;font-size:.76rem;font-weight:600;
+  min-width:84px;border-radius:4px;padding:3px 9px;text-align:center;color:#fff;margin-top:3px}
+.w-dad{background:#2f6690}.w-mum{background:#8c3f6d}.w-wal{background:#b3651e}
+.w-lana{background:#256d54}.w-gran{background:#6b5aa8}.w-nar{background:#5d6773}
+.w-a{background:#2f6690}.w-b{background:#b3651e}
+.sp{font-size:1rem}
+.key{position:relative;cursor:pointer;border-radius:4px;padding:0 4px;font-weight:700;
+  background:#fff0b8;border-bottom:2px dashed var(--gold-d);color:#7d5300}
+.key.got{background:#d6f0de;border-bottom:2px solid var(--ok);color:var(--ok-d)}
+.key::after,.pp::after{content:attr(data-t);position:absolute;left:50%;bottom:145%;
+  transform:translateX(-50%) translateY(5px);
+  background:var(--cloth-d);color:#eef4f9;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:min(230px,68vw);white-space:normal;text-align:center;line-height:1.6;
+  font-size:.84rem;font-weight:600;padding:6px 12px;border-radius:8px;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;
+  box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.key:hover::after,.key.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.pp{position:relative;cursor:pointer;border-radius:4px;padding:0 4px;font-weight:700;
+  background:#ece6ff;border-bottom:2px dashed #5a41b8;color:#452f9b}
+.pp::after{background:#2f2260;color:#eee9ff}
+.pp:hover::after,.pp.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.83rem;color:var(--muted)}
+.legend span i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-left:5px}
+
+/* word hunt chips */
+.hunt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:13px;
+  background:linear-gradient(170deg,#fdf6e6,#f5e9cf);border:2px solid var(--edge-d);
+  border-radius:8px;margin-bottom:14px}
+.hunt .ht{font-family:'Fredoka',sans-serif;font-size:.83rem;border:2px solid var(--kraft-d);
+  background:#fff;color:var(--kraft-dd);border-radius:999px;padding:6px 13px;transition:.3s}
+.hunt .ht.got{background:var(--ok);border-color:var(--ok-d);color:#fff}
+.hunt .ht.got::before{content:"✔ "}
+
+/* tables */
+.tblwrap{overflow-x:auto;margin-bottom:16px;border-radius:6px}
+.tbl{width:100%;border-collapse:collapse;background:#fffdf7;
+  border:2px solid var(--edge);border-radius:6px;overflow:hidden;font-size:.95rem}
+.tbl th{background:var(--cloth);color:#f0f5fa;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;padding:10px 12px;text-align:left}
+.tbl td{padding:10px 12px;border-top:1.5px solid var(--edge)}
+.tbl tr:nth-child(even) td{background:#f6f1e4}
+
+.btn{border:0;font-family:'Fredoka',sans-serif;font-size:.9rem;cursor:pointer;color:#fff;
+  background:var(--cloth);border-radius:6px;padding:9px 18px;box-shadow:0 3px 0 var(--cloth-d)}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.btn.small{font-size:.8rem;padding:7px 14px}
+.btn.kraft{background:var(--kraft-d);box-shadow:0 3px 0 var(--kraft-dd)}
+.btn:disabled{opacity:.5;cursor:default}
+details{background:#fffdf7;border:2px solid var(--edge);border-radius:6px;
+  padding:0;margin-bottom:13px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+details>summary{cursor:pointer;list-style:none;padding:13px 15px;
+  font-family:'Fredoka',sans-serif;font-size:.98rem;color:var(--cloth-d);font-weight:600}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";color:var(--accent)}
+details[open]>summary::before{content:"▾ "}
+details .dbody{padding:0 15px 14px}
+
+/* quiz */
+.q{background:#fffdf7;border:2px solid var(--edge);border-radius:6px;padding:14px;margin-bottom:13px}
+.q p.qt{font-weight:700;margin:0 0 4px;font-size:1rem}
+.q p.qar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.86rem;margin:0 0 10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font-family:'Nunito',sans-serif;font-size:.95rem;cursor:pointer;
+  background:#fff;border:2px solid var(--edge-d);border-radius:6px;padding:10px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.opt:hover{transform:translateX(4px);border-color:var(--kraft-d)}
+.opt.right{background:#eaf6ee;border-color:var(--ok);color:var(--ok-d);font-weight:700}
+.opt.wrong{background:#fceceb;border-color:var(--no);color:#8c3524}
+.opt:disabled{cursor:default;transform:none}
+.qfb{margin-top:9px;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.9rem;display:none}
+.qfb.on{display:block}
+.score{text-align:center;background:linear-gradient(160deg,var(--cloth),var(--cloth-d));
+  color:#eef4f9;border-radius:8px;padding:22px 16px;margin-top:6px;display:none}
+.score.on{display:block}
+.score .n{font-family:'Fredoka',sans-serif;font-size:2.6rem;font-weight:700;color:var(--gold-l)}
+.badge{margin:14px auto 0;width:132px;height:132px;border-radius:8px;
+  background:linear-gradient(170deg,#fffdf6,#eee2c6);
+  border:5px solid var(--kraft-dd);display:none;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;box-shadow:0 8px 22px rgba(0,0,0,.4);
+  animation:pop .6s cubic-bezier(.2,1.6,.4,1);transform:rotate(-3deg)}
+@keyframes pop{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1) rotate(-3deg)}}
+.badge .bi{font-size:2.3rem}
+.badge .bt{font-family:'Fredoka',sans-serif;font-size:.62rem;letter-spacing:.05em;color:var(--kraft-dd);
+  line-height:1.3;padding:0 8px;text-align:center;font-weight:700}
+
+.pop-note{position:fixed;pointer-events:none;font-size:1.5rem;z-index:80;animation:rise 1s ease-out forwards}
+@keyframes rise{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-70px) scale(1.3)}}
+.confetti{position:fixed;top:-12px;width:11px;height:11px;z-index:70;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(660deg);opacity:.15}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shakeit{animation:shake .34s}
+
+footer{text-align:center;margin-top:30px;font-family:'Fredoka',sans-serif;font-weight:600;
+  color:var(--kraft-dd);font-size:.95rem}
+
+@media (max-width:560px){
+  body{padding:10px 8px 34px}
+  .panel{padding:15px 13px 6px}
+  .who{min-width:70px;font-size:.7rem}
+  .blank{min-width:95px}
+}
+
+
+/* ═══════════ HEADER : THE OPEN PENCIL CASE ═══════════ */
+header{position:relative;padding:20px 14px 26px;text-align:center;overflow:hidden;
+  background:
+    repeating-linear-gradient(92deg, rgba(0,0,0,.12) 0 2px, transparent 2px 13px),
+    linear-gradient(170deg,#5a5064 0%, #443c4c 50%, #2f2a36 100%)}
+header::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 18%, rgba(255,244,222,.18), transparent 64%)}
+.pcase{position:relative;z-index:6;max-width:480px;margin:16px auto 0;padding:15px 16px 18px;
+  border-radius:12px;
+  background:linear-gradient(170deg,#7d4a3c,#5d3428 60%,#42241b);
+  border:3px solid #33190f;
+  box-shadow:0 18px 34px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,225,200,.2)}
+.pcase::before{content:"";position:absolute;left:12px;right:12px;top:8px;height:4px;border-radius:3px;
+  background:repeating-linear-gradient(90deg,#c9b9a3 0 6px, #6d5b4b 6px 10px);opacity:.75}
+.pc-title{position:relative;z-index:3;font-family:'Fredoka',sans-serif;font-size:.62rem;
+  letter-spacing:.24em;color:#f0d9c9;text-transform:uppercase;font-weight:700;margin:6px 0 11px}
+.tools{position:relative;z-index:3;display:flex;justify-content:center;align-items:flex-end;
+  gap:clamp(5px,2vw,11px);height:clamp(66px,17vw,86px)}
+.tool{width:clamp(15px,4vw,21px);border-radius:3px 3px 2px 2px;position:relative;
+  box-shadow:0 3px 6px rgba(0,0,0,.45);animation:popTool .5s cubic-bezier(.2,1.5,.4,1) var(--d) backwards}
+@keyframes popTool{from{opacity:0;transform:translateY(14px)}}
+.tool::after{content:"";position:absolute;top:-11px;left:0;right:0;height:12px;
+  clip-path:polygon(50% 0,100% 100%,0 100%);background:inherit;filter:brightness(1.15)}
+.tool.t1{height:74%;background:linear-gradient(180deg,#e8c44a,#b8901f)}
+.tool.t2{height:88%;background:linear-gradient(180deg,#5aa8e0,#2f6f9e)}
+.tool.t3{height:64%;background:linear-gradient(180deg,#e0685a,#a83d31)}
+.tool.t4{height:80%;background:linear-gradient(180deg,#72c07a,#3d8148)}
+.tool.t5{height:70%;background:linear-gradient(180deg,#b48ad8,#7a55a0)}
+.tool.hl{width:clamp(20px,5vw,27px);border-radius:4px}
+.tool.hl::after{display:none}
+.tool.hl::before{content:"";position:absolute;top:-8px;left:2px;right:2px;height:9px;border-radius:3px 3px 0 0;
+  background:rgba(255,255,255,.4)}
+.eraser{width:clamp(24px,6vw,32px);height:clamp(15px,4vw,19px);border-radius:3px;
+  background:linear-gradient(180deg,#f3e3d6,#cbb09c);box-shadow:0 3px 6px rgba(0,0,0,.45);
+  animation:popTool .5s cubic-bezier(.2,1.5,.4,1) 1.1s backwards}
+.pc-note{position:relative;z-index:3;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  font-size:.78rem;color:#f0d9c9;margin-top:11px;font-weight:600;opacity:.9}
+
+/* pencils = progress */
+.mk{position:relative;width:64px;text-align:center}
+.mk .pn{width:38px;height:38px;margin:0 auto;border-radius:6px;display:grid;place-items:center;
+  font-size:1rem;transition:.45s;border:2px solid rgba(253,250,241,.38);
+  background:rgba(255,255,255,.1);color:#f3ecf5}
+.mk.lit .pn{background:linear-gradient(160deg,var(--gold-l),var(--gold));border-color:var(--gold-d);
+  color:#3a2a06;box-shadow:0 0 18px 5px rgba(217,164,65,.6);transform:rotate(-7deg) scale(1.08)}
+.mk .lbl{font-family:'Fredoka',sans-serif;font-size:.54rem;letter-spacing:.05em;
+  color:#efe6f2;margin-top:6px;text-transform:uppercase;opacity:.78}
+.mk.lit .lbl{opacity:1;font-weight:700;color:#ffe6b3}
+@media (max-width:560px){ .mk{width:58px} }
+
+/* summary builder */
+.sumline{display:flex;align-items:center;gap:10px;background:#fffdf7;border:2px solid var(--edge);
+  border-radius:6px;padding:11px 13px;margin-bottom:9px;box-shadow:0 3px 0 var(--edge);transition:.3s}
+.sumline.done{border-color:var(--ok);background:#f1f9f3}
+.sumline .pp2{flex:0 0 auto;width:26px;height:26px;border-radius:5px;background:var(--kraft-d);color:#fff;
+  display:grid;place-items:center;font-family:'Fredoka',sans-serif;font-size:.74rem}
+.sumline .tx2{flex:1;font-size:.98rem;min-width:150px}
+.sumout{background:linear-gradient(170deg,#f2f6fa,#e3ebf3);border:2px solid var(--cloth-l);
+  border-radius:8px;padding:15px 16px;font-size:1.02rem;line-height:2}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="frame">
+
+  <!-- ══════════ HEADER : THE OPEN PENCIL CASE ══════════ -->
+  <header>
+    <div class="eyebrow">Unit 2 · Period 6 · Grade 9</div>
+
+    <div class="pcase">
+      <div class="pc-title">Tools for a closer look</div>
+      <div class="tools">
+        <span class="tool t1" style="--d:.35s"></span>
+        <span class="tool hl t2" style="--d:.5s"></span>
+        <span class="tool t3" style="--d:.65s"></span>
+        <span class="tool hl t4" style="--d:.8s"></span>
+        <span class="tool t5" style="--d:.95s"></span>
+        <span class="eraser"></span>
+      </div>
+      <div class="pc-note">نُلخِّصُ النصَّ، ونتتبَّعُ الضمائرَ، ونُفسِّرُ العبارات</div>
+    </div>
+
+    <div class="meter">
+      <div class="mk"><div class="pn">🧩</div><div class="lbl">Order</div></div>
+      <div class="mk"><div class="pn">📝</div><div class="lbl">Summary</div></div>
+      <div class="mk"><div class="pn">🔍</div><div class="lbl">Refer</div></div>
+      <div class="mk"><div class="pn">💭</div><div class="lbl">Discuss</div></div>
+    </div>
+    <div class="mcount" id="mCount">✏️ 0 / 4 tools used</div>
+
+    <div class="plaque">
+      <h1>Summarise and Look Closer</h1>
+      <div class="sub">نُلخِّصُ نصَّ «البيتُ مكانٌ خاصّ» ونتفحَّصُ كلماتِه</div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab on" data-p="p1">📌 Objectives</button>
+    <button class="tab" data-p="p2">🧩 Order the Ideas</button>
+    <button class="tab" data-p="p3">📝 The Summary</button>
+    <button class="tab" data-p="p4">🔍 Refer &amp; Mean</button>
+    <button class="tab" data-p="p5">💭 Think &amp; Discuss</button>
+    <button class="tab" data-p="p6">🎯 Quiz</button>
+  </nav>
+
+  <!-- ══════════ 1 · OBJECTIVES ══════════ -->
+  <section class="panel on" id="p1">
+    <h2 class="sec">Lesson Objectives</h2>
+    <p class="ar">أهدافُ الدرس — نعودُ إلى نصِّ الحصّةِ السابقةِ لنُلخِّصَه ونتفحَّصَ تفاصيلَه.</p>
+    <div class="goals">
+      <div class="goal"><span class="ico">🧩</span><b>Match each paragraph with its topic.</b>
+        <p class="ar">أُطابقُ كلَّ فقرةٍ من النصِّ بالفكرةِ التي تُعبِّرُ عنها.</p></div>
+      <div class="goal"><span class="ico">📝</span><b>Turn the topics into a written summary.</b>
+        <p class="ar">أُحوِّلُ الأفكارَ إلى جملٍ وأكتبُها ملخَّصًا مترابطًا.</p></div>
+      <div class="goal"><span class="ico">🔍</span><b>Say what the underlined words refer to and mean.</b>
+        <p class="ar">أُحدِّدُ مرجعَ الضمائرِ ومعنى العباراتِ في النصّ.</p></div>
+      <div class="goal"><span class="ico">💭</span><b>Think and discuss with a partner.</b>
+        <p class="ar">أُفكِّرُ وأُناقشُ زميلي في معنى البيتِ بالنسبةِ لنا.</p></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 2 · ORDER THE TOPICS ══════════ -->
+  <section class="panel" id="p2">
+    <h2 class="sec">Read and create a summary · Which paragraph?</h2>
+    <p class="ar">أمامَك أفكارُ النصِّ الخمس. ضعْ رقمَ الفقرةِ التي تُعبِّرُ عن كلِّ فكرةٍ من البنك.</p>
+    <div class="bank" id="obank"></div>
+    <div id="order"></div>
+  </section>
+
+  <!-- ══════════ 3 · THE SUMMARY ══════════ -->
+  <section class="panel" id="p3">
+    <h2 class="sec">Change the ideas into sentences</h2>
+    <p class="ar">حوِّلِ الأفكارَ إلى جملٍ كاملةٍ لتُكوِّنَ ملخَّصًا. أكملْ كلَّ جملةٍ من البنك،
+    ثمَّ اقرأِ الملخَّصَ كاملًا في الأسفل.</p>
+    <div class="bank" id="sbank"></div>
+    <div id="sum"></div>
+
+    <details style="margin-top:14px">
+      <summary>📄 The whole summary — الملخَّصُ كاملًا</summary>
+      <div class="dbody">
+        <div class="sumout">People have had a need for somewhere safe from danger and bad weather since ancient
+        times. They learned to build to protect themselves from dangerous animals. They build to protect
+        themselves from hot, cold and wet weather. We need a house that is a real home. A good home is
+        important to all of us all through our lives.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>➕ Expand it — وسِّعِ الملخَّص</summary>
+      <div class="dbody">
+        <p class="ar">اقرأْ جملةً من الملخَّصِ ثمَّ أضِفْ إليها معلوماتٍ تتذكَّرُها من النصّ،
+        وتبادلِ الدَّورَ مع زميلِك.</p>
+        <div id="expand"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ══════════ 4 · REFER & MEAN ══════════ -->
+  <section class="panel" id="p4">
+    <h2 class="sec">What do these words refer to?</h2>
+    <p class="ar">عُدْ إلى النصِّ وحدِّدْ ما يعودُ عليه كلُّ ضميرٍ أو عبارة.</p>
+    <div id="refer"></div>
+
+    <h2 class="sec" style="margin-top:22px">What do these phrases mean?</h2>
+    <p class="ar">ما معنى هذه العباراتِ في سياقِ النصّ؟</p>
+    <div id="mean"></div>
+  </section>
+
+  <!-- ══════════ 5 · THINK & DISCUSS ══════════ -->
+  <section class="panel" id="p5">
+    <h2 class="sec">Work in pairs · Think and discuss</h2>
+    <p class="ar">فكِّرْ في السؤالَينِ ثمَّ ناقشْ زميلَك، ودوِّنا أفكارَكما.
+    اضغطْ على السؤالِ لترى أفكارًا تُعينُك.</p>
+    <div id="disc"></div>
+  </section>
+
+  <!-- ══════════ 6 · QUIZ ══════════ -->
+  <section class="panel" id="p6">
+    <h2 class="sec">Quiz — 5 questions</h2>
+    <p class="ar">اختبارٌ قصيرٌ من خمسةِ أسئلةٍ حولَ الدرس. أجِبْ عن الأسئلةِ كلِّها ثمَّ اضغطْ زرَّ النتيجة.</p>
+    <div id="quiz"></div>
+    <div style="text-align:center;margin:8px 0 14px">
+      <button class="btn kraft" id="check" disabled>✏️ Show my score</button>
+    </div>
+    <div class="score" id="score">
+      <div class="n" id="scoreN">0 / 5</div>
+      <div id="scoreMsg" style="font-size:1rem"></div>
+      <div class="badge" id="badge"><span class="bi">✏️</span><span class="bt">CLOSE<br>READER</span></div>
+    </div>
+  </section>
+
+  <footer>Prepared with care 🌸 by T. Wad Refae</footer>
+</div>
+</div>
+
+<script>
+
+const TASKS=['order','summary','refer','discuss'];
+const METER_ICON='✏️', METER_WORD='tools used';
+const BKEY='g9u2p6_badge';
+const PERFECT='Perfect! You read every line closely! ✏️';
+
+/* ═══════════ 2 · ORDER THE TOPICS ═══════════ */
+const TOPICS=[
+ ['Our need for a house that is a real home.', '4'],
+ ['How people built to suit hot, cold and wet climates.', '3'],
+ ['Why human beings have always needed a safe place.', '1'],
+ ['A good home stays with us all our lives.', '5'],
+ ['The Masai and their circle of houses.', '2']
+];
+(function(){
+  const bank=makeBank('obank',['1','2','3','4','5'].sort(function(){return Math.random()-.5;}));
+  const box=document.getElementById('order'); let left=TOPICS.length;
+  TOPICS.forEach(function(o,i){
+    const d=document.createElement('div'); d.className='sumline';
+    const p=document.createElement('span'); p.className='pp2'; p.textContent=String.fromCharCode(97+i);
+    const t=document.createElement('span'); t.className='tx2'; t.textContent=o[0];
+    const wrap=document.createElement('span');
+    wrap.appendChild(document.createTextNode('Paragraph '));
+    wrap.appendChild(makeBlank(bank,o[1],function(e){
+      d.classList.add('done');
+      if(--left===0) light('order',e.clientX,e.clientY);
+    },'58px'));
+    d.appendChild(p); d.appendChild(t); d.appendChild(wrap);
+    box.appendChild(d);
+  });
+})();
+
+/* ═══════════ 3 · THE SUMMARY ═══════════ */
+const SUM=[
+ ['People have had a need for somewhere ', 'safe from danger and bad weather', ' since ancient times.'],
+ ['They learned to build to protect themselves from ', 'dangerous animals', '.'],
+ ['They build to protect themselves from ', 'hot, cold and wet weather', '.'],
+ ['We need a house that is ', 'a real home', '.'],
+ ['A good home is important to all of us ', 'all through our lives', '.']
+];
+(function(){
+  const bank=makeBank('sbank',SUM.map(function(o){return o[1];}).sort(function(){return Math.random()-.5;}));
+  const box=document.getElementById('sum'); let left=SUM.length;
+  SUM.forEach(function(o,i){
+    const d=document.createElement('div'); d.className='mline';
+    d.innerHTML='<span class="n">'+(i+1)+'</span>';
+    const s=document.createElement('span');
+    s.appendChild(document.createTextNode(o[0]));
+    s.appendChild(makeBlank(bank,o[1],function(e){
+      d.classList.add('done');
+      if(--left===0) light('summary',e.clientX,e.clientY);
+    },'min(240px,70vw)'));
+    s.appendChild(document.createTextNode(o[2]));
+    d.appendChild(s); box.appendChild(d);
+  });
+})();
+
+buildReveal('expand',[
+ {q:'&ldquo;They learned to build to protect themselves from dangerous animals.&rdquo;',
+  a:'The Masai of East Africa built their houses together in circles, so each house joined the next and made a strong wall. At night they brought their cows and goats into the centre.',
+  ar:'بنى الماساي بيوتَهم في دائرةٍ متلاصقةٍ فصارَتْ جدارًا قويًّا، وأدخلوا ماشيتَهم إلى الوسطِ ليلًا.'},
+ {q:'&ldquo;They build to protect themselves from hot, cold and wet weather.&rdquo;',
+  a:'In cold, wet places houses were low with thick walls and small windows facing away from the wind. In the hot, dry Middle East the thick, white walls kept out the sun’s heat.',
+  ar:'في الأماكنِ الباردةِ الماطرةِ كانتِ البيوتُ منخفضةً بجدرانٍ سميكةٍ ونوافذَ صغيرة، وفي الشرقِ الأوسطِ الحارِّ الجافِّ حَمَتِ الجدرانُ البيضاءُ السميكةُ من حرارةِ الشمس.'}
+],null,'➕');
+
+/* ═══════════ 4 · REFER & MEAN ═══════════ */
+buildReveal('refer',[
+ {q:'&ldquo;Later, <b>they</b> learned to build houses …&rdquo;', a:'our ancient ancestors',
+  ar:'أسلافُنا القُدماء.'},
+ {q:'&ldquo;… and they designed <b>them</b> to keep out wild animals.&rdquo;', a:'their houses',
+  ar:'بيوتُهم.'},
+ {q:'&ldquo;<b>They</b> were very simple, but each joined the next.&rdquo;', a:'the houses',
+  ar:'البيوت.'},
+ {q:'&ldquo;… together <b>they</b> became a strong wall.&rdquo;', a:'all the houses',
+  ar:'البيوتُ كلُّها مجتمعة.'},
+ {q:'&ldquo;… they brought their cows and goats into <b>the centre</b>.&rdquo;', a:'the space inside the ring of huts',
+  ar:'المساحةُ داخلَ حلقةِ البيوت.'},
+ {q:'&ldquo;When we have known a happy family home, we never forget <b>it</b>.&rdquo;', a:'a happy family home',
+  ar:'البيتُ العائليُّ السعيد.'}
+],'refer','🔍');
+
+buildReveal('mean',[
+ {q:'<b>difficult climates</b>', a:'weather that causes problems for people',
+  ar:'أحوالٌ جوّيّةٌ تُسبِّبُ صعوباتٍ للناس.'},
+ {q:'windows that <b>faced away from</b> the wind', a:'opened in the opposite direction',
+  ar:'تفتحُ في الاتّجاهِ المعاكس.'},
+ {q:'something that is <b>natural</b> to us', a:'that is part of our nature',
+  ar:'جزءٌ من طبيعتِنا.'},
+ {q:'even if <b>life</b> takes us far away', a:'the things that happen to us',
+  ar:'ما يجري لنا من أحداث.'}
+],null,'📖');
+
+/* ═══════════ 5 · THINK & DISCUSS ═══════════ */
+buildReveal('disc',[
+ {q:'What makes a house become a <i>home</i>?',
+  a:'The people in it. A home is safe and comfortable, and it is where our family and our memories are. A big house with no love in it is not a home.',
+  ar:'أهلُه. البيتُ الحقيقيُّ آمنٌ مريح، فيه الأهلُ والذكريات؛ فالدارُ الواسعةُ بلا محبّةٍ ليست بيتًا.'},
+ {q:'How are traditional Palestinian houses built to suit our climate?',
+  a:'They have thick stone walls and small windows that keep out the summer heat, high ceilings, and often a courtyard in the middle where the family can sit.',
+  ar:'جدرانٌ حجريّةٌ سميكةٌ ونوافذُ صغيرةٌ تَقي حرَّ الصيف، وأسقفٌ مرتفعة، وكثيرًا ما يتوسَّطُها حَوشٌ تجلسُ فيه الأسرة.'}
+],'discuss','💭');
+
+/* ═══════════ QUIZ ═══════════ */
+const QUIZ=[
+ {t:'Which paragraph is about the Masai people?',
+  ar:'أيُّ فقرةٍ تتحدَّثُ عن شعبِ الماساي؟',
+  o:['Paragraph 1','Paragraph 2','Paragraph 5'], a:1,
+  fb:'الفقرةُ الثانيةُ هي التي تروي كيف بنى الماساي بيوتَهم في دائرة.'},
+ {t:'In &ldquo;they designed <b>them</b> to keep out wild animals&rdquo;, <i>them</i> refers to …',
+  ar:'على ماذا يعودُ الضميرُ them؟',
+  o:['the wild animals','their houses','the ancestors'], a:1,
+  fb:'يعودُ على البيوتِ التي بنَوها.'},
+ {t:'<b>Difficult climates</b> means …',
+  ar:'ما معنى difficult climates؟',
+  o:['weather that causes problems for people','countries that are far away','houses that are hard to build'], a:0,
+  fb:'أحوالٌ جوّيّةٌ تُسبِّبُ صعوباتٍ للناس.'},
+ {t:'What is the main idea of the last paragraph?',
+  ar:'ما الفكرةُ الرئيسةُ للفقرةِ الأخيرة؟',
+  o:['Modern buildings are best','A good home stays in our memory all our lives','Caves were safer than houses'], a:1,
+  fb:'“When we have known a happy family home, we never forget it.”'},
+ {t:'Which sentence would open a good summary of the text?',
+  ar:'أيُّ جملةٍ تصلحُ بدايةً للملخَّص؟',
+  o:['The Masai live in East Africa.','People have needed somewhere safe since ancient times.','Windows should be small.'], a:1,
+  fb:'الملخَّصُ يبدأُ بالفكرةِ العامّةِ التي تجمعُ النصَّ كلَّه.'}
+];
+
+
+/* ═══════════ PROGRESS METER ═══════════ */
+const MARKS=document.querySelectorAll('.mk');
+const done=new Set();
+function light(t,x,y){
+  if(done.has(t)) return;
+  done.add(t);
+  const i=TASKS.indexOf(t);
+  if(MARKS[i]) MARKS[i].classList.add('lit');
+  document.getElementById('mCount').textContent=METER_ICON+' '+done.size+' / '+TASKS.length+' '+METER_WORD;
+  note(x,y,METER_ICON);
+  if(done.size===TASKS.length) burst();
+}
+function note(x,y,ch){
+  const p=document.createElement('div');
+  p.className='pop-note'; p.textContent=ch||'✨';
+  p.style.left=((x||innerWidth/2)-10)+'px'; p.style.top=((y||140)-10)+'px';
+  document.body.appendChild(p); setTimeout(function(){p.remove();},1000);
+}
+function burst(){
+  const cols=['#3d5266','#b4614f','#d9a441','#3f8f5b','#c9aa7c','#f0cd83'];
+  for(let i=0;i<70;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDuration=(2.4+Math.random()*1.8)+'s';
+    c.style.animationDelay=(Math.random()*.5)+'s';
+    if(i%3===0) c.style.borderRadius='50%';
+    document.body.appendChild(c); setTimeout(function(){c.remove();},4800);
+  }
+}
+
+/* ═══════════ TABS ═══════════ */
+document.querySelectorAll('.tab').forEach(function(b){
+  b.onclick=function(){
+    stopTTS();
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); document.getElementById(b.dataset.p).classList.add('on');
+    scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* ═══════════ SPEECH ═══════════ */
+let ttsBtn=null;
+function stopTTS(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(ttsBtn){ ttsBtn.classList.remove('playing'); ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊'; ttsBtn=null; }
+}
+function speakBtn(btn,txt){
+  if(ttsBtn===btn){ stopTTS(); return; }
+  stopTTS();
+  if(!('speechSynthesis' in window)) return;
+  btn.dataset.label=btn.innerHTML;
+  const u=new SpeechSynthesisUtterance(txt); u.lang='en-GB'; u.rate=.8;
+  u.onend=function(){ if(ttsBtn===btn) stopTTS(); };
+  ttsBtn=btn; btn.classList.add('playing'); btn.innerHTML='⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+function buildCards(boxId,words,task){
+  const box=document.getElementById(boxId); let flipped=0;
+  words.forEach(function(o){
+    const d=document.createElement('div'); d.className='flip';
+    const inn=document.createElement('div'); inn.className='flip-in';
+    const f=document.createElement('div'); f.className='face front';
+    f.innerHTML='<div class="em">'+o.em+'</div><div class="w">'+o.w+'</div><div class="hint">'+o.hint+'</div>';
+    const tb=document.createElement('button'); tb.className='tts'; tb.innerHTML='🔊 Say it';
+    tb.onclick=function(e){ e.stopPropagation(); speakBtn(this,o.say||o.w); };
+    f.appendChild(tb);
+    const b=document.createElement('div'); b.className='face back';
+    let extra=o.syn?'<div class="sa"><b>synonym:</b> '+o.syn+'</div>':'';
+    if(o.ant) extra+='<div class="sa"><b>opposite:</b> '+o.ant+'</div>';
+    b.innerHTML='<div class="mean">'+o.ar+'</div>'+extra;
+    inn.appendChild(f); inn.appendChild(b); d.appendChild(inn);
+    d.onclick=function(e){
+      d.classList.toggle('on');
+      if(d.classList.contains('on') && !d.dataset.seen){
+        d.dataset.seen='1'; flipped++;
+        note(e.clientX,e.clientY,'📒');
+        if(task && flipped===words.length) light(task,e.clientX,e.clientY);
+      }
+    };
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ SHARED WORD BANK ═══════════ */
+function makeBank(boxId,items){
+  const bank=document.getElementById(boxId); bank.sel=null;
+  items.forEach(function(t){
+    const s=document.createElement('button'); s.className='bl'; s.textContent=t;
+    s.onclick=function(){
+      if(s.classList.contains('used')) return;
+      if(bank.sel===s){ s.classList.remove('sel'); bank.sel=null; return; }
+      bank.querySelectorAll('.bl').forEach(function(x){x.classList.remove('sel');});
+      s.classList.add('sel'); bank.sel=s;
+    };
+    bank.appendChild(s);
+  });
+  return bank;
+}
+function makeBlank(bank,answer,onRight,minw){
+  const sp=document.createElement('span'); sp.className='blank'; sp.textContent='      ';
+  if(minw) sp.style.minWidth=minw;
+  sp.onclick=function(e){
+    if(sp.classList.contains('right')) return;
+    const pick=bank.sel; if(!pick) return;
+    if(pick.textContent===answer){
+      sp.textContent=answer; sp.classList.add('right');
+      pick.classList.add('used'); pick.classList.remove('sel'); bank.sel=null;
+      note(e.clientX,e.clientY,'✔');
+      onRight&&onRight(e);
+    }else{
+      sp.classList.add('shakeit'); setTimeout(function(){sp.classList.remove('shakeit');},360);
+    }
+  };
+  return sp;
+}
+
+/* ═══════════ REVEAL QUESTIONS ═══════════ */
+function buildReveal(boxId,items,task,icon){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='oq';
+    d.innerHTML='<div class="qq"><span class="n">'+(i+1)+'</span>'+it.q+'</div>';
+    const m=document.createElement('div'); m.className='model';
+    m.innerHTML='✔ '+it.a+(it.ar?'<div class="ar" style="margin:5px 0 0;font-size:.85rem;color:#2c6b42">'+it.ar+'</div>':'');
+    const b=document.createElement('button'); b.className='btn small kraft';
+    b.textContent='👁️ Show the answer';
+    b.onclick=function(e){
+      if(d.classList.contains('done')) return;
+      d.classList.add('done'); m.classList.add('on'); this.remove();
+      note(e.clientX,e.clientY,icon||'💡');
+      if(task && --left===0) light(task,e.clientX,e.clientY);
+    };
+    d.appendChild(m); d.appendChild(b);
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ MCQ BLOCK ═══════════ */
+function buildPicks(boxId,items,task){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='nw';
+    d.innerHTML='<div class="w">'+(i+1)+'. '+it.q+'</div>'+(it.line?'<div class="line">'+it.line+'</div>':'');
+    const ps=document.createElement('div'); ps.className='picks';
+    it.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='pk'; b.innerHTML=o;
+      b.onclick=function(e){
+        if(d.classList.contains('done')) return;
+        if(j===it.a){
+          b.classList.add('right'); d.classList.add('done');
+          ps.querySelectorAll('.pk').forEach(function(x){x.disabled=true;});
+          note(e.clientX,e.clientY,'✔');
+          if(task && --left===0) light(task,e.clientX,e.clientY);
+        }else{
+          b.classList.add('wrong'); b.disabled=true;
+          d.classList.add('shakeit'); setTimeout(function(){d.classList.remove('shakeit');},360);
+        }
+      };
+      ps.appendChild(b);
+    });
+    d.appendChild(ps); box.appendChild(d);
+  });
+}
+
+/* ═══════════ TOOLTIPS ON TAP ═══════════ */
+document.addEventListener('click',function(e){
+  const g=e.target.closest('.key,.pp');
+  document.querySelectorAll('.key.ton,.pp.ton').forEach(function(x){ if(x!==g) x.classList.remove('ton'); });
+  if(g) g.classList.toggle('ton');
+});
+
+/* ═══════════ QUIZ ═══════════ */
+(function(){
+  const quizBox=document.getElementById('quiz');
+  const answers=new Array(QUIZ.length).fill(null);
+  QUIZ.forEach(function(q,i){
+    const d=document.createElement('div'); d.className='q';
+    d.innerHTML='<p class="qt">'+(i+1)+'. '+q.t+'</p><p class="qar">'+q.ar+'</p>';
+    const opts=document.createElement('div'); opts.className='opts';
+    const fb=document.createElement('div'); fb.className='qfb'; fb.textContent='💡 '+q.fb;
+    q.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='opt'; b.innerHTML=o;
+      b.onclick=function(){
+        if(answers[i]!==null) return;
+        answers[i]=j;
+        opts.querySelectorAll('.opt').forEach(function(x){x.disabled=true;});
+        if(j===q.a) b.classList.add('right');
+        else{ b.classList.add('wrong'); opts.children[q.a].classList.add('right'); }
+        fb.classList.add('on');
+        if(answers.every(function(a){return a!==null;})) document.getElementById('check').disabled=false;
+      };
+      opts.appendChild(b);
+    });
+    d.appendChild(opts); d.appendChild(fb);
+    quizBox.appendChild(d);
+  });
+  document.getElementById('check').onclick=function(){
+    const n=answers.reduce(function(s,a,i){return s+(a===QUIZ[i].a?1:0);},0);
+    const box=document.getElementById('score');
+    document.getElementById('scoreN').textContent=n+' / 5';
+    document.getElementById('scoreMsg').textContent=
+      n===5 ? PERFECT : n>=3 ? 'Well done! Look through the lesson once more and try again.' :
+              'Good try — go through the lesson again and come back.';
+    box.classList.add('on');
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    if(n===5){
+      document.getElementById('badge').style.display='flex';
+      burst();
+      try{ localStorage.setItem(BKEY,'1'); }catch(e){}
+    }
+  };
+  try{
+    if(localStorage.getItem(BKEY)){
+      document.getElementById('score').classList.add('on');
+      document.getElementById('badge').style.display='flex';
+      document.getElementById('scoreMsg').textContent='You already earned this badge! 📒';
+    }
+  }catch(e){}
+})();
+
+</script>
+</body>
+</html>
