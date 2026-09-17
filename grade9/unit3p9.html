@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 3 — Which One Is Big Enough? | Grade 9 · Period 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --case:#212a3a; --case-d:#131a26; --case-l:#3a4a63;
+  --screen:#061512; --screen-2:#0a2320;
+  --trace:#4ef09a; --trace-d:#1f9b5c; --trace-l:#a8ffd0;
+  --amber:#ffbb4d; --amber-d:#b97f00;
+  --red:#ff6b5e; --red-d:#c33b2e;
+  --blue:#56c8f5; --blue-d:#1f7fa8;
+  --paper:#f7fafc; --paper-2:#eaf1f6; --paper-3:#dde8ef;
+  --ink:#16202b; --muted:#5f7183;
+  --ok:#1f9b5c; --ok-d:#157444; --no:#c33b2e;
+  --edge:#d3dee7; --edge-d:#b5c6d4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background-color:#1b2330;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.028) 0 1px, transparent 1px 34px),
+    radial-gradient(ellipse at 50% -8%, rgba(78,240,154,.14), transparent 60%),
+    linear-gradient(170deg,#243040 0%, #1a2331 55%, #10161f 100%);
+  padding:16px 12px 40px;
+}
+.wrap{max-width:1000px;margin:0 auto}
+
+/* the monitor casing */
+.frame{
+  position:relative;background:var(--paper);
+  border:14px solid var(--case);border-radius:20px;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.07), 0 0 0 3px var(--case-d),
+             0 22px 46px rgba(0,0,0,.55);
+  padding:0 0 26px;
+}
+.frame::before,.frame::after{content:"";position:absolute;left:-11px;right:-11px;height:9px;
+  pointer-events:none;z-index:12;
+  background:
+    radial-gradient(circle 4px at 9px 4px, #a3b3c6 42%, #4e5e72 70%, transparent 72%),
+    radial-gradient(circle 4px at calc(100% - 9px) 4px, #a3b3c6 42%, #4e5e72 70%, transparent 72%)}
+.frame::before{top:-11px}
+.frame::after{bottom:-11px}
+
+.eyebrow{position:relative;z-index:6;font-family:'Fredoka',sans-serif;font-size:.67rem;
+  letter-spacing:.24em;color:var(--trace-l);font-weight:600;text-transform:uppercase;
+  background:rgba(6,21,18,.75);display:inline-block;padding:4px 14px;border-radius:999px;
+  border:1.5px solid rgba(78,240,154,.4);box-shadow:0 0 14px rgba(78,240,154,.2)}
+.plaque{position:relative;z-index:6;margin:18px auto 0;max-width:640px;
+  background:linear-gradient(180deg,#f2f7fa,#dfe9f0);border:3px solid var(--case);
+  border-radius:9px;padding:11px 18px 13px;
+  box-shadow:0 10px 24px rgba(0,0,0,.42), inset 0 0 0 2px rgba(255,255,255,.7)}
+.plaque::before,.plaque::after{content:"";position:absolute;top:50%;margin-top:-4px;width:8px;height:8px;
+  border-radius:50%;background:radial-gradient(circle at 34% 30%,#c6d3e0,#5d6d80 68%,#39465a)}
+.plaque::before{left:9px}.plaque::after{right:9px}
+h1{margin:0 0 3px;font-family:'Fredoka',sans-serif;
+  font-size:clamp(1.22rem,5vw,1.8rem);color:var(--case);line-height:1.25}
+.sub{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  font-size:.95rem;color:var(--ok-d);font-weight:600}
+
+/* ═══════════ PROGRESS METER — LED pips ═══════════ */
+.meter{position:relative;z-index:6;display:flex;justify-content:center;gap:10px;
+  flex-wrap:wrap;margin:16px auto 0;max-width:560px}
+.mcount{position:relative;z-index:6;margin-top:10px;display:inline-block;
+  font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:600;color:var(--trace-l);
+  background:rgba(6,21,18,.8);border:1.5px solid rgba(78,240,154,.4);
+  border-radius:999px;padding:5px 15px;box-shadow:0 0 14px rgba(78,240,154,.18)}
+
+/* ═══════════ TABS — monitor buttons ═══════════ */
+nav{display:flex;gap:9px;padding:16px 14px 4px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){ nav{flex-wrap:wrap;overflow-x:visible;justify-content:center} }
+.tab{flex:0 0 auto;cursor:pointer;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;font-weight:600;color:var(--case);padding:11px 16px 12px;
+  background:linear-gradient(180deg,#fbfdfe,#e3ecf2);border:2px solid var(--edge-d);
+  border-radius:9px;
+  box-shadow:inset 0 3px 8px rgba(255,255,255,.85),0 3px 0 var(--edge-d);
+  transition:transform .18s,background .2s,color .2s;white-space:nowrap}
+.tab:hover{transform:translateY(-3px)}
+.tab.on{background:linear-gradient(180deg,#2e3c52,#1a2331);color:var(--trace-l);
+  border-color:var(--case-d);box-shadow:inset 0 0 14px rgba(78,240,154,.3),0 3px 0 var(--case-d)}
+
+/* ═══════════ PANELS ═══════════ */
+.panel{display:none;padding:18px 18px 6px;animation:fade .32s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.sec{font-family:'Fredoka',sans-serif;font-size:1.22rem;color:var(--case);
+  margin:0 0 4px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+h2.sec::before{content:"";width:16px;height:16px;flex:0 0 auto;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,var(--trace),var(--trace-d));
+  box-shadow:0 0 9px rgba(78,240,154,.65)}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.94rem;line-height:1.85;margin:2px 0 16px}
+.card{background:#fff;border:2px solid var(--edge);border-radius:10px;
+  padding:16px;margin-bottom:16px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:12px}
+.goal{background:#fff;border:2px solid var(--edge);border-left:6px solid var(--trace-d);
+  border-radius:9px;padding:13px 15px;box-shadow:0 3px 0 var(--edge)}
+.goal .ico{font-size:1.5rem;display:block;margin-bottom:5px}
+.goal b{font-family:'Fredoka',sans-serif;color:var(--case);font-size:.98rem}
+.goal .ar{margin:5px 0 0;font-size:.87rem}
+
+/* audio */
+.audio{margin:12px 0 16px;text-align:center}
+.audio .lbl{display:block;font-family:'Fredoka',sans-serif;font-size:.82rem;
+  color:var(--ok-d);font-weight:600;margin-bottom:6px}
+.audio iframe{width:100%;max-width:480px;height:58px;border:0;border-radius:8px}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px}
+.flip{perspective:1100px;height:200px}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:10px;padding:12px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:5px;
+  border:2.5px solid var(--case);box-shadow:0 5px 0 rgba(19,26,38,.35)}
+.face.front{background:linear-gradient(170deg,#ffffff,#e7eff5);cursor:pointer}
+.face.front .em{font-size:2.5rem}
+.face.front .w{font-family:'Fredoka',sans-serif;font-size:1.1rem;color:var(--case);font-weight:700}
+.face.front .hint{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.74rem;color:var(--muted)}
+.face.back{transform:rotateY(180deg);
+  background:linear-gradient(170deg,#0d2a25,#061512);color:#e6fff2;cursor:pointer;
+  box-shadow:0 5px 0 rgba(19,26,38,.35), inset 0 0 26px rgba(78,240,154,.14)}
+.face.back .mean{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:1.08rem;font-weight:700;color:var(--trace-l)}
+.face.back .sa{font-size:.82rem;line-height:1.7}
+.face.back .sa b{color:var(--trace)}
+.tts{border:0;cursor:pointer;background:var(--trace-d);color:#eafff3;font-family:'Fredoka',sans-serif;
+  font-size:.76rem;font-weight:600;border-radius:999px;padding:5px 13px;box-shadow:0 2px 0 var(--ok-d)}
+.tts:active{transform:translateY(2px);box-shadow:none}
+.tts.playing{background:var(--no);color:#fff;box-shadow:0 2px 0 #8c2a1f}
+
+/* ═══════════ WORD BANK + BLANKS ═══════════ */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;padding:14px;
+  background:linear-gradient(170deg,#eef5fa,#dde8f0);border:2px dashed var(--case-l);
+  border-radius:10px;margin-bottom:16px}
+.bank .bl{font-family:'Fredoka',sans-serif;font-size:.86rem;cursor:pointer;border:2px solid var(--case-l);
+  background:#fff;color:var(--case);border-radius:999px;padding:8px 15px;
+  box-shadow:0 3px 0 rgba(33,42,58,.22);transition:transform .15s,background .2s}
+.bank .bl:hover{transform:translateY(-3px)}
+.bank .bl.sel{background:var(--case);color:var(--trace-l)}
+.bank .bl.used{opacity:.3;pointer-events:none;text-decoration:line-through}
+.mline{position:relative;background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:14px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);
+  font-size:1.02rem;line-height:2.1;transition:border-color .3s,background .3s}
+.mline.done{border-color:var(--ok);background:#effaf4}
+.mline .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--case);color:var(--trace-l);font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.blank{display:inline-block;min-width:110px;border-bottom:3px dotted var(--case-l);
+  cursor:pointer;text-align:center;padding:2px 8px;font-weight:700;color:var(--case);
+  transition:background .2s,border-color .2s}
+.blank:hover{background:#e7f0f7}
+.blank.right{border-bottom:3px solid var(--ok);color:var(--ok-d);background:#e7f8ef;cursor:default;border-radius:5px}
+
+/* reveal questions */
+.oq{background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.oq.done{border-color:var(--ok);background:#effaf4}
+.oq .qq{font-size:1rem;font-weight:600;color:var(--case);margin-bottom:9px}
+.oq .qq .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--case);color:var(--trace-l);font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.oq .model{display:none;background:#e7f8ef;border-left:4px solid var(--ok);
+  border-radius:0 8px 8px 0;padding:9px 12px;font-size:.96rem;color:var(--ok-d);font-weight:600;margin-bottom:9px}
+.oq .model.on{display:block;animation:fade .3s ease}
+
+/* MCQ picks */
+.nw{background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.nw.done{border-color:var(--ok);background:#effaf4}
+.nw .w{font-family:'Fredoka',sans-serif;font-size:1.04rem;color:var(--case);margin-bottom:4px}
+.nw .line{font-size:.92rem;color:var(--muted);margin-bottom:9px;font-style:italic}
+.picks{display:flex;flex-direction:column;gap:8px}
+.pk{font-family:'Nunito',sans-serif;font-size:.95rem;text-align:left;cursor:pointer;background:#fff;
+  border:2px solid var(--edge-d);border-radius:8px;padding:9px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.pk:hover{transform:translateX(4px);border-color:var(--trace-d)}
+.pk.right{background:#e7f8ef;border-color:var(--ok);color:var(--ok-d);font-weight:700;transform:none}
+.pk.wrong{background:#fdecea;border-color:var(--no);color:#8c2a1f}
+.pk:disabled{cursor:default;transform:none}
+
+/* ═══════════ TRANSCRIPT ═══════════ */
+.script{background:#fff;border:2px solid var(--edge);border-radius:10px;
+  padding:16px 14px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.narr{font-style:italic;color:var(--muted);background:#eaf1f6;border-radius:8px;
+  padding:9px 12px;margin:0 0 12px;font-size:.94rem}
+.ln{display:flex;gap:10px;margin-bottom:11px;align-items:flex-start;line-height:1.95}
+.who{flex:0 0 auto;font-family:'Fredoka',sans-serif;font-size:.76rem;font-weight:600;
+  min-width:86px;border-radius:6px;padding:3px 9px;text-align:center;color:#fff;margin-top:3px}
+.w-wal{background:#1f7fa8}.w-jam{background:#c33b2e}.w-coa{background:#157444}
+.w-bla{background:#4a3b8c}.w-pre{background:#b97f00}.w-jul{background:#8c3f6d}
+.w-nar{background:#5f7183}.w-a{background:#1f7fa8}.w-b{background:#b5651e}
+.sp{font-size:1rem}
+.key{position:relative;cursor:pointer;border-radius:4px;padding:0 4px;font-weight:700;
+  background:#fff2c2;border-bottom:2px dashed var(--amber-d);color:#7a5200}
+.key.got{background:#d6f5e4;border-bottom:2px solid var(--ok);color:var(--ok-d)}
+.key::after,.pp::after{content:attr(data-t);position:absolute;left:50%;bottom:145%;
+  transform:translateX(-50%) translateY(5px);
+  background:var(--case);color:#eafff3;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:min(230px,68vw);white-space:normal;text-align:center;line-height:1.6;
+  font-size:.84rem;font-weight:600;padding:6px 12px;border-radius:9px;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;
+  box-shadow:0 8px 18px rgba(0,0,0,.4)}
+.key:hover::after,.key.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.pp{position:relative;cursor:pointer;border-radius:4px;padding:0 4px;font-weight:700;
+  background:#e4e9ff;border-bottom:2px dashed #4a3b8c;color:#372a78}
+.pp::after{background:#241b52;color:#ece9ff}
+.pp:hover::after,.pp.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.83rem;color:var(--muted)}
+.legend span i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-left:5px}
+
+/* word hunt chips */
+.hunt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:13px;
+  background:linear-gradient(170deg,#eef5fa,#dde8f0);border:2px solid var(--edge-d);
+  border-radius:10px;margin-bottom:14px}
+.hunt .ht{font-family:'Fredoka',sans-serif;font-size:.83rem;border:2px solid var(--case-l);
+  background:#fff;color:var(--case);border-radius:999px;padding:6px 13px;transition:.3s}
+.hunt .ht.got{background:var(--ok);border-color:var(--ok-d);color:#fff}
+.hunt .ht.got::before{content:"✔ "}
+
+/* tables */
+.tblwrap{overflow-x:auto;margin-bottom:16px;border-radius:9px}
+.tbl{width:100%;border-collapse:collapse;background:#fff;
+  border:2px solid var(--edge);border-radius:9px;overflow:hidden;font-size:.95rem}
+.tbl th{background:var(--case);color:var(--trace-l);font-family:'Fredoka',sans-serif;
+  font-size:.86rem;padding:10px 12px;text-align:left}
+.tbl td{padding:10px 12px;border-top:1.5px solid var(--edge)}
+.tbl tr:nth-child(even) td{background:var(--paper-2)}
+
+.btn{border:0;font-family:'Fredoka',sans-serif;font-size:.9rem;cursor:pointer;color:var(--trace-l);
+  background:var(--case);border-radius:8px;padding:9px 18px;box-shadow:0 3px 0 var(--case-d)}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.btn.small{font-size:.8rem;padding:7px 14px}
+.btn.kraft{background:var(--trace-d);color:#eafff3;box-shadow:0 3px 0 var(--ok-d)}
+.btn:disabled{opacity:.5;cursor:default}
+details{background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:0;margin-bottom:13px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+details>summary{cursor:pointer;list-style:none;padding:13px 15px;
+  font-family:'Fredoka',sans-serif;font-size:.98rem;color:var(--case);font-weight:600}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";color:var(--trace-d)}
+details[open]>summary::before{content:"▾ "}
+details .dbody{padding:0 15px 14px}
+
+/* quiz */
+.q{background:#fff;border:2px solid var(--edge);border-radius:9px;padding:14px;margin-bottom:13px}
+.q p.qt{font-weight:700;margin:0 0 4px;font-size:1rem}
+.q p.qar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.86rem;margin:0 0 10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font-family:'Nunito',sans-serif;font-size:.95rem;cursor:pointer;
+  background:#fff;border:2px solid var(--edge-d);border-radius:8px;padding:10px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.opt:hover{transform:translateX(4px);border-color:var(--trace-d)}
+.opt.right{background:#e7f8ef;border-color:var(--ok);color:var(--ok-d);font-weight:700}
+.opt.wrong{background:#fdecea;border-color:var(--no);color:#8c2a1f}
+.opt:disabled{cursor:default;transform:none}
+.qfb{margin-top:9px;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.9rem;display:none}
+.qfb.on{display:block}
+.score{text-align:center;border-radius:12px;padding:22px 16px;margin-top:6px;display:none;
+  background:linear-gradient(160deg,#0d2a25,#061512);color:#e6fff2;
+  box-shadow:inset 0 0 40px rgba(78,240,154,.16)}
+.score.on{display:block}
+.score .n{font-family:'Fredoka',sans-serif;font-size:2.6rem;font-weight:700;color:var(--trace)}
+.badge{margin:14px auto 0;width:132px;height:132px;border-radius:50%;
+  background:radial-gradient(circle at 36% 28%,#2c3c52,#131a26);
+  border:5px solid var(--trace-d);display:none;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;box-shadow:0 8px 22px rgba(0,0,0,.5), 0 0 26px rgba(78,240,154,.35);
+  animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1)}}
+.badge .bi{font-size:2.3rem}
+.badge .bt{font-family:'Fredoka',sans-serif;font-size:.62rem;letter-spacing:.05em;color:var(--trace-l);
+  line-height:1.3;padding:0 10px;text-align:center;font-weight:700}
+
+.pop-note{position:fixed;pointer-events:none;font-size:1.5rem;z-index:80;animation:rise 1s ease-out forwards}
+@keyframes rise{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-70px) scale(1.3)}}
+.confetti{position:fixed;top:-12px;width:11px;height:11px;z-index:70;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(660deg);opacity:.15}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shakeit{animation:shake .34s}
+
+footer{text-align:center;margin-top:30px;font-family:'Fredoka',sans-serif;font-weight:600;
+  color:var(--case);font-size:.95rem}
+
+@media (max-width:560px){
+  body{padding:10px 8px 34px}
+  .frame{border-width:10px;border-radius:15px}
+  .panel{padding:15px 13px 6px}
+  .who{min-width:72px;font-size:.7rem}
+  .blank{min-width:95px}
+}
+
+
+/* ═══════════ HEADER : THE SPEC COMPARISON DISPLAY ═══════════ */
+header{position:relative;padding:20px 14px 28px;text-align:center;overflow:hidden;
+  background:linear-gradient(170deg,#243448 0%, #17222f 52%, #0e151e 100%)}
+header::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 18%, rgba(86,200,245,.16), transparent 62%)}
+
+.specs{position:relative;z-index:6;max-width:560px;margin:16px auto 0;padding:15px;
+  border-radius:16px;background:linear-gradient(180deg,#314054,#1a2330);
+  box-shadow:0 20px 40px rgba(0,0,0,.6), inset 0 2px 0 rgba(255,255,255,.12)}
+.speclab{font-family:'Fredoka',sans-serif;font-size:.56rem;letter-spacing:.2em;
+  color:rgba(200,225,245,.62);text-transform:uppercase;margin-bottom:11px;text-align:left}
+.buscols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(7px,2.4vw,12px)}
+.buscol{border-radius:11px;padding:12px 8px 11px;text-align:center;
+  background:rgba(8,16,24,.55);border:1.5px solid rgba(140,180,215,.24);
+  opacity:0;animation:pop2 .5s cubic-bezier(.2,1.4,.4,1) var(--d) forwards}
+@keyframes pop2{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+.buscol.win{border-color:#4ef09a;box-shadow:0 0 22px rgba(78,240,154,.35);
+  background:rgba(10,38,30,.7)}
+.buscol .bus{font-size:clamp(1.5rem,7vw,2rem);line-height:1.2}
+.buscol .bn{font-family:'Fredoka',sans-serif;font-size:clamp(.6rem,2.6vw,.76rem);
+  color:#dbe9f5;margin-top:3px;line-height:1.25}
+.buscol .seats{font-family:'Fredoka',sans-serif;font-size:clamp(.82rem,3.6vw,1.05rem);
+  font-weight:700;color:#8fdcff;margin-top:5px}
+.buscol.win .seats{color:#4ef09a}
+.buscol .price{font-family:'Fredoka',sans-serif;font-size:.62rem;color:rgba(200,225,245,.7);margin-top:2px}
+.buscol .tick{display:block;margin-top:6px;font-size:.78rem;color:#4ef09a;
+  opacity:0;animation:fadeUp .4s ease 1.5s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.stitle{position:relative;z-index:6;margin:16px auto 0;max-width:620px}
+.stitle h1{font-family:'Fredoka',sans-serif;color:#eaf4ff;
+  font-size:clamp(1.4rem,5.6vw,2.05rem);margin:0;line-height:1.16;
+  text-shadow:0 3px 16px rgba(0,0,0,.6)}
+.stitle h1 em{font-style:normal;color:#8fdcff}
+.stitle .cap{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  color:rgba(215,232,245,.84);font-size:.95rem;margin-top:5px}
+
+/* progress markers */
+.mk{position:relative;width:74px;text-align:center}
+.mk .dt{width:40px;height:40px;margin:0 auto;border-radius:10px;display:grid;place-items:center;
+  font-size:1rem;transition:.45s;border:2px solid rgba(180,215,240,.28);
+  background:rgba(10,18,26,.6);color:rgba(230,240,250,.55)}
+.mk.lit .dt{background:linear-gradient(160deg,#8fdcff,#1f7fa8);border-color:#cdeeff;color:#04222e;
+  box-shadow:0 0 20px 5px rgba(86,200,245,.45);transform:scale(1.1)}
+.mk .lbl{font-family:'Fredoka',sans-serif;font-size:.54rem;letter-spacing:.05em;
+  color:rgba(215,232,245,.72);margin-top:6px;text-transform:uppercase}
+.mk.lit .lbl{color:#8fdcff;font-weight:700}
+@media (max-width:560px){ .mk{width:62px} }
+
+/* the head teacher's email */
+.mail{background:#fff;border:2px solid var(--edge);border-radius:10px;overflow:hidden;
+  box-shadow:0 3px 0 var(--edge);margin-bottom:16px}
+.mail .mh{background:var(--paper-2);padding:12px 15px;border-bottom:2px solid var(--edge)}
+.mail .mh div{font-size:.92rem;line-height:1.75}
+.mail .mh b{font-family:'Fredoka',sans-serif;color:var(--case);margin-right:6px}
+.mail .mb{padding:14px 15px;font-size:1rem;line-height:1.9}
+.mail .mb ul{margin:9px 0 0;padding-left:20px}
+.mail .mb li{margin-bottom:6px}
+
+/* the reply letter */
+.letter{background:linear-gradient(180deg,#fffef8,#f4f2e8);border:2px solid var(--edge-d);
+  border-radius:10px;padding:18px 18px 20px;box-shadow:0 5px 0 var(--edge-d);
+  font-size:1.04rem;line-height:2.5}
+.letter.done{border-color:var(--ok);background:#f2fbf6}
+.letter .sig{display:block;margin-top:14px;font-family:'Fredoka',sans-serif;
+  font-size:.92rem;color:var(--muted);text-align:right}
+
+/* young-me writing */
+.wf{background:#fff;border:2px solid var(--edge);border-left:6px solid var(--blue-d);
+  border-radius:10px;padding:13px 15px;margin-top:12px;box-shadow:0 3px 0 var(--edge)}
+.wf textarea{width:100%;min-height:96px;border:2px solid var(--edge-d);border-radius:8px;
+  padding:10px 12px;font-family:'Nunito',sans-serif;font-size:.97rem;resize:vertical;
+  background:repeating-linear-gradient(180deg,#fff 0 25px,#e7eef6 25px 26px);color:var(--ink);
+  line-height:26px}
+.wf textarea:focus{outline:none;border-color:var(--case-l)}
+.wf .saved{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.8rem;
+  color:var(--ok-d);margin-top:6px;display:none}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="frame">
+
+  <!-- ══════════ HEADER : THE SPEC COMPARISON DISPLAY ══════════ -->
+  <header>
+    <div class="eyebrow">Unit 3 · Period 9 · Grade 9</div>
+
+    <div class="specs">
+      <div class="speclab">School sports teams · new mini-bus · comparison</div>
+      <div class="buscols">
+        <div class="buscol" style="--d:.3s">
+          <div class="bus">🚐</div><div class="bn">The Skyline</div>
+          <div class="seats">24</div><div class="price">$32,000</div>
+        </div>
+        <div class="buscol" style="--d:.55s">
+          <div class="bus">🚐</div><div class="bn">The Road Runner</div>
+          <div class="seats">12</div><div class="price">$27,000</div>
+        </div>
+        <div class="buscol win" style="--d:.8s">
+          <div class="bus">🚐</div><div class="bn">The Montana</div>
+          <div class="seats">17</div><div class="price">$29,000</div>
+          <span class="tick">✔ just right</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="meter">
+      <div class="mk"><div class="dt">🚐</div><div class="lbl">Compare</div></div>
+      <div class="mk"><div class="dt">📧</div><div class="lbl">The Note</div></div>
+      <div class="mk"><div class="dt">✍️</div><div class="lbl">Reply</div></div>
+      <div class="mk"><div class="dt">👶</div><div class="lbl">When Young</div></div>
+    </div>
+    <div class="mcount" id="mCount">🚐 0 / 4 checks made</div>
+
+    <div class="stitle">
+      <h1>Which One Is <em>Big Enough</em>?</h1>
+      <div class="cap">المدرسةُ تختارُ حافلةً صغيرةً لفرقِها الرياضيّة — فأيُّها تُحقِّقُ كلَّ الشروط؟</div>
+    </div>
+
+    <div class="plaque">
+      <h1>Be fit, but be safe</h1>
+      <div class="sub">الوحدةُ الثالثة · المقارنةُ واتّخاذُ القرار</div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab on" data-p="p1">📌 Objectives</button>
+    <button class="tab" data-p="p2">🚐 Compare the Buses</button>
+    <button class="tab" data-p="p3">📧 The Head Teacher's Note</button>
+    <button class="tab" data-p="p4">✍️ Write Back</button>
+    <button class="tab" data-p="p5">👶 When I Was Young</button>
+    <button class="tab" data-p="p6">🎯 Quiz</button>
+  </nav>
+
+  <!-- ══════════ 1 · OBJECTIVES ══════════ -->
+  <section class="panel on" id="p1">
+    <h2 class="sec">Lesson Objectives</h2>
+    <p class="ar">أهدافُ الدرس — نقارِنُ ثلاثَ حافلات، ونقرأُ شروطَ المدير، ثمَّ نكتبُ إليه بقرارِنا.</p>
+    <div class="goals">
+      <div class="goal"><span class="ico">🚐</span><b>Compare the three mini-buses.</b>
+        <p class="ar">أقارِنُ بينَ الحافلاتِ الثلاثِ في الحجمِ والأمانِ والراحةِ والسعر.</p></div>
+      <div class="goal"><span class="ico">📧</span><b>Read and discuss the head teacher’s note.</b>
+        <p class="ar">أقرأُ رسالةَ المديرِ وأُناقِشُ شروطَه.</p></div>
+      <div class="goal"><span class="ico">✍️</span><b>Write back and name the right mini-bus.</b>
+        <p class="ar">أكتبُ إليه مُسمّيًا الحافلةَ المناسبةَ ومُعلِّلًا.</p></div>
+      <div class="goal"><span class="ico">👶</span><b>Talk about myself when I was young.</b>
+        <p class="ar">أتحدَّثُ عمّا لم أستطعْ فعلَه حينَ كنتُ صغيرًا.</p></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 2 · COMPARE ══════════ -->
+  <section class="panel" id="p2">
+    <h2 class="sec">Work in pairs · Compare the three mini-buses</h2>
+    <p class="ar">المدرِّبُ ومعلِّمٌ يختارانِ حافلةً صغيرةً جديدةً لفرقِ المدرسةِ الرياضيّة.
+    انظرْ إلى الجدولِ ثمَّ تحدَّثْ على نمطِ الحوارِ النموذجيّ.</p>
+
+    <div class="tblwrap">
+      <table class="tbl">
+        <tr><th></th><th>The Skyline</th><th>The Road Runner</th><th>The Montana</th></tr>
+        <tr><td>How big is it?</td><td>Carries 24</td><td>Carries 12</td><td>Carries 17</td></tr>
+        <tr><td>How safe is it?</td><td>★★★</td><td>★★★★★</td><td>★★★★</td></tr>
+        <tr><td>How comfortable is it?</td><td>★★★★★</td><td>★★★</td><td>★★★★</td></tr>
+        <tr><td>How expensive is it?</td><td>$32,000</td><td>$27,000</td><td>$29,000</td></tr>
+        <tr><td>How expensive is it to use?</td><td>★★★★★</td><td>★★★</td><td>★★★★</td></tr>
+      </table>
+    </div>
+
+    <details open>
+      <summary>💬 The example conversation — الحوارُ النموذجيّ</summary>
+      <div class="dbody">
+        <div class="ln"><span class="who w-a">Student A</span><span class="sp">The Montana is bigger than the Road Runner, isn’t it?</span></div>
+        <div class="ln"><span class="who w-b">Student B</span><span class="sp">Yes, but it isn’t as big as the Skyline, is it?</span></div>
+        <div class="ln"><span class="who w-a">Student A</span><span class="sp">That’s right. The Skyline is the biggest of all.</span></div>
+      </div>
+    </details>
+
+    <h2 class="sec" style="margin-top:20px">Now compare them for each row</h2>
+    <p class="ar">تحدَّثْ عن كلِّ صفٍّ من الجدول، ثمَّ اضغطْ لترى حوارًا نموذجيًّا.</p>
+    <div id="cmp"></div>
+  </section>
+
+  <!-- ══════════ 3 · THE NOTE ══════════ -->
+  <section class="panel" id="p3">
+    <h2 class="sec">Work in pairs · Read and discuss the mini-buses</h2>
+    <p class="ar">هذه رسالةُ مديرِ المدرسة. اقرأْها ثمَّ ناقِشْ زميلَك في الأمانِ والراحة، ثمَّ في الحجمِ والتكلفة.</p>
+
+    <div class="mail">
+      <div class="mh">
+        <div><b>To:</b> Mary Allan, Tony West</div>
+        <div><b>From:</b> Peter Best (Head Teacher)</div>
+        <div><b>Date:</b> 15th November</div>
+        <div><b>Subject:</b> New mini-bus for the school sports teams</div>
+      </div>
+      <div class="mb">
+        Thank you for finding out about new mini-buses for the school sports teams. I just want to say
+        some things to help you choose the right one for our school’s needs. Of course, the new mini-bus
+        must be safe and comfortable, but we have to think about the following, too.
+        <ul>
+          <li>It has to carry <b>14 people or more</b>.</li>
+          <li>It can’t be too expensive to buy: so we can’t spend <b>more than $30,000</b>.</li>
+          <li>We should also get a mini-bus that is <b>not too expensive to use</b>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="disc"></div>
+  </section>
+
+  <!-- ══════════ 4 · WRITE BACK ══════════ -->
+  <section class="panel" id="p4">
+    <h2 class="sec">Write back to the head teacher</h2>
+    <p class="ar">سَمِّ الحافلةَ المناسبةَ للمدرسةِ وبيِّنِ السبب. اضغطِ الكلمةَ في البنكِ أوَّلًا ثمَّ اضغطِ الفراغ.</p>
+    <div class="bank" id="wbank"></div>
+    <div class="letter" id="letter"></div>
+  </section>
+
+  <!-- ══════════ 5 · WHEN I WAS YOUNG ══════════ -->
+  <section class="panel" id="p5">
+    <h2 class="sec">Work in groups · Talk about yourselves when you were young</h2>
+    <p class="ar">قُلْ ما كنتَ تتمنّى فعلَه حينَ كنتَ صغيرًا، ولماذا لم تستطعْ.
+    استعملْ <b>too … to …</b> أو <b>wasn’t … enough to …</b>.</p>
+    <div id="young"></div>
+
+    <div class="wf">
+      <div style="font-family:Fredoka,sans-serif;color:#16202b;margin-bottom:6px">Now write about yourself</div>
+      <p class="ar" style="margin:0 0 9px">اكتبْ جملتَيك أنت. ما تكتبُه يُحفظُ في متصفِّحِك.</p>
+      <textarea id="myYoung" placeholder="When I was …, I wanted to … But I couldn’t because I was too … to … / I wasn’t … enough to …"></textarea>
+      <div class="saved" id="sv">✔ حُفِظَ في متصفِّحك</div>
+    </div>
+  </section>
+
+  <!-- ══════════ 6 · QUIZ ══════════ -->
+  <section class="panel" id="p6">
+    <h2 class="sec">Quiz — 5 questions</h2>
+    <p class="ar">اختبارٌ قصيرٌ من خمسةِ أسئلةٍ حولَ الدرس. أجِبْ عن الأسئلةِ كلِّها ثمَّ اضغطْ زرَّ النتيجة.</p>
+    <div id="quiz"></div>
+    <div style="text-align:center;margin:8px 0 14px">
+      <button class="btn kraft" id="check" disabled>🚐 Show my score</button>
+    </div>
+    <div class="score" id="score">
+      <div class="n" id="scoreN">0 / 5</div>
+      <div id="scoreMsg" style="font-size:1rem"></div>
+      <div class="badge" id="badge"><span class="bi">🚐</span><span class="bt">RIGHT<br>CHOICE</span></div>
+    </div>
+  </section>
+
+  <footer>Designed with love 💗 by T. Wad Refae</footer>
+</div>
+</div>
+
+<script>
+
+const TASKS=['cmp','disc','write','young'];
+const METER_ICON='🚐', METER_WORD='checks made';
+const BKEY='g9u3p9_badge';
+const PERFECT='Perfect! The Montana it is. 🚐';
+
+/* ═══════════ 2 · COMPARE ═══════════ */
+buildReveal('cmp',[
+ {q:'How <b>safe</b> is it? &nbsp;<span class="ar" style="display:block;margin-top:4px">سكايلاين ★★★ · رود رَنَر ★★★★★ · مونتانا ★★★★</span>',
+  a:'<b>A</b> The Montana is safer than the Skyline, isn’t it? &nbsp;<b>B</b> Yes, but it isn’t as safe as the Road Runner, is it? &nbsp;<b>A</b> That’s right. The Road Runner is the safest of all.',
+  ar:'الأكثرُ أمانًا هي رود رَنَر، ثمَّ مونتانا، ثمَّ سكايلاين.'},
+ {q:'How <b>comfortable</b> is it? &nbsp;<span class="ar" style="display:block;margin-top:4px">سكايلاين ★★★★★ · رود رَنَر ★★★ · مونتانا ★★★★</span>',
+  a:'<b>A</b> The Montana is more comfortable than the Road Runner, isn’t it? &nbsp;<b>B</b> Yes, but it isn’t as comfortable as the Skyline, is it? &nbsp;<b>A</b> That’s right. The Skyline is the most comfortable of all.',
+  ar:'comfortable صفةٌ طويلة، فنستعملُ more و the most.'},
+ {q:'How <b>expensive</b> is it? &nbsp;<span class="ar" style="display:block;margin-top:4px">$32,000 · $27,000 · $29,000</span>',
+  a:'<b>A</b> The Montana is more expensive than the Road Runner, isn’t it? &nbsp;<b>B</b> Yes, but it isn’t as expensive as the Skyline, is it? &nbsp;<b>A</b> That’s right. The Skyline is the most expensive of all.',
+  ar:'الأغلى سكايلاين، والأرخصُ رود رَنَر.'},
+ {q:'How <b>expensive to use</b> is it? &nbsp;<span class="ar" style="display:block;margin-top:4px">سكايلاين ★★★★★ · رود رَنَر ★★★ · مونتانا ★★★★</span>',
+  a:'<b>A</b> The Montana is more expensive to use than the Road Runner, isn’t it? &nbsp;<b>B</b> Yes, but it isn’t as expensive to use as the Skyline, is it? &nbsp;<b>A</b> That’s right. The Skyline is the most expensive of all to use.',
+  ar:'كثرةُ النجومِ هنا تعني ارتفاعَ تكلفةِ التشغيل.'}
+],'cmp','🚐');
+
+/* ═══════════ 3 · DISCUSS ═══════════ */
+buildReveal('disc',[
+ {q:'First, it has to be <b>safe</b>.',
+  a:'<b>B</b> Well, the Road Runner is the safest. &nbsp;<b>A</b> And I think the Montana is safe enough, too. &nbsp;<b>B</b> But I don’t think the Skyline is safe enough.',
+  ar:'رود رَنَر الأكثرُ أمانًا، ومونتانا آمنةٌ بما يكفي، أمّا سكايلاين فلا.'},
+ {q:'It also has to be <b>comfortable</b>.',
+  a:'<b>B</b> Well, the Skyline is the most comfortable. &nbsp;<b>A</b> And I think the Montana is comfortable enough, too. &nbsp;<b>B</b> But I don’t think the Road Runner is comfortable enough.',
+  ar:'سكايلاين الأكثرُ راحة، ومونتانا مريحةٌ بما يكفي.'},
+ {q:'It also has to carry <b>14 people or more</b>.',
+  a:'<b>B</b> Well, the Skyline is the biggest. &nbsp;<b>A</b> And the Montana is big enough, too. &nbsp;<b>B</b> But the Road Runner is too small.',
+  ar:'رود رَنَر تحملُ ١٢ فقط، فهي صغيرةٌ أكثرَ من اللازم.'},
+ {q:'We can’t spend <b>more than $30,000</b>.',
+  a:'<b>B</b> Well, the Road Runner is the cheapest. &nbsp;<b>A</b> And the Montana is cheap enough, too — it costs $29,000. &nbsp;<b>B</b> But the Skyline is too expensive: it costs $32,000.',
+  ar:'سكايلاين تتجاوزُ السقفَ المسموحَ به.'}
+],'disc','📧');
+
+/* ═══════════ 4 · WRITE BACK ═══════════ */
+const LET=[
+ ['After a lot of thinking, we have decided that the right mini-bus for our school is the ','Montana'],
+ ['. We think that it is ','comfortable'],
+ [' enough and ','safe'],
+ [' enough, too. It is ','big'],
+ [' enough to carry ','17'],
+ [' people. It is also not too expensive to ','use'],
+ ['. Finally, it is not ','the most expensive']
+];
+(function(){
+  const chips=LET.map(function(r){return r[1];});
+  const bank=makeBank('wbank',chips.slice().sort(function(){return Math.random()-.5;}));
+  const box=document.getElementById('letter'); let left=chips.length;
+  LET.forEach(function(r){
+    box.appendChild(document.createTextNode(r[0]));
+    box.appendChild(makeBlank(bank,r[1],function(e){
+      if(!box.querySelector('.blank:not(.right)')) box.classList.add('done');
+      if(--left===0) light('write',e.clientX,e.clientY);
+    },'132px'));
+  });
+  box.appendChild(document.createTextNode('.'));
+  const sig=document.createElement('span'); sig.className='sig';
+  sig.textContent='Mary Allan and Tony West';
+  box.appendChild(sig);
+})();
+
+/* ═══════════ 5 · WHEN I WAS YOUNG ═══════════ */
+buildReveal('young',[
+ {q:'When I was two, I wanted to <b>ride my big brother’s bike</b>.',
+  a:'But I couldn’t because I was <b>too small to ride it</b>. / I <b>wasn’t big enough to ride it</b>.',
+  ar:'الصيغتانِ تُؤدّيانِ المعنى نفسَه: too … to … أو wasn’t … enough to …'},
+ {q:'When I was six, I wanted to <b>drive a car</b>.',
+  a:'But I couldn’t because I was <b>too young to drive</b>. / I <b>wasn’t old enough to drive</b>.',
+  ar:'لاحظِ التقابل: too young ← not old enough.'},
+ {q:'When I was seven, I wanted to <b>paint my bedroom</b>.',
+  a:'But I couldn’t because I was <b>too short to paint the walls</b>. / I <b>wasn’t tall enough to paint the walls</b>.',
+  ar:'لاحظِ التقابل: too short ← not tall enough.'}
+],'young','👶');
+
+(function(){
+  const ta=document.getElementById('myYoung'), sv=document.getElementById('sv');
+  try{ ta.value=localStorage.getItem('g9u3p9_young')||''; }catch(e){}
+  ta.oninput=function(){ try{ localStorage.setItem('g9u3p9_young',ta.value); sv.style.display='block'; }catch(e){} };
+})();
+
+/* ═══════════ QUIZ ═══════════ */
+const QUIZ=[
+ {t:'Which mini-bus is the <b>safest</b>?',
+  ar:'أيُّ الحافلاتِ الأكثرُ أمانًا؟',
+  o:['The Skyline','The Road Runner','The Montana'], a:1,
+  fb:'رود رَنَر حصلت على خمسِ نجومٍ في الأمان.'},
+ {t:'Why is the Road Runner <b>not</b> the right mini-bus?',
+  ar:'لِمَ لا تصلحُ رود رَنَر؟',
+  o:['It is too small — it carries only 12 people.','It is too expensive.','It is not safe enough.'], a:0,
+  fb:'المديرُ يشترطُ أن تحملَ ١٤ شخصًا فأكثر، وهي تحملُ ١٢ فقط.'},
+ {t:'Why is the Skyline <b>not</b> the right mini-bus?',
+  ar:'ولِمَ لا تصلحُ سكايلاين؟',
+  o:['It is too small.','It costs $32,000 — that is too expensive.','It is not comfortable enough.'], a:1,
+  fb:'المدرسةُ لا تستطيعُ إنفاقَ أكثرَ من ٣٠٬٠٠٠ دولار.'},
+ {t:'Complete: &ldquo;The Montana is big ____ to carry 17 people.&rdquo;',
+  ar:'أكملِ الجملة.',
+  o:['too','enough','more'], a:1,
+  fb:'enough يأتي بعدَ الصفة: big enough to …'},
+ {t:'Complete: &ldquo;When I was two, I was ____ to ride the bike.&rdquo;',
+  ar:'أكملِ الجملة.',
+  o:['too small','small enough','not too small'], a:0,
+  fb:'too small to … = أصغرُ من أن يستطيع.'}
+];
+
+
+/* ═══════════ PROGRESS METER ═══════════ */
+const MARKS=document.querySelectorAll('.mk');
+const done=new Set();
+function light(t,x,y){
+  if(done.has(t)) return;
+  done.add(t);
+  const i=TASKS.indexOf(t);
+  if(MARKS[i]) MARKS[i].classList.add('lit');
+  document.getElementById('mCount').textContent=METER_ICON+' '+done.size+' / '+TASKS.length+' '+METER_WORD;
+  note(x,y,METER_ICON);
+  if(done.size===TASKS.length) burst();
+}
+function note(x,y,ch){
+  const p=document.createElement('div');
+  p.className='pop-note'; p.textContent=ch||'✨';
+  p.style.left=((x||innerWidth/2)-10)+'px'; p.style.top=((y||140)-10)+'px';
+  document.body.appendChild(p); setTimeout(function(){p.remove();},1000);
+}
+function burst(){
+  const cols=['#4ef09a','#56c8f5','#ffbb4d','#ff6b5e','#a8ffd0','#1f9b5c'];
+  for(let i=0;i<70;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDuration=(2.4+Math.random()*1.8)+'s';
+    c.style.animationDelay=(Math.random()*.5)+'s';
+    if(i%3===0) c.style.borderRadius='50%';
+    document.body.appendChild(c); setTimeout(function(){c.remove();},4800);
+  }
+}
+
+/* ═══════════ TABS ═══════════ */
+document.querySelectorAll('.tab').forEach(function(b){
+  b.onclick=function(){
+    stopTTS();
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); document.getElementById(b.dataset.p).classList.add('on');
+    scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* ═══════════ SPEECH ═══════════ */
+let ttsBtn=null;
+function stopTTS(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(ttsBtn){ ttsBtn.classList.remove('playing'); ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊'; ttsBtn=null; }
+}
+function speakBtn(btn,txt){
+  if(ttsBtn===btn){ stopTTS(); return; }
+  stopTTS();
+  if(!('speechSynthesis' in window)) return;
+  btn.dataset.label=btn.innerHTML;
+  const u=new SpeechSynthesisUtterance(txt); u.lang='en-GB'; u.rate=.8;
+  u.onend=function(){ if(ttsBtn===btn) stopTTS(); };
+  ttsBtn=btn; btn.classList.add('playing'); btn.innerHTML='⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+function buildCards(boxId,words,task){
+  const box=document.getElementById(boxId); let flipped=0;
+  words.forEach(function(o){
+    const d=document.createElement('div'); d.className='flip';
+    const inn=document.createElement('div'); inn.className='flip-in';
+    const f=document.createElement('div'); f.className='face front';
+    f.innerHTML='<div class="em">'+o.em+'</div><div class="w">'+o.w+'</div><div class="hint">'+o.hint+'</div>';
+    const tb=document.createElement('button'); tb.className='tts'; tb.innerHTML='🔊 Say it';
+    tb.onclick=function(e){ e.stopPropagation(); speakBtn(this,o.say||o.w); };
+    f.appendChild(tb);
+    const b=document.createElement('div'); b.className='face back';
+    let extra=o.syn?'<div class="sa"><b>synonym:</b> '+o.syn+'</div>':'';
+    if(o.ant) extra+='<div class="sa"><b>opposite:</b> '+o.ant+'</div>';
+    b.innerHTML='<div class="mean">'+o.ar+'</div>'+extra;
+    inn.appendChild(f); inn.appendChild(b); d.appendChild(inn);
+    d.onclick=function(e){
+      d.classList.toggle('on');
+      if(d.classList.contains('on') && !d.dataset.seen){
+        d.dataset.seen='1'; flipped++;
+        note(e.clientX,e.clientY,'💓');
+        if(task && flipped===words.length) light(task,e.clientX,e.clientY);
+      }
+    };
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ SHARED WORD BANK ═══════════ */
+function makeBank(boxId,items){
+  const bank=document.getElementById(boxId); bank.sel=null;
+  items.forEach(function(t){
+    const s=document.createElement('button'); s.className='bl'; s.textContent=t;
+    s.onclick=function(){
+      if(s.classList.contains('used')) return;
+      if(bank.sel===s){ s.classList.remove('sel'); bank.sel=null; return; }
+      bank.querySelectorAll('.bl').forEach(function(x){x.classList.remove('sel');});
+      s.classList.add('sel'); bank.sel=s;
+    };
+    bank.appendChild(s);
+  });
+  return bank;
+}
+function makeBlank(bank,answer,onRight,minw){
+  const sp=document.createElement('span'); sp.className='blank'; sp.textContent='      ';
+  if(minw) sp.style.minWidth=minw;
+  sp.onclick=function(e){
+    if(sp.classList.contains('right')) return;
+    const pick=bank.sel; if(!pick) return;
+    if(pick.textContent===answer){
+      sp.textContent=answer; sp.classList.add('right');
+      pick.classList.add('used'); pick.classList.remove('sel'); bank.sel=null;
+      note(e.clientX,e.clientY,'✔');
+      onRight&&onRight(e);
+    }else{
+      sp.classList.add('shakeit'); setTimeout(function(){sp.classList.remove('shakeit');},360);
+    }
+  };
+  return sp;
+}
+
+/* ═══════════ REVEAL QUESTIONS ═══════════ */
+function buildReveal(boxId,items,task,icon){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='oq';
+    d.innerHTML='<div class="qq"><span class="n">'+(i+1)+'</span>'+it.q+'</div>';
+    const m=document.createElement('div'); m.className='model';
+    m.innerHTML='✔ '+it.a+(it.ar?'<div class="ar" style="margin:5px 0 0;font-size:.85rem;color:#2c6b42">'+it.ar+'</div>':'');
+    const b=document.createElement('button'); b.className='btn small kraft';
+    b.textContent='👁️ Show the answer';
+    b.onclick=function(e){
+      if(d.classList.contains('done')) return;
+      d.classList.add('done'); m.classList.add('on'); this.remove();
+      note(e.clientX,e.clientY,icon||'💡');
+      if(task && --left===0) light(task,e.clientX,e.clientY);
+    };
+    d.appendChild(m); d.appendChild(b);
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ MCQ BLOCK ═══════════ */
+function buildPicks(boxId,items,task){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='nw';
+    d.innerHTML='<div class="w">'+(i+1)+'. '+it.q+'</div>'+(it.line?'<div class="line">'+it.line+'</div>':'');
+    const ps=document.createElement('div'); ps.className='picks';
+    it.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='pk'; b.innerHTML=o;
+      b.onclick=function(e){
+        if(d.classList.contains('done')) return;
+        if(j===it.a){
+          b.classList.add('right'); d.classList.add('done');
+          ps.querySelectorAll('.pk').forEach(function(x){x.disabled=true;});
+          note(e.clientX,e.clientY,'✔');
+          if(task && --left===0) light(task,e.clientX,e.clientY);
+        }else{
+          b.classList.add('wrong'); b.disabled=true;
+          d.classList.add('shakeit'); setTimeout(function(){d.classList.remove('shakeit');},360);
+        }
+      };
+      ps.appendChild(b);
+    });
+    d.appendChild(ps); box.appendChild(d);
+  });
+}
+
+/* ═══════════ TOOLTIPS ON TAP ═══════════ */
+document.addEventListener('click',function(e){
+  const g=e.target.closest('.key,.pp');
+  document.querySelectorAll('.key.ton,.pp.ton').forEach(function(x){ if(x!==g) x.classList.remove('ton'); });
+  if(g) g.classList.toggle('ton');
+});
+
+/* ═══════════ QUIZ ═══════════ */
+(function(){
+  const quizBox=document.getElementById('quiz');
+  const answers=new Array(QUIZ.length).fill(null);
+  QUIZ.forEach(function(q,i){
+    const d=document.createElement('div'); d.className='q';
+    d.innerHTML='<p class="qt">'+(i+1)+'. '+q.t+'</p><p class="qar">'+q.ar+'</p>';
+    const opts=document.createElement('div'); opts.className='opts';
+    const fb=document.createElement('div'); fb.className='qfb'; fb.textContent='💡 '+q.fb;
+    q.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='opt'; b.innerHTML=o;
+      b.onclick=function(){
+        if(answers[i]!==null) return;
+        answers[i]=j;
+        opts.querySelectorAll('.opt').forEach(function(x){x.disabled=true;});
+        if(j===q.a) b.classList.add('right');
+        else{ b.classList.add('wrong'); opts.children[q.a].classList.add('right'); }
+        fb.classList.add('on');
+        if(answers.every(function(a){return a!==null;})) document.getElementById('check').disabled=false;
+      };
+      opts.appendChild(b);
+    });
+    d.appendChild(opts); d.appendChild(fb);
+    quizBox.appendChild(d);
+  });
+  document.getElementById('check').onclick=function(){
+    const n=answers.reduce(function(s,a,i){return s+(a===QUIZ[i].a?1:0);},0);
+    const box=document.getElementById('score');
+    document.getElementById('scoreN').textContent=n+' / 5';
+    document.getElementById('scoreMsg').textContent=
+      n===5 ? PERFECT : n>=3 ? 'Well done! Look through the lesson once more and try again.' :
+              'Good try — go through the lesson again and come back.';
+    box.classList.add('on');
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    if(n===5){
+      document.getElementById('badge').style.display='flex';
+      burst();
+      try{ localStorage.setItem(BKEY,'1'); }catch(e){}
+    }
+  };
+  try{
+    if(localStorage.getItem(BKEY)){
+      document.getElementById('score').classList.add('on');
+      document.getElementById('badge').style.display='flex';
+      document.getElementById('scoreMsg').textContent='You already earned this badge! 🫀';
+    }
+  }catch(e){}
+})();
+
+</script>
+</body>
+</html>
