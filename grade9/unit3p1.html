@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 3 — Something Is Not Right | Grade 9 · Period 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Baloo+Bhaijaan+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --case:#212a3a; --case-d:#131a26; --case-l:#3a4a63;
+  --screen:#061512; --screen-2:#0a2320;
+  --trace:#4ef09a; --trace-d:#1f9b5c; --trace-l:#a8ffd0;
+  --amber:#ffbb4d; --amber-d:#b97f00;
+  --red:#ff6b5e; --red-d:#c33b2e;
+  --blue:#56c8f5; --blue-d:#1f7fa8;
+  --paper:#f7fafc; --paper-2:#eaf1f6; --paper-3:#dde8ef;
+  --ink:#16202b; --muted:#5f7183;
+  --ok:#1f9b5c; --ok-d:#157444; --no:#c33b2e;
+  --edge:#d3dee7; --edge-d:#b5c6d4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background-color:#1b2330;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.028) 0 1px, transparent 1px 34px),
+    radial-gradient(ellipse at 50% -8%, rgba(78,240,154,.14), transparent 60%),
+    linear-gradient(170deg,#243040 0%, #1a2331 55%, #10161f 100%);
+  padding:16px 12px 40px;
+}
+.wrap{max-width:1000px;margin:0 auto}
+
+/* the monitor casing */
+.frame{
+  position:relative;background:var(--paper);
+  border:14px solid var(--case);border-radius:20px;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.07), 0 0 0 3px var(--case-d),
+             0 22px 46px rgba(0,0,0,.55);
+  padding:0 0 26px;
+}
+.frame::before,.frame::after{content:"";position:absolute;left:-11px;right:-11px;height:9px;
+  pointer-events:none;z-index:12;
+  background:
+    radial-gradient(circle 4px at 9px 4px, #a3b3c6 42%, #4e5e72 70%, transparent 72%),
+    radial-gradient(circle 4px at calc(100% - 9px) 4px, #a3b3c6 42%, #4e5e72 70%, transparent 72%)}
+.frame::before{top:-11px}
+.frame::after{bottom:-11px}
+
+.eyebrow{position:relative;z-index:6;font-family:'Fredoka',sans-serif;font-size:.67rem;
+  letter-spacing:.24em;color:var(--trace-l);font-weight:600;text-transform:uppercase;
+  background:rgba(6,21,18,.75);display:inline-block;padding:4px 14px;border-radius:999px;
+  border:1.5px solid rgba(78,240,154,.4);box-shadow:0 0 14px rgba(78,240,154,.2)}
+.plaque{position:relative;z-index:6;margin:18px auto 0;max-width:640px;
+  background:linear-gradient(180deg,#f2f7fa,#dfe9f0);border:3px solid var(--case);
+  border-radius:9px;padding:11px 18px 13px;
+  box-shadow:0 10px 24px rgba(0,0,0,.42), inset 0 0 0 2px rgba(255,255,255,.7)}
+.plaque::before,.plaque::after{content:"";position:absolute;top:50%;margin-top:-4px;width:8px;height:8px;
+  border-radius:50%;background:radial-gradient(circle at 34% 30%,#c6d3e0,#5d6d80 68%,#39465a)}
+.plaque::before{left:9px}.plaque::after{right:9px}
+h1{margin:0 0 3px;font-family:'Fredoka',sans-serif;
+  font-size:clamp(1.22rem,5vw,1.8rem);color:var(--case);line-height:1.25}
+.sub{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  font-size:.95rem;color:var(--ok-d);font-weight:600}
+
+/* ═══════════ PROGRESS METER — LED pips ═══════════ */
+.meter{position:relative;z-index:6;display:flex;justify-content:center;gap:10px;
+  flex-wrap:wrap;margin:16px auto 0;max-width:560px}
+.mcount{position:relative;z-index:6;margin-top:10px;display:inline-block;
+  font-family:'Fredoka',sans-serif;font-size:.78rem;font-weight:600;color:var(--trace-l);
+  background:rgba(6,21,18,.8);border:1.5px solid rgba(78,240,154,.4);
+  border-radius:999px;padding:5px 15px;box-shadow:0 0 14px rgba(78,240,154,.18)}
+
+/* ═══════════ TABS — monitor buttons ═══════════ */
+nav{display:flex;gap:9px;padding:16px 14px 4px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:700px){ nav{flex-wrap:wrap;overflow-x:visible;justify-content:center} }
+.tab{flex:0 0 auto;cursor:pointer;font-family:'Fredoka',sans-serif;
+  font-size:.86rem;font-weight:600;color:var(--case);padding:11px 16px 12px;
+  background:linear-gradient(180deg,#fbfdfe,#e3ecf2);border:2px solid var(--edge-d);
+  border-radius:9px;
+  box-shadow:inset 0 3px 8px rgba(255,255,255,.85),0 3px 0 var(--edge-d);
+  transition:transform .18s,background .2s,color .2s;white-space:nowrap}
+.tab:hover{transform:translateY(-3px)}
+.tab.on{background:linear-gradient(180deg,#2e3c52,#1a2331);color:var(--trace-l);
+  border-color:var(--case-d);box-shadow:inset 0 0 14px rgba(78,240,154,.3),0 3px 0 var(--case-d)}
+
+/* ═══════════ PANELS ═══════════ */
+.panel{display:none;padding:18px 18px 6px;animation:fade .32s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.sec{font-family:'Fredoka',sans-serif;font-size:1.22rem;color:var(--case);
+  margin:0 0 4px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+h2.sec::before{content:"";width:16px;height:16px;flex:0 0 auto;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,var(--trace),var(--trace-d));
+  box-shadow:0 0 9px rgba(78,240,154,.65)}
+.ar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.94rem;line-height:1.85;margin:2px 0 16px}
+.card{background:#fff;border:2px solid var(--edge);border-radius:10px;
+  padding:16px;margin-bottom:16px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:12px}
+.goal{background:#fff;border:2px solid var(--edge);border-left:6px solid var(--trace-d);
+  border-radius:9px;padding:13px 15px;box-shadow:0 3px 0 var(--edge)}
+.goal .ico{font-size:1.5rem;display:block;margin-bottom:5px}
+.goal b{font-family:'Fredoka',sans-serif;color:var(--case);font-size:.98rem}
+.goal .ar{margin:5px 0 0;font-size:.87rem}
+
+/* audio */
+.audio{margin:12px 0 16px;text-align:center}
+.audio .lbl{display:block;font-family:'Fredoka',sans-serif;font-size:.82rem;
+  color:var(--ok-d);font-weight:600;margin-bottom:6px}
+.audio iframe{width:100%;max-width:480px;height:58px;border:0;border-radius:8px}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:14px}
+.flip{perspective:1100px;height:200px}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:10px;padding:12px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:5px;
+  border:2.5px solid var(--case);box-shadow:0 5px 0 rgba(19,26,38,.35)}
+.face.front{background:linear-gradient(170deg,#ffffff,#e7eff5);cursor:pointer}
+.face.front .em{font-size:2.5rem}
+.face.front .w{font-family:'Fredoka',sans-serif;font-size:1.1rem;color:var(--case);font-weight:700}
+.face.front .hint{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.74rem;color:var(--muted)}
+.face.back{transform:rotateY(180deg);
+  background:linear-gradient(170deg,#0d2a25,#061512);color:#e6fff2;cursor:pointer;
+  box-shadow:0 5px 0 rgba(19,26,38,.35), inset 0 0 26px rgba(78,240,154,.14)}
+.face.back .mean{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:1.08rem;font-weight:700;color:var(--trace-l)}
+.face.back .sa{font-size:.82rem;line-height:1.7}
+.face.back .sa b{color:var(--trace)}
+.tts{border:0;cursor:pointer;background:var(--trace-d);color:#eafff3;font-family:'Fredoka',sans-serif;
+  font-size:.76rem;font-weight:600;border-radius:999px;padding:5px 13px;box-shadow:0 2px 0 var(--ok-d)}
+.tts:active{transform:translateY(2px);box-shadow:none}
+.tts.playing{background:var(--no);color:#fff;box-shadow:0 2px 0 #8c2a1f}
+
+/* ═══════════ WORD BANK + BLANKS ═══════════ */
+.bank{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;padding:14px;
+  background:linear-gradient(170deg,#eef5fa,#dde8f0);border:2px dashed var(--case-l);
+  border-radius:10px;margin-bottom:16px}
+.bank .bl{font-family:'Fredoka',sans-serif;font-size:.86rem;cursor:pointer;border:2px solid var(--case-l);
+  background:#fff;color:var(--case);border-radius:999px;padding:8px 15px;
+  box-shadow:0 3px 0 rgba(33,42,58,.22);transition:transform .15s,background .2s}
+.bank .bl:hover{transform:translateY(-3px)}
+.bank .bl.sel{background:var(--case);color:var(--trace-l)}
+.bank .bl.used{opacity:.3;pointer-events:none;text-decoration:line-through}
+.mline{position:relative;background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:14px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);
+  font-size:1.02rem;line-height:2.1;transition:border-color .3s,background .3s}
+.mline.done{border-color:var(--ok);background:#effaf4}
+.mline .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--case);color:var(--trace-l);font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.blank{display:inline-block;min-width:110px;border-bottom:3px dotted var(--case-l);
+  cursor:pointer;text-align:center;padding:2px 8px;font-weight:700;color:var(--case);
+  transition:background .2s,border-color .2s}
+.blank:hover{background:#e7f0f7}
+.blank.right{border-bottom:3px solid var(--ok);color:var(--ok-d);background:#e7f8ef;cursor:default;border-radius:5px}
+
+/* reveal questions */
+.oq{background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.oq.done{border-color:var(--ok);background:#effaf4}
+.oq .qq{font-size:1rem;font-weight:600;color:var(--case);margin-bottom:9px}
+.oq .qq .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  background:var(--case);color:var(--trace-l);font-family:'Fredoka',sans-serif;font-size:.8rem;
+  margin-right:8px;vertical-align:middle}
+.oq .model{display:none;background:#e7f8ef;border-left:4px solid var(--ok);
+  border-radius:0 8px 8px 0;padding:9px 12px;font-size:.96rem;color:var(--ok-d);font-weight:600;margin-bottom:9px}
+.oq .model.on{display:block;animation:fade .3s ease}
+
+/* MCQ picks */
+.nw{background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);transition:border-color .3s,background .3s}
+.nw.done{border-color:var(--ok);background:#effaf4}
+.nw .w{font-family:'Fredoka',sans-serif;font-size:1.04rem;color:var(--case);margin-bottom:4px}
+.nw .line{font-size:.92rem;color:var(--muted);margin-bottom:9px;font-style:italic}
+.picks{display:flex;flex-direction:column;gap:8px}
+.pk{font-family:'Nunito',sans-serif;font-size:.95rem;text-align:left;cursor:pointer;background:#fff;
+  border:2px solid var(--edge-d);border-radius:8px;padding:9px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.pk:hover{transform:translateX(4px);border-color:var(--trace-d)}
+.pk.right{background:#e7f8ef;border-color:var(--ok);color:var(--ok-d);font-weight:700;transform:none}
+.pk.wrong{background:#fdecea;border-color:var(--no);color:#8c2a1f}
+.pk:disabled{cursor:default;transform:none}
+
+/* ═══════════ TRANSCRIPT ═══════════ */
+.script{background:#fff;border:2px solid var(--edge);border-radius:10px;
+  padding:16px 14px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+.narr{font-style:italic;color:var(--muted);background:#eaf1f6;border-radius:8px;
+  padding:9px 12px;margin:0 0 12px;font-size:.94rem}
+.ln{display:flex;gap:10px;margin-bottom:11px;align-items:flex-start;line-height:1.95}
+.who{flex:0 0 auto;font-family:'Fredoka',sans-serif;font-size:.76rem;font-weight:600;
+  min-width:86px;border-radius:6px;padding:3px 9px;text-align:center;color:#fff;margin-top:3px}
+.w-wal{background:#1f7fa8}.w-jam{background:#c33b2e}.w-coa{background:#157444}
+.w-bla{background:#4a3b8c}.w-pre{background:#b97f00}.w-jul{background:#8c3f6d}
+.w-nar{background:#5f7183}.w-a{background:#1f7fa8}.w-b{background:#b5651e}
+.sp{font-size:1rem}
+.key{position:relative;cursor:pointer;border-radius:4px;padding:0 4px;font-weight:700;
+  background:#fff2c2;border-bottom:2px dashed var(--amber-d);color:#7a5200}
+.key.got{background:#d6f5e4;border-bottom:2px solid var(--ok);color:var(--ok-d)}
+.key::after,.pp::after{content:attr(data-t);position:absolute;left:50%;bottom:145%;
+  transform:translateX(-50%) translateY(5px);
+  background:var(--case);color:#eafff3;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  width:max-content;max-width:min(230px,68vw);white-space:normal;text-align:center;line-height:1.6;
+  font-size:.84rem;font-weight:600;padding:6px 12px;border-radius:9px;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.18s;z-index:60;
+  box-shadow:0 8px 18px rgba(0,0,0,.4)}
+.key:hover::after,.key.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.pp{position:relative;cursor:pointer;border-radius:4px;padding:0 4px;font-weight:700;
+  background:#e4e9ff;border-bottom:2px dashed #4a3b8c;color:#372a78}
+.pp::after{background:#241b52;color:#ece9ff}
+.pp:hover::after,.pp.ton::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;
+  font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.83rem;color:var(--muted)}
+.legend span i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-left:5px}
+
+/* word hunt chips */
+.hunt{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:13px;
+  background:linear-gradient(170deg,#eef5fa,#dde8f0);border:2px solid var(--edge-d);
+  border-radius:10px;margin-bottom:14px}
+.hunt .ht{font-family:'Fredoka',sans-serif;font-size:.83rem;border:2px solid var(--case-l);
+  background:#fff;color:var(--case);border-radius:999px;padding:6px 13px;transition:.3s}
+.hunt .ht.got{background:var(--ok);border-color:var(--ok-d);color:#fff}
+.hunt .ht.got::before{content:"✔ "}
+
+/* tables */
+.tblwrap{overflow-x:auto;margin-bottom:16px;border-radius:9px}
+.tbl{width:100%;border-collapse:collapse;background:#fff;
+  border:2px solid var(--edge);border-radius:9px;overflow:hidden;font-size:.95rem}
+.tbl th{background:var(--case);color:var(--trace-l);font-family:'Fredoka',sans-serif;
+  font-size:.86rem;padding:10px 12px;text-align:left}
+.tbl td{padding:10px 12px;border-top:1.5px solid var(--edge)}
+.tbl tr:nth-child(even) td{background:var(--paper-2)}
+
+.btn{border:0;font-family:'Fredoka',sans-serif;font-size:.9rem;cursor:pointer;color:var(--trace-l);
+  background:var(--case);border-radius:8px;padding:9px 18px;box-shadow:0 3px 0 var(--case-d)}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.btn.small{font-size:.8rem;padding:7px 14px}
+.btn.kraft{background:var(--trace-d);color:#eafff3;box-shadow:0 3px 0 var(--ok-d)}
+.btn:disabled{opacity:.5;cursor:default}
+details{background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:0;margin-bottom:13px;box-shadow:0 3px 0 var(--edge);overflow:visible}
+details>summary{cursor:pointer;list-style:none;padding:13px 15px;
+  font-family:'Fredoka',sans-serif;font-size:.98rem;color:var(--case);font-weight:600}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ ";color:var(--trace-d)}
+details[open]>summary::before{content:"▾ "}
+details .dbody{padding:0 15px 14px}
+
+/* quiz */
+.q{background:#fff;border:2px solid var(--edge);border-radius:9px;padding:14px;margin-bottom:13px}
+.q p.qt{font-weight:700;margin:0 0 4px;font-size:1rem}
+.q p.qar{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;color:var(--muted);
+  font-size:.86rem;margin:0 0 10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font-family:'Nunito',sans-serif;font-size:.95rem;cursor:pointer;
+  background:#fff;border:2px solid var(--edge-d);border-radius:8px;padding:10px 13px;
+  transition:transform .15s,border-color .2s,background .2s}
+.opt:hover{transform:translateX(4px);border-color:var(--trace-d)}
+.opt.right{background:#e7f8ef;border-color:var(--ok);color:var(--ok-d);font-weight:700}
+.opt.wrong{background:#fdecea;border-color:var(--no);color:#8c2a1f}
+.opt:disabled{cursor:default;transform:none}
+.qfb{margin-top:9px;font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;font-size:.9rem;display:none}
+.qfb.on{display:block}
+.score{text-align:center;border-radius:12px;padding:22px 16px;margin-top:6px;display:none;
+  background:linear-gradient(160deg,#0d2a25,#061512);color:#e6fff2;
+  box-shadow:inset 0 0 40px rgba(78,240,154,.16)}
+.score.on{display:block}
+.score .n{font-family:'Fredoka',sans-serif;font-size:2.6rem;font-weight:700;color:var(--trace)}
+.badge{margin:14px auto 0;width:132px;height:132px;border-radius:50%;
+  background:radial-gradient(circle at 36% 28%,#2c3c52,#131a26);
+  border:5px solid var(--trace-d);display:none;flex-direction:column;align-items:center;
+  justify-content:center;gap:2px;box-shadow:0 8px 22px rgba(0,0,0,.5), 0 0 26px rgba(78,240,154,.35);
+  animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1)}}
+.badge .bi{font-size:2.3rem}
+.badge .bt{font-family:'Fredoka',sans-serif;font-size:.62rem;letter-spacing:.05em;color:var(--trace-l);
+  line-height:1.3;padding:0 10px;text-align:center;font-weight:700}
+
+.pop-note{position:fixed;pointer-events:none;font-size:1.5rem;z-index:80;animation:rise 1s ease-out forwards}
+@keyframes rise{0%{opacity:1;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-70px) scale(1.3)}}
+.confetti{position:fixed;top:-12px;width:11px;height:11px;z-index:70;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(660deg);opacity:.15}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shakeit{animation:shake .34s}
+
+footer{text-align:center;margin-top:30px;font-family:'Fredoka',sans-serif;font-weight:600;
+  color:var(--case);font-size:.95rem}
+
+@media (max-width:560px){
+  body{padding:10px 8px 34px}
+  .frame{border-width:10px;border-radius:15px}
+  .panel{padding:15px 13px 6px}
+  .who{min-width:72px;font-size:.7rem}
+  .blank{min-width:95px}
+}
+
+
+/* ═══════════ HEADER : THE MONITOR SCREEN ═══════════ */
+header{position:relative;padding:20px 14px 26px;text-align:center;overflow:hidden;
+  background:linear-gradient(170deg,#2b3748 0%, #1c2431 52%, #121923 100%)}
+header::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 30%, rgba(78,240,154,.13), transparent 62%)}
+
+.mon{position:relative;z-index:6;max-width:560px;margin:16px auto 0;padding:11px;
+  border-radius:16px;background:linear-gradient(180deg,#39485e,#1b2330);
+  box-shadow:0 20px 40px rgba(0,0,0,.6), inset 0 2px 0 rgba(255,255,255,.14)}
+.scr{position:relative;border-radius:10px;overflow:hidden;
+  background:
+    repeating-linear-gradient(0deg, rgba(78,240,154,.11) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, rgba(78,240,154,.11) 0 1px, transparent 1px 22px),
+    radial-gradient(ellipse at 50% 40%, #0b2620, #04100d 78%);
+  box-shadow:inset 0 0 34px rgba(0,0,0,.85), inset 0 0 0 2px rgba(78,240,154,.18)}
+
+.scrtop{display:flex;justify-content:space-between;align-items:center;
+  padding:9px 12px 0;font-family:'Fredoka',sans-serif;font-size:.6rem;letter-spacing:.16em;
+  color:rgba(168,255,208,.68);text-transform:uppercase}
+.alarm{display:inline-flex;align-items:center;gap:6px;color:#ffb0a7}
+.alarm i{width:8px;height:8px;border-radius:50%;background:#ff6b5e;
+  box-shadow:0 0 10px #ff6b5e;animation:blip 1s steps(1,end) infinite}
+@keyframes blip{50%{opacity:.15}}
+
+.ecgbox{position:relative;height:120px;margin:2px 0 0}
+.ecgbox svg{display:block;width:100%;height:120px}
+.ecgbox path{fill:none;stroke:#4ef09a;stroke-width:2.6;stroke-linejoin:round;
+  filter:drop-shadow(0 0 7px rgba(78,240,154,.85));
+  stroke-dasharray:2600;stroke-dashoffset:2600;
+  animation:trace 2.8s ease-out .3s forwards}
+@keyframes trace{to{stroke-dashoffset:0}}
+.sweep{position:absolute;top:0;bottom:0;width:60px;pointer-events:none;
+  background:linear-gradient(90deg, transparent, rgba(78,240,154,.22));
+  animation:sw 3.4s linear 3s infinite}
+@keyframes sw{from{left:-60px}to{left:100%}}
+
+.rdg{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:4px 10px 12px}
+.rd{min-width:82px;border-radius:8px;padding:6px 10px 7px;
+  background:rgba(0,0,0,.4);border:1px solid rgba(78,240,154,.22)}
+.rd .k{display:block;font-family:'Fredoka',sans-serif;font-size:.5rem;letter-spacing:.14em;
+  color:rgba(168,255,208,.6);text-transform:uppercase}
+.rd .v{font-family:'Fredoka',sans-serif;font-size:1.22rem;font-weight:700;color:#4ef09a;
+  text-shadow:0 0 12px rgba(78,240,154,.7)}
+.rd.hot .v{color:#ffbb4d;text-shadow:0 0 12px rgba(255,187,77,.7)}
+.rd.bad .v{color:#ff6b5e;text-shadow:0 0 12px rgba(255,107,94,.7)}
+
+.montitle{position:relative;z-index:6;margin:16px auto 0;max-width:600px}
+.montitle h1{font-family:'Fredoka',sans-serif;color:#eaf6ff;
+  font-size:clamp(1.42rem,5.8vw,2.1rem);margin:0;line-height:1.16;
+  text-shadow:0 3px 16px rgba(0,0,0,.6)}
+.montitle h1 em{font-style:normal;color:#4ef09a}
+.montitle .cap{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
+  color:rgba(215,232,245,.82);font-size:.95rem;margin-top:5px}
+
+/* progress markers = LED pips on the casing */
+.mk{position:relative;width:66px;text-align:center}
+.mk .dt{width:40px;height:40px;margin:0 auto;border-radius:50%;display:grid;place-items:center;
+  font-size:1rem;transition:.45s;border:2px solid rgba(168,255,208,.3);
+  background:rgba(6,21,18,.62);color:rgba(230,255,242,.55)}
+.mk.lit .dt{background:radial-gradient(circle at 34% 30%,#6cffb4,#1f9b5c);
+  border-color:#a8ffd0;color:#04221a;
+  box-shadow:0 0 22px 6px rgba(78,240,154,.5);transform:scale(1.1)}
+.mk .lbl{font-family:'Fredoka',sans-serif;font-size:.54rem;letter-spacing:.05em;
+  color:rgba(215,232,245,.72);margin-top:6px;text-transform:uppercase}
+.mk.lit .lbl{color:#a8ffd0;font-weight:700}
+@media (max-width:560px){ .mk{width:58px} .ecgbox,.ecgbox svg{height:96px} }
+
+/* three-part matching rows */
+.m3{background:#fff;border:2px solid var(--edge);border-radius:9px;
+  padding:13px 15px;margin-bottom:11px;box-shadow:0 3px 0 var(--edge);
+  font-size:1rem;line-height:2.2;transition:.3s}
+.m3.done{border-color:var(--ok);background:#effaf4}
+.m3 .st{font-weight:700;color:var(--case)}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="frame">
+
+  <!-- ══════════ HEADER : THE MONITOR SCREEN ══════════ -->
+  <header>
+    <div class="eyebrow">Unit 3 · Period 1 · Grade 9</div>
+
+    <div class="mon">
+      <div class="scr">
+        <div class="scrtop">
+          <span>Pitch-side monitor · 14:06</span>
+          <span class="alarm"><i></i> Alarm</span>
+        </div>
+        <div class="ecgbox">
+          <svg viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,82 L10,82 L15,89 L20,36 L25,104 L30,76 L37,82 L50,82 L55,89 L60,36 L65,104 L70,76 L77,82 L88,82 L93,89 L98,36 L103,104 L108,76 L115,82 L124,82 L129,89 L134,36 L139,104 L144,76 L151,82 L158,82 L163,89 L168,36 L173,104 L178,76 L185,82 L190,82 L195,89 L200,36 L205,104 L210,76 L217,82 L220,82 L225,89 L230,36 L235,104 L240,76 L247,82 L256,82 L600,82"/>
+          </svg>
+          <span class="sweep"></span>
+        </div>
+        <div class="rdg">
+          <div class="rd hot"><span class="k">Pulse</span><span class="v">racing</span></div>
+          <div class="rd bad"><span class="k">Skin</span><span class="v">cold</span></div>
+          <div class="rd bad"><span class="k">Status</span><span class="v">collapsed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="meter">
+      <div class="mk"><div class="dt">🔤</div><div class="lbl">Words</div></div>
+      <div class="mk"><div class="dt">🖼️</div><div class="lbl">Picture</div></div>
+      <div class="mk"><div class="dt">🎧</div><div class="lbl">Listen</div></div>
+      <div class="mk"><div class="dt">💬</div><div class="lbl">Read</div></div>
+    </div>
+    <div class="mcount" id="mCount">💓 0 / 4 readings taken</div>
+
+    <div class="montitle">
+      <h1>Something Is <em>Not Right</em></h1>
+      <div class="cap">وليدٌ وجيمي في تدريبِ كرةِ القدم — وشيءٌ ما ليس على ما يُرام.</div>
+    </div>
+
+    <div class="plaque">
+      <h1>Be fit, but be safe</h1>
+      <div class="sub">الوحدةُ الثالثة · كُنْ لائقًا، ولكنْ كُنْ آمِنًا</div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab on" data-p="p1">📌 Objectives</button>
+    <button class="tab" data-p="p2">🔤 New Words</button>
+    <button class="tab" data-p="p3">🖼️ The Picture</button>
+    <button class="tab" data-p="p4">🎧 Listen</button>
+    <button class="tab" data-p="p5">💬 Listen & Read</button>
+    <button class="tab" data-p="p6">🎯 Quiz</button>
+  </nav>
+
+  <!-- ══════════ 1 · OBJECTIVES ══════════ -->
+  <section class="panel on" id="p1">
+    <h2 class="sec">Lesson Objectives</h2>
+    <p class="ar">أهدافُ الدرس — نتعلَّمُ كلماتِ الإسعافِ واللياقة، ونقرأُ حوارَ الملعبِ ونفهمُه.</p>
+    <div class="goals">
+      <div class="goal"><span class="ico">🔤</span><b>Learn ten new words about first aid and fitness.</b>
+        <p class="ar">أتعلَّمُ عشرَ كلماتٍ جديدةً عن الإسعافِ الأوّليِّ واللياقة.</p></div>
+      <div class="goal"><span class="ico">🖼️</span><b>Describe the picture in full sentences.</b>
+        <p class="ar">أصفُ الصورةَ بجملٍ كاملةٍ مرتَّبة.</p></div>
+      <div class="goal"><span class="ico">🎧</span><b>Listen and answer questions about Jamie.</b>
+        <p class="ar">أستمعُ وأجيبُ عن أسئلةٍ حولَ ما حدثَ لجيمي.</p></div>
+      <div class="goal"><span class="ico">💬</span><b>Read the conversation and find the new words in it.</b>
+        <p class="ar">أقرأُ الحوارَ وأجدُ الكلماتِ الجديدةَ داخلَه.</p></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 2 · NEW WORDS ══════════ -->
+  <section class="panel" id="p2">
+    <h2 class="sec">Listen and repeat · New words</h2>
+    <p class="ar">استمعْ إلى التسجيلِ وردِّدِ الكلمات. اضغطِ البطاقةَ لتقلبَها وترى المعنى،
+    واضغطْ 🔊 لسماعِ الكلمةِ وحدَها.</p>
+    <div class="audio"><span class="lbl">🎧 Audio 21 — the new words</span><iframe src="https://drive.google.com/file/d/1dNKigUOwtKTz6qNq59eRgSDkJPSda9dn/preview" allow="autoplay" title="Audio 21 — the new words"></iframe></div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <!-- ══════════ 3 · THE PICTURE ══════════ -->
+  <section class="panel" id="p3">
+    <h2 class="sec">Look at the picture · Describe it</h2>
+    <p class="ar">لكلِّ جملةٍ بدايةٌ ووسطٌ ونهاية. اضغطِ القطعةَ في البنكِ أوَّلًا ثمَّ اضغطِ الفراغَ المناسب.</p>
+    <div class="card" style="background:linear-gradient(170deg,#eef5fa,#dde8f0);text-align:center">
+      <div style="font-size:2.6rem;line-height:1.3">🏟️ 🧑‍🦱🤝🧍 &nbsp; 🛌</div>
+      <p class="ar" style="margin:6px 0 0">ثلاثةُ أشخاصٍ على أرضِ الملعب: فتًى مُستلقٍ على ظهرِه،
+      وفتًى آخرُ إلى جانبِه، والمدرِّبُ يطلبُ شيئًا بسرعة.</p>
+    </div>
+    <div class="bank" id="pbank"></div>
+    <div id="pic"></div>
+  </section>
+
+  <!-- ══════════ 4 · LISTEN ══════════ -->
+  <section class="panel" id="p4">
+    <h2 class="sec">Listen and answer the questions</h2>
+    <p class="ar">استمعْ إلى التسجيلِ مرَّتَين وأجِبْ عن الأسئلةِ شفويًّا، ثمَّ اضغطْ لترى الإجابةَ النموذجيّة.
+    (هذا نشاطُ استماعٍ فقط، فلا يُعرَضُ النصُّ هنا.)</p>
+    <div class="audio"><span class="lbl">🎧 Audio 22 — at football training</span><iframe src="https://drive.google.com/file/d/1bAOLw6tMp4c9FDAvJ65hN9YBwJrpEqOe/preview" allow="autoplay" title="Audio 22 — at football training"></iframe></div>
+    <div id="listen"></div>
+  </section>
+
+  <!-- ══════════ 5 · LISTEN AND READ ══════════ -->
+  <section class="panel" id="p5">
+    <h2 class="sec">Listen and read · Find the new words</h2>
+    <p class="ar">استمعْ واقرأْ في الوقتِ نفسِه. مرِّرْ إصبعَك أو الفأرةَ على الكلمةِ
+    <span class="key" data-t="مثال: كلمةٌ جديدة">الملوَّنةِ بالأصفر</span> لترى معناها،
+    وعلى <span class="pp" data-t="مثال: ضميرٌ — على مَن يعود؟">الملوَّنةِ بالبنفسجيّ</span> لترى على مَن يعودُ الضمير.</p>
+    <div class="legend">
+      <span><i style="background:#fff2c2;border:2px solid #b97f00"></i>كلمةٌ جديدةٌ أو صعبة</span>
+      <span><i style="background:#e4e9ff;border:2px solid #4a3b8c"></i>ضميرٌ وما يعودُ إليه</span>
+    </div>
+    <div class="audio"><span class="lbl">🎧 Audio 22 — the conversation</span><iframe src="https://drive.google.com/file/d/1bAOLw6tMp4c9FDAvJ65hN9YBwJrpEqOe/preview" allow="autoplay" title="Audio 22 read along"></iframe></div>
+    <h2 class="sec" style="margin-top:6px">Find these words in the conversation</h2>
+    <p class="ar">اضغطِ الكلمةَ هنا ثمَّ ابحثْ عنها في الحوارِ أدناه — ستُصبحُ خضراءَ عندَ إيجادِها.</p>
+    <div class="hunt" id="hunt"></div>
+    <div class="script" id="script"></div>
+
+    <h2 class="sec" style="margin-top:22px">Everyday English</h2>
+    <p class="ar">عبارتانِ نستعملُهما كثيرًا في الحياةِ اليوميّة. اضغطْ 🔊 لسماعِ كلٍّ منهما.</p>
+    <div id="every"></div>
+  </section>
+
+  <!-- ══════════ 6 · QUIZ ══════════ -->
+  <section class="panel" id="p6">
+    <h2 class="sec">Quiz — 5 questions</h2>
+    <p class="ar">اختبارٌ قصيرٌ من خمسةِ أسئلةٍ حولَ الدرس. أجِبْ عن الأسئلةِ كلِّها ثمَّ اضغطْ زرَّ النتيجة.</p>
+    <div id="quiz"></div>
+    <div style="text-align:center;margin:8px 0 14px">
+      <button class="btn kraft" id="check" disabled>💓 Show my score</button>
+    </div>
+    <div class="score" id="score">
+      <div class="n" id="scoreN">0 / 5</div>
+      <div id="scoreMsg" style="font-size:1rem"></div>
+      <div class="badge" id="badge"><span class="bi">🩺</span><span class="bt">FIRST<br>RESPONDER</span></div>
+    </div>
+  </section>
+
+  <footer>Designed with love 💗 by T. Wad Refae</footer>
+</div>
+</div>
+
+<script>
+
+const TASKS=['words','pic','listen','read'];
+const METER_ICON='💓', METER_WORD='readings taken';
+const BKEY='g9u3p1_badge';
+const PERFECT='Perfect! You know exactly what to do. 🩺';
+
+/* ═══════════ 2 · NEW WORDS ═══════════ */
+buildCards('cards',[
+ {em:'😮‍💨', w:'calm down', hint:'اهدأْ', ar:'اهدأْ · يهدأ',
+  syn:'relax, take it easy', ant:'panic'},
+ {em:'🥴', w:'collapse', hint:'يقعُ فاقدًا وعيَه', ar:'يسقطُ مغشيًّا عليه',
+  syn:'faint, fall down', ant:'stand up'},
+ {em:'🛏️', w:'cover', hint:'يُغطّي', ar:'يُغطّي · يَلُفُّ بشيءٍ يُدفئ',
+  syn:'wrap up', ant:'uncover'},
+ {em:'🧰', w:'first aid kit', hint:'حقيبةُ الإسعاف', ar:'حقيبةُ الإسعافِ الأوّليّ'},
+ {em:'🟫', w:'ground', hint:'الأرض', ar:'الأرضُ · أرضُ الملعب',
+  syn:'the floor, the pitch', ant:'the air'},
+ {em:'🛌', w:'lie', hint:'يستلقي', ar:'يستلقي · يبقى مُمدَّدًا',
+  syn:'rest, stay down', ant:'stand, get up'},
+ {em:'💓', w:'pulse', hint:'النبض', ar:'النبضُ · ضرباتُ القلبِ في المِعصم',
+  syn:'heartbeat'},
+ {em:'✅', w:'right', hint:'صحيحٌ · سليم', ar:'صحيحٌ · على ما يُرام',
+  syn:'correct, all right', ant:'wrong'},
+ {em:'💦', w:'sweat', hint:'يتعرَّق', ar:'يتعرَّقُ · العَرَق',
+  syn:'perspire'},
+ {em:'🧣', w:'thermal blanket', hint:'بطّانيّةٌ حافظةٌ للحرارة', ar:'بطّانيّةٌ تحفظُ حرارةَ الجسم',
+  syn:'warm blanket'}
+],'words');
+
+/* ═══════════ 3 · THE PICTURE ═══════════ */
+const PIC=[
+ ['These three people', 'seem to be', 'on a football pitch.'],
+ ['One of them', 'is on his back,', 'and he may be sick.'],
+ ['The other two', 'are with him on the grass,', 'and they look worried.'],
+ ['The adult', 'wants the second boy', 'to go and get something.']
+];
+(function(){
+  const chips=[];
+  PIC.forEach(function(r){ chips.push(r[1]); chips.push(r[2]); });
+  const bank=makeBank('pbank',chips.slice().sort(function(){return Math.random()-.5;}));
+  const box=document.getElementById('pic'); let left=chips.length;
+  function fin(e){ if(--left===0) light('pic',e.clientX,e.clientY); }
+  PIC.forEach(function(r,i){
+    const d=document.createElement('div'); d.className='m3';
+    d.innerHTML='<span class="n">'+(i+1)+'</span>';
+    const s=document.createElement('span');
+    const st=document.createElement('span'); st.className='st'; st.textContent=r[0]+' ';
+    s.appendChild(st);
+    s.appendChild(makeBlank(bank,r[1],function(e){
+      if(!d.querySelector('.blank:not(.right)')) d.classList.add('done');
+      fin(e);
+    },'176px'));
+    s.appendChild(document.createTextNode(' '));
+    s.appendChild(makeBlank(bank,r[2],function(e){
+      if(!d.querySelector('.blank:not(.right)')) d.classList.add('done');
+      fin(e);
+    },'192px'));
+    d.appendChild(s); box.appendChild(d);
+  });
+})();
+
+/* ═══════════ 4 · LISTEN ═══════════ */
+buildReveal('listen',[
+ {q:'Why was Jamie away from school?', a:'He had flu.',
+  ar:'كان مصابًا بالإنفلونزا وبقيَ في الفراشِ أسبوعًا.'},
+ {q:'How does Jamie look to Waleed?', a:'He doesn’t look good.',
+  ar:'يبدو لوليدٍ أنَّه ليس على ما يُرام.'},
+ {q:'Why is the coach surprised that Jamie has collapsed?',
+  a:'Because Jamie is usually the fittest boy in the team.',
+  ar:'لأنَّ جيمي عادةً أكثرُ الفريقِ لياقةً.'},
+ {q:'What does the coach decide to do to help him?',
+  a:'He decides to cover him with the thermal blanket.',
+  ar:'يقرِّرُ أن يُغطِّيَه بالبطّانيّةِ الحافظةِ للحرارة.'}
+],'listen','🎧');
+
+/* ═══════════ 5 · LISTEN AND READ ═══════════ */
+const HUNT=['calm down','collapse','cover','first aid kit','ground','lie','pulse','right',
+ 'sweat','thermal blanket'];
+const LINES=[
+ ['nar','Narrator','Waleed and his friend Jamie are at football training. Jamie is a very good player, but it is <span class="pp" data-t="أوَّلُ يومٍ لجيمي في المدرسة">his</span> first day back at school after a week in bed with flu – and something is not <span class="key" data-t="صحيحٌ · على ما يُرام">right</span>.'],
+ ['wal','Waleed','Jamie, you don’t look good.'],
+ ['jam','Jamie','I’m much better than <span class="pp" data-t="I was = حالتي في الأسبوعِ الماضي">I was</span>.'],
+ ['wal','Waleed','But perhaps you should take things more slowly.'],
+ ['jam','Jamie','The most important match of the year is on Saturday, and I want to be ready for <span class="pp" data-t="it = المباراةُ المهمّة">it</span>.'],
+ ['wal','Waleed','But you’re not as strong as you think you are.'],
+ ['jam','Jamie','I’m fine!'],
+ ['coa','Coach','Listen, everyone. You’re doing better than you were last week, but you’re still not doing the best you can. And you’re still not as fit as you need to be. So next, please run round the pitch as fast as you can. Go!'],
+ ['wal','Waleed','Jamie, stop! You look terrible!'],
+ ['jam','Jamie','You’re <span class="key" data-t="محقٌّ · كلامُك صحيح">right</span> … It’s getting worse … [He falls to the <span class="key" data-t="الأرض · أرضُ الملعب">ground</span>, and he <span class="key" data-t="يستلقي · يبقى مُمدَّدًا">lies</span> there, not moving.]'],
+ ['wal','Waleed','Coach! Jamie has <span class="key" data-t="سقطَ مغشيًّا عليه">collapsed</span>!'],
+ ['coa','Coach','Really? <span class="pp" data-t="He = جيمي">He</span>’s usually the fittest boy in the team.'],
+ ['wal','Waleed','Yes, but he’s just had flu.'],
+ ['coa','Coach','What! Well, he was wrong to start training so soon.'],
+ ['wal','Waleed','I told him! I told him!'],
+ ['coa','Coach','OK, Waleed, <span class="key" data-t="اهدأْ">calm down</span>. Now let’s check his <span class="key" data-t="النبض · ضرباتُ القلب">pulse</span> … Hm, it’s racing. He’s cold, too, and he’s <span class="key" data-t="يتعرَّق">sweating</span>.'],
+ ['wal','Waleed','Do we need a doctor?'],
+ ['coa','Coach','Perhaps, but first let’s <span class="key" data-t="نُغطّيه ليدفأ">cover</span> him. Run and get the <span class="key" data-t="بطّانيّةٌ تحفظُ حرارةَ الجسم">thermal blanket</span> and the <span class="key" data-t="حقيبةُ الإسعافِ الأوّليّ">first aid kit</span>.'],
+ ['wal','Waleed','I’ll be as quick as I can.']
+];
+(function(){
+  const box=document.getElementById('script');
+  LINES.forEach(function(l){
+    if(l[0]==='nar'){
+      const p=document.createElement('p'); p.className='narr'; p.innerHTML=l[2];
+      box.appendChild(p); return;
+    }
+    const d=document.createElement('div'); d.className='ln';
+    d.innerHTML='<span class="who w-'+l[0]+'">'+l[1]+'</span><span class="sp">'+l[2]+'</span>';
+    box.appendChild(d);
+  });
+  const hb=document.getElementById('hunt'); let got=0;
+  HUNT.forEach(function(w){
+    const b=document.createElement('button'); b.className='ht'; b.textContent=w;
+    b.onclick=function(e){
+      if(b.classList.contains('got')) return;
+      const keys=[...box.querySelectorAll('.key')];
+      const hits=keys.filter(function(k){
+        const t=k.textContent.toLowerCase();
+        return t===w || t===w+'s' || t===w.replace(/e$/,'')+'ing' || t===w+'ing' ||
+               t===w+'d' || t===w+'ed' || t===w.slice(0,-1)+'ies';
+      });
+      hits.forEach(function(k){ k.classList.add('got'); });
+      if(hits[0]) hits[0].scrollIntoView({behavior:'smooth',block:'center'});
+      b.classList.add('got'); got++;
+      note(e.clientX,e.clientY,'🔎');
+      if(got===HUNT.length) light('read',e.clientX,e.clientY);
+    };
+    hb.appendChild(b);
+  });
+})();
+
+/* Everyday English */
+(function(){
+  const box=document.getElementById('every');
+  [['You should take things more slowly.','خُذِ الأمورَ بهدوءٍ أكثر.'],
+   ['OK, calm down.','حسنًا، اهدأْ.']].forEach(function(o,i){
+    const d=document.createElement('div'); d.className='mline';
+    d.innerHTML='<span class="n">'+(i+1)+'</span><span style="font-size:1.06rem;font-weight:700">'+o[0]+
+      '</span><div class="ar" style="margin:4px 0 8px">'+o[1]+'</div>';
+    const b=document.createElement('button'); b.className='tts'; b.innerHTML='🔊 Say it';
+    b.onclick=function(){ speakBtn(this,o[0]); };
+    d.appendChild(b); box.appendChild(d);
+  });
+})();
+
+/* ═══════════ QUIZ ═══════════ */
+const QUIZ=[
+ {t:'Why had Jamie been away from school for a week?',
+  ar:'لِمَ غابَ جيمي عن المدرسةِ أسبوعًا؟',
+  o:['He broke his leg.','He had flu.','He was on holiday.'], a:1,
+  fb:'كان مصابًا بالإنفلونزا وبقيَ في الفراشِ أسبوعًا.'},
+ {t:'What does the coach check first?',
+  ar:'ما أوَّلُ ما يفحصُه المدرِّب؟',
+  o:['Jamie’s pulse','Jamie’s shoes','Jamie’s bag'], a:0,
+  fb:'يفحصُ النبضَ أوَّلًا: Now let’s check his pulse.'},
+ {t:'&ldquo;He <b>collapsed</b>&rdquo; means …',
+  ar:'ما معنى collapsed؟',
+  o:['he ran away','he fell down and stopped moving','he shouted loudly'], a:1,
+  fb:'collapse = يسقطُ مغشيًّا عليه فلا يتحرَّك.'},
+ {t:'What does the coach send Waleed to get?',
+  ar:'ماذا يُرسِلُ المدرِّبُ وليدًا ليأتيَ به؟',
+  o:['A bottle of water','The thermal blanket and the first aid kit','A new football'], a:1,
+  fb:'البطّانيّةُ الحافظةُ للحرارةِ وحقيبةُ الإسعافِ الأوّليّ.'},
+ {t:'Which sentence does Waleed say?',
+  ar:'أيُّ جملةٍ قالها وليد؟',
+  o:['You’re not as strong as you think you are.','I’m the fittest boy in the team.','Run round the pitch as fast as you can.'], a:0,
+  fb:'وليدٌ هو مَن حذَّرَ جيمي: أنتَ لستَ قويًّا كما تظنّ.'}
+];
+
+
+/* ═══════════ PROGRESS METER ═══════════ */
+const MARKS=document.querySelectorAll('.mk');
+const done=new Set();
+function light(t,x,y){
+  if(done.has(t)) return;
+  done.add(t);
+  const i=TASKS.indexOf(t);
+  if(MARKS[i]) MARKS[i].classList.add('lit');
+  document.getElementById('mCount').textContent=METER_ICON+' '+done.size+' / '+TASKS.length+' '+METER_WORD;
+  note(x,y,METER_ICON);
+  if(done.size===TASKS.length) burst();
+}
+function note(x,y,ch){
+  const p=document.createElement('div');
+  p.className='pop-note'; p.textContent=ch||'✨';
+  p.style.left=((x||innerWidth/2)-10)+'px'; p.style.top=((y||140)-10)+'px';
+  document.body.appendChild(p); setTimeout(function(){p.remove();},1000);
+}
+function burst(){
+  const cols=['#4ef09a','#56c8f5','#ffbb4d','#ff6b5e','#a8ffd0','#1f9b5c'];
+  for(let i=0;i<70;i++){
+    const c=document.createElement('div'); c.className='confetti';
+    c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+    c.style.animationDuration=(2.4+Math.random()*1.8)+'s';
+    c.style.animationDelay=(Math.random()*.5)+'s';
+    if(i%3===0) c.style.borderRadius='50%';
+    document.body.appendChild(c); setTimeout(function(){c.remove();},4800);
+  }
+}
+
+/* ═══════════ TABS ═══════════ */
+document.querySelectorAll('.tab').forEach(function(b){
+  b.onclick=function(){
+    stopTTS();
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); document.getElementById(b.dataset.p).classList.add('on');
+    scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* ═══════════ SPEECH ═══════════ */
+let ttsBtn=null;
+function stopTTS(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(ttsBtn){ ttsBtn.classList.remove('playing'); ttsBtn.innerHTML=ttsBtn.dataset.label||'🔊'; ttsBtn=null; }
+}
+function speakBtn(btn,txt){
+  if(ttsBtn===btn){ stopTTS(); return; }
+  stopTTS();
+  if(!('speechSynthesis' in window)) return;
+  btn.dataset.label=btn.innerHTML;
+  const u=new SpeechSynthesisUtterance(txt); u.lang='en-GB'; u.rate=.8;
+  u.onend=function(){ if(ttsBtn===btn) stopTTS(); };
+  ttsBtn=btn; btn.classList.add('playing'); btn.innerHTML='⏹ Stop';
+  speechSynthesis.speak(u);
+}
+
+/* ═══════════ FLASHCARDS ═══════════ */
+function buildCards(boxId,words,task){
+  const box=document.getElementById(boxId); let flipped=0;
+  words.forEach(function(o){
+    const d=document.createElement('div'); d.className='flip';
+    const inn=document.createElement('div'); inn.className='flip-in';
+    const f=document.createElement('div'); f.className='face front';
+    f.innerHTML='<div class="em">'+o.em+'</div><div class="w">'+o.w+'</div><div class="hint">'+o.hint+'</div>';
+    const tb=document.createElement('button'); tb.className='tts'; tb.innerHTML='🔊 Say it';
+    tb.onclick=function(e){ e.stopPropagation(); speakBtn(this,o.say||o.w); };
+    f.appendChild(tb);
+    const b=document.createElement('div'); b.className='face back';
+    let extra=o.syn?'<div class="sa"><b>synonym:</b> '+o.syn+'</div>':'';
+    if(o.ant) extra+='<div class="sa"><b>opposite:</b> '+o.ant+'</div>';
+    b.innerHTML='<div class="mean">'+o.ar+'</div>'+extra;
+    inn.appendChild(f); inn.appendChild(b); d.appendChild(inn);
+    d.onclick=function(e){
+      d.classList.toggle('on');
+      if(d.classList.contains('on') && !d.dataset.seen){
+        d.dataset.seen='1'; flipped++;
+        note(e.clientX,e.clientY,'💓');
+        if(task && flipped===words.length) light(task,e.clientX,e.clientY);
+      }
+    };
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ SHARED WORD BANK ═══════════ */
+function makeBank(boxId,items){
+  const bank=document.getElementById(boxId); bank.sel=null;
+  items.forEach(function(t){
+    const s=document.createElement('button'); s.className='bl'; s.textContent=t;
+    s.onclick=function(){
+      if(s.classList.contains('used')) return;
+      if(bank.sel===s){ s.classList.remove('sel'); bank.sel=null; return; }
+      bank.querySelectorAll('.bl').forEach(function(x){x.classList.remove('sel');});
+      s.classList.add('sel'); bank.sel=s;
+    };
+    bank.appendChild(s);
+  });
+  return bank;
+}
+function makeBlank(bank,answer,onRight,minw){
+  const sp=document.createElement('span'); sp.className='blank'; sp.textContent='      ';
+  if(minw) sp.style.minWidth=minw;
+  sp.onclick=function(e){
+    if(sp.classList.contains('right')) return;
+    const pick=bank.sel; if(!pick) return;
+    if(pick.textContent===answer){
+      sp.textContent=answer; sp.classList.add('right');
+      pick.classList.add('used'); pick.classList.remove('sel'); bank.sel=null;
+      note(e.clientX,e.clientY,'✔');
+      onRight&&onRight(e);
+    }else{
+      sp.classList.add('shakeit'); setTimeout(function(){sp.classList.remove('shakeit');},360);
+    }
+  };
+  return sp;
+}
+
+/* ═══════════ REVEAL QUESTIONS ═══════════ */
+function buildReveal(boxId,items,task,icon){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='oq';
+    d.innerHTML='<div class="qq"><span class="n">'+(i+1)+'</span>'+it.q+'</div>';
+    const m=document.createElement('div'); m.className='model';
+    m.innerHTML='✔ '+it.a+(it.ar?'<div class="ar" style="margin:5px 0 0;font-size:.85rem;color:#2c6b42">'+it.ar+'</div>':'');
+    const b=document.createElement('button'); b.className='btn small kraft';
+    b.textContent='👁️ Show the answer';
+    b.onclick=function(e){
+      if(d.classList.contains('done')) return;
+      d.classList.add('done'); m.classList.add('on'); this.remove();
+      note(e.clientX,e.clientY,icon||'💡');
+      if(task && --left===0) light(task,e.clientX,e.clientY);
+    };
+    d.appendChild(m); d.appendChild(b);
+    box.appendChild(d);
+  });
+}
+
+/* ═══════════ MCQ BLOCK ═══════════ */
+function buildPicks(boxId,items,task){
+  const box=document.getElementById(boxId); let left=items.length;
+  items.forEach(function(it,i){
+    const d=document.createElement('div'); d.className='nw';
+    d.innerHTML='<div class="w">'+(i+1)+'. '+it.q+'</div>'+(it.line?'<div class="line">'+it.line+'</div>':'');
+    const ps=document.createElement('div'); ps.className='picks';
+    it.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='pk'; b.innerHTML=o;
+      b.onclick=function(e){
+        if(d.classList.contains('done')) return;
+        if(j===it.a){
+          b.classList.add('right'); d.classList.add('done');
+          ps.querySelectorAll('.pk').forEach(function(x){x.disabled=true;});
+          note(e.clientX,e.clientY,'✔');
+          if(task && --left===0) light(task,e.clientX,e.clientY);
+        }else{
+          b.classList.add('wrong'); b.disabled=true;
+          d.classList.add('shakeit'); setTimeout(function(){d.classList.remove('shakeit');},360);
+        }
+      };
+      ps.appendChild(b);
+    });
+    d.appendChild(ps); box.appendChild(d);
+  });
+}
+
+/* ═══════════ TOOLTIPS ON TAP ═══════════ */
+document.addEventListener('click',function(e){
+  const g=e.target.closest('.key,.pp');
+  document.querySelectorAll('.key.ton,.pp.ton').forEach(function(x){ if(x!==g) x.classList.remove('ton'); });
+  if(g) g.classList.toggle('ton');
+});
+
+/* ═══════════ QUIZ ═══════════ */
+(function(){
+  const quizBox=document.getElementById('quiz');
+  const answers=new Array(QUIZ.length).fill(null);
+  QUIZ.forEach(function(q,i){
+    const d=document.createElement('div'); d.className='q';
+    d.innerHTML='<p class="qt">'+(i+1)+'. '+q.t+'</p><p class="qar">'+q.ar+'</p>';
+    const opts=document.createElement('div'); opts.className='opts';
+    const fb=document.createElement('div'); fb.className='qfb'; fb.textContent='💡 '+q.fb;
+    q.o.forEach(function(o,j){
+      const b=document.createElement('button'); b.className='opt'; b.innerHTML=o;
+      b.onclick=function(){
+        if(answers[i]!==null) return;
+        answers[i]=j;
+        opts.querySelectorAll('.opt').forEach(function(x){x.disabled=true;});
+        if(j===q.a) b.classList.add('right');
+        else{ b.classList.add('wrong'); opts.children[q.a].classList.add('right'); }
+        fb.classList.add('on');
+        if(answers.every(function(a){return a!==null;})) document.getElementById('check').disabled=false;
+      };
+      opts.appendChild(b);
+    });
+    d.appendChild(opts); d.appendChild(fb);
+    quizBox.appendChild(d);
+  });
+  document.getElementById('check').onclick=function(){
+    const n=answers.reduce(function(s,a,i){return s+(a===QUIZ[i].a?1:0);},0);
+    const box=document.getElementById('score');
+    document.getElementById('scoreN').textContent=n+' / 5';
+    document.getElementById('scoreMsg').textContent=
+      n===5 ? PERFECT : n>=3 ? 'Well done! Look through the lesson once more and try again.' :
+              'Good try — go through the lesson again and come back.';
+    box.classList.add('on');
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    if(n===5){
+      document.getElementById('badge').style.display='flex';
+      burst();
+      try{ localStorage.setItem(BKEY,'1'); }catch(e){}
+    }
+  };
+  try{
+    if(localStorage.getItem(BKEY)){
+      document.getElementById('score').classList.add('on');
+      document.getElementById('badge').style.display='flex';
+      document.getElementById('scoreMsg').textContent='You already earned this badge! 🫀';
+    }
+  }catch(e){}
+})();
+
+</script>
+</body>
+</html>
