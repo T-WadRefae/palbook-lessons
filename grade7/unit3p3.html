@@ -37,46 +37,7 @@
   @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
 
   
-/* ===== WILD TRAIL PROGRESS (shared across Unit 3) ===== */
-  .paw-track{
-    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
-    border-radius:14px; text-align:center; z-index:5;
-    background:linear-gradient(180deg, #17472c, var(--jungle-d));
-    border:3px solid var(--mint); box-shadow:0 6px 18px rgba(7,25,15,.4);
-  }
-  .pt-label{ color:#a8dcc0; font-family:'Fredoka','Cairo',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
-  .pt-strip{ display:flex; align-items:center; justify-content:center; gap:7px; direction:ltr; flex-wrap:wrap; }
-  .pt-slot{
-    width:38px; height:38px; border-radius:50%; position:relative; background:#0f2a1b;
-    border:2px solid #2d5c42; display:flex; align-items:center; justify-content:center;
-    font-size:14px; font-weight:800; color:#5f8a72; font-family:'Fredoka',sans-serif;
-    box-shadow:inset 0 0 8px rgba(0,0,0,.5);
-  }
-  .pt-slot::after{ /* a little track ring around each step */
-    content:''; position:absolute; inset:-6px; border-radius:50%;
-    border:1.5px dashed rgba(95,138,114,.4); transform:rotate(24deg);
-  }
-  .pt-slot.on{
-    background:radial-gradient(circle at 36% 30%, #b6f4d8, var(--mint) 70%); color:#0d3a25; border-color:#fff;
-    box-shadow:0 0 12px rgba(90,209,160,.8); font-size:17px;
-  }
-  .pt-slot.on::after{ border-color:rgba(246,201,74,.8); }
-  .pt-slot.now{
-    transform:scale(1.14); border-color:var(--sun);
-    box-shadow:0 0 0 3px rgba(246,201,74,.35), 0 0 14px rgba(246,201,74,.75);
-  }
-  .pt-slot.now:not(.on){ color:var(--sun); }
-  .pt-legend{
-    display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
-    margin-top:10px; font-size:11px; font-weight:700; color:#7ba690;
-  }
-  .pt-legend .done{ color:var(--sun); }
-  .pt-dot{ color:#38634a; font-size:12px; }
-  .pt-count{ background:rgba(255,255,255,.12); color:#a8dcc0; border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; }
-  .pt-done{ margin-top:7px; color:var(--sun); font-weight:800; font-size:14px; display:none; }
-  .pt-done.show{ display:block; animation:fadeIn .6s; }
-
-  /* ===== TABS ===== */
+/* ===== TABS ===== */
   .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
   .tabs-container{
     background:var(--paper); border-radius:22px; padding:10px;
@@ -792,13 +753,6 @@
   </div>
 </header>
 
-<!-- ===== WILD TRAIL · progress (shared across Unit 3) ===== -->
-<div class="paw-track" id="pawTrack" aria-label="Wild Trail progress">
-  <div class="pt-label">🐾 دربُ البرّية — Wild Trail</div>
-  <div class="pt-strip" id="ptStrip"><span class="pt-dot">·</span><span class="pt-count" id="ptCount">0/8</span></div>
-  <div class="pt-legend"><span class="done">🐾 حصةٌ أنجزتَها</span><span>◉ الدائرة الذهبية = حصتُك الحالية</span></div>
-  <div class="pt-done" id="ptDone">✨ اكتملَ الدرب! أنتَ خبيرُ أصواتِ البرّية 🐾🏆</div>
-</div>
 
 <!-- ===== TABS ===== -->
 <nav class="tabs-nav">
@@ -1431,23 +1385,6 @@ function showFacts(btn){
 var PASSAGE_TXT = "Animals talk to people in different ways and some people learn to understand. Koko is a very intelligent gorilla. She lives with some scientists in the United States. She knows about one thousand signs and she understands about two thousand words in English. Many animals, like dogs, cats and elephants, make a noise to communicate, and some animals communicate over a long distance. Whales make a sound like singing and the noise travels hundreds of kilometres under the sea to other whales. Some animals communicate in other ways. Bees dance when they find food. Then other bees know what direction to go in. Stories about people talking to and understanding animals are popular in English. Three famous stories are Tarzan, The Jungle Book and the Doctor Dolittle books. Doctor Dolittle is a scientist with many animal friends. He talks to them in their languages.";
 
 </script>
-
-<!-- ===== WILD TRAIL · progress (shared across Unit 3) ===== -->
-<script>(function(){
-  var KEY='g7u3_paws', THIS=3;
-  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
-  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
-  var strip=document.getElementById('ptStrip'), count=document.getElementById('ptCount');
-  for(var i=8;i>=1;i--){
-    var s=document.createElement('span');
-    s.className='pt-slot'+(got.indexOf(i)>=0?' on':'')+(i===THIS?' now':'');
-    s.textContent=got.indexOf(i)>=0?'🐾':i;
-    s.title='Period '+i;
-    strip.insertBefore(s, strip.children[1]);
-  }
-  count.textContent=got.length+'/8';
-  if(got.length===8) document.getElementById('ptDone').classList.add('show');
-})();</script>
 
 </body>
 </html>
