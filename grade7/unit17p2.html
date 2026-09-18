@@ -441,6 +441,33 @@
 .gplayer{background:#eaf7ef;border:2px dashed #52b788;border-radius:14px;padding:10px 14px 12px;margin:12px 0 16px;max-width:480px}
 .gplayer b{display:block;color:#2d6a4f;font-size:.88rem;margin-bottom:7px}
 .gplayer iframe{width:100%;max-width:480px;height:58px;border:0;border-radius:9px;background:#fff}
+
+/* ═══════════ Final quiz (added 2026-09) ═══════════ */
+.wq-wrap{max-width:820px;margin:0 auto}
+.wq-q{background:#fff;border:2px solid #dfe6ee;border-radius:14px;padding:14px 16px;
+  margin-bottom:12px;box-shadow:0 3px 0 #dfe6ee}
+.wq-t{font-weight:700;font-size:1rem;margin:0 0 4px;color:#1f2937;direction:ltr;text-align:left}
+.wq-ar{direction:rtl;text-align:right;color:#6b7280;font-size:.88rem;margin:0 0 10px;line-height:1.8}
+.wq-opts{display:flex;flex-direction:column;gap:8px}
+.wq-o{direction:ltr;text-align:left;font-family:inherit;font-size:.96rem;cursor:pointer;
+  background:#fff;border:2px solid #d8e0ea;border-radius:10px;padding:10px 13px;color:#1f2937;
+  transition:transform .18s,border-color .18s,background .18s;width:100%}
+.wq-o:hover:not(:disabled){transform:translateX(4px);border-color:#7cb3e8}
+.wq-o.right{background:#eaf7ef;border-color:#2e9e5b;color:#1d6b3d;font-weight:700;transform:none}
+.wq-o.wrong{background:#fdecea;border-color:#d1553f;color:#8c2a1f}
+.wq-o:disabled{cursor:default}
+.wq-fb{margin-top:9px;direction:rtl;text-align:right;font-size:.9rem;display:none;color:#4b5563;line-height:1.8}
+.wq-fb.on{display:block}
+.wq-go{display:block;margin:6px auto 0;border:0;cursor:pointer;font-family:inherit;font-weight:700;
+  font-size:1rem;color:#fff;background:#2563eb;border-radius:12px;padding:11px 26px;box-shadow:0 4px 0 #1d4ed8}
+.wq-go:active:not(:disabled){transform:translateY(4px);box-shadow:none}
+.wq-go:disabled{opacity:.5;cursor:default}
+.wq-res{display:none;text-align:center;margin-top:14px;border-radius:14px;padding:18px 14px;
+  background:linear-gradient(160deg,#1f2937,#111827);color:#f3f4f6}
+.wq-res.on{display:block}
+.wq-score{font-size:2.3rem;font-weight:800;color:#fbbf24;line-height:1.1}
+.wq-msg{direction:rtl;font-size:.98rem;margin-top:5px}
+.wq-h{font-size:1.25rem;font-weight:700;margin:0 0 4px}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
@@ -478,6 +505,7 @@
   <div class="tabs-wrapper">
    <div class="tab-bar">
     <button class="tab-btn active" onclick="openTab(event,'objectives')">🎯 Objectives</button> <button class="tab-btn" onclick="openTab(event,'act1')">🎧 Activity 1</button> <button class="tab-btn" onclick="openTab(event,'act2')">📖 Activity 2</button> <button class="tab-btn" onclick="openTab(event,'act3')">✏️ Activity 3</button> <button class="tab-btn" onclick="openTab(event,'act4')">🔊 Activity 4</button> <button class="tab-btn" onclick="openTab(event,'act5')">💬 Activity 5</button>
+      <button class="tab-btn" onclick="openTab(event,'wquiz')">🏆 Quiz</button>
    </div><!-- OBJECTIVES -->
    <div class="tab-panel active" id="objectives">
     <div class="sec-title"><span class="num">🎯</span> Lesson Objectives
@@ -603,6 +631,19 @@
      </div>
     </div>
    </div>
+<div class="tab-panel" id="wquiz">
+    <h3 class="wq-h">🏆 Final Quiz · اختبارٌ ختاميّ</h3>
+    <p class="wq-ar">خمسةُ أسئلةٍ عن الدرس. اختَرْ إجابةً واحدةً لكلِّ سؤال، ثمَّ اضغطْ زرَّ النتيجة.</p>
+    <div class="wq-wrap">
+      <div id="wqBox"></div>
+      <button class="wq-go" id="wqGo" type="button" disabled>🏆 اعرِضْ نتيجتي</button>
+      <div class="wq-res" id="wqRes">
+        <div class="wq-score" id="wqScore">0 / 5</div>
+        <div class="wq-msg" id="wqMsg"></div>
+      </div>
+    </div>
+</div>
+
   </div>
   <footer>
    🌿 PalBook Live &nbsp;|&nbsp; ✏️ T. Wad Refae
@@ -753,5 +794,102 @@ const compData = [
 })();
 function toggleAns5(){ document.getElementById('ans5Panel').classList.toggle('show'); }
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc4832f5718e209',t:'MTc3ODg3Mjk1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fc4832f5718e209',t:'MTc3ODg3Mjk1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>
+
+/* ═══════════ Final quiz (added 2026-09) ═══════════ */
+(function(){
+  var WQ = [
+ {
+  "t": "What does “carry” mean?",
+  "ar": "ما معنى الفعل carry؟",
+  "o": [
+   "to hold something and take it with you",
+   "to throw something away",
+   "to forget something"
+  ],
+  "a": 0,
+  "fb": "carry = يحمِلُ الشيءَ ويأخذُه معه."
+ },
+ {
+  "t": "Complete: “Let’s make a ____ for the picnic.”",
+  "ar": "أكمِلِ الجملة.",
+  "o": [
+   "sandwich",
+   "weekend",
+   "suggestion"
+  ],
+  "a": 0,
+  "fb": "sandwich = شطيرة."
+ },
+ {
+  "t": "“I have a good ____ : let’s go to the park.”",
+  "ar": "أكمِلِ الجملة.",
+  "o": [
+   "catch",
+   "suggestion",
+   "same"
+  ],
+  "a": 1,
+  "fb": "suggestion = اقتراح."
+ },
+ {
+  "t": "Which word is the opposite of “remember”?",
+  "ar": "ما ضدُّ الفعل remember؟",
+  "o": [
+   "decide",
+   "forget",
+   "carry"
+  ],
+  "a": 1,
+  "fb": "forget = ينسى، وهي ضدُّ remember."
+ },
+ {
+  "t": "When is the weekend?",
+  "ar": "متى تكونُ عطلةُ نهايةِ الأسبوع؟",
+  "o": [
+   "The days at the end of the week",
+   "The first day of school",
+   "The middle of the night"
+  ],
+  "a": 0,
+  "fb": "weekend = يوما نهايةِ الأسبوع."
+ }
+];
+  var box=document.getElementById('wqBox'); if(!box) return;
+  var picked=new Array(WQ.length).fill(null);
+  var go=document.getElementById('wqGo');
+  WQ.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='wq-q';
+    d.innerHTML='<p class="wq-t">'+(i+1)+'. '+q.t+'</p><p class="wq-ar">'+q.ar+'</p>';
+    var op=document.createElement('div'); op.className='wq-opts';
+    var fb=document.createElement('p'); fb.className='wq-fb'; fb.innerHTML='💡 '+q.fb;
+    q.o.forEach(function(o,j){
+      var b=document.createElement('button'); b.className='wq-o'; b.type='button'; b.innerHTML=o;
+      b.onclick=function(){
+        if(picked[i]!==null) return;
+        picked[i]=j;
+        op.querySelectorAll('.wq-o').forEach(function(x,k){
+          x.disabled=true; if(k===q.a) x.classList.add('right');
+        });
+        if(j!==q.a) b.classList.add('wrong');
+        fb.classList.add('on');
+        go.disabled = picked.some(function(p){return p===null;});
+      };
+      op.appendChild(b);
+    });
+    d.appendChild(op); d.appendChild(fb); box.appendChild(d);
+  });
+  go.onclick=function(){
+    var n=picked.reduce(function(s,p,i){return s+(p===WQ[i].a?1:0);},0);
+    document.getElementById('wqScore').textContent=n+' / '+WQ.length;
+    document.getElementById('wqMsg').textContent = n===WQ.length
+      ? 'ممتاز! أتقنتَ الدرسَ كلَّه 🌟'
+      : (n>=3 ? 'أحسنتَ! راجِعِ الدرسَ مرّةً أخرى ثمَّ أعِدِ المحاولة.'
+              : 'حاوِلْ مرّةً أخرى بعدَ مراجعةِ الدرس.');
+    var r=document.getElementById('wqRes'); r.classList.add('on');
+    r.scrollIntoView({behavior:'smooth',block:'center'});
+  };
+})();
+</script>
+</body>
 </html>

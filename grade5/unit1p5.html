@@ -193,6 +193,33 @@ footer b{color:var(--teal)}
 /* confetti */
 .cft{position:fixed;width:.6rem;height:.9rem;top:-20px;z-index:999;pointer-events:none;border-radius:2px}
 @keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.2}}
+
+/* ═══════════ Final quiz (added 2026-09) ═══════════ */
+.wq-wrap{max-width:820px;margin:0 auto}
+.wq-q{background:#fff;border:2px solid #dfe6ee;border-radius:14px;padding:14px 16px;
+  margin-bottom:12px;box-shadow:0 3px 0 #dfe6ee}
+.wq-t{font-weight:700;font-size:1rem;margin:0 0 4px;color:#1f2937;direction:ltr;text-align:left}
+.wq-ar{direction:rtl;text-align:right;color:#6b7280;font-size:.88rem;margin:0 0 10px;line-height:1.8}
+.wq-opts{display:flex;flex-direction:column;gap:8px}
+.wq-o{direction:ltr;text-align:left;font-family:inherit;font-size:.96rem;cursor:pointer;
+  background:#fff;border:2px solid #d8e0ea;border-radius:10px;padding:10px 13px;color:#1f2937;
+  transition:transform .18s,border-color .18s,background .18s;width:100%}
+.wq-o:hover:not(:disabled){transform:translateX(4px);border-color:#7cb3e8}
+.wq-o.right{background:#eaf7ef;border-color:#2e9e5b;color:#1d6b3d;font-weight:700;transform:none}
+.wq-o.wrong{background:#fdecea;border-color:#d1553f;color:#8c2a1f}
+.wq-o:disabled{cursor:default}
+.wq-fb{margin-top:9px;direction:rtl;text-align:right;font-size:.9rem;display:none;color:#4b5563;line-height:1.8}
+.wq-fb.on{display:block}
+.wq-go{display:block;margin:6px auto 0;border:0;cursor:pointer;font-family:inherit;font-weight:700;
+  font-size:1rem;color:#fff;background:#2563eb;border-radius:12px;padding:11px 26px;box-shadow:0 4px 0 #1d4ed8}
+.wq-go:active:not(:disabled){transform:translateY(4px);box-shadow:none}
+.wq-go:disabled{opacity:.5;cursor:default}
+.wq-res{display:none;text-align:center;margin-top:14px;border-radius:14px;padding:18px 14px;
+  background:linear-gradient(160deg,#1f2937,#111827);color:#f3f4f6}
+.wq-res.on{display:block}
+.wq-score{font-size:2.3rem;font-weight:800;color:#fbbf24;line-height:1.1}
+.wq-msg{direction:rtl;font-size:.98rem;margin-top:5px}
+.wq-h{font-size:1.25rem;font-weight:700;margin:0 0 4px}
 </style>
 </head>
 <body>
@@ -230,6 +257,7 @@ footer b{color:var(--teal)}
   <button class="tab" data-t="2">💬 <span>Match</span></button>
   <button class="tab" data-t="3">✏️ <span>Correct</span></button>
   <button class="tab" data-t="4">⭐ <span>Verbs</span></button>
+<button class="tab" data-t="5">🏆 <span>Quiz</span></button>
 </nav>
 
 <!-- ============ PANEL 0: GOALS ============ -->
@@ -371,6 +399,19 @@ footer b{color:var(--teal)}
     <button class="btn" onclick="checkVerbs()">✅ Check verbs · تحقّقْ</button>
     <div class="result" id="r4"></div>
   </div>
+</section>
+
+<section class="panel" id="p5">
+    <h3 class="wq-h">🏆 Final Quiz · اختبارٌ ختاميّ</h3>
+    <p class="wq-ar">خمسةُ أسئلةٍ عن الدرس. اختَرْ إجابةً واحدةً لكلِّ سؤال، ثمَّ اضغطْ زرَّ النتيجة.</p>
+    <div class="wq-wrap">
+      <div id="wqBox"></div>
+      <button class="wq-go" id="wqGo" type="button" disabled>🏆 اعرِضْ نتيجتي</button>
+      <div class="wq-res" id="wqRes">
+        <div class="wq-score" id="wqScore">0 / 5</div>
+        <div class="wq-msg" id="wqMsg"></div>
+      </div>
+    </div>
 </section>
 
 <footer>
@@ -554,5 +595,102 @@ function burst(){
 }
 </script>
 <script>(function(){var KEY='g5u1_friends',THIS=5,em=['👋','📸','🤸','🏬','🪪','🖼️','📓','📖'];var got;try{got=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){got=[]}if(got.indexOf(THIS)<0){got.push(THIS);try{localStorage.setItem(KEY,JSON.stringify(got))}catch(e){}}var w=document.querySelector('#friendBracelet .fb-beads');for(var i=1;i<=8;i++){var b=document.createElement('span');b.className='fb-bead'+(got.indexOf(i)>=0?' on':'');b.textContent=got.indexOf(i)>=0?em[i-1]:'•';w.appendChild(b);}document.getElementById('fbCount').textContent=got.length+'/8';})();</script>
+<script>
+
+/* ═══════════ Final quiz (added 2026-09) ═══════════ */
+(function(){
+  var WQ = [
+ {
+  "t": "Which sentence is written correctly?",
+  "ar": "أيُّ جملةٍ كُتِبَت كتابةً صحيحة؟",
+  "o": [
+   "my name is sami.",
+   "My name is Sami.",
+   "my Name is sami."
+  ],
+  "a": 1,
+  "fb": "نبدأُ الجملةَ بحرفٍ كبير، واسمُ الشخصِ يبدأُ بحرفٍ كبيرٍ أيضًا."
+ },
+ {
+  "t": "Complete: “I ____ from Ramallah.”",
+  "ar": "أكمِلِ الجملة.",
+  "o": [
+   "is",
+   "am",
+   "are"
+  ],
+  "a": 1,
+  "fb": "مع I نستعملُ am دائمًا."
+ },
+ {
+  "t": "Which answer fits the question “How old are you?”",
+  "ar": "أيُّ إجابةٍ تُناسبُ السؤال؟",
+  "o": [
+   "I am eleven years old.",
+   "I live in Jenin.",
+   "I am fine, thank you."
+  ],
+  "a": 0,
+  "fb": "السؤالُ عن العُمر، فالجوابُ يذكرُ عددَ السنوات."
+ },
+ {
+  "t": "Complete: “My sister ____ in Nablus.”",
+  "ar": "أكمِلِ الجملةَ بالفعلِ الصحيح.",
+  "o": [
+   "live",
+   "lives",
+   "living"
+  ],
+  "a": 1,
+  "fb": "مع He و She و It نُضيفُ s إلى الفعلِ في المضارعِ البسيط."
+ },
+ {
+  "t": "Which word needs a capital letter?",
+  "ar": "أيُّ كلمةٍ تحتاجُ حرفًا كبيرًا؟",
+  "o": [
+   "brother",
+   "school",
+   "hebron"
+  ],
+  "a": 2,
+  "fb": "أسماءُ المدنِ والأشخاصِ تبدأُ بحرفٍ كبير: Hebron."
+ }
+];
+  var box=document.getElementById('wqBox'); if(!box) return;
+  var picked=new Array(WQ.length).fill(null);
+  var go=document.getElementById('wqGo');
+  WQ.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='wq-q';
+    d.innerHTML='<p class="wq-t">'+(i+1)+'. '+q.t+'</p><p class="wq-ar">'+q.ar+'</p>';
+    var op=document.createElement('div'); op.className='wq-opts';
+    var fb=document.createElement('p'); fb.className='wq-fb'; fb.innerHTML='💡 '+q.fb;
+    q.o.forEach(function(o,j){
+      var b=document.createElement('button'); b.className='wq-o'; b.type='button'; b.innerHTML=o;
+      b.onclick=function(){
+        if(picked[i]!==null) return;
+        picked[i]=j;
+        op.querySelectorAll('.wq-o').forEach(function(x,k){
+          x.disabled=true; if(k===q.a) x.classList.add('right');
+        });
+        if(j!==q.a) b.classList.add('wrong');
+        fb.classList.add('on');
+        go.disabled = picked.some(function(p){return p===null;});
+      };
+      op.appendChild(b);
+    });
+    d.appendChild(op); d.appendChild(fb); box.appendChild(d);
+  });
+  go.onclick=function(){
+    var n=picked.reduce(function(s,p,i){return s+(p===WQ[i].a?1:0);},0);
+    document.getElementById('wqScore').textContent=n+' / '+WQ.length;
+    document.getElementById('wqMsg').textContent = n===WQ.length
+      ? 'ممتاز! أتقنتَ الدرسَ كلَّه 🌟'
+      : (n>=3 ? 'أحسنتَ! راجِعِ الدرسَ مرّةً أخرى ثمَّ أعِدِ المحاولة.'
+              : 'حاوِلْ مرّةً أخرى بعدَ مراجعةِ الدرس.');
+    var r=document.getElementById('wqRes'); r.classList.add('on');
+    r.scrollIntoView({behavior:'smooth',block:'center'});
+  };
+})();
+</script>
 </body>
 </html>
