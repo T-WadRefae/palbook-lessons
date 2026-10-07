@@ -21,4 +21,10 @@ These lessons are featured in the [PalBook Live](https://palbook-live.vercel.app
 
 ---
 
+## 📄 License
+
+The lessons created by **T. Wad Refae** are licensed under **[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)** — attribution required, non-commercial use only, no derivatives. Third-party material (the *English for Palestine* textbook content, audio and images) remains the property of its owners.
+
+---
+
 🇵🇸 *Educational content honoring the English for Palestine curriculum*
