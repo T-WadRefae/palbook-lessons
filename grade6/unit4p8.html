@@ -83,15 +83,6 @@
   .plaque .t2{ font-family:'Fredoka',sans-serif; font-size:11px; letter-spacing:3px; margin-top:1px; }
   .plinth{ height:16px; margin:5px auto 0; width:130px; background:linear-gradient(#3a2a10,#20160a); border-radius:0 0 8px 8px; box-shadow:0 6px 12px rgba(0,0,0,.4); }
 
-  /* ===== FILM-REEL PROGRESS TRACKER (shared across Unit 4) ===== */
-  .reel-track{
-    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
-    border-radius:14px; text-align:center; z-index:5;
-    background:linear-gradient(180deg, #2a2a30, #17171b);
-    border:3px solid var(--gold); box-shadow:0 6px 18px rgba(0,0,0,.4);
-  }
-  .rt-label{ color:var(--gold); font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-size:15px; }
-  .rt-strip{ display:flex; align-items:center; justify-content:center; gap:6px; position:relative; direction:ltr; flex-wrap:wrap; }
   .rt-frame{
     width:38px; height:34px; border-radius:5px; position:relative; z-index:1; background:#0d0d10;
     border:2px solid #444; display:flex; align-items:center; justify-content:center;
@@ -99,9 +90,6 @@
     box-shadow:inset 0 0 0 3px #17171b, inset 0 0 0 4px #333;
   }
   .rt-frame.on{ background:radial-gradient(circle at 55% 40%, #fff2c4, var(--gold) 82%); color:var(--midnight); border-color:#fff; box-shadow:0 0 0 2px rgba(242,201,76,.5), inset 0 0 0 2px #fff; }
-  .rt-perf{ font-size:16px; color:#555; letter-spacing:-2px; z-index:1; }
-  .rt-count{ background:rgba(255,255,255,.12); color:var(--gold); border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
-  .rt-done{ margin-top:9px; color:var(--gold); font-weight:800; font-size:15px; display:none; }
   .rt-done.show{ display:block; animation:fadeIn .6s; }
 
   /* ===== TABS ===== */
@@ -305,13 +293,6 @@
   </div>
 </header>
 
-<!-- ===== FILM-REEL PROGRESS (shared across Unit 4) ===== -->
-<div class="reel-track" id="reelTrack" aria-label="Film Reel progress">
-  <div class="rt-label">🎞️ بكرة الأفلام — Film Reel</div>
-  <div class="rt-strip" id="rtStrip"><span class="rt-perf">::</span><span class="rt-count" id="rtCount">0/8</span></div>
-  <div class="rt-done" id="rtDone">✨ اكتملَ الفيلم! أنهيتَ الوحدةَ الرابعةَ كاملةً — أنتَ نجمُ السينما 🎬🌟🏆</div>
-</div>
-
 <!-- ===== TABS ===== -->
 <nav class="tabs-nav">
   <div class="tabs-container">
@@ -412,7 +393,7 @@
     <h2 class="section-title">🏆 Final Quiz<span class="title-sub">مراجعة الوحدة</span></h2>
     <div class="quiz-intro">
       <h3>🏆 The Unit 4 Grand Quiz</h3>
-      <p>أجبْ عن الأسئلةِ الخمسةِ لتُضيءَ آخرَ لقطةٍ وتُكملَ الفيلمَ كاملاً!</p>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفوزَ بنجمةِ هذا الدرس! 🎬</p>
       <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
     </div>
 
@@ -612,22 +593,6 @@ function resetQuiz(){
   });
 }
 </script>
-
-<!-- ===== FILM REEL · progress (shared across Unit 4) ===== -->
-<script>(function(){
-  var KEY='g6u4_reel', THIS=8;
-  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
-  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
-  var strip=document.getElementById('rtStrip'), count=document.getElementById('rtCount');
-  for(var i=8;i>=1;i--){
-    var s=document.createElement('span');
-    s.className='rt-frame'+(got.indexOf(i)>=0?' on':'');
-    s.textContent=got.indexOf(i)>=0?'★':i;
-    strip.insertBefore(s, strip.children[1]);
-  }
-  count.textContent=got.length+'/8';
-  if(got.length===8){ document.getElementById('rtDone').classList.add('show'); setTimeout(function(){ if(typeof confetti==='function') confetti(); },600); }
-})();</script>
 
 </body>
 </html>

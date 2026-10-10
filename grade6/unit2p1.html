@@ -92,16 +92,6 @@
     font-size:14px; font-weight:600; border:1px solid rgba(255,255,255,.35);
   }
 
-  /* ===== BRACELET PROGRESS TRACKER (shared across Unit 2) ===== */
-  .bracelet-track{
-    position:relative; max-width:920px; margin:18px auto 0; padding:12px 18px 15px;
-    border-radius:14px; text-align:center; z-index:5;
-    background:linear-gradient(180deg, var(--purple), var(--purple-d));
-    border:2px solid #fff; box-shadow:0 6px 18px rgba(59,42,74,.35);
-  }
-  .bt-label{ color:#fff; font-family:'Fredoka',sans-serif; font-weight:700; display:inline-flex; align-items:center; gap:7px; text-shadow:0 1px 2px rgba(0,0,0,.35); margin-bottom:9px; font-size:15px; }
-  .bt-string{ display:flex; align-items:center; justify-content:center; gap:6px; position:relative; direction:ltr; flex-wrap:wrap; }
-  .bt-string::before{ content:''; position:absolute; left:4%; right:4%; top:50%; height:3px; background:var(--thread); border-radius:2px; z-index:0; }
   .bt-bead{
     width:32px; height:32px; border-radius:50%; position:relative; z-index:1;
     background:rgba(255,255,255,.92); border:2px solid #fff;
@@ -114,9 +104,6 @@
   .bt-bead.on:nth-child(4n+2){ background:radial-gradient(circle at 40% 32%, #7dffe5, var(--teal) 75%); }
   .bt-bead.on:nth-child(4n+3){ background:radial-gradient(circle at 40% 32%, #c5a8ff, var(--purple) 75%); }
   .bt-bead.on:nth-child(4n){ background:radial-gradient(circle at 40% 32%, #fff0b0, var(--gold) 75%); }
-  .bt-knot{ font-size:20px; z-index:1; }
-  .bt-count{ background:rgba(255,255,255,.2); color:#fff; border-radius:12px; padding:2px 10px; font-size:12px; font-weight:800; z-index:1; }
-  .bt-done{ margin-top:7px; color:var(--gold); font-weight:800; font-size:14px; display:none; }
   .bt-done.show{ display:block; animation:fadeIn .6s; }
 
   /* ===== TABS ===== */
@@ -481,13 +468,6 @@
   </div>
 </header>
 
-<!-- ===== BRACELET PROGRESS (shared across Unit 2) ===== -->
-<div class="bracelet-track" id="braceletTrack" aria-label="Friendship Bracelet progress">
-  <div class="bt-label">🧶 اصنع سوارَ الصداقة — Friendship Bracelet</div>
-  <div class="bt-string" id="btString"><span class="bt-knot">🪢</span><span class="bt-count" id="btCount">0/8</span></div>
-  <div class="bt-done" id="btDone">✨ اكتملَ السوار! أنتَ صديقٌ وفيّ 🧶✨</div>
-</div>
-
 <!-- ===== TABS ===== -->
 <nav class="tabs-nav">
   <div class="tabs-container">
@@ -816,7 +796,7 @@
     <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبار الختامي</span></h2>
     <div class="quiz-intro">
       <h3>🧶 The Golden Bead Quiz</h3>
-      <p>أجبْ عن الأسئلةِ الخمسةِ لتفوزَ بالخرزةِ الذهبيةِ لسوارِ الصداقة!</p>
+      <p>أجبْ عن الأسئلةِ الخمسةِ لتفوزَ بخرزةِ هذا الدرسِ الذهبية!</p>
       <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
     </div>
 
@@ -1079,22 +1059,6 @@ function resetQuiz(){
   });
 }
 </script>
-
-<!-- ===== FRIENDSHIP BRACELET · progress (shared across Unit 2) ===== -->
-<script>(function(){
-  var KEY='g6u2_bracelet', THIS=1, em=['💬','📖','✅','✏️','⏰','🎧','🧩','🎨'];
-  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
-  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
-  var str=document.getElementById('btString'), count=document.getElementById('btCount');
-  for(var i=8;i>=1;i--){
-    var s=document.createElement('span');
-    s.className='bt-bead'+(got.indexOf(i)>=0?' on':'');
-    s.textContent=got.indexOf(i)>=0?em[i-1]:i;
-    str.insertBefore(s, str.children[1]);
-  }
-  count.textContent=got.length+'/8';
-  if(got.length===8) document.getElementById('btDone').classList.add('show');
-})();</script>
 
 </body>
 </html>

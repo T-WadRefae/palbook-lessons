@@ -54,15 +54,8 @@
   @media (prefers-reduced-motion: reduce){ .booklet{ transform:none; } .bk-panel{ transform:none !important; } }
 
   /* ===== TRACKER ===== */
-  .podium-track{ position:relative; max-width:920px; margin:18px auto 4px; padding:11px 16px 13px; border-radius:12px;
-    background:repeating-linear-gradient(90deg,transparent 0 30px,rgba(255,255,255,.22) 30px 33px),linear-gradient(180deg,var(--track),var(--track-d));
-    box-shadow:var(--shadow); border:2px solid #fff; text-align:center; }
-  .pt-label{ color:#fff; font-family:'Fredoka'; font-weight:700; display:inline-flex; align-items:center; gap:6px; text-shadow:0 1px 2px rgba(0,0,0,.35); margin-bottom:7px; }
-  .pt-lanes{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; justify-content:center; }
   .pt-step{ width:30px; height:30px; border-radius:7px; background:rgba(255,255,255,.92); border:2px solid #fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:var(--track-d); box-shadow:0 2px 4px rgba(0,0,0,.28); }
   .pt-step.on{ background:radial-gradient(circle at 40% 32%,#FFF3D6,var(--gold) 78%); color:#7a4d00; box-shadow:0 0 0 3px rgba(242,169,60,.45),0 2px 5px rgba(0,0,0,.3); }
-  .pt-finish{ font-size:1.4em; line-height:1; margin-left:2px; }
-  .pt-count{ color:#fff; font-family:'Fredoka'; font-weight:800; text-shadow:0 1px 2px rgba(0,0,0,.35); }
 
   /* ===== TABS ===== */
   .tabs-container{ display:flex; gap:7px; margin:18px 4px 0; padding:5px 4px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; position:relative; z-index:3; }
@@ -211,11 +204,7 @@
     </div>
   </div>
 
-  <!-- ===== TRACKER ===== -->
-  <div class="podium-track" id="podiumTrack" aria-label="Holidays Calendar progress">
-    <div class="pt-label">📅 The Holidays Calendar</div>
-    <div class="pt-lanes"><div class="pt-steps" style="display:contents"></div><span class="pt-finish">🎉</span><span class="pt-count" id="ptCount">0/8</span></div>
-  </div>
+  
 
   <!-- ===== TABS ===== -->
   <div class="tabs-container">
@@ -386,15 +375,6 @@
   function launchConfetti(){ const colors=['#F2A93C','#0F8B7E','#5FB06A','#2E78C4','#E0752E','#4E93D6']; for(let i=0;i<22;i++){ const c=document.createElement('div'); c.className='confetti'; c.style.left=Math.random()*100+'%'; c.style.top='-10px'; c.style.background=colors[Math.floor(Math.random()*colors.length)]; c.style.borderRadius=Math.random()>0.5?'50%':'0'; c.style.transform=`rotate(${Math.random()*360}deg)`; document.body.appendChild(c); const fall=c.animate([{top:'-10px',transform:'rotate(0deg)',opacity:1},{top:'100vh',transform:'rotate(720deg)',opacity:0}],{duration:1500+Math.random()*1500,easing:'cubic-bezier(0.4,0,0.6,1)'}); fall.onfinish=()=>c.remove(); } }
   function bigConfetti(){ launchConfetti(); setTimeout(launchConfetti,300); setTimeout(launchConfetti,600); setTimeout(launchConfetti,900); }
 </script>
-
-<script>(function(){
-  var KEY='g5u4_holidays', THIS=8, em=['🗓️','✍️','☀️','🍂','🌧️','🌸','📆','🎊'];
-  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
-  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
-  var w=document.querySelector('#podiumTrack .pt-steps');
-  for(var i=1;i<=8;i++){ var s=document.createElement('span'); s.className='pt-step'+(got.indexOf(i)>=0?' on':''); s.textContent=got.indexOf(i)>=0?em[i-1]:i; w.appendChild(s); }
-  document.getElementById('ptCount').textContent=got.length+'/8';
-})();</script>
 
 <div class="cc-license cc-license-bar" style="direction:ltr;unicode-bidi:isolate;text-align:center;font:inherit;font-size:max(11px,.8em);line-height:1.5;opacity:.85;padding:10px 12px 14px;margin:0 auto;clear:both;">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
 </body>

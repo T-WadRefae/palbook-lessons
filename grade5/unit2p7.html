@@ -48,16 +48,10 @@
   .xw-num{ position:absolute; top:0; left:2px; font-size:.46em; color:var(--ink-soft); font-weight:700; }
   .xw-pencil{ position:absolute; right:-14px; bottom:-16px; font-size:2.1em; transform:rotate(-40deg); filter:drop-shadow(0 3px 3px rgba(0,0,0,.25)); }
 
-  /* ===== MAP TRACKER ===== */
-  .explore-map{ position:relative; max-width:920px; margin:20px auto 4px; display:flex; align-items:center; gap:10px; justify-content:center; flex-wrap:wrap; padding:11px 16px; border-radius:10px;
-    background:repeating-linear-gradient(0deg,rgba(110,139,61,.07) 0 1px,transparent 1px 22px),repeating-linear-gradient(90deg,rgba(110,139,61,.07) 0 1px,transparent 1px 22px),linear-gradient(135deg,#F4ECD3,#EFE3C4); border:1px solid var(--line-d); box-shadow:var(--shadow); }
   .explore-map .tape{ top:-11px; width:64px; } .explore-map .tape.l{ left:30px; transform:rotate(-7deg); } .explore-map .tape.r{ right:30px; transform:rotate(6deg); }
-  .em-label{ font-family:'Fredoka'; font-weight:600; color:var(--green); display:flex; align-items:center; gap:5px; }
-  .em-pins{ display:flex; gap:7px; flex-wrap:wrap; justify-content:center; }
   .em-pin{ width:28px; height:28px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:#E4DCC4; border:2px solid #fff; box-shadow:0 2px 4px rgba(0,0,0,.18); display:flex; align-items:center; justify-content:center; }
   .em-pin span{ transform:rotate(45deg); font-size:13px; line-height:1; }
   .em-pin.on{ background:radial-gradient(circle at 40% 35%,#FFE39A,var(--sun) 75%); box-shadow:0 0 0 3px rgba(255,201,60,.3),0 3px 6px rgba(0,0,0,.25); }
-  .em-count{ font-family:'Fredoka'; font-weight:700; color:var(--coral); }
 
   /* ===== TABS ===== */
   .tabs-container{ display:flex; gap:7px; margin:18px 4px 0; padding:5px 4px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; position:relative; z-index:3; }
@@ -199,13 +193,7 @@
     </div>
   </div>
 
-  <!-- ===== MAP TRACKER ===== -->
-  <div class="explore-map" id="exploreMap" aria-label="Explore Our Country">
-    <span class="tape l"></span><span class="tape y r"></span>
-    <span class="em-label">🗺️ Explore Our Country</span>
-    <div class="em-pins"></div>
-    <span class="em-count" id="emCount">0/8</span>
-  </div>
+  
 
   <!-- ===== TABS ===== -->
   <div class="tabs-container">
@@ -381,15 +369,6 @@
   }
   function bigConfetti(){ launchConfetti(); setTimeout(launchConfetti,300); setTimeout(launchConfetti,600); setTimeout(launchConfetti,900); }
 </script>
-
-<script>(function(){
-  var KEY='g5u2_country', THIS=7, em=['🕌','🖼️','🧭','🪧','🕐','🎵','🧩','🏟️'];
-  var got; try{ got=JSON.parse(localStorage.getItem(KEY)||'[]') }catch(e){ got=[] }
-  if(got.indexOf(THIS)<0){ got.push(THIS); try{ localStorage.setItem(KEY, JSON.stringify(got)) }catch(e){} }
-  var w=document.querySelector('#exploreMap .em-pins');
-  for(var i=1;i<=8;i++){ var p=document.createElement('span'); p.className='em-pin'+(got.indexOf(i)>=0?' on':''); var s=document.createElement('span'); s.textContent=got.indexOf(i)>=0?em[i-1]:'•'; p.appendChild(s); w.appendChild(p); }
-  document.getElementById('emCount').textContent=got.length+'/8';
-})();</script>
 
 <div class="cc-license cc-license-bar" style="direction:ltr;unicode-bidi:isolate;text-align:center;font:inherit;font-size:max(11px,.8em);line-height:1.5;opacity:.85;padding:10px 12px 14px;margin:0 auto;clear:both;color:#1f2937;opacity:1;">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
 </body>
