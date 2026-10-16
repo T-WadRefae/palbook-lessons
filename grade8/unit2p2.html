@@ -43,111 +43,97 @@ body{
   border-radius:4px; box-shadow:0 10px 34px rgba(44,36,24,.22); padding:0 0 26px;
 }
 
-/* ═══════ HEADER : TABOON ═══════ */
-header{position:relative;padding:26px 18px 22px;text-align:center;overflow:visible;
-  background:radial-gradient(ellipse at 50% 90%, rgba(255,138,43,.20), transparent 62%), var(--linen);}
-.taboon-stage{position:relative;width:min(560px,100%);margin:0 auto;padding-bottom:6px}
-.eyebrow{font-family:'Fredoka',sans-serif;font-size:.72rem;letter-spacing:.22em;
-  color:var(--thread);font-weight:600;text-transform:uppercase;margin-bottom:12px}
-
-/* the clay dome */
-.dome{
-  position:relative;width:min(300px,64vw);aspect-ratio:1.35/1;margin:0 auto;
-  border-radius:52% 52% 12% 12% / 78% 78% 12% 12%;
+/* ═══════ HEADER : THE RESTAURANT CHALKBOARD ═══════ */
+header{position:relative;padding:22px 16px 20px;text-align:center;overflow:visible;
   background:
-    radial-gradient(ellipse at 34% 22%, rgba(255,255,255,.30), transparent 46%),
-    linear-gradient(165deg,var(--clay-l),var(--clay) 46%,var(--clay-d));
-  box-shadow:0 12px 26px rgba(60,34,14,.34), inset 0 -14px 26px rgba(0,0,0,.30);
-}
-/* clay texture cracks */
-.dome::before{
-  content:"";position:absolute;inset:0;border-radius:inherit;opacity:.30;
+    radial-gradient(ellipse at 50% 0%, rgba(44,36,24,.10), transparent 58%),
+    repeating-linear-gradient(90deg, rgba(156,90,51,.07) 0 2px, transparent 2px 9px),
+    var(--linen);}
+.eyebrow{font-family:'Fredoka',sans-serif;font-size:clamp(.62rem,2.6vw,.72rem);
+  letter-spacing:.14em;color:var(--thread);font-weight:600;text-transform:uppercase;
+  margin-bottom:14px;white-space:nowrap}
+
+.board-stage{position:relative;width:min(520px,100%);margin:0 auto;padding-top:40px}
+
+/* the nail, and the two cords that run from it down to the frame's corners */
+.board-stage::before{ /* the nail */
+  content:'';position:absolute;top:2px;left:50%;translate:-50% 0;
+  width:11px;height:11px;border-radius:50%;z-index:2;
+  background:radial-gradient(circle at 36% 32%, #f3e8cd, #8d7640);
+  box-shadow:0 1px 2px rgba(0,0,0,.45)}
+.board-stage::after{ /* both cords, drawn as one triangle outline */
+  content:'';position:absolute;top:7px;left:50%;translate:-50% 0;
+  width:54%;height:36px;z-index:0;
+  background:linear-gradient(#7d6845,#7d6845) no-repeat;
+  -webkit-mask:linear-gradient(#000 0 0) no-repeat;
+  clip-path:polygon(50% 0, 50% 4px, 2px 100%, 0 calc(100% - 3px), 50% 2px,
+                    50% 0, 100% calc(100% - 3px), calc(100% - 2px) 100%, 50% 4px);}
+
+/* wooden frame + slate */
+.board{
+  position:relative;z-index:1;border-radius:12px;padding:11px;
   background:
-    repeating-linear-gradient(72deg, rgba(90,48,20,.5) 0 1px, transparent 1px 17px),
-    repeating-linear-gradient(-58deg, rgba(90,48,20,.35) 0 1px, transparent 1px 23px);
+    repeating-linear-gradient(94deg, #a4713f 0 7px, #8d5c31 7px 15px, #9a6a3a 15px 23px);
+  box-shadow:0 12px 30px rgba(44,36,24,.34), inset 0 2px 0 rgba(255,255,255,.22);
+  animation:sway 6s ease-in-out infinite alternate;transform-origin:50% -26px;
 }
-/* the mouth + embers */
-.mouth{
-  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-  width:46%;height:40%;border-radius:50% 50% 8% 8% / 70% 70% 10% 10%;
-  background:radial-gradient(ellipse at 50% 78%, #fff2c2 0 6%, var(--ember) 26%, var(--ember-d) 58%, #5a1c06 92%);
-  box-shadow:0 0 34px 10px rgba(255,120,30,.55);
-  animation:breathe 2.6s ease-in-out infinite;
-}
-@keyframes breathe{
-  0%,100%{box-shadow:0 0 26px 7px rgba(255,120,30,.42);filter:brightness(.94)}
-  50%    {box-shadow:0 0 42px 15px rgba(255,150,40,.70);filter:brightness(1.12)}
-}
-/* heat shimmer above the dome */
-.heat{position:absolute;top:-26px;left:50%;transform:translateX(-50%);
-  width:64%;height:34px;pointer-events:none;display:flex;justify-content:space-around}
-.heat i{width:5px;height:100%;border-radius:3px;
-  background:linear-gradient(0deg,rgba(255,160,60,.42),transparent);
-  animation:shimmer 2.1s ease-in-out infinite}
-.heat i:nth-child(2){animation-delay:.35s}
-.heat i:nth-child(3){animation-delay:.7s}
-.heat i:nth-child(4){animation-delay:1.05s}
-.heat i:nth-child(5){animation-delay:1.4s}
-@keyframes shimmer{
-  0%,100%{transform:translateY(6px) scaleY(.7);opacity:.25}
-  50%    {transform:translateY(-8px) scaleY(1.15);opacity:.75}
-}
+@keyframes sway{from{transform:rotate(-.7deg)}to{transform:rotate(.7deg)}}
+.board::before,.board::after{ /* the two screws */
+  content:'';position:absolute;top:7px;width:9px;height:9px;border-radius:50%;
+  background:radial-gradient(circle at 36% 32%, #efe3c8, #9b854f);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)}
+.board::before{left:9px} .board::after{right:9px}
+.slate{
+  position:relative;border-radius:7px;padding:16px 14px 14px;
+  background:
+    radial-gradient(ellipse at 28% 18%, rgba(255,255,255,.05), transparent 56%),
+    repeating-linear-gradient(118deg, rgba(255,255,255,.018) 0 3px, transparent 3px 7px),
+    linear-gradient(170deg,#2f4038,#1e2b26 62%,#243229);
+  box-shadow:inset 0 0 26px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.07);
+  overflow:hidden}
+.slate::after{ /* a faint chalk smudge */
+  content:'';position:absolute;left:-10%;bottom:14%;width:120%;height:30px;
+  background:radial-gradient(ellipse at 30% 50%, rgba(255,255,255,.07), transparent 62%);
+  pointer-events:none}
 
-/* wooden bread peel carrying the title */
-.peel{
-  position:relative;margin:-16px auto 0;width:min(470px,100%);
-  background:linear-gradient(180deg,#c99a5e,#a97a40);
-  border:3px solid #7d5626;border-radius:14px;
-  box-shadow:0 7px 0 #6d4a20, 0 12px 22px rgba(60,34,14,.30);
-  padding:13px 20px 15px;transform:rotate(-1.1deg);
-}
-.peel::after{ /* the handle */
-  content:"";position:absolute;right:-52px;top:50%;transform:translateY(-50%);
-  width:56px;height:15px;border-radius:0 8px 8px 0;
-  background:linear-gradient(180deg,#c99a5e,#8d6330);border:3px solid #7d5626;border-left:0;
-}
-@media (max-width:620px){ .peel::after{display:none} }
-.peel h1{
-  margin:0;font-family:'Fredoka',sans-serif;font-weight:700;
-  font-size:clamp(1.05rem,3.9vw,1.6rem);color:#2f1c08;line-height:1.25;
-  text-shadow:0 1px 0 rgba(255,255,255,.35)
-}
-.peel .sub{font-family:'Baloo Bhaijaan 2',sans-serif;direction:rtl;
-  font-size:.86rem;color:#4a2f11;margin-top:3px}
+.chalk-top{font-family:'Caveat',cursive;color:#eae2cd;font-size:.95rem;opacity:.82;
+  letter-spacing:.04em;margin-bottom:2px}
+.slate h1{
+  font-family:'Caveat',cursive;color:#fffaf0;font-size:clamp(1.55rem,6.4vw,2.3rem);
+  line-height:1.12;margin:0 0 4px;text-shadow:0 1px 0 rgba(0,0,0,.4),0 0 14px rgba(255,255,255,.14)}
+.chalk-rule{display:block;width:64%;max-width:260px;height:3px;margin:4px auto 10px;
+  border-radius:3px;opacity:.72;transform:rotate(-.5deg);
+  background:linear-gradient(90deg,
+    transparent 0, rgba(255,255,255,.85) 10%, rgba(255,255,255,.95) 50%,
+    rgba(255,255,255,.8) 88%, transparent 100%);
+  filter:blur(.3px)}
+.slate .sub{font-family:'Baloo Bhaijaan 2',sans-serif;color:#cfe0cf;font-size:.8rem;
+  line-height:1.75;opacity:.9;margin:0 auto 12px;max-width:34ch}
 
-/* eight loaves waiting on the ledge */
-.ledge{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:20px auto 0;max-width:520px}
-.loaf{
-  width:46px;height:34px;border-radius:50%;
-  background:linear-gradient(160deg,#efe3c8,#dccBa4);
-  border:2px solid #c9b489;position:relative;
-  transition:transform .45s cubic-bezier(.2,1.5,.4,1), background .5s, box-shadow .45s;
-  opacity:.55;
-}
-.loaf::after{content:"";position:absolute;inset:22% 26%;border-radius:50%;
-  background:repeating-radial-gradient(circle,rgba(160,130,80,.22) 0 2px,transparent 2px 5px)}
-.loaf.baked{
-  opacity:1;
-  background:linear-gradient(160deg,#e9b45f,#c8873a);
-  border-color:#9c5a2a;
-  box-shadow:0 4px 10px rgba(140,80,20,.4), inset 0 -3px 6px rgba(120,60,10,.35);
-  transform:translateY(-9px) rotate(-5deg) scale(1.1);
-}
+/* the menu lines — one per activity, ticked in chalk as you go */
+.menu{list-style:none;margin:0;padding:0;display:grid;gap:5px;
+  text-align:left;direction:ltr;max-width:330px;margin-inline:auto}
+.menu .loaf{
+  display:flex;align-items:baseline;gap:7px;position:relative;
+  font-family:'Caveat',cursive;font-size:1.02rem;color:#e7ecdf;opacity:.6;
+  transition:opacity .35s, color .35s}
+.menu .loaf::before{content:'·';color:#cfe0cf;font-size:1.3rem;line-height:1}
+.menu .loaf::after{ /* the chalk tick, drawn on completion */
+  content:'✓';margin-inline-start:auto;color:#9fe3a8;font-size:1.05rem;
+  opacity:0;transform:scale(.5) rotate(-18deg);transition:all .35s cubic-bezier(.3,1.5,.5,1)}
+.menu .loaf.baked{opacity:1;color:#fffdf5}
+.menu .loaf.baked::after{opacity:1;transform:scale(1) rotate(0)}
 
-/* ═══════ TATREEZ PROGRESS BAND (unit identity) ═══════ */
-.band-wrap{margin:22px auto 0;max-width:620px;padding:0 14px}
+/* chalk tally under the board */
+.band-wrap{width:min(520px,100%);margin:13px auto 0}
 .band-label{display:flex;justify-content:space-between;align-items:center;
-  font-family:'Fredoka',sans-serif;font-size:.78rem;color:var(--muted);margin-bottom:6px}
-.band{height:20px;border-radius:4px;background:#eee3cd;border:2px solid var(--stone-line);
-  display:flex;overflow:hidden}
-.band i{flex:1;border-right:1px solid rgba(195,177,145,.5);transition:background .3s,transform .3s}
-.band i:last-child{border-right:0}
-.band i.on{
-  background:
-    linear-gradient(45deg,transparent 42%,var(--thread) 42% 58%,transparent 58%),
-    linear-gradient(-45deg,transparent 42%,var(--thread) 42% 58%,transparent 58%);
-  transform:scale(1.06);
-}
+  font-family:'Fredoka',sans-serif;font-size:.74rem;color:var(--muted);margin-bottom:5px}
+.band{display:flex;gap:5px;justify-content:center;padding:7px 10px;border-radius:9px;
+  background:#243229;box-shadow:inset 0 0 12px rgba(0,0,0,.5)}
+.band i{width:4px;height:17px;border-radius:2px;background:rgba(255,255,255,.14);
+  transition:all .3s;transform:rotate(-8deg)}
+.band i.on{background:#fffaf0;box-shadow:0 0 8px rgba(255,255,255,.6);transform:rotate(-8deg) scaleY(1.12)}
+@media (max-width:360px){ .menu{max-width:none} .slate h1{font-size:1.45rem} }
 
 /* ═══════ TABS ═══════ */
 nav{display:flex;gap:9px;padding:16px 14px 4px;overflow-x:auto;
@@ -277,26 +263,25 @@ footer{text-align:center;margin-top:30px;font-family:'Fredoka',sans-serif;font-w
 
   <!-- ══════════ HEADER : TABOON ══════════ -->
   <header>
-    <div class="taboon-stage">
-      <div class="eyebrow">Grade 8 · Unit 2 · Period 2 · PB page 17</div>
-      <div class="dome">
-        <div class="heat"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="mouth"></div>
-      </div>
-      <div class="peel">
-        <h1>A Taste of Palestinian Culture</h1>
-        <div class="sub">الكلماتُ تعودُ إلى مواضِعها — كما يعودُ الرغيفُ إلى الطابون</div>
-      </div>
-      <div class="ledge" id="ledge"></div>
+<div class="eyebrow">Grade 8 · Unit 2 · Period 2 · PB page 17</div>
+<div class="board-stage">
+  <div class="board">
+    <div class="slate">
+      <div class="chalk-top">~ Today's menu ~</div>
+      <h1>A Taste of Palestinian Culture</h1>
+      <i class="chalk-rule"></i>
+      <div class="sub">الكلماتُ تعودُ إلى مواضِعها — كما يعودُ كلُّ طبقٍ إلى قائمتِه</div>
+      <ul class="menu" id="ledge"></ul>
     </div>
-
-    <div class="band-wrap">
-      <div class="band-label">
-        <span>Your embroidery</span><span id="bandCount">0 / 8 stitches</span>
-      </div>
-      <div class="band" id="band"></div>
-    </div>
-  </header>
+  </div>
+</div>
+<div class="band-wrap">
+  <div class="band-label">
+    <span>Chalk marks</span><span id="bandCount">0 / 8 ticked</span>
+  </div>
+  <div class="band" id="band"></div>
+</div>
+</header>
 
   <!-- ══════════ TABS ══════════ -->
   <nav id="tabs">
@@ -460,17 +445,20 @@ footer{text-align:center;margin-top:30px;font-family:'Fredoka',sans-serif;font-w
 <script>
 /* ---------- loaves + tatreez band ---------- */
 const TOTAL=8; let done=0;
+const MENU=['Add the words','Listen and check','Read the dialogue','Answer 1 & 2',
+            'Answer 3 & 4','Everyday English','Practise aloud','Final quiz'];
 const band=document.getElementById('band'), ledge=document.getElementById('ledge');
 for(let i=0;i<TOTAL;i++){
   band.appendChild(document.createElement('i'));
-  const l=document.createElement('div'); l.className='loaf'; ledge.appendChild(l);
+  const l=document.createElement('li'); l.className='loaf';
+  l.append(document.createTextNode(MENU[i]||('Task '+(i+1)))); ledge.appendChild(l);
 }
 function bake(i,x,y){
   if(ledge.children[i]) ledge.children[i].classList.add('baked');
   if(done<TOTAL){ band.children[done].classList.add('on'); done++; }
-  document.getElementById('bandCount').textContent=done+' / '+TOTAL+' stitches';
+  document.getElementById('bandCount').textContent=done+' / '+TOTAL+' ticked';
   const p=document.createElement('div');
-  p.className='pop-stitch'; p.textContent=Math.random()<.5?'🫓':'🪡';
+  p.className='pop-stitch'; p.textContent=Math.random()<.5?'✓':'🍽️';
   p.style.left=(x||innerWidth/2)+'px'; p.style.top=(y||140)+'px';
   document.body.appendChild(p); setTimeout(()=>p.remove(),1000);
   if(done===TOTAL) burst();
@@ -622,7 +610,7 @@ function finish(){
   else m.textContent='لا بأس، أعِدِ الاستماعَ وحاولْ ثانيةً 💪';
   if(correct>=4){
     document.getElementById('badge').style.display='flex';
-    try{ localStorage.setItem('g8u2p2_badge','taboon'); }catch(e){}
+    try{ localStorage.setItem('g8u2p2_badge','chalkboard'); }catch(e){}
     burst();
   }
   s.scrollIntoView({behavior:'smooth',block:'center'});
