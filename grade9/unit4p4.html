@@ -60,17 +60,14 @@
   }
   @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
   .tab-btn{
-    background:transparent; border:none; padding:13px 12px; border-radius:15px; cursor:pointer;
-    font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; color:var(--leaf-d);
-    display:flex; flex-direction:column; align-items:center; gap:5px; flex:1 0 auto; min-width:88px;
-    transition:all .3s cubic-bezier(.4,0,.2,1);
+    background:transparent; border:none; padding:0; border-radius:0; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; color:#4a2810;
+    display:flex; flex-direction:column; align-items:stretch; gap:0; flex:1 0 auto; min-width:92px;
+    transition:transform .3s cubic-bezier(.4,0,.2,1); position:relative;
   }
-  .tab-btn:hover{ background:rgba(90,209,160,.13); transform:translateY(-2px); }
-  .tab-btn.active{
-    background:linear-gradient(135deg, var(--mint), var(--mint-d));
-    color:#08321f; box-shadow:0 4px 0 var(--leaf-d), 0 6px 14px rgba(47,168,119,.4); transform:translateY(-2px);
-  }
-  .tab-icon{ font-size:26px; line-height:1; }
+  .tab-btn:hover{ transform:translateY(-2px); }
+  .tab-btn:hover .tab-scroll{ background:linear-gradient(#fbf2d9 0,#f0dca8 100%); }
+  .tab-icon{ font-size:21px; line-height:1; filter:sepia(.15); transition:all .3s ease; }
 
   /* ===== MAIN ===== */
   .main-content{ max-width:1100px; margin:28px auto; padding:0 18px 60px; position:relative; z-index:2; }
@@ -468,6 +465,60 @@
 
   
 
+  /* ===== SCROLL TABS (Grade 9 Unit 4 - manuscript theme) ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:
+      repeating-linear-gradient(90deg, rgba(140,110,50,.08) 0 1px, transparent 1px 4px),
+      linear-gradient(#2a2140, #1a1535);
+    border:none; border-radius:14px; padding:16px 12px 14px;
+    box-shadow:0 10px 24px rgba(0,0,0,.5);
+    display:flex; gap:7px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    position:relative; background:transparent; border:none; padding:10px 2px 0; cursor:pointer;
+    display:flex; flex-direction:column; align-items:stretch; gap:0; flex:1 0 auto; min-width:80px; max-width:112px;
+    transition:transform .3s cubic-bezier(.4,0,.2,1); color:#4a2810;
+    font-family:'Fredoka',sans-serif; font-weight:600;
+  }
+  .tab-btn:hover{ transform:translateY(-3px); }
+  .tab-btn::before, .tab-btn::after{
+    content:''; display:block; height:9px; border-radius:5px;
+    background:linear-gradient(90deg,#5a3f1a 0,#b48a44 20%,#f0d58b 50%,#b48a44 80%,#5a3f1a 100%);
+    box-shadow:0 2px 4px rgba(0,0,0,.4), inset 0 1px 1px rgba(255,230,180,.5);
+    margin:0 -3px;
+  }
+  .tab-scroll{
+    position:relative; background:linear-gradient(#f6ead0 0,#eadaa2 100%);
+    padding:9px 6px 9px; margin:-1px 0; min-height:52px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    box-shadow:inset 0 0 10px rgba(140,110,50,.3), inset 0 4px 6px rgba(255,245,210,.4), inset 0 -4px 6px rgba(140,110,50,.2);
+    transition:all .3s ease;
+  }
+  .tab-scroll::before, .tab-scroll::after{
+    content:''; position:absolute; left:-3px; right:-3px; height:3px; background:rgba(0,0,0,.25);
+  }
+  .tab-scroll::before{ top:0 } .tab-scroll::after{ bottom:0 }
+  .tab-icon{ font-size:21px; line-height:1; filter:sepia(.15); transition:all .3s ease; }
+  .tab-btn > span:last-child{ font-size:11.5px; line-height:1.1; text-align:center; color:#4a2810; }
+  .tab-btn.active{ transform:translateY(-4px) scale(1.04); }
+  .tab-btn.active::before, .tab-btn.active::after{
+    background:linear-gradient(90deg,#8a6514 0,#e0b84f 20%,#fef0d0 50%,#e0b84f 80%,#8a6514 100%);
+    box-shadow:0 3px 7px rgba(0,0,0,.45), 0 0 14px rgba(240,213,139,.7), inset 0 1px 1px rgba(255,245,210,.6);
+  }
+  .tab-btn.active .tab-scroll{
+    background:linear-gradient(#fff5db 0,#f6d78b 100%); filter:drop-shadow(0 0 12px rgba(240,180,41,.5));
+  }
+  .tab-btn.active .tab-icon{ filter:none; transform:scale(1.15); }
+  .tab-btn.active > span:last-child{ color:#8a1515; font-weight:700; }
+  /* a subtle red ribbon tag for the active one */
+  .tab-btn.active .tab-scroll::after{
+    background:linear-gradient(var(--red),var(--red-d));
+    height:5px; box-shadow:0 1px 3px rgba(0,0,0,.3);
+  }
+
+
   /* ===== HEADER : CROSSED SWORDS (سيفانِ متقاطعان) ===== */
   .lesson-header{
     background:
@@ -781,10 +832,10 @@
 <!-- ===== TABS ===== -->
 <nav class="tabs-nav">
   <div class="tabs-container">
-    <button class="tab-btn active" data-tab="aims"><span class="tab-icon">🎯</span><span>Aims</span></button>
-    <button class="tab-btn" data-tab="words"><span class="tab-icon">📇</span><span>Words</span></button>
-    <button class="tab-btn" data-tab="complete"><span class="tab-icon">🧩</span><span>Complete</span></button>
-    <button class="tab-btn" data-tab="quiz"><span class="tab-icon">🏆</span><span>Final Quiz</span></button>
+    <button class="tab-btn active" data-tab="aims"><span class="tab-scroll"><span class="tab-icon">🎯</span><span>Aims</span></span></button>
+    <button class="tab-btn" data-tab="words"><span class="tab-scroll"><span class="tab-icon">📇</span><span>Words</span></span></button>
+    <button class="tab-btn" data-tab="complete"><span class="tab-scroll"><span class="tab-icon">🧩</span><span>Complete</span></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="tab-scroll"><span class="tab-icon">🏆</span><span>Final Quiz</span></span></button>
   </div>
 </nav>
 
