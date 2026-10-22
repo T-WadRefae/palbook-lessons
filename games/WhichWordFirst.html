@@ -259,6 +259,37 @@
   .btn.ghost{ background:#fff; color:var(--ink); box-shadow:0 4px 0 var(--line); }
   .btnrow{ display:flex; gap:9px; flex-wrap:wrap; }
 
+  /* ===== name + shared leaderboard ===== */
+  .namebox{
+    background:var(--card); border-radius:18px; padding:14px 16px; margin:0 0 14px;
+    box-shadow:0 4px 0 var(--line);
+  }
+  .namebox label{ display:block; font-size:13.5px; font-weight:700; color:var(--ink-s); margin-bottom:7px; }
+  .namerow{ display:flex; gap:8px; flex-wrap:wrap; }
+  .namerow input{
+    flex:1 1 180px; min-width:0; padding:12px 14px; border:2px solid var(--line); border-radius:999px;
+    font-family:inherit; font-size:16px; font-weight:700; color:var(--ink); background:#fff; text-align:center;
+  }
+  .namerow input:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 4px rgba(238,171,36,.25); }
+  .namerow .btn{ flex:0 0 auto; background:var(--gold); box-shadow:0 4px 0 var(--gold-d); color:#3a2600; }
+
+  .sctabs{ display:flex; gap:7px; flex-wrap:wrap; justify-content:center; margin:0 0 12px; }
+  .sctab{
+    border-radius:999px; padding:9px 16px; font-size:14px; font-weight:700; cursor:pointer;
+    background:#fff; color:var(--ink); box-shadow:0 3px 0 var(--line); border:0; font-family:inherit;
+  }
+  .sctab.on{ background:var(--gold); color:#3a2600; box-shadow:0 3px 0 var(--gold-d); }
+  .sclist{ background:var(--card); border-radius:18px; overflow:hidden; box-shadow:0 4px 0 var(--line); }
+  .screc{ display:flex; align-items:center; gap:10px; padding:11px 14px; border-bottom:1px solid var(--line); }
+  .screc:last-child{ border-bottom:none; }
+  .screc.me{ background:#fff8e6; }
+  .screc .rk{ flex:0 0 34px; text-align:center; font-weight:800; font-size:16px; color:var(--ink-s); }
+  .screc .nm{ flex:1; min-width:0; font-weight:700; font-size:15px; color:var(--ink); word-break:break-word; }
+  .screc .st{ flex:0 0 auto; font-weight:800; font-size:16px; color:var(--gold-d); }
+  .scmsg{ padding:24px 16px; text-align:center; color:var(--ink-s); font-size:14.5px; line-height:1.85; }
+  .scrank{ margin-top:10px; padding:10px 12px; border-radius:12px; background:#eef6fb; font-size:14px; color:var(--ink); }
+  .scrank b{ color:var(--gold-d); }
+
   @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
 </style>
 </head>
@@ -280,6 +311,14 @@
       </div>
     </div>
 
+    <div class="namebox">
+      <label for="playerName">Your name <span class="ar">— اكتبِ اسمَكَ لتظهرَ نتيجتُكَ في اللائحةِ المشتركة</span></label>
+      <div class="namerow">
+        <input id="playerName" maxlength="20" autocomplete="off" placeholder="…" />
+        <button class="btn" id="scoresBtn" type="button">🏆 Scores</button>
+      </div>
+    </div>
+
     <div class="levels" id="levels"></div>
 
     <div class="howto">
@@ -291,6 +330,36 @@
         <li>Tap 🔊 on a card to hear the word. Tap <b>Hint</b> if you are stuck (it costs one star).</li>
       </ol>
       <span class="ar">اِقرَأِ الكلماتِ الأربعَ، ثُمَّ اختَرِ الكلمةَ الأسبقَ في الترتيبِ الأبجديِّ. كلُّ اختيارٍ صحيحٍ يُثبِّتُ لوحًا من ألواحِ الجسر، وبعدَ اللوحِ الرابعِ يَعبُرُ المتسلِّقُ إلى القمَّةِ التالية. اِضغَطْ 🔊 لسماعِ الكلمة، و«Hint» للمساعدةِ مقابلَ نجمةٍ واحدة.</span>
+    </div>
+
+    <div class="credit">Prepared with care 🌸 by T. Wad Refae</div>
+    <div class="cc-license">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer">CC BY-NC-ND 4.0</a></div>
+  </div>
+</section>
+
+<!-- =========================== SCORES =========================== -->
+<section id="scores" hidden>
+  <div class="wrap">
+    <div class="hero">
+      <svg class="peaks" viewBox="0 0 600 72" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 72 L0 40 L70 10 L140 44 L210 18 L300 50 L380 22 L470 46 L540 16 L600 38 L600 72 Z" fill="#6f6a8d" opacity=".75"/>
+      </svg>
+      <h1>🏆 Scores</h1>
+      <div class="sub">Best stars per level — from every device</div>
+      <div class="subar ar">أفضلُ عددِ نجومٍ لكلِّ لاعبٍ في كلِّ مستوى، من جميعِ الأجهزة.</div>
+    </div>
+
+    <div class="sctabs" id="scTabs">
+      <button class="sctab on" data-b="1" type="button">Level 1</button>
+      <button class="sctab" data-b="2" type="button">Level 2</button>
+      <button class="sctab" data-b="3" type="button">Level 3</button>
+    </div>
+
+    <div class="sclist" id="scList"><div class="scmsg ar">جارٍ التحميل…</div></div>
+
+    <div class="btnrow" style="margin-top:14px">
+      <button class="btn ghost" id="scRefresh" type="button">🔄 Refresh</button>
+      <button class="btn ghost" id="scBack" type="button">← Back</button>
     </div>
 
     <div class="credit">Prepared with care 🌸 by T. Wad Refae</div>
@@ -367,6 +436,7 @@
       <div class="starline" id="sheetStars"></div>
       <p id="sheetText"></p>
       <p class="ar" id="sheetTextAr"></p>
+      <div class="scrank" id="sheetRank" hidden></div>
       <div class="btnrow">
         <button class="btn" id="nextBtn" type="button"></button>
         <button class="btn ghost" id="againBtn" type="button">🔁 Play level again</button>
@@ -534,10 +604,104 @@ $("#againBtn").addEventListener("click", function(){ startLevel(S.level); });
 $("#hintBtn").addEventListener("click", hint);
 
 function show(which){
-  $("#start").hidden = which !== "start";
-  $("#play").hidden  = which !== "play";
+  $("#start").hidden  = which !== "start";
+  $("#play").hidden   = which !== "play";
+  $("#scores").hidden = which !== "scores";
   window.scrollTo(0,0);
 }
+
+/* ===================== shared leaderboard ===================== */
+var API  = "https://palbook-live.vercel.app/api/scores";
+var GAME = "which-word-first";
+
+/* the name is remembered so a pupil does not retype it every time */
+(function(){
+  var saved = store("wcf_name");
+  if(saved) $("#playerName").value = saved;
+  $("#playerName").addEventListener("input", function(){
+    store("wcf_name", this.value.replace(/\s+/g," ").trim().slice(0,20));
+  });
+})();
+function playerName(){ return $("#playerName").value.replace(/\s+/g," ").trim().slice(0,20); }
+
+function submitScore(levelIndex, stars, bridges){
+  var who = playerName(), box = $("#sheetRank");
+  if(!who){
+    box.hidden = false;
+    box.innerHTML = '<span class="ar">اكتبِ اسمَكَ في الشاشةِ الأولى لتُسجَّلَ نتيجتُكَ في اللائحة.</span>';
+    return;
+  }
+  box.hidden = false;
+  box.innerHTML = '<span class="ar">جارٍ إرسالُ نتيجتِك…</span>';
+  fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      game: GAME, board: levelIndex + 1, name: who,
+      score: stars, correct: bridges, total: bridges
+    })
+  }).then(function(r){ if(!r.ok) throw new Error("bad"); return r.json(); })
+    .then(function(d){
+      box.innerHTML = d.improved
+        ? '🏆 New personal best — you are <b>#' + d.rank + '</b> on Level ' + (levelIndex+1) + '.'
+        : '🏆 Your best on Level ' + (levelIndex+1) + ' is still <b>' + d.best + '</b> ⭐ (rank #' + d.rank + ').';
+    })
+    .catch(function(){
+      box.innerHTML = '<span class="ar">تعذَّرَ إرسالُ النتيجةِ الآن — تحقَّقْ من الاتّصال.</span>';
+    });
+}
+
+var scBoard = 1;
+function openScores(b){
+  scBoard = b || 1;
+  var tabs = $("#scTabs").querySelectorAll(".sctab"), i;
+  for(i=0;i<tabs.length;i++){
+    tabs[i].classList.toggle("on", parseInt(tabs[i].getAttribute("data-b"),10) === scBoard);
+  }
+  show("scores");
+  loadScores();
+}
+function loadScores(){
+  var list = $("#scList");
+  list.innerHTML = '<div class="scmsg ar">جارٍ التحميل…</div>';
+  fetch(API + "?game=" + GAME + "&board=" + scBoard + "&limit=50", { cache:"no-store" })
+    .then(function(r){ if(!r.ok) throw new Error("bad"); return r.json(); })
+    .then(function(d){ renderScores(d.rows || []); })
+    .catch(function(){
+      list.innerHTML = '<div class="scmsg ar">تعذَّرَ تحميلُ اللائحة.<br>تحقَّقْ من الاتّصالِ ثمَّ اضغطْ «Refresh».</div>';
+    });
+}
+function renderScores(rows){
+  var list = $("#scList"), me = playerName(), medals = ["🥇","🥈","🥉"], i;
+  list.innerHTML = "";
+  if(!rows.length){
+    list.innerHTML = '<div class="scmsg ar">لا توجدُ نتائجُ بعدُ في هذا المستوى.<br>كُنْ أوّلَ مَن يَعبُرُ الجسر! 🌉</div>';
+    return;
+  }
+  for(i=0;i<rows.length;i++){
+    var r = rows[i];
+    var row  = document.createElement("div");
+    row.className = "screc" + (me && r.name === me ? " me" : "");
+    var rk = document.createElement("span");
+    rk.className = "rk";
+    rk.textContent = r.rank <= 3 ? medals[r.rank-1] : String(r.rank);
+    var nm = document.createElement("span");
+    nm.className = "nm";
+    nm.textContent = r.name;          // textContent: a name is never parsed as HTML
+    var st = document.createElement("span");
+    st.className = "st";
+    st.textContent = "⭐ " + r.score;
+    row.appendChild(rk); row.appendChild(nm); row.appendChild(st);
+    list.appendChild(row);
+  }
+}
+$("#scoresBtn").addEventListener("click", function(){ openScores(1); });
+$("#scBack").addEventListener("click", function(){ buildBest(); show("start"); });
+$("#scRefresh").addEventListener("click", loadScores);
+$("#scTabs").addEventListener("click", function(e){
+  var t = e.target.closest(".sctab");
+  if(t) openScores(parseInt(t.getAttribute("data-b"),10));
+});
 
 /* ===================== level / group ===================== */
 function startLevel(li){
@@ -669,7 +833,9 @@ function finishGroup(){
         "You finished " + S.groups.length + " bridges in " + LEVELS[S.level].name.split(" — ")[0] +
         " and collected " + S.stars + " of " + (S.groups.length*3) + " stars.";
       $("#sheetTextAr").textContent = "أتمَمْتَ بناءَ الجسورِ كلِّها ووصَلْتَ إلى القمَّة. أحسَنْتَ!";
+      submitScore(S.level, S.stars, S.groups.length);
     }else{
+      $("#sheetRank").hidden = true;
       $("#sheetTitle").textContent = "Bridge finished! 🌉";
       $("#sheetText").textContent = S.miss === 0
         ? "Perfect order on the first try."
