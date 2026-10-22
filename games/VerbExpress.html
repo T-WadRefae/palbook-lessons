@@ -58,8 +58,9 @@
     font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); background:#fff; text-align:center; }
   input.name-in:focus{ outline:none; border-color:var(--sky-d); box-shadow:0 0 0 4px rgba(74,159,208,.22); }
 
-  .levels{ display:grid; gap:9px; margin-top:16px; }
-  @media(min-width:460px){ .levels{ grid-template-columns:repeat(3,1fr); } }
+  .pick-label{ margin-top:15px; font-size:13.5px; font-weight:600; color:var(--ink-soft); text-align:center; }
+  .levels{ display:grid; gap:8px; margin-top:7px; grid-template-columns:repeat(2,1fr); }
+  @media(min-width:460px){ .levels{ grid-template-columns:repeat(4,1fr); } }
   .lvl{ background:#fff; border:3px solid #e2d8bb; border-radius:15px; padding:11px 9px; cursor:pointer;
     display:flex; flex-direction:column; align-items:center; gap:3px; transition:all .2s ease; }
   .lvl:hover{ transform:translateY(-2px); }
@@ -264,25 +265,30 @@
       <div class="loco-badge">🚂</div>
       <h1 class="game-title">Verb Express</h1>
       <div class="game-sub ar">قِطارُ الأفعال — مِنَ الحاضرِ إلى الماضي</div>
-      <p class="game-tag ar">يَقِفُ القطارُ في المحطّة، وتَنزِلُ غيمةٌ عليها الفعلُ المجرَّد.<br>اكتُبْ صيغةَ الماضي البسيطِ لينطلقَ القطارُ إلى المحطّةِ التالية 🚂💨</p>
+      <p class="game-tag ar">يَقِفُ القطارُ في المحطّة، وتَنزِلُ غيمةٌ عليها الفعلُ المجرَّد.<br>اكتُبْ صيغةَ الماضي البسيطِ لينطلقَ القطارُ إلى المحطّةِ التالية 🚂💨<br><b>كلُّ رحلةٍ: ١٠ أفعالٍ عشوائيّة — ٥ منتظمة 🌉 و٥ شاذّة 🚇</b></p>
 
       <div class="field">
         <label for="playerName">Your name <span class="ar">— اكتبِ اسمَكَ لتظهرَ في لائحةِ النتائج</span></label>
         <input class="name-in" id="playerName" maxlength="20" placeholder="…" autocomplete="off" />
       </div>
 
+      <p class="pick-label ar">اختَرْ صفَّك</p>
       <div class="levels" id="levels">
-        <button class="lvl on" data-lv="1" type="button">
-          <span class="lv-emo">🌤️</span><span class="lv-name">Level 1</span>
-          <span class="lv-meta ar">الصفّان ٥–٦<br>أفعالٌ أساسيّة</span>
+        <button class="lvl" data-gr="5" type="button">
+          <span class="lv-emo">5️⃣</span><span class="lv-name">Grade 5</span>
+          <span class="lv-meta ar">الصفُّ الخامس</span>
         </button>
-        <button class="lvl" data-lv="2" type="button">
-          <span class="lv-emo">⛰️</span><span class="lv-name">Level 2</span>
-          <span class="lv-meta ar">الصفّان ٧–٨<br>قواعدُ الإملاء</span>
+        <button class="lvl" data-gr="6" type="button">
+          <span class="lv-emo">6️⃣</span><span class="lv-name">Grade 6</span>
+          <span class="lv-meta ar">الصفُّ السادس</span>
         </button>
-        <button class="lvl" data-lv="3" type="button">
-          <span class="lv-emo">🌙</span><span class="lv-name">Level 3</span>
-          <span class="lv-meta ar">تحدٍّ<br>أفعالٌ شاذّة</span>
+        <button class="lvl" data-gr="7" type="button">
+          <span class="lv-emo">7️⃣</span><span class="lv-name">Grade 7</span>
+          <span class="lv-meta ar">الصفُّ السابع</span>
+        </button>
+        <button class="lvl" data-gr="8" type="button">
+          <span class="lv-emo">8️⃣</span><span class="lv-name">Grade 8</span>
+          <span class="lv-meta ar">الصفُّ الثامن</span>
         </button>
       </div>
 
@@ -380,9 +386,10 @@
       <p class="ar">أفضلُ نتيجةٍ لكلِّ لاعبٍ — من كلِّ الأجهزة</p>
     </div>
     <div class="sc-tabs" id="scTabs">
-      <button class="sc-tab on" data-lv="1" type="button">Level 1</button>
-      <button class="sc-tab" data-lv="2" type="button">Level 2</button>
-      <button class="sc-tab" data-lv="3" type="button">Level 3</button>
+      <button class="sc-tab on" data-gr="5" type="button">Grade 5</button>
+      <button class="sc-tab" data-gr="6" type="button">Grade 6</button>
+      <button class="sc-tab" data-gr="7" type="button">Grade 7</button>
+      <button class="sc-tab" data-gr="8" type="button">Grade 8</button>
     </div>
     <div class="sc-list" id="scList"><div class="sc-msg ar">جارٍ التحميل…</div></div>
     <div class="sc-actions">
@@ -398,82 +405,136 @@
 
   var API = 'https://palbook-live.vercel.app/api/scores';
   var GAME = 'verb-express';
-  var PER_RUN = 10;
 
   var STATIONS = ['Jaffa','Haifa','Acre','Nazareth','Jenin','Nablus','Ramallah','Jerusalem','Bethlehem','Hebron'];
 
-  /* ===== verb bank: [ base, past, Arabic, 'r'|'i', example sentence, [extra accepted spellings] ] ===== */
+  /* ===== verb bank, by school grade =====
+     Each entry: [ base, past, Arabic, example sentence, [extra accepted spellings] ]
+     Every run draws 5 regular + 5 irregular verbs at random from the grade. */
   var BANK = {
-    1: [
-      ['play','played','لَعِبَ','r','Yesterday we played football in the yard.'],
-      ['walk','walked','مَشى','r','Yesterday I walked to school.'],
-      ['watch','watched','شاهَدَ','r','Last night they watched TV.'],
-      ['help','helped','ساعَدَ','r','Yesterday Lana helped her mother.'],
-      ['clean','cleaned','نَظَّفَ','r','Last Sunday we cleaned the classroom.'],
-      ['open','opened','فَتَحَ','r','The shop opened at eight o’clock.'],
-      ['listen','listened','اِستَمَعَ','r','Last evening I listened to the radio.'],
-      ['visit','visited','زارَ','r','Last Friday they visited their grandfather.'],
-      ['cook','cooked','طَبَخَ','r','Last Saturday my father cooked our lunch.'],
-      ['wash','washed','غَسَلَ','r','Before lunch she washed her hands.'],
-      ['go','went','ذَهَبَ','i','Yesterday I went to the market.'],
-      ['eat','ate','أَكَلَ','i','Yesterday we ate rice for lunch.'],
-      ['see','saw','رَأى','i','Yesterday I saw my friends at school.'],
-      ['come','came','جاءَ','i','Yesterday they came home at four.'],
-      ['take','took','أَخَذَ','i','Yesterday he took the bus to work.'],
-      ['make','made','صَنَعَ','i','Last Friday Mum made a cake.'],
-      ['give','gave','أَعْطى','i','Yesterday the teacher gave us homework.'],
-      ['write','wrote','كَتَبَ','i','Last month I wrote a long letter.'],
-      ['drink','drank','شَرِبَ','i','This morning she drank her milk.'],
-      ['run','ran','رَكَضَ','i','Yesterday the boys ran in the park.']
-    ],
-    2: [
-      ['stop','stopped','تَوَقَّفَ','r','Yesterday the bus stopped near the school.'],
-      ['study','studied','دَرَسَ','r','Yesterday we studied English for an hour.'],
-      ['carry','carried','حَمَلَ','r','Yesterday he carried the heavy bag home.'],
-      ['plan','planned','خَطَّطَ','r','Last week they planned the school trip.'],
-      ['try','tried','حاوَلَ','r','Yesterday she tried to fix the computer.'],
-      ['shop','shopped','تَسَوَّقَ','r','Last Friday we shopped in the old city.'],
-      ['hurry','hurried','أَسْرَعَ','r','This morning I hurried to catch the bus.'],
-      ['travel','travelled','سافَرَ','r','Last summer they travelled to Jerusalem.',['traveled']],
-      ['buy','bought','اِشْتَرى','i','This morning my mother bought fresh bread.'],
-      ['bring','brought','أَحْضَرَ','i','Yesterday he brought his books to class.'],
-      ['teach','taught','عَلَّمَ','i','Last year she taught us English.'],
-      ['catch','caught','أَمْسَكَ','i','Yesterday the goalkeeper caught the ball.'],
-      ['think','thought','فَكَّرَ','i','Yesterday I thought about the question.'],
-      ['find','found','وَجَدَ','i','Yesterday they found the lost key.'],
-      ['leave','left','غادَرَ','i','Yesterday we left the house at seven.'],
-      ['meet','met','اِلْتَقى','i','Yesterday she met her friends at the library.'],
-      ['build','built','بَنى','i','Last year they built a new school.'],
-      ['win','won','فازَ','i','Last Friday our team won the match.'],
-      ['break','broke','كَسَرَ','i','Yesterday he broke the glass by mistake.'],
-      ['speak','spoke','تَحَدَّثَ','i','Yesterday she spoke to the headmaster.']
-    ],
-    3: [
-      ['begin','began','بَدَأَ','i','Yesterday the lesson began at eight o’clock.'],
-      ['swim','swam','سَبَحَ','i','Last summer they swam in the sea every day.'],
-      ['wear','wore','اِرْتَدى','i','On the feast she wore her new dress.'],
-      ['forget','forgot','نَسِيَ','i','Yesterday I forgot my keys at home.'],
-      ['understand','understood','فَهِمَ','i','Yesterday we understood the new lesson.'],
-      ['keep','kept','حافَظَ على','i','Last week he kept his room tidy.'],
-      ['sleep','slept','نامَ','i','Last night the baby slept for eight hours.'],
-      ['sell','sold','باعَ','i','Yesterday the farmer sold his olives.'],
-      ['tell','told','رَوى','i','Last night grandmother told us a story.'],
-      ['drive','drove','قادَ','i','Last week my uncle drove to Nablus.'],
-      ['grow','grew','زَرَعَ','i','Last year the farmers grew wheat here.'],
-      ['know','knew','عَرَفَ','i','Yesterday I knew the answer at once.'],
-      ['throw','threw','رَمى','i','Yesterday the player threw the ball.'],
-      ['hide','hid','اِخْتَبَأَ','i','Yesterday the cat hid under the chair.'],
-      ['spend','spent','أَمْضى','i','Last holiday we spent a week with our cousins.'],
-      ['choose','chose','اِخْتارَ','i','Yesterday she chose a book from the library.'],
-      ['feel','felt','شَعَرَ','i','Yesterday he felt tired after the long walk.'],
-      ['ring','rang','رَنَّ','i','Yesterday the bell rang at two o’clock.'],
-      ['steal','stole','سَرَقَ','i','In the story, the thief stole the gold.'],
-      ['rise','rose','أَشْرَقَ','i','Yesterday the sun rose behind the hills.']
-    ]
+    5: {
+      r: [
+        ['play','played','لَعِبَ','Yesterday we played football in the yard.'],
+        ['walk','walked','مَشى','Yesterday I walked to school.'],
+        ['watch','watched','شاهَدَ','Last night they watched TV.'],
+        ['help','helped','ساعَدَ','Yesterday Lana helped her mother.'],
+        ['clean','cleaned','نَظَّفَ','Last Sunday we cleaned the classroom.'],
+        ['open','opened','فَتَحَ','The shop opened at eight o’clock.'],
+        ['listen','listened','اِستَمَعَ','Last evening I listened to the radio.'],
+        ['visit','visited','زارَ','Last Friday they visited their grandfather.'],
+        ['cook','cooked','طَبَخَ','Last Saturday my father cooked our lunch.'],
+        ['wash','washed','غَسَلَ','Before lunch she washed her hands.']
+      ],
+      i: [
+        ['go','went','ذَهَبَ','Yesterday I went to the market.'],
+        ['eat','ate','أَكَلَ','Yesterday we ate rice for lunch.'],
+        ['see','saw','رَأى','Yesterday I saw my friends at school.'],
+        ['come','came','جاءَ','Yesterday they came home at four.'],
+        ['take','took','أَخَذَ','Yesterday he took the bus to work.'],
+        ['make','made','صَنَعَ','Last Friday Mum made a cake.'],
+        ['give','gave','أَعْطى','Yesterday the teacher gave us homework.'],
+        ['run','ran','رَكَضَ','Yesterday the boys ran in the park.'],
+        ['drink','drank','شَرِبَ','This morning she drank her milk.'],
+        ['sit','sat','جَلَسَ','Yesterday we sat under the olive tree.']
+      ]
+    },
+    6: {
+      r: [
+        ['answer','answered','أَجابَ','Yesterday she answered all the questions.'],
+        ['paint','painted','رَسَمَ','Last week they painted the classroom wall.'],
+        ['jump','jumped','قَفَزَ','Yesterday the children jumped over the rope.'],
+        ['close','closed','أَغْلَقَ','Yesterday he closed the window.'],
+        ['live','lived','سَكَنَ','My grandfather lived in Jaffa.'],
+        ['talk','talked','تَكَلَّمَ','Yesterday we talked about the trip.'],
+        ['study','studied','دَرَسَ','Yesterday we studied English for an hour.'],
+        ['carry','carried','حَمَلَ','Yesterday he carried the heavy bag home.'],
+        ['try','tried','حاوَلَ','Yesterday she tried to fix the computer.'],
+        ['dance','danced','رَقَصَ','At the wedding they danced the dabke.']
+      ],
+      i: [
+        ['write','wrote','كَتَبَ','Last month I wrote a long letter.'],
+        ['sleep','slept','نامَ','Last night the baby slept for eight hours.'],
+        ['buy','bought','اِشْتَرى','This morning my mother bought fresh bread.'],
+        ['bring','brought','أَحْضَرَ','Yesterday he brought his books to class.'],
+        ['find','found','وَجَدَ','Yesterday they found the lost key.'],
+        ['meet','met','اِلْتَقى','Yesterday she met her friends at the library.'],
+        ['tell','told','رَوى','Last night grandmother told us a story.'],
+        ['sing','sang','غَنّى','Yesterday the class sang a new song.'],
+        ['swim','swam','سَبَحَ','Last summer they swam in the sea every day.'],
+        ['feel','felt','شَعَرَ','Yesterday he felt tired after the long walk.']
+      ]
+    },
+    7: {
+      r: [
+        ['stop','stopped','تَوَقَّفَ','Yesterday the bus stopped near the school.'],
+        ['plan','planned','خَطَّطَ','Last week they planned the school trip.'],
+        ['shop','shopped','تَسَوَّقَ','Last Friday we shopped in the old city.'],
+        ['drop','dropped','أَسْقَطَ','Yesterday he dropped his pen on the floor.'],
+        ['travel','travelled','سافَرَ','Last summer they travelled to Jerusalem.',['traveled']],
+        ['hurry','hurried','أَسْرَعَ','This morning I hurried to catch the bus.'],
+        ['worry','worried','قَلِقَ','Yesterday my mother worried about the exam.'],
+        ['cry','cried','بَكى','Yesterday the baby cried all morning.'],
+        ['enjoy','enjoyed','اِسْتَمْتَعَ','Yesterday we enjoyed the school trip.'],
+        ['clap','clapped','صَفَّقَ','Yesterday everyone clapped for the winners.']
+      ],
+      i: [
+        ['teach','taught','عَلَّمَ','Last year she taught us English.'],
+        ['catch','caught','أَمْسَكَ','Yesterday the goalkeeper caught the ball.'],
+        ['think','thought','فَكَّرَ','Yesterday I thought about the question.'],
+        ['leave','left','غادَرَ','Yesterday we left the house at seven.'],
+        ['build','built','بَنى','Last year they built a new school.'],
+        ['win','won','فازَ','Last Friday our team won the match.'],
+        ['break','broke','كَسَرَ','Yesterday he broke the glass by mistake.'],
+        ['speak','spoke','تَحَدَّثَ','Yesterday she spoke to the headmaster.'],
+        ['wear','wore','اِرْتَدى','On the feast she wore her new dress.'],
+        ['begin','began','بَدَأَ','Yesterday the lesson began at eight o’clock.']
+      ]
+    },
+    8: {
+      r: [
+        ['decide','decided','قَرَّرَ','Yesterday they decided to write about Salah Al-Din.'],
+        ['arrive','arrived','وَصَلَ','Yesterday the guests arrived before sunset.'],
+        ['prepare','prepared','حَضَّرَ','Last night she prepared her presentation.'],
+        ['describe','described','وَصَفَ','Yesterday he described the old city.'],
+        ['discover','discovered','اِكْتَشَفَ','Last year they discovered an old coin.'],
+        ['continue','continued','تابَعَ','Yesterday we continued the lesson after break.'],
+        ['repeat','repeated','كَرَّرَ','Yesterday the teacher repeated the question.'],
+        ['improve','improved','حَسَّنَ','Last term she improved her handwriting.'],
+        ['invite','invited','دَعا','Last week they invited us to dinner.'],
+        ['practise','practised','تَدَرَّبَ','Yesterday the team practised for two hours.',['practiced']]
+      ],
+      i: [
+        ['understand','understood','فَهِمَ','Yesterday we understood the new lesson.'],
+        ['keep','kept','حافَظَ على','Last week he kept his room tidy.'],
+        ['sell','sold','باعَ','Yesterday the farmer sold his olives.'],
+        ['drive','drove','قادَ','Last week my uncle drove to Nablus.'],
+        ['grow','grew','زَرَعَ','Last year the farmers grew wheat here.'],
+        ['know','knew','عَرَفَ','Yesterday I knew the answer at once.'],
+        ['throw','threw','رَمى','Yesterday the player threw the ball.'],
+        ['hide','hid','اِخْتَبَأَ','Yesterday the cat hid under the chair.'],
+        ['spend','spent','أَمْضى','Last holiday we spent a week with our cousins.'],
+        ['choose','chose','اِخْتارَ','Yesterday she chose a book from the library.']
+      ]
+    }
   };
 
-  var LEVEL_TIME = { 1:30, 2:26, 3:23 };
+  var GRADES = [5, 6, 7, 8];
+  var PER_KIND = 5;              // 5 regular + 5 irregular every run
+  var PER_RUN = PER_KIND * 2;
+  var QUESTION_TIME = 25;
   var HINT_COST = 25;
+
+  /* one verb, normalised out of the compact bank rows */
+  function mkQ(row, kind){
+    return { base:row[0], past:row[1], ar:row[2], ex:row[3], alts:row[4] || null, kind:kind };
+  }
+  /* a run is 5 random regular + 5 random irregular verbs, then shuffled together */
+  function drawRun(grade){
+    var b = BANK[grade] || BANK[5];
+    var picked = shuffle(b.r.slice()).slice(0, PER_KIND).map(function(row){ return mkQ(row,'r'); })
+         .concat(shuffle(b.i.slice()).slice(0, PER_KIND).map(function(row){ return mkQ(row,'i'); }));
+    return shuffle(picked);
+  }
 
   /* ===== helpers ===== */
   var $ = function(id){ return document.getElementById(id); };
@@ -541,20 +602,31 @@
   }
 
   /* ===== state ===== */
-  var S = { name:'', level:1, qs:[], i:0, score:0, correct:0, streak:0,
+  var S = { name:'', grade:5, qs:[], i:0, score:0, correct:0, streak:0,
             locked:true, usedHint:false, timeLeft:0, timerId:null, missed:[] };
 
-  try { var saved = localStorage.getItem('vx_name'); if (saved) $('playerName').value = saved; } catch(e){}
+  try {
+    var savedName = localStorage.getItem('vx_name');
+    if (savedName) $('playerName').value = savedName;
+    var savedGrade = Number(localStorage.getItem('vx_grade'));
+    if (GRADES.indexOf(savedGrade) !== -1) S.grade = savedGrade;
+  } catch(e){}
 
   /* ===== start screen ===== */
+  function paintGradePick(){
+    var all = document.querySelectorAll('.lvl');
+    for (var i=0;i<all.length;i++){
+      all[i].classList.toggle('on', Number(all[i].getAttribute('data-gr')) === S.grade);
+    }
+  }
   $('levels').addEventListener('click', function(e){
     var b = e.target.closest ? e.target.closest('.lvl') : null;
     if (!b) return;
-    var all = document.querySelectorAll('.lvl');
-    for (var i=0;i<all.length;i++) all[i].classList.remove('on');
-    b.classList.add('on');
-    S.level = Number(b.getAttribute('data-lv'));
+    S.grade = Number(b.getAttribute('data-gr'));
+    try { localStorage.setItem('vx_grade', String(S.grade)); } catch(e){}
+    paintGradePick();
   });
+  paintGradePick();
 
   $('btnStart').addEventListener('click', function(){
     var n = $('playerName').value.replace(/\s+/g,' ').trim().slice(0,20);
@@ -569,8 +641,8 @@
     startRun();
   });
 
-  $('btnScores1').addEventListener('click', function(){ openScores(S.level); });
-  $('btnScores2').addEventListener('click', function(){ openScores(S.level); });
+  $('btnScores1').addEventListener('click', function(){ openScores(S.grade); });
+  $('btnScores2').addEventListener('click', function(){ openScores(S.grade); });
   $('btnHome').addEventListener('click', function(){ show('scr-start'); });
   $('btnAgain').addEventListener('click', function(){ startRun(); });
   $('btnBack').addEventListener('click', function(){ show('scr-start'); });
@@ -584,7 +656,7 @@
 
   /* ===== run ===== */
   function startRun(){
-    S.qs = shuffle(BANK[S.level].slice()).slice(0, PER_RUN);
+    S.qs = drawRun(S.grade);
     S.i = 0; S.score = 0; S.correct = 0; S.streak = 0; S.missed = [];
     $('hudScore').textContent = '0';
     $('hudStreakChip').style.display = 'none';
@@ -632,10 +704,10 @@
   /* --- 2. the cloud with the base verb comes down --- */
   function dropCloud(){
     var q = S.qs[S.i];
-    $('cloudVerb').textContent = q[0];
-    $('cloudAr').textContent = q[2];
-    $('cloudKind').className = 'cloud-kind ' + (q[3] === 'r' ? 'bridge' : 'tunnel');
-    $('cloudKind').textContent = q[3] === 'r' ? '🌉 Regular' : '🚇 Irregular';
+    $('cloudVerb').textContent = q.base;
+    $('cloudAr').textContent = q.ar;
+    $('cloudKind').className = 'cloud-kind ' + (q.kind === 'r' ? 'bridge' : 'tunnel');
+    $('cloudKind').textContent = q.kind === 'r' ? '🌉 Regular' : '🚇 Irregular';
     $('cloudCard').classList.add('in');
     $('loco').classList.add('bump');
 
@@ -655,7 +727,7 @@
     if (S.locked || S.usedHint) return;
     S.usedHint = true;
     var q = S.qs[S.i], inp = $('typeIn');
-    inp.value = q[1].charAt(0);
+    inp.value = q.past.charAt(0);
     try { inp.focus(); inp.setSelectionRange(1,1); } catch(e){}
     $('btnHint').disabled = true;
   });
@@ -663,9 +735,8 @@
   function accepts(q, given){
     var g = norm(given);
     if (!g) return false;
-    if (g === norm(q[1])) return true;
-    var alts = q[5];
-    if (alts) for (var i=0;i<alts.length;i++){ if (g === norm(alts[i])) return true; }
+    if (g === norm(q.past)) return true;
+    if (q.alts) for (var i=0;i<q.alts.length;i++){ if (g === norm(q.alts[i])) return true; }
     return false;
   }
 
@@ -684,23 +755,23 @@
 
     if (ok){
       S.correct++; S.streak++;
-      var speed = Math.round(Math.max(0, S.timeLeft / LEVEL_TIME[S.level]) * 50);
+      var speed = Math.round(Math.max(0, S.timeLeft / QUESTION_TIME) * 50);
       var streakBonus = Math.min(S.streak - 1, 5) * 10;
       var gained = Math.max(0, 100 + speed + streakBonus - (S.usedHint ? HINT_COST : 0));
       S.score += gained;
 
       inp.classList.add('right');
-      inp.value = q[1];
+      inp.value = q.past;
       markStripe(S.i, true);
       $('hudScore').textContent = String(S.score);
       $('hudStreakChip').style.display = S.streak > 1 ? '' : 'none';
       $('hudStreak').textContent = String(S.streak);
 
       v.className = 'verdict good show';
-      v.innerHTML = '✅ <b>' + q[0] + ' → ' + q[1] + '</b> &nbsp;+' + gained + ' pts'
+      v.innerHTML = '✅ <b>' + q.base + ' → ' + q.past + '</b> &nbsp;+' + gained + ' pts'
         + (streakBonus ? ' <span style="opacity:.8">(🔥 +' + streakBonus + ')</span>' : '')
         + (S.usedHint ? ' <span style="opacity:.7">(💡 −' + HINT_COST + ')</span>' : '')
-        + '<span class="ex">' + q[4] + '</span>';
+        + '<span class="ex">' + q.ex + '</span>';
       goodSound();
       sparkAt($('cloudCard'));
       $('cloudCard').classList.add('pop');
@@ -713,9 +784,9 @@
 
       v.className = 'verdict bad show';
       v.innerHTML = (timedOut ? '⏱️ <b>Time is up.</b> ' : '❌ <b>Not quite.</b> ')
-        + 'The past of <b>' + q[0] + '</b> is <span class="fix">' + q[1] + '</span>.'
-        + '<span class="ex">' + q[4] + '</span>'
-        + '<span class="ar">المعنى: ' + q[2] + '</span>';
+        + 'The past of <b>' + q.base + '</b> is <span class="fix">' + q.past + '</span>.'
+        + '<span class="ex">' + q.ex + '</span>'
+        + '<span class="ar">المعنى: ' + q.ar + '</span>';
       badSound();
       $('cloudCard').classList.remove('in');
     }
@@ -752,7 +823,7 @@
   /* ===== timer ===== */
   function startTimer(){
     stopTimer();
-    S.timeLeft = LEVEL_TIME[S.level];
+    S.timeLeft = QUESTION_TIME;
     var total = S.timeLeft;
     paintTimer(1);
     S.timerId = setInterval(function(){
@@ -783,7 +854,11 @@
       : stars === 3 ? 'Great journey!' : stars >= 1 ? 'You arrived!' : 'Keep practising!';
     $('resStars').textContent = '⭐️'.repeat(stars) + '☆'.repeat(3 - stars);
     $('resScore').innerHTML = S.score + ' <span>pts</span>';
-    $('resLine').innerHTML = S.correct + ' / ' + PER_RUN + ' correct &nbsp;·&nbsp; Level ' + S.level;
+    var rOk = 0, iOk = 0;
+    S.qs.forEach(function(q){ if (S.missed.indexOf(q) === -1){ if (q.kind === 'r') rOk++; else iOk++; } });
+    $('resLine').innerHTML = S.correct + ' / ' + PER_RUN + ' correct &nbsp;·&nbsp; Grade ' + S.grade
+      + '<br><span style="font-size:13px">🌉 regular ' + rOk + '/' + PER_KIND
+      + ' &nbsp;·&nbsp; 🚇 irregular ' + iOk + '/' + PER_KIND + '</span>';
     $('rankBox').innerHTML = '<span class="ar">جارٍ إرسالُ نتيجتِك…</span>';
 
     var mbox = $('missed'), mlist = $('missedList');
@@ -792,8 +867,8 @@
       mbox.classList.add('show');
       S.missed.forEach(function(q){
         var s = document.createElement('span');
-        s.appendChild(document.createTextNode(q[0] + ' → '));
-        var b = document.createElement('b'); b.textContent = q[1];
+        s.appendChild(document.createTextNode(q.base + ' → '));
+        var b = document.createElement('b'); b.textContent = q.past;
         s.appendChild(b);
         mlist.appendChild(s);
       });
@@ -810,14 +885,14 @@
     fetch(API, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ game:GAME, level:S.level, name:S.name, score:S.score, correct:S.correct, total:PER_RUN })
+      body: JSON.stringify({ game:GAME, grade:S.grade, name:S.name, score:S.score, correct:S.correct, total:PER_RUN })
     }).then(function(r){
       if (!r.ok) throw new Error('bad');
       return r.json();
     }).then(function(d){
       var msg = d.improved
-        ? 'New personal best! You are <b>#' + d.rank + '</b> on Level ' + S.level + '.'
-        : 'Your best on Level ' + S.level + ' is still <b>' + d.best + '</b> pts (rank #' + d.rank + ').';
+        ? 'New personal best! You are <b>#' + d.rank + '</b> in Grade ' + S.grade + '.'
+        : 'Your best in Grade ' + S.grade + ' is still <b>' + d.best + '</b> pts (rank #' + d.rank + ').';
       $('rankBox').innerHTML = '🏆 ' + msg;
     }).catch(function(){
       $('rankBox').innerHTML = '📴 <span class="ar">تعذَّرَ إرسالُ النتيجةِ الآن — تحقَّقْ من الاتّصالِ وأعِدِ المحاولة.</span>';
@@ -825,23 +900,23 @@
   }
 
   /* ===== scores ===== */
-  var scLevel = 1;
+  var scGrade = 5;
   $('scTabs').addEventListener('click', function(e){
     var b = e.target.closest ? e.target.closest('.sc-tab') : null;
     if (!b) return;
     var all = document.querySelectorAll('.sc-tab');
     for (var i=0;i<all.length;i++) all[i].classList.remove('on');
     b.classList.add('on');
-    scLevel = Number(b.getAttribute('data-lv'));
+    scGrade = Number(b.getAttribute('data-gr'));
     loadScores();
   });
   $('btnRefresh').addEventListener('click', loadScores);
 
-  function openScores(lv){
-    scLevel = lv || 1;
+  function openScores(gr){
+    scGrade = GRADES.indexOf(gr) !== -1 ? gr : 5;
     var all = document.querySelectorAll('.sc-tab');
     for (var i=0;i<all.length;i++){
-      all[i].classList.toggle('on', Number(all[i].getAttribute('data-lv')) === scLevel);
+      all[i].classList.toggle('on', Number(all[i].getAttribute('data-gr')) === scGrade);
     }
     show('scr-scores');
     loadScores();
@@ -850,7 +925,7 @@
   function loadScores(){
     var box = $('scList');
     box.innerHTML = '<div class="sc-msg ar">جارٍ التحميل…</div>';
-    fetch(API + '?game=' + GAME + '&level=' + scLevel + '&limit=50', { cache:'no-store' })
+    fetch(API + '?game=' + GAME + '&grade=' + scGrade + '&limit=50', { cache:'no-store' })
       .then(function(r){ if (!r.ok) throw new Error('bad'); return r.json(); })
       .then(function(d){ renderScores(d.rows || []); })
       .catch(function(){
@@ -861,7 +936,7 @@
   function renderScores(rows){
     var box = $('scList'); box.innerHTML = '';
     if (!rows.length){
-      box.innerHTML = '<div class="sc-msg ar">لا توجدُ نتائجُ بعدُ في هذا المستوى.<br>كُنْ أوّلَ مَن يَركبُ القطار! 🚂</div>';
+      box.innerHTML = '<div class="sc-msg ar">لا توجدُ نتائجُ بعدُ في هذا الصفّ.<br>كُنْ أوّلَ مَن يَركبُ القطار! 🚂</div>';
       return;
     }
     var medals = ['🥇','🥈','🥉'];
