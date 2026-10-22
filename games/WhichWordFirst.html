@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Which Word Comes First? 🌉 — Alphabetical Order | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --sky:#7cc9e3; --sky-2:#c9ebec; --sky-3:#fdf0d6;
+    --rock:#6f6a8d; --rock-d:#4e4a6b; --rock-l:#938ead; --snow:#f7f9ff;
+    --wood:#cf8c46; --wood-d:#9f662c; --wood-l:#e8b273; --rope:#8d6a45;
+    --gold:#eeab24; --gold-d:#c2831a;
+    --ink:#2b2a3c; --ink-s:#615d7a;
+    --card:#ffffff; --line:rgba(43,42,60,.14);
+    --ok:#2b9469; --ok-d:#1f7250; --no:#cf4b45;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; margin:0; }
+  body{
+    font-family:'Fredoka',system-ui,sans-serif; color:var(--ink);
+    background:linear-gradient(180deg,#5fb6d8 0%,#9ddcea 42%,#fdf0d6 100%);
+    overflow-x:hidden;
+  }
+  .ar{ font-family:'Cairo',sans-serif; direction:rtl; unicode-bidi:isolate; font-weight:600; }
+  button{ font-family:inherit; cursor:pointer; border:none; }
+  :focus-visible{ outline:3px solid var(--gold); outline-offset:2px; border-radius:8px; }
+  .wrap{ max-width:940px; margin:0 auto; padding:14px 14px 28px; }
+  section[hidden]{ display:none !important; }
+
+  /* ===================== START SCREEN ===================== */
+  .hero{
+    position:relative; overflow:hidden; border-radius:22px; margin-bottom:16px;
+    background:linear-gradient(180deg,#2f4a6b 0%,#486f94 55%,#7fb0c9 100%);
+    box-shadow:0 10px 26px rgba(20,32,50,.3);
+    padding:26px 18px 20px; text-align:center; color:#fff;
+  }
+  .hero .peaks{ position:absolute; inset:auto 0 0 0; height:72px; display:block; }
+  .hero h1{
+    position:relative; z-index:2; margin:0 0 6px; font-size:clamp(26px,7.4vw,46px); font-weight:700;
+    letter-spacing:-.5px; text-shadow:0 3px 0 rgba(0,0,0,.22);
+  }
+  .hero .sub{ position:relative; z-index:2; font-size:clamp(13px,3.4vw,16px); opacity:.95; }
+  .hero .subar{ position:relative; z-index:2; margin-top:6px; font-size:clamp(12px,3.2vw,14.5px); opacity:.92; }
+  .hero .ropeline{
+    position:relative; z-index:2; margin:16px auto 2px; width:min(320px,86%); height:10px;
+    border-radius:6px; background:var(--rope);
+    box-shadow:0 3px 0 rgba(0,0,0,.2);
+  }
+  .hero .ropeline i{
+    position:absolute; top:-7px; width:18%; height:16px; border-radius:4px;
+    background:linear-gradient(180deg,var(--wood-l),var(--wood) 60%,var(--wood-d));
+    box-shadow:0 2px 0 var(--wood-d);
+  }
+
+  .levels{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+  .lvl{
+    text-align:left; color:var(--ink); background:var(--card); border-radius:18px; overflow:hidden;
+    box-shadow:0 5px 0 rgba(43,42,60,.16), 0 8px 18px rgba(20,32,50,.14);
+    display:flex; flex-direction:column; transition:transform .16s ease;
+    padding:0 0 14px;
+  }
+  .lvl:hover{ transform:translateY(-4px); }
+  .lvl svg{ display:block; width:100%; height:78px; }
+  .lvl .t{ padding:10px 14px 0; font-size:18px; font-weight:700; }
+  .lvl .d{ padding:2px 14px 0; font-size:13px; color:var(--ink-s); line-height:1.5; }
+  .lvl .dar{ padding:4px 14px 0; font-size:12.5px; color:var(--ink-s); line-height:1.6; }
+  .lvl .ex{
+    margin:10px 14px 0; align-self:flex-start; font-size:13px; font-weight:600; color:var(--wood-d);
+    background:#fdf3e2; border:2px dashed #e6c795; border-radius:10px; padding:5px 10px;
+  }
+  .lvl .best{ margin:8px 14px 0; font-size:12.5px; color:var(--gold-d); font-weight:600; }
+
+  .howto{
+    margin-top:16px; background:rgba(255,255,255,.9); border-radius:16px; padding:14px 16px;
+    box-shadow:0 4px 0 rgba(43,42,60,.12);
+  }
+  .howto h2{ margin:0 0 8px; font-size:17px; }
+  .howto ol{ margin:0; padding-left:20px; font-size:14px; line-height:1.85; color:var(--ink-s); }
+  .howto .ar{ display:block; margin-top:8px; font-size:13px; color:var(--ink-s); line-height:1.8; }
+
+  .credit{ margin-top:18px; text-align:center; font-size:13px; color:#2a3d52; }
+  .cc-license{
+    direction:ltr; unicode-bidi:isolate; text-align:center; font-size:11.5px;
+    margin:.45em auto 0; color:#1f2937;
+  }
+  .cc-license a{ color:inherit; text-decoration:underline; }
+
+  /* ===================== HUD ===================== */
+  .hud{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px;
+    background:rgba(28,42,64,.92); color:#fff; border-radius:14px; padding:9px 12px;
+  }
+  .hud .name{ font-weight:700; font-size:15.5px; margin-right:auto; line-height:1.3; }
+  .hud .name small{ display:block; font-family:'Cairo',sans-serif; font-weight:600; font-size:11.5px; opacity:.85; direction:rtl; }
+  .pill{
+    background:rgba(255,255,255,.16); color:#fff; border-radius:999px; padding:6px 11px;
+    font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:5px;
+  }
+  .pill.btn:hover{ background:rgba(255,255,255,.3); }
+  .dots{ display:flex; gap:4px; }
+  .dots i{ width:9px; height:9px; border-radius:3px; background:rgba(255,255,255,.3); display:block; }
+  .dots i.on{ background:var(--gold); }
+  .dots i.now{ background:#fff; }
+
+  /* ===================== SCENE ===================== */
+  .scene{
+    position:relative; width:100%; aspect-ratio:16/9; min-height:244px; border-radius:20px;
+    overflow:hidden; background:linear-gradient(180deg,var(--sky) 0%,var(--sky-2) 58%,var(--sky-3) 100%);
+    box-shadow:0 6px 0 rgba(43,42,60,.14), 0 10px 22px rgba(20,32,50,.18);
+  }
+  @media (max-width:640px){ .scene{ aspect-ratio:11/9; } }
+
+  .sun{
+    position:absolute; top:9%; right:13%; width:11%; aspect-ratio:1; max-width:64px; border-radius:50%;
+    background:radial-gradient(circle at 36% 34%,#fff6d4,var(--gold) 68%);
+    box-shadow:0 0 34px 12px rgba(238,171,36,.35);
+  }
+  .cloud{ position:absolute; height:9%; border-radius:999px; background:#fff; filter:blur(7px); opacity:.9; }
+  .range{ position:absolute; inset:auto 0 0 0; width:100%; height:66%; display:block; }
+
+  .cliff{ position:absolute; bottom:0; width:25%; }
+  .cliff.start{ left:0; top:54%; clip-path:polygon(0 100%,0 10%,26% 0,84% 7%,100% 24%,96% 100%); }
+  .cliff.goal{ right:0; top:45%; clip-path:polygon(100% 100%,100% 8%,76% 0,18% 6%,0 22%,4% 100%); }
+  .cliff .face{ position:absolute; inset:0; background:linear-gradient(190deg,var(--rock-l),var(--rock) 34%,var(--rock-d)); }
+  .cliff .cap{
+    position:absolute; inset:0 0 auto 0; height:26%; background:var(--snow); opacity:.92;
+    clip-path:polygon(0 34%,14% 10%,36% 30%,58% 6%,78% 26%,100% 12%,100% 100%,0 100%);
+  }
+  .flag{ position:absolute; right:16%; bottom:0; width:4px; height:54px; background:var(--rock-d); border-radius:2px; }
+  .flag::after{
+    content:""; position:absolute; right:4px; top:2px; width:30px; height:20px; background:var(--gold);
+    clip-path:polygon(100% 0,0 22%,0 78%,100% 100%); transform-origin:100% 50%;
+    animation:wave 2.6s ease-in-out infinite;
+  }
+  @keyframes wave{ 0%,100%{ transform:skewY(0) scaleX(1); } 50%{ transform:skewY(5deg) scaleX(.9); } }
+
+  .post{ position:absolute; width:7px; height:38px; background:var(--rope); border-radius:3px; }
+  .cable{
+    position:absolute; left:21%; right:21%; bottom:48%; height:4px; border-radius:3px;
+    background:var(--rope); transform:rotate(-3.2deg); opacity:.85;
+  }
+
+  .bridge{ position:absolute; left:22%; right:22%; bottom:38%; display:flex; align-items:flex-end; gap:1.2%; }
+  .slot{
+    flex:1 1 0; min-width:0; position:relative; margin-bottom:calc(var(--i) * .55rem);
+    height:clamp(2rem,6.2vw,2.9rem); border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    border:2px dashed var(--rope); background:rgba(255,255,255,.16);
+    font-weight:700; color:var(--rope); font-size:clamp(.8rem,2.4vw,1.05rem);
+  }
+  .slot .word{ display:none; font-size:clamp(.7rem,2.3vw,1.02rem); color:#3a2410; white-space:nowrap; }
+  .slot.filled{
+    border-style:solid; border-color:var(--wood-d);
+    background:linear-gradient(180deg,var(--wood-l),var(--wood) 55%,var(--wood-d));
+    box-shadow:0 3px 0 var(--wood-d), 0 6px 12px rgba(0,0,0,.2);
+    animation:drop .42s cubic-bezier(.2,1.5,.5,1) both;
+  }
+  .slot.filled .num{ display:none; }
+  .slot.filled .word{ display:block; }
+  .slot.bad{ animation:nope .4s ease both; border-color:var(--no); background:rgba(207,75,69,.2); }
+  @keyframes drop{ from{ transform:translateY(-26px) rotate(7deg); opacity:0; } to{ transform:none; opacity:1; } }
+  @keyframes nope{ 0%,100%{ transform:none; } 25%{ transform:translateX(5px); } 75%{ transform:translateX(-5px); } }
+
+  .hero-k{
+    position:absolute; left:9%; bottom:46%; width:7.4%; min-width:34px; max-width:52px; z-index:3;
+    transition:left .62s cubic-bezier(.4,.1,.3,1), bottom .62s ease;
+  }
+  .hero-k svg{ display:block; width:100%; height:auto; }
+  .hero-k.walk{ animation:hop .62s ease; }
+  @keyframes hop{ 0%,100%{ transform:translateY(0); } 40%{ transform:translateY(-10px); } }
+
+  .pop{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  .pop i{ position:absolute; width:8px; height:12px; border-radius:2px; animation:fall 1.6s linear forwards; }
+  @keyframes fall{ from{ transform:translateY(-10px) rotate(0); opacity:1; } to{ transform:translateY(240px) rotate(540deg); opacity:0; } }
+  .sparkle{ position:absolute; font-size:20px; pointer-events:none; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ from{ transform:translateY(0) scale(.6); opacity:1; } to{ transform:translateY(-34px) scale(1.3); opacity:0; } }
+
+  /* ===================== PROMPT + POOL ===================== */
+  .prompt{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:12px 0 10px;
+    background:rgba(255,255,255,.9); border-radius:12px; padding:9px 13px;
+    box-shadow:0 3px 0 rgba(43,42,60,.1); min-height:44px;
+  }
+  .prompt .q{ font-weight:700; font-size:15px; }
+  .prompt .step{ font-weight:700; color:var(--wood-d); font-variant-numeric:tabular-nums; }
+  .prompt .msg{ font-size:13.5px; font-weight:600; }
+  .prompt .msg .ar{ display:block; font-size:12.5px; opacity:.9; }
+  .prompt .msg.ok{ color:var(--ok-d); }
+  .prompt .msg.no{ color:var(--no); }
+
+  .pool{ display:grid; grid-template-columns:repeat(4,1fr); gap:9px; }
+  @media (max-width:430px){ .pool{ gap:6px; } }
+  .card{
+    position:relative; min-width:0; background:var(--card); color:var(--ink); border-radius:15px;
+    padding:11px 5px 9px; display:flex; flex-direction:column; align-items:center; gap:7px;
+    box-shadow:0 4px 0 rgba(43,42,60,.16); transition:transform .14s ease, box-shadow .14s ease;
+  }
+  .card .w{ font-weight:700; font-size:clamp(14px,3.9vw,21px); line-height:1.15; word-break:break-word; text-align:center; }
+  .card .k{
+    width:28px; height:28px; border-radius:50%; display:grid; place-items:center;
+    font-weight:700; font-size:14px; background:#e4f2f8; border:2px solid #bfdfed; color:var(--ink);
+  }
+  .card .say{
+    position:absolute; top:5px; right:5px; width:24px; height:24px; border-radius:50%;
+    background:#f1f5f9; font-size:12px; line-height:1; display:grid; place-items:center; padding:0;
+  }
+  .card .say:hover{ background:var(--gold); }
+  .card:hover:not(:disabled){ transform:translateY(-4px); box-shadow:0 7px 0 var(--gold); }
+  .card:disabled{ opacity:.34; box-shadow:none; transform:none; }
+  .card.shake{ animation:nope .4s ease both; box-shadow:0 4px 0 var(--no); }
+  .card.hint{ box-shadow:0 4px 0 var(--gold), 0 0 0 4px rgba(238,171,36,.35); }
+  .card.hint .k{ background:var(--gold); border-color:var(--gold-d); }
+
+  /* ===================== ALPHABET RAIL ===================== */
+  .rail{
+    margin-top:12px; background:rgba(255,255,255,.9); border-radius:14px; padding:10px 12px;
+    box-shadow:0 3px 0 rgba(43,42,60,.1);
+  }
+  .rail .cap2{ font-size:12px; font-weight:700; color:var(--ink-s); letter-spacing:.06em; margin-bottom:8px; }
+  .rail .cap2 .ar{ font-weight:600; }
+  .rail .row{ display:flex; flex-wrap:wrap; gap:4px; }
+  .rail .row span{
+    min-width:30px; height:30px; padding:0 4px; border-radius:8px; display:grid; place-items:center;
+    background:#fff; border:2px solid var(--line); color:var(--ink-s); font-size:13px; font-weight:600;
+  }
+  .rail .row span.live{ background:var(--gold); border-color:var(--gold-d); color:#2b2a3c; }
+
+  /* ===================== SHEET ===================== */
+  .sheet{
+    margin-top:14px; background:#fff; border-radius:18px; padding:16px;
+    box-shadow:0 5px 0 rgba(43,42,60,.16), 0 10px 22px rgba(20,32,50,.16);
+    display:flex; flex-direction:column; gap:9px; align-items:flex-start;
+  }
+  .sheet h3{ margin:0; font-size:21px; }
+  .sheet p{ margin:0; font-size:13.5px; color:var(--ink-s); line-height:1.7; }
+  .starline{ font-size:27px; letter-spacing:.1em; color:var(--gold); }
+  .stamp{
+    align-self:center; width:112px; height:112px; border-radius:50%; display:grid; place-items:center;
+    background:radial-gradient(circle at 34% 30%,#fff5d9,var(--gold) 72%);
+    border:5px solid var(--gold-d); box-shadow:0 6px 0 rgba(43,42,60,.18);
+    animation:bounce .7s cubic-bezier(.2,1.6,.4,1) both;
+  }
+  .stamp span{ font-size:46px; }
+  @keyframes bounce{ from{ transform:scale(.3) rotate(-18deg); opacity:0; } to{ transform:none; opacity:1; } }
+  .btn{
+    border-radius:999px; padding:11px 22px; font-size:16px; font-weight:700; color:#fff;
+    background:var(--ok); box-shadow:0 4px 0 var(--ok-d);
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn.ghost{ background:#fff; color:var(--ink); box-shadow:0 4px 0 var(--line); }
+  .btnrow{ display:flex; gap:9px; flex-wrap:wrap; }
+
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<!-- =========================== START =========================== -->
+<section id="start">
+  <div class="wrap">
+    <div class="hero">
+      <svg class="peaks" viewBox="0 0 600 72" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 72 L0 40 L70 10 L140 44 L210 18 L300 50 L380 22 L470 46 L540 16 L600 38 L600 72 Z" fill="#6f6a8d" opacity=".75"/>
+        <path d="M70 10 L96 24 L70 31 L45 23 Z M380 22 L404 34 L380 41 L357 33 Z" fill="#f7f9ff" opacity=".9"/>
+      </svg>
+      <h1>Which Word Comes First?</h1>
+      <div class="sub">Put four words in alphabetical order and build the bridge to the next peak 🌉</div>
+      <div class="subar ar">رتِّبِ الكلماتِ الأربعَ ترتيبًا أبجديًّا، فتبني لوحًا من ألواحِ الجسرِ حتى تَصِلَ إلى القمَّةِ التالية.</div>
+      <div class="ropeline">
+        <i style="left:4%"></i><i style="left:28%"></i><i style="left:52%"></i><i style="left:76%"></i>
+      </div>
+    </div>
+
+    <div class="levels" id="levels"></div>
+
+    <div class="howto">
+      <h2>How to play</h2>
+      <ol>
+        <li>Read the four words. Decide which one comes <b>first</b> in the alphabet.</li>
+        <li>Tap it — a wooden plank locks into the bridge and the climber hops onto it.</li>
+        <li>Four correct words finish the bridge, and the climber crosses to the next peak.</li>
+        <li>Tap 🔊 on a card to hear the word. Tap <b>Hint</b> if you are stuck (it costs one star).</li>
+      </ol>
+      <span class="ar">اِقرَأِ الكلماتِ الأربعَ، ثُمَّ اختَرِ الكلمةَ الأسبقَ في الترتيبِ الأبجديِّ. كلُّ اختيارٍ صحيحٍ يُثبِّتُ لوحًا من ألواحِ الجسر، وبعدَ اللوحِ الرابعِ يَعبُرُ المتسلِّقُ إلى القمَّةِ التالية. اِضغَطْ 🔊 لسماعِ الكلمة، و«Hint» للمساعدةِ مقابلَ نجمةٍ واحدة.</span>
+    </div>
+
+    <div class="credit">Prepared with care 🌸 by T. Wad Refae</div>
+    <div class="cc-license">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer">CC BY-NC-ND 4.0</a></div>
+  </div>
+</section>
+
+<!-- =========================== PLAY =========================== -->
+<section id="play" hidden>
+  <div class="wrap">
+    <div class="hud">
+      <div class="name" id="lvlName">Level 1<small id="lvlTip"></small></div>
+      <div class="dots" id="dots" aria-label="Bridges finished"></div>
+      <span class="pill" id="starPill">⭐ <span id="starNum">0</span></span>
+      <button class="pill btn" id="hintBtn" type="button">💡 Hint</button>
+      <button class="pill btn" id="muteBtn" type="button" aria-pressed="false">🔊 Sound</button>
+      <button class="pill btn" id="backBtn" type="button">↩ Levels</button>
+    </div>
+
+    <div class="scene" id="scene">
+      <div class="sun"></div>
+      <div class="cloud" style="top:16%;left:30%;width:22%"></div>
+      <div class="cloud" style="top:28%;right:26%;width:16%"></div>
+
+      <svg class="range" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 400 L0 250 L100 170 L220 230 L360 120 L480 190 L640 70 L750 150 L880 36 L1000 120 L1000 400 Z" fill="var(--rock-l)" opacity=".55"/>
+        <path d="M0 400 L0 300 L120 240 L260 290 L400 206 L540 262 L680 160 L800 212 L890 128 L1000 210 L1000 400 Z" fill="var(--rock)" opacity=".6"/>
+        <path d="M880 36 L918 60 L880 74 L844 58 Z M640 70 L674 94 L640 106 L608 92 Z" fill="var(--snow)" opacity=".85"/>
+      </svg>
+
+      <div class="cliff start"><div class="face"></div><div class="cap"></div></div>
+      <div class="cliff goal"><div class="face"></div><div class="cap"></div><div class="flag"></div></div>
+
+      <div class="post" style="left:21.2%;bottom:40%"></div>
+      <div class="post" style="right:21.2%;bottom:46%"></div>
+      <div class="cable"></div>
+
+      <div class="bridge" id="bridge"></div>
+
+      <div class="hero-k" id="climber">
+        <svg viewBox="0 0 44 60" aria-hidden="true">
+          <rect x="25" y="22" width="12" height="16" rx="5" fill="var(--rock-d)"/>
+          <path d="M30 56 L26 40 L21 40 L24 56 Z" fill="#3d4a6b"/>
+          <path d="M20 56 L16 40 L11 40 L14 56 Z" fill="#2f3a56"/>
+          <rect x="21" y="53" width="11" height="5" rx="2.5" fill="#241c16"/>
+          <rect x="11" y="53" width="11" height="5" rx="2.5" fill="#241c16"/>
+          <rect x="11" y="20" width="20" height="23" rx="9" fill="#e4572e"/>
+          <rect x="6" y="26" width="9" height="5" rx="2.5" fill="#f2c9a0" transform="rotate(24 6 26)"/>
+          <circle cx="20" cy="12" r="9" fill="#f2c9a0"/>
+          <path d="M10 11 a10 10 0 0 1 20 0 l1 2 h-22 z" fill="var(--gold)"/>
+          <circle cx="24" cy="13" r="1.5" fill="#2b2a3c"/>
+          <path d="M20 17 q3 2.5 6 0" stroke="#2b2a3c" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="pop" id="pop"></div>
+    </div>
+
+    <div class="prompt">
+      <span class="q">Plank <span class="step" id="stepNum">1</span> of 4 — which word comes first?</span>
+      <span class="msg" id="msg"></span>
+    </div>
+
+    <div class="pool" id="pool"></div>
+
+    <div class="rail">
+      <div class="cap2">THE ALPHABET <span class="ar">— الأبجديَّةُ الإنجليزيَّة</span></div>
+      <div class="row" id="alpha"></div>
+    </div>
+
+    <div class="sheet" id="sheet" hidden>
+      <div class="stamp" id="stamp" hidden><span>🌉</span></div>
+      <h3 id="sheetTitle"></h3>
+      <div class="starline" id="sheetStars"></div>
+      <p id="sheetText"></p>
+      <p class="ar" id="sheetTextAr"></p>
+      <div class="btnrow">
+        <button class="btn" id="nextBtn" type="button"></button>
+        <button class="btn ghost" id="againBtn" type="button">🔁 Play level again</button>
+      </div>
+    </div>
+
+    <div class="credit">Prepared with care 🌸 by T. Wad Refae</div>
+    <div class="cc-license">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer">CC BY-NC-ND 4.0</a></div>
+  </div>
+</section>
+
+<script>
+/* ===================== data ===================== */
+var LEVELS = [
+  {
+    name: "Level 1 — Different first letters",
+    tip: "الحرفُ الأوَّلُ مختلفٌ في كلِّ كلمة.",
+    hint: "Look at the first letter of each word.",
+    hintAr: "اُنظُرْ إلى الحرفِ الأوَّلِ وموقِعِهِ في الأبجديَّة.",
+    key: 0,
+    ex: "ball · door · flower · garden",
+    groups: [
+      ["apple","book","cat","desk"],
+      ["egg","fish","green","house"],
+      ["ice","jump","kite","lamp"],
+      ["moon","nest","orange","pen"],
+      ["queen","rain","sun","tree"],
+      ["umbrella","van","water","yellow"],
+      ["ball","door","flower","garden"],
+      ["clock","hand","map","school"]
+    ]
+  },
+  {
+    name: "Level 2 — Same first letter",
+    tip: "الحرفُ الأوَّلُ متشابِهٌ، فقارِنِ الحرفَ الثاني.",
+    hint: "The first letters are the same — compare the second letter.",
+    hintAr: "الحرفُ الأوَّلُ متشابِه، فقارِنِ الحرفَ الثاني.",
+    key: 1,
+    ex: "bag · bed · big · book",
+    groups: [
+      ["bag","bed","big","book"],
+      ["cake","city","clock","cup"],
+      ["farm","fish","flower","fruit"],
+      ["game","girl","glass","green"],
+      ["hand","help","hill","house"],
+      ["lamp","leg","light","long"],
+      ["map","men","milk","moon"],
+      ["park","pen","pink","plant"],
+      ["sand","seven","ship","sun"],
+      ["table","tent","tiger","tree"]
+    ]
+  },
+  {
+    name: "Level 3 — Same first two letters",
+    tip: "الحرفانِ الأوَّلانِ متشابِهان، فقارِنِ الحرفَ الثالث.",
+    hint: "The first two letters are the same — compare the third letter.",
+    hintAr: "الحرفانِ الأوَّلانِ متشابِهان، فقارِنِ الحرفَ الثالث.",
+    key: 2,
+    ex: "share · sheep · shirt · shop",
+    groups: [
+      ["share","sheep","shirt","shop"],
+      ["star","stem","stone","study"],
+      ["chair","cheese","chicken","chocolate"],
+      ["plant","please","plot","plus"],
+      ["branch","bread","bridge","brother"],
+      ["thank","their","think","those"],
+      ["class","clean","climb","clock"],
+      ["grape","green","grill","group"],
+      ["speak","spider","sport","spring"],
+      ["what","where","white","who"]
+    ]
+  }
+];
+var PER_LEVEL = 5;
+var AZ = "abcdefghijklmnopqrstuvwxyz";
+
+/* ===================== helpers ===================== */
+function $(s){ return document.querySelector(s); }
+function cmp(a,b){ a=a.toLowerCase(); b=b.toLowerCase(); return a<b ? -1 : (a>b ? 1 : 0); }
+function shuffled(a){
+  var x=a.slice(), i, j, t;
+  for(i=x.length-1;i>0;i--){ j=Math.floor(Math.random()*(i+1)); t=x[i]; x[i]=x[j]; x[j]=t; }
+  return x;
+}
+function store(k,v){
+  try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; }
+}
+
+/* ===================== sound ===================== */
+var muted = store("wcf_muted")==="1";
+var actx = null;
+function tone(freq,dur,type,gain,delay){
+  if(muted) return;
+  dur=dur||.14; type=type||"sine"; gain=gain||.13; delay=delay||0;
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    var t=actx.currentTime+delay, o=actx.createOscillator(), g=actx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(gain,t+.015);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+dur+.02);
+  }catch(e){}
+}
+function speak(word){
+  try{
+    if(!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(word);
+    u.lang = "en-US"; u.rate = .85; u.pitch = 1;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* ===================== state ===================== */
+var S = { level:0, groups:[], gi:0, order:[], view:null, step:0, miss:0, hinted:false, stars:0 };
+
+/* ===================== build start screen ===================== */
+(function(){
+  var html = "";
+  for(var i=0;i<LEVELS.length;i++){
+    var L = LEVELS[i];
+    var best = store("wcf_best_"+i);
+    html +=
+      '<button class="lvl" type="button" data-l="'+i+'">'+
+        '<svg viewBox="0 0 240 78" preserveAspectRatio="none" aria-hidden="true">'+
+          '<rect width="240" height="78" fill="#c9ebec"/>'+
+          '<path d="M0 78 L0 '+(58-i*12)+' L70 '+(24-i*7)+' L120 '+(54-i*11)+' L172 '+(18-i*5)+' L240 '+(48-i*9)+' L240 78 Z" fill="#6f6a8d" opacity=".72"/>'+
+          '<rect x="46" y="'+(64-i*4)+'" width="148" height="8" rx="4" fill="#cf8c46"/>'+
+        '</svg>'+
+        '<div class="t">'+L.name+'</div>'+
+        '<div class="d">'+L.hint+'</div>'+
+        '<div class="dar ar">'+L.tip+'</div>'+
+        '<div class="ex">'+L.ex+'</div>'+
+        (best ? '<div class="best">⭐ Best: '+best+' / '+(PER_LEVEL*3)+'</div>' : '')+
+      '</button>';
+  }
+  $("#levels").innerHTML = html;
+  $("#levels").addEventListener("click", function(e){
+    var b = e.target.closest(".lvl");
+    if(b) startLevel(parseInt(b.getAttribute("data-l"),10));
+  });
+
+  var rail = "";
+  for(var c=0;c<26;c++){
+    var ch = AZ.charAt(c);
+    rail += '<span data-l="'+ch+'">'+ch.toUpperCase()+ch+'</span>';
+  }
+  $("#alpha").innerHTML = rail;
+  syncMute();
+})();
+
+/* ===================== controls ===================== */
+$("#muteBtn").addEventListener("click", function(){
+  muted = !muted; store("wcf_muted", muted ? "1" : "0"); syncMute();
+  if(!muted) tone(660,.1);
+});
+function syncMute(){
+  var b = $("#muteBtn");
+  b.textContent = muted ? "🔈 Sound off" : "🔊 Sound";
+  b.setAttribute("aria-pressed", muted ? "true" : "false");
+}
+$("#backBtn").addEventListener("click", function(){ show("start"); });
+$("#againBtn").addEventListener("click", function(){ startLevel(S.level); });
+$("#hintBtn").addEventListener("click", hint);
+
+function show(which){
+  $("#start").hidden = which !== "start";
+  $("#play").hidden  = which !== "play";
+  window.scrollTo(0,0);
+}
+
+/* ===================== level / group ===================== */
+function startLevel(li){
+  S.level = li;
+  S.groups = shuffled(LEVELS[li].groups).slice(0, PER_LEVEL);
+  S.gi = 0; S.stars = 0;
+  $("#lvlName").innerHTML = LEVELS[li].name + '<small class="ar">' + LEVELS[li].tip + '</small>';
+  $("#starNum").textContent = "0";
+  show("play");
+  loadGroup();
+}
+
+function loadGroup(){
+  var L = LEVELS[S.level], i, html = "";
+  S.order = S.groups[S.gi].slice().sort(cmp);
+  S.view = shuffled(S.order);
+  S.step = 0; S.miss = 0; S.hinted = false;
+
+  $("#sheet").hidden = true;
+  $("#stamp").hidden = true;
+  $("#pop").innerHTML = "";
+  var k = $("#climber");
+  k.classList.remove("walk");
+  k.style.left = "9%"; k.style.bottom = "46%";
+
+  for(i=0;i<S.order.length;i++){
+    html += '<div class="slot" style="--i:'+i+'" data-s="'+i+'"><span class="num">'+(i+1)+'</span><span class="word"></span></div>';
+  }
+  $("#bridge").innerHTML = html;
+
+  html = "";
+  for(i=0;i<S.groups.length;i++){
+    html += '<i class="'+(i<S.gi?"on":(i===S.gi?"now":""))+'"></i>';
+  }
+  $("#dots").innerHTML = html;
+
+  $("#stepNum").textContent = "1";
+  setMsg("", "");
+  drawPool();
+
+  var keys = {};
+  for(i=0;i<S.order.length;i++){ keys[S.order[i].charAt(L.key).toLowerCase()] = 1; }
+  var cells = $("#alpha").querySelectorAll("span");
+  for(i=0;i<cells.length;i++){
+    if(keys[cells[i].getAttribute("data-l")]) cells[i].classList.add("live");
+    else cells[i].classList.remove("live");
+  }
+}
+
+function drawPool(){
+  var L = LEVELS[S.level], placed = {}, i, w, html = "";
+  for(i=0;i<S.step;i++){ placed[S.order[i]] = 1; }
+  for(i=0;i<S.view.length;i++){
+    w = S.view[i];
+    html +=
+      '<button class="card" type="button" data-w="'+w+'"'+(placed[w]?" disabled":"")+'>'+
+        '<button class="say" type="button" data-say="'+w+'" title="Hear the word" aria-label="Hear '+w+'">🔊</button>'+
+        '<span class="w">'+w+'</span>'+
+        '<span class="k">'+w.charAt(L.key)+'</span>'+
+      '</button>';
+  }
+  $("#pool").innerHTML = html;
+}
+
+$("#pool").addEventListener("click", function(e){
+  var say = e.target.closest(".say");
+  if(say){ e.stopPropagation(); speak(say.getAttribute("data-say")); return; }
+  var card = e.target.closest(".card");
+  if(card && !card.disabled) pick(card);
+});
+
+function setMsg(en, cls, ar){
+  var m = $("#msg");
+  m.className = "msg " + (cls || "");
+  m.innerHTML = en ? (en + (ar ? '<span class="ar">'+ar+'</span>' : "")) : "";
+}
+
+function pick(card){
+  var w = card.getAttribute("data-w"), want = S.order[S.step], L = LEVELS[S.level];
+  var slot = $('#bridge [data-s="'+S.step+'"]'), k = $("#climber");
+
+  if(w === want){
+    slot.classList.add("filled");
+    slot.querySelector(".word").textContent = w;
+    card.disabled = true;
+    sparkle(card);
+    tone(430 + S.step*110, .16, "triangle", .13);
+    k.classList.remove("walk"); void k.offsetWidth; k.classList.add("walk");
+    k.style.left = (22 + 14*S.step + 7) + "%";
+    k.style.bottom = (46 + S.step*3.1) + "%";
+    S.step++;
+    $("#stepNum").textContent = Math.min(S.step + 1, 4);
+    if(S.step === 4) finishGroup();
+    else setMsg("Correct! One more plank in the bridge.", "ok", "أحسَنْتَ! لوحٌ جديدٌ في الجسر.");
+  }else{
+    S.miss++;
+    card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+    slot.classList.remove("bad"); void slot.offsetWidth; slot.classList.add("bad");
+    tone(150, .22, "sawtooth", .1);
+    setMsg("Not yet — " + L.hint, "no", L.hintAr);
+  }
+}
+
+function earned(){
+  var s = 3 - Math.min(2, S.miss) - (S.hinted ? 1 : 0);
+  return s < 1 ? 1 : s;
+}
+
+function finishGroup(){
+  var k = $("#climber"), got = earned(), i;
+  k.classList.remove("walk"); void k.offsetWidth; k.classList.add("walk");
+  k.style.left = "88%"; k.style.bottom = "53%";
+  for(i=0;i<4;i++){ tone(523 * Math.pow(2, i/6), .18, "sine", .12, i*.1); }
+  confetti();
+
+  S.stars += got;
+  $("#starNum").textContent = S.stars;
+  S.gi++;
+  var last = S.gi >= S.groups.length;
+
+  setTimeout(function(){
+    if(last){
+      var key = "wcf_best_" + S.level, prev = parseInt(store(key) || "0", 10);
+      if(S.stars > prev) store(key, String(S.stars));
+      store("wcf_badge_" + S.level, "1");
+      $("#stamp").hidden = false;
+      $("#sheetTitle").textContent = "You reached the next peak! 🏔️";
+      $("#sheetText").textContent =
+        "You finished " + S.groups.length + " bridges in " + LEVELS[S.level].name.split(" — ")[0] +
+        " and collected " + S.stars + " of " + (S.groups.length*3) + " stars.";
+      $("#sheetTextAr").textContent = "أتمَمْتَ بناءَ الجسورِ كلِّها ووصَلْتَ إلى القمَّة. أحسَنْتَ!";
+    }else{
+      $("#sheetTitle").textContent = "Bridge finished! 🌉";
+      $("#sheetText").textContent = S.miss === 0
+        ? "Perfect order on the first try."
+        : "Mistakes on this bridge: " + S.miss + ".";
+      $("#sheetTextAr").textContent = S.miss === 0
+        ? "ترتيبٌ صحيحٌ من المحاولةِ الأولى."
+        : "واصِلْ، وتَأمَّلِ الحروفَ قبلَ الاختيار.";
+    }
+    $("#sheetStars").textContent = new Array(got+1).join("★") + new Array(4-got).join("☆");
+    var nb = $("#nextBtn");
+    nb.textContent = last
+      ? (S.level < LEVELS.length-1 ? "➡ Next level" : "🏠 Choose a level")
+      : "➡ Next bridge";
+    nb.onclick = last
+      ? function(){ if(S.level < LEVELS.length-1) startLevel(S.level+1); else { buildBest(); show("start"); } }
+      : function(){ loadGroup(); };
+    $("#againBtn").hidden = !last;
+    $("#sheet").hidden = false;
+  }, 700);
+}
+
+function hint(){
+  if(S.step >= 4 || $("#sheet").hidden === false) return;
+  S.hinted = true;
+  var want = S.order[S.step];
+  var b = $('#pool .card[data-w="'+want+'"]');
+  if(b){
+    b.classList.add("hint");
+    setTimeout(function(){ b.classList.remove("hint"); }, 1700);
+  }
+  setMsg("This word comes next.", "ok", "هذِهِ الكلمةُ هي التاليةُ في الترتيب.");
+  tone(880, .1, "sine", .08);
+}
+
+/* ===================== effects ===================== */
+function sparkle(el){
+  var s = document.createElement("span");
+  s.className = "sparkle"; s.textContent = "✨";
+  s.style.left = (el.offsetLeft + el.offsetWidth/2 - 10) + "px";
+  s.style.top  = (el.offsetTop + 4) + "px";
+  $("#pool").appendChild(s);
+  setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); }, 820);
+}
+function confetti(){
+  var cols = ["#eeab24","#2b9469","#e4572e","#4a7cd6","#f7f9ff"], html = "", i;
+  for(i=0;i<26;i++){
+    html += '<i style="left:'+(8+Math.random()*84).toFixed(1)+'%;top:'+(10+Math.random()*25).toFixed(1)+
+            '%;background:'+cols[i%cols.length]+';animation-delay:'+(Math.random()*.5).toFixed(2)+'s"></i>';
+  }
+  $("#pop").innerHTML = html;
+  setTimeout(function(){ $("#pop").innerHTML = ""; }, 2300);
+}
+
+/* refresh "best" lines on the start screen */
+function buildBest(){
+  var cards = $("#levels").querySelectorAll(".lvl"), i, b, old, div;
+  for(i=0;i<cards.length;i++){
+    b = store("wcf_best_" + i);
+    old = cards[i].querySelector(".best");
+    if(!b) continue;
+    if(old) old.textContent = "⭐ Best: " + b + " / " + (PER_LEVEL*3);
+    else{
+      div = document.createElement("div");
+      div.className = "best";
+      div.textContent = "⭐ Best: " + b + " / " + (PER_LEVEL*3);
+      cards[i].appendChild(div);
+    }
+  }
+}
+</script>
+</body>
+</html>
