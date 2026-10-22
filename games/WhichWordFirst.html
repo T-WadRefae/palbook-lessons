@@ -28,7 +28,9 @@
   button{ font-family:inherit; cursor:pointer; border:none; }
   :focus-visible{ outline:3px solid var(--gold); outline-offset:2px; border-radius:8px; }
   .wrap{ max-width:940px; margin:0 auto; padding:14px 14px 28px; }
-  section[hidden]{ display:none !important; }
+  /* A class that sets `display` outranks the browser's own [hidden] rule, so
+     without this any hidden .sheet / .stamp keeps rendering. */
+  [hidden]{ display:none !important; }
 
   /* ===================== START SCREEN ===================== */
   .hero{
@@ -110,6 +112,14 @@
     position:relative; width:100%; aspect-ratio:16/9; min-height:244px; border-radius:20px;
     overflow:hidden; background:linear-gradient(180deg,var(--sky) 0%,var(--sky-2) 58%,var(--sky-3) 100%);
     box-shadow:0 6px 0 rgba(43,42,60,.14), 0 10px 22px rgba(20,32,50,.18);
+  }
+  /* On a short screen the scene has to give way, or the bridge scrolls off the
+     top exactly when the pupil is choosing a word and the plank locks in. */
+  @media (max-height:760px){
+    .scene{ min-height:0; height:min(38vh,250px); aspect-ratio:auto; }
+  }
+  @media (max-height:600px){
+    .scene{ height:min(34vh,190px); }
   }
   @media (max-width:640px){ .scene{ aspect-ratio:11/9; } }
 
@@ -232,14 +242,37 @@
     min-width:30px; height:30px; padding:0 4px; border-radius:8px; display:grid; place-items:center;
     background:#fff; border:2px solid var(--line); color:var(--ink-s); font-size:13px; font-weight:600;
   }
+  /* Wrapped over three rows the alphabet costs ~149px of height — enough to
+     push the bridge off a phone screen. Below a tablet it becomes one strip
+     that slides sideways instead. */
+  @media (max-width:760px){
+    .rail{ margin-top:10px; padding:8px 10px; }
+    .rail .row{
+      flex-wrap:nowrap; overflow-x:auto; scroll-snap-type:x proximity;
+      -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:2px;
+    }
+    .rail .row::-webkit-scrollbar{ display:none; }
+    .rail .row span{ flex:0 0 auto; scroll-snap-align:center; }
+  }
   .rail .row span.live{ background:var(--gold); border-color:var(--gold-d); color:#2b2a3c; }
 
   /* ===================== SHEET ===================== */
+  /* The sheet is a centred overlay, not a block at the foot of the page:
+     inline, its "Next bridge" button landed ~1100px down and was off-screen
+     on every size, so finishing a bridge looked like nothing had happened. */
   .sheet{
-    margin-top:14px; background:#fff; border-radius:18px; padding:16px;
-    box-shadow:0 5px 0 rgba(43,42,60,.16), 0 10px 22px rgba(20,32,50,.16);
-    display:flex; flex-direction:column; gap:9px; align-items:flex-start;
+    position:fixed; inset:0; z-index:60; margin:0; padding:16px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(27,34,56,.55);
   }
+  .sheetcard{
+    background:#fff; border-radius:18px; padding:16px;
+    width:min(420px,100%); max-height:86vh; overflow:auto;
+    display:flex; flex-direction:column; gap:9px; align-items:flex-start;
+    box-shadow:0 8px 0 rgba(43,42,60,.18), 0 20px 42px rgba(20,32,50,.34);
+    animation:sheetIn .32s cubic-bezier(.2,1.5,.4,1) both;
+  }
+  @keyframes sheetIn{ from{ transform:scale(.9); opacity:0 } to{ transform:scale(1); opacity:1 } }
   .sheet h3{ margin:0; font-size:21px; }
   .sheet p{ margin:0; font-size:13.5px; color:var(--ink-s); line-height:1.7; }
   .starline{ font-size:27px; letter-spacing:.1em; color:var(--gold); }
@@ -431,15 +464,17 @@
     </div>
 
     <div class="sheet" id="sheet" hidden>
-      <div class="stamp" id="stamp" hidden><span>🌉</span></div>
-      <h3 id="sheetTitle"></h3>
-      <div class="starline" id="sheetStars"></div>
-      <p id="sheetText"></p>
-      <p class="ar" id="sheetTextAr"></p>
-      <div class="scrank" id="sheetRank" hidden></div>
-      <div class="btnrow">
-        <button class="btn" id="nextBtn" type="button"></button>
-        <button class="btn ghost" id="againBtn" type="button">🔁 Play level again</button>
+      <div class="sheetcard">
+        <div class="stamp" id="stamp" hidden><span>🌉</span></div>
+        <h3 id="sheetTitle"></h3>
+        <div class="starline" id="sheetStars"></div>
+        <p id="sheetText"></p>
+        <p class="ar" id="sheetTextAr"></p>
+        <div class="scrank" id="sheetRank" hidden></div>
+        <div class="btnrow">
+          <button class="btn" id="nextBtn" type="button"></button>
+          <button class="btn ghost" id="againBtn" type="button">🔁 Play level again</button>
+        </div>
       </div>
     </div>
 
@@ -744,10 +779,21 @@ function loadGroup(){
 
   var keys = {};
   for(i=0;i<S.order.length;i++){ keys[S.order[i].charAt(L.key).toLowerCase()] = 1; }
-  var cells = $("#alpha").querySelectorAll("span");
+  var cells = $("#alpha").querySelectorAll("span"), firstLive = null;
   for(i=0;i<cells.length;i++){
-    if(keys[cells[i].getAttribute("data-l")]) cells[i].classList.add("live");
-    else cells[i].classList.remove("live");
+    if(keys[cells[i].getAttribute("data-l")]){
+      cells[i].classList.add("live");
+      if(!firstLive) firstLive = cells[i];
+    }else cells[i].classList.remove("live");
+  }
+  // On a phone the rail is one sideways strip, so bring the lit letters into
+  // view — otherwise they sit off to the right where nobody looks.
+  if(firstLive){
+    var row = $("#alpha");
+    if(row.scrollWidth > row.clientWidth){
+      row.scrollTo({ left: Math.max(0, firstLive.offsetLeft - row.clientWidth/2 + firstLive.offsetWidth/2),
+                     behavior: "smooth" });
+    }
   }
 }
 
