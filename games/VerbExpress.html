@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Verb Express 🚂 — Present to Past | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --rail:#3d4a63; --rail-d:#2a3446;
+    --sky:#7fc4e8; --sky-d:#4a9fd0;
+    --loco:#c0392b; --loco-d:#8e2a20;
+    --brass:#e8b84b; --brass-d:#b8882a;
+    --grass:#5bbd6a; --grass-d:#3d9b4c;
+    --ink:#20293a; --ink-soft:#5a6780;
+    --paper:#fffdf7; --cream:#fdf4e3;
+    --ok:#2fae6b; --ok-d:#1e8a52;
+    --no:#e05a4e; --no-d:#b43a30;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; }
+  body{
+    font-family:'Fredoka',sans-serif; color:var(--ink);
+    background:linear-gradient(180deg,#2a3f5c 0%,#1c2a40 100%);
+    overflow:hidden; position:fixed; inset:0;
+  }
+  .ar{ font-family:'Cairo',sans-serif; direction:rtl; unicode-bidi:isolate; }
+
+  .screen{ position:absolute; inset:0; display:none; flex-direction:column; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; }
+  .screen.active{ display:flex; }
+
+  /* ===== scenery bits shared by start / result ===== */
+  .sky{ position:absolute; inset:0; z-index:0;
+    background:linear-gradient(180deg,var(--sky) 0%,#bfe4f5 55%,#e8f4dc 72%,var(--grass) 72%,var(--grass-d) 100%); }
+  .sun{ position:absolute; top:5%; right:9%; width:58px; height:58px; border-radius:50%;
+    background:radial-gradient(circle at 36% 34%,#fff7c9,#ffd94a 60%,#f5b61e);
+    box-shadow:0 0 36px rgba(255,214,74,.75); }
+  .cloudlet{ position:absolute; font-size:36px; opacity:.85; animation:drift linear infinite; }
+  @keyframes drift{ from{ transform:translateX(112vw) } to{ transform:translateX(-30vw) } }
+  .hill{ position:absolute; bottom:26%; border-radius:50% 50% 0 0; background:#8fd49a; opacity:.75; }
+
+  /* ===== start ===== */
+  .start-wrap{ position:relative; z-index:2; margin:auto; width:min(560px,94vw); padding:22px 16px 30px; text-align:center; }
+  .hero{ background:linear-gradient(165deg,rgba(255,255,255,.96),rgba(255,250,236,.94));
+    border:4px solid var(--brass); border-radius:24px; padding:20px 18px 22px;
+    box-shadow:0 14px 0 rgba(184,136,42,.45), 0 24px 50px rgba(0,0,0,.4); }
+  .loco-badge{ font-size:clamp(52px,13vw,76px); line-height:1; filter:drop-shadow(0 6px 10px rgba(0,0,0,.25)); animation:chug 1.5s ease-in-out infinite; }
+  @keyframes chug{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-6px) } }
+  h1.game-title{ font-size:clamp(28px,7.4vw,44px); color:var(--loco); letter-spacing:-.5px; margin-top:4px; }
+  .game-sub{ font-size:clamp(14px,3.6vw,18px); color:var(--brass-d); font-weight:700; margin-top:2px; }
+  .game-tag{ font-size:13px; color:var(--ink-soft); margin-top:7px; line-height:1.85; }
+
+  .field{ margin-top:18px; text-align:left; }
+  .field label{ display:block; font-size:13.5px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; }
+  input.name-in{ width:100%; padding:13px 15px; border:3px solid #d9cfae; border-radius:14px;
+    font-family:'Fredoka',sans-serif; font-size:17px; color:var(--ink); background:#fff; text-align:center; }
+  input.name-in:focus{ outline:none; border-color:var(--sky-d); box-shadow:0 0 0 4px rgba(74,159,208,.22); }
+
+  .levels{ display:grid; gap:9px; margin-top:16px; }
+  @media(min-width:460px){ .levels{ grid-template-columns:repeat(3,1fr); } }
+  .lvl{ background:#fff; border:3px solid #e2d8bb; border-radius:15px; padding:11px 9px; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:3px; transition:all .2s ease; }
+  .lvl:hover{ transform:translateY(-2px); }
+  .lvl .lv-emo{ font-size:26px; line-height:1; }
+  .lvl .lv-name{ font-size:14px; font-weight:700; color:var(--ink); }
+  .lvl .lv-meta{ font-size:11px; color:var(--ink-soft); text-align:center; line-height:1.45; }
+  .lvl.on{ border-color:var(--loco); background:linear-gradient(#fff6f4,#ffe8e3); box-shadow:0 5px 0 var(--loco-d); transform:translateY(-3px); }
+
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; border:none; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-weight:700; border-radius:15px; transition:all .18s ease; }
+  .btn-go{ width:100%; margin-top:17px; padding:15px; font-size:19px; color:#fff;
+    background:linear-gradient(135deg,var(--ok),var(--ok-d)); box-shadow:0 6px 0 var(--ok-d); }
+  .btn-go:hover{ transform:translateY(-2px); box-shadow:0 8px 0 var(--ok-d), 0 10px 18px rgba(0,0,0,.2); }
+  .btn-ghost{ margin-top:10px; width:100%; padding:12px; font-size:15.5px; color:var(--rail);
+    background:#fff; border:3px solid #d9cfae; }
+  .btn-ghost:hover{ background:var(--cream); }
+
+  .credit{ margin-top:16px; font-size:12.5px; color:rgba(255,255,255,.85); }
+  .cc-license{ direction:ltr; unicode-bidi:isolate; text-align:center; font-size:11px; margin:.45em auto 0; color:rgba(255,255,255,.72); }
+  .cc-license a{ color:inherit; text-decoration:underline; }
+
+  /* ===== play : HUD ===== */
+  .hud{ position:relative; z-index:5; display:flex; align-items:center; gap:7px; flex-wrap:wrap;
+    padding:8px 11px; background:rgba(28,42,64,.94); color:#fff; flex:0 0 auto; }
+  .hud .chip{ display:flex; align-items:center; gap:5px; background:rgba(255,255,255,.14);
+    padding:5px 10px; border-radius:11px; font-size:13px; font-weight:600; }
+  .hud .chip b{ color:var(--brass); }
+  .hud .spacer{ flex:1; }
+  .icon-btn{ background:rgba(255,255,255,.14); color:#fff; border:none; width:33px; height:33px;
+    border-radius:10px; font-size:15px; cursor:pointer; }
+  .icon-btn:hover{ background:rgba(255,255,255,.26); }
+
+  /* station progress strip */
+  .stripe{ position:relative; z-index:5; display:flex; gap:4px; padding:7px 11px; flex:0 0 auto;
+    background:rgba(28,42,64,.8); }
+  .stripe i{ flex:1; height:6px; border-radius:3px; background:rgba(255,255,255,.2); transition:background .3s; }
+  .stripe i.done{ background:var(--brass); }
+  .stripe i.miss{ background:var(--no); }
+
+  /* ===== play : the world ===== */
+  .world{ position:relative; flex:1 1 auto; min-height:210px; overflow:hidden;
+    background:linear-gradient(180deg,var(--sky) 0%,#bfe4f5 40%,#e8f4dc 58%,var(--grass) 58%,var(--grass-d) 100%); }
+
+  .w-sun{ position:absolute; top:7%; right:7%; width:40px; height:40px; border-radius:50%;
+    background:radial-gradient(circle at 36% 34%,#fff7c9,#ffd94a 60%,#f5b61e); box-shadow:0 0 28px rgba(255,214,74,.7); }
+  .w-hill{ position:absolute; bottom:40%; border-radius:50% 50% 0 0; background:#8fd49a; opacity:.8; }
+  .w-tree{ position:absolute; bottom:37%; font-size:24px; }
+
+  /* station */
+  .station{ position:absolute; bottom:26%; left:56%; transform:translateX(-50%); z-index:1;
+    display:flex; flex-direction:column; align-items:center; }
+  .stn-roof{ width:118px; height:13px; background:linear-gradient(#b1402f,#8e2a20);
+    border-radius:5px 5px 2px 2px; box-shadow:0 3px 0 rgba(0,0,0,.18); }
+  .stn-sign{ margin-top:3px; background:var(--paper); border:2.5px solid var(--rail);
+    border-radius:8px; padding:2px 11px; font-size:12px; font-weight:700; color:var(--rail);
+    white-space:nowrap; box-shadow:0 2px 0 rgba(0,0,0,.15); }
+  .stn-posts{ display:flex; justify-content:space-between; width:106px; margin-top:1px; }
+  .stn-posts span{ width:6px; height:26px; background:linear-gradient(#8d6a44,#6b5134); border-radius:2px; }
+  .stn-platform{ width:132px; height:9px; margin-top:-1px; border-radius:3px;
+    background:linear-gradient(#cdbda0,#a8947a); box-shadow:0 2px 0 rgba(0,0,0,.18); }
+
+  /* rails */
+  .rails{ position:absolute; left:0; right:0; bottom:12%; height:14px; z-index:2; }
+  .rails::before{ content:''; position:absolute; inset:0;
+    background:repeating-linear-gradient(90deg,#6b5134 0 9px,transparent 9px 22px); }
+  .rails::after{ content:''; position:absolute; left:0; right:0; top:3px; height:3px;
+    background:#9aa8bd; box-shadow:0 6px 0 #9aa8bd; }
+
+  /* the train */
+  /* centred on its own width, so it always pulls up level with the station
+     (56%) whatever the screen width — the emoji size is in px, the track in %. */
+  .loco{ position:absolute; bottom:calc(12% + 6px); left:-20%; z-index:3; white-space:nowrap;
+    font-size:clamp(30px,7.6vw,44px); line-height:1; filter:drop-shadow(0 4px 6px rgba(0,0,0,.3));
+    transform:translateX(-50%); transition:left 1.05s ease-out; }
+  .loco.at{ left:56%; }
+  .loco.out{ left:150%; transition:left 1.15s ease-in; }
+  .loco .wag{ font-size:.86em; margin-left:-4px; }
+  .loco.bump{ animation:bump .5s ease-in-out 2; }
+  @keyframes bump{
+    0%,100%{ transform:translateX(-50%) translateY(0) }
+    50%{ transform:translateX(-50%) translateY(-4px) }
+  }
+
+  .smoke{ position:absolute; font-size:20px; opacity:0; pointer-events:none; z-index:2; }
+  .smoke.go{ animation:smoke 1.3s ease-out forwards; }
+  @keyframes smoke{ 0%{ opacity:.85; transform:translate(0,0) scale(.5) } 100%{ opacity:0; transform:translate(-40px,-60px) scale(1.8) } }
+
+  /* the verb cloud */
+  /* anchored just above the station roof, so it holds at any screen height */
+  .cloudcard{ position:absolute; left:53%; bottom:calc(26% + 88px); z-index:4;
+    transform:translate(-50%,-190%); opacity:0;
+    background:#fff; border-radius:40px; padding:13px 30px 14px;
+    box-shadow:0 12px 26px rgba(0,0,0,.2);
+    transition:transform .6s cubic-bezier(.3,1.5,.5,1), opacity .4s ease; }
+  .cloudcard.in{ transform:translate(-50%,0); opacity:1; }
+  .cloudcard.pop{ animation:cloudPop .45s ease-out forwards; }
+  @keyframes cloudPop{ to{ transform:translate(-50%,-26px) scale(1.25); opacity:0 } }
+  .cloudcard .lobe{ position:absolute; background:#fff; border-radius:50%; z-index:0; }
+  .cloudcard .l1{ width:46px; height:46px; left:12px; top:-19px; }
+  .cloudcard .l2{ width:62px; height:62px; left:50%; margin-left:-31px; top:-29px; }
+  .cloudcard .l3{ width:40px; height:40px; right:14px; top:-16px; }
+  .cloud-body{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:1px; }
+  .cloud-verb{ font-size:clamp(26px,7.6vw,38px); font-weight:700; color:var(--loco); line-height:1.15; }
+  .cloud-ar{ font-family:'Cairo',sans-serif; direction:rtl; font-size:13px; color:var(--ink-soft); }
+  .cloud-kind{ margin-top:3px; font-size:10.5px; font-weight:700; letter-spacing:.05em;
+    padding:2px 9px; border-radius:20px; }
+  .cloud-kind.bridge{ background:#dff0e4; color:var(--ok-d); }
+  .cloud-kind.tunnel{ background:#e4dff2; color:#5b3f9e; }
+
+  /* ===== play : answer dock ===== */
+  .dock{ position:relative; z-index:5; flex:0 0 auto; padding:11px 12px 16px;
+    background:linear-gradient(180deg,#eef4fa,#dde8f2); border-top:3px solid #c9d6e4; }
+  .dock-inner{ width:min(560px,100%); margin:0 auto; }
+  .ask{ text-align:center; font-size:13.5px; color:var(--ink-soft); margin-bottom:8px; }
+  .ask b{ color:var(--loco); }
+  .timer{ height:7px; border-radius:4px; background:rgba(0,0,0,.12); overflow:hidden; margin-bottom:9px; }
+  .timer i{ display:block; height:100%; width:100%; background:linear-gradient(90deg,var(--ok),var(--brass)); transition:width .25s linear; }
+  .timer i.low{ background:linear-gradient(90deg,var(--no),#f08a2e); }
+
+  .typebox{ display:flex; gap:7px; }
+  .typebox input{ flex:1 1 auto; min-width:0; padding:13px 15px; border:3px solid var(--brass); border-radius:13px;
+    font-family:'Fredoka',sans-serif; font-size:19px; font-weight:700; color:#6b4a10;
+    background:linear-gradient(#fffaf0,#fdeec9); text-align:center; }
+  .typebox input:focus{ outline:none; border-color:var(--sky-d); box-shadow:0 0 0 4px rgba(74,159,208,.2); }
+  .typebox input.right{ border-color:var(--ok); background:linear-gradient(#e4f8ec,#bfeed3); color:var(--ok-d); }
+  .typebox input.wrong{ border-color:var(--no); background:linear-gradient(#fde6e3,#f8c8c2); color:var(--no-d); animation:shake .4s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .typebox button{ flex:0 0 auto; padding:13px 20px; font-size:17px; color:#fff;
+    background:linear-gradient(135deg,var(--ok),var(--ok-d)); box-shadow:0 5px 0 var(--ok-d); }
+  .typebox .hintb{ flex:0 0 auto; padding:13px 14px; font-size:16px; color:#6b4a10;
+    background:#fff; border:3px solid #e2d8bb; box-shadow:none; }
+
+  .verdict{ margin-top:10px; padding:10px 12px; border-radius:11px; font-size:14px; display:none; line-height:1.7; }
+  .verdict.show{ display:block; animation:pop .35s; }
+  @keyframes pop{ 0%{transform:scale(.95)} 55%{transform:scale(1.03)} 100%{transform:scale(1)} }
+  .verdict.good{ background:#dff3e6; color:var(--ok-d); border-left:5px solid var(--ok); }
+  .verdict.bad{ background:#fde9e6; color:var(--no-d); border-left:5px solid var(--no); }
+  .verdict .fix{ font-weight:700; font-size:16.5px; }
+  .verdict .ex{ display:block; margin-top:4px; font-size:13px; opacity:.92; }
+  .verdict .ar{ display:block; margin-top:3px; font-size:12.5px; opacity:.9; }
+
+  /* ===== result ===== */
+  .res-wrap{ position:relative; z-index:2; margin:auto; width:min(540px,94vw); padding:22px 16px 30px; text-align:center; }
+  .res-card{ background:linear-gradient(165deg,rgba(255,255,255,.97),rgba(255,250,236,.95));
+    border:4px solid var(--brass); border-radius:24px; padding:22px 18px;
+    box-shadow:0 14px 0 rgba(184,136,42,.45), 0 24px 50px rgba(0,0,0,.4); }
+  .res-emo{ font-size:62px; line-height:1; animation:chug 1.6s ease-in-out infinite; }
+  .res-title{ font-size:25px; color:var(--loco); margin-top:5px; }
+  .res-score{ font-size:48px; font-weight:700; color:var(--brass-d); margin-top:5px; line-height:1.1; }
+  .res-score span{ font-size:19px; color:var(--ink-soft); }
+  .res-line{ font-size:15px; color:var(--ink-soft); margin-top:5px; }
+  .stars{ font-size:30px; margin-top:7px; letter-spacing:5px; }
+  .rankbox{ margin-top:13px; padding:11px; border-radius:13px; background:#eef4fa; font-size:14.5px; color:var(--rail); }
+  .rankbox b{ color:var(--loco); font-size:17px; }
+  .missed{ margin-top:12px; text-align:left; background:#fff6f4; border:2px solid #f3cfc8;
+    border-radius:13px; padding:10px 12px; font-size:13.5px; color:var(--no-d); display:none; }
+  .missed.show{ display:block; }
+  .missed h4{ font-size:13px; margin-bottom:5px; }
+  .missed span{ display:inline-block; background:#fff; border:1.5px solid #f0c6be; border-radius:8px;
+    padding:3px 9px; margin:3px 4px 0 0; color:var(--ink); font-size:13px; }
+  .missed span b{ color:var(--ok-d); }
+
+  /* ===== scores ===== */
+  .sc-wrap{ position:relative; z-index:2; width:min(640px,96vw); margin:0 auto; padding:18px 13px 34px; }
+  .sc-head{ text-align:center; color:#fff; }
+  .sc-head h2{ font-size:27px; }
+  .sc-head p{ font-size:13px; opacity:.85; margin-top:3px; }
+  .sc-tabs{ display:flex; gap:7px; margin-top:14px; justify-content:center; flex-wrap:wrap; }
+  .sc-tab{ padding:8px 15px; border-radius:11px; border:2px solid rgba(255,255,255,.3); background:rgba(255,255,255,.1);
+    color:#fff; font-family:'Fredoka',sans-serif; font-size:13.5px; font-weight:600; cursor:pointer; }
+  .sc-tab.on{ background:var(--brass); border-color:var(--brass-d); color:#3a2600; }
+  .sc-list{ margin-top:13px; background:var(--paper); border:3px solid var(--brass); border-radius:17px; overflow:hidden; }
+  .sc-row{ display:flex; align-items:center; gap:10px; padding:11px 13px; border-bottom:1px solid #eee4c8; }
+  .sc-row:last-child{ border-bottom:none; }
+  .sc-row.me{ background:linear-gradient(90deg,#fff6d9,#fffdf2); }
+  .sc-rank{ flex:0 0 36px; font-size:17px; font-weight:700; color:var(--ink-soft); text-align:center; }
+  .sc-name{ flex:1; font-size:15.5px; font-weight:600; color:var(--ink); word-break:break-word; min-width:0; }
+  .sc-det{ flex:0 0 auto; font-size:12px; color:var(--ink-soft); }
+  .sc-pts{ flex:0 0 auto; font-size:17px; font-weight:700; color:var(--brass-d); min-width:58px; text-align:right; }
+  .sc-msg{ padding:26px 16px; text-align:center; color:var(--ink-soft); font-size:14.5px; line-height:1.8; }
+  .sc-actions{ display:flex; gap:9px; margin-top:13px; }
+  .sc-actions .btn{ flex:1; padding:12px; font-size:15px; margin-top:0; }
+
+  .confetti{ position:fixed; width:11px; height:17px; z-index:99; pointer-events:none; animation:fall linear forwards; }
+  @keyframes fall{ to{ transform:translateY(104vh) rotate(760deg); opacity:0 } }
+  .spark{ position:fixed; font-size:21px; z-index:99; pointer-events:none; animation:sparkUp .8s ease-out forwards; }
+  @keyframes sparkUp{ 0%{opacity:1; transform:translateY(0) scale(.6)} 100%{opacity:0; transform:translateY(-58px) scale(1.4)} }
+</style>
+</head>
+<body>
+
+<!-- ======================= START ======================= -->
+<section class="screen active" id="scr-start">
+  <div class="sky"></div><div class="sun"></div>
+  <div class="cloudlet" style="top:12%;left:0;animation-duration:46s">☁️</div>
+  <div class="cloudlet" style="top:24%;left:0;animation-duration:66s;font-size:28px">☁️</div>
+  <div class="hill" style="left:-6%;width:46%;height:16%"></div>
+  <div class="hill" style="right:-8%;width:52%;height:20%"></div>
+
+  <div class="start-wrap">
+    <div class="hero">
+      <div class="loco-badge">🚂</div>
+      <h1 class="game-title">Verb Express</h1>
+      <div class="game-sub ar">قِطارُ الأفعال — مِنَ الحاضرِ إلى الماضي</div>
+      <p class="game-tag ar">يَقِفُ القطارُ في المحطّة، وتَنزِلُ غيمةٌ عليها الفعلُ المجرَّد.<br>اكتُبْ صيغةَ الماضي البسيطِ لينطلقَ القطارُ إلى المحطّةِ التالية 🚂💨</p>
+
+      <div class="field">
+        <label for="playerName">Your name <span class="ar">— اكتبِ اسمَكَ لتظهرَ في لائحةِ النتائج</span></label>
+        <input class="name-in" id="playerName" maxlength="20" placeholder="…" autocomplete="off" />
+      </div>
+
+      <div class="levels" id="levels">
+        <button class="lvl on" data-lv="1" type="button">
+          <span class="lv-emo">🌤️</span><span class="lv-name">Level 1</span>
+          <span class="lv-meta ar">الصفّان ٥–٦<br>أفعالٌ أساسيّة</span>
+        </button>
+        <button class="lvl" data-lv="2" type="button">
+          <span class="lv-emo">⛰️</span><span class="lv-name">Level 2</span>
+          <span class="lv-meta ar">الصفّان ٧–٨<br>قواعدُ الإملاء</span>
+        </button>
+        <button class="lvl" data-lv="3" type="button">
+          <span class="lv-emo">🌙</span><span class="lv-name">Level 3</span>
+          <span class="lv-meta ar">تحدٍّ<br>أفعالٌ شاذّة</span>
+        </button>
+      </div>
+
+      <button class="btn btn-go" id="btnStart" type="button">🚂 Start the journey</button>
+      <button class="btn btn-ghost" id="btnScores1" type="button">🏆 Scores <span class="ar">— لائحةُ النتائج</span></button>
+    </div>
+    <div class="credit">Designed with love 💗 by T. Wad Refae</div>
+    <div class="cc-license">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer">CC BY-NC-ND 4.0</a></div>
+  </div>
+</section>
+
+<!-- ======================= PLAY ======================= -->
+<section class="screen" id="scr-play">
+  <div class="hud">
+    <span class="chip">🎫 <b id="hudScore">0</b></span>
+    <span class="chip">🚉 <b id="hudQ">1</b>/10</span>
+    <span class="chip" id="hudStreakChip" style="display:none">🔥 <b id="hudStreak">0</b></span>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="btnMute" type="button" title="Sound">🔊</button>
+    <button class="icon-btn" id="btnQuit" type="button" title="Quit">✕</button>
+  </div>
+
+  <div class="stripe" id="stripe"></div>
+
+  <div class="world">
+    <div class="w-sun"></div>
+    <div class="cloudlet" style="top:10%;left:0;animation-duration:54s;font-size:24px">☁️</div>
+    <div class="w-hill" style="left:-12%;width:52%;height:26%"></div>
+    <div class="w-hill" style="right:-14%;width:58%;height:32%"></div>
+    <div class="w-tree" style="left:8%">🌳</div>
+    <div class="w-tree" style="left:88%;font-size:21px">🌲</div>
+
+    <div class="station">
+      <div class="stn-roof"></div>
+      <div class="stn-sign" id="stnSign">Jaffa</div>
+      <div class="stn-posts"><span></span><span></span></div>
+      <div class="stn-platform"></div>
+    </div>
+
+    <div class="rails"></div>
+
+    <div class="cloudcard" id="cloudCard">
+      <span class="lobe l1"></span><span class="lobe l2"></span><span class="lobe l3"></span>
+      <span class="cloud-body">
+        <span class="cloud-verb" id="cloudVerb">go</span>
+        <span class="cloud-ar" id="cloudAr">ذهب</span>
+        <span class="cloud-kind bridge" id="cloudKind">🌉 Regular</span>
+      </span>
+    </div>
+
+    <div class="loco" id="loco">🚂<span class="wag">🚃</span></div>
+  </div>
+
+  <div class="dock">
+    <div class="dock-inner">
+      <p class="ask">Write the <b>past simple</b> <span class="ar">— اكتبْ صيغةَ الماضي البسيط</span></p>
+      <div class="timer"><i id="timerBar"></i></div>
+      <div class="typebox">
+        <input id="typeIn" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="…" />
+        <button class="btn hintb" id="btnHint" type="button" title="Hint">💡</button>
+        <button class="btn" id="btnCheck" type="button">Go</button>
+      </div>
+      <div class="verdict" id="verdict"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= RESULT ======================= -->
+<section class="screen" id="scr-res">
+  <div class="sky"></div><div class="sun"></div>
+  <div class="hill" style="left:-6%;width:46%;height:16%"></div>
+  <div class="hill" style="right:-8%;width:52%;height:20%"></div>
+  <div class="res-wrap">
+    <div class="res-card">
+      <div class="res-emo" id="resEmo">🏁</div>
+      <h2 class="res-title" id="resTitle">You arrived!</h2>
+      <div class="stars" id="resStars">⭐️⭐️⭐️</div>
+      <div class="res-score" id="resScore">0 <span>pts</span></div>
+      <p class="res-line" id="resLine"></p>
+      <div class="rankbox" id="rankBox">…</div>
+      <div class="missed" id="missed"><h4 class="ar">راجِعْ هذه الأفعال:</h4><div id="missedList"></div></div>
+      <button class="btn btn-go" id="btnAgain" type="button">🔁 Play again</button>
+      <button class="btn btn-ghost" id="btnScores2" type="button">🏆 Scores <span class="ar">— لائحةُ النتائج</span></button>
+      <button class="btn btn-ghost" id="btnHome" type="button">🏠 Home</button>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SCORES ======================= -->
+<section class="screen" id="scr-scores">
+  <div class="sky" style="background:linear-gradient(180deg,#2a3f5c,#1c2a40)"></div>
+  <div class="sc-wrap">
+    <div class="sc-head">
+      <h2>🏆 Scores</h2>
+      <p class="ar">أفضلُ نتيجةٍ لكلِّ لاعبٍ — من كلِّ الأجهزة</p>
+    </div>
+    <div class="sc-tabs" id="scTabs">
+      <button class="sc-tab on" data-lv="1" type="button">Level 1</button>
+      <button class="sc-tab" data-lv="2" type="button">Level 2</button>
+      <button class="sc-tab" data-lv="3" type="button">Level 3</button>
+    </div>
+    <div class="sc-list" id="scList"><div class="sc-msg ar">جارٍ التحميل…</div></div>
+    <div class="sc-actions">
+      <button class="btn btn-ghost" id="btnRefresh" type="button">🔄 Refresh</button>
+      <button class="btn btn-ghost" id="btnBack" type="button">← Back</button>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  'use strict';
+
+  var API = 'https://palbook-live.vercel.app/api/scores';
+  var GAME = 'verb-express';
+  var PER_RUN = 10;
+
+  var STATIONS = ['Jaffa','Haifa','Acre','Nazareth','Jenin','Nablus','Ramallah','Jerusalem','Bethlehem','Hebron'];
+
+  /* ===== verb bank: [ base, past, Arabic, 'r'|'i', example sentence, [extra accepted spellings] ] ===== */
+  var BANK = {
+    1: [
+      ['play','played','لَعِبَ','r','Yesterday we played football in the yard.'],
+      ['walk','walked','مَشى','r','Yesterday I walked to school.'],
+      ['watch','watched','شاهَدَ','r','Last night they watched TV.'],
+      ['help','helped','ساعَدَ','r','Yesterday Lana helped her mother.'],
+      ['clean','cleaned','نَظَّفَ','r','Last Sunday we cleaned the classroom.'],
+      ['open','opened','فَتَحَ','r','The shop opened at eight o’clock.'],
+      ['listen','listened','اِستَمَعَ','r','Last evening I listened to the radio.'],
+      ['visit','visited','زارَ','r','Last Friday they visited their grandfather.'],
+      ['cook','cooked','طَبَخَ','r','Last Saturday my father cooked our lunch.'],
+      ['wash','washed','غَسَلَ','r','Before lunch she washed her hands.'],
+      ['go','went','ذَهَبَ','i','Yesterday I went to the market.'],
+      ['eat','ate','أَكَلَ','i','Yesterday we ate rice for lunch.'],
+      ['see','saw','رَأى','i','Yesterday I saw my friends at school.'],
+      ['come','came','جاءَ','i','Yesterday they came home at four.'],
+      ['take','took','أَخَذَ','i','Yesterday he took the bus to work.'],
+      ['make','made','صَنَعَ','i','Last Friday Mum made a cake.'],
+      ['give','gave','أَعْطى','i','Yesterday the teacher gave us homework.'],
+      ['write','wrote','كَتَبَ','i','Last month I wrote a long letter.'],
+      ['drink','drank','شَرِبَ','i','This morning she drank her milk.'],
+      ['run','ran','رَكَضَ','i','Yesterday the boys ran in the park.']
+    ],
+    2: [
+      ['stop','stopped','تَوَقَّفَ','r','Yesterday the bus stopped near the school.'],
+      ['study','studied','دَرَسَ','r','Yesterday we studied English for an hour.'],
+      ['carry','carried','حَمَلَ','r','Yesterday he carried the heavy bag home.'],
+      ['plan','planned','خَطَّطَ','r','Last week they planned the school trip.'],
+      ['try','tried','حاوَلَ','r','Yesterday she tried to fix the computer.'],
+      ['shop','shopped','تَسَوَّقَ','r','Last Friday we shopped in the old city.'],
+      ['hurry','hurried','أَسْرَعَ','r','This morning I hurried to catch the bus.'],
+      ['travel','travelled','سافَرَ','r','Last summer they travelled to Jerusalem.',['traveled']],
+      ['buy','bought','اِشْتَرى','i','This morning my mother bought fresh bread.'],
+      ['bring','brought','أَحْضَرَ','i','Yesterday he brought his books to class.'],
+      ['teach','taught','عَلَّمَ','i','Last year she taught us English.'],
+      ['catch','caught','أَمْسَكَ','i','Yesterday the goalkeeper caught the ball.'],
+      ['think','thought','فَكَّرَ','i','Yesterday I thought about the question.'],
+      ['find','found','وَجَدَ','i','Yesterday they found the lost key.'],
+      ['leave','left','غادَرَ','i','Yesterday we left the house at seven.'],
+      ['meet','met','اِلْتَقى','i','Yesterday she met her friends at the library.'],
+      ['build','built','بَنى','i','Last year they built a new school.'],
+      ['win','won','فازَ','i','Last Friday our team won the match.'],
+      ['break','broke','كَسَرَ','i','Yesterday he broke the glass by mistake.'],
+      ['speak','spoke','تَحَدَّثَ','i','Yesterday she spoke to the headmaster.']
+    ],
+    3: [
+      ['begin','began','بَدَأَ','i','Yesterday the lesson began at eight o’clock.'],
+      ['swim','swam','سَبَحَ','i','Last summer they swam in the sea every day.'],
+      ['wear','wore','اِرْتَدى','i','On the feast she wore her new dress.'],
+      ['forget','forgot','نَسِيَ','i','Yesterday I forgot my keys at home.'],
+      ['understand','understood','فَهِمَ','i','Yesterday we understood the new lesson.'],
+      ['keep','kept','حافَظَ على','i','Last week he kept his room tidy.'],
+      ['sleep','slept','نامَ','i','Last night the baby slept for eight hours.'],
+      ['sell','sold','باعَ','i','Yesterday the farmer sold his olives.'],
+      ['tell','told','رَوى','i','Last night grandmother told us a story.'],
+      ['drive','drove','قادَ','i','Last week my uncle drove to Nablus.'],
+      ['grow','grew','زَرَعَ','i','Last year the farmers grew wheat here.'],
+      ['know','knew','عَرَفَ','i','Yesterday I knew the answer at once.'],
+      ['throw','threw','رَمى','i','Yesterday the player threw the ball.'],
+      ['hide','hid','اِخْتَبَأَ','i','Yesterday the cat hid under the chair.'],
+      ['spend','spent','أَمْضى','i','Last holiday we spent a week with our cousins.'],
+      ['choose','chose','اِخْتارَ','i','Yesterday she chose a book from the library.'],
+      ['feel','felt','شَعَرَ','i','Yesterday he felt tired after the long walk.'],
+      ['ring','rang','رَنَّ','i','Yesterday the bell rang at two o’clock.'],
+      ['steal','stole','سَرَقَ','i','In the story, the thief stole the gold.'],
+      ['rise','rose','أَشْرَقَ','i','Yesterday the sun rose behind the hills.']
+    ]
+  };
+
+  var LEVEL_TIME = { 1:30, 2:26, 3:23 };
+  var HINT_COST = 25;
+
+  /* ===== helpers ===== */
+  var $ = function(id){ return document.getElementById(id); };
+  function show(id){
+    var list = document.querySelectorAll('.screen');
+    for (var i=0;i<list.length;i++) list[i].classList.remove('active');
+    $(id).classList.add('active'); $(id).scrollTop = 0;
+  }
+  function shuffle(a){
+    for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+  function norm(s){ return String(s||'').toLowerCase().replace(/[^a-z]/g,''); }
+
+  /* ===== sound ===== */
+  var muted = false, actx = null;
+  try { muted = localStorage.getItem('vx_muted') === '1'; } catch(e){}
+  function beep(freq, ms, type){
+    if (muted) return;
+    try{
+      if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = actx.createOscillator(), g = actx.createGain();
+      o.type = type || 'triangle'; o.frequency.value = freq;
+      g.gain.setValueAtTime(.001, actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.16, actx.currentTime + .012);
+      g.gain.exponentialRampToValueAtTime(.001, actx.currentTime + ms/1000);
+      o.connect(g); g.connect(actx.destination);
+      o.start(); o.stop(actx.currentTime + ms/1000);
+    }catch(e){}
+  }
+  function goodSound(){ beep(660,110); setTimeout(function(){ beep(880,150); },95); }
+  function badSound(){ beep(200,230,'sawtooth'); }
+  function hornSound(){ beep(300,260,'sine'); setTimeout(function(){ beep(240,320,'sine'); },210); }
+
+  /* ===== effects ===== */
+  function sparkAt(el){
+    if (!el) return;
+    var r = el.getBoundingClientRect(), marks = ['✨','⭐️','💫'];
+    for (var i=0;i<6;i++){
+      (function(i){
+        var s = document.createElement('span');
+        s.className = 'spark'; s.textContent = marks[i % marks.length];
+        s.style.left = (r.left + Math.random()*r.width) + 'px';
+        s.style.top  = (r.top + r.height*.4) + 'px';
+        s.style.animationDelay = (i*55) + 'ms';
+        document.body.appendChild(s);
+        setTimeout(function(){ s.remove(); }, 1000 + i*55);
+      })(i);
+    }
+  }
+  function confetti(){
+    var cols = ['#e8b84b','#c0392b','#2fae6b','#4a9fd0','#8e44ad','#f08a2e'];
+    for (var i=0;i<70;i++){
+      (function(){
+        var c = document.createElement('i');
+        c.className = 'confetti';
+        c.style.left = (Math.random()*100) + 'vw'; c.style.top = '-24px';
+        c.style.background = cols[Math.floor(Math.random()*cols.length)];
+        c.style.animationDuration = (2.1 + Math.random()*1.5) + 's';
+        c.style.animationDelay = (Math.random()*.5) + 's';
+        document.body.appendChild(c);
+        setTimeout(function(){ c.remove(); }, 4200);
+      })();
+    }
+  }
+
+  /* ===== state ===== */
+  var S = { name:'', level:1, qs:[], i:0, score:0, correct:0, streak:0,
+            locked:true, usedHint:false, timeLeft:0, timerId:null, missed:[] };
+
+  try { var saved = localStorage.getItem('vx_name'); if (saved) $('playerName').value = saved; } catch(e){}
+
+  /* ===== start screen ===== */
+  $('levels').addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('.lvl') : null;
+    if (!b) return;
+    var all = document.querySelectorAll('.lvl');
+    for (var i=0;i<all.length;i++) all[i].classList.remove('on');
+    b.classList.add('on');
+    S.level = Number(b.getAttribute('data-lv'));
+  });
+
+  $('btnStart').addEventListener('click', function(){
+    var n = $('playerName').value.replace(/\s+/g,' ').trim().slice(0,20);
+    if (!n){
+      $('playerName').focus();
+      $('playerName').style.borderColor = '#e05a4e';
+      setTimeout(function(){ $('playerName').style.borderColor = ''; }, 1200);
+      return;
+    }
+    S.name = n;
+    try { localStorage.setItem('vx_name', n); } catch(e){}
+    startRun();
+  });
+
+  $('btnScores1').addEventListener('click', function(){ openScores(S.level); });
+  $('btnScores2').addEventListener('click', function(){ openScores(S.level); });
+  $('btnHome').addEventListener('click', function(){ show('scr-start'); });
+  $('btnAgain').addEventListener('click', function(){ startRun(); });
+  $('btnBack').addEventListener('click', function(){ show('scr-start'); });
+  $('btnQuit').addEventListener('click', function(){ stopTimer(); show('scr-start'); });
+  $('btnMute').addEventListener('click', function(){
+    muted = !muted;
+    $('btnMute').textContent = muted ? '🔇' : '🔊';
+    try { localStorage.setItem('vx_muted', muted ? '1' : '0'); } catch(e){}
+  });
+  $('btnMute').textContent = muted ? '🔇' : '🔊';
+
+  /* ===== run ===== */
+  function startRun(){
+    S.qs = shuffle(BANK[S.level].slice()).slice(0, PER_RUN);
+    S.i = 0; S.score = 0; S.correct = 0; S.streak = 0; S.missed = [];
+    $('hudScore').textContent = '0';
+    $('hudStreakChip').style.display = 'none';
+    buildStripe();
+    show('scr-play');
+    hornSound();
+    arriveAtStation();
+  }
+
+  function buildStripe(){
+    var box = $('stripe'); box.innerHTML = '';
+    for (var i=0;i<PER_RUN;i++) box.appendChild(document.createElement('i'));
+  }
+
+  /* --- 1. the train pulls into the station --- */
+  function arriveAtStation(){
+    if (S.i >= S.qs.length){ finish(); return; }
+
+    S.locked = true;
+    S.usedHint = false;
+
+    var loco = $('loco'), cloud = $('cloudCard');
+    cloud.className = 'cloudcard';
+
+    $('hudQ').textContent = String(S.i + 1);
+    $('stnSign').textContent = STATIONS[S.i] || ('Station ' + (S.i + 1));
+
+    var inp = $('typeIn');
+    inp.value = ''; inp.className = ''; inp.disabled = true;
+    $('btnCheck').disabled = true; $('btnHint').disabled = true;
+    var v = $('verdict'); v.className = 'verdict'; v.innerHTML = '';
+    paintTimer(1);
+
+    // snap the train back to the left with no visible rewind, then roll in
+    loco.style.transition = 'none';
+    loco.className = 'loco';
+    void loco.offsetWidth;
+    loco.style.transition = '';
+    loco.classList.add('at');
+
+    puff();
+    setTimeout(dropCloud, 1080);
+  }
+
+  /* --- 2. the cloud with the base verb comes down --- */
+  function dropCloud(){
+    var q = S.qs[S.i];
+    $('cloudVerb').textContent = q[0];
+    $('cloudAr').textContent = q[2];
+    $('cloudKind').className = 'cloud-kind ' + (q[3] === 'r' ? 'bridge' : 'tunnel');
+    $('cloudKind').textContent = q[3] === 'r' ? '🌉 Regular' : '🚇 Irregular';
+    $('cloudCard').classList.add('in');
+    $('loco').classList.add('bump');
+
+    var inp = $('typeIn');
+    inp.disabled = false; $('btnCheck').disabled = false; $('btnHint').disabled = false;
+    S.locked = false;
+    setTimeout(function(){ try { inp.focus(); } catch(e){} }, 120);
+    startTimer();
+  }
+
+  /* --- 3. check the answer --- */
+  $('btnCheck').addEventListener('click', function(){ answer($('typeIn').value); });
+  $('typeIn').addEventListener('keydown', function(e){
+    if (e.key === 'Enter'){ e.preventDefault(); answer($('typeIn').value); }
+  });
+  $('btnHint').addEventListener('click', function(){
+    if (S.locked || S.usedHint) return;
+    S.usedHint = true;
+    var q = S.qs[S.i], inp = $('typeIn');
+    inp.value = q[1].charAt(0);
+    try { inp.focus(); inp.setSelectionRange(1,1); } catch(e){}
+    $('btnHint').disabled = true;
+  });
+
+  function accepts(q, given){
+    var g = norm(given);
+    if (!g) return false;
+    if (g === norm(q[1])) return true;
+    var alts = q[5];
+    if (alts) for (var i=0;i<alts.length;i++){ if (g === norm(alts[i])) return true; }
+    return false;
+  }
+
+  function answer(given){
+    if (S.locked) return;
+    S.locked = true;
+    stopTimer();
+
+    var q = S.qs[S.i], inp = $('typeIn');
+    var timedOut = given === null;
+    var ok = !timedOut && accepts(q, given);
+
+    inp.disabled = true; $('btnCheck').disabled = true; $('btnHint').disabled = true;
+
+    var v = $('verdict');
+
+    if (ok){
+      S.correct++; S.streak++;
+      var speed = Math.round(Math.max(0, S.timeLeft / LEVEL_TIME[S.level]) * 50);
+      var streakBonus = Math.min(S.streak - 1, 5) * 10;
+      var gained = Math.max(0, 100 + speed + streakBonus - (S.usedHint ? HINT_COST : 0));
+      S.score += gained;
+
+      inp.classList.add('right');
+      inp.value = q[1];
+      markStripe(S.i, true);
+      $('hudScore').textContent = String(S.score);
+      $('hudStreakChip').style.display = S.streak > 1 ? '' : 'none';
+      $('hudStreak').textContent = String(S.streak);
+
+      v.className = 'verdict good show';
+      v.innerHTML = '✅ <b>' + q[0] + ' → ' + q[1] + '</b> &nbsp;+' + gained + ' pts'
+        + (streakBonus ? ' <span style="opacity:.8">(🔥 +' + streakBonus + ')</span>' : '')
+        + (S.usedHint ? ' <span style="opacity:.7">(💡 −' + HINT_COST + ')</span>' : '')
+        + '<span class="ex">' + q[4] + '</span>';
+      goodSound();
+      sparkAt($('cloudCard'));
+      $('cloudCard').classList.add('pop');
+    } else {
+      S.streak = 0;
+      S.missed.push(q);
+      $('hudStreakChip').style.display = 'none';
+      inp.classList.add('wrong');
+      markStripe(S.i, false);
+
+      v.className = 'verdict bad show';
+      v.innerHTML = (timedOut ? '⏱️ <b>Time is up.</b> ' : '❌ <b>Not quite.</b> ')
+        + 'The past of <b>' + q[0] + '</b> is <span class="fix">' + q[1] + '</span>.'
+        + '<span class="ex">' + q[4] + '</span>'
+        + '<span class="ar">المعنى: ' + q[2] + '</span>';
+      badSound();
+      $('cloudCard').classList.remove('in');
+    }
+
+    setTimeout(departStation, ok ? 1150 : 2500);
+  }
+
+  /* --- 4. the train leaves for the next station --- */
+  function departStation(){
+    var loco = $('loco');
+    $('cloudCard').classList.remove('in');
+    loco.classList.remove('bump');
+    loco.classList.add('out');
+    puff(); setTimeout(puff, 260); setTimeout(puff, 520);
+    hornSound();
+    setTimeout(function(){ S.i++; arriveAtStation(); }, 1200);
+  }
+
+  function puff(){
+    var loco = $('loco');
+    var s = document.createElement('span');
+    s.className = 'smoke go'; s.textContent = '💨';
+    s.style.left = loco.style.left || getComputedStyle(loco).left;
+    s.style.bottom = 'calc(16% + 42px)';
+    loco.parentNode.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 1400);
+  }
+
+  function markStripe(i, ok){
+    var d = $('stripe').children[i];
+    if (d) d.className = ok ? 'done' : 'miss';
+  }
+
+  /* ===== timer ===== */
+  function startTimer(){
+    stopTimer();
+    S.timeLeft = LEVEL_TIME[S.level];
+    var total = S.timeLeft;
+    paintTimer(1);
+    S.timerId = setInterval(function(){
+      S.timeLeft -= 0.1;
+      if (S.timeLeft <= 0){
+        stopTimer(); paintTimer(0);
+        if (!S.locked) answer(null);
+        return;
+      }
+      paintTimer(S.timeLeft / total);
+    }, 100);
+  }
+  function stopTimer(){ if (S.timerId){ clearInterval(S.timerId); S.timerId = null; } }
+  function paintTimer(frac){
+    var bar = $('timerBar');
+    bar.style.width = Math.max(0, frac * 100) + '%';
+    if (frac < .3) bar.classList.add('low'); else bar.classList.remove('low');
+  }
+
+  /* ===== finish ===== */
+  function finish(){
+    stopTimer();
+    var pct = S.correct / PER_RUN;
+    var stars = pct >= .9 ? 3 : pct >= .6 ? 2 : pct >= .3 ? 1 : 0;
+
+    $('resEmo').textContent = stars === 3 ? '🏆' : stars === 2 ? '🎉' : stars === 1 ? '🚂' : '🛤️';
+    $('resTitle').textContent = S.correct === PER_RUN ? 'Perfect journey!'
+      : stars === 3 ? 'Great journey!' : stars >= 1 ? 'You arrived!' : 'Keep practising!';
+    $('resStars').textContent = '⭐️'.repeat(stars) + '☆'.repeat(3 - stars);
+    $('resScore').innerHTML = S.score + ' <span>pts</span>';
+    $('resLine').innerHTML = S.correct + ' / ' + PER_RUN + ' correct &nbsp;·&nbsp; Level ' + S.level;
+    $('rankBox').innerHTML = '<span class="ar">جارٍ إرسالُ نتيجتِك…</span>';
+
+    var mbox = $('missed'), mlist = $('missedList');
+    mlist.innerHTML = '';
+    if (S.missed.length){
+      mbox.classList.add('show');
+      S.missed.forEach(function(q){
+        var s = document.createElement('span');
+        s.appendChild(document.createTextNode(q[0] + ' → '));
+        var b = document.createElement('b'); b.textContent = q[1];
+        s.appendChild(b);
+        mlist.appendChild(s);
+      });
+    } else {
+      mbox.classList.remove('show');
+    }
+
+    show('scr-res');
+    if (stars >= 2){ confetti(); hornSound(); }
+    submitScore();
+  }
+
+  function submitScore(){
+    fetch(API, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ game:GAME, level:S.level, name:S.name, score:S.score, correct:S.correct, total:PER_RUN })
+    }).then(function(r){
+      if (!r.ok) throw new Error('bad');
+      return r.json();
+    }).then(function(d){
+      var msg = d.improved
+        ? 'New personal best! You are <b>#' + d.rank + '</b> on Level ' + S.level + '.'
+        : 'Your best on Level ' + S.level + ' is still <b>' + d.best + '</b> pts (rank #' + d.rank + ').';
+      $('rankBox').innerHTML = '🏆 ' + msg;
+    }).catch(function(){
+      $('rankBox').innerHTML = '📴 <span class="ar">تعذَّرَ إرسالُ النتيجةِ الآن — تحقَّقْ من الاتّصالِ وأعِدِ المحاولة.</span>';
+    });
+  }
+
+  /* ===== scores ===== */
+  var scLevel = 1;
+  $('scTabs').addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('.sc-tab') : null;
+    if (!b) return;
+    var all = document.querySelectorAll('.sc-tab');
+    for (var i=0;i<all.length;i++) all[i].classList.remove('on');
+    b.classList.add('on');
+    scLevel = Number(b.getAttribute('data-lv'));
+    loadScores();
+  });
+  $('btnRefresh').addEventListener('click', loadScores);
+
+  function openScores(lv){
+    scLevel = lv || 1;
+    var all = document.querySelectorAll('.sc-tab');
+    for (var i=0;i<all.length;i++){
+      all[i].classList.toggle('on', Number(all[i].getAttribute('data-lv')) === scLevel);
+    }
+    show('scr-scores');
+    loadScores();
+  }
+
+  function loadScores(){
+    var box = $('scList');
+    box.innerHTML = '<div class="sc-msg ar">جارٍ التحميل…</div>';
+    fetch(API + '?game=' + GAME + '&level=' + scLevel + '&limit=50', { cache:'no-store' })
+      .then(function(r){ if (!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){ renderScores(d.rows || []); })
+      .catch(function(){
+        box.innerHTML = '<div class="sc-msg ar">تعذَّرَ تحميلُ اللائحة.<br>تحقَّقْ من الاتّصالِ بالإنترنتِ ثمَّ اضغطْ «Refresh».</div>';
+      });
+  }
+
+  function renderScores(rows){
+    var box = $('scList'); box.innerHTML = '';
+    if (!rows.length){
+      box.innerHTML = '<div class="sc-msg ar">لا توجدُ نتائجُ بعدُ في هذا المستوى.<br>كُنْ أوّلَ مَن يَركبُ القطار! 🚂</div>';
+      return;
+    }
+    var medals = ['🥇','🥈','🥉'];
+    rows.forEach(function(r){
+      var row = document.createElement('div');
+      row.className = 'sc-row' + (r.name === S.name ? ' me' : '');
+
+      var rank = document.createElement('span');
+      rank.className = 'sc-rank';
+      rank.textContent = r.rank <= 3 ? medals[r.rank - 1] : String(r.rank);
+
+      var name = document.createElement('span');
+      name.className = 'sc-name';
+      name.textContent = r.name;          // textContent: a name is never parsed as HTML
+
+      var det = document.createElement('span');
+      det.className = 'sc-det';
+      det.textContent = (r.correct || 0) + '/' + (r.total || PER_RUN);
+
+      var pts = document.createElement('span');
+      pts.className = 'sc-pts';
+      pts.textContent = String(r.score);
+
+      row.appendChild(rank); row.appendChild(name); row.appendChild(det); row.appendChild(pts);
+      box.appendChild(row);
+    });
+  }
+})();
+</script>
+</body>
+</html>
