@@ -304,6 +304,9 @@
     font-family:inherit; font-size:16px; font-weight:700; color:var(--ink); background:#fff; text-align:center;
   }
   .namerow input:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 4px rgba(238,171,36,.25); }
+  .namerow input.need{ border-color:var(--no); box-shadow:0 0 0 4px rgba(207,75,69,.22); animation:nudge .4s ease both; }
+  @keyframes nudge{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .namehint{ margin-top:8px; font-size:13.5px; font-weight:700; color:var(--no); }
   .namerow .btn{ flex:0 0 auto; background:var(--gold); box-shadow:0 4px 0 var(--gold-d); color:#3a2600; }
 
   .sctabs{ display:flex; gap:7px; flex-wrap:wrap; justify-content:center; margin:0 0 12px; }
@@ -345,11 +348,12 @@
     </div>
 
     <div class="namebox">
-      <label for="playerName">Your name <span class="ar">— اكتبِ اسمَكَ لتظهرَ نتيجتُكَ في اللائحةِ المشتركة</span></label>
+      <label for="playerName">Your name <span class="ar">— اكتبِ اسمَكَ أوّلًا لتبدأَ اللعبَ ولتظهرَ نتيجتُكَ في اللائحة</span></label>
       <div class="namerow">
         <input id="playerName" maxlength="20" autocomplete="off" placeholder="…" />
         <button class="btn" id="scoresBtn" type="button">🏆 Scores</button>
       </div>
+      <div class="namehint ar" id="nameHint" hidden>✋ اكتبِ اسمَكَ أوّلًا، ثمَّ اختَرْ مستوًى.</div>
     </div>
 
     <div class="levels" id="levels"></div>
@@ -612,7 +616,10 @@ var S = { level:0, groups:[], gi:0, order:[], view:null, step:0, miss:0, hinted:
   $("#levels").innerHTML = html;
   $("#levels").addEventListener("click", function(e){
     var b = e.target.closest(".lvl");
-    if(b) startLevel(parseInt(b.getAttribute("data-l"),10));
+    if(!b) return;
+    // the name is taken before the first plank, so every run can be recorded
+    if(!requireName()) return;
+    startLevel(parseInt(b.getAttribute("data-l"),10));
   });
 
   var rail = "";
@@ -655,9 +662,21 @@ var GAME = "which-word-first";
   if(saved) $("#playerName").value = saved;
   $("#playerName").addEventListener("input", function(){
     store("wcf_name", this.value.replace(/\s+/g," ").trim().slice(0,20));
+    if(this.value.trim()){ this.classList.remove("need"); $("#nameHint").hidden = true; }
   });
 })();
 function playerName(){ return $("#playerName").value.replace(/\s+/g," ").trim().slice(0,20); }
+
+/* Blocks a level until there is a name, and says so instead of ignoring the tap. */
+function requireName(){
+  if(playerName()) return true;
+  var box = $("#playerName");
+  $("#nameHint").hidden = false;
+  box.classList.remove("need"); void box.offsetWidth; box.classList.add("need");
+  try{ box.scrollIntoView({ block:"center", behavior:"smooth" }); box.focus({ preventScroll:true }); }
+  catch(e){ box.focus(); }
+  return false;
+}
 
 function submitScore(levelIndex, stars, bridges){
   var who = playerName(), box = $("#sheetRank");
