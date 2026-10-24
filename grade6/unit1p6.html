@@ -208,6 +208,16 @@ header{
 .audio-card .audio-label .ear{font-size:1.6rem; display:inline-block; animation:wiggle 1.6s ease-in-out infinite;}
 .audio-card iframe{
   width:100%; height:220px; max-width:480px; border:none; border-radius:12px; background:#fff; display:block; margin:0 auto;}
+/* compact custom player (2026-10 experiment, this lesson only): replaces the
+   Drive /preview iframe with our own tiny play/seek/time bar, driven by the
+   same Drive audio file via its direct-download URL. Falls back to the
+   proven 220px iframe automatically if that URL fails to stream. */
+.gdp{display:flex; align-items:center; gap:10px; width:100%; max-width:480px; margin:0 auto;
+  background:#fff; border-radius:12px; padding:8px 14px; box-sizing:border-box;}
+.gdp-play{flex:none; width:38px; height:38px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--purple); color:#fff; font-size:1rem; display:flex; align-items:center; justify-content:center;}
+.gdp-seek{flex:1; min-width:0; accent-color:var(--purple);}
+.gdp-time{flex:none; font-size:.72rem; color:#666; direction:ltr; white-space:nowrap;}
 
 /* exercise images */
 .ex-img{
@@ -516,7 +526,11 @@ footer .small{margin-top:8px; color:#ce93d8; font-weight:700; font-size:.9rem;}
 
     <div class="audio-card">
       <div class="audio-label"><span class="ear">🎧</span> Audio 5 — اضغط زر التشغيل واستمع</div>
-      <iframe src="https://drive.google.com/file/d/1b8kSG9R-OlSmxOSYdCDn9IFIgl07eQPD/preview" width="100%" height="220" style="max-width:480px;border:0;border-radius:8px;display:block;margin:0 auto;" allow="autoplay" title="Audio 5"></iframe>
+      <div class="gdp" data-id="1b8kSG9R-OlSmxOSYdCDn9IFIgl07eQPD" data-label="Audio 5">
+        <button class="gdp-play" type="button" aria-label="Play">▶️</button>
+        <input class="gdp-seek" type="range" min="0" max="100" value="0" step="0.1">
+        <span class="gdp-time">0:00 / 0:00</span>
+      </div>
     </div>
 
     <div class="mcq">
@@ -572,7 +586,11 @@ footer .small{margin-top:8px; color:#ce93d8; font-weight:700; font-size:.9rem;}
 
     <div class="audio-card">
       <div class="audio-label"><span class="ear">🎧</span> Audio 6 — اضغط زر التشغيل واستمع</div>
-      <iframe src="https://drive.google.com/file/d/1639Cyf_u6g5uH0LzWrjJtgv7STn7_DKw/preview" width="100%" height="220" style="max-width:480px;border:0;border-radius:8px;display:block;margin:0 auto;" allow="autoplay" title="Audio 6"></iframe>
+      <div class="gdp" data-id="1639Cyf_u6g5uH0LzWrjJtgv7STn7_DKw" data-label="Audio 6">
+        <button class="gdp-play" type="button" aria-label="Play">▶️</button>
+        <input class="gdp-seek" type="range" min="0" max="100" value="0" step="0.1">
+        <span class="gdp-time">0:00 / 0:00</span>
+      </div>
     </div>
 
     <div class="q3-row"><span class="num3">1</span>Rania and Omar <span class="opt" data-ok="1">missed</span>/<span class="opt" data-ok="0">helped</span> their friends Amy and Ben.</div>
@@ -591,7 +609,11 @@ footer .small{margin-top:8px; color:#ce93d8; font-weight:700; font-size:.9rem;}
 
     <div class="audio-card">
       <div class="audio-label"><span class="ear">🎧</span> Audio 7 — اضغط زر التشغيل واستمع ثم ردد</div>
-      <iframe src="https://drive.google.com/file/d/1qB-sQ8fUFHip-2ufR8ABPsMjm0RfFwcQ/preview" width="100%" height="220" style="max-width:480px;border:0;border-radius:8px;display:block;margin:0 auto;" allow="autoplay" title="Audio 7"></iframe>
+      <div class="gdp" data-id="1qB-sQ8fUFHip-2ufR8ABPsMjm0RfFwcQ" data-label="Audio 7">
+        <button class="gdp-play" type="button" aria-label="Play">▶️</button>
+        <input class="gdp-seek" type="range" min="0" max="100" value="0" step="0.1">
+        <span class="gdp-time">0:00 / 0:00</span>
+      </div>
     </div>
 
     <div class="poem">
@@ -872,6 +894,71 @@ function reveal(btn){
     var r=document.getElementById('wqRes'); r.classList.add('on');
     r.scrollIntoView({behavior:'smooth',block:'center'});
   };
+})();
+</script>
+<script>
+/* ===== Compact Drive audio player (2026-10 experiment, this lesson only) =====
+   Plays the same Drive file via its direct-download URL inside a hidden
+   <audio> element, driven by our own tiny button+slider+time UI (no native
+   <audio controls>, no Drive iframe chrome). If the direct stream fails for
+   any reason, each player swaps itself out for the proven Drive /preview
+   iframe at 220px so playback is never lost. */
+(function(){
+  document.querySelectorAll('.gdp').forEach(function(box){
+    var id = box.dataset.id;
+    var playBtn = box.querySelector('.gdp-play');
+    var seek = box.querySelector('.gdp-seek');
+    var timeEl = box.querySelector('.gdp-time');
+    var audio = new Audio();
+    audio.preload = 'metadata'; // loads just the duration up front, so the 6s fallback check below is meaningful
+    audio.src = 'https://drive.google.com/uc?export=download&id=' + id;
+    var seeking = false, failed = false;
+
+    function fmt(s){
+      if(!isFinite(s) || s < 0) return '0:00';
+      s = Math.floor(s);
+      var m = Math.floor(s/60), sec = s%60;
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+    function updateUI(){
+      timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+      if(!seeking && audio.duration) seek.value = (audio.currentTime / audio.duration) * 100;
+    }
+    function fallbackToIframe(){
+      if(failed) return;
+      failed = true;
+      try { audio.pause(); } catch(e){}
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://drive.google.com/file/d/' + id + '/preview';
+      iframe.width = '100%';
+      iframe.height = '220';
+      iframe.setAttribute('allow', 'autoplay');
+      iframe.style.cssText = 'max-width:480px;border:0;border-radius:8px;display:block;margin:0 auto;';
+      iframe.title = box.dataset.label || 'Audio';
+      box.replaceWith(iframe);
+    }
+
+    playBtn.addEventListener('click', function(){
+      if(failed) return;
+      if(audio.paused){
+        audio.play().then(function(){ playBtn.textContent='⏸️'; }).catch(fallbackToIframe);
+      } else {
+        audio.pause();
+        playBtn.textContent='▶️';
+      }
+    });
+    seek.addEventListener('input', function(){ seeking = true; });
+    seek.addEventListener('change', function(){
+      if(audio.duration) audio.currentTime = (seek.value/100) * audio.duration;
+      seeking = false;
+    });
+    audio.addEventListener('timeupdate', updateUI);
+    audio.addEventListener('loadedmetadata', updateUI);
+    audio.addEventListener('ended', function(){ playBtn.textContent='▶️'; seek.value = 0; });
+    audio.addEventListener('error', fallbackToIframe);
+    // If metadata never arrives (blocked/undownloadable file), fall back after a short wait.
+    setTimeout(function(){ if(!audio.duration) fallbackToIframe(); }, 6000);
+  });
 })();
 </script>
 </body>
