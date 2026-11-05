@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A day in Istanbul - Grade 9 Unit 5 Period 2 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 5 palette : Bosphorus sunset ===== */
+  :root{
+    --sunset:#FF7A45; --sunset-d:#d4572a;
+    --rose:#E85D75;   --rose-d:#c03d57;
+    --lilac:#7A5C99;  --lilac-d:#5c4378;
+    --cream:#FFF1E6;  --cream-d:#f6dcc8;
+    --aub:#3D2645;    --aub-d:#2a1830;
+    --ink:#2a1d30; --muted:#6e5f74; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a city map: faint streets and blocks */
+    background-image:
+      linear-gradient(rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(rgba(232,93,117,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,93,117,.045) 1px, transparent 1px);
+    background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : THE TOURIST INFORMATION LEAFLET RACK ===== */
+  .lesson-header{
+    position:relative; overflow:hidden; padding:14px 12px 34px;
+    background:linear-gradient(180deg, var(--aub-d) 0%, var(--aub) 24%, var(--lilac) 55%, var(--rose) 80%, var(--sunset) 100%);
+  }
+  .lesson-header::before{
+    content:''; position:absolute; width:240px; height:240px; border-radius:50%; left:-60px; bottom:-110px;
+    background:radial-gradient(circle, #ffd2a8 0%, rgba(255,160,100,.5) 45%, transparent 70%);
+  }
+  .skyline{ position:absolute; left:0; right:0; bottom:0; width:100%; height:62px; opacity:.5; pointer-events:none; }
+  .header-inner{ max-width:900px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--cream); color:var(--aub);
+    padding:6px 17px; border-radius:50px; font-weight:700; font-size:13px; margin-bottom:14px; direction:ltr;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--cream-d), 0 8px 18px rgba(0,0,0,.3);
+  }
+  .rack-stage{ position:relative; max-width:620px; margin:0 auto; direction:ltr; perspective:1200px; }
+  .info-sign{
+    display:inline-flex; align-items:center; gap:10px; background:#fff; color:var(--aub);
+    border-radius:10px 10px 0 0; padding:6px 18px 5px; font-family:'Fredoka',sans-serif; font-weight:700;
+    font-size:14px; letter-spacing:.14em; box-shadow:0 -2px 8px rgba(0,0,0,.15);
+  }
+  .info-sign i{ font-style:normal; width:24px; height:24px; border-radius:50%; background:var(--lilac); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center; font-family:Georgia,serif; font-weight:700; letter-spacing:0; }
+  .rack{
+    position:relative; border-radius:14px; padding:16px 14px 18px;
+    background:linear-gradient(180deg,#4a3352,#2f1d36); border:3px solid #fff;
+    box-shadow:0 18px 34px rgba(42,24,48,.5), inset 0 2px 0 rgba(255,255,255,.15);
+  }
+  .pockets{ display:flex; justify-content:center; align-items:flex-end; gap:10px; min-height:150px; }
+  .leaflet{
+    position:relative; width:86px; height:122px; border-radius:4px 4px 2px 2px; padding:10px 6px; color:#fff;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:5px;
+    box-shadow:0 6px 10px rgba(0,0,0,.35); font-family:'Fredoka',sans-serif; font-size:11px; line-height:1.15; text-align:center;
+    background:linear-gradient(160deg,var(--c1),var(--c2));
+  }
+  .leaflet .em{ font-size:30px; line-height:1; filter:drop-shadow(0 2px 2px rgba(0,0,0,.3)); }
+  .leaflet b{ font-weight:700; font-size:11.5px; }
+  .leaflet::after{ /* the clear acrylic pocket in front */
+    content:''; position:absolute; left:-5px; right:-5px; bottom:-6px; height:52%;
+    background:linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.12));
+    border:1.5px solid rgba(255,255,255,.55); border-radius:3px; backdrop-filter:blur(.5px);
+  }
+  .leaflet.l1{ --c1:#FF7A45; --c2:#d4572a; transform:rotate(-4deg); }
+  .leaflet.l2{ --c1:#7A5C99; --c2:#5c4378; transform:rotate(2deg); }
+  .leaflet.l4{ --c1:#E85D75; --c2:#c03d57; transform:rotate(-2deg); }
+  .leaflet.l5{ --c1:#5c4378; --c2:#3D2645; transform:rotate(4deg); }
+  .leaflet.slot{ background:rgba(255,255,255,.08); box-shadow:none; border:2px dashed rgba(255,255,255,.35); }
+  /* the open leaflet that has slid out of the middle pocket */
+  .open-leaflet{
+    position:relative; z-index:4; width:min(560px,94%); margin:-30px auto 0; display:flex; transform-style:preserve-3d;
+    animation:slide-out 1s .2s cubic-bezier(.2,.8,.25,1) both;
+  }
+  @keyframes slide-out{ from{ transform:translateY(-120px) scale(.45); opacity:0; } to{ transform:none; opacity:1; } }
+  .panel{
+    flex:1; min-height:178px; padding:14px 12px 12px; background:#fffaf4; color:var(--ink); position:relative;
+    box-shadow:0 14px 28px rgba(42,24,48,.45);
+  }
+  .panel.side{ background:linear-gradient(180deg,#fff3ea,#ffe6d6); }
+  .panel.left{ transform-origin:100% 50%; animation:unfold-left .9s 1.05s cubic-bezier(.3,.9,.3,1) both; border-radius:6px 0 0 6px; }
+  .panel.right{ transform-origin:0 50%; animation:unfold-right .9s 1.25s cubic-bezier(.3,.9,.3,1) both; border-radius:0 6px 6px 0; }
+  .panel.mid{ flex:1.25; z-index:2; border-left:1px solid rgba(61,38,69,.14); border-right:1px solid rgba(61,38,69,.14); }
+  @keyframes unfold-left{ from{ transform:rotateY(-178deg); } to{ transform:none; } }
+  @keyframes unfold-right{ from{ transform:rotateY(178deg); } to{ transform:none; } }
+  .panel h4{ font-family:'Fredoka',sans-serif; font-size:12px; letter-spacing:.12em; color:var(--rose-d); margin-bottom:8px; }
+  .panel .chips{ display:flex; flex-wrap:wrap; gap:5px; justify-content:center; }
+  .panel .chips span{ background:#fff; border:1.5px solid var(--cream-d); border-radius:8px; padding:2px 7px; font-family:'Fredoka',sans-serif; font-size:12px; }
+  .panel .clock{ font-family:'Fredoka',sans-serif; font-size:13px; line-height:1.9; color:var(--aub); }
+  .panel .clock b{ color:var(--rose-d); }
+  .panel.mid .ttl-small{ font-family:'Fredoka',sans-serif; font-size:11px; letter-spacing:.2em; color:var(--lilac); }
+  .panel.mid h1{ font-family:'Fredoka',sans-serif; font-size:clamp(21px,4.4vw,32px); color:var(--aub); line-height:1.1; margin:6px 0 4px; }
+  .panel.mid .em-row{ font-size:28px; letter-spacing:6px; margin:4px 0 6px; }
+  .panel.mid .per{ display:inline-block; background:var(--sunset); color:var(--aub-d); font-family:'Fredoka',sans-serif; font-weight:700; font-size:12.5px; border-radius:20px; padding:3px 12px; }
+  .lesson-subtitle{ font-size:clamp(14px,3vw,18px); color:#fff; font-weight:800; margin-top:18px; text-shadow:0 2px 6px rgba(42,24,48,.5); }
+  .header-hint{ font-size:12.5px; color:#fff3ea; font-weight:700; margin-top:3px; text-shadow:0 1px 4px rgba(42,24,48,.6); }
+  @media (max-width:560px){
+    .leaflet{ width:64px; height:104px; font-size:9.5px; } .leaflet .em{ font-size:24px; } .leaflet b{ font-size:10px; }
+    .leaflet.l1,.leaflet.l5{ display:none; }
+    .pockets{ min-height:126px; } .open-leaflet{ margin-top:-24px; } .panel.mid .em-row{ font-size:22px; letter-spacing:3px; }
+    .panel{ min-height:160px; padding:10px 6px; } .panel .chips span{ font-size:10.5px; padding:2px 5px; }
+    .panel .clock{ font-size:11px; } .panel h4{ font-size:10px; letter-spacing:.06em; }
+  }
+
+  /* ===== TABS : STREET SIGNS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:
+      repeating-linear-gradient(90deg, rgba(255,241,230,.55) 0 22px, transparent 22px 40px) left bottom 9px / 100% 3px no-repeat,
+      linear-gradient(#55405e, var(--aub));
+    border-radius:16px; padding:22px 12px 22px; box-shadow:0 10px 24px rgba(42,24,48,.35);
+    display:flex; gap:8px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    position:relative; background:transparent; border:none; cursor:pointer; padding:0;
+    display:flex; flex-direction:column; align-items:center; flex:1 0 auto; min-width:86px; max-width:118px;
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ transform:translateY(-3px); }
+  .sign{
+    width:100%; background:var(--lilac); color:#fff; border:2px solid #fff; border-radius:8px;
+    box-shadow:0 0 0 2px var(--lilac-d), 0 5px 8px rgba(0,0,0,.35);
+    padding:7px 6px 6px; min-height:54px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    transition:all .3s ease;
+  }
+  .tab-icon{ font-size:20px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12px; line-height:1.1; text-align:center; }
+  .post{ width:6px; height:14px; background:linear-gradient(90deg,#9a8aa6,#e9e0ee,#9a8aa6); border-radius:0 0 2px 2px; }
+  .tab-btn.active{ transform:translateY(-2px); }
+  .tab-btn.active .sign{ background:var(--sunset); color:var(--aub-d); box-shadow:0 0 0 2px var(--sunset-d), 0 0 18px rgba(255,122,69,.65); }
+  .tab-btn.active .tab-lbl{ font-weight:700; }
+  .tab-btn.active::before{
+    content:'📍'; position:absolute; top:-21px; left:50%; transform:translateX(-50%); font-size:19px;
+    animation:pin-drop-tab .55s cubic-bezier(.3,1.6,.5,1); filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));
+  }
+  @keyframes pin-drop-tab{ from{ transform:translate(-50%,-18px); opacity:0; } to{ transform:translate(-50%,0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 20px rgba(61,38,69,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 15px rgba(61,38,69,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(232,93,117,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #e6d2c6;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fffaf5,#ffeadc); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a3a19; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(212,87,42,.45);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(255,122,69,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(122,92,153,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(122,92,153,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #e6d2c6; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff3e9,#ffe2cf); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a3414; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #e6d2c6;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fffaf6; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f1e0d5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #eedfd6; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff5ec,#ffe6d6); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a3a19; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(42,24,48,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(255,122,69,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6, 0 12px 28px rgba(61,38,69,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(61,38,69,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,160,100,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffc29e; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(122,92,153,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(232,93,117,.15); }
+  .find-word.found{ background:rgba(232,93,117,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #e6d2c6; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #eedfd6; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'📍'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eedfd6; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fffaf6; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffd2bd; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(232,93,117,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show{ animation:none !important; }
+  }
+
+  /* ===== Period 2 widgets ===== */
+  .sent .body{ flex:1; }
+  .sent .ab{ line-height:2.2; }
+  .sent .ab b{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:6px;
+    background:var(--cream); color:var(--lilac-d); font-size:12.5px; margin-right:6px; vertical-align:middle; }
+  .tipbox b{ unicode-bidi:isolate; direction:ltr; }
+  .pair{ background:#fffaf6; border:2px solid #f1e0d5; border-radius:14px; padding:12px 14px; margin-bottom:12px; direction:ltr; }
+  .pair-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px; }
+  .pair-top .no{ background:var(--rose-d); color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; }
+  .pair p{ font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.9; }
+  .pair p b{ color:var(--lilac-d); margin-right:4px; }
+  .pair p em{ font-style:normal; background:#ffe0cc; border-radius:5px; padding:0 4px; font-weight:600; color:#8a3a19; }
+  .say-btn{ background:var(--lilac); color:#fff; border:none; border-radius:20px; padding:6px 13px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:12.5px; }
+  .qa{ background:#fffaf6; border:2px solid #f1e0d5; border-radius:14px; padding:13px 15px; margin-bottom:12px; }
+  .qa .q{ display:flex; gap:10px; align-items:flex-start; direction:ltr; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.55; }
+  .qa .q .n{ background:linear-gradient(135deg,var(--rose),var(--rose-d)); color:#fff; width:30px; height:30px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; }
+  .qa .q .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .qa details{ margin-top:9px; }
+  .qa details summary{ cursor:pointer; display:inline-block; background:var(--cream); border:2px solid var(--cream-d); color:var(--lilac-d); border-radius:20px; padding:4px 14px; font-size:13px; font-weight:700; list-style:none; }
+  .qa details summary::-webkit-details-marker{ display:none; }
+  .qa .model{ margin-top:9px; background:var(--ok-bg); border-left:4px solid var(--ok-bd); border-radius:10px; padding:10px 13px; direction:ltr; font-family:'Fredoka',sans-serif; font-size:15px; color:var(--ok-tx); }
+  .qa .model .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:#2f5d43; margin-top:4px; }
+  .roles{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; direction:ltr; }
+  .role{ background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:12px 18px; min-width:104px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; box-shadow:0 5px 0 #e6d2c6; transition:all .2s; }
+  .role:hover{ transform:translateY(-3px); }
+  .role .face{ font-size:36px; line-height:1.1; }
+  .role .nm{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:16px; color:var(--aub); }
+  .role .ar{ font-size:12px; color:var(--muted); }
+  .role.on{ border-color:var(--sunset-d); background:#fff1e6; box-shadow:0 5px 0 var(--sunset-d), 0 0 0 4px rgba(255,122,69,.25); }
+  .role-note{ text-align:center; font-size:13.5px; font-weight:700; color:var(--lilac-d); margin-bottom:16px; }
+  .dialogue-line.me{ background:#fff1e6; border-left-width:9px; box-shadow:0 0 0 2px rgba(255,122,69,.45); font-weight:600; }
+  .dialogue-line.me::after{ content:' 🎤'; }
+  .dialogue-line.dim{ opacity:.55; }
+  @media (prefers-reduced-motion:reduce){ .open-leaflet,.panel.left,.panel.right{ animation:none !important; } }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <svg class="skyline" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#2a1830" d="M0 70V50h50V38c0-12 34-12 34 0v12h30V24l4-14 4 14v26h40V42c0-24 80-24 80 0v8h24V20l4-14 4 14v30h50V44c0-10 30-10 30 0v6h90V34c0-30 100-30 100 0v16h20V16l4-14 4 14v34h16V16l4-14 4 14v34h70V44c0-12 40-12 40 0v6h90V40h24v10h60V42c0-16 56-16 56 0v8h50V24l4-14 4 14v26h70V70z"/>
+  </svg>
+  <div class="header-inner">
+    <div class="unit-badge"><span>ℹ️</span> UNIT 5 · PERIOD 2 · GRADE 9 · PB PAGE 53</div>
+    <div class="rack-stage">
+      <div class="info-sign"><i>i</i> TOURIST INFORMATION</div>
+      <div class="rack">
+        <div class="pockets">
+          <div class="leaflet l1"><span class="em">🏰</span><b>Topkapi Palace</b></div>
+          <div class="leaflet l2"><span class="em">⛴️</span><b>The Bosphorus</b></div>
+          <div class="leaflet slot"></div>
+          <div class="leaflet l4"><span class="em">🕌</span><b>Blue Mosque</b></div>
+          <div class="leaflet l5"><span class="em">🛍️</span><b>Grand Bazaar</b></div>
+        </div>
+      </div>
+      <div class="open-leaflet">
+        <div class="panel side left">
+          <h4>YOUR WORDS</h4>
+          <div class="chips"><span>coin</span><span>purse</span><span>lira</span><span>change</span><span>across</span><span>a few</span></div>
+        </div>
+        <div class="panel mid">
+          <div class="ttl-small">ISTANBUL GUIDE</div>
+          <h1>A day in Istanbul</h1>
+          <div class="em-row">☕🪙🗺️</div>
+          <span class="per">Period 2 · Words in action</span>
+        </div>
+        <div class="panel side right">
+          <h4>TODAY</h4>
+          <div class="clock">☕ <b>11:15</b> coffee shop<br>👛 <b>11:45</b> pay the bill<br>🕌 <b>12:00</b> Blue Mosque</div>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-subtitle">يومٌ في إسطنبول — الكلماتُ في مواقفَ جديدة ℹ️</div>
+    <p class="header-hint">خذْ نشرتَكَ من مركزِ المعلومات، واستعملْ كلماتِ الحصّةِ الأولى في حواراتٍ جديدة.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="complete"><span class="sign"><span class="tab-icon">✏️</span><span class="tab-lbl">Complete</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="check"><span class="sign"><span class="tab-icon">🎧</span><span class="tab-lbl">Listen &amp; Check</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="answer"><span class="sign"><span class="tab-icon">📖</span><span class="tab-lbl">Read &amp; Answer</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="groups"><span class="sign"><span class="tab-icon">🎭</span><span class="tab-lbl">Act it out</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <!-- ===== AIMS ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#FF7A45;"><div class="aim-icon-wrap">✏️</div>
+        <h3 class="aim-title">Use the new words</h3><p class="aim-desc">Complete seven short conversations with the words from Period 1.
+          <span class="ar">إكمالُ سبعةِ حواراتٍ قصيرةٍ بكلماتِ الحصّةِ الأولى.</span></p></div>
+      <div class="aim-card" style="--ac:#7A5C99;"><div class="aim-icon-wrap">🎧</div>
+        <h3 class="aim-title">Listen and check</h3><p class="aim-desc">Listen to check your answers, then practise in pairs.
+          <span class="ar">الاستماعُ للتحقُّقِ من الإجابات، ثمَّ التدرُّبُ في أزواج.</span></p></div>
+      <div class="aim-card" style="--ac:#E85D75;"><div class="aim-icon-wrap">📖</div>
+        <h3 class="aim-title">Read and answer</h3><p class="aim-desc">Read the coffee shop conversation again and answer eight questions.
+          <span class="ar">قراءةُ حوارِ المقهى مرّةً أخرى والإجابةُ عن ثمانيةِ أسئلة.</span></p></div>
+      <div class="aim-card" style="--ac:#5c4378;"><div class="aim-icon-wrap">🎭</div>
+        <h3 class="aim-title">Act it out</h3><p class="aim-desc">Practise the conversation in groups of three.
+          <span class="ar">تمثيلُ الحوارِ في مجموعاتٍ من ثلاثةِ طلّاب.</span></p></div>
+      <div class="aim-card" style="--ac:#d4572a;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Plan your time and keep your appointments.
+          <span class="ar">نُنظِّمُ وقتَنا ونلتزمُ بمواعيدِنا — كما حرصَ الأقاربُ على لقاءِ والدَيهم في الثانيةَ عشرة.</span></p></div>
+    </div>
+    <div class="key-language-box">
+      <h3>🔑 كلماتُ الحصّةِ الأولى التي سنستعملُها اليوم</h3>
+      <div class="key-words">
+        <span class="key-word">a few</span><span class="key-word">across</span><span class="key-word">change</span><span class="key-word">coin</span>
+        <span class="key-word">crossroads</span><span class="key-word">customer</span><span class="key-word">information centre</span>
+        <span class="key-word">lira</span><span class="key-word">pay</span><span class="key-word">purse</span><span class="key-word">take out</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACTIVITY 1 ===== -->
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">✏️ Complete the conversations<span class="title-sub">أكمِلِ الحوارات</span></h2>
+    <div class="activity-banner">
+      <div class="en">✏️ Activity 1: Read. Add new words from period 1. Make any changes needed.</div>
+      <div class="ar">اخترْ كلمةً من البنك، ثمَّ اضغطِ الفراغَ المناسب. انتبهْ: قد تحتاجُ الكلمةُ إلى تغيير — مثلًا إلى صيغةِ الجمع.</div>
+    </div>
+    <div class="bank" id="bank1">
+      <h4>🏦 بنكُ الكلمات — كلُّ كلمةٍ تُستعمَلُ مرّةً واحدة</h4>
+      <div class="bank-words">
+        <button class="bw" type="button" data-w="a few">a few</button>
+        <button class="bw" type="button" data-w="across">across</button>
+        <button class="bw" type="button" data-w="change">change</button>
+        <button class="bw" type="button" data-w="coin">coin</button>
+        <button class="bw" type="button" data-w="crossroads">crossroads</button>
+        <button class="bw" type="button" data-w="customer">customer</button>
+        <button class="bw" type="button" data-w="information centre">information centre</button>
+        <button class="bw" type="button" data-w="lira">lira</button>
+        <button class="bw" type="button" data-w="pay">pay</button>
+        <button class="bw" type="button" data-w="purse">purse</button>
+        <button class="bw" type="button" data-w="take out">take out</button>
+      </div>
+    </div>
+    <div class="sent-list">
+      <div class="sent"><span class="n">1</span><div class="body">
+        <div class="ab"><b>A</b> The weather is getting much warmer now that it's April.</div>
+        <div class="ab"><b>B</b> You're right. It's time to put away our winter clothes and <span class="blank" data-bank="bank1" data-a="take out">?</span> our summer things.</div></div></div>
+      <div class="sent"><span class="n">2</span><div class="body">
+        <div class="ab"><b>A</b> We need to get a map to find our way round town.</div>
+        <div class="ab"><b>B</b> Let's go to the tourist <span class="blank" data-bank="bank1" data-a="information centre">?</span> over there. They'll give us one.</div></div></div>
+      <div class="sent"><span class="n">3</span><div class="body">
+        <div class="ab"><b>A</b> Let's not try to go <span class="blank" data-bank="bank1" data-a="across">?</span> the road here. It's busy and it's dangerous!</div>
+        <div class="ab"><b>B</b> You're right. Let's go to the <span class="blank" data-bank="bank1" data-a="crossroads">?</span>. The traffic stops at the lights there.</div></div></div>
+      <div class="sent"><span class="n">4</span><div class="body">
+        <div class="ab"><b>A</b> Oh, no! I've left my <span class="blank" data-bank="bank1" data-a="purse">?</span> at home with all my money!</div>
+        <div class="ab"><b>B</b> It's all right. I have some, so I can <span class="blank" data-bank="bank1" data-a="pay">?</span> for everything.</div></div></div>
+      <div class="sent"><span class="n">5</span><div class="body">
+        <div class="ab"><b>A</b> It's five <span class="blank" data-bank="bank1" data-a="lira">?</span> for the juice, and I've only got a fifty. Sorry!</div>
+        <div class="ab"><b>B</b> No problem. Here's your <span class="blank" data-bank="bank1" data-a="change">?</span>. Twenty … forty … forty-five.</div></div></div>
+      <div class="sent"><span class="n">6</span><div class="body">
+        <div class="ab"><b>A</b> I need a <span class="blank" data-bank="bank1" data-a="coin">?</span> for this drinks machine. Have you got any?</div>
+        <div class="ab"><b>B</b> Yes, I've got <span class="blank" data-bank="bank1" data-a="a few">?</span>. What do you need? A dollar?</div></div></div>
+      <div class="sent"><span class="n">7</span><div class="body">
+        <div class="ab"><b>A</b> Let's stop at that coffee shop and have an ice cream and a cup of coffee.</div>
+        <div class="ab"><b>B</b> All right, but there are a lot of <span class="blank" data-bank="bank1" data-a="customer" data-show="customers">?</span>, so we'll have to wait for a while.</div></div></div>
+    </div>
+    <div class="res-line" id="bank1Res"></div>
+    <div class="tipbox">💡 في الجملةِ السابعة: بعدَ <b>a lot of</b> يأتي الاسمُ المعدودُ بصيغةِ الجمع، فتصبحُ <b>customer</b> ← <b>customers</b>.</div>
+  </section>
+
+  <!-- ===== ACTIVITY 2 ===== -->
+  <section class="tab-content" id="tab-check">
+    <h2 class="section-title">🎧 Listen and check<span class="title-sub">استمعْ وتحقَّقْ، ثمَّ تدرَّبْ مع زميلِك</span></h2>
+    <div class="activity-banner">
+      <div class="en">🎧 Activity 2: Listen and check. Then practise in pairs.</div>
+      <div class="ar">استمعْ إلى الحواراتِ السبعةِ وتحقَّقْ من إجاباتِك. ثمَّ تدرَّبْ مع زميلِك: أحدُكما يقرأُ دورَ <b>A</b> والآخرُ دورَ <b>B</b>، ثمَّ تتبادلانِ الدورَين.</div>
+    </div>
+    <div class="gplayer">
+      <b>🎧 CD 2 · Audio 13 · Seven short conversations</b>
+      <audio controls preload="metadata" src="../audio/grade9/unit5/track13.mp3" title="Audio 13" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio>
+    </div>
+    <details class="drop-q">
+      <summary>✅ The conversations with the answers <span class="ar">اضغطْ لإظهارِ الحواراتِ كاملة</span></summary>
+      <div class="drop-body" id="pairList"></div>
+    </details>
+  </section>
+
+  <!-- ===== ACTIVITY 3 ===== -->
+  <section class="tab-content" id="tab-answer">
+    <h2 class="section-title">📖 Read again and answer<span class="title-sub">اقرأْ مرّةً أخرى وأجِبْ</span></h2>
+    <div class="activity-banner">
+      <div class="en">📖 Activity 3: Read again and answer the questions.</div>
+      <div class="ar">اقرأْ حوارَ المقهى من الحصّةِ الأولى بصمت، ثمَّ أجِبْ عن الأسئلةِ الثمانية. حاولْ أن تُجيبَ أوّلًا، ثمَّ افتحِ الإجابةَ النموذجيّةَ وابحثْ عن السطرِ الذي يدلُّ عليها.</div>
+    </div>
+    <details class="drop-q">
+      <summary>📖 The conversation (Period 1) <span class="ar">اضغطْ لقراءةِ الحوار</span></summary>
+      <div class="drop-body"><div class="talk-card"><div class="talk-head"><div class="talk-title"><span class="talk-badge">☕</span> On the way to the Blue Mosque</div>
+        <button class="play-scene-btn" type="button" onclick="playText(this,SCENE)">🔊 Read aloud</button></div>
+        <div class="dialogue-box" id="dlgRead"></div></div></div>
+    </details>
+    <details class="drop-q" open>
+      <summary>📝 Questions (8) <span class="ar">الأسئلة</span></summary>
+      <div class="drop-body" id="qList"></div>
+    </details>
+  </section>
+
+  <!-- ===== ACTIVITY 4 ===== -->
+  <section class="tab-content" id="tab-groups">
+    <h2 class="section-title">🎭 Act it out<span class="title-sub">مثِّلوا الحوارَ في مجموعات</span></h2>
+    <div class="activity-banner">
+      <div class="en">🎭 Activity 4: Work in groups. Listen again and practise the conversation.</div>
+      <div class="ar">كوِّنوا مجموعاتٍ من ثلاثة. اخترْ دورَك، فتتلوَّنُ جُمَلُك في الحوار. استمعوا إلى التسجيلِ مرّةً أخرى، ثمَّ اقرأوا الحوارَ بالأدوار.</div>
+    </div>
+    <div class="gplayer">
+      <b>🎧 CD 2 · Audio 12 · In a coffee shop in Istanbul</b>
+      <audio controls preload="metadata" src="../audio/grade9/unit5/track12.mp3" title="Audio 12" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio>
+    </div>
+    <div class="roles">
+      <button class="role" type="button" data-role="Hadeel"><span class="face">🧕</span><span class="nm">Hadeel</span><span class="ar">هديل</span></button>
+      <button class="role" type="button" data-role="Nidal"><span class="face">🧑</span><span class="nm">Nidal</span><span class="ar">نضال</span></button>
+      <button class="role" type="button" data-role="Rami"><span class="face">👦</span><span class="nm">Rami</span><span class="ar">رامي</span></button>
+    </div>
+    <p class="role-note" id="roleNote">اخترْ دورًا لتتلوَّنَ جُمَلُه 👆 — والمعلّمُ أو أحدُ الطلّابِ يقرأُ دورَي الراوي والرجل.</p>
+    <div class="talk-card"><div class="talk-head"><div class="talk-title"><span class="talk-badge">🎭</span> Read it in roles</div></div>
+      <div class="dialogue-box" id="dlgAct"></div></div>
+  </section>
+
+  <!-- ===== QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>ℹ️ Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ مركزِ المعلومات.</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">"It's five lira for the juice, and I've only got a fifty." How much change will B give?<span class="ar">كم سيكونُ الباقي؟</span></div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>Five lira.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>Fifteen lira.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>Forty-five lira.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>Fifty lira.</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">Where can you get a free map of the town?<span class="ar">من أينَ تحصلُ على خريطةٍ للمدينة؟</span></div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>At the tourist information centre.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>At the crossroads.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>From a drinks machine.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>In a purse.</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">Why is it safer to cross at the crossroads?<span class="ar">لماذا يكونُ العبورُ عندَ مفترقِ الطرقِ أكثرَ أمانًا؟</span></div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>Because there are no cars there.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>Because the traffic stops at the lights there.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Because the road is wider there.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>Because a policeman is always there.</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">It was 11:15. The cousins were meeting Mum and Dad at 12:00. How much time did they have?<span class="ar">كم كانَ لديهم من الوقت؟</span></div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>Fifteen minutes.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>Half an hour.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>Forty-five minutes.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>An hour.</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">Why did Hadeel have enough money?<span class="ar">لماذا كانَ مع هديلَ ما يكفي من النقود؟</span></div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>Because Rami gave her some.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>Because she found a purse.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Because the drinks were free.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">D</span>Because she changed some dollars the day before.</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">ℹ️<small>INFO STAR</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff1e6">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+var BKEY = 'g9u5p2_badge';
+
+/* floating city things */
+(function(){
+  var box=document.getElementById('floaties'), ems=['ℹ️','🗺️','📍','☕','🕌','🪙','👛','✨'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%';
+    s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s';
+    s.style.fontSize=(15+Math.random()*14)+'px';
+    box.appendChild(s);
+  }
+})();
+
+/* tabs */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+
+/* TTS */
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+function playText(btn,text){
+  if(!window.speechSynthesis) return;
+  if(btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speak(text,btn);
+}
+
+/* tap tooltips (mobile) */
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+
+/* sparkles + confetti */
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','ℹ️','⭐','🪙'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px');
+    s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#FF7A45','#E85D75','#7A5C99','#ffd2bd','#3D2645'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* Activity 1 — shared word bank: pick a word, then tap its blank */
+(function(){
+  var box=document.getElementById('bank1'), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){
+    w.addEventListener('click',function(){
+      if(w.classList.contains('used')) return;
+      if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+      box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')});
+      w.classList.add('sel'); sel=w;
+    });
+  });
+  var blanks=document.querySelectorAll('.blank[data-bank="bank1"]'), line=document.getElementById('bank1Res');
+  blanks.forEach(function(bl){
+    bl.addEventListener('click',function(){
+      if(bl.classList.contains('ok')) return;
+      if(!sel || sel.dataset.w!==bl.dataset.a){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+      bl.textContent=bl.dataset.show||sel.dataset.w; bl.classList.add('ok');
+      sel.classList.add('used'); sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+      var ok=document.querySelectorAll('.blank[data-bank="bank1"].ok').length;
+      line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+      if(ok===blanks.length){ line.textContent='🏆 أحسنتَ! أكملتَ الحواراتِ السبعةَ كلَّها.'; confetti(); }
+    });
+  });
+})();
+
+/* Activity 2 — the seven conversations, for checking and pair practice */
+var PAIRS=[
+  ["The weather is getting much warmer now that it's April.","You're right. It's time to put away our winter clothes and <em>take out</em> our summer things."],
+  ["We need to get a map to find our way round town.","Let's go to the tourist <em>information centre</em> over there. They'll give us one."],
+  ["Let's not try to go <em>across</em> the road here. It's busy and it's dangerous!","You're right. Let's go to the <em>crossroads</em>. The traffic stops at the lights there."],
+  ["Oh, no! I've left my <em>purse</em> at home with all my money!","It's all right. I have some, so I can <em>pay</em> for everything."],
+  ["It's five <em>lira</em> for the juice, and I've only got a fifty. Sorry!","No problem. Here's your <em>change</em>. Twenty … forty … forty-five."],
+  ["I need a <em>coin</em> for this drinks machine. Have you got any?","Yes, I've got <em>a few</em>. What do you need? A dollar?"],
+  ["Let's stop at that coffee shop and have an ice cream and a cup of coffee.","All right, but there are a lot of <em>customers</em>, so we'll have to wait for a while."]
+];
+(function(){
+  var box=document.getElementById('pairList');
+  PAIRS.forEach(function(p,i){
+    var d=document.createElement('div'); d.className='pair';
+    var plain=('A: '+p[0]+' B: '+p[1]).replace(/<[^>]+>/g,'');
+    d.innerHTML='<div class="pair-top"><span class="no">'+(i+1)+'</span><button class="say-btn" type="button">🔊 Listen</button></div>'+
+      '<p><b>A</b>'+p[0]+'</p><p><b>B</b>'+p[1]+'</p>';
+    d.querySelector('.say-btn').addEventListener('click',function(){ playText(this,plain.replace(/^A: /,'').replace(' B: ',' ... ')); });
+    box.appendChild(d);
+  });
+})();
+
+/* the Period 1 conversation (read in Activity 3, acted in Activity 4) */
+var DIALOGUE=[
+  ['Narrator','During the summer, the Yafawi cousins went to Turkey for a few days. One morning in Istanbul, <span class="pronoun">they<span class="tooltip">تعودُ على: هديل ونضال ورامي</span></span> were on their way to the famous \'Blue Mosque\'.'],
+  ['Hadeel','I\'m getting <span class="hover-word">thirsty<span class="tooltip">عطشان</span></span>. I\'d love some cold apple juice!'],
+  ['Nidal','Me, too!'],
+  ['Rami','And me. We\'re meeting Mum and Dad at the <span class="hover-word">entrance<span class="tooltip">المَدخَل</span></span> at 12:00, and it\'s 11:15 now, so there\'s a little time. Let\'s stop at this coffee shop for a few minutes. There aren\'t many customers, so <span class="pronoun">it<span class="tooltip">تعودُ على: التوقُّفِ في المقهى</span></span>\'ll be quick.'],
+  ['Hadeel','Mm, it\'s nice and cool here. Let\'s look at the <span class="hover-word">menu<span class="tooltip">قائمةُ الطعام</span></span>.'],
+  ['Nidal','But wait. I only have a little money – just a few coins.'],
+  ['Rami','I don\'t have much, <span class="hover-word">either<span class="tooltip">أيضًا (في النفي)</span></span>. How much do you have, Hadeel?'],
+  ['Hadeel','Enough. I <span class="hover-word">changed<span class="tooltip">صَرَفْتُ (عملةً بأخرى)</span></span> some dollars yesterday, so I can pay for the drinks.'],
+  ['Nidal/Rami','Thanks, Hadeel!'],
+  ['Hadeel','And let\'s <span class="hover-word">order<span class="tooltip">نطلُبُ (طعامًا)</span></span> a few Turkish cakes.'],
+  ['Nidal','No, let\'s order lots! <span class="pronoun">They<span class="tooltip">تعودُ على: الكعكِ التركيّ</span></span>\'re <span class="hover-word">delicious<span class="tooltip">لذيذ</span></span>!'],
+  ['Hadeel','Don\'t be so <span class="hover-word">greedy<span class="tooltip">طمّاع</span></span>!'],
+  ['Rami','Anyway, we only have time for a few. Let\'s just have two each.'],
+  ['Narrator','At 11:45, it was time to go. Hadeel took out <span class="pronoun">her<span class="tooltip">تعودُ على: هديل</span></span> purse to pay the <span class="hover-word">bill<span class="tooltip">الحساب · الفاتورة</span></span>.'],
+  ['Hadeel','Here you are. Two twenties.'],
+  ['Man','And here\'s <span class="pronoun">your<span class="tooltip">تعودُ على: هديل</span></span> change. Ten and five – fifteen lira.'],
+  ['Hadeel','Thanks. And could you tell <span class="pronoun">us<span class="tooltip">تعودُ على: هديل ونضال ورامي</span></span> the way to the Blue Mosque, please?'],
+  ['Man','Go across the road and turn right. Then turn left at the crossroads. Go <span class="hover-word">past<span class="tooltip">مارًّا بـ</span></span> the information centre and you\'ll see <span class="pronoun">it<span class="tooltip">تعودُ على: الجامعِ الأزرق</span></span> on your right.'],
+  ['All','Thanks!']
+];
+function buildDialogue(id){
+  var box=document.getElementById(id);
+  DIALOGUE.forEach(function(l){
+    var d=document.createElement('div'); d.className='dialogue-line';
+    d.dataset.speaker=l[0].indexOf('/')>-1?'All':l[0]; d.dataset.who=l[0];
+    d.innerHTML='<span class="speaker-name">'+l[0]+':</span> '+l[1];
+    box.appendChild(d);
+  });
+}
+buildDialogue('dlgRead'); buildDialogue('dlgAct');
+var SCENE=DIALOGUE.map(function(l){ return l[0]+': '+l[1].replace(/<span class="tooltip">[^<]*<\/span>/g,'').replace(/<[^>]+>/g,''); }).join(' ');
+
+/* Activity 3 — eight questions with model answers */
+var QS=[
+  ['That morning, what were the cousins on their way to do?','في ذلك الصباح، إلى أينَ كانَ الأقاربُ ذاهبين؟','They were going to visit the Blue Mosque.','كانوا ذاهبينَ لزيارةِ الجامعِ الأزرق.'],
+  ['How much time did they still have until then?','كم بقيَ لديهم من الوقتِ حتى الموعد؟','They had 45 minutes (from 11:15 to 12:00).','كانَ لديهم خمسٌ وأربعونَ دقيقة.'],
+  ['What did they all feel like doing?','ماذا رغبوا جميعًا في أن يفعلوا؟','They felt like having a (cold) drink.','رغبوا في تناولِ مشروبٍ بارد.'],
+  ['What problem did the boys have?','ما المشكلةُ التي واجهَها الولدان؟',"They didn't have much money.",'لم يكنْ معهما كثيرٌ من النقود.'],
+  ["Why didn't Hadeel have that problem?",'لماذا لم تواجهْ هديلُ تلك المشكلة؟','Because she changed some dollars the day before.','لأنّها صرفتْ بعضَ الدولاراتِ في اليومِ السابق.'],
+  ['Why could they only have a few cakes?','لماذا لم يتمكّنوا إلّا من تناولِ القليلِ من الكعك؟','Because they only had time for a few.','لأنَّ وقتَهم لم يكنْ يكفي إلّا لقليلٍ منه.'],
+  ['At the end, what did Hadeel ask the man in the coffee shop?','في النهاية، عمَّ سألتْ هديلُ الرجلَ في المقهى؟','She asked him the way to the Blue Mosque.','سألتْه عن الطريقِ إلى الجامعِ الأزرق.'],
+  ['Where did the cousins need to go to get there?','كيفَ يصلُ الأقاربُ إلى هناك؟','They needed to go across the road, turn right, turn left at the crossroads and go past the information centre.','يعبرونَ الشارع، وينعطفونَ يمينًا، ثمَّ يسارًا عندَ مفترقِ الطرق، ويمرّونَ بمركزِ المعلومات.']
+];
+(function(){
+  var box=document.getElementById('qList');
+  QS.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='qa';
+    d.innerHTML='<div class="q"><span class="n">'+(i+1)+'</span><div>'+q[0]+'<span class="ar">'+q[1]+'</span></div></div>'+
+      '<details><summary>💡 الإجابةُ النموذجيّة</summary><div class="model">'+q[2]+'<span class="ar">'+q[3]+'</span></div></details>';
+    d.querySelector('details').addEventListener('toggle',function(){ if(this.open) sparkleAt(this); });
+    box.appendChild(d);
+  });
+})();
+
+/* Activity 4 — pick a role */
+document.querySelectorAll('.role').forEach(function(r){
+  r.addEventListener('click',function(){
+    var on=!r.classList.contains('on');
+    document.querySelectorAll('.role').forEach(function(x){x.classList.remove('on')});
+    var lines=document.querySelectorAll('#dlgAct .dialogue-line');
+    lines.forEach(function(l){ l.classList.remove('me','dim'); });
+    var note=document.getElementById('roleNote');
+    if(!on){ note.textContent='اخترْ دورًا لتتلوَّنَ جُمَلُه 👆 — والمعلّمُ أو أحدُ الطلّابِ يقرأُ دورَي الراوي والرجل.'; return; }
+    r.classList.add('on');
+    var who=r.dataset.role, n=0;
+    lines.forEach(function(l){
+      var w=l.dataset.who;
+      if(w===who || (w.indexOf('/')>-1 && w.indexOf(who)>-1) || w==='All'){ l.classList.add('me'); n++; } else l.classList.add('dim');
+    });
+    note.textContent='🎤 أنتَ الآنَ '+r.querySelector('.ar').textContent+' — لديكَ '+n+' جُمَلٍ في الحوار.';
+    sparkleAt(r);
+  });
+});
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Info star!'; msg='رائع! تستطيعُ الآنَ أن تعملَ في مركزِ المعلوماتِ السياحيّة ℹ️🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجِعِ الحواراتِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='ℹ️ لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
