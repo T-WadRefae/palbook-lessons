@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A day in Istanbul - Grade 9 Unit 5 Period 6 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 5 palette : Bosphorus sunset ===== */
+  :root{
+    --sunset:#FF7A45; --sunset-d:#d4572a;
+    --rose:#E85D75;   --rose-d:#c03d57;
+    --lilac:#7A5C99;  --lilac-d:#5c4378;
+    --cream:#FFF1E6;  --cream-d:#f6dcc8;
+    --aub:#3D2645;    --aub-d:#2a1830;
+    --ink:#2a1d30; --muted:#6e5f74; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a city map: faint streets and blocks */
+    background-image:
+      linear-gradient(rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(rgba(232,93,117,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,93,117,.045) 1px, transparent 1px);
+    background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : THE ISTANBUL FACT FILE ON A CORK BOARD ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:14px 12px 28px;
+    background:linear-gradient(180deg, var(--aub-d) 0%, var(--aub) 26%, var(--lilac) 58%, var(--rose) 84%, var(--sunset) 100%); }
+  .header-inner{ max-width:900px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ display:inline-flex; align-items:center; gap:9px; background:var(--cream); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:12px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--cream-d), 0 8px 18px rgba(0,0,0,.3); }
+  .cork{ position:relative; max-width:640px; margin:0 auto; direction:ltr; border-radius:12px; padding:22px 16px 24px; border:10px solid #8a5a3b;
+    background:radial-gradient(circle at 20% 30%, rgba(0,0,0,.06) 1.5px, transparent 2px) 0 0/14px 14px, radial-gradient(circle at 70% 60%, rgba(255,255,255,.12) 1px, transparent 2px) 0 0/11px 11px, linear-gradient(135deg,#d9a46b,#c48b52);
+    box-shadow:inset 0 0 0 2px #6a4128, inset 0 0 26px rgba(0,0,0,.35), 0 18px 34px rgba(42,24,48,.5); min-height:260px; }
+  .string{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:2; }
+  .string path{ stroke-dasharray:1; stroke-dashoffset:1; animation:draw-str 1.6s 1.4s ease-out forwards; }
+  @keyframes draw-str{ to{ stroke-dashoffset:0; } }
+  .factcard{ position:relative; z-index:3; width:min(330px,72%); margin:0 auto; background:#fffdf6; border-radius:4px; padding:14px 16px 12px; text-align:left; transform:rotate(-1.5deg);
+    background-image:linear-gradient(transparent 27px, rgba(122,92,153,.18) 28px); background-size:100% 28px; background-position:0 40px;
+    box-shadow:0 10px 18px rgba(0,0,0,.35); animation:card-in .7s cubic-bezier(.3,1.4,.5,1) both; }
+  @keyframes card-in{ from{ transform:translateY(-30px) rotate(-8deg); opacity:0; } to{ transform:rotate(-1.5deg); opacity:1; } }
+  .factcard::before{ content:'📌'; position:absolute; top:-14px; left:50%; margin-left:-10px; font-size:22px; filter:drop-shadow(0 2px 2px rgba(0,0,0,.4)); }
+  .factcard .hd{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:12px; letter-spacing:.2em; color:var(--rose-d); border-bottom:2px solid var(--rose); padding-bottom:4px; margin-bottom:4px; }
+  .factcard h1{ font-family:'Fredoka',sans-serif; font-size:clamp(22px,4.6vw,30px); color:var(--aub); line-height:1.15; }
+  .factcard .row{ font-family:'Caveat',cursive; font-size:19px; color:#2a1d30; line-height:28px; display:flex; gap:6px; white-space:nowrap; overflow:hidden; }
+  .factcard .row b{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:13px; color:var(--lilac-d); }
+  .factcard .row .fill{ flex:1; border-bottom:2px dotted #b9a6c8; height:20px; position:relative; }
+  .factcard .row .fill::after{ content:'?'; position:absolute; left:0; top:-6px; color:var(--rose-d); font-family:'Caveat',cursive; font-size:22px; opacity:0; animation:qm .4s forwards; animation-delay:var(--d); }
+  @keyframes qm{ to{ opacity:1; } }
+  .stamp{ position:absolute; right:-14px; bottom:12px; z-index:4; transform:rotate(-14deg); border:3px solid var(--rose-d); color:var(--rose-d); border-radius:8px;
+    padding:3px 10px; font-family:'Fredoka',sans-serif; font-weight:700; font-size:13px; letter-spacing:.1em; background:rgba(255,253,246,.85);
+    opacity:0; animation:stamp-in .45s 2.6s cubic-bezier(.3,1.6,.5,1) forwards; }
+  @keyframes stamp-in{ from{ opacity:0; transform:rotate(-14deg) scale(2.2);} to{ opacity:1; transform:rotate(-14deg) scale(1);} }
+  .polaroid{ position:absolute; z-index:3; width:84px; background:#fff; padding:6px 6px 16px; box-shadow:0 8px 14px rgba(0,0,0,.35); font-size:36px; text-align:center; line-height:1.3; }
+  .polaroid span{ display:block; font-family:'Caveat',cursive; font-size:14px; color:#2a1d30; line-height:1; margin-top:3px; }
+  .polaroid::before{ content:''; position:absolute; top:-6px; left:50%; width:12px; height:12px; margin-left:-6px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#ff9db0,var(--rose-d)); box-shadow:0 2px 3px rgba(0,0,0,.4); }
+  .polaroid.p1{ left:3%; top:14px; transform:rotate(-8deg); } .polaroid.p2{ right:3%; top:22px; transform:rotate(7deg); }
+  .polaroid.p3{ left:5%; bottom:16px; transform:rotate(5deg); } .polaroid.p4{ right:4%; bottom:20px; transform:rotate(-6deg); }
+  @media (max-width:560px){ .cork{ padding:16px 6px 18px; } .polaroid{ width:48px; font-size:19px; padding:3px 3px 10px; } .polaroid span{ font-size:9.5px; } .polaroid.p1,.polaroid.p3{ left:1%; } .polaroid.p2,.polaroid.p4{ right:1%; } .factcard{ width:64%; padding:12px 9px 10px; }
+    .factcard .row{ font-size:16px; } .factcard .row b{ font-size:11px; } .polaroid.p3,.polaroid.p4{ bottom:6px; } .stamp{ right:-8px; font-size:11px; } }
+  .lesson-subtitle{ font-size:clamp(14px,3vw,18px); color:#fff; font-weight:800; margin-top:16px; text-shadow:0 2px 6px rgba(42,24,48,.5); }
+  .header-hint{ font-size:12.5px; color:#fff3ea; font-weight:700; margin-top:3px; text-shadow:0 1px 4px rgba(42,24,48,.6); }
+  @media (prefers-reduced-motion:reduce){ .factcard,.stamp,.string path,.factcard .row .fill::after{ animation:none !important; opacity:1; stroke-dashoffset:0; } }
+
+  /* ===== TABS : STREET SIGNS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:
+      repeating-linear-gradient(90deg, rgba(255,241,230,.55) 0 22px, transparent 22px 40px) left bottom 9px / 100% 3px no-repeat,
+      linear-gradient(#55405e, var(--aub));
+    border-radius:16px; padding:22px 12px 22px; box-shadow:0 10px 24px rgba(42,24,48,.35);
+    display:flex; gap:8px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    position:relative; background:transparent; border:none; cursor:pointer; padding:0;
+    display:flex; flex-direction:column; align-items:center; flex:1 0 auto; min-width:86px; max-width:118px;
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ transform:translateY(-3px); }
+  .sign{
+    width:100%; background:var(--lilac); color:#fff; border:2px solid #fff; border-radius:8px;
+    box-shadow:0 0 0 2px var(--lilac-d), 0 5px 8px rgba(0,0,0,.35);
+    padding:7px 6px 6px; min-height:54px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    transition:all .3s ease;
+  }
+  .tab-icon{ font-size:20px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12px; line-height:1.1; text-align:center; }
+  .post{ width:6px; height:14px; background:linear-gradient(90deg,#9a8aa6,#e9e0ee,#9a8aa6); border-radius:0 0 2px 2px; }
+  .tab-btn.active{ transform:translateY(-2px); }
+  .tab-btn.active .sign{ background:var(--sunset); color:var(--aub-d); box-shadow:0 0 0 2px var(--sunset-d), 0 0 18px rgba(255,122,69,.65); }
+  .tab-btn.active .tab-lbl{ font-weight:700; }
+  .tab-btn.active::before{
+    content:'📍'; position:absolute; top:-21px; left:50%; transform:translateX(-50%); font-size:19px;
+    animation:pin-drop-tab .55s cubic-bezier(.3,1.6,.5,1); filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));
+  }
+  @keyframes pin-drop-tab{ from{ transform:translate(-50%,-18px); opacity:0; } to{ transform:translate(-50%,0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 20px rgba(61,38,69,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 15px rgba(61,38,69,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(232,93,117,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #e6d2c6;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fffaf5,#ffeadc); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a3a19; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(212,87,42,.45);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(255,122,69,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(122,92,153,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(122,92,153,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #e6d2c6; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff3e9,#ffe2cf); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a3414; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #e6d2c6;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fffaf6; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f1e0d5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #eedfd6; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff5ec,#ffe6d6); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a3a19; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(42,24,48,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(255,122,69,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6, 0 12px 28px rgba(61,38,69,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(61,38,69,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,160,100,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffc29e; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(122,92,153,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(232,93,117,.15); }
+  .find-word.found{ background:rgba(232,93,117,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #e6d2c6; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #eedfd6; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'📍'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eedfd6; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fffaf6; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffd2bd; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(232,93,117,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show{ animation:none !important; }
+  }
+
+  /* ===== Period 6 widgets ===== */
+  .passage{ background:#fffdf9; border:2px solid #eedfd6; border-radius:16px; padding:12px 10px; direction:ltr; text-align:left; }
+  .ln{ display:grid; grid-template-columns:28px 1fr; gap:6px; font-family:'Fredoka',sans-serif; font-size:15px; line-height:2; }
+  .ln .no{ color:#bba9c4; font-size:12px; text-align:right; padding-top:3px; } .ln .no.five{ color:var(--rose-d); font-weight:700; } .ln.pstart{ margin-top:8px; }
+  .ftable{ display:grid; gap:10px; direction:ltr; }
+  .fr{ display:grid; grid-template-columns:170px 1fr; background:#fff; border:2px solid #eedfd6; border-radius:14px; overflow:visible; box-shadow:0 3px 0 #efdcd0; }
+  .fk{ background:var(--cream); font-family:'Fredoka',sans-serif; font-weight:700; color:var(--aub); padding:10px 12px; border-radius:12px 0 0 12px; display:flex; align-items:center; }
+  .fv{ padding:8px 12px; font-family:'Fredoka',sans-serif; font-size:15px; line-height:2.3; }
+  @media (max-width:560px){ .fr{ grid-template-columns:1fr; } .fk{ border-radius:12px 12px 0 0; } }
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; margin:22px 0 10px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); }
+  .qa-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:12px; }
+  .qa{ background:#fff; border:2px solid #eedfd6; border-radius:14px; padding:12px 14px; direction:ltr; box-shadow:0 3px 0 #efdcd0; }
+  .qa .q{ display:flex; gap:9px; align-items:flex-start; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.5; }
+  .qa .q > div{ flex:1; }
+  .qa .n, .qa .model .n{ background:var(--lilac); color:#fff; width:26px; height:26px; flex-shrink:0; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; }
+  .qa .model .n{ background:var(--ok-bd); }
+  .say-btn{ background:var(--cream); border:2px solid var(--cream-d); color:var(--aub); border-radius:20px; padding:2px 10px; cursor:pointer; font-size:13px; }
+  .say-btn.playing{ background:var(--rose-d); color:#fff; }
+  .qa details{ margin-top:8px; }
+  .qa details summary{ cursor:pointer; display:inline-block; background:var(--cream); border:2px solid var(--cream-d); color:var(--lilac-d); border-radius:20px; padding:3px 13px; font-size:13px; font-weight:700; list-style:none; }
+  .qa details summary::-webkit-details-marker{ display:none; }
+  .qa .model{ margin-top:8px; display:flex; gap:9px; background:var(--ok-bg); border-radius:10px; padding:9px 11px; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ok-tx); line-height:1.6; }
+  .wq{ background:#fff; border:2px solid #eedfd6; border-radius:14px; padding:12px 14px; margin-bottom:12px; direction:ltr; }
+  .wq .ctx{ font-family:'Fredoka',sans-serif; font-size:15.5px; margin-bottom:9px; }
+  .wq .ctx u{ text-decoration-color:var(--rose-d); text-decoration-thickness:3px; text-underline-offset:3px; font-weight:600; }
+  .ln-tag{ background:var(--aub); color:#fff; border-radius:7px; padding:1px 8px; font-size:12px; margin-right:8px; }
+  .wq .opts{ display:flex; flex-wrap:wrap; gap:8px; }
+  .wq button{ background:#fffaf6; border:2px solid #eedfd6; border-radius:10px; padding:6px 12px; cursor:pointer; font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .wq button.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .wq button.no{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .wq button:disabled{ cursor:default; }
+  .city-chips{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; direction:ltr; margin-bottom:10px; }
+  .city{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:20px; padding:6px 14px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; }
+  .city.on{ background:var(--lilac); color:#fff; box-shadow:0 0 0 3px rgba(122,92,153,.3); }
+  .add-city{ display:flex; gap:8px; justify-content:center; margin-bottom:6px; direction:ltr; }
+  .add-city input{ border:2px solid #eedfd6; border-radius:12px; padding:7px 12px; font-family:'Fredoka',sans-serif; font-size:14px; width:min(220px,55vw); }
+  .check-btn{ background:linear-gradient(135deg,var(--rose),var(--rose-d)); color:#fff; border:none; padding:8px 16px; border-radius:12px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; }
+  .check-btn.ghost{ background:#fff; color:var(--lilac-d); border:2px solid var(--lilac); }
+  .mini-hint{ text-align:center; font-size:13px; color:var(--lilac-d); font-weight:700; margin:6px 0 12px; }
+  .cnote{ background:#fff; border:2px solid #eedfd6; border-radius:14px; padding:10px 12px; margin-bottom:10px; direction:ltr; }
+  .cnote.starred{ border-color:var(--sunset); box-shadow:0 0 0 3px rgba(255,122,69,.25); }
+  .cnote .ctop{ display:flex; justify-content:space-between; align-items:center; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); margin-bottom:6px; }
+  .cnote .star{ background:none; border:none; font-size:22px; cursor:pointer; }
+  .cnote input{ width:100%; border:2px solid #eedfd6; border-radius:10px; padding:7px 11px; font-family:'Fredoka',sans-serif; font-size:14.5px; }
+  .frames{ margin-top:14px; background:#f4eefa; border-radius:14px; padding:12px 14px; direction:ltr; font-family:'Fredoka',sans-serif; font-size:14.5px; display:grid; gap:4px; color:#3f2b55; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🗂️</span> UNIT 5 · PERIOD 6 · GRADE 9 · PB PAGE 57</div>
+    <div class="cork">
+      <svg class="string" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path pathLength="1" d="M12 14 L50 6 L88 16" fill="none" stroke="#c03d57" stroke-width=".7"/>
+        <path pathLength="1" d="M14 84 L50 94 L86 82" fill="none" stroke="#c03d57" stroke-width=".7"/>
+      </svg>
+      <div class="polaroid p1">🕌<span>Blue Mosque</span></div>
+      <div class="polaroid p2">🏰<span>Topkapi</span></div>
+      <div class="polaroid p3">⛪<span>Aya Sofya</span></div>
+      <div class="polaroid p4">🌉<span>Bosphorus</span></div>
+      <div class="factcard">
+        <div class="hd">FACT FILE · No. 5</div>
+        <h1>Istanbul</h1>
+        <div class="row"><b>The place:</b><span class="fill" style="--d:.9s"></span></div>
+        <div class="row"><b>Its names:</b><span class="fill" style="--d:1.2s"></span></div>
+        <div class="row"><b>Its history:</b><span class="fill" style="--d:1.5s"></span></div>
+        <div class="row"><b>Its size:</b><span class="fill" style="--d:1.8s"></span></div>
+        <div class="row"><b>Its visitors:</b><span class="fill" style="--d:2.1s"></span></div>
+        <span class="stamp">TO COMPLETE</span>
+      </div>
+    </div>
+    <div class="lesson-subtitle">يومٌ في إسطنبول — ملفُّ حقائقِ المدينة 🗂️</div>
+    <p class="header-hint">PERIOD 6 · Reading — املأْ ملفَّ إسطنبولَ من النصّ، ثمَّ اسألْ زميلَك وأجِبْ.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="file"><span class="sign"><span class="tab-icon">🗂️</span><span class="tab-lbl">Fact File</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="ask"><span class="sign"><span class="tab-icon">💬</span><span class="tab-lbl">Ask &amp; Answer</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="words"><span class="sign"><span class="tab-icon">🔎</span><span class="tab-lbl">Words in Text</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="cities"><span class="sign"><span class="tab-icon">🌍</span><span class="tab-lbl">World Cities</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#FF7A45;"><div class="aim-icon-wrap">🗂️</div>
+        <h3 class="aim-title">Make notes</h3><p class="aim-desc">Read the passage again and complete a fact file about Istanbul.
+          <span class="ar">قراءةُ النصِّ مرّةً أخرى وإكمالُ ملفِّ حقائقَ عن إسطنبول.</span></p></div>
+      <div class="aim-card" style="--ac:#E85D75;"><div class="aim-icon-wrap">💬</div>
+        <h3 class="aim-title">Ask and answer</h3><p class="aim-desc">Ask and answer questions about Istanbul and its history from your notes.
+          <span class="ar">طرحُ أسئلةٍ عن إسطنبولَ وتاريخِها والإجابةُ عنها من الملاحظات.</span></p></div>
+      <div class="aim-card" style="--ac:#7A5C99;"><div class="aim-icon-wrap">🔎</div>
+        <h3 class="aim-title">Words in the text</h3><p class="aim-desc">Say what words refer to, and what phrases mean.
+          <span class="ar">تحديدُ ما تعودُ عليه الكلمات، ومعنى بعضِ العبارات.</span></p></div>
+      <div class="aim-card" style="--ac:#5c4378;"><div class="aim-icon-wrap">🌍</div>
+        <h3 class="aim-title">Think and discuss</h3><p class="aim-desc">Agree on five great world cities and say why each is special.
+          <span class="ar">الاتّفاقُ على خمسِ مدنٍ عالميّةٍ عظيمة، وبيانُ ما يميّزُ كلًّا منها.</span></p></div>
+      <div class="aim-card" style="--ac:#d4572a;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Good notes help us remember and share what we learn.
+          <span class="ar">الملاحظاتُ المنظَّمةُ تساعدُنا على التذكُّرِ ومشاركةِ ما نتعلّم.</span></p></div>
+    </div>
+  </section>
+
+  <section class="tab-content" id="tab-file">
+    <h2 class="section-title">🗂️ Complete the fact file<span class="title-sub">أكمِلْ ملفَّ الحقائق</span></h2>
+    <div class="activity-banner">
+      <div class="en">🗂️ Activity 1: Read and add notes about Istanbul to complete the table.</div>
+      <div class="ar">اقرأِ النصَّ (في القائمةِ المنسدلة)، ثمَّ اخترْ عبارةً من البنكِ واضغطِ الفراغَ المناسب. في الخاناتِ التي فيها أكثرُ من فراغٍ يصحُّ أيُّ ترتيب.</div>
+    </div>
+    <details class="drop-q">
+      <summary>📖 Introducing Istanbul (page 56) <span class="ar">اضغطْ لقراءةِ النصّ</span></summary>
+      <div class="drop-body"><div class="passage"><div class="lines" id="lines"></div></div></div>
+    </details>
+    <div class="bank" id="bankF">
+      <h4>🏦 بنكُ العبارات — كلُّ عبارةٍ تُستعمَلُ مرّةً واحدة</h4>
+      <div class="bank-words">
+        <button class="bw" type="button" data-w="West">West</button>
+        <button class="bw" type="button" data-w="the Ottoman Empire">the Ottoman Empire</button>
+        <button class="bw" type="button" data-w="Asia">Asia</button>
+        <button class="bw" type="button" data-w="Constantinople">Constantinople</button>
+        <button class="bw" type="button" data-w="12 million">12 million</button>
+        <button class="bw" type="button" data-w="the Blue Mosque">the Blue Mosque</button>
+        <button class="bw" type="button" data-w="Istanbul">Istanbul</button>
+        <button class="bw" type="button" data-w="the Eastern Roman Empire">the Eastern Roman Empire</button>
+        <button class="bw" type="button" data-w="14 million people">14 million people</button>
+        <button class="bw" type="button" data-w="Europe">Europe</button>
+        <button class="bw" type="button" data-w="the Topkapi Palace">the Topkapi Palace</button>
+        <button class="bw" type="button" data-w="East">East</button>
+        <button class="bw" type="button" data-w="Byzantium">Byzantium</button>
+        <button class="bw" type="button" data-w="Aya Sofya">Aya Sofya</button>
+      </div>
+    </div>
+    <div class="ftable">
+      <div class="fr"><div class="fk">🌍 The place</div><div class="fv">Is on two continents: <span class="blank" data-g="place">?</span> and <span class="blank" data-g="place">?</span>.</div></div>
+      <div class="fr"><div class="fk">🏷️ Its names</div><div class="fv">Has had three names: <span class="blank" data-g="names">?</span>, <span class="blank" data-g="names">?</span> and <span class="blank" data-g="names">?</span>.</div></div>
+      <div class="fr"><div class="fk">👑 Its history</div><div class="fv">Was the capital of two empires: <span class="blank" data-g="emp">?</span> and <span class="blank" data-g="emp">?</span>.</div></div>
+      <div class="fr"><div class="fk">⚖️ Its history of trade</div><div class="fv">Was always a centre of trade between: <span class="blank" data-g="trade">?</span> and <span class="blank" data-g="trade">?</span>.</div></div>
+      <div class="fr"><div class="fk">🕌 Its buildings</div><div class="fv">Some of its greatest buildings are: <span class="blank" data-g="build">?</span>, <span class="blank" data-g="build">?</span> and <span class="blank" data-g="build">?</span>.</div></div>
+      <div class="fr"><div class="fk">👥 Its size</div><div class="fv">Today, <span class="blank" data-g="size">?</span> live there.</div></div>
+      <div class="fr"><div class="fk">🧳 Its visitors</div><div class="fv"><span class="blank" data-g="vis">?</span> people a year visit the city.</div></div>
+    </div>
+    <div class="res-line" id="bankFRes"></div>
+  </section>
+
+  <section class="tab-content" id="tab-ask">
+    <h2 class="section-title">💬 Ask and answer<span class="title-sub">اسألْ وأجِبْ مع زميلِك</span></h2>
+    <div class="activity-banner">
+      <div class="en">💬 Activities 2 and 3: Work in pairs. Ask and answer questions about Istanbul and its history.</div>
+      <div class="ar">الطالبُ <b>A</b> يختارُ سؤالًا ويطرحُه، والطالبُ <b>B</b> يُجيبُ من ملاحظاتِه (ملفِّ الحقائقِ وملاحظاتِ الحصّةِ الرابعة). افتحِ النموذجَ للتحقُّق، ثمَّ تبادلا الأدوار.</div>
+    </div>
+    <h3 class="part-h">Activity 2 · About Istanbul<span class="ar">أسئلةٌ عن إسطنبول من ملفِّ الحقائق</span></h3>
+    <div class="qa-grid" id="qa2"></div>
+    <h3 class="part-h">Activity 3 · More about its history<span class="ar">أسئلةٌ عن تاريخِها من ملاحظاتِ الحصّةِ الرابعة</span></h3>
+    <div class="qa-grid" id="qa3"></div>
+  </section>
+
+  <section class="tab-content" id="tab-words">
+    <h2 class="section-title">🔎 Words in the text<span class="title-sub">كلماتٌ في النصّ</span></h2>
+    <div class="activity-banner">
+      <div class="en">🔎 Activity 4: Read the passage again and do these tasks.</div>
+      <div class="ar">أوّلًا: علامَ تعودُ الكلماتُ الملوَّنة؟ ثانيًا: ما معنى العباراتِ الملوَّنة؟ رقمُ السطرِ يدلُّك على مكانِها في النصّ.</div>
+    </div>
+    <h3 class="part-h">A · Say what the underlined words refer to.<span class="ar">علامَ تعودُ الكلمة؟</span></h3>
+    <div id="refList"></div>
+    <h3 class="part-h">B · Say what the underlined words and phrases mean.<span class="ar">ما معنى العبارة؟</span></h3>
+    <div id="meanList"></div>
+    <div class="res-line" id="wordsRes"></div>
+  </section>
+
+  <section class="tab-content" id="tab-cities">
+    <h2 class="section-title">🌍 Think and discuss<span class="title-sub">فكِّرا وتناقشا</span></h2>
+    <div class="activity-banner">
+      <div class="en">🌍 Activity 5: Work in pairs. Think and discuss.</div>
+      <div class="ar">١- اتّفقا على خمسِ مدنٍ عالميّةٍ عظيمة. ٢- قولا لماذا تتميّزُ كلٌّ منها. ٣- اختارا مدينتَينِ تودّانِ زيارتَهما معًا (⭐).</div>
+    </div>
+    <div class="city-chips" id="cityChips"></div>
+    <div class="add-city"><input type="text" id="cityNew" maxlength="24" placeholder="Another city…" aria-label="Another city"><button class="check-btn ghost" type="button" id="cityAdd">➕ Add</button></div>
+    <p class="mini-hint" id="cityCount">اخترا خمسَ مدن (0 / 5)</p>
+    <div id="cityNotes"></div>
+    <div class="frames">
+      <b>🗣️ Useful language</b>
+      <span>I think <i>Al-Quds</i> is a great world city because …</span>
+      <span>It's special because it has …</span>
+      <span>We'd most like to visit <i>…</i> and <i>…</i> together.</span>
+    </div>
+  </section>
+
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>🗂️ Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «ملفُّ الحقائقِ مكتمل».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">Istanbul was the capital of two empires. Which ones?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>The Eastern Roman Empire and the Ottoman Empire.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>The Turkish Empire and the British Empire.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Byzantium and Constantinople.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>Asia and Europe.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">"Here, the sultans lived…" (line 10). What does <u>Here</u> refer to?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>The Blue Mosque</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>The Topkapi Palace</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Ankara</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>The Bosphorus</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">"…the <u>heart</u> of a huge empire" means…</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>the smallest part</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>the oldest building</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>the most important centre</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>the border</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">Istanbul was always a centre of trade between…</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>North and South.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>East and West.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Turkey and Ankara.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>Rome and Africa.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">"…and <u>thousands more</u> worked…" means…</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>large numbers of people</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>a thousand years</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>only a few sultans</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>more money</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🗂️<small>FILE COMPLETE</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff1e6">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+var BKEY = 'g9u5p6_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['🗂️','📌','🕌','⛪','🏰','🌍','📝','✨'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  if(btn && btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','📌','⭐','🗂️'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#FF7A45','#E85D75','#7A5C99','#ffd2bd','#3D2645'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+function hw(w,ar){ return '<span class="hover-word">'+w+'<span class="tooltip">'+ar+'</span></span>'; }
+function pr(w,ar){ return '<span class="pronoun">'+w+'<span class="tooltip">تعودُ على: '+ar+'</span></span>'; }
+
+/* the passage, line by line as in the book (lines 1-17) */
+var LINES=[
+  [1,'Istanbul is a city on two continents, with one foot in Asia and the other in Europe. '+pr('It','إسطنبول')+' is not a'],
+  [0,hw('capital','عاصمة')+' city now: the capital of modern Turkey is Ankara. '+hw('However','ومع ذلك')+', it used to be the capital of'],
+  [0,'empires and is still a great world city today.'],
+  [1,pr('Its','إسطنبول')+' name was Byzantium for 1,000 years, and it grew rich and powerful because East-West trade'],
+  [0,hw('routes','طُرُق')+' passed through the city – along and across the Bosphorus. Then the Romans made'],
+  [0,pr('it','المدينة (بيزنطة)')+' the capital of their eastern empire, and for the next 1,000 years people called it Constantinople.'],
+  [1,'Then Constantinople '+hw('fell to','سقطتْ في يدِ')+' the Muslim Ottomans. This time, the city\'s name changed to'],
+  [0,'Istanbul, and it became the '+hw('heart','قلب · مركز')+' of a '+hw('huge','ضخم')+' empire that reached across large parts of Europe,'],
+  [0,'Asia and North Africa.'],
+  [1,'The Topkapi Palace was the centre of '+pr('its','الإمبراطوريّةِ العثمانيّة')+' government. '+pr('Here','في قصرِ توبكابي')+', the sultans lived and thousands'],
+  [0,'more worked to rule the Ottoman Empire. Today, '+pr('it','قصرِ توبكابي')+' is a huge '+hw('museum','متحف')+' with beautiful gardens and'],
+  [0,'hundreds of rooms. '+pr('These','مئاتِ الغرف')+' are full of fantastic collections of pictures, maps, jewellery and many'],
+  [0,'other '+hw('fascinating','رائع · آسِر')+' things.'],
+  [1,'When you visit Topkapi, you must also see its famous ancient '+hw('neighbours','جيران')+' – the Blue Mosque'],
+  [0,'and Aya Sofya. But there is much, much more to do: this is an exciting modern city of 14 million'],
+  [0,'people. East and West meet in its busy streets, markets and shops. And '+pr('its','إسطنبول')+' 12 million '+hw('visitors','زوّار')+' a'],
+  [0,'year never forget their time here. Istanbul is a very special place.']
+];
+(function(){
+  var box=document.getElementById('lines');
+  LINES.forEach(function(l,i){
+    var n=i+1, d=document.createElement('div'); d.className='ln'+(l[0]&&i?' pstart':'');
+    d.innerHTML='<span class="no'+(n%5===0?' five':'')+'">'+n+'</span><span>'+l[1]+'</span>';
+    box.appendChild(d);
+  });
+})();
+
+
+/* Activity 1 — the fact file: one shared bank; in a row with several blanks any order is right */
+var GROUPS={place:['Europe','Asia'], names:['Byzantium','Constantinople','Istanbul'], emp:['the Eastern Roman Empire','the Ottoman Empire'],
+  trade:['East','West'], build:['the Blue Mosque','Aya Sofya','the Topkapi Palace'], size:['14 million people'], vis:['12 million']};
+(function(){
+  var box=document.getElementById('bankF'), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){
+    w.addEventListener('click',function(){
+      if(w.classList.contains('used')) return;
+      if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+      box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w;
+    });
+  });
+  var blanks=document.querySelectorAll('#tab-file .blank'), line=document.getElementById('bankFRes');
+  blanks.forEach(function(bl){
+    bl.addEventListener('click',function(){
+      if(bl.classList.contains('ok')) return;
+      var g=bl.dataset.g, taken=[].map.call(document.querySelectorAll('#tab-file .blank.ok[data-g="'+g+'"]'),function(x){return x.textContent;});
+      if(!sel || GROUPS[g].indexOf(sel.dataset.w)<0 || taken.indexOf(sel.dataset.w)>-1){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+      bl.textContent=sel.dataset.w; bl.classList.add('ok'); sel.classList.add('used'); sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+      var ok=document.querySelectorAll('#tab-file .blank.ok').length;
+      line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+      if(ok===blanks.length){ line.textContent='🏆 رائع! اكتملَ ملفُّ حقائقِ إسطنبول.'; confetti(); }
+    });
+  });
+})();
+
+/* Activities 2 and 3 — question cards with model answers */
+var QA2=[
+  ['What do you know about the place?','It is on two continents: Europe and Asia.'],
+  ['Can you say anything about its names?','It has had three names: Byzantium, Constantinople and Istanbul.'],
+  ['What do you know about its history?','It was the capital of two empires: the Eastern Roman Empire and the Ottoman Empire.'],
+  ['Can you say anything about its history of trade?','It was always a centre of trade between East and West.'],
+  ['What do you know about its buildings?','Some of its greatest buildings are the Blue Mosque, Aya Sofya and the Topkapi Palace.'],
+  ['Can you say anything about its size?','Today, 14 million people live there.'],
+  ['What do you know about its visitors?','12 million people a year visit the city.']
+];
+var QA3=[
+  ['What else do you know about the history of Byzantium?','King Byzos began building it about 2,700 years ago. It was rich and powerful because of trade.'],
+  ['Can you say anything else about the history of Constantinople?','In 324, the Romans made Byzantium the capital of their eastern empire and called it Constantinople.'],
+  ['What else do you know about the history of Aya Sofya?','It opened its doors to the people in 573. It was the biggest church in the world.'],
+  ['What else do you know about the history of the Ottoman Empire?','The Ottomans took Constantinople in 1453 and ruled their empire from the city. The empire fell in 1918.'],
+  ['Can you say anything else about the history of the Topkapi Palace?','The sultan and his government moved into it in 1465.'],
+  ['What else do you know about the history of the Blue Mosque?','The Ottomans finished building it in 1616, so it is quite new.'],
+  ['Can you say anything else about the history of modern Turkey?','A new government set up the modern country of Turkey in 1923.']
+];
+function buildQA(id,list){
+  var box=document.getElementById(id);
+  list.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='qa';
+    d.innerHTML='<div class="q"><span class="n">A</span><div>'+q[0]+'</div><button class="say-btn" type="button">🔊</button></div>'+
+      '<details><summary>💡 Student B</summary><div class="model"><span class="n">B</span><div>'+q[1]+'</div></div></details>';
+    d.querySelector('.say-btn').addEventListener('click',function(){ speak(q[0]+' ... '+q[1],this); });
+    d.querySelector('details').addEventListener('toggle',function(){ if(this.open) sparkleAt(this); });
+    box.appendChild(d);
+  });
+}
+buildQA('qa2',QA2); buildQA('qa3',QA3);
+
+/* Activity 4 — reference words and meanings (answers from the teacher's book) */
+var REF=[
+  ['Line 6','… people called <u>it</u> Constantinople.',['Byzantium','the Bosphorus','the Roman Empire'],0],
+  ['Line 10','The Topkapi Palace was the centre of <u>its</u> government.',['Istanbul\'s','the Ottoman Empire\'s','Turkey\'s'],1],
+  ['Line 10','<u>Here</u>, the sultans lived, and …',['in Ankara','in the Blue Mosque','in the Topkapi Palace'],2],
+  ['Line 16','And <u>its</u> 12 million visitors a year never forget their time here.',['Istanbul\'s','the museum\'s','Topkapi\'s'],0]
+];
+var MEAN=[
+  ['Line 1','…, with <u>one foot in Asia and the other in Europe</u>.',['part of it is in Asia, and the other part is in Europe','people walk from Asia to Europe','it is very far from Asia'],0],
+  ['Line 3','… and is <u>still a great world city</u> today.',['it used to be important, but not now','one of the most important cities internationally','a city with many old buildings'],1],
+  ['Line 8','… it became <u>the heart</u> of a huge empire …',['the hospital','the smallest town','the administrative and spiritual centre'],2],
+  ['Line 10','… and <u>thousands more</u> worked …',['large numbers of people','a thousand years','more money'],0]
+];
+(function(){
+  var answered=0, right=0, total=REF.length+MEAN.length;
+  function build(id,list,prefix){
+    var box=document.getElementById(id);
+    list.forEach(function(it,i){
+      var d=document.createElement('div'); d.className='wq';
+      d.innerHTML='<div class="ctx"><span class="ln-tag">'+it[0]+'</span>'+it[1]+'</div><div class="opts"></div>';
+      it[2].forEach(function(o,k){
+        var b=document.createElement('button'); b.type='button'; b.textContent=o;
+        b.addEventListener('click',function(){
+          d.querySelectorAll('button').forEach(function(x,j){ x.disabled=true; if(j===it[3]) x.classList.add('ok'); });
+          if(k===it[3]){ right++; sparkleAt(b); } else b.classList.add('no');
+          answered++;
+          if(answered===total){ var line=document.getElementById('wordsRes'); line.className='res-line show good';
+            line.textContent=(right===total?'🏆 ممتاز! ':'📘 نتيجتُك: ')+right+' / '+total; if(right===total) confetti(); }
+        });
+        d.querySelector('.opts').appendChild(b);
+      });
+      box.appendChild(d);
+    });
+  }
+  build('refList',REF); build('meanList',MEAN);
+})();
+
+/* Activity 5 — five great world cities (notes stay on this device) */
+(function(){
+  var KEY='g9u5p6_cities', base=['Al-Quds','Makkah','Cairo','Istanbul','Rome','London','Paris','Beijing','Tokyo','New York','Dubai','Amman'];
+  var st={picked:[],notes:{},stars:[],extra:[]};
+  try{ var s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s) st=s; }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  var chips=document.getElementById('cityChips'), notes=document.getElementById('cityNotes'), count=document.getElementById('cityCount');
+  function render(){
+    chips.innerHTML='';
+    base.concat(st.extra).forEach(function(c){
+      var b=document.createElement('button'); b.type='button'; b.className='city'+(st.picked.indexOf(c)>-1?' on':''); b.textContent=c;
+      b.addEventListener('click',function(){
+        var i=st.picked.indexOf(c);
+        if(i>-1){ st.picked.splice(i,1); var k=st.stars.indexOf(c); if(k>-1) st.stars.splice(k,1); }
+        else if(st.picked.length<5){ st.picked.push(c); sparkleAt(b); }
+        else { count.textContent='⚠️ خمسُ مدنٍ فقط — ألغِ اختيارَ مدينةٍ أوّلًا.'; return; }
+        save(); render();
+      });
+      chips.appendChild(b);
+    });
+    count.textContent='اخترا خمسَ مدن ('+st.picked.length+' / 5)'+(st.picked.length===5?' ✔ — والآنَ اكتبا لماذا تتميّزُ كلٌّ منها، واختارا مدينتَينِ ⭐':'');
+    notes.innerHTML='';
+    st.picked.forEach(function(c){
+      var d=document.createElement('div'); d.className='cnote'+(st.stars.indexOf(c)>-1?' starred':'');
+      d.innerHTML='<div class="ctop"><b>'+c+'</b><button class="star" type="button" aria-label="star">'+(st.stars.indexOf(c)>-1?'⭐':'☆')+'</button></div>'+
+        '<input type="text" maxlength="120" placeholder="It\'s special because …" aria-label="Why is '+c+' special?">';
+      var inp=d.querySelector('input'); inp.value=st.notes[c]||'';
+      inp.addEventListener('input',function(){ st.notes[c]=inp.value; save(); });
+      d.querySelector('.star').addEventListener('click',function(){
+        var k=st.stars.indexOf(c);
+        if(k>-1) st.stars.splice(k,1); else { if(st.stars.length>=2) st.stars.shift(); st.stars.push(c); }
+        save(); render(); if(st.stars.length===2) confetti();
+      });
+      notes.appendChild(d);
+    });
+  }
+  document.getElementById('cityAdd').addEventListener('click',function(){
+    var v=document.getElementById('cityNew').value.trim(); if(!v) return;
+    if(base.concat(st.extra).indexOf(v)<0) st.extra.push(v);
+    document.getElementById('cityNew').value=''; save(); render();
+  });
+  render();
+})();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='File complete!'; msg='رائع! ملفُّ إسطنبولَ مكتملٌ وملاحظاتُك دقيقة 🗂️🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجِعْ ملفَّ الحقائقِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى النصِّ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='🗂️ لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
