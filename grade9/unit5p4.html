@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A day in Istanbul - Grade 9 Unit 5 Period 4 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 5 palette : Bosphorus sunset ===== */
+  :root{
+    --sunset:#FF7A45; --sunset-d:#d4572a;
+    --rose:#E85D75;   --rose-d:#c03d57;
+    --lilac:#7A5C99;  --lilac-d:#5c4378;
+    --cream:#FFF1E6;  --cream-d:#f6dcc8;
+    --aub:#3D2645;    --aub-d:#2a1830;
+    --ink:#2a1d30; --muted:#6e5f74; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a city map: faint streets and blocks */
+    background-image:
+      linear-gradient(rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(rgba(232,93,117,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,93,117,.045) 1px, transparent 1px);
+    background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : THE HELICOPTER WINDOW ===== */
+  .lesson-header{
+    position:relative; overflow:hidden; padding:14px 12px 30px;
+    background:linear-gradient(180deg, var(--aub-d) 0%, var(--aub) 26%, var(--lilac) 58%, var(--rose) 84%, var(--sunset) 100%);
+  }
+  .header-inner{ max-width:900px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{
+    display:inline-flex; align-items:center; gap:9px; background:var(--cream); color:var(--aub);
+    padding:6px 17px; border-radius:50px; font-weight:700; font-size:13px; margin-bottom:14px; direction:ltr;
+    font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--cream-d), 0 8px 18px rgba(0,0,0,.3);
+  }
+  .cabin{ position:relative; width:min(380px,86vw); margin:0 auto; direction:ltr; }
+  .porthole{
+    position:relative; width:100%; aspect-ratio:1/1; border-radius:50%; overflow:hidden;
+    border:18px solid #4a3352; box-shadow:0 0 0 4px #2a1830, 0 0 0 8px #6a5272, 0 20px 40px rgba(0,0,0,.55), inset 0 0 30px rgba(0,0,0,.5);
+    background:#cdb9e6;
+  }
+  .porthole .view{ position:absolute; inset:-2%; animation:fly 14s ease-in-out infinite alternate; }
+  .porthole .view svg{ width:100%; height:100%; display:block; }
+  @keyframes fly{ from{ transform:translate(1.5%,1%) rotate(-1.5deg);} to{ transform:translate(-1.5%,-1%) rotate(1.5deg) scale(1.03);} }
+  .porthole .glass{ position:absolute; inset:0; border-radius:50%; pointer-events:none;
+    background:radial-gradient(circle at 30% 22%, rgba(255,255,255,.45), transparent 32%), radial-gradient(circle at 70% 85%, rgba(255,255,255,.12), transparent 30%); }
+  .porthole .rotor{ position:absolute; left:50%; top:-40%; width:150%; height:150%; margin-left:-75%; pointer-events:none; opacity:.16;
+    background:conic-gradient(#000 0 6deg, transparent 6deg 90deg, #000 90deg 96deg, transparent 96deg 180deg, #000 180deg 186deg, transparent 186deg 270deg, #000 270deg 276deg, transparent 276deg);
+    border-radius:50%; animation:spin .25s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .bolts{ position:absolute; inset:-14px; border-radius:50%; pointer-events:none; }
+  .bolts i{ position:absolute; width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#eee,#7c6a86); }
+  .marker{ opacity:0; animation:mk-in .5s forwards; transform-box:fill-box; transform-origin:center bottom; }
+  @keyframes mk-in{ from{ opacity:0; transform:translateY(-10px) scale(.6);} to{ opacity:1; transform:none; } }
+  .chopper{ position:absolute; right:-18px; top:6px; font-size:46px; transform:scaleX(-1) rotate(-8deg); filter:drop-shadow(0 6px 8px rgba(0,0,0,.4)); animation:hover 2.2s ease-in-out infinite alternate; }
+  @keyframes hover{ to{ transform:scaleX(-1) rotate(-4deg) translateY(-8px); } }
+  .headset{ position:absolute; left:-14px; bottom:-14px; max-width:62%; background:#fff; color:var(--aub); border-radius:14px 14px 14px 4px;
+    padding:8px 11px; font-family:'Fredoka',sans-serif; font-size:12.5px; line-height:1.35; text-align:left; box-shadow:0 8px 16px rgba(0,0,0,.35); }
+  .headset b{ color:var(--rose-d); display:block; font-size:11px; letter-spacing:.08em; }
+  .dash{ display:inline-block; margin-top:18px; background:linear-gradient(#3a2742,#24152b); color:#fff; border-radius:14px; padding:9px 22px 10px;
+    border:2px solid #7A5C99; box-shadow:0 10px 22px rgba(0,0,0,.35), inset 0 0 12px rgba(255,122,69,.25); direction:ltr; }
+  .dash small{ display:block; font-family:'Fredoka',sans-serif; font-size:11px; letter-spacing:.2em; color:#ffb48f; }
+  .dash h1{ font-family:'Fredoka',sans-serif; font-size:clamp(22px,5vw,34px); line-height:1.15; }
+  .dash .alt{ font-family:'Courier New',monospace; font-size:12px; color:#9ef0b4; }
+  .lesson-subtitle{ font-size:clamp(14px,3vw,18px); color:#fff; font-weight:800; margin-top:10px; text-shadow:0 2px 6px rgba(42,24,48,.5); }
+  .header-hint{ font-size:12.5px; color:#fff3ea; font-weight:700; margin-top:3px; text-shadow:0 1px 4px rgba(42,24,48,.6); }
+  @media (max-width:480px){ .headset{ font-size:11px; left:-6px; max-width:70%; } .chopper{ font-size:36px; right:-6px; } }
+  @media (prefers-reduced-motion:reduce){ .porthole .view,.porthole .rotor,.chopper{ animation:none; } .marker{ animation:none; opacity:1; } }
+
+  /* ===== TABS : STREET SIGNS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:
+      repeating-linear-gradient(90deg, rgba(255,241,230,.55) 0 22px, transparent 22px 40px) left bottom 9px / 100% 3px no-repeat,
+      linear-gradient(#55405e, var(--aub));
+    border-radius:16px; padding:22px 12px 22px; box-shadow:0 10px 24px rgba(42,24,48,.35);
+    display:flex; gap:8px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    position:relative; background:transparent; border:none; cursor:pointer; padding:0;
+    display:flex; flex-direction:column; align-items:center; flex:1 0 auto; min-width:86px; max-width:118px;
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ transform:translateY(-3px); }
+  .sign{
+    width:100%; background:var(--lilac); color:#fff; border:2px solid #fff; border-radius:8px;
+    box-shadow:0 0 0 2px var(--lilac-d), 0 5px 8px rgba(0,0,0,.35);
+    padding:7px 6px 6px; min-height:54px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    transition:all .3s ease;
+  }
+  .tab-icon{ font-size:20px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12px; line-height:1.1; text-align:center; }
+  .post{ width:6px; height:14px; background:linear-gradient(90deg,#9a8aa6,#e9e0ee,#9a8aa6); border-radius:0 0 2px 2px; }
+  .tab-btn.active{ transform:translateY(-2px); }
+  .tab-btn.active .sign{ background:var(--sunset); color:var(--aub-d); box-shadow:0 0 0 2px var(--sunset-d), 0 0 18px rgba(255,122,69,.65); }
+  .tab-btn.active .tab-lbl{ font-weight:700; }
+  .tab-btn.active::before{
+    content:'📍'; position:absolute; top:-21px; left:50%; transform:translateX(-50%); font-size:19px;
+    animation:pin-drop-tab .55s cubic-bezier(.3,1.6,.5,1); filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));
+  }
+  @keyframes pin-drop-tab{ from{ transform:translate(-50%,-18px); opacity:0; } to{ transform:translate(-50%,0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 20px rgba(61,38,69,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 15px rgba(61,38,69,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(232,93,117,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #e6d2c6;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fffaf5,#ffeadc); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a3a19; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(212,87,42,.45);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(255,122,69,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(122,92,153,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(122,92,153,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #e6d2c6; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff3e9,#ffe2cf); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a3414; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #e6d2c6;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fffaf6; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f1e0d5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #eedfd6; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff5ec,#ffe6d6); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a3a19; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(42,24,48,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(255,122,69,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6, 0 12px 28px rgba(61,38,69,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(61,38,69,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,160,100,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffc29e; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(122,92,153,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(232,93,117,.15); }
+  .find-word.found{ background:rgba(232,93,117,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #e6d2c6; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #eedfd6; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'📍'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eedfd6; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fffaf6; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffd2bd; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(232,93,117,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show{ animation:none !important; }
+  }
+
+  /* ===== Period 2 widgets ===== */
+  .sent .body{ flex:1; }
+  .sent .ab{ line-height:2.2; }
+  .sent .ab b{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:6px;
+    background:var(--cream); color:var(--lilac-d); font-size:12.5px; margin-right:6px; vertical-align:middle; }
+  .tipbox b{ unicode-bidi:isolate; direction:ltr; }
+  .pair{ background:#fffaf6; border:2px solid #f1e0d5; border-radius:14px; padding:12px 14px; margin-bottom:12px; direction:ltr; }
+  .pair-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px; }
+  .pair-top .no{ background:var(--rose-d); color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; }
+  .pair p{ font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.9; }
+  .pair p b{ color:var(--lilac-d); margin-right:4px; }
+  .pair p em{ font-style:normal; background:#ffe0cc; border-radius:5px; padding:0 4px; font-weight:600; color:#8a3a19; }
+  .say-btn{ background:var(--lilac); color:#fff; border:none; border-radius:20px; padding:6px 13px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:12.5px; }
+
+  /* ===== Period 4 widgets ===== */
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; margin:22px 0 10px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); }
+  .num-pick{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; direction:ltr; margin-bottom:6px; }
+  .np{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:12px; padding:7px 13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; box-shadow:0 3px 0 var(--cream-d); }
+  .np.sel{ background:var(--lilac); color:#fff; box-shadow:0 0 0 3px rgba(122,92,153,.35); }
+  .np.used{ opacity:.35; text-decoration:line-through; cursor:default; }
+  .mini-hint{ text-align:center; font-size:12.5px; color:var(--muted); font-weight:700; margin-bottom:10px; }
+  .panorama{ position:relative; max-width:720px; margin:0 auto; border-radius:16px; overflow:hidden; border:3px solid #fff; box-shadow:0 8px 20px rgba(61,38,69,.18); direction:ltr; }
+  .panorama svg{ display:block; width:100%; height:auto; }
+  .spot{ position:absolute; transform:translateX(-50%); width:40px; height:40px; border-radius:50%; border:3px dashed var(--aub); background:rgba(255,255,255,.88);
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; color:var(--aub); cursor:pointer; box-shadow:0 3px 8px rgba(0,0,0,.25); }
+  .spot.ok{ background:var(--ok-bg); border:3px solid var(--ok-bd); color:var(--ok-tx); font-size:19px; cursor:default; }
+  .spot.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  @media (max-width:480px){ .spot{ width:32px; height:32px; font-size:13px; } }
+  .timeline{ position:relative; display:grid; gap:10px; padding-left:8px; direction:ltr; }
+  .timeline::before{ content:''; position:absolute; left:26px; top:10px; bottom:10px; width:4px; border-radius:2px; background:linear-gradient(var(--sunset),var(--rose),var(--lilac)); }
+  .tl{ position:relative; display:flex; gap:12px; align-items:center; background:#fff; border:2px solid #eedfd6; border-radius:14px; padding:10px 14px 10px 8px;
+    font-family:'Fredoka',sans-serif; font-size:15px; line-height:2.1; text-align:left; box-shadow:0 3px 0 #efdcd0; }
+  .tl .dot{ position:relative; z-index:1; flex-shrink:0; width:38px; height:38px; border-radius:50%; background:var(--cream); border:3px solid #fff; box-shadow:0 0 0 2px var(--lilac); display:flex; align-items:center; justify-content:center; font-size:18px; }
+  .tl .blank{ min-width:72px; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🚁</span> UNIT 5 · PERIOD 4 · GRADE 9 · PB PAGE 55</div>
+    <div class="cabin">
+      <div class="porthole">
+        <div class="view">
+          <svg viewBox="0 0 400 400" role="img" aria-label="Old Istanbul from above: the Blue Mosque, Aya Sofya, the Topkapi Palace and the Bosphorus.">
+            <rect width="400" height="400" fill="#b9a6d6"/>
+            <!-- water texture -->
+            <g stroke="#d9cdee" stroke-width="2" fill="none" opacity=".7">
+              <path d="M250 40 q10 -6 20 0 t20 0"/><path d="M300 120 q10 -6 20 0 t20 0"/><path d="M330 220 q10 -6 20 0 t20 0"/><path d="M280 330 q10 -6 20 0 t20 0"/>
+            </g>
+            <!-- the old city peninsula -->
+            <path d="M0 60 C80 40 170 70 230 120 C270 150 290 190 285 230 C280 270 240 300 190 330 C140 360 60 380 0 390Z" fill="#f4dcc6"/>
+            <g fill="#ead0b9"><rect x="20" y="110" width="50" height="34" rx="4"/><rect x="30" y="300" width="60" height="40" rx="4"/><rect x="90" y="330" width="44" height="30" rx="4"/></g>
+            <!-- streets -->
+            <g stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".9"><path d="M0 200 C60 196 110 210 160 230"/><path d="M110 90 C120 160 120 260 100 380"/></g>
+            <!-- Topkapi Palace: courtyards at the tip -->
+            <g transform="translate(205 150)">
+              <rect x="0" y="0" width="58" height="40" rx="4" fill="#fff" stroke="#7A5C99" stroke-width="2"/>
+              <rect x="8" y="8" width="18" height="24" fill="#d7c8e3"/><rect x="32" y="8" width="18" height="24" fill="#d7c8e3"/>
+              <circle cx="-8" cy="12" r="6" fill="#c7b38f"/><circle cx="66" cy="34" r="6" fill="#c7b38f"/>
+            </g>
+            <!-- Aya Sofya: one big dome, four minarets -->
+            <g transform="translate(160 235)">
+              <rect x="-26" y="-22" width="52" height="44" rx="4" fill="#f0b9a4"/>
+              <circle r="16" fill="#E85D75"/><circle r="6" fill="#ffd2bd"/>
+              <g fill="#3D2645"><circle cx="-32" cy="-28" r="3.5"/><circle cx="32" cy="-28" r="3.5"/><circle cx="-32" cy="28" r="3.5"/><circle cx="32" cy="28" r="3.5"/></g>
+            </g>
+            <!-- the Blue Mosque: a big dome, half domes, six minarets -->
+            <g transform="translate(95 280)">
+              <rect x="-30" y="-30" width="60" height="60" rx="5" fill="#cbbde6"/>
+              <circle r="17" fill="#7A5C99"/><circle r="6" fill="#e9e0f6"/>
+              <g fill="#7A5C99"><circle cx="0" cy="-22" r="8"/><circle cx="0" cy="22" r="8"/><circle cx="-22" cy="0" r="8"/><circle cx="22" cy="0" r="8"/></g>
+              <g fill="#3D2645"><circle cx="-36" cy="-36" r="3.5"/><circle cx="36" cy="-36" r="3.5"/><circle cx="-36" cy="36" r="3.5"/><circle cx="36" cy="36" r="3.5"/><circle cx="-36" cy="64" r="3.5"/><circle cx="36" cy="64" r="3.5"/></g>
+            </g>
+            <!-- markers -->
+            <g class="marker" style="animation-delay:.8s"><rect x="62" y="322" width="104" height="22" rx="11" fill="#3D2645"/><text x="114" y="337" text-anchor="middle" font-family="Fredoka" font-size="12" fill="#fff" font-weight="600">🕌 Blue Mosque</text></g>
+            <g class="marker" style="animation-delay:1.6s"><rect x="286" y="262" width="96" height="22" rx="11" fill="#3D2645"/><text x="334" y="277" text-anchor="middle" font-family="Fredoka" font-size="12" fill="#fff" font-weight="600">≈ Bosphorus</text></g>
+            <g class="marker" style="animation-delay:2.4s"><rect x="194" y="226" width="90" height="22" rx="11" fill="#3D2645"/><text x="239" y="241" text-anchor="middle" font-family="Fredoka" font-size="12" fill="#fff" font-weight="600">⛪ Aya Sofya</text></g>
+            <g class="marker" style="animation-delay:3.2s"><rect x="186" y="112" width="104" height="22" rx="11" fill="#3D2645"/><text x="238" y="127" text-anchor="middle" font-family="Fredoka" font-size="12" fill="#fff" font-weight="600">🏰 Topkapi Palace</text></g>
+            <text x="388" y="30" text-anchor="end" font-family="Fredoka" font-size="13" fill="#5c4378" font-weight="700">ASIA →</text>
+            <text x="14" y="40" font-family="Fredoka" font-size="13" fill="#5c4378" font-weight="700">← EUROPE</text>
+          </svg>
+        </div>
+        <div class="rotor"></div>
+        <div class="glass"></div>
+      </div>
+      <div class="bolts" aria-hidden="true">
+        <i style="left:50%;top:-1px"></i><i style="right:-1px;top:50%"></i><i style="left:50%;bottom:-1px"></i><i style="left:-1px;top:50%"></i>
+        <i style="left:14%;top:14%"></i><i style="right:14%;top:14%"></i><i style="left:14%;bottom:14%"></i><i style="right:14%;bottom:14%"></i>
+      </div>
+      <span class="chopper">🚁</span>
+      <div class="headset"><b>🎧 GUIDE</b>"Here we are, flying over the heart of ancient Istanbul…"</div>
+    </div>
+    <div class="dash"><small>FLYING OVER HISTORY · PERIOD 4</small><h1>A day in Istanbul</h1><div class="alt">ALT 500 m · Europe ⇄ Asia</div></div>
+    <div class="lesson-subtitle">يومٌ في إسطنبول — جولةٌ فوقَ التاريخ 🚁</div>
+    <p class="header-hint">انظرْ من نافذةِ المروحيّة: مدينةٌ واحدةٌ على قارّتَين، وثلاثةُ أسماءٍ عبرَ التاريخ.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="words"><span class="sign"><span class="tab-icon">📇</span><span class="tab-lbl">Words</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="complete"><span class="sign"><span class="tab-icon">✏️</span><span class="tab-lbl">Complete</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="check"><span class="sign"><span class="tab-icon">💬</span><span class="tab-lbl">Check &amp; Practise</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="tour"><span class="sign"><span class="tab-icon">🚁</span><span class="tab-lbl">The Tour</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <!-- ===== AIMS ===== -->
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#FF7A45;"><div class="aim-icon-wrap">📇</div>
+        <h3 class="aim-title">History words</h3><p class="aim-desc">Learn twelve words and names about the history of Istanbul.
+          <span class="ar">تعلُّمُ اثنتي عشرةَ كلمةً واسمًا عن تاريخِ إسطنبول.</span></p></div>
+      <div class="aim-card" style="--ac:#E85D75;"><div class="aim-icon-wrap">✏️</div>
+        <h3 class="aim-title">Use them</h3><p class="aim-desc">Complete five short conversations, then check and practise them in pairs.
+          <span class="ar">إكمالُ خمسةِ حواراتٍ قصيرة، ثمَّ التحقُّقُ منها والتدرُّبُ عليها في أزواج.</span></p></div>
+      <div class="aim-card" style="--ac:#7A5C99;"><div class="aim-icon-wrap">🚁</div>
+        <h3 class="aim-title">Listen to the tour</h3><p class="aim-desc">Find four famous places, then complete history notes with dates.
+          <span class="ar">تحديدُ أربعةِ أماكنَ مشهورة، ثمَّ إكمالُ ملاحظاتٍ تاريخيّةٍ بالتواريخ.</span></p></div>
+      <div class="aim-card" style="--ac:#d4572a;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Great cities grow when people trade and meet in peace.
+          <span class="ar">تزدهرُ المدنُ العظيمةُ حينَ يتبادلُ الناسُ التجارةَ ويلتقونَ بسلام.</span></p></div>
+    </div>
+    <div class="key-language-box">
+      <h3>🔑 الكلماتُ المفتاحيّةُ للدرس</h3>
+      <div class="key-words">
+        <span class="key-word">continent</span><span class="key-word">empire</span><span class="key-word">government</span><span class="key-word">jewellery</span>
+        <span class="key-word">powerful</span><span class="key-word">reach</span><span class="key-word">sultan</span><span class="key-word">trade</span>
+        <span class="key-word">the Bosphorus</span><span class="key-word">Byzantium</span><span class="key-word">Constantinople</span><span class="key-word">the Ottoman Empire</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACTIVITY 1 ===== -->
+  <section class="tab-content" id="tab-words">
+    <h2 class="section-title">📇 Word Cards<span class="title-sub">بطاقاتُ الكلمات</span></h2>
+    <div class="activity-banner">
+      <div class="en">🔤 Activity 1: Listen and repeat.</div>
+      <div class="ar">استمعْ إلى الكلماتِ وردِّدْها. اضغطْ زرَّ 🔊 لسماعِ نطقِ الكلمة، واضغطِ البطاقةَ نفسَها لقلبِها ورؤيةِ المعنى.</div>
+    </div>
+    <div class="gplayer">
+      <b>🎧 CD 2 · Audio 14 · The new words</b>
+      <audio controls preload="metadata" src="../audio/grade9/unit5/track14.mp3" title="Audio 14" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio>
+    </div>
+    <div class="cards-instruction">👆 اضغطِ البطاقةَ لترى المعنى · 🔊 اضغطِ الزرَّ لسماعِ النطق</div>
+    <div class="word-cards-grid" id="wordCardsGrid"></div>
+    <div class="wf-box">
+      <h3>🧩 Word formation</h3>
+      <p class="ar">نُكوِّنُ كلماتٍ جديدةً بإضافةِ نهايات.</p>
+      <div class="wf-row"><span class="wf-chip">collect (v)</span>+ -ion →<span class="wf-chip new">collection (n)</span><span class="tag">يجمعُ ← مجموعة</span></div>
+      <div class="wf-row"><span class="wf-chip">east (n/adj/adv)</span>+ -ern →<span class="wf-chip new">eastern (adj)</span><span class="tag">الشرق ← شرقيّ</span></div>
+      <div class="wf-row"><span class="wf-chip">rule (v)</span>+ -r →<span class="wf-chip new">ruler (n)</span><span class="tag">يحكمُ ← حاكم</span></div>
+    </div>
+  </section>
+
+  <!-- ===== ACTIVITY 2 ===== -->
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">✏️ Add the new words<span class="title-sub">أضِفِ الكلماتِ الجديدة</span></h2>
+    <div class="activity-banner">
+      <div class="en">✏️ Activity 2: Listen. Add new words from activity 1. Make any changes needed.</div>
+      <div class="ar">استمعْ إلى الحوارات، ثمَّ اخترْ كلمةً من البنكِ واضغطِ الفراغَ المناسب. انتبهْ: قد تحتاجُ الكلمةُ إلى تغيير، كالجمعِ أو الحرفِ الكبير.</div>
+    </div>
+    <div class="gplayer">
+      <b>🎧 CD 2 · Audio 15 · Five short conversations</b>
+      <audio controls preload="metadata" src="../audio/grade9/unit5/track15.mp3" title="Audio 15" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio>
+    </div>
+    <div class="bank" id="bank1">
+      <h4>🏦 بنكُ الكلمات — كلُّ كلمةٍ تُستعمَلُ مرّةً واحدة</h4>
+      <div class="bank-words">
+        <button class="bw" type="button" data-w="collection">collection</button>
+        <button class="bw" type="button" data-w="continent">continent</button>
+        <button class="bw" type="button" data-w="eastern">eastern</button>
+        <button class="bw" type="button" data-w="empire">empire</button>
+        <button class="bw" type="button" data-w="government">government</button>
+        <button class="bw" type="button" data-w="jewellery">jewellery</button>
+        <button class="bw" type="button" data-w="powerful">powerful</button>
+        <button class="bw" type="button" data-w="reach">reach</button>
+        <button class="bw" type="button" data-w="rule">rule</button>
+        <button class="bw" type="button" data-w="sultan">sultan</button>
+        <button class="bw" type="button" data-w="trade">trade</button>
+      </div>
+    </div>
+    <div class="sent-list">
+      <div class="sent"><span class="n">1</span><div class="body">
+        <div class="ab"><b>A</b> I have to <span class="blank" data-bank="bank1" data-a="reach">?</span> the airport by 3:30, and it's on the other side of town.</div>
+        <div class="ab"><b>B</b> You can go through the city centre, but it'll be quicker to go round.</div></div></div>
+      <div class="sent"><span class="n">2</span><div class="body">
+        <div class="ab"><b>A</b> What did people call the rulers of the Ottoman <span class="blank" data-bank="bank1" data-a="empire" data-show="Empire">?</span>?</div>
+        <div class="ab"><b>B</b> They used the word <span class="blank" data-bank="bank1" data-a="sultan">?</span>.</div></div></div>
+      <div class="sent"><span class="n">3</span><div class="body">
+        <div class="ab"><b>A</b> Istanbul was the centre of <span class="blank" data-bank="bank1" data-a="government">?</span> for the Ottomans.</div>
+        <div class="ab"><b>B</b> What parts of the world did they <span class="blank" data-bank="bank1" data-a="rule">?</span>?</div>
+        <div class="ab"><b>A</b> Large parts of three <span class="blank" data-bank="bank1" data-a="continent" data-show="continents">?</span> – Asia, Africa and Europe.</div></div></div>
+      <div class="sent"><span class="n">4</span><div class="body">
+        <div class="ab"><b>A</b> Ancient Byzantium was very rich and <span class="blank" data-bank="bank1" data-a="powerful">?</span>, wasn't it? But why?</div>
+        <div class="ab"><b>B</b> Because it stood on very important <span class="blank" data-bank="bank1" data-a="trade">?</span> routes between East and West.</div>
+        <div class="ab"><b>A</b> And of course, it was also the capital of Rome's <span class="blank" data-bank="bank1" data-a="eastern">?</span> empire.</div></div></div>
+      <div class="sent"><span class="n">5</span><div class="body">
+        <div class="ab"><b>A</b> The museum has a fantastic <span class="blank" data-bank="bank1" data-a="collection">?</span> of ancient things that they've found.</div>
+        <div class="ab"><b>B</b> Including some beautiful <span class="blank" data-bank="bank1" data-a="jewellery">?</span> that Roman women used to wear.</div></div></div>
+    </div>
+    <div class="res-line" id="bank1Res"></div>
+    <div class="tipbox">💡 <b>the Ottoman Empire</b> اسمُ دولةٍ بعينِها، فنكتبُ <b>Empire</b> بحرفٍ كبير. وبعدَ <b>three</b> يأتي الجمع: <b>continents</b>.</div>
+  </section>
+
+  <!-- ===== ACTIVITY 3 ===== -->
+  <section class="tab-content" id="tab-check">
+    <h2 class="section-title">💬 Listen and check<span class="title-sub">استمعْ وتحقَّقْ، ثمَّ تدرَّبْ مع زميلِك</span></h2>
+    <div class="activity-banner">
+      <div class="en">💬 Activity 3: Listen and check. Then practise in pairs.</div>
+      <div class="ar">استمعْ مرّةً أخرى وتحقَّقْ من إجاباتِك. ثمَّ تدرَّبْ مع زميلِك: أحدُكما يقرأُ دورَ <b>A</b> والآخرُ دورَ <b>B</b>، ثمَّ تتبادلانِ الدورَين.</div>
+    </div>
+    <div class="gplayer">
+      <b>🎧 CD 2 · Audio 15 · Five short conversations</b>
+      <audio controls preload="metadata" src="../audio/grade9/unit5/track15.mp3" title="Audio 15" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio>
+    </div>
+    <details class="drop-q">
+      <summary>✅ The conversations with the answers <span class="ar">اضغطْ لإظهارِ الحواراتِ كاملة</span></summary>
+      <div class="drop-body" id="pairList"></div>
+    </details>
+  </section>
+
+  <!-- ===== ACTIVITY 4 ===== -->
+  <section class="tab-content" id="tab-tour">
+    <h2 class="section-title">🚁 Listen and do the tasks<span class="title-sub">استمعْ إلى الجولةِ ونفِّذِ المهمّتَين</span></h2>
+    <div class="activity-banner">
+      <div class="en">🚁 Activity 4: Listen and do the tasks.</div>
+      <div class="ar">هذا نشاطُ استماعٍ فقط — لا نصَّ مكتوبًا. ركِّزْ على ما تسمعُه من المرشد.</div>
+    </div>
+
+    <h3 class="part-h">Part 1 · Find and number the places in the photo.<span class="ar">الجزءُ الأوّل: جِدِ الأماكنَ ورقِّمْها في الصورة.</span></h3>
+    <div class="gplayer">
+      <b>🎧 CD 2 · Audio 16 · Part 1 — flying over Istanbul</b>
+      <audio controls preload="metadata" src="../audio/grade9/unit5/track16.mp3" title="Audio 16" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio>
+    </div>
+    <div class="num-pick" id="numPick">
+      <button class="np" type="button" data-n="1">1 · the Blue Mosque</button>
+      <button class="np" type="button" data-n="2">2 · the Bosphorus</button>
+      <button class="np" type="button" data-n="3">3 · Aya Sofya</button>
+      <button class="np" type="button" data-n="4">4 · the Topkapi Palace</button>
+    </div>
+    <p class="mini-hint">اخترْ رقمًا من الأعلى، ثمَّ اضغطِ الدائرةَ فوقَ المكانِ الصحيحِ في الصورة.</p>
+    <div class="panorama">
+      <svg viewBox="0 0 640 230" role="img" aria-label="A view of old Istanbul from the air with four places marked A to D, from left to right.">
+        <defs><linearGradient id="skyP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9c2"/><stop offset="1" stop-color="#fff1e6"/></linearGradient></defs>
+        <rect width="640" height="230" fill="url(#skyP)"/>
+        <path d="M0 150 H470 C500 150 520 160 540 175 L640 175 V230 H0Z" fill="#f2d7c2"/>
+        <path d="M470 150 C520 140 560 120 640 112 V175 L540 175 C520 160 500 150 470 150Z" fill="#b9a6d6"/>
+        <path d="M600 112 C610 100 625 100 640 98 V112Z" fill="#d9c3ad"/>
+        <g stroke="#e3d6f2" stroke-width="2" fill="none"><path d="M520 150 q10 -5 20 0 t20 0"/><path d="M570 135 q10 -5 20 0 t20 0"/></g>
+        <!-- A: Topkapi Palace (left, long low palace with gardens) -->
+        <g fill="#8d75a8"><rect x="22" y="120" width="120" height="30" rx="3"/><rect x="40" y="104" width="22" height="18"/><rect x="96" y="100" width="26" height="22"/><path d="M96 100 L109 86 L122 100Z"/></g>
+        <g fill="#9cb38a" opacity=".8"><circle cx="18" cy="148" r="9"/><circle cx="150" cy="146" r="8"/></g>
+        <!-- B: Aya Sofya (one big dome, four minarets) -->
+        <g fill="#E85D75"><rect x="190" y="112" width="96" height="38" rx="3"/><path d="M202 114 Q238 60 274 114Z"/>
+          <rect x="182" y="78" width="6" height="72"/><path d="M180 80 L185 62 L190 80Z"/><rect x="288" y="78" width="6" height="72"/><path d="M286 80 L291 62 L296 80Z"/>
+          <rect x="196" y="92" width="5" height="22"/><rect x="275" y="92" width="5" height="22"/></g>
+        <!-- C: the Blue Mosque (nearest, six minarets) -->
+        <g fill="#5c4378"><rect x="328" y="118" width="120" height="44" rx="3"/><path d="M346 120 Q388 60 430 120Z"/><path d="M334 122 Q348 104 362 122Z"/><path d="M414 122 Q428 104 442 122Z"/>
+          <g><rect x="318" y="72" width="5" height="90"/><path d="M316 74 L320.5 52 L325 74Z"/>
+             <rect x="453" y="72" width="5" height="90"/><path d="M451 74 L455.5 52 L460 74Z"/>
+             <rect x="334" y="84" width="5" height="40"/><path d="M332 86 L336.5 68 L341 86Z"/>
+             <rect x="437" y="84" width="5" height="40"/><path d="M435 86 L439.5 68 L444 86Z"/>
+             <rect x="352" y="92" width="4" height="30"/><path d="M350 94 L354 80 L358 94Z"/>
+             <rect x="420" y="92" width="4" height="30"/><path d="M418 94 L422 80 L426 94Z"/></g></g>
+      </svg>
+      <button class="spot" type="button" data-s="A" style="left:13%;top:20%">A</button>
+      <button class="spot" type="button" data-s="B" style="left:37%;top:10%">B</button>
+      <button class="spot" type="button" data-s="C" style="left:60%;top:8%">C</button>
+      <button class="spot" type="button" data-s="D" style="left:88%;top:62%">D</button>
+    </div>
+    <div class="res-line" id="spotRes"></div>
+
+    <h3 class="part-h">Part 2 · Complete the history notes. Add the dates.<span class="ar">الجزءُ الثاني: أكمِلِ الملاحظاتِ التاريخيّةَ بالتواريخ.</span></h3>
+    <div class="gplayer">
+      <b>🎧 CD 2 · Audio 17 · Part 2 — at the Blue Mosque</b>
+      <audio controls preload="metadata" src="../audio/grade9/unit5/track17.mp3" title="Audio 17" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio>
+    </div>
+    <div class="bank" id="bankDates">
+      <h4>📅 بنكُ التواريخ — اخترْ تاريخًا ثمَّ اضغطِ الفراغ</h4>
+      <div class="bank-words">
+        <button class="bw" type="button" data-w="1453">1453</button>
+        <button class="bw" type="button" data-w="1923">1923</button>
+        <button class="bw" type="button" data-w="324">324</button>
+        <button class="bw" type="button" data-w="1616">1616</button>
+        <button class="bw" type="button" data-w="2,700">2,700</button>
+        <button class="bw" type="button" data-w="573">573</button>
+        <button class="bw" type="button" data-w="1465">1465</button>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl"><span class="dot">🏺</span><div>Byzos began building Byzantium about <span class="blank" data-bank="bankDates" data-a="2,700">?</span> years ago.</div></div>
+      <div class="tl"><span class="dot">🏛️</span><div>Byzantium became Constantinople – capital of Rome's eastern empire in <span class="blank" data-bank="bankDates" data-a="324">?</span>.</div></div>
+      <div class="tl"><span class="dot">⛪</span><div>Aya Sofya opened its doors to the people in <span class="blank" data-bank="bankDates" data-a="573">?</span>.</div></div>
+      <div class="tl"><span class="dot">⚔️</span><div>The Ottomans attacked Constantinople and took it in <span class="blank" data-bank="bankDates" data-a="1453">?</span>.</div></div>
+      <div class="tl"><span class="dot">🏰</span><div>The sultan and his government moved into the Topkapi Palace in <span class="blank" data-bank="bankDates" data-a="1465">?</span>.</div></div>
+      <div class="tl"><span class="dot">🕌</span><div>The Ottomans finished building the Blue Mosque in <span class="blank" data-bank="bankDates" data-a="1616">?</span>.</div></div>
+      <div class="tl"><span class="dot">🇹🇷</span><div>A new government set up the modern country of Turkey in <span class="blank" data-bank="bankDates" data-a="1923">?</span>.</div></div>
+    </div>
+    <div class="res-line" id="bankDatesRes"></div>
+  </section>
+
+  <!-- ===== QUIZ ===== -->
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>🚁 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «طيّارِ التاريخ».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">What did people call the rulers of the Ottoman Empire?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>kings</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>sultans</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>presidents</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>guides</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">Istanbul stands on two ______ : Europe and Asia.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>empires</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>collections</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>continents</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>governments</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">Why was ancient Byzantium rich and powerful?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>Because it stood on important trade routes between East and West.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>Because it had a lot of jewellery.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Because it was the capital of modern Turkey.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>Because it was far from the sea.</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">In which year did the Ottomans take Constantinople?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>324</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>1616</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>1453</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>1923</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-question">
+        <div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">Which is the right order of the city's names?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>Istanbul → Byzantium → Constantinople</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>Byzantium → Constantinople → Istanbul</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Constantinople → Byzantium → Istanbul</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>Byzantium → Istanbul → Constantinople</button>
+        </div><div class="quiz-feedback"></div>
+      </div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🚁<small>HISTORY FLYER</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff1e6">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+var BKEY = 'g9u5p4_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['🚁','🕌','⛪','🏰','🌊','👑','💍','✨'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+function playText(btn,text){ if(btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; } speak(text,btn); }
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','🚁','⭐','👑'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#FF7A45','#E85D75','#7A5C99','#ffd2bd','#3D2645'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* word flashcards */
+var WORDS=[
+  {en:'continent',  emoji:'🌍', ar:'قارّة',                     syn:'Asia, Africa and Europe<br>are continents.'},
+  {en:'empire',     emoji:'🏛️', ar:'إمبراطوريّة',               syn:'Rome\'s eastern empire<br>ruler: emperor <i>(إمبراطور)</i>'},
+  {en:'government', emoji:'🏢', ar:'حكومة',                     syn:'the centre of government'},
+  {en:'jewellery',  emoji:'💍', ar:'مجوهراتٌ · حُليّ',           syn:'beautiful jewellery<br><i>(اسمٌ غيرُ معدود)</i>'},
+  {en:'powerful',   emoji:'💪', ar:'قويٌّ · ذو نفوذ',            syn:'a rich and powerful city<br>ant: weak <i>(ضعيف)</i>'},
+  {en:'reach',      emoji:'🎯', ar:'يصلُ إلى · يمتدُّ إلى',      syn:'reach the airport by 3:30<br>syn: get to'},
+  {en:'sultan',     emoji:'👑', ar:'سلطان',                     syn:'the Ottoman rulers'},
+  {en:'trade',      emoji:'⚖️', ar:'تجارة · يُتاجِر',            syn:'trade routes between<br>East and West'},
+  {en:'the Bosphorus', emoji:'🌊', ar:'مضيقُ البوسفور',          syn:'between Europe and Asia'},
+  {en:'Byzantium',  emoji:'🏺', ar:'بيزنطة',                    syn:'the first name of the city'},
+  {en:'Constantinople', emoji:'🏛️', ar:'القسطنطينيّة',           syn:'the second name of the city'},
+  {en:'the Ottoman Empire', emoji:'🌙', ar:'الدولةُ العثمانيّة', syn:'its sultans ruled from Istanbul'}
+];
+(function(){
+  var grid=document.getElementById('wordCardsGrid');
+  WORDS.forEach(function(w){
+    var card=document.createElement('div'); card.className='word-card';
+    card.innerHTML='<button class="speaker-icon" type="button" aria-label="speak">🔊</button><span class="flip-icon">↻</span>'+
+      '<div class="card-front"><div class="word-emoji">'+w.emoji+'</div><div class="word-en">'+w.en+'</div><div class="word-tap-hint">اضغطْ لرؤيةِ المعنى 👆</div></div>'+
+      '<div class="card-back"><div class="word-ar">'+w.ar+'</div><div class="word-syn">'+w.syn+'</div></div>';
+    card.addEventListener('click',function(){ card.classList.toggle('flipped'); });
+    card.querySelector('.speaker-icon').addEventListener('click',function(e){ e.stopPropagation(); speak(w.en,this); });
+    grid.appendChild(card);
+  });
+})();
+
+/* shared word banks (each word used once) */
+function makeBank(id, doneMsg){
+  var box=document.getElementById(id), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){
+    w.addEventListener('click',function(){
+      if(w.classList.contains('used')) return;
+      if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+      box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')});
+      w.classList.add('sel'); sel=w;
+    });
+  });
+  var blanks=document.querySelectorAll('.blank[data-bank="'+id+'"]'), line=document.getElementById(id+'Res');
+  blanks.forEach(function(bl){
+    bl.addEventListener('click',function(){
+      if(bl.classList.contains('ok')) return;
+      if(!sel || sel.dataset.w!==bl.dataset.a){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+      bl.textContent=bl.dataset.show||sel.dataset.w; bl.classList.add('ok');
+      sel.classList.add('used'); sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+      var ok=document.querySelectorAll('.blank[data-bank="'+id+'"].ok').length;
+      line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+      if(ok===blanks.length){ line.textContent=doneMsg; confetti(); }
+    });
+  });
+}
+makeBank('bank1','🏆 أحسنتَ! أكملتَ الحواراتِ الخمسةَ كلَّها.');
+makeBank('bankDates','🏆 رائع! رتَّبتَ تاريخَ إسطنبولَ كاملًا.');
+
+/* Activity 3 — the five conversations for checking and pair practice */
+var PAIRS=[
+  ["A","I have to <em>reach</em> the airport by 3:30, and it's on the other side of town."],["B","You can go through the city centre, but it'll be quicker to go round."],null,
+  ["A","What did people call the rulers of the Ottoman <em>Empire</em>?"],["B","They used the word <em>sultan</em>."],null,
+  ["A","Istanbul was the centre of <em>government</em> for the Ottomans."],["B","What parts of the world did they <em>rule</em>?"],["A","Large parts of three <em>continents</em> – Asia, Africa and Europe."],null,
+  ["A","Ancient Byzantium was very rich and <em>powerful</em>, wasn't it? But why?"],["B","Because it stood on very important <em>trade</em> routes between East and West."],["A","And of course, it was also the capital of Rome's <em>eastern</em> empire."],null,
+  ["A","The museum has a fantastic <em>collection</em> of ancient things that they've found."],["B","Including some beautiful <em>jewellery</em> that Roman women used to wear."],null
+];
+(function(){
+  var box=document.getElementById('pairList'), cur=[], n=0;
+  PAIRS.forEach(function(l){
+    if(l){ cur.push(l); return; }
+    n++; var lines=cur; cur=[];
+    var d=document.createElement('div'); d.className='pair';
+    var plain=lines.map(function(x){ return x[1].replace(/<[^>]+>/g,''); }).join(' ... ');
+    d.innerHTML='<div class="pair-top"><span class="no">'+n+'</span><button class="say-btn" type="button">🔊 Listen</button></div>'+
+      lines.map(function(x){ return '<p><b>'+x[0]+'</b>'+x[1]+'</p>'; }).join('');
+    d.querySelector('.say-btn').addEventListener('click',function(){ playText(this,plain); });
+    box.appendChild(d);
+  });
+})();
+
+/* Activity 4, part 1 — number the places (answers from left to right: 4, 3, 1, 2) */
+(function(){
+  var ANS={A:'4',B:'3',C:'1',D:'2'}, sel=null, done=0;
+  var picks=document.querySelectorAll('#numPick .np');
+  picks.forEach(function(p){
+    p.addEventListener('click',function(){
+      if(p.classList.contains('used')) return;
+      picks.forEach(function(x){x.classList.remove('sel')});
+      if(sel===p){ sel=null; return; } p.classList.add('sel'); sel=p;
+    });
+  });
+  document.querySelectorAll('.spot').forEach(function(s){
+    s.addEventListener('click',function(){
+      if(s.classList.contains('ok')) return;
+      if(!sel || ANS[s.dataset.s]!==sel.dataset.n){ s.classList.add('no'); setTimeout(function(){s.classList.remove('no')},450); return; }
+      s.textContent=sel.dataset.n; s.classList.add('ok'); sel.classList.add('used'); sel.classList.remove('sel'); sel=null; done++; sparkleAt(s);
+      var line=document.getElementById('spotRes'); line.className='res-line show good'; line.textContent='✅ '+done+' / 4';
+      if(done===4){ line.innerHTML='🏆 أحسنت! من اليسارِ إلى اليمين: <span dir="ltr" style="unicode-bidi:isolate">4 · 3 · 1 · 2</span>'; confetti(); }
+    });
+  });
+})();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='History flyer!'; msg='رائع! حلَّقتَ فوقَ ألفَينِ وسبعِمئةِ عامٍ من التاريخ 🚁🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجِعِ الكلماتِ والتواريخَ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='🚁 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
