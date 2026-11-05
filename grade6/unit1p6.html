@@ -532,7 +532,7 @@ footer .small{margin-top:8px; color:#ce93d8; font-weight:700; font-size:.9rem;}
 
     <div class="audio-card">
       <div class="audio-label"><span class="ear">🎧</span> Audio 5 — اضغط زر التشغيل واستمع</div>
-      <div class="gdp" data-id="1b8kSG9R-OlSmxOSYdCDn9IFIgl07eQPD" data-label="Audio 5">
+      <div class="gdp" data-src="../audio/grade6/unit1/track05.mp3" data-label="Audio 5">
         <button class="gdp-play" type="button" aria-label="Play">▶️</button>
         <input class="gdp-seek" type="range" min="0" max="100" value="0" step="0.1">
         <span class="gdp-time">0:00 / 0:00</span>
@@ -592,7 +592,7 @@ footer .small{margin-top:8px; color:#ce93d8; font-weight:700; font-size:.9rem;}
 
     <div class="audio-card">
       <div class="audio-label"><span class="ear">🎧</span> Audio 6 — اضغط زر التشغيل واستمع</div>
-      <div class="gdp" data-id="1639Cyf_u6g5uH0LzWrjJtgv7STn7_DKw" data-label="Audio 6">
+      <div class="gdp" data-src="../audio/grade6/unit1/track06.mp3" data-label="Audio 6">
         <button class="gdp-play" type="button" aria-label="Play">▶️</button>
         <input class="gdp-seek" type="range" min="0" max="100" value="0" step="0.1">
         <span class="gdp-time">0:00 / 0:00</span>
@@ -615,7 +615,7 @@ footer .small{margin-top:8px; color:#ce93d8; font-weight:700; font-size:.9rem;}
 
     <div class="audio-card">
       <div class="audio-label"><span class="ear">🎧</span> Audio 7 — اضغط زر التشغيل واستمع ثم ردد</div>
-      <div class="gdp" data-id="1qB-sQ8fUFHip-2ufR8ABPsMjm0RfFwcQ" data-label="Audio 7">
+      <div class="gdp" data-src="../audio/grade6/unit1/track07.mp3" data-label="Audio 7">
         <button class="gdp-play" type="button" aria-label="Play">▶️</button>
         <input class="gdp-seek" type="range" min="0" max="100" value="0" step="0.1">
         <span class="gdp-time">0:00 / 0:00</span>
@@ -903,20 +903,19 @@ function reveal(btn){
 })();
 </script>
 <script>
-/* ===== Compact Drive audio player, round 2 (2026-10, this lesson only) =====
-   Same mechanism as before: hidden <audio> streaming the Drive file via its
-   direct-download URL, driven by our own button+slider+time bar (no native
-   <audio controls>, no Drive iframe chrome). Falls back to the proven 220px
-   Drive /preview iframe if the direct stream fails. */
+/* ===== Compact audio player (this lesson only) =====
+   A hidden <audio> playing the file hosted with the lessons, driven by our own
+   button + slider + time bar. If it cannot play, the bar is swapped for the
+   browser's own audio player on the same file. */
 (function(){
   document.querySelectorAll('.gdp').forEach(function(box){
-    var id = box.dataset.id;
+    var src = box.dataset.src;
     var playBtn = box.querySelector('.gdp-play');
     var seek = box.querySelector('.gdp-seek');
     var timeEl = box.querySelector('.gdp-time');
     var audio = new Audio();
     audio.preload = 'metadata';
-    audio.src = 'https://drive.google.com/uc?export=download&id=' + id;
+    audio.src = src;
     var seeking = false, failed = false;
 
     function fmt(s){
@@ -933,14 +932,13 @@ function reveal(btn){
       if(failed) return;
       failed = true;
       try { audio.pause(); } catch(e){}
-      var iframe = document.createElement('iframe');
-      iframe.src = 'https://drive.google.com/file/d/' + id + '/preview';
-      iframe.width = '100%';
-      iframe.height = '220';
-      iframe.setAttribute('allow', 'autoplay');
-      iframe.style.cssText = 'max-width:480px;border:0;border-radius:8px;display:block;margin:0 auto;';
-      iframe.title = box.dataset.label || 'Audio';
-      box.replaceWith(iframe);
+      var native = document.createElement('audio');
+      native.controls = true;
+      native.preload = 'metadata';
+      native.src = src;
+      native.title = box.dataset.label || 'Audio';
+      native.style.cssText = 'width:100%;max-width:480px;display:block;margin:0 auto;';
+      box.replaceWith(native);
     }
 
     playBtn.addEventListener('click', function(){
