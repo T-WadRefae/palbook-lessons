@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A day in Istanbul - Grade 9 Unit 5 Period 8 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 5 palette : Bosphorus sunset ===== */
+  :root{
+    --sunset:#FF7A45; --sunset-d:#d4572a;
+    --rose:#E85D75;   --rose-d:#c03d57;
+    --lilac:#7A5C99;  --lilac-d:#5c4378;
+    --cream:#FFF1E6;  --cream-d:#f6dcc8;
+    --aub:#3D2645;    --aub-d:#2a1830;
+    --ink:#2a1d30; --muted:#6e5f74; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a city map: faint streets and blocks */
+    background-image:
+      linear-gradient(rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(rgba(232,93,117,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,93,117,.045) 1px, transparent 1px);
+    background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : THE SPOTLIGHT THAT PICKS ONE (a → the) ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:14px 12px 26px; background:linear-gradient(180deg,#160c1b 0%, var(--aub-d) 30%, var(--aub) 60%, #5c3a5e 85%, var(--rose-d) 100%); }
+  .header-inner{ max-width:900px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ display:inline-flex; align-items:center; gap:9px; background:var(--cream); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:6px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--cream-d), 0 8px 18px rgba(0,0,0,.3); }
+  .stage{ position:relative; max-width:720px; margin:0 auto; direction:ltr; }
+  .stage svg{ display:block; width:100%; height:auto; }
+  .beam{ transform-origin:360px 0px; animation:sweep 4.2s ease-in-out forwards; }
+  @keyframes sweep{ 0%{ transform:rotate(38deg);} 25%{ transform:rotate(-30deg);} 50%{ transform:rotate(14deg);} 72%{ transform:rotate(-12deg);} 100%{ transform:rotate(0deg);} }
+  .lamp-glow{ animation:glow 1.4s ease-in-out infinite alternate; }
+  @keyframes glow{ from{ opacity:.6;} to{ opacity:1;} }
+  .tag-a{ animation:fade-out .5s 4.2s forwards; } .tag-the{ opacity:0; animation:fade-in .6s 4.4s forwards; }
+  .lit{ animation:light-up .8s 4.1s forwards; }
+  @keyframes fade-out{ to{ opacity:0; } } @keyframes fade-in{ to{ opacity:1; } }
+  @keyframes light-up{ to{ fill:#ffe1cf; } }
+  .rule-line{ font-family:'Fredoka',sans-serif; font-size:clamp(17px,3.6vw,24px); color:#fff; direction:ltr; margin-top:6px; }
+  .rule-line .a{ color:#cdb9e6; } .rule-line .t{ color:#ffb48f; font-weight:700; }
+  .title-plate{ display:inline-block; margin-top:10px; border:2px solid #ffb48f; border-radius:12px; padding:5px 20px; direction:ltr; background:rgba(42,24,48,.6); }
+  .title-plate small{ display:block; font-family:'Fredoka',sans-serif; font-size:11px; letter-spacing:.22em; color:#ffb48f; }
+  .title-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(22px,5vw,32px); color:#fff; line-height:1.15; }
+  .lesson-subtitle{ font-size:clamp(14px,3vw,18px); color:#fff; font-weight:800; margin-top:12px; }
+  .header-hint{ font-size:12.5px; color:#f3e6f0; font-weight:700; margin-top:3px; }
+  @media (prefers-reduced-motion:reduce){ .beam,.lamp-glow,.tag-a,.tag-the,.lit{ animation:none; } .tag-a{ opacity:0; } .tag-the{ opacity:1; } }
+
+  /* ===== TABS : STREET SIGNS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:
+      repeating-linear-gradient(90deg, rgba(255,241,230,.55) 0 22px, transparent 22px 40px) left bottom 9px / 100% 3px no-repeat,
+      linear-gradient(#55405e, var(--aub));
+    border-radius:16px; padding:22px 12px 22px; box-shadow:0 10px 24px rgba(42,24,48,.35);
+    display:flex; gap:8px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    position:relative; background:transparent; border:none; cursor:pointer; padding:0;
+    display:flex; flex-direction:column; align-items:center; flex:1 0 auto; min-width:86px; max-width:118px;
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ transform:translateY(-3px); }
+  .sign{
+    width:100%; background:var(--lilac); color:#fff; border:2px solid #fff; border-radius:8px;
+    box-shadow:0 0 0 2px var(--lilac-d), 0 5px 8px rgba(0,0,0,.35);
+    padding:7px 6px 6px; min-height:54px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    transition:all .3s ease;
+  }
+  .tab-icon{ font-size:20px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12px; line-height:1.1; text-align:center; }
+  .post{ width:6px; height:14px; background:linear-gradient(90deg,#9a8aa6,#e9e0ee,#9a8aa6); border-radius:0 0 2px 2px; }
+  .tab-btn.active{ transform:translateY(-2px); }
+  .tab-btn.active .sign{ background:var(--sunset); color:var(--aub-d); box-shadow:0 0 0 2px var(--sunset-d), 0 0 18px rgba(255,122,69,.65); }
+  .tab-btn.active .tab-lbl{ font-weight:700; }
+  .tab-btn.active::before{
+    content:'📍'; position:absolute; top:-21px; left:50%; transform:translateX(-50%); font-size:19px;
+    animation:pin-drop-tab .55s cubic-bezier(.3,1.6,.5,1); filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));
+  }
+  @keyframes pin-drop-tab{ from{ transform:translate(-50%,-18px); opacity:0; } to{ transform:translate(-50%,0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 20px rgba(61,38,69,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 15px rgba(61,38,69,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(232,93,117,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #e6d2c6;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fffaf5,#ffeadc); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a3a19; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(212,87,42,.45);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(255,122,69,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(122,92,153,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(122,92,153,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #e6d2c6; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff3e9,#ffe2cf); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a3414; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #e6d2c6;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fffaf6; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f1e0d5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #eedfd6; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff5ec,#ffe6d6); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a3a19; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(42,24,48,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(255,122,69,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6, 0 12px 28px rgba(61,38,69,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(61,38,69,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,160,100,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffc29e; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(122,92,153,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(232,93,117,.15); }
+  .find-word.found{ background:rgba(232,93,117,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #e6d2c6; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #eedfd6; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'📍'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eedfd6; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fffaf6; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffd2bd; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(232,93,117,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show{ animation:none !important; }
+  }
+
+  /* ===== Period 8 widgets ===== */
+  .ex-grid{ display:grid; gap:9px; margin-bottom:16px; }
+  .ex{ background:#fff; border:2px solid #eedfd6; border-radius:13px; padding:10px 14px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:0 3px 0 #efdcd0; }
+  .ex .n{ background:var(--lilac); color:#fff; width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; }
+  .ex mark{ background:#e6dcf3; color:var(--lilac-d); border-radius:5px; padding:0 5px; font-weight:700; }
+  .ex mark.t{ background:#ffd2bd; color:#8a3a19; }
+  .tick{ background:#fffaf6; border:2px solid #f1e0d5; border-radius:14px; padding:12px 14px; margin-bottom:12px; direction:ltr; }
+  .tick .st{ font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.7; margin-bottom:9px; }
+  .gap{ display:inline-block; min-width:60px; text-align:center; border-bottom:3px dashed var(--lilac); color:var(--lilac-d); font-weight:700; }
+  .gap.filled{ border-bottom-style:solid; color:var(--ok-tx); border-color:var(--ok-bd); }
+  .tf-btns{ display:flex; gap:9px; flex-wrap:wrap; }
+  .tfb{ background:#fff; border:2px solid #eedfd6; border-radius:12px; padding:7px 16px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; }
+  .tfb.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .tfb.no{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); } .tfb:disabled{ cursor:default; }
+  .rule-wrap{ display:none; margin-top:20px; background:#fff; border:3px solid var(--sunset); border-radius:18px; padding:18px; box-shadow:0 6px 0 var(--sunset-d); }
+  .rule-wrap.show{ display:block; animation:fadeIn .5s; }
+  .rule-wrap h3{ font-family:'Fredoka',sans-serif; font-size:20px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:12px; }
+  .rule-wrap h3 .ar{ font-family:'Cairo',sans-serif; font-size:14px; color:var(--muted); }
+  .rule-table{ display:grid; grid-template-columns:1fr 1fr; gap:12px; direction:ltr; }
+  .rule-table .col{ border-radius:14px; padding:12px; font-family:'Fredoka',sans-serif; font-size:15px; line-height:2; }
+  .rule-table .col.c{ background:#f1ebf7; } .rule-table .col.u{ background:#fff0e6; }
+  .rule-table h4{ font-size:18px; margin-bottom:4px; } .rule-table h4 .ar{ display:block; font-family:'Cairo',sans-serif; font-size:12px; color:var(--muted); line-height:1.4; }
+  .rule-table .c b{ color:var(--lilac-d); } .rule-table .u b{ color:#c2410c; }
+  .rule-ar{ margin-top:12px; font-size:13.5px; font-weight:700; color:#43354a; } .rule-ar b, .header-hint b{ unicode-bidi:isolate; direction:ltr; }
+  @media (max-width:520px){ .rule-table{ grid-template-columns:1fr; } }
+  .shop-pick{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; direction:ltr; margin-bottom:12px; }
+  .shop{ background:#fff; border:2px solid var(--cream-d); border-radius:14px; padding:9px 16px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; color:var(--aub); box-shadow:0 4px 0 var(--cream-d); }
+  .shop.on{ background:var(--aub); color:#fff; box-shadow:0 4px 0 var(--aub-d); }
+  .choice{ display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; direction:ltr; margin-bottom:12px; font-family:'Fredoka',sans-serif; font-weight:600; color:var(--muted); }
+  .opt{ background:#fff; border:2px solid var(--sunset); color:#8a3a19; border-radius:20px; padding:6px 14px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; }
+  .opt.on{ background:var(--sunset); color:var(--aub-d); }
+  .convo{ background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:14px; box-shadow:0 6px 0 #e6d2c6; direction:ltr; display:grid; gap:9px; }
+  .cl{ display:flex; gap:9px; align-items:baseline; font-family:'Fredoka',sans-serif; font-size:16px; line-height:1.7; padding:8px 12px; border-radius:12px; max-width:92%; }
+  .cl b{ font-size:12.5px; border-radius:8px; padding:1px 8px; color:#fff; flex-shrink:0; }
+  .cl.you{ background:#fff0e6; } .cl.you b{ background:var(--sunset-d); }
+  .cl.shop{ background:#f4eefa; margin-left:auto; } .cl.shop b{ background:var(--lilac); }
+  .art-a{ background:#e6dcf3; color:var(--lilac-d); border-radius:5px; padding:0 4px; font-weight:700; }
+  .art-t{ background:#ffd2bd; color:#8a3a19; border-radius:5px; padding:0 4px; font-weight:700; }
+  .convo-tools{ display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+  .check-btn{ background:linear-gradient(135deg,var(--rose),var(--rose-d)); color:#fff; border:none; padding:10px 18px; border-radius:13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; box-shadow:0 4px 0 var(--aub); }
+  .check-btn.playing{ background:var(--aub); }
+  .mini-hint{ font-size:13px; color:var(--lilac-d); font-weight:700; }
+  .slot{ display:inline-flex; align-items:center; gap:4px; flex-wrap:wrap; vertical-align:middle; }
+  .slot .blank{ min-width:120px; }
+  .slot .final{ background:var(--ok-bg); color:var(--ok-tx); border-bottom:3px solid var(--ok-bd); border-radius:7px 7px 0 0; padding:2px 9px; font-weight:700; }
+  .pickpair{ display:inline-flex; gap:4px; }
+  .pk{ background:#fff; border:2px solid #eedfd6; border-radius:10px; padding:2px 10px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:700; font-size:14px; }
+  .pk.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .pk.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; } .pk:disabled{ cursor:default; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🔦</span> UNIT 5 · PERIOD 8 · GRADE 9 · PB PAGE 59</div>
+    <div class="stage">
+      <svg viewBox="0 0 720 300" role="img" aria-label="A spotlight sweeps over a row of buildings and stops on one mosque: a mosque becomes the Blue Mosque.">
+        <defs><linearGradient id="beamG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1d6" stop-opacity=".85"/><stop offset="1" stop-color="#ffd2a8" stop-opacity=".12"/></linearGradient></defs>
+        <!-- the lamp -->
+        <rect x="340" y="0" width="40" height="14" rx="4" fill="#5c4378"/><circle class="lamp-glow" cx="360" cy="14" r="9" fill="#fff1d6"/>
+        <!-- buildings in silhouette -->
+        <g fill="#2a1830">
+          <g><rect x="40" y="200" width="100" height="60"/><rect x="60" y="176" width="22" height="26"/><rect x="100" y="168" width="26" height="34"/><path d="M100 168 L113 150 L126 168Z"/></g>
+          <g><rect x="170" y="196" width="90" height="64"/><path d="M180 198 Q215 140 250 198Z"/><rect x="164" y="160" width="6" height="100"/><path d="M162 162 L167 140 L172 162Z"/><rect x="260" y="160" width="6" height="100"/><path d="M258 162 L263 140 L268 162Z"/></g>
+          <g class="lit"><rect x="300" y="200" width="120" height="60"/><path d="M318 202 Q360 130 402 202Z"/><path d="M304 204 Q318 184 332 204Z"/><path d="M388 204 Q402 184 416 204Z"/>
+             <rect x="286" y="150" width="6" height="110"/><path d="M284 152 L289 128 L294 152Z"/><rect x="428" y="150" width="6" height="110"/><path d="M426 152 L431 128 L436 152Z"/>
+             <rect x="304" y="172" width="5" height="34"/><path d="M302 174 L306.5 158 L311 174Z"/><rect x="411" y="172" width="5" height="34"/><path d="M409 174 L413.5 158 L418 174Z"/>
+             <rect x="324" y="182" width="4" height="22"/><rect x="392" y="182" width="4" height="22"/></g>
+          <g><rect x="460" y="190" width="70" height="70"/><path d="M460 190 L495 160 L530 190Z"/><rect x="488" y="140" width="14" height="22"/><path d="M488 140 L495 126 L502 140Z"/></g>
+          <g><rect x="560" y="160" width="40" height="100"/><path d="M556 160 L580 120 L604 160Z"/><rect x="610" y="210" width="80" height="50"/></g>
+        </g>
+        <rect x="0" y="258" width="720" height="42" fill="#1a0f20"/>
+        <!-- the beam -->
+        <path class="beam" d="M352 14 L250 270 L470 270 L368 14Z" fill="url(#beamG)" style="mix-blend-mode:screen"/>
+        <!-- labels -->
+        <g font-family="Fredoka" font-weight="600" text-anchor="middle" font-size="15" fill="#cdb9e6">
+          <text x="90" y="290">a palace</text><text x="215" y="290">a church</text><text x="495" y="290">a museum</text><text x="600" y="290">a tower</text>
+        </g>
+        <text class="tag-a" x="360" y="290" text-anchor="middle" font-family="Fredoka" font-weight="600" font-size="15" fill="#cdb9e6">a mosque</text>
+        <g class="tag-the"><rect x="282" y="270" width="156" height="28" rx="14" fill="#FF7A45"/><text x="360" y="290" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="17" fill="#2a1830">the Blue Mosque</text></g>
+      </svg>
+    </div>
+    <div class="rule-line"><span class="a">a mosque</span> → <span class="t">the Blue Mosque</span> · <span class="a">an empire</span> → <span class="t">the Ottoman Empire</span></div>
+    <div class="title-plate"><small>A, AN OR THE? · PERIOD 8</small><h1>A day in Istanbul</h1></div>
+    <div class="lesson-subtitle">يومٌ في إسطنبول — متى نقولُ a / an ومتى نقولُ the؟ 🔦</div>
+    <p class="header-hint">الضوءُ يختارُ شيئًا واحدًا بعينِه… وهكذا تفعلُ <b dir="ltr">the</b>.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="discover"><span class="sign"><span class="tab-icon">🔍</span><span class="tab-lbl">Discover</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="shops"><span class="sign"><span class="tab-icon">🛍️</span><span class="tab-lbl">In the Shops</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="history"><span class="sign"><span class="tab-icon">📜</span><span class="tab-lbl">a or the?</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#FF7A45;"><div class="aim-icon-wrap">🔍</div>
+        <h3 class="aim-title">Discover the rule</h3><p class="aim-desc">Find out when we use <i>a/an</i> and when we use <i>the</i>.
+          <span class="ar">اكتشافُ متى نستعملُ a / an ومتى نستعملُ the.</span></p></div>
+      <div class="aim-card" style="--ac:#E85D75;"><div class="aim-icon-wrap">🛍️</div>
+        <h3 class="aim-title">Shop talk</h3><p class="aim-desc">Have conversations in tourist shops: ask with <i>a/an</i>, choose with <i>the</i>.
+          <span class="ar">إجراءُ حواراتٍ في محلّاتِ السيّاح: نسألُ بـ a ونختارُ بـ the.</span></p></div>
+      <div class="aim-card" style="--ac:#7A5C99;"><div class="aim-icon-wrap">📜</div>
+        <h3 class="aim-title">Write about history</h3><p class="aim-desc">Complete statements about the Ottomans with <i>a</i> or <i>the</i> and capital letters.
+          <span class="ar">إكمالُ جُمَلٍ عن العثمانيّينَ بـ a أو the وبالحروفِ الكبيرة.</span></p></div>
+      <div class="aim-card" style="--ac:#d4572a;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Be polite in shops: <i>please</i> and <i>thank you</i>.
+          <span class="ar">نتحدّثُ بأدبٍ في المحلّات: من فضلك، وشكرًا.</span></p></div>
+    </div>
+  </section>
+
+  <section class="tab-content" id="tab-discover">
+    <h2 class="section-title">🔍 Read the examples<span class="title-sub">اقرأِ الأمثلةَ واكتشفِ القاعدة</span></h2>
+    <div class="activity-banner">
+      <div class="en">🔍 Activity 1: Read the examples. Tick (✔) the best way to complete the statements.</div>
+      <div class="ar">لاحظِ الكلمةَ الملوَّنةَ في كلِّ مثال، ثمَّ اخترْ <b>a) a / an</b> أو <b>b) the</b> لكلِّ عبارة.</div>
+    </div>
+    <div class="ex-grid">
+      <div class="ex"><span class="n">1</span>Istanbul is <mark>a</mark> city on two continents.</div>
+      <div class="ex"><span class="n">2</span>Trade routes passed through <mark class="t">the</mark> city.</div>
+      <div class="ex"><span class="n">3</span><mark class="t">The</mark> Topkapi Palace was <mark class="t">the</mark> centre of <mark class="t">the</mark> government.</div>
+      <div class="ex"><span class="n">4</span>Here, thousands worked to rule <mark class="t">the</mark> Ottoman Empire.</div>
+    </div>
+    <div id="tickList"></div>
+    <div class="res-line" id="tickRes"></div>
+    <div class="rule-wrap" id="ruleWrap">
+      <h3>📘 The rule <span class="ar">القاعدة</span></h3>
+      <div class="rule-table">
+        <div class="col c"><h4>a / an<span class="ar">شيءٌ جديدٌ أو غيرُ محدَّد</span></h4>
+          <p><b>a</b> city · <b>an</b> empire</p><p>I'd like <b>a</b> hat, please.</p><p><b>a</b> mosque · <b>a</b> palace</p></div>
+        <div class="col u"><h4>the<span class="ar">شيءٌ ذُكِرَ أو معروفٌ أو واحدٌ فقط</span></h4>
+          <p><b>the</b> city (again)</p><p>I'd like <b>the</b> large one.</p><p><b>the</b> Blue Mosque · <b>the</b> sun</p></div>
+      </div>
+      <p class="rule-ar">نستعملُ <b>an</b> قبلَ الصوتِ المتحرّك: <b>an</b> empire، <b>an</b> amazing mosque.</p>
+    </div>
+  </section>
+
+  <section class="tab-content" id="tab-shops">
+    <h2 class="section-title">🛍️ In the tourist shops<span class="title-sub">حواراتٌ في محلّاتِ السيّاح</span></h2>
+    <div class="activity-banner">
+      <div class="en">🛍️ Activities 2 and 3: Work in pairs. Have conversations in different tourist shops. Then practise them.</div>
+      <div class="ar">• ابدأْ بـ <b>a / an</b>. • تحدَّثْ عن الخيارَينِ بـ <b>a / an</b>. • قلِ الشيءَ الذي اخترتَه بـ <b>the</b>. اخترِ المحلَّ ثمَّ اخترْ ما تريد، فيتكوَّنُ الحوار.</div>
+    </div>
+    <div class="shop-pick" id="shopPick">
+      <button class="shop on" type="button" data-s="0">🧢 Hat shop</button>
+      <button class="shop" type="button" data-s="1">🗺️ Map shop</button>
+      <button class="shop" type="button" data-s="2">🚌 Tour desk</button>
+    </div>
+    <div class="choice" id="choice"></div>
+    <div class="convo" id="convo"></div>
+    <div class="convo-tools"><button class="check-btn" type="button" id="convoSay">🔊 Listen to the conversation</button><span class="mini-hint" id="convoCount"></span></div>
+  </section>
+
+  <section class="tab-content" id="tab-history">
+    <h2 class="section-title">📜 Complete the statements<span class="title-sub">أكمِلِ الجُمَلَ بـ a أو the</span></h2>
+    <div class="activity-banner">
+      <div class="en">📜 Activity 4: Complete the statements. Choose from each box and add <i>a</i> or <i>the</i>. Begin names with capital letters.</div>
+      <div class="ar">لكلِّ فراغ: اخترْ <b>a</b> أو <b>the</b>، ثمَّ اخترِ العبارةَ من الصندوق واضغطِ الفراغ. الأسماءُ تبدأُ بحرفٍ كبير: <b>blue mosque</b> ← <b>the Blue Mosque</b>.</div>
+    </div>
+    <div class="boxes">
+      <div class="bank" id="bankH">
+        <h4>📦 Box 1 + Box 2</h4>
+        <div class="bank-words">
+          <button class="bw" type="button" data-w="beautiful new mosque">beautiful new mosque</button>
+          <button class="bw" type="button" data-w="huge new empire">huge new empire</button>
+          <button class="bw" type="button" data-w="great new palace">great new palace</button>
+          <button class="bw" type="button" data-w="blue mosque">blue mosque</button>
+          <button class="bw" type="button" data-w="ottoman empire">ottoman empire</button>
+          <button class="bw" type="button" data-w="topkapi palace">topkapi palace</button>
+        </div>
+      </div>
+    </div>
+    <div class="sent-list" id="histList"></div>
+    <div class="res-line" id="histRes"></div>
+  </section>
+
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>🔦 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «الضوءِ الكاشف».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">You: "I'd like ___ hat, please."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>a</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>an</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>the</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">"Would you like a large hat or a smaller one?" — "Oh, I'd like ___ large one, please."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>a</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>an</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>the</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">Osman the First started ___ empire. It later grew much larger.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>a</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>an</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>the</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">There is only one, so we say ___ sun and ___ moon.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>a … a</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>the … the</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>a … the</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">Which sentence is correct?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>They built a Topkapi Palace for the sultan.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>They built a great new palace. It was the Topkapi Palace.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>They built the great new palace. It was a Topkapi Palace.</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🔦<small>SPOTLIGHT</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff1e6">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+var BKEY = 'g9u5p8_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['🔦','🕌','🏰','🧢','🗺️','🚌','✨','⭐'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+function playText(btn,text){ if(btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; } speak(text,btn); }
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','🔦','⭐','🕌'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#FF7A45','#E85D75','#7A5C99','#ffd2bd','#3D2645'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+
+/* Activity 1 — tick a) a/an or b) the (answers: a, b, b, b) */
+var TICK=[
+  ['When we start talking about something new, we put ___ before the noun (or <i>some</i> if the noun is plural).','a'],
+  ['When we refer to the same thing again, we put ___ before the noun.','b'],
+  ['We often use ___ before a place name: the name means that there is only one of that thing. Compare <i>a mosque / the Blue Mosque</i> and <i>a palace / the Topkapi Palace</i>.','b'],
+  ['We use ___ before a noun when there is only one of that thing. In the same way, we talk about <i>the Ottoman Empire / the sun</i> and <i>the moon</i>.','b']
+];
+(function(){
+  var box=document.getElementById('tickList'), done=0, right=0;
+  TICK.forEach(function(t,i){
+    var d=document.createElement('div'); d.className='tick';
+    d.innerHTML='<div class="st"><b>'+(i+1)+'</b> '+t[0].replace('___','<span class="gap">___</span>')+'</div><div class="tf-btns"><button class="tfb" type="button" data-v="a">a) a / an</button><button class="tfb" type="button" data-v="b">b) the</button></div>';
+    d.querySelectorAll('.tfb').forEach(function(b){
+      b.addEventListener('click',function(){
+        d.querySelectorAll('.tfb').forEach(function(x){ x.disabled=true; if(x.dataset.v===t[1]) x.classList.add('ok'); });
+        d.querySelector('.gap').textContent=t[1]==='a'?'a / an':'the'; d.querySelector('.gap').classList.add('filled');
+        if(b.dataset.v===t[1]){ right++; sparkleAt(b); } else b.classList.add('no');
+        done++;
+        if(done===TICK.length){ var line=document.getElementById('tickRes'); line.className='res-line show good';
+          line.textContent=(right===TICK.length?'🏆 ممتاز! ':'📘 نتيجتُك: ')+right+' / '+TICK.length+' — اقرأِ القاعدةَ في الأسفل.';
+          document.getElementById('ruleWrap').classList.add('show'); if(right===TICK.length) confetti(); }
+      });
+    });
+    box.appendChild(d);
+  });
+})();
+
+/* Activities 2 and 3 — conversations in tourist shops */
+var SHOPS=[
+  {start:"I'd like a hat, please.", ask:"Would you like a large hat or a smaller one?", opts:['large','smaller']},
+  {start:"Excuse me, but I'd like to buy a map of Istanbul.", ask:"Would you like an English-language map or an Arabic-language one?", opts:['English-language','Arabic-language']},
+  {start:"I'd like to do a bus tour of the city, please.", ask:"Would you like a two-hour tour or a four-hour one?", opts:['two-hour','four-hour']}
+];
+(function(){
+  var cur=0, opt=0, heard={};
+  function mark(s){ return s.replace(/\b(an?)\b(?![-\w])/g,'<span class="art-a">$1</span>').replace(/\b(the)\b/gi,'<span class="art-t">$1</span>'); }
+  function lines(){ var s=SHOPS[cur]; return [['You',s.start],['Assistant',s.ask],['You',"Oh, I'd like the "+s.opts[opt]+" one, please."],['Assistant','Here you are.'],['You','Thank you!']]; }
+  function render(){
+    var s=SHOPS[cur], ch=document.getElementById('choice');
+    ch.innerHTML='<span>Choose:</span>'+s.opts.map(function(o,i){ return '<button type="button" class="opt'+(i===opt?' on':'')+'" data-i="'+i+'">the '+o+' one</button>'; }).join('');
+    ch.querySelectorAll('.opt').forEach(function(b){ b.addEventListener('click',function(){ opt=+b.dataset.i; render(); }); });
+    document.getElementById('convo').innerHTML=lines().map(function(l){ return '<div class="cl '+(l[0]==='You'?'you':'shop')+'"><b>'+l[0]+'</b><span>'+mark(l[1])+'</span></div>'; }).join('');
+    document.getElementById('convoCount').textContent='تدرَّبتَ على '+Object.keys(heard).length+' / 6 حوارات';
+  }
+  document.querySelectorAll('#shopPick .shop').forEach(function(b){
+    b.addEventListener('click',function(){ document.querySelectorAll('#shopPick .shop').forEach(function(x){x.classList.remove('on')}); b.classList.add('on'); cur=+b.dataset.s; opt=0; render(); });
+  });
+  document.getElementById('convoSay').addEventListener('click',function(){
+    var t=lines().map(function(l){return l[1];}).join(' ... ');
+    var was=this.classList.contains('playing'); speak(t,this);
+    if(!was){ heard[cur+'-'+opt]=1; render(); sparkleAt(this); if(Object.keys(heard).length===6) confetti(); }
+  });
+  render();
+})();
+
+/* Activity 4 — a or the + the phrase (answers from the teacher's book) */
+var HIST=[
+  ['Sultan Osman the First became the father of ',['a','huge new empire','a huge new empire'],' in about 1300. It later grew much larger, and people called it ',['the','ottoman empire','the Ottoman Empire'],'.'],
+  ['When the Ottomans took Constantinople in 1453, they built ',['a','great new palace','a great new palace'],' for the sultan. This was ',['the','topkapi palace','the Topkapi Palace'],', the new centre of government.'],
+  ['They also built ',['a','beautiful new mosque','a beautiful new mosque'],' near Aya Sofya, and they called it ',['the','blue mosque','the Blue Mosque'],'.']
+];
+(function(){
+  var box=document.getElementById('histList'), bank=document.getElementById('bankH'), sel=null, done=0, total=6;
+  bank.querySelectorAll('.bw').forEach(function(w){ w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return; if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+    bank.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w; }); });
+  function slot(s){
+    return '<span class="slot" data-art="'+s[0]+'" data-a="'+s[1]+'" data-show="'+s[2]+'"><span class="pickpair"><button class="pk" type="button" data-v="a">a</button><button class="pk" type="button" data-v="the">the</button></span><span class="blank">?</span></span>';
+  }
+  HIST.forEach(function(h,i){
+    var d=document.createElement('div'); d.className='sent';
+    d.innerHTML='<span class="n">'+(i+1)+'</span><div class="body">'+h[0]+slot(h[1])+h[2]+slot(h[3])+h[4]+'</div>';
+    box.appendChild(d);
+  });
+  function check(sl){
+    if(sl.dataset.artOk && sl.dataset.phOk && !sl.classList.contains('done')){
+      sl.classList.add('done'); sl.innerHTML='<span class="final">'+sl.dataset.show+'</span>'; sparkleAt(sl); done++;
+      var line=document.getElementById('histRes'); line.className='res-line show good'; line.textContent='✅ '+done+' / '+total;
+      if(done===total){ line.textContent='🏆 أحسنت! a للشيءِ الجديد، و the للاسمِ الواحدِ المعروف.'; confetti(); }
+    }
+  }
+  box.querySelectorAll('.slot').forEach(function(sl){
+    sl.querySelectorAll('.pk').forEach(function(p){ p.addEventListener('click',function(){
+      if(p.dataset.v===sl.dataset.art){ sl.dataset.artOk='1'; sl.querySelectorAll('.pk').forEach(function(x){x.disabled=true;}); p.classList.add('ok'); check(sl); }
+      else { p.classList.add('no'); setTimeout(function(){p.classList.remove('no')},450); }
+    }); });
+    sl.querySelector('.blank').addEventListener('click',function(){
+      var bl=this;
+      if(!sel || sel.dataset.w!==sl.dataset.a){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+      bl.textContent=sel.dataset.w; bl.classList.add('ok'); sel.classList.add('used'); sel.classList.remove('sel'); sel=null; sl.dataset.phOk='1'; check(sl);
+    });
+  });
+})();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='In the spotlight!'; msg='رائع! تعرفُ متى تقولُ a ومتى تقولُ the 🔦🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجِعْ جدولَ القاعدةِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='🔦 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
