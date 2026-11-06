@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A day in Istanbul - Grade 9 Unit 5 Period 7 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 5 palette : Bosphorus sunset ===== */
+  :root{
+    --sunset:#FF7A45; --sunset-d:#d4572a;
+    --rose:#E85D75;   --rose-d:#c03d57;
+    --lilac:#7A5C99;  --lilac-d:#5c4378;
+    --cream:#FFF1E6;  --cream-d:#f6dcc8;
+    --aub:#3D2645;    --aub-d:#2a1830;
+    --ink:#2a1d30; --muted:#6e5f74; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a city map: faint streets and blocks */
+    background-image:
+      linear-gradient(rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(rgba(232,93,117,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,93,117,.045) 1px, transparent 1px);
+    background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : THE ROUNDABOUT FROM ABOVE ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:14px 12px 28px;
+    background:linear-gradient(180deg, var(--aub-d) 0%, var(--aub) 26%, var(--lilac) 58%, var(--rose) 84%, var(--sunset) 100%); }
+  .header-inner{ max-width:900px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ display:inline-flex; align-items:center; gap:9px; background:var(--cream); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:10px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--cream-d), 0 8px 18px rgba(0,0,0,.3); }
+  .rbt{ width:min(440px,94vw); margin:0 auto; direction:ltr; filter:drop-shadow(0 18px 26px rgba(42,24,48,.45)); }
+  .rbt svg{ display:block; width:100%; height:auto; }
+  .orbit{ transform-origin:220px 220px; animation:orbit 9s linear infinite; }
+  .orbit.o2{ animation-duration:13s; }
+  @keyframes orbit{ to{ transform:rotate(360deg); } }
+  .exit-lbl{ opacity:0; animation:lbl-in .45s forwards; }
+  @keyframes lbl-in{ from{ opacity:0; transform:scale(.6);} to{ opacity:1; transform:none;} }
+  .exit-lbl{ transform-box:fill-box; transform-origin:center; }
+  .spin-text{ transform-origin:220px 220px; animation:orbit 40s linear infinite reverse; }
+  .road-plate{ display:inline-block; margin-top:4px; background:var(--aub); color:#fff; border:3px solid #fff; outline:3px solid var(--aub); border-radius:10px; padding:6px 20px 7px; direction:ltr; box-shadow:0 10px 22px rgba(0,0,0,.35); }
+  .road-plate small{ display:block; font-family:'Fredoka',sans-serif; font-size:11px; letter-spacing:.22em; color:#ffc9b0; }
+  .road-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(22px,5vw,34px); line-height:1.15; }
+  .lesson-subtitle{ font-size:clamp(14px,3vw,18px); color:#fff; font-weight:800; margin-top:12px; text-shadow:0 2px 6px rgba(42,24,48,.5); }
+  .header-hint{ font-size:12.5px; color:#fff3ea; font-weight:700; margin-top:3px; text-shadow:0 1px 4px rgba(42,24,48,.6); }
+  @media (prefers-reduced-motion:reduce){ .orbit,.spin-text{ animation:none; } .exit-lbl{ animation:none; opacity:1; } }
+
+  /* ===== TABS : STREET SIGNS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:
+      repeating-linear-gradient(90deg, rgba(255,241,230,.55) 0 22px, transparent 22px 40px) left bottom 9px / 100% 3px no-repeat,
+      linear-gradient(#55405e, var(--aub));
+    border-radius:16px; padding:22px 12px 22px; box-shadow:0 10px 24px rgba(42,24,48,.35);
+    display:flex; gap:8px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    position:relative; background:transparent; border:none; cursor:pointer; padding:0;
+    display:flex; flex-direction:column; align-items:center; flex:1 0 auto; min-width:86px; max-width:118px;
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ transform:translateY(-3px); }
+  .sign{
+    width:100%; background:var(--lilac); color:#fff; border:2px solid #fff; border-radius:8px;
+    box-shadow:0 0 0 2px var(--lilac-d), 0 5px 8px rgba(0,0,0,.35);
+    padding:7px 6px 6px; min-height:54px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    transition:all .3s ease;
+  }
+  .tab-icon{ font-size:20px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12px; line-height:1.1; text-align:center; }
+  .post{ width:6px; height:14px; background:linear-gradient(90deg,#9a8aa6,#e9e0ee,#9a8aa6); border-radius:0 0 2px 2px; }
+  .tab-btn.active{ transform:translateY(-2px); }
+  .tab-btn.active .sign{ background:var(--sunset); color:var(--aub-d); box-shadow:0 0 0 2px var(--sunset-d), 0 0 18px rgba(255,122,69,.65); }
+  .tab-btn.active .tab-lbl{ font-weight:700; }
+  .tab-btn.active::before{
+    content:'📍'; position:absolute; top:-21px; left:50%; transform:translateX(-50%); font-size:19px;
+    animation:pin-drop-tab .55s cubic-bezier(.3,1.6,.5,1); filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));
+  }
+  @keyframes pin-drop-tab{ from{ transform:translate(-50%,-18px); opacity:0; } to{ transform:translate(-50%,0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 20px rgba(61,38,69,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 15px rgba(61,38,69,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(232,93,117,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #e6d2c6;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fffaf5,#ffeadc); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a3a19; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(212,87,42,.45);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(255,122,69,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(122,92,153,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(122,92,153,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #e6d2c6; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff3e9,#ffe2cf); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a3414; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #e6d2c6;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fffaf6; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f1e0d5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #eedfd6; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff5ec,#ffe6d6); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a3a19; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(42,24,48,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(255,122,69,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6, 0 12px 28px rgba(61,38,69,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(61,38,69,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,160,100,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffc29e; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(122,92,153,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(232,93,117,.15); }
+  .find-word.found{ background:rgba(232,93,117,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #e6d2c6; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #eedfd6; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'📍'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eedfd6; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fffaf6; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffd2bd; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(232,93,117,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show{ animation:none !important; }
+  }
+
+  /* ===== Period 2 widgets ===== */
+  .sent .body{ flex:1; }
+  .sent .ab{ line-height:2.2; }
+  .sent .ab b{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:6px;
+    background:var(--cream); color:var(--lilac-d); font-size:12.5px; margin-right:6px; vertical-align:middle; }
+  .tipbox b{ unicode-bidi:isolate; direction:ltr; }
+  .pair{ background:#fffaf6; border:2px solid #f1e0d5; border-radius:14px; padding:12px 14px; margin-bottom:12px; direction:ltr; }
+  .pair-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px; }
+  .pair-top .no{ background:var(--rose-d); color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; }
+  .pair p{ font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.9; }
+  .pair p b{ color:var(--lilac-d); margin-right:4px; }
+  .pair p em{ font-style:normal; background:#ffe0cc; border-radius:5px; padding:0 4px; font-weight:600; color:#8a3a19; }
+  .say-btn{ background:var(--lilac); color:#fff; border:none; border-radius:20px; padding:6px 13px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:12.5px; }
+
+  /* ===== Period 7 widgets ===== */
+  .dmap{ max-width:720px; margin:0 auto 16px; border-radius:16px; overflow:hidden; border:3px solid #fff; box-shadow:0 8px 20px rgba(61,38,69,.18); direction:ltr; }
+  .dmap svg{ display:block; width:100%; height:auto; }
+  .dir-text{ background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:16px 18px; box-shadow:0 6px 0 #e6d2c6; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:16px; line-height:2.5; }
+  .dir-text .blank{ min-width:80px; }
+  .opp-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:560px; margin:0 auto; direction:ltr; }
+  .opp-col{ display:grid; gap:10px; align-content:start; }
+  .ow{ background:#fff; border:3px solid #eedfd6; border-radius:14px; padding:11px 14px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; color:var(--ink); box-shadow:0 4px 0 #e6d2c6; }
+  .ow.sel{ border-color:var(--lilac); background:#f4eefa; box-shadow:0 4px 0 var(--lilac-d); }
+  .ow.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .ow.gone{ opacity:.45; text-decoration:line-through; }
+  .ow.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🔄</span> UNIT 5 · PERIOD 7 · GRADE 9 · PB PAGE 58</div>
+    <div class="rbt"><svg viewBox="0 0 440 440" role="img" aria-label="A roundabout from above: cars go round it, and arrows on the roads that leave it say along, round, past, through, across, into, out of and over.">
+  <circle cx="220" cy="220" r="214" fill="#f4dcc6"/>
+  <g fill="#ead0b9"><rect x="40" y="40" width="120" height="120" rx="14"/><rect x="280" y="40" width="120" height="120" rx="14"/><rect x="40" y="280" width="120" height="120" rx="14"/><rect x="280" y="280" width="120" height="120" rx="14"/></g>
+  <g fill="#9cb38a" opacity=".85"><circle cx="70" cy="70" r="12"/><circle cx="380" cy="380" r="14"/><circle cx="380" cy="64" r="10"/><circle cx="62" cy="372" r="11"/></g>
+  <clipPath id="disc"><circle cx="220" cy="220" r="214"/></clipPath>
+  <g clip-path="url(#disc)"><rect x="196" y="-10" width="48" height="230" fill="#4a3352" transform="rotate(0 220 220)"/><rect x="196" y="-10" width="48" height="230" fill="#4a3352" transform="rotate(90 220 220)"/><rect x="196" y="-10" width="48" height="230" fill="#4a3352" transform="rotate(180 220 220)"/><rect x="196" y="-10" width="48" height="230" fill="#4a3352" transform="rotate(270 220 220)"/><line x1="220" y1="0" x2="220" y2="120" stroke="#ffd2bd" stroke-width="3" stroke-dasharray="10 9" transform="rotate(0 220 220)"/><line x1="220" y1="0" x2="220" y2="120" stroke="#ffd2bd" stroke-width="3" stroke-dasharray="10 9" transform="rotate(90 220 220)"/><line x1="220" y1="0" x2="220" y2="120" stroke="#ffd2bd" stroke-width="3" stroke-dasharray="10 9" transform="rotate(180 220 220)"/><line x1="220" y1="0" x2="220" y2="120" stroke="#ffd2bd" stroke-width="3" stroke-dasharray="10 9" transform="rotate(270 220 220)"/></g>
+  <circle cx="220" cy="220" r="104" fill="#4a3352"/>
+  <circle cx="220" cy="220" r="104" fill="none" stroke="#ffd2bd" stroke-width="3" stroke-dasharray="12 10" opacity=".8"/>
+  <path d="M220 300 l-9 -14 h18z" fill="#ffd2bd" transform="rotate(45 220 220)"/><path d="M220 300 l-9 -14 h18z" fill="#ffd2bd" transform="rotate(135 220 220)"/><path d="M220 300 l-9 -14 h18z" fill="#ffd2bd" transform="rotate(225 220 220)"/><path d="M220 300 l-9 -14 h18z" fill="#ffd2bd" transform="rotate(315 220 220)"/>
+  <g class="orbit " style="animation-delay:-0s"><rect x="214" y="129" width="12" height="18" rx="4" fill="#FF7A45" transform="rotate(90 220 138)"/></g><g class="orbit " style="animation-delay:-3s"><rect x="214" y="129" width="12" height="18" rx="4" fill="#ffd36b" transform="rotate(90 220 138)"/></g><g class="orbit " style="animation-delay:-6s"><rect x="214" y="129" width="12" height="18" rx="4" fill="#fff1e6" transform="rotate(90 220 138)"/></g>
+  <g class="orbit o2" style="animation-delay:-1.5s"><rect x="214" y="129" width="12" height="18" rx="4" fill="#E85D75" transform="rotate(90 220 138)"/></g><g class="orbit o2" style="animation-delay:-8s"><rect x="214" y="129" width="12" height="18" rx="4" fill="#cdb9e6" transform="rotate(90 220 138)"/></g>
+  <circle cx="220" cy="220" r="66" fill="#b8cfa5" stroke="#fff" stroke-width="5"/>
+  <defs><path id="ring" d="M220 220 m-48 0 a48 48 0 1 1 96 0 a48 48 0 1 1 -96 0"/></defs>
+  <g class="spin-text"><text font-family="Fredoka" font-size="13" font-weight="700" fill="#3D2645" letter-spacing="2"><textPath href="#ring">GO ROUND · GO ROUND · GO ROUND ·</textPath></text></g>
+  <text x="220" y="232" text-anchor="middle" font-size="30">🌷</text>
+  <g class="exit-lbl" style="animation-delay:0.40s"><rect x="185" y="31" width="69" height="26" rx="13" fill="#FFF1E6" stroke="#3D2645" stroke-width="2"/><text x="220" y="49" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#3D2645">along</text></g><g class="exit-lbl" style="animation-delay:0.65s"><rect x="310" y="83" width="69" height="26" rx="13" fill="#FFF1E6" stroke="#3D2645" stroke-width="2"/><text x="344" y="101" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#3D2645">round</text></g><g class="exit-lbl" style="animation-delay:0.90s"><rect x="366" y="207" width="60" height="26" rx="13" fill="#FFF1E6" stroke="#3D2645" stroke-width="2"/><text x="396" y="225" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#3D2645">past</text></g><g class="exit-lbl" style="animation-delay:1.15s"><rect x="301" y="331" width="87" height="26" rx="13" fill="#FFF1E6" stroke="#3D2645" stroke-width="2"/><text x="344" y="349" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#3D2645">through</text></g><g class="exit-lbl" style="animation-delay:1.40s"><rect x="181" y="383" width="78" height="26" rx="13" fill="#FFF1E6" stroke="#3D2645" stroke-width="2"/><text x="220" y="401" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#3D2645">across</text></g><g class="exit-lbl" style="animation-delay:1.65s"><rect x="66" y="331" width="60" height="26" rx="13" fill="#FFF1E6" stroke="#3D2645" stroke-width="2"/><text x="96" y="349" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#3D2645">into</text></g><g class="exit-lbl" style="animation-delay:1.90s"><rect x="5" y="207" width="78" height="26" rx="13" fill="#FFF1E6" stroke="#3D2645" stroke-width="2"/><text x="44" y="225" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#3D2645">out of</text></g><g class="exit-lbl" style="animation-delay:2.15s"><rect x="66" y="83" width="60" height="26" rx="13" fill="#FFF1E6" stroke="#3D2645" stroke-width="2"/><text x="96" y="101" text-anchor="middle" font-family="Fredoka" font-size="15" font-weight="700" fill="#3D2645">over</text></g>
+</svg></div>
+    <div class="road-plate"><small>WHICH WAY? · PERIOD 7</small><h1>A day in Istanbul</h1></div>
+    <div class="lesson-subtitle">يومٌ في إسطنبول — كلماتُ الحركةِ والاتّجاه 🔄</div>
+    <p class="header-hint">حولَ الدوّارِ وعلى كلِّ مخرج: كلمةٌ تدلُّك على الطريق.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="dir"><span class="sign"><span class="tab-icon">🧭</span><span class="tab-lbl">Directions</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="opp"><span class="sign"><span class="tab-icon">↔️</span><span class="tab-lbl">Opposites</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="conv"><span class="sign"><span class="tab-icon">✏️</span><span class="tab-lbl">Conversations</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="practise"><span class="sign"><span class="tab-icon">💬</span><span class="tab-lbl">Practise</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#FF7A45;"><div class="aim-icon-wrap">🧭</div>
+        <h3 class="aim-title">Prepositions of movement</h3><p class="aim-desc">Complete directions with <i>across, along, into, out of, over, past, round, through, to</i> and <i>ahead</i>.
+          <span class="ar">إكمالُ إرشاداتِ الطريقِ بحروفِ الجرِّ الدالّةِ على الحركة.</span></p></div>
+      <div class="aim-card" style="--ac:#E85D75;"><div class="aim-icon-wrap">↔️</div>
+        <h3 class="aim-title">Opposites</h3><p class="aim-desc">Match five pairs of opposites and use them in conversations.
+          <span class="ar">مطابقةُ خمسةِ أزواجٍ من الأضداد، واستعمالُها في حوارات.</span></p></div>
+      <div class="aim-card" style="--ac:#7A5C99;"><div class="aim-icon-wrap">💬</div>
+        <h3 class="aim-title">Speak</h3><p class="aim-desc">Practise the conversations in pairs.
+          <span class="ar">التدرُّبُ على الحواراتِ في أزواج.</span></p></div>
+      <div class="aim-card" style="--ac:#d4572a;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Clear directions help people and keep them safe.
+          <span class="ar">الإرشاداتُ الواضحةُ تساعدُ الناسَ وتحفظُ سلامتَهم.</span></p></div>
+    </div>
+    <div class="key-language-box">
+      <h3>🔑 لغةُ الدرس</h3>
+      <div class="key-words">
+        <span class="key-word">across</span><span class="key-word">ahead</span><span class="key-word">along</span><span class="key-word">into</span><span class="key-word">out of</span>
+        <span class="key-word">over</span><span class="key-word">past</span><span class="key-word">round</span><span class="key-word">through</span><span class="key-word">to</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab-content" id="tab-dir">
+    <h2 class="section-title">🧭 Complete the directions<span class="title-sub">أكمِلِ الإرشاداتِ إلى المقهى</span></h2>
+    <div class="activity-banner">
+      <div class="en">🧭 Activity 1: Complete the directions to the Top Coffee Shop. Use the prepositions in the box.</div>
+      <div class="ar">تتبَّعِ الطريقَ على الخريطةِ من 📍، ثمَّ اخترْ كلمةً من البنكِ واضغطِ الفراغ. حينَ تكتملُ الإرشاداتُ يُرسَمُ الطريقُ على الخريطة.</div>
+    </div>
+    <div class="dmap">
+      <svg viewBox="0 0 600 380" role="img" aria-label="A town map from the start, over the crossroads, along East Road to a roundabout, into High Street, left into Green Road past the museum, through the market, across the wide road and round a rock garden in the park to the Top Coffee Shop.">
+        <rect width="600" height="380" fill="#fff7ef"/>
+        <g fill="#f6dccb"><rect x="120" y="100" width="140" height="60" rx="6"/><rect x="300" y="100" width="280" height="60" rx="6"/><rect x="20" y="100" width="70" height="260" rx="6"/><rect x="120" y="200" width="140" height="70" rx="6"/></g>
+        <rect x="0" y="66" width="600" height="28" fill="#fff" stroke="#e6c7b2"/>
+        <rect x="88" y="0" width="24" height="380" fill="#fff" stroke="#e6c7b2"/>
+        <rect x="268" y="94" width="24" height="100" fill="#fff" stroke="#e6c7b2"/>
+        <rect x="268" y="168" width="332" height="24" fill="#fff" stroke="#e6c7b2"/>
+        <rect x="0" y="282" width="600" height="34" fill="#fff" stroke="#e6c7b2"/>
+        <line x1="0" y1="299" x2="600" y2="299" stroke="#f3b08f" stroke-width="2" stroke-dasharray="10 9"/>
+        <circle cx="280" cy="80" r="22" fill="#fff" stroke="#e6c7b2"/><circle cx="280" cy="80" r="10" fill="#b8cfa5"/>
+        <g font-family="Fredoka" font-size="11" fill="#5c4378" font-weight="600">
+          <text x="196" y="60">East Road →</text><text x="300" y="186" >Green Road</text>
+          <text x="262" y="140" transform="rotate(-90 262 140)">High Street</text>
+          <text x="114" y="60">✚ crossroads</text><text x="306" y="62">roundabout</text><text x="10" y="276">wide road ↓</text>
+        </g>
+        <rect x="320" y="200" width="70" height="60" rx="6" fill="#ece0f3" stroke="#7A5C99"/><text x="355" y="235" text-anchor="middle" font-family="Fredoka" font-size="12" fill="#3D2645" font-weight="600">🏛️ museum</text>
+        <rect x="425" y="196" width="50" height="82" rx="6" fill="#ffe0cc" stroke="#FF7A45"/><text x="450" y="240" text-anchor="middle" font-family="Fredoka" font-size="11" fill="#3D2645" font-weight="600">🛍️</text><text x="450" y="256" text-anchor="middle" font-family="Fredoka" font-size="11" fill="#3D2645" font-weight="600">market</text>
+        <rect x="360" y="322" width="230" height="54" rx="10" fill="#d4e6c5" stroke="#9cb38a"/><text x="375" y="370" font-family="Fredoka" font-size="11" fill="#3D2645" font-weight="600">🌳 park</text>
+        <circle cx="450" cy="350" r="12" fill="#bfae9e"/><text x="450" y="354" text-anchor="middle" font-size="10">🪨</text>
+        <rect x="508" y="332" width="76" height="34" rx="7" fill="#fff" stroke="#E85D75" stroke-width="2"/><text x="546" y="353" text-anchor="middle" font-family="Fredoka" font-size="10.5" fill="#3D2645" font-weight="700">☕ Top Coffee</text>
+        <text x="20" y="84" font-size="20">📍</text>
+        <path id="dRoute" pathLength="1" d="M34 80 H268 M292 80 V180 H450 V196 M450 278 V336 A14 14 0 1 1 464 350 H506" fill="none" stroke="#E85D75" stroke-width="5" stroke-linecap="round" stroke-dasharray="1" stroke-dashoffset="1"/>
+      </svg>
+    </div>
+    <div class="bank" id="bankD">
+      <h4>🏦 Prepositions — كلُّ كلمةٍ تُستعمَلُ مرّةً واحدة</h4>
+      <div class="bank-words">
+        <button class="bw" type="button" data-w="across">across</button><button class="bw" type="button" data-w="ahead">ahead</button>
+        <button class="bw" type="button" data-w="along">along</button><button class="bw" type="button" data-w="into">into</button>
+        <button class="bw" type="button" data-w="out of">out of</button><button class="bw" type="button" data-w="over">over</button>
+        <button class="bw" type="button" data-w="past">past</button><button class="bw" type="button" data-w="round">round</button>
+        <button class="bw" type="button" data-w="through">through</button><button class="bw" type="button" data-w="to">to</button>
+      </div>
+    </div>
+    <div class="dir-text">
+      Go (1) <span class="blank" data-bank="bankD" data-a="over">?</span> the crossroads and go (2) <span class="blank" data-bank="bankD" data-a="along">?</span> East Road until you come (3) <span class="blank" data-bank="bankD" data-a="to">?</span> a roundabout.
+      Turn right there (4) <span class="blank" data-bank="bankD" data-a="into">?</span> High Street and go straight (5) <span class="blank" data-bank="bankD" data-a="ahead">?</span> for about 100 metres. Then take the first left. That's Green Road.
+      Go (6) <span class="blank" data-bank="bankD" data-a="past">?</span> the museum on your right, and turn right at the market. Go (7) <span class="blank" data-bank="bankD" data-a="through">?</span> the market, and you'll come (8) <span class="blank" data-bank="bankD" data-a="out of">?</span> it at the other end.
+      Go (9) <span class="blank" data-bank="bankD" data-a="across">?</span> the wide road there, and you'll be at the entrance of a small park. Go in, walk (10) <span class="blank" data-bank="bankD" data-a="round">?</span> a rock garden inside the park, and then you'll see the Top Coffee Shop just there.
+    </div>
+    <div class="res-line" id="bankDRes"></div>
+  </section>
+
+  <section class="tab-content" id="tab-opp">
+    <h2 class="section-title">↔️ Pairs of opposites<span class="title-sub">طابِقِ الأضداد</span></h2>
+    <div class="activity-banner">
+      <div class="en">↔️ Activity 2: Work in pairs. Match words to form pairs of opposites.</div>
+      <div class="ar">اضغطْ كلمةً من العمودِ الأيسر، ثمَّ ضدَّها من العمودِ الأيمن. الزوجُ الأوّلُ محلولٌ مثالًا كما في الكتاب: <b>modern ↔ ancient</b>.</div>
+    </div>
+    <div class="opp-wrap">
+      <div class="opp-col" id="oppL"></div>
+      <div class="opp-col" id="oppR"></div>
+    </div>
+    <div class="res-line" id="oppRes"></div>
+  </section>
+
+  <section class="tab-content" id="tab-conv">
+    <h2 class="section-title">✏️ Complete the conversations<span class="title-sub">أكمِلِ الحواراتِ بالأضداد</span></h2>
+    <div class="activity-banner">
+      <div class="en">✏️ Activity 3: Work in pairs. Complete the conversations with opposites from activity 2.</div>
+      <div class="ar">في كلِّ حوارٍ كلمتانِ متضادّتان. اخترْ من البنكِ ثمَّ اضغطِ الفراغ.</div>
+    </div>
+    <div class="bank" id="bankO">
+      <h4>🏦 Opposites — كلُّ كلمةٍ تُستعمَلُ مرّةً واحدة</h4>
+      <div class="bank-words">
+        <button class="bw" type="button" data-w="modern">modern</button><button class="bw" type="button" data-w="boring">boring</button>
+        <button class="bw" type="button" data-w="remember">remember</button><button class="bw" type="button" data-w="put away">put away</button>
+        <button class="bw" type="button" data-w="outside">outside</button><button class="bw" type="button" data-w="take out">take out</button>
+        <button class="bw" type="button" data-w="inside">inside</button><button class="bw" type="button" data-w="exciting">exciting</button>
+        <button class="bw" type="button" data-w="ancient">ancient</button><button class="bw" type="button" data-w="forget">forget</button>
+      </div>
+    </div>
+    <div class="sent-list">
+      <div class="sent"><span class="n">1</span><div class="body">
+        <div class="ab"><b>A</b> Istanbul is nearly 3,000 years old, so it's a very <span class="blank" data-bank="bankO" data-a="ancient">?</span> city.</div>
+        <div class="ab"><b>B</b> Yes, but it's also an exciting <span class="blank" data-bank="bankO" data-a="modern">?</span> place.</div></div></div>
+      <div class="sent"><span class="n">2</span><div class="body">
+        <div class="ab"><b>A</b> I must <span class="blank" data-bank="bankO" data-a="remember">?</span> to change some more money.</div>
+        <div class="ab"><b>B</b> Well, don't <span class="blank" data-bank="bankO" data-a="forget">?</span> to take your passport. You'll need that.</div></div></div>
+      <div class="sent"><span class="n">3</span><div class="body">
+        <div class="ab"><b>A</b> When we reached the Blue Mosque and stood <span class="blank" data-bank="bankO" data-a="outside">?</span>, it looked amazing.</div>
+        <div class="ab"><b>B</b> Then when we went <span class="blank" data-bank="bankO" data-a="inside">?</span> and saw the beautiful walls and windows all round us, it looked really beautiful.</div></div></div>
+      <div class="sent"><span class="n">4</span><div class="body">
+        <div class="ab"><b>A</b> Would you like me to <span class="blank" data-bank="bankO" data-a="put away">?</span> the dishes?</div>
+        <div class="ab"><b>B</b> Yes, please, and could you <span class="blank" data-bank="bankO" data-a="take out">?</span> some glasses? We'll give everyone a glass of orange juice.</div></div></div>
+      <div class="sent"><span class="n">5</span><div class="body">
+        <div class="ab"><b>A</b> This programme is <span class="blank" data-bank="bankO" data-a="boring">?</span>. It's sending me to sleep!</div>
+        <div class="ab"><b>B</b> Yes, let's change channels. There's an <span class="blank" data-bank="bankO" data-a="exciting">?</span> film on Channel 10.</div></div></div>
+    </div>
+    <div class="res-line" id="bankORes"></div>
+  </section>
+
+  <section class="tab-content" id="tab-practise">
+    <h2 class="section-title">💬 Practise the conversations<span class="title-sub">تدرَّبْ على الحوارات</span></h2>
+    <div class="activity-banner">
+      <div class="en">💬 Activity 4: Work in pairs. Practise the conversations.</div>
+      <div class="ar">أحدُكما يقرأُ دورَ <b>A</b> والآخرُ دورَ <b>B</b>، ثمَّ تتبادلانِ الدورَين. اضغطْ 🔊 لتسمعَ الحوار.</div>
+    </div>
+    <details class="drop-q" open>
+      <summary>💬 The five conversations <span class="ar">الحواراتُ كاملة</span></summary>
+      <div class="drop-body" id="pairList"></div>
+    </details>
+  </section>
+
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>🔄 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «سيّدِ الدوّار».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">Go ______ the market and you'll come out at the other end.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>over</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>through</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>ahead</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>to</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">What is the opposite of <b>ancient</b>?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>old</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>boring</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>modern</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>inside</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">Walk ______ the rock garden, and you'll see the coffee shop.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>round</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>into</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>out of</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>along</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">Don't ______ to take your passport. You'll need it.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>remember</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>forget</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>put away</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>take out</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">Go ______ the museum on your right. (Don't go in — walk next to it and on.)</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>into</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>through</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>past</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">D</span>across</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🔄<small>WAY FINDER</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff1e6">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+var BKEY = 'g9u5p7_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['🔄','🧭','📍','☕','🌷','🚗','↔️','✨'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+function playText(btn,text){ if(btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; } speak(text,btn); }
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','🧭','⭐','🔄'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#FF7A45','#E85D75','#7A5C99','#ffd2bd','#3D2645'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+/* shared word banks (each word used once) */
+function makeBank(id, doneMsg){
+  var box=document.getElementById(id), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){
+    w.addEventListener('click',function(){
+      if(w.classList.contains('used')) return;
+      if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+      box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')});
+      w.classList.add('sel'); sel=w;
+    });
+  });
+  var blanks=document.querySelectorAll('.blank[data-bank="'+id+'"]'), line=document.getElementById(id+'Res');
+  blanks.forEach(function(bl){
+    bl.addEventListener('click',function(){
+      if(bl.classList.contains('ok')) return;
+      if(!sel || sel.dataset.w!==bl.dataset.a){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+      bl.textContent=bl.dataset.show||sel.dataset.w; bl.classList.add('ok');
+      sel.classList.add('used'); sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+      var ok=document.querySelectorAll('.blank[data-bank="'+id+'"].ok').length;
+      line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+      if(ok===blanks.length){ line.textContent=doneMsg; confetti(); }
+    });
+  });
+}
+
+makeBank('bankD','🏆 أحسنت! وصلتَ إلى Top Coffee Shop — انظرْ إلى الطريقِ على الخريطة.');
+makeBank('bankO','🏆 أحسنت! أكملتَ الحواراتِ الخمسةَ بالأضداد.');
+/* when the directions are complete, the route draws itself on the map */
+(function(){
+  var route=document.getElementById('dRoute');
+  var obs=new MutationObserver(function(){
+    if(document.querySelectorAll('.blank[data-bank="bankD"].ok').length===10){
+      route.style.transition='stroke-dashoffset 3.2s ease-in-out'; route.style.strokeDashoffset='0'; obs.disconnect();
+    }
+  });
+  obs.observe(document.getElementById('bankDRes'),{childList:true,characterData:true,subtree:true});
+})();
+
+/* Activity 2 — match the opposites (modern / ancient is the book's example) */
+var OPP=[['modern','ancient'],['remember','forget'],['boring','exciting'],['put away','take out'],['outside','inside']];
+(function(){
+  var L=document.getElementById('oppL'), R=document.getElementById('oppR'), sel=null, done=0;
+  var right=OPP.map(function(p){return p[1];}).sort();
+  OPP.forEach(function(p,i){
+    var b=document.createElement('button'); b.type='button'; b.className='ow'; b.textContent=p[0]; b.dataset.k=p[1];
+    if(i===0){ b.classList.add('ok'); b.disabled=true; b.textContent=p[0]+' ↔ '+p[1]; }
+    b.addEventListener('click',function(){ if(b.disabled) return; L.querySelectorAll('.ow').forEach(function(x){x.classList.remove('sel')}); b.classList.add('sel'); sel=b; });
+    L.appendChild(b);
+  });
+  right.forEach(function(w){
+    var b=document.createElement('button'); b.type='button'; b.className='ow'; b.textContent=w;
+    if(w==='ancient'){ b.classList.add('ok','gone'); b.disabled=true; }
+    b.addEventListener('click',function(){
+      if(b.disabled) return;
+      if(!sel || sel.dataset.k!==w){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+      sel.textContent=sel.textContent+' ↔ '+w; sel.classList.remove('sel'); sel.classList.add('ok'); sel.disabled=true; sel=null;
+      b.classList.add('ok','gone'); b.disabled=true; done++; sparkleAt(b);
+      var line=document.getElementById('oppRes'); line.className='res-line show good'; line.textContent='✅ '+done+' / 4';
+      if(done===4){ line.textContent='🏆 ممتاز! طابقتَ الأزواجَ الخمسةَ كلَّها.'; confetti(); }
+    });
+    R.appendChild(b);
+  });
+})();
+
+/* Activity 4 — the five conversations for pair practice */
+var PAIRS=[
+  ["A","Istanbul is nearly 3,000 years old, so it's a very <em>ancient</em> city."],["B","Yes, but it's also an exciting <em>modern</em> place."],null,
+  ["A","I must <em>remember</em> to change some more money."],["B","Well, don't <em>forget</em> to take your passport. You'll need that."],null,
+  ["A","When we reached the Blue Mosque and stood <em>outside</em>, it looked amazing."],["B","Then when we went <em>inside</em> and saw the beautiful walls and windows all round us, it looked really beautiful."],null,
+  ["A","Would you like me to <em>put away</em> the dishes?"],["B","Yes, please, and could you <em>take out</em> some glasses? We'll give everyone a glass of orange juice."],null,
+  ["A","This programme is <em>boring</em>. It's sending me to sleep!"],["B","Yes, let's change channels. There's an <em>exciting</em> film on Channel 10."],null
+];
+(function(){
+  var box=document.getElementById('pairList'), cur=[], n=0;
+  PAIRS.forEach(function(l){
+    if(l){ cur.push(l); return; }
+    n++; var lines=cur; cur=[];
+    var d=document.createElement('div'); d.className='pair';
+    var plain=lines.map(function(x){ return x[1].replace(/<[^>]+>/g,''); }).join(' ... ');
+    d.innerHTML='<div class="pair-top"><span class="no">'+n+'</span><button class="say-btn" type="button">🔊 Listen</button></div>'+
+      lines.map(function(x){ return '<p><b>'+x[0]+'</b>'+x[1]+'</p>'; }).join('');
+    d.querySelector('.say-btn').addEventListener('click',function(){ playText(this,plain); });
+    box.appendChild(d);
+  });
+})();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Way finder!'; msg='رائع! لن تضلَّ طريقَك أبدًا — تعرفُ كلماتِ الحركةِ والأضداد 🔄🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجِعِ الإرشاداتِ والأضدادَ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='🔄 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
