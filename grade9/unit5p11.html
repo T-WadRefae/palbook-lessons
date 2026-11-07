@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A day in Istanbul - Grade 9 Unit 5 Period 11 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 5 palette : Bosphorus sunset ===== */
+  :root{
+    --sunset:#FF7A45; --sunset-d:#d4572a;
+    --rose:#E85D75;   --rose-d:#c03d57;
+    --lilac:#7A5C99;  --lilac-d:#5c4378;
+    --cream:#FFF1E6;  --cream-d:#f6dcc8;
+    --aub:#3D2645;    --aub-d:#2a1830;
+    --ink:#2a1d30; --muted:#6e5f74; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a city map: faint streets and blocks */
+    background-image:
+      linear-gradient(rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(122,92,153,.07) 2px, transparent 2px),
+      linear-gradient(rgba(232,93,117,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,93,117,.045) 1px, transparent 1px);
+    background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER : DICTATION NOTEBOOK ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:14px 12px 26px; background:linear-gradient(180deg, var(--aub-d) 0%, var(--aub) 30%, var(--lilac) 62%, var(--rose) 86%, var(--sunset) 100%); }
+  .header-inner{ max-width:960px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ display:inline-flex; align-items:center; gap:9px; background:var(--cream); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:14px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--cream-d), 0 8px 18px rgba(0,0,0,.3); }
+  .nb-wrap{ max-width:600px; margin:0 auto; padding:0 6px; direction:ltr; }
+  .notebook{ position:relative; transform:rotate(-1.6deg); background:#fffdf8; border-radius:6px 14px 14px 6px; text-align:left;
+    box-shadow:0 2px 0 #eadfd2, 0 4px 0 #f7efe4, 0 6px 0 #e3d6c7, 0 18px 34px rgba(20,8,24,.45); padding-top:22px; }
+  .rings{ position:absolute; top:-12px; left:14px; right:14px; height:28px; display:flex; justify-content:space-between; pointer-events:none; }
+  .rings i{ width:12px; height:28px; border:3px solid #b9b2c2; border-radius:8px; background:linear-gradient(90deg,#efeaf3,#a59db0); box-shadow:0 2px 3px rgba(0,0,0,.3); }
+  .nb-page{ position:relative; display:grid; grid-template-columns:96px 1fr; min-height:170px;
+    background:repeating-linear-gradient(180deg, transparent 0 33px, #c9dcef 33px 34px); background-position:0 6px; padding:0 0 16px; }
+  .nb-margin{ border-right:2px solid #f08aa0; padding:6px 8px 0; }
+  .nb-margin svg{ width:100%; height:auto; display:block; }
+  .nb-margin .route{ stroke-dasharray:4 4; animation:march 1.2s linear infinite; }
+  @keyframes march{ to{ stroke-dashoffset:-16; } }
+  .nb-lines{ padding:0 14px 0 16px; position:relative; }
+  .nb-date{ font-family:'Caveat',cursive; font-size:17px; color:var(--rose-d); height:34px; line-height:34px; text-align:right; }
+  .nb-line{ height:34px; line-height:38px; white-space:nowrap; }
+  .wl{ display:inline-block; position:relative; vertical-align:top; }
+  .wl .txt{ display:inline-block; overflow:hidden; white-space:nowrap; vertical-align:top; max-width:0; font-family:'Caveat',cursive; font-weight:700;
+    font-size:clamp(19px,4.6vw,27px); color:#24305e; animation:write 2.2s ease-in-out forwards; animation-delay:var(--d); }
+  @keyframes write{ to{ max-width:30em; } }
+  .wl .pen{ position:absolute; right:-20px; top:-6px; font-size:24px; opacity:0; animation:pen 2.2s forwards; animation-delay:var(--d); }
+  .wl.last .pen{ animation:penlast 2.2s forwards; animation-delay:var(--d); }
+  @keyframes pen{ 0%{opacity:1; transform:rotate(0)} 25%{transform:rotate(-8deg) translateY(-2px)} 50%{transform:rotate(4deg)} 75%{opacity:1; transform:rotate(-6deg)} 100%{opacity:0} }
+  @keyframes penlast{ 0%{opacity:1} 50%{transform:rotate(-8deg) translateY(-2px)} 100%{opacity:1; transform:rotate(6deg) translate(4px,-4px)} }
+  .nb-stamp{ position:absolute; right:14px; bottom:10px; border:3px solid #2f8f5b; color:#2f8f5b; border-radius:9px; padding:3px 11px;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:clamp(12px,2.6vw,15px); letter-spacing:.08em; background:rgba(234,250,241,.75);
+    transform:rotate(-12deg) scale(2.6); opacity:0; animation:stampin .45s cubic-bezier(.2,1.6,.4,1) forwards; animation-delay:7.4s; }
+  @keyframes stampin{ to{ opacity:1; transform:rotate(-12deg) scale(1); } }
+  .title-plate{ display:inline-block; margin:22px auto 8px; padding:6px 22px 8px; border:2px solid rgba(255,241,230,.85); border-radius:12px; background:rgba(42,24,48,.35); direction:ltr; }
+  .title-plate small{ display:block; color:#ffd9c2; font-size:11px; letter-spacing:.2em; font-family:'Fredoka',sans-serif; }
+  .title-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(22px,4.6vw,34px); color:#fff; line-height:1.1; }
+  .lesson-subtitle{ color:#fff; font-weight:800; font-size:clamp(14px,2.8vw,18px); margin-top:4px; text-shadow:0 2px 8px rgba(42,24,48,.45); }
+  .header-hint{ color:#fff1e6; font-size:13px; margin-top:6px; font-weight:600; }
+  @media (max-width:520px){ .nb-page{ grid-template-columns:52px 1fr; } .nb-lines{ padding:0 8px 0 10px; } .rings{ left:8px; right:8px; } .rings i:nth-child(even){ display:none; } }
+  @media (prefers-reduced-motion:reduce){ .wl .txt{ animation:none; max-width:none; } .wl .pen{ display:none; } .nb-stamp{ animation:none; opacity:1; transform:rotate(-12deg); } .nb-margin .route{ animation:none; } }
+  /* ===== TABS : STREET SIGNS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    background:
+      repeating-linear-gradient(90deg, rgba(255,241,230,.55) 0 22px, transparent 22px 40px) left bottom 9px / 100% 3px no-repeat,
+      linear-gradient(#55405e, var(--aub));
+    border-radius:16px; padding:22px 12px 22px; box-shadow:0 10px 24px rgba(42,24,48,.35);
+    display:flex; gap:8px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{
+    position:relative; background:transparent; border:none; cursor:pointer; padding:0;
+    display:flex; flex-direction:column; align-items:center; flex:1 0 auto; min-width:86px; max-width:118px;
+    transition:transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .tab-btn:hover{ transform:translateY(-3px); }
+  .sign{
+    width:100%; background:var(--lilac); color:#fff; border:2px solid #fff; border-radius:8px;
+    box-shadow:0 0 0 2px var(--lilac-d), 0 5px 8px rgba(0,0,0,.35);
+    padding:7px 6px 6px; min-height:54px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    transition:all .3s ease;
+  }
+  .tab-icon{ font-size:20px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12px; line-height:1.1; text-align:center; }
+  .post{ width:6px; height:14px; background:linear-gradient(90deg,#9a8aa6,#e9e0ee,#9a8aa6); border-radius:0 0 2px 2px; }
+  .tab-btn.active{ transform:translateY(-2px); }
+  .tab-btn.active .sign{ background:var(--sunset); color:var(--aub-d); box-shadow:0 0 0 2px var(--sunset-d), 0 0 18px rgba(255,122,69,.65); }
+  .tab-btn.active .tab-lbl{ font-weight:700; }
+  .tab-btn.active::before{
+    content:'📍'; position:absolute; top:-21px; left:50%; transform:translateX(-50%); font-size:19px;
+    animation:pin-drop-tab .55s cubic-bezier(.3,1.6,.5,1); filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));
+  }
+  @keyframes pin-drop-tab{ from{ transform:translate(-50%,-18px); opacity:0; } to{ transform:translate(-50%,0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 20px rgba(61,38,69,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6, 0 8px 15px rgba(61,38,69,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(232,93,117,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #e6d2c6;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fffaf5,#ffeadc); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a3a19; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(212,87,42,.45);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(255,122,69,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(122,92,153,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(122,92,153,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #e6d2c6; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff3e9,#ffe2cf); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a3414; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #eedfd6; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #e6d2c6;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fffaf6; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f1e0d5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #eedfd6; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff5ec,#ffe6d6); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a3a19; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(42,24,48,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(255,122,69,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6, 0 12px 28px rgba(61,38,69,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(61,38,69,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,160,100,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffc29e; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(122,92,153,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(232,93,117,.15); }
+  .find-word.found{ background:rgba(232,93,117,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #eedfd6; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #e6d2c6; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #eedfd6; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'📍'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #eedfd6; box-shadow:0 6px 0 #e6d2c6; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eedfd6; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fffaf6; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #eedfd6; box-shadow:0 8px 0 #e6d2c6; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffd2bd; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(232,93,117,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show{ animation:none !important; }
+  }
+
+  /* ===== Period 11 widgets ===== */
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); direction:ltr; text-align:left; margin:18px 0 8px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .nb-sheet{ background:#fffdf8; border:2px solid #eadfd2; border-left:6px solid #f08aa0; border-radius:12px; padding:12px 14px; box-shadow:0 5px 0 #e6d2c6; direction:ltr; text-align:left; margin-bottom:12px; }
+  .nb-lbl{ display:block; font-family:'Fredoka',sans-serif; font-weight:700; color:var(--rose-d); font-size:14px; margin:6px 0 2px; }
+  .nb-area{ width:100%; border:none; resize:vertical; outline:none; font-family:'Caveat',cursive; font-weight:700; font-size:22px; color:#24305e; line-height:34px;
+    background:repeating-linear-gradient(180deg, transparent 0 33px, #c9dcef 33px 34px); padding:0 4px; }
+  .nb-area:focus{ box-shadow:0 0 0 3px rgba(122,92,153,.25); border-radius:6px; }
+  .wc{ text-align:right; font-family:'Fredoka',sans-serif; font-size:13px; color:var(--muted); }
+  .wc.good{ color:var(--ok-tx); font-weight:700; }
+  .convo-tools{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+  .check-btn{ background:linear-gradient(135deg,var(--rose),var(--rose-d)); color:#fff; border:none; padding:9px 16px; border-radius:13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; box-shadow:0 4px 0 var(--aub); }
+  .check-btn.playing{ background:var(--aub); }
+  .dict-card{ direction:ltr; text-align:left; margin-bottom:10px; } .dict-card b{ font-family:'Fredoka',sans-serif; color:var(--lilac-d); font-size:14px; }
+  .dict-card p{ font-family:'Fredoka',sans-serif; font-size:16px; line-height:2; }
+  .wok{ background:var(--ok-bg); color:var(--ok-tx); border-radius:5px; padding:1px 3px; }
+  .wno{ background:var(--no-bg); color:var(--no-tx); border-radius:5px; padding:1px 3px; font-weight:700; }
+  .sent.ord{ flex-direction:column; gap:8px; line-height:1.8; }
+  .sent.ord.done{ border-color:var(--ok-bd); background:#f6fcf8; }
+  .num-pick{ display:flex; gap:6px; flex-wrap:wrap; }
+  .nbox{ width:36px; height:36px; border-radius:9px; border:2px solid var(--lilac); background:#fff; color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:700; font-size:16px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .nbox.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .nbox.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .ref{ position:relative; text-decoration:underline; text-decoration-color:var(--rose); text-decoration-thickness:3px; text-underline-offset:4px; cursor:pointer; font-weight:600; }
+  .ref.peek{ background:#fff0e6; border-radius:4px; }
+  .ref.show::after,.done .ref:hover::after{ content:'➜ ' attr(data-r); position:absolute; left:0; bottom:calc(100% + 4px); background:var(--aub); color:#fff; font-size:12.5px; font-weight:600; white-space:nowrap; padding:3px 9px; border-radius:8px; z-index:20; box-shadow:0 4px 10px rgba(0,0,0,.25); }
+  .ref2{ text-decoration:underline; text-decoration-color:var(--rose); text-decoration-thickness:2px; text-underline-offset:3px; }
+  .ordered{ margin-top:18px; background:linear-gradient(#fffdf8,#fff6ee); border:3px solid var(--cream-d); border-radius:16px; padding:14px 16px; direction:ltr; text-align:left; }
+  .ordered h3{ font-family:'Fredoka',sans-serif; color:var(--aub); font-size:17px; margin-bottom:8px; }
+  .ordered h3 .ar{ font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .ordered ol{ padding-left:22px; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.9; }
+  .ts-first{ direction:ltr; text-align:left; background:#f4eefa; border-radius:12px; padding:9px 13px; margin-bottom:10px; font-family:'Fredoka',sans-serif; font-size:14.5px; color:#3f2b55; }
+  .ts-first u{ text-decoration-color:var(--sunset); text-decoration-thickness:3px; }
+  .model-p{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.9; }
+  .model-p b{ color:var(--rose-d); }
+  .chains{ display:grid; gap:10px; margin-bottom:8px; direction:ltr; }
+  .chain{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; background:#fff; border:2px solid #eedfd6; border-radius:14px; padding:10px 12px; font-family:'Fredoka',sans-serif; font-size:15px; }
+  .chain .ck{ background:var(--aub); color:#fff; border-radius:10px; padding:3px 10px; font-weight:600; }
+  .chain .cv{ background:#fff0e6; color:var(--sunset-d); border:2px dashed var(--sunset); border-radius:10px; padding:2px 10px; font-weight:600; }
+  .chain .ar-r{ color:var(--rose-d); font-weight:700; }
+  .swap{ display:inline-block; border-bottom:3px dashed var(--lilac); background:rgba(122,92,153,.09); border-radius:7px 7px 0 0; padding:0 7px; cursor:pointer; line-height:1.7; }
+  .swap s{ color:var(--muted); text-decoration-color:var(--rose-d); text-decoration-thickness:2px; }
+  .swap.hint{ box-shadow:0 0 0 3px rgba(255,122,69,.45); }
+  .swap.no{ background:var(--no-bg); border-bottom-color:var(--no-bd); animation:shake .35s; }
+  .swap.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); cursor:default; } .swap.ok b{ color:var(--ok-tx); }
+  #chgList .sent{ line-height:2.1; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>📝</span> UNIT 5 · PERIOD 11 · GRADE 9 · PB PAGE 62</div>
+    <div class="nb-wrap">
+      <div class="notebook" role="img" aria-label="A notebook page: Go straight along this street, go past the museum on your left, and take the next right. A DICTATION stamp with a tick.">
+        <div class="rings"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="nb-page">
+          <div class="nb-margin"><svg viewBox="0 0 80 120"><g stroke="#d9cbe6" stroke-width="7" stroke-linecap="round"><path d="M8 30 H72"/><path d="M8 84 H72"/><path d="M40 8 V112"/></g><path class="route" d="M10 84 H40 V30 H70" fill="none" stroke="#E85D75" stroke-width="3" stroke-linecap="round"/><circle cx="10" cy="84" r="5" fill="#3D2645"/><text x="70" y="26" text-anchor="middle" font-size="16">📍</text><text x="22" y="62" font-size="13">🏛️</text><text x="50" y="108" font-size="13">🕌</text></svg></div>
+          <div class="nb-lines">
+            <div class="nb-date">Dictation ✍ Period 11</div>
+            <div class="nb-line"><span class="wl" style="--d:.5s"><span class="txt" style="--d:.5s">Go straight along this street,</span><span class="pen">✏️</span></span></div>
+            <div class="nb-line"><span class="wl" style="--d:2.8s"><span class="txt" style="--d:2.8s">go past the museum on your left,</span><span class="pen">✏️</span></span></div>
+            <div class="nb-line"><span class="wl last" style="--d:5.1s"><span class="txt" style="--d:5.1s">and take the next right.</span><span class="pen">✏️</span></span></div>
+          </div>
+          <div class="nb-stamp">DICTATION ✓</div>
+        </div>
+      </div>
+    </div>
+    <div class="title-plate"><small>LISTEN · ORDER · WRITE · PERIOD 11</small><h1>A day in Istanbul</h1></div>
+    <div class="lesson-subtitle">يومٌ في إسطنبول — نكتبُ ما نسمع، ونرتّبُ الإرشادات، ونكتبُ فقرة 📝</div>
+    <p class="header-hint">جملةٌ افتتاحيّة، وكلماتٌ تعودُ على ما قبلَها، وكلماتٌ جديدةٌ بدلَ التكرار.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="dict"><span class="sign"><span class="tab-icon">🎧</span><span class="tab-lbl">Dictation</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="order"><span class="sign"><span class="tab-icon">🔢</span><span class="tab-lbl">Order</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="para"><span class="sign"><span class="tab-icon">✍️</span><span class="tab-lbl">Paragraph</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="change"><span class="sign"><span class="tab-icon">🔁</span><span class="tab-lbl">New Words</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#FF7A45;"><div class="aim-icon-wrap">🎧</div>
+        <h3 class="aim-title">Write what you hear</h3><p class="aim-desc">Listen to two sentences and write them down correctly.
+          <span class="ar">الاستماعُ إلى جملتَينِ وكتابتُهما كتابةً صحيحة.</span></p></div>
+      <div class="aim-card" style="--ac:#E85D75;"><div class="aim-icon-wrap">🔢</div>
+        <h3 class="aim-title">Order directions</h3><p class="aim-desc">Use words like <i>here, there, the place</i> to put directions in order.
+          <span class="ar">ترتيبُ الإرشاداتِ بالاستعانةِ بالكلماتِ التي تعودُ على ما قبلَها.</span></p></div>
+      <div class="aim-card" style="--ac:#7A5C99;"><div class="aim-icon-wrap">✍️</div>
+        <h3 class="aim-title">Write a paragraph</h3><p class="aim-desc">Choose a topic sentence, then write the paragraph without repeating the same words.
+          <span class="ar">اختيارُ جملةٍ افتتاحيّةٍ وكتابةُ الفقرةِ دونَ تكرارِ الكلمات.</span></p></div>
+      <div class="aim-card" style="--ac:#d4572a;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Write neatly and check your work before you hand it in.
+          <span class="ar">نكتبُ بخطٍّ مرتّبٍ ونراجعُ عملَنا قبلَ تسليمِه.</span></p></div>
+    </div>
+  </section>
+
+  <section class="tab-content" id="tab-dict">
+    <h2 class="section-title">🎧 Listen and write<span class="title-sub">استمعْ واكتبْ ما تسمع</span></h2>
+    <div class="activity-banner">
+      <div class="en">🎧 Activity 1: Listen and write down what you hear.</div>
+      <div class="ar">ستسمعُ جملتَين. ١- استمعْ أوّلًا دونَ كتابة. ٢- استمعْ مرّةً ثانيةً واكتبْ. ٣- استمعْ مرّةً ثالثةً وراجعْ ما كتبت، ثمَّ اضغطْ «Check».</div>
+    </div>
+    <div class="gplayer">
+      <b>🎧 CD 2 · Audio 21 · Two sentences</b>
+      <audio controls preload="metadata" src="../audio/grade9/unit5/track21.mp3" title="Audio 21" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio>
+    </div>
+    <div class="nb-sheet">
+      <label class="nb-lbl" for="d1">Sentence 1</label>
+      <textarea class="nb-area" id="d1" rows="3" spellcheck="false" autocomplete="off" placeholder="Write sentence 1 here…"></textarea>
+      <label class="nb-lbl" for="d2">Sentence 2</label>
+      <textarea class="nb-area" id="d2" rows="3" spellcheck="false" autocomplete="off" placeholder="Write sentence 2 here…"></textarea>
+      <div class="convo-tools"><button class="check-btn" type="button" id="dCheck">✅ Check my sentences</button></div>
+    </div>
+    <div id="dOut"></div>
+    <div class="res-line" id="dRes"></div>
+  </section>
+
+  <section class="tab-content" id="tab-order">
+    <h2 class="section-title">🔢 Order the directions<span class="title-sub">رتِّبِ الإرشادات</span></h2>
+    <div class="activity-banner">
+      <div class="en">🔢 Activity 2: Work in pairs. Order sentences to produce directions.</div>
+      <div class="ar">١- رقِّمِ الجُمَلَ من 1 إلى 6 (الجملةُ 1 معطاة). استعنْ بالكلماتِ المسطَّرة: ابحثْ عن الكلمةِ التي تعودُ عليها. ٢- تبادلْ مع زميلِك قراءةَ الإرشادات.</div>
+    </div>
+    <div class="sent-list" id="ordList"></div>
+    <div class="res-line" id="ordRes"></div>
+    <div class="ordered" id="ordered" hidden>
+      <h3>🗺️ The directions in order <span class="ar">الإرشاداتُ مرتَّبة</span></h3>
+      <ol id="ordOl"></ol>
+      <div class="convo-tools"><button class="check-btn" type="button" id="ordSay">🔊 Read out the directions</button></div>
+    </div>
+  </section>
+
+  <section class="tab-content" id="tab-para">
+    <h2 class="section-title">✍️ Write a paragraph<span class="title-sub">اكتبْ فقرة</span></h2>
+    <div class="activity-banner">
+      <div class="en">✍️ Activity 3: Work in pairs. Write a paragraph.</div>
+      <div class="ar">١- اخترْ أفضلَ جملةٍ افتتاحيّةٍ لبدايةِ الإرشادات (ابحثْ عن كلمةٍ فيها تتّفقُ مع كلمةٍ في الجملةِ 1). ٢- اكتبِ الفقرةَ كاملة.</div>
+    </div>
+    <h3 class="part-h">1 · Choose the best topic sentence.<span class="ar">اخترْ أفضلَ جملةٍ افتتاحيّة.</span></h3>
+    <div class="ts-first">Sentence 1: <i>Sultanahmet Park is a good place to start your tour of <u>ancient</u> Istanbul.</i></div>
+    <div class="options-list" id="tsList">
+      <button class="option-btn" type="button" data-ok="0">Istanbul has a history that goes back 2,700 years.</button>
+      <button class="option-btn" type="button" data-ok="1">When you visit Istanbul, you must see a little of its amazing past.</button>
+      <button class="option-btn" type="button" data-ok="0">Istanbul is an exciting modern city, but it also has a very long history.</button>
+    </div>
+    <div class="explanation" id="tsExp"></div>
+    <h3 class="part-h">2 · Write out the paragraph.<span class="ar">اكتبِ الفقرة: الجملةُ الافتتاحيّة، ثمَّ الجُمَلُ الستُّ بالترتيب.</span></h3>
+    <div class="nb-sheet">
+      <textarea class="nb-area big" id="paraArea" rows="9" spellcheck="false" placeholder="When you visit Istanbul, …"></textarea>
+      <div class="wc" id="paraWc">0 words</div>
+    </div>
+    <details class="drop-q" id="paraModel">
+      <summary>📖 Model paragraph <span class="ar">الفقرةُ النموذجيّة — افتحْها بعدَ الكتابة</span></summary>
+      <div class="drop-body"><p class="model-p" id="modelP"></p>
+        <div class="convo-tools"><button class="check-btn" type="button" id="modelSay">🔊 Listen</button></div></div>
+    </details>
+  </section>
+
+  <section class="tab-content" id="tab-change">
+    <h2 class="section-title">🔁 Don't repeat — change!<span class="title-sub">لا تكرِّرْ — غيِّرْ</span></h2>
+    <div class="activity-banner">
+      <div class="en">🔁 Activity 4: Read the information. Then do the task.</div>
+      <div class="ar">لا نحبُّ أن نستعملَ الكلماتِ نفسَها مرّةً بعدَ مرّة. لاحظْ كيف تغيَّرتِ الكلماتُ في الفقرةِ التي كتبتَها.</div>
+    </div>
+    <div class="chains">
+      <div class="chain"><span class="ck">Sultanahmet Park</span><span class="ar-r">➜</span><span class="cv">the gardens</span></div>
+      <div class="chain"><span class="ck">the Blue Mosque</span><span class="ar-r">➜</span><span class="cv">this famous example of Islamic architecture</span><span class="ar-r">➜</span><span class="cv">the place</span></div>
+    </div>
+    <h3 class="part-h">Use these words to make five changes.<span class="ar">اخترْ كلمةً من الصندوق، ثمَّ اضغطِ الكلمةَ المكرَّرةَ المشطوبةَ لتستبدلَها (خمسةُ تغييرات).</span></h3>
+    <div class="bank" id="bankC"><div class="bank-words">
+      <button class="bw" type="button" data-w="designs">designs</button><button class="bw" type="button" data-w="produce">produce</button>
+      <button class="bw" type="button" data-w="right">right</button><button class="bw" type="button" data-w="sport">sport</button>
+      <button class="bw" type="button" data-w="trip">trip</button></div></div>
+    <div class="sent-list" id="chgList">
+      <div class="sent"><span class="n">1</span><div>We're going on a city tour, and the <span class="swap" data-a="trip"><s>tour</s></span> is going to take four hours.</div></div>
+      <div class="sent"><span class="n">2</span><div>He loves all kinds of ball games, and he spends all his free time on <span class="swap" data-a="sport"><s>ball games</s></span>.</div></div>
+      <div class="sent"><span class="n">3</span><div>She writes very fast, and she tries to <span class="swap" data-a="produce"><s>write</s></span> a book every three months.</div></div>
+      <div class="sent"><span class="n">4</span><div>Engineers have to make sure that their plans are correct. If something is not <span class="swap" data-a="right"><s>correct</s></span> with the <span class="swap" data-a="designs"><s>plans</s></span> for a bridge, for example, it may collapse!</div></div>
+    </div>
+    <div class="res-line" id="chgRes"></div>
+  </section>
+
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>📝 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «الدفترِ المرتَّب».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">"Sultanahmet Park is a good place to start. When you leave the mosque, go back across <u>the gardens</u>." What does <i>the gardens</i> refer to?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>Sultanahmet Park</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>the Blue Mosque</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Aya Sofya</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">Which sentence should come FIRST in a set of directions?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>Inside, look round you at the beautiful blue walls.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>Sultanahmet Park is a good place to start your tour.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>When you leave, go back across the gardens.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">A good topic sentence …</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>tells the reader what the whole paragraph is about.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>gives the last direction.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>repeats the same words again and again.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">"We're going on a city tour, and the ______ is going to take four hours." Choose the best word.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>tour</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>trip</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>sport</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">"She paid for her apple juice with ______ coins."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>a little</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>much</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>a few</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">📝<small>NEAT NOTEBOOK</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff1e6">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+var BKEY = 'g9u5p11_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['📝','✏️','📒','🗺️','📍','✨','⭐','🕌'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+function playText(btn,text){ if(btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; } speak(text,btn); }
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','📝','⭐','✏️'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#FF7A45','#E85D75','#7A5C99','#ffd2bd','#3D2645'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+
+
+/* Activity 1 — dictation (CD 2 Audio 21) */
+var DICT=['Before she left the coffee shop, the customer took out her purse, and she paid for her apple juice with a few coins.',
+  'The government has decided to open a new museum with collections of jewellery and other things from the time of the Ottoman Empire.'];
+function normW(w){ return w.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9']/g,''); }
+function lcsMark(model, typed){
+  var a=model.map(normW), b=typed.map(normW).filter(Boolean), n=a.length, m=b.length, L=[], i, j;
+  for(i=0;i<=n;i++){ L.push(new Array(m+1).fill(0)); }
+  for(i=n-1;i>=0;i--) for(j=m-1;j>=0;j--) L[i][j]= a[i]===b[j] ? L[i+1][j+1]+1 : Math.max(L[i+1][j],L[i][j+1]);
+  var ok=new Array(n).fill(false); i=0; j=0;
+  while(i<n && j<m){ if(a[i]===b[j]){ ok[i]=true; i++; j++; } else if(L[i+1][j]>=L[i][j+1]) i++; else j++; }
+  return ok;
+}
+document.getElementById('dCheck').addEventListener('click',function(){
+  var out=document.getElementById('dOut'), total=0, got=0, html='';
+  DICT.forEach(function(s,k){
+    var typed=document.getElementById('d'+(k+1)).value.trim().split(/\s+/), words=s.split(' '), ok=lcsMark(words,typed);
+    total+=words.length; ok.forEach(function(x){ if(x) got++; });
+    html+='<div class="dict-card"><b>Sentence '+(k+1)+'</b><p>'+words.map(function(w,i){ return '<span class="'+(ok[i]?'wok':'wno')+'">'+w+'</span>'; }).join(' ')+'</p></div>';
+  });
+  out.innerHTML='<details class="drop-q" open><summary>📖 Check with the sentences <span class="ar">الأخضرُ كتبتَه، والأحمرُ ينقصُك أو فيه خطأ</span></summary><div class="drop-body">'+html+'</div></details>';
+  var pct=Math.round(got/total*100), line=document.getElementById('dRes'); line.className='res-line show good';
+  line.textContent='✍️ '+got+' / '+total+' ('+pct+'%)';
+  if(pct===100){ line.textContent='🏆 ممتاز! كتبتَ الجملتَينِ كاملتَين.'; confetti(); } else if(pct>=80){ sparkleAt(this); }
+});
+
+/* Activity 2 — order the directions (answers 6, 2, 1, 5, 4, 3) */
+var ORD=[
+  {n:6, t:'On your way, be sure to look up again and see the amazing architecture of <u class="ref" data-r="Aya Sofya">this building</u>, too – a church that has stood for 1,500 years.'},
+  {n:2, t:'<u class="ref" data-r="Sultanahmet Park">From here</u>, first turn left and go to the great Blue Mosque, a building that is 400 years old.'},
+  {n:1, t:'Sultanahmet Park is a good place to start your tour of ancient Istanbul.', given:true},
+  {n:5, t:'<u class="ref" data-r="leave the Blue Mosque">When you leave</u>, go back across <u class="ref" data-r="Sultanahmet Park">the gardens</u>, past <u class="ref" data-r="Sultanahmet Park">the place where you started</u>, to a much older building, Aya Sofya.'},
+  {n:4, t:'<u class="ref" data-r="inside the Blue Mosque">Inside</u>, look round you at the beautiful blue walls that give <u class="ref" data-r="the Blue Mosque">the place</u> its name.'},
+  {n:3, t:'<u class="ref" data-r="to the Blue Mosque">On your way there</u>, look up at the beautiful shapes of <u class="ref" data-r="the Blue Mosque">this famous example of Islamic architecture</u>.'}];
+function plain(h){ var d=document.createElement('div'); d.innerHTML=h; return d.textContent; }
+(function(){
+  var box=document.getElementById('ordList'), done=1;
+  ORD.forEach(function(o){
+    var d=document.createElement('div'); d.className='sent ord'+(o.given?' done':'');
+    d.innerHTML='<div class="ord-txt">'+o.t+'</div><div class="num-pick">'+(o.given?'<span class="nbox ok">1</span>':[2,3,4,5,6].map(function(k){return '<button type="button" class="nbox">'+k+'</button>';}).join(''))+'</div>';
+    d.querySelectorAll('button.nbox').forEach(function(b){ b.addEventListener('click',function(){
+      if(d.classList.contains('done')) return;
+      if(+b.textContent!==o.n){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+      d.classList.add('done'); d.querySelector('.num-pick').innerHTML='<span class="nbox ok">'+o.n+'</span>'; sparkleAt(d); done++;
+      var line=document.getElementById('ordRes'); line.className='res-line show good'; line.textContent='✅ '+done+' / 6';
+      if(done===6){ line.textContent='🏆 أحسنت! رتّبتَ الإرشاداتِ كلَّها. اضغطْ أيَّ كلمةٍ مسطَّرةٍ لترى ما تعودُ عليه.'; confetti(); finish(); }
+    }); });
+    box.appendChild(d);
+  });
+  box.addEventListener('click',function(e){ var r=e.target.closest('.ref'); if(!r) return;
+    if(!r.closest('.done')){ r.classList.add('peek'); setTimeout(function(){r.classList.remove('peek')},900); return; }
+    var on=r.classList.contains('show'); box.querySelectorAll('.ref.show').forEach(function(x){x.classList.remove('show')}); if(!on) r.classList.add('show'); });
+  function finish(){
+    var sorted=ORD.slice().sort(function(a,b){return a.n-b.n;});
+    document.getElementById('ordOl').innerHTML=sorted.map(function(o){ return '<li>'+o.t.replace(/class="ref"/g,'class="ref2"')+'</li>'; }).join('');
+    document.getElementById('ordered').hidden=false;
+    document.getElementById('modelP').innerHTML='<b>When you visit Istanbul, you must see a little of its amazing past.</b> '+sorted.map(function(o){return plain(o.t);}).join(' ');
+  }
+  document.getElementById('ordSay').addEventListener('click',function(){ speak(ORD.slice().sort(function(a,b){return a.n-b.n;}).map(function(o){return plain(o.t);}).join(' '),this); });
+})();
+
+/* Activity 3 — topic sentence + paragraph */
+(function(){
+  var list=document.getElementById('tsList'), exp=document.getElementById('tsExp'), done=false;
+  list.querySelectorAll('.option-btn').forEach(function(b){ b.addEventListener('click',function(){
+    if(done) return;
+    if(b.dataset.ok!=='1'){ b.classList.add('wrong'); exp.className='explanation show'; exp.innerHTML='حاولْ مرّةً أخرى: ابحثْ عن كلمةٍ في الجملةِ الافتتاحيّةِ تتّفقُ مع كلمةِ <strong>ancient</strong> في الجملةِ 1.'; return; }
+    done=true; b.classList.add('correct'); list.querySelectorAll('.option-btn').forEach(function(x){x.disabled=true;}); sparkleAt(b);
+    exp.className='explanation show'; exp.innerHTML='✅ صحيح! كلمةُ <strong>past</strong> (الماضي) تتّفقُ مع كلمةِ <strong>ancient</strong> (القديمة) في الجملةِ 1، والجملةُ تخاطبُ الزائرَ مباشرةً: <strong>When you visit Istanbul…</strong>';
+  }); });
+  var area=document.getElementById('paraArea'), wc=document.getElementById('paraWc');
+  area.addEventListener('input',function(){ var n=(area.value.trim().match(/\S+/g)||[]).length; wc.textContent=n+' words'; wc.classList.toggle('good',n>=100); });
+  if(!document.getElementById('modelP').textContent){
+    var sorted=ORD.slice().sort(function(a,b){return a.n-b.n;});
+    document.getElementById('modelP').innerHTML='<b>When you visit Istanbul, you must see a little of its amazing past.</b> '+sorted.map(function(o){return plain(o.t);}).join(' ');
+  }
+  document.getElementById('modelSay').addEventListener('click',function(){ speak(document.getElementById('modelP').textContent,this); });
+})();
+
+/* Activity 4 — five changes with one shared word bank */
+(function(){
+  var bank=document.getElementById('bankC'), sel=null, done=0;
+  bank.querySelectorAll('.bw').forEach(function(w){ w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return; if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+    bank.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w; }); });
+  document.querySelectorAll('#chgList .swap').forEach(function(s){ s.addEventListener('click',function(){
+    if(s.classList.contains('ok')) return;
+    if(!sel){ s.classList.add('hint'); setTimeout(function(){s.classList.remove('hint')},700); return; }
+    if(sel.dataset.w!==s.dataset.a){ s.classList.add('no'); setTimeout(function(){s.classList.remove('no')},450); return; }
+    s.classList.add('ok'); s.insertAdjacentHTML('beforeend',' <b>'+s.dataset.a+'</b>'); sel.classList.add('used'); sel.classList.remove('sel'); sel=null; done++; sparkleAt(s);
+    var line=document.getElementById('chgRes'); line.className='res-line show good'; line.textContent='✅ '+done+' / 5';
+    if(done===5){ line.textContent='🏆 رائع! أجريتَ التغييراتِ الخمسة، وصارتِ الجُمَلُ أجملَ دونَ تكرار.'; confetti(); }
+  }); });
+})();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Neat notebook!'; msg='رائع! تكتبُ ما تسمع، وترتّبُ الإرشادات، وتكتبُ فقرةً بلا تكرار 📝🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعِ الأنشطةَ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='📝 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
