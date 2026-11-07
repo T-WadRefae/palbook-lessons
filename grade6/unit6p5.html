@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy food - Grade 6 Unit 6 Period 5 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 6 palette : berry smoothie ===== */
+  :root{
+    --sunset:#C2185B; --sunset-d:#8E0F42;
+    --rose:#F06292;   --rose-d:#D81B60;
+    --lilac:#3F51B5;  --lilac-d:#2C3A8C;
+    --cream:#FFF5F8;  --cream-d:#F8D9E4;
+    --aub:#3A1030;    --aub-d:#26091F;
+    --mint:#7ED3B2;   --mint-d:#3FA37E;
+    --ink:#2b1626; --muted:#6f5a68; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a soft food-pyramid pattern */
+    background-image:
+      linear-gradient(135deg, rgba(240,98,146,.06) 25%, transparent 25%),
+      linear-gradient(225deg, rgba(126,211,178,.09) 25%, transparent 25%),
+      radial-gradient(circle at 50% 50%, rgba(63,81,181,.05) 2px, transparent 2.5px);
+    background-size:64px 64px,64px 64px,22px 22px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+  /* ===== HEADER frame (shared by the unit; each period draws its own scene) ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:14px 12px 26px; background:linear-gradient(180deg, var(--aub-d) 0%, var(--aub) 22%, var(--sunset-d) 52%, var(--sunset) 78%, var(--rose) 100%); }
+  .lesson-header::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:14px; background:radial-gradient(circle at 10px -2px, transparent 11px, var(--cream) 12px) 0 0/20px 14px repeat-x; }
+  .header-inner{ max-width:960px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ position:relative; z-index:6; display:inline-flex; align-items:center; gap:9px; background:var(--cream); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:14px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--cream-d), 0 8px 18px rgba(0,0,0,.3); }
+  .title-plate{ display:inline-block; margin:18px auto 8px; padding:6px 22px 8px; border:2px solid rgba(255,245,248,.85); border-radius:14px; background:rgba(38,9,31,.35); direction:ltr; }
+  .title-plate small{ display:block; color:#ffc4da; font-size:11px; letter-spacing:.2em; font-family:'Fredoka',sans-serif; }
+  .title-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(24px,5vw,36px); color:#fff; line-height:1.1; }
+  .lesson-subtitle{ color:#fff; font-weight:800; font-size:clamp(14px,2.8vw,18px); margin-top:4px; text-shadow:0 2px 8px rgba(38,9,31,.5); }
+  .header-hint{ color:#fff5f8; font-size:13px; margin-top:6px; font-weight:600; padding-bottom:6px; }
+  @keyframes popin{ from{ opacity:0; transform:scale(.3);} to{ opacity:1; transform:none;} }
+  @keyframes fadeup{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none;} }
+  /* P5 scene: a smoothie blender — "should" + "because" blend into good advice */
+  .blend-scene{ display:flex; align-items:flex-end; justify-content:center; gap:clamp(10px,4vw,30px); direction:ltr; max-width:640px; margin:0 auto; }
+  .blender{ position:relative; width:clamp(110px,26vw,150px); }
+  .jar{ position:relative; height:clamp(140px,30vw,180px); border:4px solid rgba(255,255,255,.9); border-top-width:6px; border-radius:10px 10px 26px 26px; background:rgba(255,255,255,.18); overflow:hidden; }
+  .fill{ position:absolute; left:0; right:0; bottom:0; height:0; background:linear-gradient(180deg,#f48fb1,#C2185B); animation:fill 1.4s 2.4s ease-in-out forwards; }
+  @keyframes fill{ to{ height:78%; } }
+  .fruit{ position:absolute; left:var(--x); top:-40px; font-size:clamp(22px,5vw,30px); animation:dropin .7s ease-in forwards, spin .5s linear 2.3s 2 both; animation-delay:var(--d),calc(var(--d) + 1.6s); }
+  @keyframes dropin{ to{ top:var(--y); } }
+  @keyframes spin{ to{ transform:rotate(360deg) scale(.2); opacity:0; } }
+  .base{ height:clamp(40px,9vw,52px); margin:0 -8px; background:linear-gradient(180deg,#3F51B5,#2C3A8C); border-radius:8px 8px 14px 14px; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 10px 20px rgba(0,0,0,.35); }
+  .base i{ width:12px; height:12px; border-radius:50%; background:#7ED3B2; box-shadow:0 0 8px #7ED3B2; } .base i+i{ background:#FFD23F; box-shadow:0 0 8px #FFD23F; }
+  .adv-card{ background:#fff; border-radius:18px; padding:12px 16px; text-align:left; max-width:310px; box-shadow:0 12px 24px rgba(0,0,0,.35); opacity:0; animation:fadeup .6s 3.6s forwards; font-family:'Fredoka',sans-serif; }
+  .adv-card .k{ font-size:11px; letter-spacing:.16em; color:var(--rose-d); font-weight:700; }
+  .adv-card p{ color:var(--aub); font-size:clamp(14px,3.2vw,18px); font-weight:600; line-height:1.4; } .adv-card b{ color:var(--sunset); } .adv-card u{ text-decoration-color:var(--mint-d); text-decoration-thickness:3px; }
+  @media (prefers-reduced-motion:reduce){ .fruit{ display:none; } .fill{ animation:none; height:78%; } .adv-card{ animation:none; opacity:1; } }
+  /* ===== TABS : FOOD-PYRAMID BLOCKS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{
+    position:relative; background:linear-gradient(180deg,#fff,#ffeef4); border:3px solid var(--cream-d);
+    border-radius:20px; padding:30px 12px 14px; box-shadow:0 8px 20px rgba(58,16,48,.14);
+    display:flex; gap:7px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .tabs-container::before{ content:''; position:absolute; left:50%; bottom:8px; transform:translateX(-50%); width:min(620px,92%); height:calc(100% - 16px);
+    clip-path:polygon(50% 0,100% 100%,0 100%); background:linear-gradient(180deg, rgba(240,98,146,.20), rgba(255,210,63,.18) 55%, rgba(126,211,178,.30)); pointer-events:none; }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{ position:relative; background:transparent; border:none; cursor:pointer; padding:0; flex:1 0 auto; min-width:92px; max-width:132px;
+    filter:drop-shadow(0 4px 0 rgba(58,16,48,.18)); transition:transform .3s cubic-bezier(.4,0,.2,1); }
+  .tab-btn:hover{ transform:translateY(-3px); }
+  .tab-btn:nth-child(6n+1){ --tc:#c9f0df; --tb:#3FA37E; }
+  .tab-btn:nth-child(6n+2){ --tc:#fff1b8; --tb:#d9a400; }
+  .tab-btn:nth-child(6n+3){ --tc:#ffd6e4; --tb:#D81B60; }
+  .tab-btn:nth-child(6n+4){ --tc:#dfe3ff; --tb:#3F51B5; }
+  .tab-btn:nth-child(6n+5){ --tc:#ffe0cc; --tb:#e8590c; }
+  .tab-btn:nth-child(6n+6){ --tc:#efd9f7; --tb:#8e44ad; }
+  .sign{ width:100%; background:var(--tc); color:var(--aub); clip-path:polygon(9% 0,91% 0,100% 100%,0 100%);
+    border-top:4px solid var(--tb); padding:8px 12px 7px; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; transition:all .3s ease; }
+  .tab-icon{ font-size:20px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12.5px; line-height:1.1; text-align:center; }
+  .post{ display:none; }
+  .tab-btn.active{ transform:translateY(-4px); }
+  .tab-btn.active .sign{ background:linear-gradient(180deg,var(--rose),var(--sunset)); color:#fff; border-top-color:var(--aub); }
+  .tab-btn.active .tab-lbl{ font-weight:700; }
+  .tab-btn.active::before{ content:'🍓'; position:absolute; top:-24px; left:50%; transform:translateX(-50%); font-size:19px;
+    animation:berry-drop .55s cubic-bezier(.3,1.6,.5,1); }
+  @keyframes berry-drop{ from{ transform:translate(-50%,-18px); opacity:0; } to{ transform:translate(-50%,0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #f3d6e1; box-shadow:0 6px 0 #ecc4d4, 0 8px 20px rgba(58,16,48,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #f3d6e1; box-shadow:0 6px 0 #ecc4d4, 0 8px 15px rgba(58,16,48,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(240,98,146,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #f3d6e1; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #ecc4d4;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fff8fb,#ffe6ef); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a1446; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(142,15,66,.4);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(194,24,91,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(63,81,181,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(63,81,181,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #f3d6e1; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #ecc4d4; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff0f5,#ffe0ec); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a1440; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #f3d6e1; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #ecc4d4;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fff7fa; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f5dbe5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #f3d6e1; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff2f7,#ffe1ec); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a1446; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(58,16,48,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(194,24,91,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #f3d6e1; box-shadow:0 8px 0 #ecc4d4, 0 12px 28px rgba(58,16,48,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(58,16,48,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,214,0,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffe680; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(63,81,181,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(240,98,146,.15); }
+  .find-word.found{ background:rgba(240,98,146,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #f3d6e1; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #ecc4d4; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #f3d6e1; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'🍓'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #f3d6e1; box-shadow:0 6px 0 #ecc4d4; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #f3d6e1; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fff7fa; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #f3d6e1; box-shadow:0 8px 0 #ecc4d4; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffd0e1; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(240,98,146,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show,.tab-btn.active::before{ animation:none !important; }
+  }
+
+  /* ===== Unit 6 shared widgets ===== */
+  [hidden]{ display:none !important; }
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); direction:ltr; text-align:left; margin:18px 0 8px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .convo-tools{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+  .check-btn{ direction:ltr; unicode-bidi:isolate; background:linear-gradient(135deg,var(--rose),var(--sunset)); color:#fff; border:none; padding:9px 16px; border-radius:13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; box-shadow:0 4px 0 var(--aub); }
+  .check-btn.ghost{ background:#fff; color:var(--lilac-d); border:2px solid var(--lilac); box-shadow:0 4px 0 var(--cream-d); }
+  .check-btn.playing{ background:var(--aub); color:#fff; }
+  .say-btn{ background:var(--cream); border:2px solid var(--cream-d); color:var(--sunset); border-radius:20px; padding:1px 9px; cursor:pointer; font-size:14px; flex-shrink:0; }
+  .say-btn.playing{ background:var(--sunset); color:#fff; }
+  .pick{ display:inline-flex; gap:5px; flex-wrap:wrap; vertical-align:middle; margin:0 3px; }
+  .pk{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:2px 11px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; }
+  .pk.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .pk.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .pk.off{ opacity:.35; text-decoration:line-through; cursor:default; }
+  .story{ display:grid; gap:12px; }
+  .scene{ background:#fff; border:3px solid #f3d6e1; border-radius:18px; padding:13px 15px; box-shadow:0 5px 0 #ecc4d4; direction:ltr; text-align:left; display:flex; gap:12px; align-items:flex-start; }
+  .scene .pic{ font-size:34px; line-height:1; flex-shrink:0; }
+  .scene .lines{ flex:1; display:grid; gap:6px; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.75; }
+  .scene .who{ display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--lilac); border-radius:8px; padding:0 8px; margin-right:6px; }
+  .scene .who.n{ background:var(--mint-d); }
+  .everyday{ background:linear-gradient(135deg,#e9fbf3,#d3f3e6); border:3px dashed var(--mint-d); border-radius:16px; padding:12px 16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; margin-top:14px; }
+  .everyday h4{ color:var(--mint-d); font-size:15px; } .everyday p{ font-size:16px; color:var(--aub); }
+  .nb-area{ width:100%; border:2px solid #f3d6e1; border-radius:12px; resize:vertical; outline:none; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.7; padding:8px 11px; background:#fff; direction:ltr; }
+  .nb-area:focus, .tinput:focus{ border-color:var(--lilac); box-shadow:0 0 0 3px rgba(63,81,181,.18); }
+  .tinput{ border:2px solid #f3d6e1; border-radius:10px; padding:5px 10px; font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--ink); background:#fff; outline:none; direction:ltr; }
+  .tinput.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .tinput.no{ background:var(--no-bg); border-color:var(--no-bd); }
+  .model{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.8; color:var(--ok-tx); background:var(--ok-bg); border-radius:12px; padding:8px 12px; margin-top:6px; }
+  .q-list{ display:grid; gap:12px; }
+  .qa{ background:#fff; border:3px solid #f3d6e1; border-radius:16px; padding:12px 14px; box-shadow:0 5px 0 #ecc4d4; direction:ltr; text-align:left; }
+  .qa .q{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); font-weight:600; margin-bottom:8px; display:flex; gap:9px; align-items:baseline; }
+  .qa .q .n{ background:var(--sunset); color:#fff; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .opts{ display:flex; flex-wrap:wrap; gap:7px; }
+  .op{ background:#fff7fa; border:2px solid #f3d6e1; border-radius:12px; padding:6px 13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); }
+  .op.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; } .op.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .op:disabled{ cursor:default; }
+
+  .hint-v{ align-self:center; font-family:'Fredoka',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; }
+  .tinput.wide{ width:100%; }
+  .ask-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+  .askc{ background:#fff; border:3px solid #f3d6e1; border-radius:18px; padding:14px; box-shadow:0 5px 0 #ecc4d4; direction:ltr; text-align:left; display:grid; gap:10px; font-family:'Fredoka',sans-serif; }
+  .askc .aq{ font-size:16.5px; color:var(--aub); font-weight:600; display:flex; gap:7px; align-items:center; flex-wrap:wrap; } .askc .em{ font-size:28px; }
+  .askc .ans{ background:#e9fbf3; border-radius:12px; padding:8px 12px; color:var(--ok-tx); font-size:15.5px; font-weight:600; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🥤</span> UNIT 6 · PERIOD 5 · GRADE 6 · PB PAGE 44</div>
+    <div class="blend-scene" role="img" aria-label="Fruit and milk drop into a blender and make a berry smoothie, next to an advice card: You should drink milk because it is healthy."><div class="blender"><div class="jar"><span class="fruit" style="--x:10%;--d:.2s;--y:58%">🍓</span><span class="fruit" style="--x:50%;--d:.5s;--y:40%">🍌</span><span class="fruit" style="--x:26%;--d:.8s;--y:30%">🫐</span><span class="fruit" style="--x:58%;--d:1.1s;--y:62%">🥛</span><span class="fruit" style="--x:16%;--d:1.4s;--y:12%">🍎</span><div class="fill"></div></div><div class="base"><i></i><i></i></div></div><div class="adv-card"><span class="k">GOOD ADVICE</span><p>You <b>should</b> drink a smoothie <u>because</u> it is healthy! 🥤</p></div></div>
+    <div class="title-plate"><small>THINK · WRITE · ASK · PERIOD 5</small><h1>Healthy food</h1></div>
+    <div class="lesson-subtitle">الطعامُ الصحّيّ — نخلطُ «should» مع «because» فنحصلُ على نصيحةٍ جيّدة 🥤</div>
+    <p class="header-hint">نختارُ الفعلَ الصحيح، ونكتبُ النصائح، ونسألُ ونُجيب.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="think"><span class="sign"><span class="tab-icon">🤔</span><span class="tab-lbl">Think</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="advice"><span class="sign"><span class="tab-icon">✍️</span><span class="tab-lbl">Write Advice</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="ask"><span class="sign"><span class="tab-icon">💬</span><span class="tab-lbl">Ask &amp; Answer</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#C2185B;"><div class="aim-icon-wrap">🤔</div>
+        <h3 class="aim-title">Choose the verb</h3><p class="aim-desc">Complete sentences with <i>is / are</i> and <i>make / makes</i>.
+          <span class="ar">إكمالُ الجُمَلِ بالصيغةِ الصحيحةِ للفعل.</span></p></div>
+      <div class="aim-card" style="--ac:#3F51B5;"><div class="aim-icon-wrap">✍️</div>
+        <h3 class="aim-title">Write advice</h3><p class="aim-desc">Write advice with <i>You should … / You shouldn't …</i>
+          <span class="ar">كتابةُ النصائحِ باستعمالِ should وshouldn't.</span></p></div>
+      <div class="aim-card" style="--ac:#3FA37E;"><div class="aim-icon-wrap">💬</div>
+        <h3 class="aim-title">Ask and answer</h3><p class="aim-desc">Ask and answer questions about food and drink.
+          <span class="ar">السؤالُ والإجابةُ عن الطعامِ والشراب.</span></p></div>
+      <div class="aim-card" style="--ac:#F06292;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Give friendly advice and give a reason with <i>because</i>.
+          <span class="ar">نقدّمُ النصيحةَ بلطفٍ ونذكرُ السببَ بـ because.</span></p></div>
+    </div>
+  </section>
+  <section class="tab-content" id="tab-think">
+    <h2 class="section-title">🤔 Read and think<span class="title-sub">اقرأْ وفكِّرْ واخترِ الكلمةَ الصحيحة</span></h2>
+    <div class="activity-banner">
+      <div class="en">🤔 Activity 1: Read and think. Complete the sentences with correct words.</div>
+      <div class="ar">انظرْ إلى الكلمةِ قبلَ الفراغ: <b>it</b> (مفرد) ← is / makes، و<b>they</b> (جمع) ← are / make.</div>
+    </div>
+
+    <div class="sent-list"><div class="sent"><span class="n">1</span><div>Amy should eat vegetable soup because it <span class="pick" data-a="is"><button class="pk" type="button">is</button><button class="pk" type="button">are</button></span> good for her.</div><span class="hint-v">(be)</span></div>
+<div class="sent"><span class="n">2</span><div>Rania shouldn't eat lots of fried food because it <span class="pick" data-a="makes"><button class="pk" type="button">make</button><button class="pk" type="button">makes</button></span> her fat.</div><span class="hint-v">(make)</span></div>
+<div class="sent"><span class="n">3</span><div>The children shouldn't drink fizzy drinks because they <span class="pick" data-a="are"><button class="pk" type="button">is</button><button class="pk" type="button">are</button></span> very sweet.</div><span class="hint-v">(be)</span></div>
+<div class="sent"><span class="n">4</span><div>Omar should have rice and meat because they <span class="pick" data-a="make"><button class="pk" type="button">make</button><button class="pk" type="button">makes</button></span> him strong.</div><span class="hint-v">(make)</span></div>
+</div>
+    <div class="res-line" id="thinkRes"></div>
+  </section>
+  <section class="tab-content" id="tab-advice">
+    <h2 class="section-title">✍️ Think and write<span class="title-sub">فكِّرْ واكتبِ النصيحةَ الصحيحة</span></h2>
+    <div class="activity-banner">
+      <div class="en">✍️ Activity 2: Think and write the correct answers. What should / shouldn't they do?</div>
+      <div class="ar">اكتبْ نصيحةً كاملةً من الكلمات: ابدأْ بـ <b>You should</b> أو <b>You shouldn't</b>، وابدأْ بحرفٍ كبيرٍ وانتهِ بنقطة.</div>
+    </div>
+
+    <div class="q-list"><div class="qa ex"><div class="q"><span class="n">✓</span><span>eat / healthy</span></div><div class="model">You should eat healthy food.</div></div><div class="qa ad" data-m="You should only eat a little ice-cream."><div class="q"><span class="n">1</span><span>only eat / a little ice-cream</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" placeholder="You should …"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="model" hidden></div></div><div class="qa ad" data-m="You should eat meat and rice."><div class="q"><span class="n">2</span><span>eat / meat and rice</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" placeholder="You should …"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="model" hidden></div></div><div class="qa ad" data-m="You shouldn&#39;t eat lots of fried food."><div class="q"><span class="n">3</span><span>eat / lots of / fried food</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" placeholder="You should …"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="model" hidden></div></div><div class="qa ad" data-m="You shouldn&#39;t buy burgers or drink fizzy drinks."><div class="q"><span class="n">4</span><span>buy / burgers / fizzy drinks</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" placeholder="You should …"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="model" hidden></div></div></div>
+    <div class="res-line" id="adRes"></div>
+  </section>
+  <section class="tab-content" id="tab-ask">
+    <h2 class="section-title">💬 Ask and answer<span class="title-sub">اسألْ زميلَك وأجِبْ عن أسئلتِه</span></h2>
+    <div class="activity-banner">
+      <div class="en">💬 Activity 3: Work in pairs. Ask and answer questions about food and drink.</div>
+      <div class="ar">الطالبُ A يسأل، والطالبُ B يُجيب: ١- اخترْ <b>Yes, you should</b> أو <b>No, you shouldn't</b>. ٢- اخترِ السبب. ثمَّ استمعْ إلى الحوارِ وتبادلا الأدوار.</div>
+    </div>
+
+    <div class="ask-grid"><div class="askc" data-yn="y" data-r="h"><div class="aq"><span class="em">🥦</span><b>A:</b> Should I eat vegetables? <button class="say-btn" type="button">🔊</button></div><div class="opts yn"><button class="op" type="button" data-v="y">Yes, you should.</button><button class="op" type="button" data-v="n">No, you shouldn't.</button></div><div class="opts rs" hidden><button class="op" type="button" data-v="h">because they are healthy</button><button class="op" type="button" data-v="s">because they are very sweet</button><button class="op" type="button" data-v="f">because it makes you fat</button><button class="op" type="button" data-v="g">because it's good for you</button></div><div class="ans" hidden></div></div><div class="askc" data-yn="n" data-r="s"><div class="aq"><span class="em">🥤</span><b>A:</b> Should I drink fizzy drinks? <button class="say-btn" type="button">🔊</button></div><div class="opts yn"><button class="op" type="button" data-v="y">Yes, you should.</button><button class="op" type="button" data-v="n">No, you shouldn't.</button></div><div class="opts rs" hidden><button class="op" type="button" data-v="h">because they are healthy</button><button class="op" type="button" data-v="s">because they are very sweet</button><button class="op" type="button" data-v="f">because it makes you fat</button><button class="op" type="button" data-v="g">because it's good for you</button></div><div class="ans" hidden></div></div><div class="askc" data-yn="n" data-r="f"><div class="aq"><span class="em">🍟</span><b>A:</b> Should I eat fried food? <button class="say-btn" type="button">🔊</button></div><div class="opts yn"><button class="op" type="button" data-v="y">Yes, you should.</button><button class="op" type="button" data-v="n">No, you shouldn't.</button></div><div class="opts rs" hidden><button class="op" type="button" data-v="h">because they are healthy</button><button class="op" type="button" data-v="s">because they are very sweet</button><button class="op" type="button" data-v="f">because it makes you fat</button><button class="op" type="button" data-v="g">because it's good for you</button></div><div class="ans" hidden></div></div><div class="askc" data-yn="y" data-r="g"><div class="aq"><span class="em">💧</span><b>A:</b> Should I drink water? <button class="say-btn" type="button">🔊</button></div><div class="opts yn"><button class="op" type="button" data-v="y">Yes, you should.</button><button class="op" type="button" data-v="n">No, you shouldn't.</button></div><div class="opts rs" hidden><button class="op" type="button" data-v="h">because they are healthy</button><button class="op" type="button" data-v="s">because they are very sweet</button><button class="op" type="button" data-v="f">because it makes you fat</button><button class="op" type="button" data-v="g">because it's good for you</button></div><div class="ans" hidden></div></div></div>
+    <div class="res-line" id="askRes"></div>
+  </section>
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>🥤 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «خلّاطِ النصائح».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">"Vegetable soup is healthy because it ______ good for you."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>is</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>are</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>be</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">"Rice and meat ______ you strong."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>makes</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>make</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>making</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">Which is good advice?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>You should eat lots of fried food.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>You shouldn't drink lots of fizzy drinks.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>You should eat a lot of ice-cream.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">"Should I drink water?" — "______"</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>Yes, you should.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>Yes, you shouldn't.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>No, I should.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">"Fizzy drinks are not healthy ______ they are very sweet."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>because</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>but</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>and</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🥤<small>ADVICE BLENDER</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff5f8">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+var BKEY = 'g6u6p5_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['🥤','🍓','🍌','🫐','🥛','🍎','💡','✨'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  if(btn && btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','🍓','⭐','🥤'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#C2185B','#F06292','#3F51B5','#7ED3B2','#FFD23F'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+function hw(w,ar){ return '<span class="hover-word">'+w+'<span class="tooltip">'+ar+'</span></span>'; }
+function pr(w,ar){ return '<span class="pronoun">'+w+'<span class="tooltip">تعودُ على: '+ar+'</span></span>'; }
+function txt(h){ var d=document.createElement('div'); d.innerHTML=h; d.querySelectorAll('.tooltip').forEach(function(t){t.remove()}); return d.textContent; }
+/* reusable: one shared word bank → blanks (.blank[data-bank][data-a]) */
+function makeBank(id, doneMsg){
+  var box=document.getElementById(id), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){ w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return; if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+    box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w; }); });
+  var blanks=document.querySelectorAll('.blank[data-bank="'+id+'"]'), line=document.getElementById(id+'Res');
+  blanks.forEach(function(bl){ bl.addEventListener('click',function(){
+    if(bl.classList.contains('ok')) return;
+    if(!sel || sel.dataset.w!==bl.dataset.a){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+    bl.textContent=sel.dataset.w; bl.classList.add('ok');
+    if(!box.dataset.reuse){ sel.classList.add('used'); } sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+    var ok=document.querySelectorAll('.blank[data-bank="'+id+'"].ok').length;
+    line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+    if(ok===blanks.length){ line.textContent=doneMsg; confetti(); var cb=window['onBankDone_'+id]; if(cb) cb(); }
+  }); });
+}
+/* reusable: choose-the-right-word items (.pick[data-a] with .pk buttons) */
+function makePicks(sel, resId, doneMsg){
+  var picks=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  picks.forEach(function(p){ p.querySelectorAll('.pk').forEach(function(b){ b.addEventListener('click',function(){
+    if(p.dataset.done) return;
+    if(b.textContent.trim()!==p.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    p.dataset.done='1'; b.classList.add('ok'); p.querySelectorAll('.pk').forEach(function(x){ if(x!==b) x.classList.add('off'); }); sparkleAt(b); done++;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+picks.length;
+    if(done===picks.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+/* reusable: one-answer questions (.qa[data-a] with .op buttons) */
+function makeQA(sel, resId, doneMsg){
+  var qs=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  qs.forEach(function(q){ q.querySelectorAll('.op').forEach(function(b){ b.addEventListener('click',function(){
+    if(q.dataset.done) return;
+    if(b.dataset.v!==q.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    q.dataset.done='1'; b.classList.add('ok'); q.querySelectorAll('.op').forEach(function(x){x.disabled=true;}); sparkleAt(b); done++;
+    var m=q.querySelector('.model'); if(m) m.hidden=false;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+qs.length;
+    if(done===qs.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+
+makePicks('#tab-think .pick','thinkRes','🏆 أحسنت! is وmakes مع it، وare وmake مع they.');
+function norm(s){ return s.toLowerCase().replace(/should not/g,"shouldn't").replace(/[’]/g,"'").replace(/[^a-z' ]/g,' ').replace(/\s+/g,' ').trim(); }
+(function(){
+  var done=0, qs=document.querySelectorAll('.qa.ad');
+  qs.forEach(function(q){ var inp=q.querySelector('input'), b=q.querySelector('.check-btn'), m=q.querySelector('.model');
+    b.addEventListener('click',function(){
+      if(q.dataset.done) return; var v=inp.value.trim(); if(!v){ inp.focus(); return; }
+      var ok=norm(v)===norm(q.dataset.m);
+      var form=/^[A-Z]/.test(v) && /\.$/.test(v);
+      if(ok){ q.dataset.done='1'; inp.classList.add('ok'); inp.readOnly=true; sparkleAt(b); done++;
+        m.hidden=false; m.innerHTML=form?'✅ ممتاز! نصيحةٌ صحيحة: '+q.dataset.m:'✅ الكلماتُ صحيحة! تذكَّرْ: حرفٌ كبيرٌ في البداية، ونقطةٌ في النهاية — '+q.dataset.m;
+        var l=document.getElementById('adRes'); l.className='res-line show good'; l.textContent='✍️ '+done+' / '+qs.length;
+        if(done===qs.length){ l.textContent='🏆 رائع! كتبتَ النصائحَ الأربعَ كلَّها.'; confetti(); } }
+      else { inp.classList.add('no'); setTimeout(function(){inp.classList.remove('no')},700); q.dataset.tries=(+(q.dataset.tries||0))+1;
+        m.hidden=false; m.innerHTML=q.dataset.tries>1?'💡 الإجابة: '+q.dataset.m:'💡 حاولْ مرّةً أخرى: هل هي نصيحةٌ بـ should أم shouldn\'t؟ ورتِّبِ الكلماتِ كما في المثال.'; }
+    }); });
+})();
+(function(){
+  var done=0, cards=document.querySelectorAll('.askc');
+  cards.forEach(function(c){
+    var q=c.querySelector('.aq').textContent.replace('A:','').replace('🔊','').trim().replace(/^\S+\s/,'');
+    c.querySelector('.aq .say-btn').addEventListener('click',function(){ speak(q,this); });
+    c.querySelectorAll('.yn .op').forEach(function(b){ b.addEventListener('click',function(){
+      if(c.dataset.yn_ok) return;
+      if(b.dataset.v!==c.dataset.yn){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+      c.dataset.yn_ok=b.textContent; b.classList.add('ok'); c.querySelectorAll('.yn .op').forEach(function(x){x.disabled=true;}); c.querySelector('.rs').hidden=false; sparkleAt(b); }); });
+    c.querySelectorAll('.rs .op').forEach(function(b){ b.addEventListener('click',function(){
+      if(c.dataset.done) return;
+      if(b.dataset.v!==c.dataset.r){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+      c.dataset.done='1'; b.classList.add('ok'); c.querySelectorAll('.rs .op').forEach(function(x){x.disabled=true;});
+      var a=c.dataset.yn_ok.replace(/\.$/,'')+' '+b.textContent+'.';
+      var ans=c.querySelector('.ans'); ans.hidden=false; ans.innerHTML='<b>B:</b> '+a+' <button class="say-btn" type="button">🔊</button>';
+      ans.querySelector('.say-btn').addEventListener('click',function(){ speak(q+' ... '+a,this); });
+      sparkleAt(b); done++; var l=document.getElementById('askRes'); l.className='res-line show good'; l.textContent='💬 '+done+' / '+cards.length;
+      if(done===cards.length){ l.textContent='🏆 أحسنت! أجبتَ عن الأسئلةِ الأربعة — تبادلِ الأدوارَ مع زميلِك.'; confetti(); }
+    }); });
+  });
+})();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Advice blender!'; msg='رائع! تقدّمُ نصائحَ جيّدةً وتذكرُ أسبابَها 🥤🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ أنشطةَ الدرسِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='🥤 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
