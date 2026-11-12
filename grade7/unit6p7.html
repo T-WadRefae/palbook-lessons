@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goal! - Grade 7 Unit 6 Period 7 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 6 palette : red card & gold ===== */
+  :root{
+    --sunset:#D62828; --sunset-d:#A61E1E;
+    --rose:#F77F00;   --rose-d:#C96500;
+    --lilac:#3A3A48;  --lilac-d:#24242E;
+    --cream:#FFF8E7;  --cream-d:#F3E3BF;
+    --aub:#1D1D24;    --aub-d:#111116;
+    --mint:#FCBF49;   --mint-d:#A86F0C;
+    --ink:#22202a; --muted:#6b6457; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a chalk-lined pitch seen from above, very faint */
+    background-image:
+      radial-gradient(circle at 50% 50%, transparent 58px, rgba(214,40,40,.07) 59px, rgba(214,40,40,.07) 61px, transparent 62px),
+      linear-gradient(90deg, transparent calc(50% - 1px), rgba(29,29,36,.05) calc(50% - 1px), rgba(29,29,36,.05) calc(50% + 1px), transparent calc(50% + 1px)),
+      repeating-linear-gradient(0deg, rgba(252,191,73,.08) 0 40px, transparent 40px 80px);
+    background-size:240px 240px,240px 240px,100% 80px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+
+  /* ===== HEADER frame: a stadium at night (each period draws its own scene) ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:14px 12px 34px;
+    background:radial-gradient(ellipse at 12% 0%, rgba(252,191,73,.35), transparent 38%), radial-gradient(ellipse at 88% 0%, rgba(252,191,73,.35), transparent 38%),
+      linear-gradient(180deg, #0d0d12 0%, var(--aub) 45%, #3a1414 78%, var(--sunset-d) 100%); }
+  .lesson-header::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:18px;
+    background:repeating-linear-gradient(90deg,#2f6b34 0 40px,#38793d 40px 80px); border-top:3px solid rgba(255,255,255,.85); }
+  .header-inner{ max-width:960px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ position:relative; z-index:6; display:inline-flex; align-items:center; gap:9px; background:var(--mint); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:14px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--mint-d), 0 8px 18px rgba(0,0,0,.4); }
+  .title-plate{ display:inline-block; margin:18px auto 8px; padding:6px 22px 8px; border:2px solid rgba(252,191,73,.85); border-radius:12px; background:rgba(0,0,0,.45); direction:ltr; }
+  .title-plate small{ display:block; color:#FCBF49; font-size:11px; letter-spacing:.2em; font-family:'Fredoka',sans-serif; }
+  .title-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(26px,5.4vw,40px); color:#fff; line-height:1.1; letter-spacing:.03em; }
+  .lesson-subtitle{ color:#fff; font-weight:800; font-size:clamp(14px,2.8vw,18px); margin-top:4px; text-shadow:0 2px 8px rgba(0,0,0,.6); }
+  .header-hint{ color:#ffe7b0; font-size:13px; margin-top:6px; font-weight:600; }
+  @keyframes popin{ from{ opacity:0; transform:scale(.3);} to{ opacity:1; transform:none;} }
+  @keyframes fadeup{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none;} }
+  /* P7 scene: the back page of a sports newspaper, with the apostrophes circled in red pen */
+  .paper{ position:relative; max-width:560px; margin:0 auto; background:#f6f1e4; color:#1d1d24; border-radius:4px; padding:12px 16px 14px; text-align:left; direction:ltr;
+    box-shadow:0 16px 30px rgba(0,0,0,.5); transform:rotate(-1.5deg); animation:unroll .8s cubic-bezier(.3,1.3,.5,1) both;
+    background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(0,0,0,.03) 23px 24px); }
+  @keyframes unroll{ from{ transform:rotate(-12deg) scale(.6); opacity:0; } to{ transform:rotate(-1.5deg); opacity:1; } }
+  .masthead{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:3px double #1d1d24; padding-bottom:4px; font-family:'Fredoka',sans-serif; }
+  .masthead b{ font-size:clamp(22px,5.4vw,34px); letter-spacing:.12em; color:var(--sunset-d); } .masthead small{ font-size:11px; color:#555; }
+  .headline{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:clamp(17px,4.2vw,25px); line-height:1.15; margin:8px 0 6px; }
+  .cols{ display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:start; }
+  .photo{ width:clamp(70px,18vw,100px); aspect-ratio:1; background:linear-gradient(180deg,#9cc4e8,#3d8b3d 60%); border:3px solid #fff; box-shadow:0 2px 5px rgba(0,0,0,.3); display:flex; align-items:center; justify-content:center; font-size:clamp(28px,6vw,40px); }
+  .story-txt{ font-family:'Cairo',sans-serif; font-size:clamp(11.5px,2.7vw,13.5px); line-height:1.55; color:#333; direction:ltr; }
+  .ap{ position:relative; display:inline-block; }
+  .ap::after{ content:''; position:absolute; inset:-3px -4px; border:2.5px solid #D62828; border-radius:50%; transform:rotate(-6deg) scale(0); animation:circle .4s cubic-bezier(.3,1.6,.5,1) forwards; animation-delay:var(--d); }
+  @keyframes circle{ to{ transform:rotate(-6deg) scale(1); } }
+  .pen{ position:absolute; right:-8px; bottom:-14px; font-size:clamp(28px,6vw,38px); transform:rotate(-20deg); filter:drop-shadow(0 4px 4px rgba(0,0,0,.4)); }
+  @media (prefers-reduced-motion:reduce){ .paper{ animation:none; } .ap::after{ animation:none; transform:rotate(-6deg); } }
+  /* ===== TABS : STADIUM SCOREBOARD ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{ position:relative; background:linear-gradient(180deg,#2b2b35,#15151b); border:4px solid #3a3a48; border-radius:14px;
+    padding:16px 12px 12px; box-shadow:0 10px 24px rgba(0,0,0,.35), inset 0 0 0 2px #0c0c10; display:flex; gap:7px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .tabs-container::before,.tabs-container::after{ content:''; position:absolute; top:6px; width:8px; height:8px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#c9c9d3,#55556a); }
+  .tabs-container::before{ left:8px; } .tabs-container::after{ right:8px; }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{ position:relative; background:transparent; border:none; cursor:pointer; padding:0; flex:1 0 auto; min-width:90px; max-width:130px; transition:transform .25s ease; }
+  .tab-btn:hover{ transform:translateY(-2px); }
+  .sign{ width:100%; min-height:56px; border-radius:8px; padding:7px 8px 6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    background:radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1.5px) 0 0/5px 5px, #0b0b0f; border:2px solid #34343f; color:#FCBF49; transition:all .25s ease;
+    box-shadow:inset 0 0 12px rgba(0,0,0,.8); }
+  .tab-icon{ font-size:19px; line-height:1; filter:saturate(.8); }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12.5px; line-height:1.1; text-align:center; letter-spacing:.04em; text-shadow:0 0 6px rgba(252,191,73,.65); }
+  .post{ display:none; }
+  .tab-btn.active .sign{ background:radial-gradient(circle,rgba(255,255,255,.12) 1px,transparent 1.5px) 0 0/5px 5px, linear-gradient(180deg,#e63939,#a61e1e); border-color:#FCBF49; color:#fff;
+    box-shadow:0 0 16px rgba(214,40,40,.7), inset 0 0 8px rgba(0,0,0,.3); }
+  .tab-btn.active .tab-lbl{ text-shadow:0 0 6px rgba(255,255,255,.7); font-weight:700; }
+  .tab-btn.active::before{ content:'⚽'; position:absolute; top:-15px; left:50%; transform:translateX(-50%); font-size:16px; z-index:2; animation:ball-bounce .6s cubic-bezier(.3,1.6,.5,1); }
+  @keyframes ball-bounce{ from{ transform:translate(-50%,-14px) rotate(-90deg); opacity:0; } to{ transform:translate(-50%,0) rotate(0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #efdcb8; box-shadow:0 6px 0 #e3c99a, 0 8px 20px rgba(29,29,36,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #efdcb8; box-shadow:0 6px 0 #e3c99a, 0 8px 15px rgba(29,29,36,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(247,127,0,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #efdcb8; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #e3c99a;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fffbf2,#fff1d6); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a3a0c; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(142,15,66,.4);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(214,40,40,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(58,58,72,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(58,58,72,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #efdcb8; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #e3c99a; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff4e0,#ffe9c7); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a2a0c; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #efdcb8; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #e3c99a;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fffaf0; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f5dbe5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #efdcb8; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff6e6,#ffeccc); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a3a0c; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(29,29,36,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(214,40,40,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #efdcb8; box-shadow:0 8px 0 #e3c99a, 0 12px 28px rgba(29,29,36,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(29,29,36,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,214,0,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffe680; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(58,58,72,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(247,127,0,.15); }
+  .find-word.found{ background:rgba(247,127,0,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #efdcb8; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #e3c99a; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #efdcb8; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'⚽'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #efdcb8; box-shadow:0 6px 0 #e3c99a; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #efdcb8; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fffaf0; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #efdcb8; box-shadow:0 8px 0 #e3c99a; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffe3a3; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(247,127,0,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show,.tab-btn.active::before{ animation:none !important; }
+  }
+
+  /* ===== Unit 6 shared widgets ===== */
+  [hidden]{ display:none !important; }
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); direction:ltr; text-align:left; margin:18px 0 8px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .convo-tools{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+  .check-btn{ direction:ltr; unicode-bidi:isolate; background:linear-gradient(135deg,var(--rose),var(--sunset)); color:#fff; border:none; padding:9px 16px; border-radius:13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; box-shadow:0 4px 0 var(--aub); }
+  .check-btn.ghost{ background:#fff; color:var(--lilac-d); border:2px solid var(--lilac); box-shadow:0 4px 0 var(--cream-d); }
+  .check-btn.playing{ background:var(--aub); color:#fff; }
+  .say-btn{ background:var(--cream); border:2px solid var(--cream-d); color:var(--sunset); border-radius:20px; padding:1px 9px; cursor:pointer; font-size:14px; flex-shrink:0; }
+  .say-btn.playing{ background:var(--sunset); color:#fff; }
+  .pick{ display:inline-flex; gap:5px; flex-wrap:wrap; vertical-align:middle; margin:0 3px; }
+  .pk{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:2px 11px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; }
+  .pk.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .pk.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .pk.off{ opacity:.35; text-decoration:line-through; cursor:default; }
+  .story{ display:grid; gap:12px; }
+  .scene{ background:#fff; border:3px solid #efdcb8; border-radius:18px; padding:13px 15px; box-shadow:0 5px 0 #e3c99a; direction:ltr; text-align:left; display:flex; gap:12px; align-items:flex-start; }
+  .scene .pic{ font-size:34px; line-height:1; flex-shrink:0; }
+  .scene .lines{ flex:1; display:grid; gap:6px; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.75; }
+  .scene .who{ display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--lilac); border-radius:8px; padding:0 8px; margin-right:6px; }
+  .scene .who.n{ background:var(--mint-d); }
+  .everyday{ background:linear-gradient(135deg,#fff3d1,#ffe7a8); border:3px dashed var(--mint-d); border-radius:16px; padding:12px 16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; margin-top:14px; }
+  .everyday h4{ color:var(--mint-d); font-size:15px; } .everyday p{ font-size:16px; color:var(--aub); }
+  .nb-area{ width:100%; border:2px solid #efdcb8; border-radius:12px; resize:vertical; outline:none; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.7; padding:8px 11px; background:#fff; direction:ltr; }
+  .nb-area:focus, .tinput:focus{ border-color:var(--lilac); box-shadow:0 0 0 3px rgba(58,58,72,.18); }
+  .tinput{ border:2px solid #efdcb8; border-radius:10px; padding:5px 10px; font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--ink); background:#fff; outline:none; direction:ltr; }
+  .tinput.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .tinput.no{ background:var(--no-bg); border-color:var(--no-bd); }
+  .model{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.8; color:var(--ok-tx); background:var(--ok-bg); border-radius:12px; padding:8px 12px; margin-top:6px; }
+  .q-list{ display:grid; gap:12px; }
+  .qa{ background:#fff; border:3px solid #efdcb8; border-radius:16px; padding:12px 14px; box-shadow:0 5px 0 #e3c99a; direction:ltr; text-align:left; }
+  .qa .q{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); font-weight:600; margin-bottom:8px; display:flex; gap:9px; align-items:baseline; }
+  .qa .q .n{ background:var(--sunset); color:#fff; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .opts{ display:flex; flex-wrap:wrap; gap:7px; }
+  .op{ background:#fffaf0; border:2px solid #efdcb8; border-radius:12px; padding:6px 13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); }
+  .op.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; } .op.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .op:disabled{ cursor:default; }
+
+  .dict-box{ background:#fff; border:3px dashed var(--rose); border-radius:16px; padding:12px 16px; margin-bottom:16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.7; display:grid; gap:6px; }
+  .dict-box h4{ color:var(--rose-d); } .dict-box .ar{ direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); }
+  .dentry{ display:grid; grid-template-columns:auto 1fr 1fr; gap:10px; align-items:start; background:#fff8e7; border-radius:12px; padding:8px 12px; }
+  @media (max-width:560px){ .dentry{ grid-template-columns:1fr; } }
+  .dentry b{ font-size:20px; color:var(--sunset); } .dentry small{ display:block; font-size:11.5px; color:var(--muted); letter-spacing:.04em; }
+  .dq{ background:#fff; border:3px solid #efdcb8; border-radius:16px; padding:12px 14px; box-shadow:0 5px 0 #e3c99a; direction:ltr; text-align:left; display:grid; gap:8px; }
+  .dw{ background:var(--aub); color:#FCBF49; border-radius:10px; padding:3px 14px; font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; }
+  .op.off{ opacity:.35; }
+  .desc-card{ background:#fff; border:3px solid #efdcb8; border-radius:16px; padding:14px 16px; box-shadow:0 5px 0 #e3c99a; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; line-height:1.85; display:flex; gap:10px; align-items:flex-start; margin-bottom:14px; }
+  .pics2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; direction:ltr; } .pics2.one{ grid-template-columns:minmax(0,340px); justify-content:center; }
+  @media (max-width:520px){ .pics2{ grid-template-columns:1fr; } }
+  .scene-pic{ position:relative; border-radius:16px; border:4px solid #fff; box-shadow:0 6px 14px rgba(0,0,0,.2); background:linear-gradient(180deg,#a9cbe8 0 30%,#3d8b3d 30%); padding:30px 10px 10px; }
+  .scene-pic b{ position:absolute; top:6px; left:8px; background:var(--aub); color:#FCBF49; border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; }
+  .sp-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; } .sp-grid span{ background:rgba(255,255,255,.85); border-radius:12px; text-align:center; font-size:30px; padding:6px 0; }
+  .raw{ font-family:'Courier New',monospace; color:var(--muted); font-size:15px; } .tinput.wide{ width:100%; }
+  .fb{ font-size:13.5px; font-weight:700; margin-top:6px; direction:rtl; text-align:right; } .fb.no{ color:var(--no-tx); } .fb.ok{ color:var(--ok-tx); }
+  .qa.ps .tinput{ font-size:16px; }
+  .chain-ex{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; display:grid; gap:4px; } .chain-ex b{ color:var(--sunset); }
+  .chain{ display:grid; gap:8px; direction:ltr; text-align:left; } .ch-step{ background:#fff; border:2px solid #efdcb8; border-radius:12px; padding:8px 12px; display:grid; gap:4px; font-family:'Fredoka',sans-serif; }
+  .ch-step b{ font-size:14px; } .ch-step.s b{ color:var(--sunset); } .ch-step.q{ margin-left:16px; border-color:#d8d8e0; } .ch-step.q b{ color:var(--lilac); } .ch-step.a{ margin-left:32px; } .ch-step.a b{ color:var(--ok-tx); }
+  .frames{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; direction:ltr; font-family:'Fredoka',sans-serif; align-items:center; }
+  .frames b{ color:var(--mint-d); margin-right:4px; } .frames span{ background:#fff8e7; border:1px dashed #e3c99a; border-radius:8px; padding:3px 9px; font-size:14px; }
+  .wc{ text-align:right; font-family:'Fredoka',sans-serif; font-size:13px; color:var(--muted); direction:ltr; } .wc.good{ color:var(--ok-tx); font-weight:700; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>📰</span> UNIT 6 · PERIOD 7 · GRADE 7 · PB PAGE 46</div>
+    <div class="paper" role="img" aria-label="The back page of a sports newspaper: That's the Brazilian team. They've already scored three goals! The apostrophes are circled in red pen.">
+      <div class="masthead"><b>SPORTS</b><small>DAILY NEWS · BACK PAGE</small></div>
+      <div class="headline">That<span class="ap" style="--d:1.2s">'</span>s the Brazilian team! They<span class="ap" style="--d:1.6s">'</span>ve already scored three goals</div>
+      <div class="cols"><div class="photo">⚽</div><div class="story-txt">The weather is freezing here today, and the players are looking very cold. One player has tried to score a goal but has missed … He<span class="ap" style="--d:2s">'</span>s just fallen over!</div></div>
+      <span class="pen">🖊️</span>
+    </div>
+    <div class="title-plate"><small>DICTIONARY · DESCRIBE · WRITE · PERIOD 7</small><h1>Goal!</h1></div>
+    <div class="lesson-subtitle">هدف! — صفحةُ الرياضةِ في الجريدة: نكتبُ وصفًا ونستعملُ الفاصلةَ العُليا <span dir="ltr" style="unicode-bidi:isolate">( ' )</span> 📰</div>
+    <p class="header-hint">نتعلّمُ من القاموس، ونصفُ مشهدًا رياضيًّا، ونكتبُ الجملَ بعلاماتِ ترقيمٍ صحيحة.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="dict"><span class="sign"><span class="tab-icon">📕</span><span class="tab-lbl">Dictionary</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="describe"><span class="sign"><span class="tab-icon">🖼️</span><span class="tab-lbl">Describe</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="punct"><span class="sign"><span class="tab-icon">✍️</span><span class="tab-lbl">Correct Sentences</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="chain"><span class="sign"><span class="tab-icon">🔗</span><span class="tab-lbl">Question Chain</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="write"><span class="sign"><span class="tab-icon">📝</span><span class="tab-lbl">Write</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#D62828;"><div class="aim-icon-wrap">📕</div>
+        <h3 class="aim-title">Use a dictionary</h3><p class="aim-desc">Match words with their definitions and example sentences.
+          <span class="ar">مطابقةُ الكلماتِ مع تعريفاتِها وأمثلتِها.</span></p></div>
+      <div class="aim-card" style="--ac:#F77F00;"><div class="aim-icon-wrap">🖼️</div>
+        <h3 class="aim-title">Read a description</h3><p class="aim-desc">Read a description and match it with the correct picture.
+          <span class="ar">قراءةُ وصفٍ ومطابقتُه مع الصورةِ الصحيحة.</span></p></div>
+      <div class="aim-card" style="--ac:#3A3A48;"><div class="aim-icon-wrap">✍️</div>
+        <h3 class="aim-title">Write correctly</h3><p class="aim-desc">Use capital letters, full stops and apostrophes: <i>they've, he's</i>.
+          <span class="ar">الكتابةُ بحروفٍ كبيرةٍ ونقاطٍ وفواصلَ عُليا صحيحة.</span></p></div>
+      <div class="aim-card" style="--ac:#C99A2E;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Check your writing carefully and help your partner.
+          <span class="ar">نراجعُ كتابتَنا بعناية، ونساعدُ زملاءَنا.</span></p></div>
+    </div>
+  </section>
+  <section class="tab-content" id="tab-dict">
+    <h2 class="section-title">📕 Using a dictionary<span class="title-sub">استعمالُ القاموس: التعريفُ والجملةُ المثال</span></h2>
+    <div class="dict-box"><h4>📕 Using a dictionary: example sentences</h4><p>Dictionaries have example sentences to help show you the meaning of the word.</p>
+      <div class="dentry"><b>match</b><span class="def"><small>definition (the meaning)</small>a game between two people or two teams</span><span class="exs"><small>example sentence</small><i>I'm playing in a football match tomorrow.</i></span></div>
+      <span class="ar">في القاموسِ تعريفٌ للكلمة، وجملةٌ مثالٌ توضّحُ معناها.</span></div>
+    <div class="activity-banner">
+      <div class="en">📕 Activity 1: Match the words with their definitions and example sentences.</div>
+      <div class="ar">لكلِّ كلمة: اضغطْ أوّلًا التعريفَ المناسب، ثمَّ الجملةَ المثالَ المناسبة.</div>
+    </div>
+    <div class="q-list"><div class="dq" data-d="0"><div class="q"><span class="dw">pitch</span></div><div class="opts dd"><button class="op" type="button" data-v="0">a field on which games are played</button><button class="op" type="button" data-v="1">the points you get in a game (or the marks you get in a test)</button><button class="op" type="button" data-v="2">someone who plays a game or sport</button></div><div class="opts de" hidden><button class="op" type="button" data-v="0">We are playing on the new football pitch today.</button><button class="op" type="button" data-v="1">The score in our football match was 3-2.</button><button class="op" type="button" data-v="2">My father is a good tennis player.</button></div></div><div class="dq" data-d="1"><div class="q"><span class="dw">score</span></div><div class="opts dd"><button class="op" type="button" data-v="0">a field on which games are played</button><button class="op" type="button" data-v="1">the points you get in a game (or the marks you get in a test)</button><button class="op" type="button" data-v="2">someone who plays a game or sport</button></div><div class="opts de" hidden><button class="op" type="button" data-v="0">We are playing on the new football pitch today.</button><button class="op" type="button" data-v="1">The score in our football match was 3-2.</button><button class="op" type="button" data-v="2">My father is a good tennis player.</button></div></div><div class="dq" data-d="2"><div class="q"><span class="dw">player</span></div><div class="opts dd"><button class="op" type="button" data-v="0">a field on which games are played</button><button class="op" type="button" data-v="1">the points you get in a game (or the marks you get in a test)</button><button class="op" type="button" data-v="2">someone who plays a game or sport</button></div><div class="opts de" hidden><button class="op" type="button" data-v="0">We are playing on the new football pitch today.</button><button class="op" type="button" data-v="1">The score in our football match was 3-2.</button><button class="op" type="button" data-v="2">My father is a good tennis player.</button></div></div></div>
+    <div class="res-line" id="dRes"></div>
+  </section>
+  <section class="tab-content" id="tab-describe">
+    <h2 class="section-title">🖼️ Read and match<span class="title-sub">اقرأِ الوصفَ وطابِقْه مع الصورةِ الصحيحة</span></h2>
+    <div class="activity-banner">
+      <div class="en">🖼️ Activity 2: Read the description and match it with the correct picture.</div>
+      <div class="ar">اقرأِ الوصف، ثمَّ انظرْ إلى الصورتَين واخترِ الصورةَ التي يصفُها.</div>
+    </div>
+    <div class="desc-card"><p>The weather is freezing here today in London, and the players are looking very cold. One player has tried to score a goal but has missed, and the ball has gone off the pitch. One of the players is pushing another player, but no one has seen him yet. It's not a very exciting match and the people watching the match are looking bored. A player is drinking a mug of coffee.</p><button class="say-btn" type="button" data-t="The weather is freezing here today in London, and the players are looking very cold. One player has tried to score a goal but has missed, and the ball has gone off the pitch. One of the players is pushing another player, but no one has seen him yet. It&#39;s not a very exciting match and the people watching the match are looking bored. A player is drinking a mug of coffee.">🔊</button></div>
+    <div class="pics2"><div class="scene-pic"><b>a</b><div class="sp-grid"><span title="cold players">🥶</span><span title="freezing weather">❄️</span><span title="ball off the pitch">⚽➡️</span><span title="pushing">🤼</span><span title="bored crowd">😴</span><span title="coffee">☕</span></div></div><div class="scene-pic"><b>b</b><div class="sp-grid"><span title="sunny day">☀️</span><span title="a great goal">⚽🥅</span><span title="happy crowd">🎉</span><span title="yellow card">🟨</span><span title="drinking water">🥤</span><span title="running fast">🏃</span></div></div></div>
+    <div class="q-list"><div class="qa ds" data-a="a"><div class="q"><span class="n">?</span><span>Which picture does the description show?</span></div><div class="opts"><button class="op" type="button" data-v="a">Picture a</button><button class="op" type="button" data-v="b">Picture b</button></div><div class="model" hidden>✅ Picture <b>a</b>: freezing weather, the ball off the pitch, one player pushing another, a bored crowd and a mug of coffee.</div></div>
+</div>
+    <div class="res-line" id="dsRes"></div>
+  </section>
+  <section class="tab-content" id="tab-punct">
+    <h2 class="section-title">✍️ Write correct sentences<span class="title-sub">اكتبِ الجملَ بشكلٍ صحيح</span></h2>
+    <div class="dict-box"><h4>✍️ Writing skills: contracted forms</h4><p>Remember that we use contractions with <b>pronouns</b> when we speak or when we write something which someone is speaking: <i>They<b>'ve</b> already scored three goals.</i> We don't use contractions with <b>nouns</b>: <i>The Brazilian team <b>have</b> scored.</i></p>
+      <span class="ar">نختصرُ مع الضمائر: <span dir="ltr" style="unicode-bidi:isolate">they've · he's · I've</span>، ولا نختصرُ مع الأسماء: <span dir="ltr" style="unicode-bidi:isolate">The Brazilian team have scored.</span></span></div>
+    <div class="activity-banner">
+      <div class="en">✍️ Activity 3: Write correct sentences.</div>
+      <div class="ar">انسخِ الجملةَ بشكلٍ صحيح: حرفٌ كبيرٌ في أوّلِ الجملةِ وفي أسماءِ البلادِ والشعوب، والفاصلةُ العُليا <span dir="ltr" style="unicode-bidi:isolate">( ' )</span> في الاختصارات، ونقطةٌ في النهاية. انتبهْ: الجملةُ الأولى جملتان!</div>
+    </div>
+    <div class="q-list"><div class="qa ps" data-m="That&#39;s the Brazilian team. They&#39;ve already scored three goals."><div class="q"><span class="n">1</span><span class="raw">thats the brazilian team theyve already scored three goals</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" autocapitalize="off"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="fb"></div></div><div class="qa ps" data-m="The Egyptian team have scored but they haven&#39;t won."><div class="q"><span class="n">2</span><span class="raw">the egyptian team have scored but they havent won</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" autocapitalize="off"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="fb"></div></div><div class="qa ps" data-m="He&#39;s my favourite player but he&#39;s just fallen over."><div class="q"><span class="n">3</span><span class="raw">hes my favourite player but hes just fallen over</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" autocapitalize="off"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="fb"></div></div><div class="qa ps" data-m="I&#39;ve changed my mind."><div class="q"><span class="n">4</span><span class="raw">ive changed my mind</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" autocapitalize="off"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="fb"></div></div><div class="qa ps" data-m="The Brazilian team have won five times."><div class="q"><span class="n">5</span><span class="raw">the brazilian team have won five times</span></div><input class="tinput wide" type="text" spellcheck="false" autocomplete="off" autocapitalize="off"><div class="convo-tools" style="justify-content:flex-start"><button class="check-btn" type="button">✅ Check</button></div><div class="fb"></div></div></div>
+    <div class="res-line" id="psRes"></div>
+  </section>
+  <section class="tab-content" id="tab-chain">
+    <h2 class="section-title">🔗 A question chain<span class="title-sub">سلسلةُ الأسئلة: جملةٌ ثمَّ سؤالٌ ثمَّ إجابة</span></h2>
+    <div class="activity-banner">
+      <div class="en">🔗 Activity 4: Write a sentence about a scene from sport.</div>
+      <div class="ar">١- اكتبْ جملةً عن مشهدٍ رياضيّ. ٢- يكتبُ زميلُك سؤالًا عنها. ٣- اكتبْ إجابةَ السؤال. تابعا حتّى تكتبا ثلاثةَ أسئلةٍ أو أربعة.</div>
+    </div>
+    <details class="drop-q"><summary>👀 Example <span class="ar">مثالٌ من الكتاب</span></summary><div class="drop-body"><div class="chain-ex">
+      <div><b>✍️ Sentence:</b> The short Brazilian player is excellent.</div><div><b>❓ Question:</b> What has he done?</div><div><b>✅ Answer:</b> He has passed all the other players.</div><div><b>❓ Question:</b> How many players have seen him?</div></div></div></details>
+    <div class="chain">
+      <div class="ch-step s"><b>✍️ My sentence</b><textarea class="nb-area" rows="2" spellcheck="false" placeholder="The tall goalkeeper is …"></textarea></div>
+      <div class="ch-step q"><b>❓ Question 1 (my partner)</b><input class="tinput wide" type="text" spellcheck="false" placeholder="What has he / she done? / How many …?"></div>
+      <div class="ch-step a"><b>✅ Answer 1</b><input class="tinput wide" type="text" spellcheck="false" placeholder="He has … / She has …"></div>
+      <div class="ch-step q"><b>❓ Question 2 (my partner)</b><input class="tinput wide" type="text" spellcheck="false" placeholder="What has he / she done? / How many …?"></div>
+      <div class="ch-step a"><b>✅ Answer 2</b><input class="tinput wide" type="text" spellcheck="false" placeholder="He has … / She has …"></div>
+      <div class="ch-step q"><b>❓ Question 3 (my partner)</b><input class="tinput wide" type="text" spellcheck="false" placeholder="What has he / she done? / How many …?"></div>
+      <div class="ch-step a"><b>✅ Answer 3</b><input class="tinput wide" type="text" spellcheck="false" placeholder="He has … / She has …"></div>
+    </div>
+    <div class="convo-tools"><button class="check-btn" type="button" id="chainSay">🔊 Read our chain</button></div>
+  </section>
+  <section class="tab-content" id="tab-write">
+    <h2 class="section-title">📝 Write a description<span class="title-sub">صِفِ الصورةَ الأخرى (الصورة b)</span></h2>
+    <div class="activity-banner">
+      <div class="en">📝 Activity 5: Look at the other picture and write a description. Use the description in activity 2 to help you.</div>
+      <div class="ar">انظرْ إلى الصورة <b>b</b> واكتبْ وصفًا لها مثلَ الوصفِ في النشاطِ الثاني. استعملِ المضارعَ التامّ والمضارعَ المستمرّ، والاختصاراتِ الصحيحة.</div>
+    </div>
+    <div class="pics2 one"><div class="scene-pic"><b>b</b><div class="sp-grid"><span title="sunny day">☀️</span><span title="a great goal">⚽🥅</span><span title="happy crowd">🎉</span><span title="yellow card">🟨</span><span title="drinking water">🥤</span><span title="running fast">🏃</span></div></div></div>
+    <div class="frames"><b>💡 Sentence starters</b><span>The weather is … here today in …</span><span>One player has just …</span><span>The referee is …</span><span>The people watching the match are …</span><span>It's a very … match.</span></div>
+    <textarea class="nb-area" id="descArea" rows="7" spellcheck="false" placeholder="The weather is sunny here today in …"></textarea>
+    <div class="wc" id="descWc">0 words</div>
+    <div class="convo-tools"><button class="check-btn" type="button" id="descSay">🔊 Listen to my description</button></div>
+  </section>
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>📰 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «صفحةِ الرياضة».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">Which sentence is written correctly?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>They've already scored.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>Theyve already scored.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>they've already scored</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">Which sentence is correct?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>The Brazilian team have scored.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>The Brazilian team've scored.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>the brazilian team have scored.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">In a dictionary, the <b>definition</b> is …</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>the meaning of the word.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>an example sentence.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>the picture.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text"><b>pitch</b> means …</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>the points you get in a game.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>a field on which games are played.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>someone who plays a sport.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">In the description in activity 2, the weather is …</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>sunny.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>freezing.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>very hot.</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">📰<small>SPORTS PAGE</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff8e7">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+
+var BKEY = 'g7u6p7_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['⚽','🏆','🥅','🎽','📣','⭐','🏟️','✨'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  if(btn && btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⚽','⭐','🏆'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#D62828','#F77F00','#FCBF49','#ffffff','#1D1D24'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+function hw(w,ar){ return '<span class="hover-word">'+w+'<span class="tooltip">'+ar+'</span></span>'; }
+function pr(w,ar){ return '<span class="pronoun">'+w+'<span class="tooltip">تعودُ على: '+ar+'</span></span>'; }
+function txt(h){ var d=document.createElement('div'); d.innerHTML=h; d.querySelectorAll('.tooltip').forEach(function(t){t.remove()}); return d.textContent; }
+/* reusable: one shared word bank → blanks (.blank[data-bank][data-a]) */
+function makeBank(id, doneMsg){
+  var box=document.getElementById(id), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){ w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return; if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+    box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w; }); });
+  var blanks=document.querySelectorAll('.blank[data-bank="'+id+'"]'), line=document.getElementById(id+'Res');
+  blanks.forEach(function(bl){ bl.addEventListener('click',function(){
+    if(bl.classList.contains('ok')) return;
+    if(!sel || bl.dataset.a.split('|').indexOf(sel.dataset.w)<0){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+    bl.textContent=sel.dataset.w; bl.classList.add('ok');
+    if(!box.dataset.reuse){ sel.classList.add('used'); } sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+    var ok=document.querySelectorAll('.blank[data-bank="'+id+'"].ok').length;
+    line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+    if(ok===blanks.length){ line.textContent=doneMsg; confetti(); var cb=window['onBankDone_'+id]; if(cb) cb(); }
+  }); });
+}
+/* reusable: choose-the-right-word items (.pick[data-a] with .pk buttons) */
+function makePicks(sel, resId, doneMsg){
+  var picks=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  picks.forEach(function(p){ p.querySelectorAll('.pk').forEach(function(b){ b.addEventListener('click',function(){
+    if(p.dataset.done) return;
+    if(b.textContent.trim()!==p.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    p.dataset.done='1'; b.classList.add('ok'); p.querySelectorAll('.pk').forEach(function(x){ if(x!==b) x.classList.add('off'); }); sparkleAt(b); done++;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+picks.length;
+    if(done===picks.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+/* reusable: one-answer questions (.qa[data-a] with .op buttons) */
+function makeQA(sel, resId, doneMsg){
+  var qs=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  qs.forEach(function(q){ q.querySelectorAll('.op').forEach(function(b){ b.addEventListener('click',function(){
+    if(q.dataset.done) return;
+    if(b.dataset.v!==q.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    q.dataset.done='1'; b.classList.add('ok'); q.querySelectorAll('.op').forEach(function(x){x.disabled=true;}); sparkleAt(b); done++;
+    var m=q.querySelector('.model'); if(m) m.hidden=false;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+qs.length;
+    if(done===qs.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+
+document.querySelectorAll('[data-t]').forEach(function(b){ b.addEventListener('click',function(){ speak(b.dataset.t,b); }); });
+makeQA('.qa.ds','dsRes','🏆 أحسنت! الوصفُ يناسبُ الصورة a.');
+(function(){
+  var qs=document.querySelectorAll('.dq'), done=0;
+  qs.forEach(function(q){ var k=q.dataset.d;
+    function wire(sel,next){ q.querySelectorAll(sel+' .op').forEach(function(b){ b.addEventListener('click',function(){
+      if(b.dataset.v!==k){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+      b.classList.add('ok'); q.querySelectorAll(sel+' .op').forEach(function(x){ x.disabled=true; if(x!==b) x.classList.add('off'); }); sparkleAt(b); next(); }); }); }
+    wire('.dd',function(){ q.querySelector('.de').hidden=false; });
+    wire('.de',function(){ done++; var l=document.getElementById('dRes'); l.className='res-line show good'; l.textContent='📕 '+done+' / '+qs.length;
+      if(done===qs.length){ l.textContent='🏆 رائع! طابقتَ الكلماتِ الثلاثَ مع تعريفاتِها وأمثلتِها.'; confetti(); } });
+  });
+})();
+(function(){
+  var qs=document.querySelectorAll('.qa.ps'), done=0;
+  function fix(s){ return s.replace(/[’‘]/g,"'").replace(/\s+/g,' ').trim(); }
+  qs.forEach(function(q){ var inp=q.querySelector('input'), fb=q.querySelector('.fb'), m=q.dataset.m;
+    q.querySelector('.check-btn').addEventListener('click',function(){
+      var v=fix(inp.value); if(!v){ inp.focus(); return; }
+      if(v===m){ if(q.dataset.done) return; q.dataset.done=1; inp.classList.add('ok'); inp.readOnly=true; fb.className='fb ok'; fb.textContent='✅ ممتاز! جملةٌ صحيحةٌ تمامًا.'; sparkleAt(this); done++;
+        var l=document.getElementById('psRes'); l.className='res-line show good'; l.textContent='✍️ '+done+' / '+qs.length;
+        if(done===qs.length){ l.textContent='🏆 رائع! كتبتَ الجملَ الخمسَ بعلاماتِ ترقيمٍ صحيحة.'; confetti(); } return; }
+      var tips=[];
+      if(v.toLowerCase().replace(/[^a-z]/g,'')!==m.toLowerCase().replace(/[^a-z]/g,'')) tips.push('تأكّدْ من الكلماتِ وترتيبِها');
+      if(!/^[A-Z]/.test(v)) tips.push('ابدأْ بحرفٍ كبير');
+      if(/brazilian|egyptian/.test(v)) tips.push('أسماءُ الشعوبِ تبدأُ بحرفٍ كبير: Brazilian, Egyptian');
+      if((m.match(/'/g)||[]).length!==(v.match(/'/g)||[]).length) tips.push("ضعِ الفاصلةَ العُليا ( ' ) في الاختصارات");
+      if((m.match(/[.]/g)||[]).length!==(v.match(/[.]/g)||[]).length) tips.push('انتبهْ إلى النقاط');
+      if(/ i /.test(' '+v+' ')||/ i'/.test(' '+v)) tips.push('I تُكتبُ دائمًا بحرفٍ كبير');
+      if(!tips.length) tips.push('قارِنْ جملتَك بالجملةِ الأصليّةِ حرفًا حرفًا');
+      q.dataset.t=(+(q.dataset.t||0))+1; if(q.dataset.t>2) tips.push('الإجابة: '+m);
+      inp.classList.add('no'); setTimeout(function(){inp.classList.remove('no')},700); fb.className='fb no'; fb.textContent='💡 '+tips.join(' · ');
+    }); });
+})();
+document.getElementById('chainSay').addEventListener('click',function(){ var t=[].map.call(document.querySelectorAll('.chain textarea,.chain input'),function(x){return x.value.trim();}).filter(Boolean).join(' ... '); if(t) speak(t,this); });
+(function(){ var a=document.getElementById('descArea'), w=document.getElementById('descWc');
+  a.addEventListener('input',function(){ var n=(a.value.trim().match(/\S+/g)||[]).length; w.textContent=n+' words'; w.classList.toggle('good',n>=40); if(n>=40 && !a.dataset.c){ a.dataset.c=1; confetti(); } });
+  document.getElementById('descSay').addEventListener('click',function(){ if(a.value.trim()) speak(a.value,this); }); })();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Sports writer!'; msg='رائع! تكتبُ وصفًا رياضيًّا بعلاماتِ ترقيمٍ صحيحة 📰🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ أنشطةَ الدرسِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='📰 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

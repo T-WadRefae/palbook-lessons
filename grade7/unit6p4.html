@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goal! - Grade 7 Unit 6 Period 4 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 6 palette : red card & gold ===== */
+  :root{
+    --sunset:#D62828; --sunset-d:#A61E1E;
+    --rose:#F77F00;   --rose-d:#C96500;
+    --lilac:#3A3A48;  --lilac-d:#24242E;
+    --cream:#FFF8E7;  --cream-d:#F3E3BF;
+    --aub:#1D1D24;    --aub-d:#111116;
+    --mint:#FCBF49;   --mint-d:#A86F0C;
+    --ink:#22202a; --muted:#6b6457; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a chalk-lined pitch seen from above, very faint */
+    background-image:
+      radial-gradient(circle at 50% 50%, transparent 58px, rgba(214,40,40,.07) 59px, rgba(214,40,40,.07) 61px, transparent 62px),
+      linear-gradient(90deg, transparent calc(50% - 1px), rgba(29,29,36,.05) calc(50% - 1px), rgba(29,29,36,.05) calc(50% + 1px), transparent calc(50% + 1px)),
+      repeating-linear-gradient(0deg, rgba(252,191,73,.08) 0 40px, transparent 40px 80px);
+    background-size:240px 240px,240px 240px,100% 80px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+
+  /* ===== HEADER frame: a stadium at night (each period draws its own scene) ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:14px 12px 34px;
+    background:radial-gradient(ellipse at 12% 0%, rgba(252,191,73,.35), transparent 38%), radial-gradient(ellipse at 88% 0%, rgba(252,191,73,.35), transparent 38%),
+      linear-gradient(180deg, #0d0d12 0%, var(--aub) 45%, #3a1414 78%, var(--sunset-d) 100%); }
+  .lesson-header::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:18px;
+    background:repeating-linear-gradient(90deg,#2f6b34 0 40px,#38793d 40px 80px); border-top:3px solid rgba(255,255,255,.85); }
+  .header-inner{ max-width:960px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ position:relative; z-index:6; display:inline-flex; align-items:center; gap:9px; background:var(--mint); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:14px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--mint-d), 0 8px 18px rgba(0,0,0,.4); }
+  .title-plate{ display:inline-block; margin:18px auto 8px; padding:6px 22px 8px; border:2px solid rgba(252,191,73,.85); border-radius:12px; background:rgba(0,0,0,.45); direction:ltr; }
+  .title-plate small{ display:block; color:#FCBF49; font-size:11px; letter-spacing:.2em; font-family:'Fredoka',sans-serif; }
+  .title-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(26px,5.4vw,40px); color:#fff; line-height:1.1; letter-spacing:.03em; }
+  .lesson-subtitle{ color:#fff; font-weight:800; font-size:clamp(14px,2.8vw,18px); margin-top:4px; text-shadow:0 2px 8px rgba(0,0,0,.6); }
+  .header-hint{ color:#ffe7b0; font-size:13px; margin-top:6px; font-weight:600; }
+  @keyframes popin{ from{ opacity:0; transform:scale(.3);} to{ opacity:1; transform:none;} }
+  @keyframes fadeup{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none;} }
+  /* P4 scene: two floodlight towers sweep their beams across the pitch; the -ed sounds glow in the light */
+  .fl-scene{ position:relative; max-width:640px; height:clamp(190px,38vw,220px); margin:0 auto; direction:ltr; overflow:hidden; }
+  .tower{ position:absolute; bottom:0; width:12px; height:78%; background:linear-gradient(90deg,#3a3a48,#6a6a80,#3a3a48); }
+  .tower.l{ left:6%; } .tower.r{ right:6%; }
+  .lamp{ position:absolute; top:-20px; left:50%; transform:translateX(-50%); width:52px; height:24px; border-radius:6px; background:radial-gradient(circle,#fffbe6 30%,#FCBF49 70%); box-shadow:0 0 26px 8px rgba(252,191,73,.8); }
+  .beam{ position:absolute; top:0; height:100%; width:62%; background:linear-gradient(180deg,rgba(255,244,200,.45),rgba(255,244,200,.04)); pointer-events:none; }
+  .beam.l{ left:calc(6% + 6px); transform-origin:0 0; clip-path:polygon(0 0,6% 0,100% 100%,48% 100%); animation:sweepL 5s ease-in-out infinite alternate; }
+  .beam.r{ right:calc(6% + 6px); transform-origin:100% 0; clip-path:polygon(94% 0,100% 0,52% 100%,0 100%); animation:sweepR 5s ease-in-out infinite alternate; }
+  @keyframes sweepL{ from{ transform:rotate(-10deg);} to{ transform:rotate(8deg);} } @keyframes sweepR{ from{ transform:rotate(10deg);} to{ transform:rotate(-8deg);} }
+  .ed-row{ position:absolute; left:50%; top:46%; transform:translate(-50%,-50%); display:flex; gap:clamp(8px,2.4vw,16px); }
+  .ed{ background:rgba(0,0,0,.55); border:2px solid #FCBF49; border-radius:14px; padding:6px 12px; text-align:center; font-family:'Fredoka',sans-serif; color:#fff; opacity:0; animation:popin .5s cubic-bezier(.3,1.6,.5,1) forwards; animation-delay:var(--d); }
+  .ed b{ display:block; color:#FCBF49; font-size:clamp(18px,4.4vw,26px); text-shadow:0 0 10px rgba(252,191,73,.8); } .ed span{ font-size:clamp(12px,2.8vw,15px); }
+  .poem-line{ position:absolute; left:8%; right:8%; bottom:6px; text-align:center; line-height:1.1; font-family:'Caveat',cursive; font-weight:700; font-size:clamp(18px,4.4vw,26px); color:#ffe7b0; opacity:0; animation:fadeup .6s 1.8s forwards; }
+  @media (prefers-reduced-motion:reduce){ .beam{ animation:none !important; } .ed,.poem-line{ animation:none; opacity:1; } }
+  /* ===== TABS : STADIUM SCOREBOARD ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{ position:relative; background:linear-gradient(180deg,#2b2b35,#15151b); border:4px solid #3a3a48; border-radius:14px;
+    padding:16px 12px 12px; box-shadow:0 10px 24px rgba(0,0,0,.35), inset 0 0 0 2px #0c0c10; display:flex; gap:7px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .tabs-container::before,.tabs-container::after{ content:''; position:absolute; top:6px; width:8px; height:8px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#c9c9d3,#55556a); }
+  .tabs-container::before{ left:8px; } .tabs-container::after{ right:8px; }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{ position:relative; background:transparent; border:none; cursor:pointer; padding:0; flex:1 0 auto; min-width:90px; max-width:130px; transition:transform .25s ease; }
+  .tab-btn:hover{ transform:translateY(-2px); }
+  .sign{ width:100%; min-height:56px; border-radius:8px; padding:7px 8px 6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    background:radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1.5px) 0 0/5px 5px, #0b0b0f; border:2px solid #34343f; color:#FCBF49; transition:all .25s ease;
+    box-shadow:inset 0 0 12px rgba(0,0,0,.8); }
+  .tab-icon{ font-size:19px; line-height:1; filter:saturate(.8); }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12.5px; line-height:1.1; text-align:center; letter-spacing:.04em; text-shadow:0 0 6px rgba(252,191,73,.65); }
+  .post{ display:none; }
+  .tab-btn.active .sign{ background:radial-gradient(circle,rgba(255,255,255,.12) 1px,transparent 1.5px) 0 0/5px 5px, linear-gradient(180deg,#e63939,#a61e1e); border-color:#FCBF49; color:#fff;
+    box-shadow:0 0 16px rgba(214,40,40,.7), inset 0 0 8px rgba(0,0,0,.3); }
+  .tab-btn.active .tab-lbl{ text-shadow:0 0 6px rgba(255,255,255,.7); font-weight:700; }
+  .tab-btn.active::before{ content:'⚽'; position:absolute; top:-15px; left:50%; transform:translateX(-50%); font-size:16px; z-index:2; animation:ball-bounce .6s cubic-bezier(.3,1.6,.5,1); }
+  @keyframes ball-bounce{ from{ transform:translate(-50%,-14px) rotate(-90deg); opacity:0; } to{ transform:translate(-50%,0) rotate(0); opacity:1; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #efdcb8; box-shadow:0 6px 0 #e3c99a, 0 8px 20px rgba(29,29,36,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #efdcb8; box-shadow:0 6px 0 #e3c99a, 0 8px 15px rgba(29,29,36,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(247,127,0,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #efdcb8; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #e3c99a;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#fffbf2,#fff1d6); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#8a3a0c; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(142,15,66,.4);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(214,40,40,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(58,58,72,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(58,58,72,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #efdcb8; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #e3c99a; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff4e0,#ffe9c7); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7a2a0c; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #efdcb8; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #e3c99a;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fffaf0; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f5dbe5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #efdcb8; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff6e6,#ffeccc); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#8a3a0c; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(29,29,36,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(214,40,40,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #efdcb8; box-shadow:0 8px 0 #e3c99a, 0 12px 28px rgba(29,29,36,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(29,29,36,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,214,0,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffe680; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(58,58,72,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(247,127,0,.15); }
+  .find-word.found{ background:rgba(247,127,0,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #efdcb8; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #e3c99a; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #efdcb8; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'⚽'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #efdcb8; box-shadow:0 6px 0 #e3c99a; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #efdcb8; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fffaf0; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #efdcb8; box-shadow:0 8px 0 #e3c99a; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #ffe3a3; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(247,127,0,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show,.tab-btn.active::before{ animation:none !important; }
+  }
+
+  /* ===== Unit 6 shared widgets ===== */
+  [hidden]{ display:none !important; }
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); direction:ltr; text-align:left; margin:18px 0 8px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .convo-tools{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+  .check-btn{ direction:ltr; unicode-bidi:isolate; background:linear-gradient(135deg,var(--rose),var(--sunset)); color:#fff; border:none; padding:9px 16px; border-radius:13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; box-shadow:0 4px 0 var(--aub); }
+  .check-btn.ghost{ background:#fff; color:var(--lilac-d); border:2px solid var(--lilac); box-shadow:0 4px 0 var(--cream-d); }
+  .check-btn.playing{ background:var(--aub); color:#fff; }
+  .say-btn{ background:var(--cream); border:2px solid var(--cream-d); color:var(--sunset); border-radius:20px; padding:1px 9px; cursor:pointer; font-size:14px; flex-shrink:0; }
+  .say-btn.playing{ background:var(--sunset); color:#fff; }
+  .pick{ display:inline-flex; gap:5px; flex-wrap:wrap; vertical-align:middle; margin:0 3px; }
+  .pk{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:2px 11px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; }
+  .pk.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .pk.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .pk.off{ opacity:.35; text-decoration:line-through; cursor:default; }
+  .story{ display:grid; gap:12px; }
+  .scene{ background:#fff; border:3px solid #efdcb8; border-radius:18px; padding:13px 15px; box-shadow:0 5px 0 #e3c99a; direction:ltr; text-align:left; display:flex; gap:12px; align-items:flex-start; }
+  .scene .pic{ font-size:34px; line-height:1; flex-shrink:0; }
+  .scene .lines{ flex:1; display:grid; gap:6px; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.75; }
+  .scene .who{ display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--lilac); border-radius:8px; padding:0 8px; margin-right:6px; }
+  .scene .who.n{ background:var(--mint-d); }
+  .everyday{ background:linear-gradient(135deg,#fff3d1,#ffe7a8); border:3px dashed var(--mint-d); border-radius:16px; padding:12px 16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; margin-top:14px; }
+  .everyday h4{ color:var(--mint-d); font-size:15px; } .everyday p{ font-size:16px; color:var(--aub); }
+  .nb-area{ width:100%; border:2px solid #efdcb8; border-radius:12px; resize:vertical; outline:none; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.7; padding:8px 11px; background:#fff; direction:ltr; }
+  .nb-area:focus, .tinput:focus{ border-color:var(--lilac); box-shadow:0 0 0 3px rgba(58,58,72,.18); }
+  .tinput{ border:2px solid #efdcb8; border-radius:10px; padding:5px 10px; font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--ink); background:#fff; outline:none; direction:ltr; }
+  .tinput.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .tinput.no{ background:var(--no-bg); border-color:var(--no-bd); }
+  .model{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.8; color:var(--ok-tx); background:var(--ok-bg); border-radius:12px; padding:8px 12px; margin-top:6px; }
+  .q-list{ display:grid; gap:12px; }
+  .qa{ background:#fff; border:3px solid #efdcb8; border-radius:16px; padding:12px 14px; box-shadow:0 5px 0 #e3c99a; direction:ltr; text-align:left; }
+  .qa .q{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); font-weight:600; margin-bottom:8px; display:flex; gap:9px; align-items:baseline; }
+  .qa .q .n{ background:var(--sunset); color:#fff; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .opts{ display:flex; flex-wrap:wrap; gap:7px; }
+  .op{ background:#fffaf0; border:2px solid #efdcb8; border-radius:12px; padding:6px 13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); }
+  .op.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; } .op.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .op:disabled{ cursor:default; }
+
+  .wlist{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; direction:ltr; }
+  .wl{ background:#fff; border:2px solid #efdcb8; border-radius:22px; padding:6px 13px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; color:var(--ink); cursor:pointer; display:inline-flex; gap:7px; align-items:center; }
+  .wl .num{ background:#fff1d6; color:var(--sunset-d); border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; }
+  .wl.circ{ border:3px solid var(--sunset); } .wl.circ .num{ background:var(--sunset); color:#fff; } .wl.nh{ border:3px dashed var(--muted); opacity:.7; } .wl.nh .num{ background:var(--muted); color:#fff; }
+  .wl.no{ border-color:var(--no-bd); animation:shake .35s; }
+  .pics{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:14px; direction:ltr; }
+  @media (max-width:520px){ .pics{ grid-template-columns:repeat(3,1fr); } }
+  .pic{ background:#fff; border:3px solid #efdcb8; border-radius:14px; padding:8px 4px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:3px; box-shadow:0 4px 0 #e3c99a; }
+  .pic b{ background:var(--aub); color:#FCBF49; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .pic .pe{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:21px; color:var(--sunset-d); } .pic small{ font-family:'Fredoka',sans-serif; font-size:12px; color:var(--muted); line-height:1.2; }
+  .pm{ font-family:'Fredoka',sans-serif; font-size:13.5px; color:var(--muted); margin-top:2px; }
+  .poem{ display:grid; gap:6px; max-width:640px; margin:0 auto 16px; direction:ltr; }
+  .pl{ background:#fff; border:2px solid #efdcb8; border-radius:12px; padding:8px 14px; text-align:left; font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--aub); cursor:pointer; box-shadow:0 3px 0 #e3c99a; display:flex; gap:8px; align-items:center; }
+  .pl .pe{ width:26px; text-align:center; } .pl:hover{ border-color:var(--rose); } .pl.playing{ background:#fff1d6; border-color:var(--sunset); }
+  .edw{ font-weight:700; border-radius:5px; padding:0 4px; } .edw.d{ background:#ffe3a3; color:var(--sunset-d); }
+  .pron-box{ background:#fff; border:3px dashed var(--rose); border-radius:16px; padding:12px 16px; margin-bottom:16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .pron-box h4{ color:var(--rose-d); } .pron-box p{ font-size:15px; line-height:1.7; } .pron-box .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:4px; }
+  .ed-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; direction:ltr; }
+  @media (max-width:520px){ .ed-cols{ grid-template-columns:1fr; } }
+  .edc{ background:#fff; border:3px solid #efdcb8; border-radius:16px; padding:12px; text-align:center; display:flex; flex-direction:column; gap:7px; box-shadow:0 5px 0 #e3c99a; }
+  .edc h4{ font-family:'Fredoka',sans-serif; font-size:24px; color:#fff; border-radius:10px; } .edc.d h4{ background:var(--sunset); } .edc.t h4{ background:var(--rose); } .edc.id h4{ background:var(--lilac); }
+  .edc small{ font-family:'Cairo',sans-serif; color:var(--muted); font-size:12.5px; }
+  .edb{ background:#fffaf0; border:2px solid #efdcb8; border-radius:12px; padding:6px; font-family:'Fredoka',sans-serif; font-size:16px; cursor:pointer; color:var(--aub); } .edb.playing{ background:#fff1d6; border-color:var(--sunset); }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>💡</span> UNIT 6 · PERIOD 4 · GRADE 7 · PB PAGE 43</div>
+    <div class="fl-scene" role="img" aria-label="Two floodlight towers light up the stadium. In the light: /d/ scored, /t/ watched, /id/ started. What do you think of sport?"><span class="beam l"></span><span class="beam r"></span><div class="tower l"><span class="lamp"></span></div><div class="tower r"><span class="lamp"></span></div><div class="ed-row"><div class="ed" style="--d:.4s"><b>/d/</b><span>scored</span></div><div class="ed" style="--d:.8s"><b>/t/</b><span>watched</span></div><div class="ed" style="--d:1.2s"><b>/id/</b><span>started</span></div></div><div class="poem-line">♪ What do you think of sport, hmm? ♪</div></div>
+    <div class="title-plate"><small>ORDER · COMPLETE · SAY · PERIOD 4</small><h1>Goal!</h1></div>
+    <div class="lesson-subtitle">هدف! — الأضواءُ مسلَّطةٌ على الكلماتِ وعلى نطقِ النهاية <span dir="ltr" style="unicode-bidi:isolate">-ed</span> 💡</div>
+    <p class="header-hint">نرتّبُ الكلماتِ كما نسمعُها، ونُكملُ الجُمَل، ونقرأُ قصيدةً عن الرياضة.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="order"><span class="sign"><span class="tab-icon">🔢</span><span class="tab-lbl">Number the Words</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="circle"><span class="sign"><span class="tab-icon">✔️</span><span class="tab-lbl">Choose</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="complete"><span class="sign"><span class="tab-icon">🧩</span><span class="tab-lbl">Complete &amp; Match</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="poem"><span class="sign"><span class="tab-icon">🎵</span><span class="tab-lbl">The Poem</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="ed"><span class="sign"><span class="tab-icon">🔊</span><span class="tab-lbl">-ed Endings</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#D62828;"><div class="aim-icon-wrap">🔢</div>
+        <h3 class="aim-title">Listen for order</h3><p class="aim-desc">Listen and number the words in the order you hear them.
+          <span class="ar">الاستماعُ وترقيمُ الكلماتِ بترتيبِ سماعِها.</span></p></div>
+      <div class="aim-card" style="--ac:#F77F00;"><div class="aim-icon-wrap">🧩</div>
+        <h3 class="aim-title">Use the words</h3><p class="aim-desc">Choose and complete sentences with <i>pitch, final, enormous…</i>
+          <span class="ar">استعمالُ كلماتِ الدرسِ في جُمَل.</span></p></div>
+      <div class="aim-card" style="--ac:#3A3A48;"><div class="aim-icon-wrap">🔊</div>
+        <h3 class="aim-title">-ed sounds</h3><p class="aim-desc">Say <i>-ed</i> endings correctly: /d/, /t/ and /id/.
+          <span class="ar">نطقُ النهايةِ <span dir="ltr" style="unicode-bidi:isolate">-ed</span> نطقًا صحيحًا.</span></p></div>
+      <div class="aim-card" style="--ac:#C99A2E;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Enjoy sport safely — don't play when it's dangerous.
+          <span class="ar">نستمتعُ بالرياضةِ بأمان، ولا نلعبُ في الظروفِ الخطرة.</span></p></div>
+    </div>
+  </section>
+  <section class="tab-content" id="tab-order">
+    <h2 class="section-title">🔢 Listen and number<span class="title-sub">استمعْ ورقِّمِ الكلماتِ بترتيبِ سماعِها</span></h2>
+    <div class="activity-banner">
+      <div class="en">🔢 Activity 1: Listen and number the words in the order you hear them. Which words didn't you hear?</div>
+      <div class="ar">اضغطِ الكلماتِ بالترتيبِ الذي تسمعُها فيه، فيظهرُ رقمُها. بعدَ ذلك اضغطِ الكلمتينِ اللتينِ لم تسمعْهما.</div>
+    </div>
+    <div class="gplayer"><b>🎧 Audio 54 · The World Cup™ match</b>
+      <audio controls preload="metadata" src="../audio/grade7/unit6/track54.mp3" title="Audio 54" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio></div>
+    <div class="wlist" id="ordWords"><button class="wl" type="button" data-w="competition"><span class="num">?</span>competition</button><button class="wl" type="button" data-w="dangerous"><span class="num">?</span>dangerous</button><button class="wl" type="button" data-w="enormous"><span class="num">?</span>enormous</button><button class="wl" type="button" data-w="enter"><span class="num">?</span>enter</button><button class="wl" type="button" data-w="final"><span class="num">?</span>final</button><button class="wl" type="button" data-w="freezing"><span class="num">?</span>freezing</button><button class="wl" type="button" data-w="pitch"><span class="num">?</span>pitch</button><button class="wl" type="button" data-w="World Cup™"><span class="num">?</span>World Cup™</button></div>
+    <div class="res-line" id="ordRes"></div>
+  </section>
+  <section class="tab-content" id="tab-circle">
+    <h2 class="section-title">✔️ Read and circle<span class="title-sub">اقرأْ واخترِ الكلمةَ الصحيحة</span></h2>
+    <div class="activity-banner">
+      <div class="en">✔️ Activity 2: Read and circle the correct words.</div>
+      <div class="ar">اقرأْ كلَّ جملةٍ واضغطِ الكلمةَ الصحيحة.</div>
+    </div>
+    <div class="sent-list"><div class="sent"><span class="n">1</span><div>It's too <span class="pick" data-a="dangerous"><button class="pk" type="button">dangerous</button><button class="pk" type="button">enormous</button></span> to play.</div></div>
+<div class="sent"><span class="n">2</span><div>The <span class="pick" data-a="competition"><button class="pk" type="button">pitch</button><button class="pk" type="button">competition</button></span> is very exciting.</div></div>
+<div class="sent"><span class="n">3</span><div>What time is the <span class="pick" data-a="final"><button class="pk" type="button">pitch</button><button class="pk" type="button">final</button></span>?</div></div>
+<div class="sent"><span class="n">4</span><div>It's so cold today. I'm <span class="pick" data-a="freezing"><button class="pk" type="button">freezing</button><button class="pk" type="button">enormous</button></span>!</div></div>
+<div class="sent"><span class="n">5</span><div>Qatar has never won the <span class="pick" data-a="World Cup™"><button class="pk" type="button">World Cup™</button><button class="pk" type="button">enter</button></span>.</div></div>
+</div>
+    <div class="res-line" id="chRes"></div>
+  </section>
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">🧩 Complete and match<span class="title-sub">أكمِلِ الجُمَلَ ثمَّ طابِقْها مع الصور</span></h2>
+    <div class="activity-banner">
+      <div class="en">🧩 Activity 3: Complete the sentences with words from activity 1. Then match the sentences with the pictures.</div>
+      <div class="ar">١- اضغطْ كلمةً من الصندوقِ ثمَّ الفراغ. ٢- اخترْ حرفَ الصورةِ المناسبةِ لكلِّ جملة.</div>
+    </div>
+    <div class="pics"><div class="pic"><b>a</b><span class="pe">🏆🇧🇷</span><small>the cup<br>winners</small></div><div class="pic"><b>b</b><span class="pe">🏟️</span><small>a very<br>big stadium</small></div><div class="pic"><b>c</b><span class="pe">⛈️🥶</span><small>very bad<br>weather</small></div><div class="pic"><b>d</b><span class="pe">🟩👕×22</span><small>players on<br>the field</small></div><div class="pic"><b>e</b><span class="pe">🟥📝🥇</span><small>the red team<br>are in!</small></div></div>
+    <div class="bank" id="bank4"><h4>📦 Word box</h4><div class="bank-words"><button class="bw" type="button" data-w="dangerous">dangerous</button><button class="bw" type="button" data-w="enormous">enormous</button><button class="bw" type="button" data-w="entered">entered</button><button class="bw" type="button" data-w="pitch">pitch</button><button class="bw" type="button" data-w="World Cup™">World Cup™</button></div></div>
+    <div class="sent-list"><div class="sent"><span class="n">1</span><div>How many players are on the <span class="blank" data-bank="bank4" data-a="pitch">______</span>?<div class="pm">picture: <span class="pick" data-a="d"><button class="pk" type="button">a</button><button class="pk" type="button">b</button><button class="pk" type="button">c</button><button class="pk" type="button">d</button><button class="pk" type="button">e</button></span></div></div></div><div class="sent"><span class="n">2</span><div>Brazil has won the <span class="blank" data-bank="bank4" data-a="World Cup™">______</span> more than any other team.<div class="pm">picture: <span class="pick" data-a="a"><button class="pk" type="button">a</button><button class="pk" type="button">b</button><button class="pk" type="button">c</button><button class="pk" type="button">d</button><button class="pk" type="button">e</button></span></div></div></div><div class="sent"><span class="n">3</span><div>It's too <span class="blank" data-bank="bank4" data-a="dangerous">______</span> to play. The weather is too bad.<div class="pm">picture: <span class="pick" data-a="c"><button class="pk" type="button">a</button><button class="pk" type="button">b</button><button class="pk" type="button">c</button><button class="pk" type="button">d</button><button class="pk" type="button">e</button></span></div></div></div><div class="sent"><span class="n">4</span><div>The pitch is <span class="blank" data-bank="bank4" data-a="enormous">______</span>! It's the biggest one I've seen.<div class="pm">picture: <span class="pick" data-a="b"><button class="pk" type="button">a</button><button class="pk" type="button">b</button><button class="pk" type="button">c</button><button class="pk" type="button">d</button><button class="pk" type="button">e</button></span></div></div></div><div class="sent"><span class="n">5</span><div>The red team have <span class="blank" data-bank="bank4" data-a="entered">______</span> the final.<div class="pm">picture: <span class="pick" data-a="e"><button class="pk" type="button">a</button><button class="pk" type="button">b</button><button class="pk" type="button">c</button><button class="pk" type="button">d</button><button class="pk" type="button">e</button></span></div></div></div></div>
+    <div class="res-line" id="bank4Res"></div><div class="res-line" id="picRes"></div>
+  </section>
+  <section class="tab-content" id="tab-poem">
+    <h2 class="section-title">🎵 Listen and repeat<span class="title-sub">استمعْ إلى القصيدةِ وردِّدْها</span></h2>
+    <div class="activity-banner">
+      <div class="en">🎵 Activity 4: Listen and repeat.</div>
+      <div class="ar">اقرأِ القصيدةَ لتفهمَها، ثمَّ استمعْ وردِّدْها بالنبرةِ الصحيحة. اضغطْ أيَّ سطرٍ لتسمعَه وحدَه.</div>
+    </div>
+    <div class="gplayer"><b>🎧 Audio 55 · Poem: What do you think of sport?</b>
+      <audio controls preload="metadata" src="../audio/grade7/unit6/track55.mp3" title="Audio 55" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio></div>    <div class="poem"><button class="pl" type="button" data-t="What do you think of sport, hmm?"><span class="pe"></span>What do you think of sport, hmm?</button><button class="pl" type="button" data-t="What do you think of sport?"><span class="pe"></span>What do you think of sport?</button><button class="pl" type="button" data-t="He's scored a goal! Oh it's amazing!"><span class="pe">⚽</span>He's <span class='edw d'>scored</span> a goal! Oh it's amazing!</button><button class="pl" type="button" data-t="And look at the pitch, wow, it's enormous!"><span class="pe">🏟️</span>And look at the pitch, wow, it's enormous!</button><button class="pl" type="button" data-t="My team have won! Wow, oh I love them!"><span class="pe">🏆</span>My team have won! Wow, oh I love them!</button><button class="pl" type="button" data-t="I love all sports, yes I do."><span class="pe">❤️</span>I love all sports, yes I do.</button><button class="pl" type="button" data-t="What do you think of sport, hmm?"><span class="pe"></span>What do you think of sport, hmm?</button><button class="pl" type="button" data-t="What do you think of sport?"><span class="pe"></span>What do you think of sport?</button><button class="pl" type="button" data-t="She's won ten races? Oh, how boring."><span class="pe">🏃‍♀️</span>She's won ten races? Oh, how boring.</button><button class="pl" type="button" data-t="That player's fallen. This is dangerous."><span class="pe">⚠️</span>That player's fallen. This is dangerous.</button><button class="pl" type="button" data-t="Can we go home now? It's freezing cold."><span class="pe">🥶</span>Can we go home now? It's freezing cold.</button><button class="pl" type="button" data-t="What do you think of sport, hmm?"><span class="pe"></span>What do you think of sport, hmm?</button><button class="pl" type="button" data-t="What do you think of sport?"><span class="pe"></span>What do you think of sport?</button></div>
+    <div class="activity-banner">
+      <div class="en">🗣️ Activity 6: Read the poem again. Make sure you sound the -ed endings correctly.</div>
+      <div class="ar">اقرأِ القصيدةَ مع زميلِك بصوتٍ عالٍ، وانتبهْ إلى نطقِ <span dir="ltr" style="unicode-bidi:isolate">scored</span> بصوت <span dir="ltr" style="unicode-bidi:isolate">/d/</span>.</div>
+    </div>
+  </section>
+  <section class="tab-content" id="tab-ed">
+    <h2 class="section-title">🔊 -ed endings<span class="title-sub">نطقُ النهايةِ <span dir="ltr" style="unicode-bidi:isolate">-ed</span></span></h2>
+    <div class="pron-box"><h4>🔊 Pronunciation: -ed endings</h4><p>Sometimes an <b>-ed</b> ending only adds a 't' or a 'd' sound to the end of a verb. But sometimes you need to add 'id' because it's difficult to say with 't' or 'd'.</p>
+      <span class="ar">أحيانًا تُضيفُ <span dir="ltr" style="unicode-bidi:isolate">-ed</span> صوتَ <span dir="ltr" style="unicode-bidi:isolate">t</span> أو <span dir="ltr" style="unicode-bidi:isolate">d</span> فقط، وأحيانًا نضيفُ المقطعَ <span dir="ltr" style="unicode-bidi:isolate">id</span> لأنّ النطقَ صعب (بعدَ الحرفَين <span dir="ltr" style="unicode-bidi:isolate">t</span> و<span dir="ltr" style="unicode-bidi:isolate">d</span>).</span></div>
+    <div class="activity-banner">
+      <div class="en">🔊 Activity 5: Listen and repeat.</div>
+      <div class="ar">استمعْ وردِّدْ. اضغطْ أيَّ كلمةٍ لتسمعَها.</div>
+    </div>
+    <div class="gplayer"><b>🎧 Audio 56 · -ed endings</b>
+      <audio controls preload="metadata" src="../audio/grade7/unit6/track56.mp3" title="Audio 56" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio></div>    <div class="ed-cols"><div class="edc d"><h4>/d/</h4><small>نسمعُ صوتَ <span dir="ltr" style="unicode-bidi:isolate">d</span> فقط</small><button class="edb" type="button" data-t="listened">listened</button><button class="edb" type="button" data-t="scored">scored</button></div><div class="edc t"><h4>/t/</h4><small>نسمعُ صوتَ <span dir="ltr" style="unicode-bidi:isolate">t</span> فقط</small><button class="edb" type="button" data-t="watched">watched</button><button class="edb" type="button" data-t="stopped">stopped</button></div><div class="edc id"><h4>/id/</h4><small>نضيفُ المقطعَ <span dir="ltr" style="unicode-bidi:isolate">id</span> بعدَ <span dir="ltr" style="unicode-bidi:isolate">t</span> أو <span dir="ltr" style="unicode-bidi:isolate">d</span></small><button class="edb" type="button" data-t="visited">visited</button><button class="edb" type="button" data-t="started">started</button><button class="edb" type="button" data-t="wanted">wanted</button><button class="edb" type="button" data-t="invited">invited</button></div></div>
+  </section>
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>💡 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «الأضواءِ الكاشفة».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">"It's too ______ to play. The weather is too bad."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>enormous</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>dangerous</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>final</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">Which word ends with the sound <b>/id/</b>?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>wanted</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>watched</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>scored</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">Which word ends with the sound <b>/t/</b>?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>listened</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>visited</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">C</span>stopped</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">"What time is the ______?" — "At eight o'clock."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>final</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>pitch</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>freezing</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">"The red team have ______ the final."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>enter</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>entered</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>entering</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">💡<small>FLOODLIGHT</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#fff8e7">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+
+var BKEY = 'g7u6p4_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['⚽','🏆','🥅','🎽','📣','⭐','🏟️','✨'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  if(btn && btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⚽','⭐','🏆'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#D62828','#F77F00','#FCBF49','#ffffff','#1D1D24'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+function hw(w,ar){ return '<span class="hover-word">'+w+'<span class="tooltip">'+ar+'</span></span>'; }
+function pr(w,ar){ return '<span class="pronoun">'+w+'<span class="tooltip">تعودُ على: '+ar+'</span></span>'; }
+function txt(h){ var d=document.createElement('div'); d.innerHTML=h; d.querySelectorAll('.tooltip').forEach(function(t){t.remove()}); return d.textContent; }
+/* reusable: one shared word bank → blanks (.blank[data-bank][data-a]) */
+function makeBank(id, doneMsg){
+  var box=document.getElementById(id), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){ w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return; if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+    box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w; }); });
+  var blanks=document.querySelectorAll('.blank[data-bank="'+id+'"]'), line=document.getElementById(id+'Res');
+  blanks.forEach(function(bl){ bl.addEventListener('click',function(){
+    if(bl.classList.contains('ok')) return;
+    if(!sel || bl.dataset.a.split('|').indexOf(sel.dataset.w)<0){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+    bl.textContent=sel.dataset.w; bl.classList.add('ok');
+    if(!box.dataset.reuse){ sel.classList.add('used'); } sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+    var ok=document.querySelectorAll('.blank[data-bank="'+id+'"].ok').length;
+    line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+    if(ok===blanks.length){ line.textContent=doneMsg; confetti(); var cb=window['onBankDone_'+id]; if(cb) cb(); }
+  }); });
+}
+/* reusable: choose-the-right-word items (.pick[data-a] with .pk buttons) */
+function makePicks(sel, resId, doneMsg){
+  var picks=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  picks.forEach(function(p){ p.querySelectorAll('.pk').forEach(function(b){ b.addEventListener('click',function(){
+    if(p.dataset.done) return;
+    if(b.textContent.trim()!==p.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    p.dataset.done='1'; b.classList.add('ok'); p.querySelectorAll('.pk').forEach(function(x){ if(x!==b) x.classList.add('off'); }); sparkleAt(b); done++;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+picks.length;
+    if(done===picks.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+/* reusable: one-answer questions (.qa[data-a] with .op buttons) */
+function makeQA(sel, resId, doneMsg){
+  var qs=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  qs.forEach(function(q){ q.querySelectorAll('.op').forEach(function(b){ b.addEventListener('click',function(){
+    if(q.dataset.done) return;
+    if(b.dataset.v!==q.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    q.dataset.done='1'; b.classList.add('ok'); q.querySelectorAll('.op').forEach(function(x){x.disabled=true;}); sparkleAt(b); done++;
+    var m=q.querySelector('.model'); if(m) m.hidden=false;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+qs.length;
+    if(done===qs.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+
+makePicks('#tab-circle .pick','chRes','🏆 أحسنت! اخترتَ الكلماتِ الخمسَ الصحيحة.');
+makeBank('bank4','🏆 رائع! أكملتَ الجملَ الخمس — الآنَ طابِقْها مع الصور.');
+makePicks('#tab-complete .pick','picRes','🏆 ممتاز! طابقتَ الجملَ مع الصور.');
+document.querySelectorAll('[data-t]').forEach(function(b){ b.addEventListener('click',function(){ speak(b.dataset.t,b); }); });
+(function(){
+  var ORDER=['World Cup™','final','competition','enormous','pitch','freezing'], idx=0, miss=0;
+  var l=document.getElementById('ordRes');
+  document.querySelectorAll('#ordWords .wl').forEach(function(b){ b.addEventListener('click',function(){
+    if(b.classList.contains('done')) return;
+    var w=b.dataset.w;
+    if(idx<ORDER.length){
+      if(w!==ORDER[idx]){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+      idx++; b.classList.add('done','circ'); b.querySelector('.num').textContent=idx; sparkleAt(b);
+      l.className='res-line show good'; l.textContent='🔢 '+idx+' / '+ORDER.length;
+      if(idx===ORDER.length) l.textContent='👏 ممتاز! والآن: أيُّ كلمتَينِ لم تسمعْهما؟ اضغطْهما.';
+    } else {
+      b.classList.add('done','nh'); b.querySelector('.num').textContent='✗'; miss++; sparkleAt(b);
+      if(miss===2){ l.textContent='🏆 رائع! لم نسمعْ dangerous وenter.'; confetti(); }
+    }
+  }); });
+})();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Floodlight star!'; msg='رائع! تسمعُ جيّدًا وتنطقُ -ed نطقًا صحيحًا 💡🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ أنشطةَ الدرسِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='💡 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
