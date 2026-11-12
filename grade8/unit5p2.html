@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>People and games - Grade 8 Unit 5 Period 2 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 5 palette : team kit — blue & orange ===== */
+  :root{
+    --sunset:#1E40AF; --sunset-d:#1E3A8A;
+    --rose:#F97316;   --rose-d:#C2410C;
+    --lilac:#334155;  --lilac-d:#1E293B;
+    --cream:#F8FAFC;  --cream-d:#E2E8F0;
+    --aub:#0F172A;    --aub-d:#020617;
+    --mint:#FACC15;   --mint-d:#A16207;
+    --ink:#0f172a; --muted:#5b6475; --paper:#ffffff;
+    --ok-bg:#d9f2e3; --ok-bd:#2f8f5b; --ok-tx:#0f4d2c;
+    --no-bg:#ffdcd6; --no-bd:#c2412d; --no-tx:#7c1a12;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a tiled changing-room wall */
+    background-image:
+      linear-gradient(rgba(30,64,175,.06) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(30,64,175,.06) 2px, transparent 2px);
+    background-size:46px 46px,46px 46px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+
+  /* ===== HEADER frame: the team changing room (each period draws its own scene) ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:14px 12px 34px;
+    background:radial-gradient(ellipse at 50% -10%, rgba(250,204,21,.28), transparent 50%),
+      linear-gradient(180deg, #0b1330 0%, var(--sunset-d) 45%, var(--sunset) 82%, #2b5ad6 100%); }
+  .lesson-header::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:20px;
+    background:repeating-linear-gradient(90deg,#b5793d 0 70px,#a86d33 70px 72px); border-top:3px solid #7c4a1d; box-shadow:0 -4px 10px rgba(0,0,0,.25); }
+  .header-inner{ max-width:960px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ position:relative; z-index:6; display:inline-flex; align-items:center; gap:9px; background:var(--mint); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:14px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--mint-d), 0 8px 18px rgba(0,0,0,.4); }
+  .title-plate{ display:inline-block; margin:18px auto 8px; padding:6px 22px 8px; border:2px solid rgba(249,115,22,.9); border-radius:12px; background:rgba(2,6,23,.45); direction:ltr; }
+  .title-plate small{ display:block; color:#fdba74; font-size:11px; letter-spacing:.2em; font-family:'Fredoka',sans-serif; }
+  .title-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(24px,5vw,38px); color:#fff; line-height:1.1; }
+  .lesson-subtitle{ color:#fff; font-weight:800; font-size:clamp(14px,2.8vw,18px); margin-top:4px; text-shadow:0 2px 8px rgba(0,0,0,.6); }
+  .header-hint{ color:#dbeafe; font-size:13px; margin-top:6px; font-weight:600; }
+  @keyframes popin{ from{ opacity:0; transform:scale(.3);} to{ opacity:1; transform:none;} }
+  @keyframes fadeup{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none;} }
+  /* P2 scene: a locker combination lock — the wheels roll and spell WHOSE? */
+  .lock-scene{ display:flex; align-items:center; justify-content:center; gap:clamp(10px,4vw,26px); direction:ltr; flex-wrap:wrap; }
+  .padlock{ position:relative; width:clamp(230px,62vw,330px); padding:clamp(52px,12vw,66px) 14px 16px; }
+  .shackle{ position:absolute; left:50%; top:0; transform:translateX(-50%); width:56%; height:clamp(70px,16vw,90px); border:clamp(10px,2.4vw,14px) solid #cbd5e1; border-bottom:none; border-radius:60px 60px 0 0;
+    animation:unlock .6s 2.6s cubic-bezier(.3,1.5,.5,1) forwards; box-shadow:inset 0 4px 0 rgba(255,255,255,.4); }
+  @keyframes unlock{ to{ transform:translate(-50%,-18px); } }
+  .body{ position:relative; background:linear-gradient(180deg,#fb923c,#F97316 50%,#c2410c); border-radius:18px; padding:14px 12px; box-shadow:0 14px 26px rgba(0,0,0,.45), inset 0 3px 0 rgba(255,255,255,.35); display:flex; justify-content:center; gap:6px; }
+  .wheel{ width:clamp(34px,9vw,46px); height:clamp(48px,12vw,62px); background:linear-gradient(180deg,#334155,#0f172a 30%,#0f172a 70%,#334155); border-radius:6px; overflow:hidden; position:relative; box-shadow:inset 0 0 0 2px #020617; }
+  .wheel span{ display:block; font-family:'Fredoka',sans-serif; font-weight:700; font-size:clamp(24px,6vw,32px); color:#FACC15; text-align:center; height:clamp(48px,12vw,62px); line-height:clamp(48px,12vw,62px); }
+  .reel{ animation:roll 2s cubic-bezier(.2,.8,.3,1) forwards; animation-delay:var(--d); }
+  @keyframes roll{ from{ transform:translateY(0); } to{ transform:translateY(calc(-1 * var(--n) * clamp(48px,12vw,62px))); } }
+  .q-tag{ background:#fff; color:var(--aub); border-radius:14px; padding:8px 14px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(13px,3vw,16px); box-shadow:0 10px 20px rgba(0,0,0,.35); text-align:left; opacity:0; animation:popin .5s 3s cubic-bezier(.3,1.6,.5,1) forwards; max-width:260px; }
+  .q-tag b{ color:var(--rose-d); }
+  @media (prefers-reduced-motion:reduce){ .reel{ animation:none; transform:translateY(calc(-1 * var(--n) * clamp(48px,12vw,62px))); } .shackle,.q-tag{ animation:none; opacity:1; } }
+  /* ===== TABS : NUMBERED LOCKER DOORS ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{ counter-reset:locker; position:relative; background:linear-gradient(180deg,#cbd5e1,#94a3b8); border:4px solid #64748b; border-radius:12px 12px 6px 6px;
+    padding:12px 12px 22px; box-shadow:0 10px 22px rgba(15,23,42,.25); display:flex; gap:6px; direction:ltr; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .tabs-container::after{ content:''; position:absolute; left:-4px; right:-4px; bottom:-4px; height:14px; border-radius:0 0 6px 6px; background:repeating-linear-gradient(90deg,#b5793d 0 60px,#a86d33 60px 62px); box-shadow:0 4px 8px rgba(0,0,0,.25); }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{ counter-increment:locker; position:relative; background:transparent; border:none; cursor:pointer; padding:0; flex:1 0 auto; min-width:88px; max-width:124px; transition:transform .25s ease; perspective:400px; }
+  .tab-btn:hover{ transform:translateY(-2px); }
+  .sign{ position:relative; width:100%; min-height:74px; border-radius:6px; padding:22px 8px 8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    background:repeating-linear-gradient(180deg, rgba(0,0,0,.35) 0 2px, transparent 2px 5px) 50% 6px / 46% 12px no-repeat, linear-gradient(90deg,#2d55c8,#1E40AF 55%,#1a3796);
+    border:2px solid #0f2a6e; color:#fff; box-shadow:inset 0 0 0 2px rgba(255,255,255,.12), 0 3px 0 #0f2a6e; transition:all .3s ease; transform-origin:0 50%; }
+  .sign::before{ content:counter(locker); position:absolute; top:3px; left:5px; background:#e2e8f0; color:#0f172a; border-radius:3px; font-family:'Fredoka',sans-serif; font-weight:700; font-size:10px; padding:0 4px; }
+  .sign::after{ content:''; position:absolute; right:6px; top:50%; width:4px; height:16px; border-radius:2px; background:linear-gradient(90deg,#cbd5e1,#64748b); }
+  .tab-icon{ font-size:19px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:12.5px; line-height:1.1; text-align:center; }
+  .post{ display:none; }
+  .tab-btn.active .sign{ background:repeating-linear-gradient(180deg, rgba(0,0,0,.25) 0 2px, transparent 2px 5px) 50% 6px / 46% 12px no-repeat, linear-gradient(90deg,#fb8a3c,#F97316 55%,#e0620a);
+    border-color:#9a3412; box-shadow:inset 0 0 0 2px rgba(255,255,255,.2), 0 3px 0 #9a3412, 0 0 14px rgba(249,115,22,.6); transform:rotateY(-14deg); }
+  .tab-btn.active .tab-lbl{ font-weight:700; }
+  .tab-btn.active::before{ content:'🏷️'; position:absolute; top:-12px; right:2px; font-size:16px; z-index:2; animation:tagswing .7s ease; transform-origin:50% 0; }
+  @keyframes tagswing{ 0%{ transform:rotate(-40deg); opacity:0; } 60%{ transform:rotate(14deg); opacity:1; } 100%{ transform:rotate(0); } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #d6deea; box-shadow:0 6px 0 #c3cfe0, 0 8px 20px rgba(15,23,42,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #d6deea; box-shadow:0 6px 0 #c3cfe0, 0 8px 15px rgba(15,23,42,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(249,115,22,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #d6deea; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #c3cfe0;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#f8fafc,#ffedd5); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#9a3412; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(142,15,66,.4);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(30,64,175,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(51,65,85,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(51,65,85,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #d6deea; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #c3cfe0; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff7ed,#fed7aa); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7c2d12; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #d6deea; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #c3cfe0;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#f6f9fc; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f5dbe5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #d6deea; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff7ed,#ffedd5); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#9a3412; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(15,23,42,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(30,64,175,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #d6deea; box-shadow:0 8px 0 #c3cfe0, 0 12px 28px rgba(15,23,42,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(15,23,42,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,214,0,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffe680; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(51,65,85,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(249,115,22,.15); }
+  .find-word.found{ background:rgba(249,115,22,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #d6deea; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #c3cfe0; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #d6deea; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'🏷️'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #d6deea; box-shadow:0 6px 0 #c3cfe0; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #d6deea; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#f6f9fc; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #d6deea; box-shadow:0 8px 0 #c3cfe0; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #fde68a; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(249,115,22,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show,.tab-btn.active::before{ animation:none !important; } .tab-btn.active .sign{ transform:none; }
+  }
+
+  /* ===== Unit 6 shared widgets ===== */
+  [hidden]{ display:none !important; }
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); direction:ltr; text-align:left; margin:18px 0 8px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .convo-tools{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+  .check-btn{ direction:ltr; unicode-bidi:isolate; background:linear-gradient(135deg,var(--rose),var(--sunset)); color:#fff; border:none; padding:9px 16px; border-radius:13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; box-shadow:0 4px 0 var(--aub); }
+  .check-btn.ghost{ background:#fff; color:var(--lilac-d); border:2px solid var(--lilac); box-shadow:0 4px 0 var(--cream-d); }
+  .check-btn.playing{ background:var(--aub); color:#fff; }
+  .say-btn{ background:var(--cream); border:2px solid var(--cream-d); color:var(--sunset); border-radius:20px; padding:1px 9px; cursor:pointer; font-size:14px; flex-shrink:0; }
+  .say-btn.playing{ background:var(--sunset); color:#fff; }
+  .pick{ display:inline-flex; gap:5px; flex-wrap:wrap; vertical-align:middle; margin:0 3px; }
+  .pk{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:2px 11px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; }
+  .pk.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .pk.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .pk.off{ opacity:.35; text-decoration:line-through; cursor:default; }
+  .story{ display:grid; gap:12px; }
+  .scene{ background:#fff; border:3px solid #d6deea; border-radius:18px; padding:13px 15px; box-shadow:0 5px 0 #c3cfe0; direction:ltr; text-align:left; display:flex; gap:12px; align-items:flex-start; }
+  .scene .pic{ font-size:34px; line-height:1; flex-shrink:0; }
+  .scene .lines{ flex:1; display:grid; gap:6px; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.75; }
+  .scene .who{ display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--lilac); border-radius:8px; padding:0 8px; margin-right:6px; }
+  .scene .who.n{ background:var(--mint-d); }
+  .everyday{ background:linear-gradient(135deg,#fef9c3,#fef08a); border:3px dashed var(--mint-d); border-radius:16px; padding:12px 16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; margin-top:14px; }
+  .everyday h4{ color:var(--mint-d); font-size:15px; } .everyday p{ font-size:16px; color:var(--aub); }
+  .nb-area{ width:100%; border:2px solid #d6deea; border-radius:12px; resize:vertical; outline:none; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.7; padding:8px 11px; background:#fff; direction:ltr; }
+  .nb-area:focus, .tinput:focus{ border-color:var(--lilac); box-shadow:0 0 0 3px rgba(51,65,85,.18); }
+  .tinput{ border:2px solid #d6deea; border-radius:10px; padding:5px 10px; font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--ink); background:#fff; outline:none; direction:ltr; }
+  .tinput.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .tinput.no{ background:var(--no-bg); border-color:var(--no-bd); }
+  .model{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.8; color:var(--ok-tx); background:var(--ok-bg); border-radius:12px; padding:8px 12px; margin-top:6px; }
+  .q-list{ display:grid; gap:12px; }
+  .qa{ background:#fff; border:3px solid #d6deea; border-radius:16px; padding:12px 14px; box-shadow:0 5px 0 #c3cfe0; direction:ltr; text-align:left; }
+  .qa .q{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); font-weight:600; margin-bottom:8px; display:flex; gap:9px; align-items:baseline; }
+  .qa .q .n{ background:var(--sunset); color:#fff; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .opts{ display:flex; flex-wrap:wrap; gap:7px; }
+  .op{ background:#f6f9fc; border:2px solid #d6deea; border-radius:12px; padding:6px 13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); }
+  .op.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; } .op.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .op:disabled{ cursor:default; }
+  .res-line{ unicode-bidi:plaintext; }
+
+  .res-line{ unicode-bidi:plaintext; }
+  .audio-missing{ background:#fff7ed; border:2px dashed var(--rose); color:#9a3412; border-radius:12px; padding:9px 12px; font-weight:700; font-size:13.5px; text-align:center; margin:8px auto 2px; max-width:480px; }
+
+  .convo-sheet{ background:#fff; border:3px solid #d6deea; border-radius:18px; padding:12px; box-shadow:0 6px 0 #c3cfe0; direction:ltr; display:grid; gap:8px; }
+  .cline{ display:flex; gap:9px; align-items:baseline; font-family:'Fredoka',sans-serif; font-size:16px; line-height:1.85; padding:6px 10px; border-radius:12px; background:#f6f9fc; }
+  .cline .who{ flex-shrink:0; font-size:12px; font-weight:700; color:#fff; border-radius:8px; padding:0 8px; background:var(--lilac); }
+  .cline.Omar .who{ background:var(--sunset); } .cline.Adnan .who{ background:#0e7490; } .cline.Yasmeen .who{ background:var(--rose-d); } .cline.Narrator .who{ background:#64748b; }
+  .cline.Omar{ background:#eef2ff; } .cline.Yasmeen{ background:#fff7ed; } .cline.Adnan{ background:#ecfeff; }
+  .cline .tx{ flex:1; } .cline .say-btn{ font-size:12px; padding:0 7px; }
+  .cline.me{ box-shadow:0 0 0 3px var(--rose); font-weight:600; } .cline.dim{ opacity:.45; }
+  .tk{ cursor:pointer; border-radius:4px; } .tk:hover{ background:#ffedd5; }
+  .tk.u{ background:#fef08a; box-shadow:0 0 0 2px #facc15; font-weight:700; color:var(--sunset-d); } .tk.miss{ background:var(--no-bg); }
+  .roles{ display:flex; gap:10px; justify-content:center; margin-bottom:12px; direction:ltr; flex-wrap:wrap; }
+  .role{ background:#fff; border:3px solid #d6deea; border-radius:16px; padding:8px 16px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; color:var(--aub); box-shadow:0 4px 0 #c3cfe0; }
+  .role.on{ border-color:var(--rose); background:#fff7ed; }
+  .ee{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:4px; } .ee b{ color:var(--aub); font-size:16px; } .ee span{ color:var(--muted); font-family:'Cairo',sans-serif; font-size:13.5px; }
+  .tinput.wide{ width:100%; } .gp{ padding:2px 8px; margin:0 3px; font-weight:600; } .sent.cp{ line-height:2.3; }
+  .fb{ font-size:13.5px; font-weight:700; margin-top:6px; direction:rtl; text-align:right; } .fb.no{ color:var(--no-tx); } .fb.ok{ color:var(--ok-tx); }
+  .talk-list{ display:grid; gap:10px; direction:ltr; }
+  .talk-q{ display:flex; gap:10px; align-items:center; background:#fff; border:3px solid #d6deea; border-radius:16px; padding:12px 14px; box-shadow:0 5px 0 #c3cfe0; font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--aub); font-weight:600; }
+  .talk-q .n{ background:var(--sunset); color:#fff; border-radius:50%; width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; } .talk-q .say-btn{ margin-left:auto; }
+  .stc{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:4px 12px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; }
+  .stc.on{ background:var(--rose); border-color:var(--rose); color:#fff; }
+  .chips{ display:flex; flex-wrap:wrap; gap:6px; }
+  .dlg{ margin-top:14px; background:#f8fafc; border:2px dashed var(--mint-d); border-radius:14px; padding:10px 14px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; line-height:1.8; }
+  .dlg b{ color:var(--sunset); margin-right:4px; }
+
+  .dq{ display:flex; gap:10px; background:#fff; border:3px solid #d6deea; border-radius:16px; padding:10px 14px; box-shadow:0 5px 0 #c3cfe0; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; line-height:2.2; }
+  .dq .n{ background:var(--sunset); color:#fff; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:8px; }
+  .dls{ flex:1; display:grid; } .dl b{ color:var(--rose-d); }
+  .dq .say-btn{ align-self:flex-start; margin-top:6px; }
+  .q-list .dq{ margin:0; }
+
+  .wordline{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:14px; direction:ltr; }
+  .wordline span{ background:var(--aub); color:#FACC15; border-radius:10px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:14.5px; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>🔐</span> UNIT 5 · PERIOD 2 · GRADE 8 · PB PAGE 53</div>
+    <div class="lock-scene" role="img" aria-label="A locker padlock: its wheels roll and spell WHOSE, then it opens. Whose are these socks?"><div class="padlock"><div class="shackle"></div><div class="body"><div class="wheel"><div class="reel" style="--n:6;--d:0.2s"><span>K</span><span>P</span><span>R</span><span>E</span><span>G</span><span>B</span><span>W</span></div></div><div class="wheel"><div class="reel" style="--n:6;--d:0.5s"><span>C</span><span>E</span><span>K</span><span>X</span><span>G</span><span>R</span><span>H</span></div></div><div class="wheel"><div class="reel" style="--n:6;--d:0.7s"><span>A</span><span>U</span><span>V</span><span>U</span><span>R</span><span>V</span><span>O</span></div></div><div class="wheel"><div class="reel" style="--n:6;--d:0.9s"><span>Z</span><span>G</span><span>R</span><span>C</span><span>V</span><span>K</span><span>S</span></div></div><div class="wheel"><div class="reel" style="--n:6;--d:1.2s"><span>A</span><span>L</span><span>X</span><span>T</span><span>V</span><span>R</span><span>E</span></div></div></div></div><div class="q-tag">🧦 <b>Whose</b> are these socks?<br>Are they Ahmed's?</div></div>
+    <div class="title-plate"><small>WORDS · READ · ACT · PERIOD 2</small><h1>People and games</h1></div>
+    <div class="lesson-subtitle">الناسُ والألعاب — رمزُ الخزانة: <span dir="ltr" style="unicode-bidi:isolate">W-H-O-S-E</span>… لِمَن هذه الأشياء؟ 🔐</div>
+    <p class="header-hint">نُكملُ حواراتٍ قصيرةً بكلماتِ الحصّةِ الأولى، ونفهمُ القصّة، ونمثّلُها.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="complete"><span class="sign"><span class="tab-icon">✏️</span><span class="tab-lbl">Complete</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="check"><span class="sign"><span class="tab-icon">🎧</span><span class="tab-lbl">Listen &amp; Check</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="answer"><span class="sign"><span class="tab-icon">❓</span><span class="tab-lbl">Answer</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="act"><span class="sign"><span class="tab-icon">🎭</span><span class="tab-lbl">Act it Out</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#D62828;"><div class="aim-icon-wrap">✏️</div>
+        <h3 class="aim-title">Use the new words</h3><p class="aim-desc">Complete short conversations with words from period 1.
+          <span class="ar">إكمالُ حواراتٍ قصيرةٍ بكلماتِ الحصّةِ الأولى.</span></p></div>
+      <div class="aim-card" style="--ac:#F77F00;"><div class="aim-icon-wrap">🎧</div>
+        <h3 class="aim-title">Listen and check</h3><p class="aim-desc">Listen, check your answers and practise in pairs.
+          <span class="ar">الاستماعُ والتحقّقُ ثمَّ التدرّبُ مع الزميل.</span></p></div>
+      <div class="aim-card" style="--ac:#3A3A48;"><div class="aim-icon-wrap">🎭</div>
+        <h3 class="aim-title">Read and act</h3><p class="aim-desc">Answer questions about the story and act it out in groups of three.
+          <span class="ar">الإجابةُ عن أسئلةِ القصّةِ وتمثيلُها في مجموعاتٍ ثلاثيّة.</span></p></div>
+      <div class="aim-card" style="--ac:#C99A2E;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Respect other opinions: football is for everyone!
+          <span class="ar">نحترمُ الآراءَ الأخرى: كرةُ القدمِ للجميع!</span></p></div>
+    </div>
+  </section>
+  <section class="tab-content" id="tab-complete">
+    <h2 class="section-title">✏️ Read and complete<span class="title-sub">اقرأْ وأضِفْ كلماتِ الحصّةِ الأولى</span></h2>
+    <div class="activity-banner">
+      <div class="en">✏️ Activity 1: Read. Add new words from period 1. Make any changes needed.</div>
+      <div class="ar">اكتبِ الكلمةَ المناسبةَ في كلِّ فراغ. انتبهْ: قد تحتاجُ إلى تغييرِ شكلِ الكلمة، مثل: <span dir="ltr" style="unicode-bidi:isolate">miss → missed</span>.</div>
+    </div>
+    <div class="wordline"><span>club</span><span>coach</span><span>either</span><span>miss</span><span>practise</span><span>soccer</span><span>sports bag</span><span>training</span><span>whose</span></div>
+    <div class="q-list" id="cpBox"><div class="dq "><span class="n">1</span><div class="dls"><div class="dl"><b>A</b> <span>What have you got in your <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="sports bag" size="11">?</span></div><div class="dl"><b>B</b> <span>I've got my trainers and all my football things.</span></div></div></div><div class="dq "><span class="n">2</span><div class="dls"><div class="dl"><b>A</b> <span>Why do Americans say <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="soccer" size="7"> for the game of football?</span></div><div class="dl"><b>B</b> <span>Football means American football to them, so they need a different name.</span></div></div></div><div class="dq "><span class="n">3</span><div class="dls"><div class="dl"><b>A</b> <span>Did Fuad score?</span></div><div class="dl"><b>B</b> <span>He almost did, but he <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="missed" size="7"> – three times.</span></div></div></div><div class="dq "><span class="n">4</span><div class="dls"><div class="dl"><b>A</b> <span>It wasn't a very good game yesterday. Our team need to <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="practise|practice" size="9"> more.</span></div><div class="dl"><b>B</b> <span>I didn't enjoy the game, <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="either" size="7">.</span></div></div></div><div class="dq "><span class="n">5</span><div class="dls"><div class="dl"><b>A</b> <span>Have we really got <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="training" size="9"> again this evening?</span></div><div class="dl"><b>B</b> <span>Yes, we're going every day this week – before the big match.</span></div></div></div><div class="dq "><span class="n">6</span><div class="dls"><div class="dl"><b>A</b> <span><input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="whose" size="6"> are these socks? Are they Ahmed's?</span></div><div class="dl"><b>B</b> <span>Yes, I think they are. His socks are that colour.</span></div></div></div><div class="dq "><span class="n">7</span><div class="dls"><div class="dl"><b>A</b> <span>We don't have a school team, so we went to the <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="club" size="6"> in our town.</span></div><div class="dl"><b>B</b> <span>That way, we can play games and also get help from our fantastic <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="coach" size="6">.</span></div></div></div></div>
+    <div class="convo-tools"><button class="check-btn" type="button" id="cpCheck">✅ Check</button></div>
+    <div class="res-line" id="cpRes"></div>
+  </section>
+  <section class="tab-content" id="tab-check">
+    <h2 class="section-title">🎧 Listen and check<span class="title-sub">استمعْ وتحقّقْ، ثمَّ تدرّبْ مع زميلِك</span></h2>
+    <div class="activity-banner">
+      <div class="en">🎧 Activity 2: Listen and check. Then practise in pairs.</div>
+      <div class="ar">استمعْ وتحقّقْ من إجاباتِك، ثمَّ اقرأِ الحوارات مع زميلِك: أنتَ A وزميلُك B، ثمَّ تبادلا.</div>
+    </div>
+    <div class="gplayer"><b>🎧 CD 2 · Audio 4 · Seven short conversations</b>
+      <audio controls preload="metadata" src="../audio/grade8/unit5/track04.mp3" title="Audio 4" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio></div>    <div class="q-list"><div class="dq"><span class="n">1</span><div class="dls"><div class="dl"><b>A</b> <span>What have you got in your sports bag?</span></div><div class="dl"><b>B</b> <span>I've got my trainers and all my football things.</span></div></div><button class="say-btn" type="button" data-t="What have you got in your sports bag? ... I've got my trainers and all my football things.">🔊</button></div><div class="dq"><span class="n">2</span><div class="dls"><div class="dl"><b>A</b> <span>Why do Americans say soccer for the game of football?</span></div><div class="dl"><b>B</b> <span>Football means American football to them, so they need a different name.</span></div></div><button class="say-btn" type="button" data-t="Why do Americans say soccer for the game of football? ... Football means American football to them, so they need a different name.">🔊</button></div><div class="dq"><span class="n">3</span><div class="dls"><div class="dl"><b>A</b> <span>Did Fuad score?</span></div><div class="dl"><b>B</b> <span>He almost did, but he missed – three times!</span></div></div><button class="say-btn" type="button" data-t="Did Fuad score? ... He almost did, but he missed – three times!">🔊</button></div><div class="dq"><span class="n">4</span><div class="dls"><div class="dl"><b>A</b> <span>It wasn't a very good game yesterday. Our team need to practise more.</span></div><div class="dl"><b>B</b> <span>I didn't enjoy the game, either.</span></div></div><button class="say-btn" type="button" data-t="It wasn't a very good game yesterday. Our team need to practise more. ... I didn't enjoy the game, either.">🔊</button></div><div class="dq"><span class="n">5</span><div class="dls"><div class="dl"><b>A</b> <span>Have we really got training again this evening?</span></div><div class="dl"><b>B</b> <span>Yes, we're going every day this week – before the big match.</span></div></div><button class="say-btn" type="button" data-t="Have we really got training again this evening? ... Yes, we're going every day this week – before the big match.">🔊</button></div><div class="dq"><span class="n">6</span><div class="dls"><div class="dl"><b>A</b> <span>Whose are these socks? Are they Ahmed's?</span></div><div class="dl"><b>B</b> <span>Yes, I think they are. His socks are that colour.</span></div></div><button class="say-btn" type="button" data-t="Whose are these socks? Are they Ahmed's? ... Yes, I think they are. His socks are that colour.">🔊</button></div><div class="dq"><span class="n">7</span><div class="dls"><div class="dl"><b>A</b> <span>We don't have a school team, so we went to the club in our town.</span></div><div class="dl"><b>B</b> <span>That way, we can play games and also get help from our fantastic coach.</span></div></div><button class="say-btn" type="button" data-t="We don't have a school team, so we went to the club in our town. ... That way, we can play games and also get help from our fantastic coach.">🔊</button></div></div>
+  </section>
+  <section class="tab-content" id="tab-answer">
+    <h2 class="section-title">❓ Read again and answer<span class="title-sub">اقرأِ الحوارَ مرّةً أخرى وأجِب</span></h2>
+    <div class="activity-banner">
+      <div class="en">❓ Activity 3: Read again and answer the questions.</div>
+      <div class="ar">ارجعْ إلى حوارِ عمرَ وعدنانَ وياسمين (في تبويبِ Act it Out) وأجِبْ عن الأسئلةِ الثمانية.</div>
+    </div>
+    <details class="drop-q"><summary>❓ The questions <span class="ar">الأسئلةُ الثمانية</span></summary><div class="drop-body"><div class="q-list">
+<div class="qa a3" data-a="b"><div class="q"><span class="n">1</span><span>Whose is the big sports bag?</span></div><div class="opts"><button class="op" type="button" data-v="a">It's Adnan's.</button><button class="op" type="button" data-v="b">It's Yasmeen's.</button><button class="op" type="button" data-v="c">It's Omar's.</button></div></div>
+<div class="qa a3" data-a="a"><div class="q"><span class="n">2</span><span>Why is training today more important than usual for them?</span></div><div class="opts"><button class="op" type="button" data-v="a">Because they both have important matches tomorrow.</button><button class="op" type="button" data-v="b">Because their coach is new.</button><button class="op" type="button" data-v="c">Because it is the first training.</button></div></div>
+<div class="qa a3" data-a="b"><div class="q"><span class="n">3</span><span>Why has Omar never heard of soccer?</span></div><div class="opts"><button class="op" type="button" data-v="a">Because he doesn't like sport.</button><button class="op" type="button" data-v="b">Because soccer is an American word; he calls it football.</button><button class="op" type="button" data-v="c">Because it is a new game.</button></div></div>
+<div class="qa a3" data-a="a"><div class="q"><span class="n">4</span><span>How does Omar feel about football and girls?</span></div><div class="opts"><button class="op" type="button" data-v="a">He doesn't think it's a game for girls.</button><button class="op" type="button" data-v="b">He thinks it is the best game for girls.</button><button class="op" type="button" data-v="c">He wants to play with the girls.</button></div></div>
+<div class="qa a3" data-a="b"><div class="q"><span class="n">5</span><span>What do his cousins tell him about football in America?</span></div><div class="opts"><button class="op" type="button" data-v="a">Nobody plays it.</button><button class="op" type="button" data-v="b">Lots of girls play it.</button><button class="op" type="button" data-v="c">Only boys play it.</button></div></div>
+<div class="qa a3" data-a="b"><div class="q"><span class="n">6</span><span>Where does Adnan invite Omar to go with him?</span></div><div class="opts"><button class="op" type="button" data-v="a">to the cinema</button><button class="op" type="button" data-v="b">to training</button><button class="op" type="button" data-v="c">to school</button></div></div>
+<div class="qa a3" data-a="a"><div class="q"><span class="n">7</span><span>Who does Adnan think will win his match?</span></div><div class="opts"><button class="op" type="button" data-v="a">his team</button><button class="op" type="button" data-v="b">Yasmeen's team</button><button class="op" type="button" data-v="c">nobody</button></div></div>
+<div class="qa a3" data-a="a"><div class="q"><span class="n">8</span><span>Why does Yasmeen think Omar should watch her team's match?</span></div><div class="opts"><button class="op" type="button" data-v="a">She thinks her match will be much better.</button><button class="op" type="button" data-v="b">Her match is first.</button><button class="op" type="button" data-v="c">Her team need a player.</button></div></div>
+    </div><div class="res-line" id="a3Res"></div></div></details>
+  </section>
+  <section class="tab-content" id="tab-act">
+    <h2 class="section-title">🎭 Act it out<span class="title-sub">مثِّلوا الحوارَ في مجموعاتٍ ثلاثيّة</span></h2>
+    <div class="activity-banner">
+      <div class="en">🎭 Activity 4: Work in groups of three. Listen again and practise the conversation.</div>
+      <div class="ar">استمعوا إلى الحوار، ثمَّ يختارُ كلُّ طالبٍ دورًا (عمر، عدنان، ياسمين) فتُضاءُ جُمَلُه. يقرأُ الراوي أيُّ واحدٍ منكم.</div>
+    </div>
+    <div class="gplayer"><b>🎧 CD 2 · Audio 3 · Omar, Adnan and Yasmeen</b>
+      <audio controls preload="metadata" src="../audio/grade8/unit5/track03.mp3" title="Audio 3" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio></div>
+    <div class="roles"><button class="role" type="button" data-r="Omar">🧒 Omar</button><button class="role" type="button" data-r="Adnan">👦 Adnan</button><button class="role" type="button" data-r="Yasmeen">👧 Yasmeen</button></div>
+    <div class="convo-sheet" id="convoA"></div>
+  </section>
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>🔐 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «رمزِ الخزانة».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">"He almost scored, but he ______ – three times!"</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>missed</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>miss</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>missing</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">"______ are these socks? Are they Ahmed's?"</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>Who</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>Whose</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Where</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">"We went to the ______ in our town to play games."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>coach</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>club</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>soccer</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">Why is training today important for Adnan and Yasmeen?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>They have big matches tomorrow.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>They are on holiday.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>Their coach is ill.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">"I didn't enjoy the game." — "I didn't enjoy it, ______."</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>too</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>either</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>also</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">🔐<small>LOCKER CODE</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Prepared with care 🌸 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#f8fafc">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+
+var BKEY = 'g8u5p2_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['🏀','⚽','👟','🎒','🏐','🏆','🥅','✨'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  if(btn && btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','🏷️','⭐','🏀'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#1E40AF','#F97316','#FACC15','#ffffff','#0F172A'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+function hw(w,ar){ return '<span class="hover-word">'+w+'<span class="tooltip">'+ar+'</span></span>'; }
+function pr(w,ar){ return '<span class="pronoun">'+w+'<span class="tooltip">تعودُ على: '+ar+'</span></span>'; }
+function txt(h){ var d=document.createElement('div'); d.innerHTML=h; d.querySelectorAll('.tooltip').forEach(function(t){t.remove()}); return d.textContent; }
+/* reusable: one shared word bank → blanks (.blank[data-bank][data-a]) */
+function makeBank(id, doneMsg){
+  var box=document.getElementById(id), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){ w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return; if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+    box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w; }); });
+  var blanks=document.querySelectorAll('.blank[data-bank="'+id+'"]'), line=document.getElementById(id+'Res');
+  blanks.forEach(function(bl){ bl.addEventListener('click',function(){
+    if(bl.classList.contains('ok')) return;
+    if(!sel || bl.dataset.a.split('|').indexOf(sel.dataset.w)<0){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+    bl.textContent=sel.dataset.w; bl.classList.add('ok');
+    if(!box.dataset.reuse){ sel.classList.add('used'); } sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+    var ok=document.querySelectorAll('.blank[data-bank="'+id+'"].ok').length;
+    line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+    if(ok===blanks.length){ line.textContent=doneMsg; confetti(); var cb=window['onBankDone_'+id]; if(cb) cb(); }
+  }); });
+}
+/* reusable: choose-the-right-word items (.pick[data-a] with .pk buttons) */
+function makePicks(sel, resId, doneMsg){
+  var picks=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  picks.forEach(function(p){ p.querySelectorAll('.pk').forEach(function(b){ b.addEventListener('click',function(){
+    if(p.dataset.done) return;
+    if(b.textContent.trim()!==p.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    p.dataset.done='1'; b.classList.add('ok'); p.querySelectorAll('.pk').forEach(function(x){ if(x!==b) x.classList.add('off'); }); sparkleAt(b); done++;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+picks.length;
+    if(done===picks.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+/* reusable: one-answer questions (.qa[data-a] with .op buttons) */
+function makeQA(sel, resId, doneMsg){
+  var qs=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  qs.forEach(function(q){ q.querySelectorAll('.op').forEach(function(b){ b.addEventListener('click',function(){
+    if(q.dataset.done) return;
+    if(b.dataset.v!==q.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    q.dataset.done='1'; b.classList.add('ok'); q.querySelectorAll('.op').forEach(function(x){x.disabled=true;}); sparkleAt(b); done++;
+    var m=q.querySelector('.model'); if(m) m.hidden=false;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+qs.length;
+    if(done===qs.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+
+/* audio files that are not uploaded yet: replace the player with a short note */
+(function(){
+  function miss(a){ if(a.dataset.gone) return; a.dataset.gone=1; var n=document.createElement('div'); n.className='audio-missing';
+    n.textContent='🎧 تسجيلُ '+(a.title||'')+' غيرُ متوفّرٍ بعد — استعملْ أزرارَ 🔊 لتسمعَ النصّ.'; a.replaceWith(n); }
+  document.querySelectorAll('audio').forEach(function(a){ a.addEventListener('error',function(){ miss(a); }); if(a.error || a.networkState===3) miss(a); });
+})();
+
+function segHtml(seg, tokenise){
+  return seg.map(function(s){
+    if(typeof s!=='string') return s[0]==='h'?hw(s[1],s[2]):pr(s[1],s[2]);
+    if(!tokenise) return s;
+    return s.split(/(\s+)/).map(function(t){ if(/^\s+$/.test(t)||!t) return t;
+      var core=t.replace(/[^A-Za-z']/g,'').toLowerCase();
+      return '<span class="tk'+(TARGETS.indexOf(core)>-1?' tgt':'')+'">'+t+'</span>'; }).join('');
+  }).join('');
+}
+function segText(seg){ return seg.map(function(s){ return typeof s==='string'?s:s[1]; }).join(''); }
+var CONVO=[["Narrator", ["Omar has seen a big sports bag. It isn't his, so he asks Adnan."]], ["Omar", ["Whose is that sports bag, Adnan? Is it yours, or is it Yasmeen's?"]], ["Adnan", ["It's ", ["p", "hers", "Yasmeen's (her sports bag)"], ". ", ["p", "Mine", "my sports bag (Adnan’s)"], " is over there by the ", ["h", "stairs", "الدَّرَج"], "."]], ["Yasmeen", ["(Yasmeen arrives.) Yes, I've got training at the club today. Our coach says we really ", ["h", "mustn't", "يجبُ ألّا"], " miss it. We have to practise more."]], ["Adnan", ["I mustn't miss my training, either. You see, Omar, our teams both have big matches tomorrow."]], ["Omar", ["What kind of sport do you mean? Basketball? Volleyball?"]], ["Yasmeen", ["No, soccer."]], ["Omar", ["Soccer? What's that? I've never ", ["h", "heard of", "سمعَ عن"], " it."]], ["Adnan", ["Oh, yes, it's soccer here in America, but everyone else calls ", ["p", "it", "the game (soccer)"], " football."]], ["Omar", ["Ah, football! I love the game."]], ["Yasmeen", ["I do, too."]], ["Omar", ["But football isn't a game for girls, is it? Not like volleyball."]], ["Yasmeen", ["I don't ", ["h", "agree", "أوافق"], "."]], ["Adnan", ["I don't, either. Lots of girls play it here."]], ["Yasmeen", ["It's a game for everyone, and it's my ", ["h", "favourite", "المفضَّلة"], "."]], ["Omar", [["p", "Mine", "my favourite game (Omar’s)"], ", too. I really miss football!"]], ["Adnan", ["What about training with me this evening?"]], ["Omar", ["Fantastic! And can I come and watch your match tomorrow?"]], ["Adnan", ["Yes, it'll be good. Our team are going to win!"]], ["Yasmeen", ["Ha! You should come and watch our game, Omar. ", ["p", "Ours", "our game (Yasmeen’s team’s)"], " will be much better than ", ["p", "theirs", "their game (Adnan’s team’s)"], "!"]]];
+
+document.querySelectorAll('[data-t]').forEach(function(b){ b.addEventListener('click',function(){ speak(b.dataset.t,b); }); });
+function renderConvo(id, tok, role){
+  var box=document.getElementById(id); if(!box) return;
+  box.innerHTML=CONVO.map(function(l,i){ var cls=role?(l[0]===role?' me':' dim'):'';
+    return '<div class="cline '+l[0]+cls+'"><span class="who">'+l[0]+'</span><span class="tx">'+segHtml(l[1],tok)+'</span><button class="say-btn" type="button" data-i="'+i+'">🔊</button></div>'; }).join('');
+  box.querySelectorAll('.say-btn[data-i]').forEach(function(b){ b.addEventListener('click',function(e){ e.stopPropagation(); speak(segText(CONVO[+b.dataset.i][1]).replace('(Yasmeen arrives.) ',''),b); }); });
+}
+function wireRoles(boxId){
+  document.querySelectorAll('.role').forEach(function(r){ r.addEventListener('click',function(){
+    var on=r.classList.contains('on'); document.querySelectorAll('.role').forEach(function(x){x.classList.remove('on')});
+    if(!on){ r.classList.add('on'); sparkleAt(r); } renderConvo(boxId,false,on?null:r.dataset.r); }); });
+}
+
+function nz(s){ return s.toLowerCase().replace(/[’]/g,"'").replace(/\s+/g,' ').trim(); }
+function wireTyped(btnId, scopeSel, resId, doneMsg, onDone){
+  document.getElementById(btnId).addEventListener('click',function(){
+    var ins=document.querySelectorAll(scopeSel+' .gp'), ok=0;
+    ins.forEach(function(i){ i.classList.remove('ok','no'); var v=nz(i.value); if(!v) return;
+      if(i.dataset.a.split('|').indexOf(v)>-1){ i.classList.add('ok'); i.readOnly=true; ok++; } else { i.classList.add('no'); i.placeholder=i.dataset.a.charAt(0)+'…'; } });
+    var l=document.getElementById(resId); l.className='res-line show good'; l.textContent='✏️ '+ok+' / '+ins.length;
+    if(ok===ins.length){ l.textContent=doneMsg; confetti(); if(onDone) onDone(); } else if(ok) sparkleAt(this);
+  });
+}
+
+var TARGETS=[];
+wireTyped('cpCheck','#cpBox','cpRes','🏆 ممتاز! أكملتَ الحواراتِ السبعة — استمعْ إليها وتحقّق.');
+makeQA('.qa.a3','a3Res','🏆 أحسنت! أجبتَ عن الأسئلةِ الثمانية.');
+renderConvo('convoA',false); wireRoles('convoA');
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Code breaker!'; msg='رائع! تستعملُ كلماتِ الوحدةِ وتفهمُ القصّةَ جيّدًا 🔐🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ أنشطةَ الدرسِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='🔐 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
