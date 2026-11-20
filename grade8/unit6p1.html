@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friends - Grade 8 Unit 6 Period 1 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 6 palette : friendship bracelet — magenta, violet & lime ===== */
+  :root{
+    --sunset:#A21CAF; --sunset-d:#86198F;
+    --rose:#65A30D;   --rose-d:#4D7C0F;
+    --lilac:#5B21B6;  --lilac-d:#4C1D95;
+    --cream:#FDF8FF;  --cream-d:#F3E8FF;
+    --aub:#2E1065;    --aub-d:#1E0B45;
+    --mint:#FDE047;   --mint-d:#CA8A04;
+    --ink:#2e1065; --muted:#6b5b7b; --paper:#ffffff;
+    --ok-bg:#dcfce7; --ok-bd:#16a34a; --ok-tx:#14532d;
+    --no-bg:#ffe4e6; --no-bd:#e11d48; --no-tx:#881337;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a magazine page: soft halftone dots in magenta and violet */
+    background-image:
+      radial-gradient(circle, rgba(162,28,175,.09) 1.6px, transparent 2px),
+      radial-gradient(circle, rgba(91,33,182,.07) 1.6px, transparent 2px);
+    background-size:18px 18px,18px 18px; background-position:0 0,9px 9px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+
+  /* ===== HEADER frame: the Young Times magazine cover (each period draws its own cover story) ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:12px 12px 34px;
+    background:radial-gradient(circle at 85% 10%, rgba(253,224,71,.35), transparent 32%), radial-gradient(circle at 8% 90%, rgba(101,163,13,.35), transparent 34%),
+      linear-gradient(160deg, #2E1065 0%, #5B21B6 45%, #A21CAF 100%); }
+  .lesson-header::before{ content:'YOUNG TIMES'; position:absolute; top:6px; left:50%; transform:translateX(-50%); font-family:'Fredoka',sans-serif; font-weight:700; font-size:clamp(38px,11vw,78px); letter-spacing:.06em; color:rgba(255,255,255,.07); white-space:nowrap; z-index:1; }
+  .lesson-header::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:16px; z-index:2;
+    background:repeating-linear-gradient(90deg,#A21CAF 0 18px,#FDE047 18px 36px,#65A30D 36px 54px,#5B21B6 54px 72px,#DB2777 72px 90px); box-shadow:0 -3px 8px rgba(0,0,0,.25); }
+  .header-inner{ max-width:960px; margin:0 auto; position:relative; z-index:3; text-align:center; }
+  .unit-badge{ position:relative; z-index:6; display:inline-flex; align-items:center; gap:9px; background:var(--mint); color:var(--aub); padding:6px 17px; border-radius:50px;
+    font-weight:700; font-size:13px; margin-bottom:12px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 var(--mint-d), 0 8px 18px rgba(0,0,0,.4); }
+  .title-plate{ display:inline-block; margin:16px auto 8px; padding:6px 22px 8px; border:2px solid #FDE047; border-radius:14px; background:rgba(30,11,69,.5); direction:ltr; }
+  .title-plate small{ display:block; color:#f5d0fe; font-size:11px; letter-spacing:.2em; font-family:'Fredoka',sans-serif; }
+  .title-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(26px,5.4vw,40px); color:#fff; line-height:1.1; }
+  .lesson-subtitle{ color:#fff; font-weight:800; font-size:clamp(14px,2.8vw,18px); margin-top:4px; text-shadow:0 2px 8px rgba(0,0,0,.6); }
+  .header-hint{ color:#f5edff; font-size:13px; margin-top:6px; font-weight:600; }
+  @keyframes popin{ from{ opacity:0; transform:scale(.3);} to{ opacity:1; transform:none;} }
+  @keyframes fadeup{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none;} }
+  @keyframes sway{ 0%,100%{ transform:rotate(-2deg);} 50%{ transform:rotate(2deg);} }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  /* P1 cover story: three mood cards slide in — upset, angry, happy together — under a "FEELINGS" headline */
+  .moods{ position:relative; width:min(360px,94vw); height:180px; padding-top:10px; margin:0 auto; direction:ltr; display:flex; justify-content:center; align-items:center; gap:clamp(6px,2vw,12px); }
+  .mood{ position:relative; width:31%; height:132px; background:#fff; border-radius:10px; box-shadow:0 12px 20px rgba(0,0,0,.4); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    transform:rotate(var(--r)); opacity:0; animation:cardin .6s cubic-bezier(.3,1.4,.5,1) forwards; animation-delay:var(--d); border-top:8px solid var(--c); }
+  .mood .f{ font-size:clamp(26px,8vw,36px); } .mood b{ font-family:'Fredoka',sans-serif; font-size:clamp(10px,2.8vw,12px); color:#2E1065; text-align:center; line-height:1.15; padding:0 4px; }
+  .mood .bub{ position:absolute; top:-14px; right:-6px; background:#FDE047; color:#2E1065; font-family:'Fredoka',sans-serif; font-weight:700; font-size:10px; border-radius:10px; padding:1px 7px; transform:rotate(6deg); }
+  @keyframes cardin{ from{ opacity:0; transform:translateY(-40px) rotate(0); } to{ opacity:1; transform:rotate(var(--r)); } }
+  .hl{ position:absolute; top:-6px; left:3%; transform:rotate(-5deg); background:#DB2777; color:#fff; font-family:'Fredoka',sans-serif; font-weight:700; font-size:13px; letter-spacing:.15em; padding:2px 12px; z-index:3; }
+  @media (prefers-reduced-motion:reduce){ .mood{ animation:none; opacity:1; } }
+  /* ===== TABS : MAGAZINE PAGE FLAGS sticking out of the spine ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{ position:relative; border-radius:6px; padding:16px 12px 0; direction:ltr; display:flex; gap:6px; align-items:flex-end; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    background:linear-gradient(180deg,transparent 0 calc(100% - 14px),#fff calc(100% - 14px)); border-bottom:4px solid var(--aub); }
+  .tabs-nav::after{ content:''; display:block; height:10px; margin:0 6px; border-radius:0 0 6px 6px; background:repeating-linear-gradient(90deg,#f5edff 0 4px,#eadcf7 4px 6px); box-shadow:0 6px 10px rgba(46,16,101,.18); }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{ position:relative; background:transparent; border:none; cursor:pointer; padding:0; flex:1 0 auto; min-width:86px; max-width:124px; transition:transform .2s ease; }
+  .tab-btn:nth-child(5n+1){ --flag:#A21CAF; } .tab-btn:nth-child(5n+2){ --flag:#5B21B6; } .tab-btn:nth-child(5n+3){ --flag:#65A30D; } .tab-btn:nth-child(5n+4){ --flag:#DB2777; } .tab-btn:nth-child(5n+5){ --flag:#CA8A04; }
+  /* each tab is a sticky page flag with a folded corner */
+  .sign{ position:relative; width:100%; min-height:62px; padding:8px 6px 10px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; color:#fff;
+    background:linear-gradient(180deg,var(--flag),color-mix(in srgb,var(--flag) 78%,#000)); border-radius:10px 10px 0 0; box-shadow:inset 0 -6px 0 rgba(0,0,0,.12); transform:translateY(8px); transition:all .25s ease; }
+  .sign::before{ content:''; position:absolute; top:0; right:0; width:14px; height:14px; background:linear-gradient(225deg,#fdf8ff 50%,rgba(0,0,0,.25) 50%); border-radius:0 10px 0 0; }
+  .sign::after{ display:none; }
+  .tab-btn:hover .sign{ transform:translateY(2px); }
+  .tab-icon{ font-size:19px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:12.5px; line-height:1.1; text-align:center; text-shadow:0 1px 2px rgba(0,0,0,.25); }
+  .post{ display:none; }
+  /* the open page: the flag pops up, turns white with a coloured edge */
+  .tab-btn.active .sign{ transform:translateY(-4px); background:#fff; color:var(--aub); box-shadow:inset 0 5px 0 var(--flag), 0 -4px 12px rgba(46,16,101,.18); }
+  .tab-btn.active .tab-lbl{ text-shadow:none; }
+  .tab-btn.active::before{ content:'💌'; position:absolute; top:-14px; right:4px; font-size:16px; z-index:2; animation:olivedrop .6s cubic-bezier(.3,1.5,.5,1); }
+  @keyframes olivedrop{ 0%{ transform:translateY(-20px) rotate(-30deg); opacity:0; } 70%{ transform:translateY(3px) rotate(8deg); opacity:1; } 100%{ transform:none; } }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #eadcf7; box-shadow:0 6px 0 #d5bdf0, 0 8px 20px rgba(46,16,101,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #eadcf7; box-shadow:0 6px 0 #d5bdf0, 0 8px 15px rgba(46,16,101,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(101,163,13,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #eadcf7; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #d5bdf0;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#f8fafc,#ecfccb); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#9a3412; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(142,15,66,.4);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(162,28,175,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(91,33,182,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(91,33,182,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #eadcf7; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #d5bdf0; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#f7fee7,#d9f99d); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#7c2d12; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #eadcf7; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #d5bdf0;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#fbf7ff; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f5dbe5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #eadcf7; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#f7fee7,#ecfccb); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#9a3412; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(46,16,101,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(162,28,175,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #eadcf7; box-shadow:0 8px 0 #d5bdf0, 0 12px 28px rgba(46,16,101,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(46,16,101,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,214,0,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffe680; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(91,33,182,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(101,163,13,.15); }
+  .find-word.found{ background:rgba(101,163,13,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #eadcf7; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #d5bdf0; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #eadcf7; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'💌'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #eadcf7; box-shadow:0 6px 0 #d5bdf0; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #eadcf7; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#fbf7ff; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #eadcf7; box-shadow:0 8px 0 #d5bdf0; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #fde68a; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(101,163,13,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show,.tab-btn.active::before{ animation:none !important; } .tab-btn.active .sign{ transform:none; }
+  }
+
+  /* ===== Unit 6 shared widgets ===== */
+  [hidden]{ display:none !important; }
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); direction:ltr; text-align:left; margin:18px 0 8px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .convo-tools{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+  .check-btn{ direction:ltr; unicode-bidi:isolate; background:linear-gradient(135deg,var(--rose),var(--sunset)); color:#fff; border:none; padding:9px 16px; border-radius:13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; box-shadow:0 4px 0 var(--aub); }
+  .check-btn.ghost{ background:#fff; color:var(--lilac-d); border:2px solid var(--lilac); box-shadow:0 4px 0 var(--cream-d); }
+  .check-btn.playing{ background:var(--aub); color:#fff; }
+  .say-btn{ background:var(--cream); border:2px solid var(--cream-d); color:var(--sunset); border-radius:20px; padding:1px 9px; cursor:pointer; font-size:14px; flex-shrink:0; }
+  .say-btn.playing{ background:var(--sunset); color:#fff; }
+  .pick{ display:inline-flex; gap:5px; flex-wrap:wrap; vertical-align:middle; margin:0 3px; }
+  .pk{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:2px 11px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; }
+  .pk.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .pk.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .pk.off{ opacity:.35; text-decoration:line-through; cursor:default; }
+  .story{ display:grid; gap:12px; }
+  .scene{ background:#fff; border:3px solid #eadcf7; border-radius:18px; padding:13px 15px; box-shadow:0 5px 0 #d5bdf0; direction:ltr; text-align:left; display:flex; gap:12px; align-items:flex-start; }
+  .scene .pic{ font-size:34px; line-height:1; flex-shrink:0; }
+  .scene .lines{ flex:1; display:grid; gap:6px; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.75; }
+  .scene .who{ display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--lilac); border-radius:8px; padding:0 8px; margin-right:6px; }
+  .scene .who.n{ background:var(--mint-d); }
+  .everyday{ background:linear-gradient(135deg,#fef9c3,#fef08a); border:3px dashed var(--mint-d); border-radius:16px; padding:12px 16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; margin-top:14px; }
+  .everyday h4{ color:var(--mint-d); font-size:15px; } .everyday p{ font-size:16px; color:var(--aub); }
+  .nb-area{ width:100%; border:2px solid #eadcf7; border-radius:12px; resize:vertical; outline:none; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.7; padding:8px 11px; background:#fff; direction:ltr; }
+  .nb-area:focus, .tinput:focus{ border-color:var(--lilac); box-shadow:0 0 0 3px rgba(91,33,182,.18); }
+  .tinput{ border:2px solid #eadcf7; border-radius:10px; padding:5px 10px; font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--ink); background:#fff; outline:none; direction:ltr; }
+  .tinput.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .tinput.no{ background:var(--no-bg); border-color:var(--no-bd); }
+  .model{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.8; color:var(--ok-tx); background:var(--ok-bg); border-radius:12px; padding:8px 12px; margin-top:6px; }
+  .q-list{ display:grid; gap:12px; }
+  .qa{ background:#fff; border:3px solid #eadcf7; border-radius:16px; padding:12px 14px; box-shadow:0 5px 0 #d5bdf0; direction:ltr; text-align:left; }
+  .qa .q{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); font-weight:600; margin-bottom:8px; display:flex; gap:9px; align-items:baseline; }
+  .qa .q .n{ background:var(--sunset); color:#fff; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .opts{ display:flex; flex-wrap:wrap; gap:7px; }
+  .op{ background:#fbf7ff; border:2px solid #eadcf7; border-radius:12px; padding:6px 13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); }
+  .op.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; } .op.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .op:disabled{ cursor:default; }
+  .res-line{ unicode-bidi:plaintext; }
+
+  .res-line{ unicode-bidi:plaintext; }
+  .audio-missing{ background:#f7fee7; border:2px dashed var(--rose); color:#9a3412; border-radius:12px; padding:9px 12px; font-weight:700; font-size:13.5px; text-align:center; margin:8px auto 2px; max-width:480px; }
+
+  .story-card{ background:#fff; border:3px solid #eadcf7; border-radius:18px; padding:14px 16px; box-shadow:0 6px 0 #d5bdf0; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16.5px; line-height:2.1; }
+  .story-card p{ margin:0 0 6px; } .story-card b{ color:var(--rose-d); } .story-card .check-btn{ display:block; margin-top:8px; }
+  .tipbox{ margin-top:14px; background:#fff; border-left:5px solid var(--mint-d); border-radius:12px; padding:10px 14px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.7; }
+  .tipbox .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; color:var(--muted); font-size:13px; }
+  .tarea{ width:100%; box-sizing:border-box; font-family:'Fredoka',sans-serif; font-size:16px; line-height:1.6; border:2px solid #d5bdf0; border-radius:12px; padding:9px 12px; direction:ltr; text-align:left; background:repeating-linear-gradient(#fff 0 25px,#efe3ff 25px 26px); background-attachment:local; resize:vertical; }
+  .tarea:focus{ outline:none; border-color:var(--sunset); }
+  .convo-tools{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:12px 0 4px; }
+  .gp{ padding:2px 8px; margin:0 3px; font-weight:600; } .tinput.wide{ width:100%; }
+  .tinput.ok{ border-color:var(--ok-bd); background:var(--ok-bg); } .tinput.no{ border-color:var(--no-bd); background:var(--no-bg); }
+  .say-btn{ cursor:pointer; } .sent .blank{ min-width:76px; } .sent.cp{ line-height:2.4; }
+  .fb{ font-size:13.5px; font-weight:700; direction:rtl; text-align:right; } .fb.no{ color:var(--no-tx); } .fb.ok{ color:var(--ok-tx); } .fb:empty{ display:none; }
+  .wa{ background:#fff; border:2px solid #eadcf7; border-radius:14px; padding:10px 12px; direction:ltr; text-align:left; display:grid; gap:8px; }
+  .wa .q{ display:flex; gap:8px; align-items:center; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); font-weight:600; }
+  .wa .q .n, .tq .q .n, .num-b{ background:var(--sunset); color:#fff; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+  .wa-row{ display:flex; gap:8px; flex-wrap:wrap; } .wa-row .tinput{ flex:1; min-width:200px; } .wa .model{ font-family:'Fredoka',sans-serif; color:var(--sunset); }
+  .tq{ background:#fff; border:2px solid #eadcf7; border-radius:14px; padding:10px 12px; direction:ltr; text-align:left; display:grid; gap:6px; font-family:'Fredoka',sans-serif; }
+  .tq .q{ display:flex; gap:8px; align-items:center; font-size:16.5px; color:var(--aub); } .tq .q .say-btn{ margin-left:auto; }
+  .drop-q.mini summary{ padding:8px 12px; font-size:14.5px; } .drop-q.mini p{ padding:4px 12px 10px; margin:0; font-size:15.5px; line-height:1.7; }
+  .stc{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:4px 12px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; }
+  .stc.on{ background:var(--rose); border-color:var(--rose); color:#fff; }
+  .cklist{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:10px; direction:ltr; }
+  .cklist span{ font-family:'Fredoka',sans-serif; font-size:14px; background:#faf5ff; color:var(--muted); border:2px dashed #d5bdf0; border-radius:999px; padding:4px 12px; }
+  .cklist span.on{ background:var(--ok-bg); color:var(--ok-tx); border:2px solid var(--ok-bd); } .cklist span.on::before{ content:'✓ '; }
+  .bw.pic{ display:inline-flex; flex-direction:column; align-items:center; min-width:62px; padding:4px 8px; line-height:1.1; }
+  .bw.pic .pl{ font-size:11px; font-weight:700; color:var(--rose-d); } .bw.pic .pe{ font-size:26px; }
+  .tkx{ cursor:pointer; border-radius:6px; padding:0 1px; } .tkx:hover{ background:#f7fee7; }
+  .tkx.u{ box-shadow:inset 0 -3px 0 var(--rose); background:#f7fee7; font-weight:700; color:var(--rose-d); } .tkx.miss{ background:var(--no-bg); }
+  .bld{ background:#fff; border:2px solid #eadcf7; border-radius:14px; padding:10px 12px; direction:ltr; display:grid; gap:8px; }
+  .bld.ok{ border-color:var(--ok-bd); background:#f2fbf6; }
+  .bld .out{ display:flex; gap:8px; align-items:center; min-height:34px; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); }
+  .bld .built{ border-bottom:2px dashed #d5bdf0; flex:1; min-height:28px; }
+  .pool{ display:flex; flex-wrap:wrap; gap:6px; }
+  .tile{ font-family:'Fredoka',sans-serif; font-size:15.5px; background:#fff; border:2px solid #A21CAF; border-radius:8px; padding:4px 10px; cursor:pointer; color:var(--aub); box-shadow:0 3px 0 #d5bdf0; }
+  .tile.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .4s; } .bt{ text-align:right; } .check-btn.ghost{ background:#fff; color:var(--sunset); border:2px solid var(--sunset); }
+
+  .convo-sheet{ background:#fff; border:3px solid #eadcf7; border-radius:18px; padding:12px; box-shadow:0 6px 0 #d5bdf0; direction:ltr; display:grid; gap:8px; }
+  .cline{ display:flex; gap:9px; align-items:baseline; font-family:'Fredoka',sans-serif; font-size:16px; line-height:1.9; padding:6px 10px; border-radius:12px; background:#fbf7ff; }
+  .cline .who{ flex-shrink:0; font-size:12px; font-weight:700; color:#fff; border-radius:8px; padding:0 8px; background:var(--lilac); }
+  .cline .tx{ flex:1; } .cline .say-btn{ font-size:12px; padding:0 7px; }
+  .cline.me{ box-shadow:0 0 0 3px var(--rose); font-weight:600; } .cline.dim{ opacity:.45; }
+  .tk{ cursor:pointer; border-radius:4px; } .tk:hover{ background:#f7fee7; }
+  .tk.u{ background:#fef08a; box-shadow:0 0 0 2px #e0b52b; font-weight:700; color:var(--sunset-d); } .tk.miss{ background:var(--no-bg); }
+  .roles{ display:flex; gap:10px; justify-content:center; margin-bottom:12px; direction:ltr; flex-wrap:wrap; }
+  .role{ background:#fff; border:3px solid #eadcf7; border-radius:16px; padding:8px 16px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; color:var(--aub); box-shadow:0 4px 0 #d5bdf0; }
+  .role.on{ border-color:var(--rose); background:#f7fee7; }
+  .ee-box{ margin-top:16px; background:#fff; border:3px dashed var(--mint-d); border-radius:16px; padding:10px 14px; }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; color:var(--sunset); direction:ltr; text-align:left; margin-bottom:6px; } .ee-box h3 .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); font-weight:600; }
+  .ee-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; direction:ltr; padding:4px 0; border-bottom:1px dashed #eadcf7; } .ee-row:last-child{ border:none; }
+  .ee-row b{ font-family:'Fredoka',sans-serif; color:var(--aub); font-size:16px; } .ee-row span{ direction:rtl; color:var(--muted); font-size:13.5px; } .ee-row .say-btn{ margin-left:auto; }
+
+  .wl{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; margin-bottom:12px; }
+  .wl span{ font-family:'Fredoka',sans-serif; font-size:14px; background:#fff; border:2px dashed #d5bdf0; border-radius:999px; padding:2px 11px; color:var(--muted); }
+  .wl span.on{ border:2px solid var(--rose); color:var(--rose-d); background:#f7fee7; font-weight:700; }
+
+  .cline.cTina .who{ background:var(--sunset); } .cline.cNadia .who{ background:var(--rose-d); } .cline.cNarrator .who{ background:#6b5b7b; }
+  .cline.cTina{ background:#fbf0ff; } .cline.cNadia{ background:#f7fee7; }
+  .ql-read{ display:grid; gap:6px; margin-bottom:10px; }
+  .rl{ display:flex; gap:10px; align-items:center; background:#fff; border:2px solid #eadcf7; border-radius:12px; padding:8px 12px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .rl .n{ background:var(--sunset); color:#fff; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; } .rl .tx{ flex:1; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>💜</span> UNIT 6 · PERIOD 1 · GRADE 8 · PB PAGE 64</div>
+    <div class="moods" role="img" aria-label="Three pictures: Tina is upset and Nadia sees; Tina shouts Leave me alone and Nadia looks worried; the two girls are happy together."><span class="hl">FEELINGS</span><div class="mood" style="--r:-5deg;--d:0.2s;--c:#5B21B6"><span class="f">😟👀</span><b>upset</b></div><div class="mood" style="--r:2deg;--d:0.6s;--c:#DB2777"><span class="bub">Leave me alone!</span><span class="f">😠😟</span><b>angry</b></div><div class="mood" style="--r:-2deg;--d:1.0s;--c:#65A30D"><span class="f">😊😊</span><b>happy together</b></div></div>
+    <div class="title-plate"><small>WORDS · LISTEN · READ · PERIOD 1</small><h1>Friends</h1></div>
+    <div class="lesson-subtitle">الأصدقاء — مشاعرُ تينا ونادية في ثلاثِ صور 💜</div>
+    <p class="header-hint">نتعلّمُ كلماتِ المشاعر، ونصفُ الصور، ونستمعُ ونقرأُ حوارَ الصديقتين.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="words"><span class="sign"><span class="tab-icon">📚</span><span class="tab-lbl">Words</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="describe"><span class="sign"><span class="tab-icon">🖼️</span><span class="tab-lbl">Describe</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="listen"><span class="sign"><span class="tab-icon">🎧</span><span class="tab-lbl">Listen</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="read"><span class="sign"><span class="tab-icon">📖</span><span class="tab-lbl">Listen & Read</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#D62828;"><div class="aim-icon-wrap">📚</div>
+        <h3 class="aim-title">Feelings words</h3><p class="aim-desc">Learn: <i>alone, embarrassed, horrible, in fact, natural, scared, support, worried</i>.
+          <span class="ar">تعلُّمُ كلماتِ المشاعر.</span></p></div>
+      <div class="aim-card" style="--ac:#F77F00;"><div class="aim-icon-wrap">🖼️</div>
+        <h3 class="aim-title">Describe pictures</h3><p class="aim-desc">Make sentences about how people look and feel.
+          <span class="ar">وصفُ الصورِ ومشاعرِ الأشخاص.</span></p></div>
+      <div class="aim-card" style="--ac:#3A3A48;"><div class="aim-icon-wrap">🎧</div>
+        <h3 class="aim-title">Listen and read</h3><p class="aim-desc">Listen to Tina saying sorry to her friend Nadia.
+          <span class="ar">الاستماعُ إلى اعتذارِ تينا لصديقتِها نادية.</span></p></div>
+      <div class="aim-card" style="--ac:#C99A2E;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">A good friend understands – and we say sorry when we are wrong.
+          <span class="ar">الصديقُ الحقيقيُّ يتفهّم، ونعتذرُ حين نخطئ.</span></p></div>
+    </div>
+  </section>
+  <section class="tab-content" id="tab-words">
+    <h2 class="section-title">📚 Listen and repeat<span class="title-sub">استمعْ وردِّدِ الكلمات</span></h2>
+    <div class="activity-banner">
+      <div class="en">📚 Activity 1: Listen and repeat.</div>
+      <div class="ar">استمعْ وردِّدْ. اضغطِ البطاقةَ لترى معناها، واضغطْ 🔊 لتسمعَ الكلمة.</div>
+    </div>
+    <div class="gplayer"><b>🎧 CD 2 · Audio 12 · New words</b>
+      <audio controls preload="metadata" src="../audio/grade8/unit6/track12.mp3" title="Audio 12" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio></div>
+    <div class="word-cards-grid" id="wordCardsGrid"></div>
+    <div class="tipbox">🔤 <b>Word formation:</b> worry → be <b>worried</b> · scare → be <b>scared</b> · embarrass → be <b>embarrassed</b><span class="ar">من الفعلِ نصنعُ صفةً تصفُ المشاعرَ بإضافة ed.</span></div>
+  </section>
+  <section class="tab-content" id="tab-describe">
+    <h2 class="section-title">🖼️ Describe the pictures<span class="title-sub">صِفِ الصورَ الثلاث</span></h2>
+    <div class="activity-banner">
+      <div class="en">🖼️ Activity 2: Describe the pictures on page 65.</div>
+      <div class="ar">الجملُ مقسّمةٌ إلى ثلاثةِ أجزاء. اختر الجزءَ الأوسطَ من الصندوقِ الأوّل، والنهايةَ من الصندوقِ الثاني. انظرْ إلى الصورِ في رأسِ الصفحة.</div>
+    </div>
+    <div class="bank" id="bankMid"><h4>📦 Middle parts</h4><div class="bank-words"><button class="bw" type="button" data-w="Nadia is not shouting back,">Nadia is not shouting back,</button><button class="bw" type="button" data-w="Tina and Nadia are showing">Tina and Nadia are showing</button><button class="bw" type="button" data-w="Tina looks very angry">Tina looks very angry</button><button class="bw" type="button" data-w="Tina seems very upset,">Tina seems very upset,</button><button class="bw" type="button" data-w="the two girls both look">the two girls both look</button></div></div>
+    <div class="bank" id="bankEnd"><h4>📦 Endings</h4><div class="bank-words"><button class="bw" type="button" data-w="and Nadia has just seen this.">and Nadia has just seen this.</button><button class="bw" type="button" data-w="and she is shouting at Nadia.">and she is shouting at Nadia.</button><button class="bw" type="button" data-w="and she just looks worried.">and she just looks worried.</button><button class="bw" type="button" data-w="very different feelings.">very different feelings.</button><button class="bw" type="button" data-w="very happy together.">very happy together.</button></div></div>
+    <div class="sent-list"><div class="sent"><span class="n">1</span><div>In these three pictures, <span class="blank" data-bank="bankMid" data-a="Tina and Nadia are showing">______</span> <span class="blank" data-bank="bankEnd" data-a="very different feelings.">______</span></div></div><div class="sent"><span class="n">2</span><div>In the first picture, <span class="blank" data-bank="bankMid" data-a="Tina seems very upset,">______</span> <span class="blank" data-bank="bankEnd" data-a="and Nadia has just seen this.">______</span></div></div><div class="sent"><span class="n">3</span><div>In the second picture, <span class="blank" data-bank="bankMid" data-a="Tina looks very angry">______</span> <span class="blank" data-bank="bankEnd" data-a="and she is shouting at Nadia.">______</span></div></div><div class="sent"><span class="n">4</span><div>In the same picture, <span class="blank" data-bank="bankMid" data-a="Nadia is not shouting back,">______</span> <span class="blank" data-bank="bankEnd" data-a="and she just looks worried.">______</span></div></div><div class="sent"><span class="n">5</span><div>In the last picture, <span class="blank" data-bank="bankMid" data-a="the two girls both look">______</span> <span class="blank" data-bank="bankEnd" data-a="very happy together.">______</span></div></div></div>
+    <div class="res-line" id="bankMidRes"></div><div class="res-line" id="bankEndRes"></div>
+  </section>
+  <section class="tab-content" id="tab-listen">
+    <h2 class="section-title">🎧 Listen and answer<span class="title-sub">استمعْ وأجِبْ</span></h2>
+    <div class="activity-banner">
+      <div class="en">🎧 Activity 3: Listen and answer the questions.</div>
+      <div class="ar">اقرأِ الأسئلةَ أوّلًا، ثمَّ استمعْ إلى الحوار (دونَ قراءةِ النصّ) وأجِبْ.</div>
+    </div>
+    <div class="ql-read"><div class="rl"><span class="n">1</span><span class="tx">Why was Tina worried about Tim yesterday?</span><button class="say-btn" type="button" data-t="Why was Tina worried about Tim yesterday?">🔊</button></div><div class="rl"><span class="n">2</span><span class="tx">How did she speak to Nadia?</span><button class="say-btn" type="button" data-t="How did she speak to Nadia?">🔊</button></div><div class="rl"><span class="n">3</span><span class="tx">What does she want to say to Nadia now?</span><button class="say-btn" type="button" data-t="What does she want to say to Nadia now?">🔊</button></div><div class="rl"><span class="n">4</span><span class="tx">How does Nadia feel about what happened?</span><button class="say-btn" type="button" data-t="How does Nadia feel about what happened?">🔊</button></div></div>
+    <div class="gplayer"><b>🎧 CD 2 · Audio 14 · Tina and Nadia</b>
+      <audio controls preload="metadata" src="../audio/grade8/unit6/track14.mp3" title="Audio 14" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio></div>
+    <details class="drop-q"><summary>📝 Questions <span class="ar">الأسئلة</span></summary><div class="q-list"><div class="qa l3" data-a="a"><div class="q"><span class="n">1</span><span>Why was Tina worried about Tim yesterday?</span></div><div class="opts"><button class="op" type="button" data-v="a">Because he was in hospital.</button><button class="op" type="button" data-v="b">Because he lost his bag.</button><button class="op" type="button" data-v="c">Because he was angry with her.</button></div></div>
+<div class="qa l3" data-a="b"><div class="q"><span class="n">2</span><span>How did she speak to Nadia?</span></div><div class="opts"><button class="op" type="button" data-v="a">She was very kind to her.</button><button class="op" type="button" data-v="b">She was horrible to her.</button><button class="op" type="button" data-v="c">She didn’t speak to her.</button></div></div>
+<div class="qa l3" data-a="b"><div class="q"><span class="n">3</span><span>What does she want to say to Nadia now?</span></div><div class="opts"><button class="op" type="button" data-v="a">She wants to say thank you.</button><button class="op" type="button" data-v="b">She wants to say sorry.</button><button class="op" type="button" data-v="c">She wants to say goodbye.</button></div></div>
+<div class="qa l3" data-a="b"><div class="q"><span class="n">4</span><span>How does Nadia feel about what happened?</span></div><div class="opts"><button class="op" type="button" data-v="a">She is still angry.</button><button class="op" type="button" data-v="b">She understands and she isn’t angry.</button><button class="op" type="button" data-v="c">She is embarrassed.</button></div></div>
+</div></details>
+    <div class="res-line" id="l3Res"></div>
+  </section>
+  <section class="tab-content" id="tab-read">
+    <h2 class="section-title">📖 Listen and read<span class="title-sub">استمعْ واقرأْ، وجدِ الكلمات</span></h2>
+    <div class="activity-banner">
+      <div class="en">📖 Activity 4: Listen and read. Find the words and phrases from activity 1.</div>
+      <div class="ar">استمعْ وتابعْ في النصّ. اضغطْ كلَّ كلمةٍ من كلماتِ النشاطِ الأوّل لتجدَها (ويظهرُ معناها). الضميرُ الملوّنُ يُظهرُ على مَن يعود.</div>
+    </div>
+    <div class="gplayer"><b>🎧 CD 2 · Audio 14 · Tina and Nadia</b>
+      <audio controls preload="metadata" src="../audio/grade8/unit6/track14.mp3" title="Audio 14" style="width:100%;max-width:480px;display:block;margin:8px auto 2px;"></audio></div>
+    <div class="wl" id="wl"><span data-k="alone">alone</span><span data-k="embarrassed">embarrassed</span><span data-k="horrible">horrible</span><span data-k="in fact">in fact</span><span data-k="natural">natural</span><span data-k="scared">scared</span><span data-k="support">support</span><span data-k="worried">worried</span></div>
+    <div class="convo-sheet" id="convoR"></div>
+    <div class="res-line" id="uRes"></div>
+    <div class="roles"><button class="role" type="button" data-r="Tina">👧 Tina</button><button class="role" type="button" data-r="Nadia">👧🏽 Nadia</button></div>
+    <div class="ee-box"><h3>💬 Everyday English <span class="ar">عباراتٌ يوميّة</span></h3><div class="ee-row"><b>Don’t worry. Really.</b><span>لا تقلقي، حقًّا.</span><button class="say-btn" type="button" data-t="Don’t worry. Really.">🔊</button></div><div class="ee-row"><b>It’s fine.</b><span>لا بأس.</span><button class="say-btn" type="button" data-t="It’s fine.">🔊</button></div><div class="ee-row"><b>I understand completely.</b><span>أتفهّمُ تمامًا.</span><button class="say-btn" type="button" data-t="I understand completely.">🔊</button></div></div>
+  </section>
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>💜 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «المشاعر».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">I’m not going with anyone. I’m going ______.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>alone</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>natural</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>scared</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">Tina shouted at her friend. She was ______ to her.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>horrible</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>alone</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>natural</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">When I stand up and speak in front of everyone, I go red. I’m ______.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>embarrassed</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>supported</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>alone</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">Why does Tina want to say sorry?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>She was horrible to Nadia.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>She lost Nadia’s bag.</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>She was late.</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">What does Nadia think friends should do?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">A</span>hide their feelings</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">B</span>not hide their feelings</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>never talk</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">💜<small>TRUE FRIEND</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#f8fafc">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+
+var BKEY = 'g8u6p1_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['💌','🤝','💜','✨','📰','😊','🫶','⭐'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  if(btn && btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','💜','💌','⭐'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#A21CAF','#65A30D','#FDE047','#5B21B6','#DB2777'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+function hw(w,ar){ return '<span class="hover-word">'+w+'<span class="tooltip">'+ar+'</span></span>'; }
+function pr(w,ar){ return '<span class="pronoun">'+w+'<span class="tooltip">تعودُ على: '+ar+'</span></span>'; }
+function txt(h){ var d=document.createElement('div'); d.innerHTML=h; d.querySelectorAll('.tooltip').forEach(function(t){t.remove()}); return d.textContent; }
+/* reusable: one shared word bank → blanks (.blank[data-bank][data-a]) */
+function makeBank(id, doneMsg){
+  var box=document.getElementById(id), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){ w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return; if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+    box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w; }); });
+  var blanks=document.querySelectorAll('.blank[data-bank="'+id+'"]'), line=document.getElementById(id+'Res');
+  blanks.forEach(function(bl){ bl.addEventListener('click',function(){
+    if(bl.classList.contains('ok')) return;
+    if(!sel || bl.dataset.a.split('|').indexOf(sel.dataset.w)<0){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+    bl.textContent=sel.dataset.w; bl.classList.add('ok');
+    if(!box.dataset.reuse){ sel.classList.add('used'); } sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+    var ok=document.querySelectorAll('.blank[data-bank="'+id+'"].ok').length;
+    line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+    if(ok===blanks.length){ line.textContent=doneMsg; confetti(); var cb=window['onBankDone_'+id]; if(cb) cb(); }
+  }); });
+}
+/* reusable: choose-the-right-word items (.pick[data-a] with .pk buttons) */
+function makePicks(sel, resId, doneMsg){
+  var picks=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  picks.forEach(function(p){ p.querySelectorAll('.pk').forEach(function(b){ b.addEventListener('click',function(){
+    if(p.dataset.done) return;
+    if(b.textContent.trim()!==p.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    p.dataset.done='1'; b.classList.add('ok'); p.querySelectorAll('.pk').forEach(function(x){ if(x!==b) x.classList.add('off'); }); sparkleAt(b); done++;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+picks.length;
+    if(done===picks.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+/* reusable: one-answer questions (.qa[data-a] with .op buttons) */
+function makeQA(sel, resId, doneMsg){
+  var qs=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  qs.forEach(function(q){ q.querySelectorAll('.op').forEach(function(b){ b.addEventListener('click',function(){
+    if(q.dataset.done) return;
+    if(b.dataset.v!==q.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    q.dataset.done='1'; b.classList.add('ok'); q.querySelectorAll('.op').forEach(function(x){x.disabled=true;}); sparkleAt(b); done++;
+    var m=q.querySelector('.model'); if(m) m.hidden=false;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+qs.length;
+    if(done===qs.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+
+/* audio files that are not uploaded yet: replace the player with a short note */
+(function(){
+  function miss(a){ if(a.dataset.gone) return; a.dataset.gone=1; var n=document.createElement('div'); n.className='audio-missing';
+    n.textContent='🎧 تسجيلُ '+(a.title||'')+' غيرُ متوفّرٍ بعد — استعملْ أزرارَ 🔊 لتسمعَ النصّ.'; a.replaceWith(n); }
+  document.querySelectorAll('audio').forEach(function(a){ a.addEventListener('error',function(){ miss(a); }); if(a.error || a.networkState===3) miss(a); });
+})();
+var WORDS=[
+  {en:'alone', emoji:'🧍', ar:'وحيدًا / وحدَه', syn:'I’m going alone.<br>ant: with someone'},
+  {en:'embarrassed', emoji:'😳', ar:'محرَج', syn:'I feel bad – and embarrassed, too.<br><i>embarrass → be embarrassed</i>'},
+  {en:'horrible', emoji:'😠', ar:'فظيع / سيّئُ المعاملة', syn:'I was horrible back to you!<br>ant: nice, kind'},
+  {en:'in fact', emoji:'💡', ar:'في الحقيقة / بل', syn:'In fact, they shouldn’t hide them.<br>syn: really, actually'},
+  {en:'natural', emoji:'🌿', ar:'طبيعيّ', syn:'It was only natural.<br>ant: strange'},
+  {en:'scared', emoji:'😨', ar:'خائف', syn:'I was really scared.<br>syn: frightened · <i>scare → be scared</i>'},
+  {en:'support', emoji:'🤝', ar:'يدعمُ / يساند', syn:'trying to support me<br>syn: help'},
+  {en:'worried', emoji:'😟', ar:'قَلِق', syn:'Don’t worry. / I’m worried.<br><i>worry → be worried</i>'}
+];
+/* word flashcards (front: word + emoji + 🔊 · back: Arabic + synonym/antonym) */
+(function(){
+  var grid=document.getElementById('wordCardsGrid'); if(!grid) return;
+  WORDS.forEach(function(w){
+    var card=document.createElement('div'); card.className='word-card';
+    card.innerHTML='<button class="speaker-icon" type="button" aria-label="speak">🔊</button><span class="flip-icon">↻</span>'+
+      '<div class="card-front"><div class="word-emoji">'+w.emoji+'</div><div class="word-en">'+w.en+'</div><div class="word-tap-hint">اضغطْ لرؤيةِ المعنى 👆</div></div>'+
+      '<div class="card-back"><div class="word-ar">'+w.ar+'</div><div class="word-syn">'+w.syn+'</div></div>';
+    card.addEventListener('click',function(){ card.classList.toggle('flipped'); });
+    card.querySelector('.speaker-icon').addEventListener('click',function(e){ e.stopPropagation(); speak(w.en,this); });
+    grid.appendChild(card);
+  });
+})();
+
+
+function wireBuilders(sel,resId,doneMsg){
+  var all=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  all.forEach(function(b){ var target=b.dataset.m.split(' '), pos=0, pool=b.querySelector('.pool'), out=b.querySelector('.built');
+    function reset(){ pos=0; out.innerHTML=''; var w=target.slice(); do{ shuffle(w); }while(w.length>1 && w.join(' ')===b.dataset.m);
+      pool.innerHTML=w.map(function(x){ return '<button class="tile" type="button">'+x+'</button>'; }).join('');
+      pool.querySelectorAll('.tile').forEach(function(t){ t.addEventListener('click',function(){ if(b.dataset.done) return;
+        if(t.textContent!==target[pos]){ t.classList.add('no'); setTimeout(function(){ t.classList.remove('no'); },400); return; }
+        pos++; out.insertAdjacentHTML('beforeend','<span>'+t.textContent+'</span> '); t.remove(); sparkleAt(out);
+        if(pos===target.length){ b.dataset.done=1; b.classList.add('ok'); done++; line.className='res-line show good'; line.textContent='🧩 '+done+' / '+all.length; speak(b.dataset.m);
+          if(done===all.length){ line.textContent=doneMsg; confetti(); } } }); }); }
+    var r=b.querySelector('.bt button'); if(r) r.addEventListener('click',function(){ if(!b.dataset.done) reset(); }); reset(); });
+}
+function wireWA(sel,resId,doneMsg){
+  var all=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  all.forEach(function(w){ var i=w.querySelector('input'), fb=w.querySelector('.fb');
+    w.querySelector('.check-btn').addEventListener('click',function(){ var v=i.value.toLowerCase().replace(/[’]/g,"'"); if(!v.trim()){ i.focus(); return; }
+      var hit=w.dataset.k.split('|').some(function(k){ return v.indexOf(k)>-1; });
+      if(hit){ if(!w.dataset.done){ w.dataset.done=1; done++; } i.classList.add('ok'); i.classList.remove('no'); fb.className='fb ok'; fb.textContent='✔️ إجابةٌ صحيحة!'; var m=w.querySelector('.model'); if(m) m.hidden=false; sparkleAt(this);
+        line.className='res-line show good'; line.textContent='📝 '+done+' / '+all.length; if(done===all.length){ line.textContent=doneMsg; confetti(); } }
+      else { i.classList.add('no'); fb.className='fb no'; fb.textContent='🤔 ارجعْ إلى النصِّ وحاولْ مرّةً أخرى.'; }
+    }); });
+}
+var CONVO=[["Narrator", ["Two days ago, Tina's younger brother fell from a tree and hurt himself badly."]], ["Nadia", ["Hi, Tina. What's the news from the hospital? How's Tim?"]], ["Tina", [["p", "He", "Tim"], " was much better when we visited ", ["p", "him", "Tim"], " last night."]], ["Nadia", ["Great! And you look happier now. You were very upset yesterday morning."]], ["Tina", ["Yes, I was really ", ["t", "scared", "scared", "خائفة"], "."]], ["Nadia", ["Well, it's fantastic that you don't need to ", ["t", "worry", "worried", "تقلقي"], " now."]], ["Tina", ["Listen, Nadia, I want to say sorry for yesterday."]], ["Nadia", ["Oh, because you shouted, ‘Leave me ", ["t", "alone", "alone", "وحدي"], "!’"]], ["Tina", ["Yes. I know you were just trying to ", ["t", "support", "support", "تدعميني"], " me like a good friend."]], ["Nadia", ["Well, I always want to help when a friend is upset."]], ["Tina", ["And I was ", ["t", "horrible", "horrible", "فظيعة / سيّئة المعاملة"], " back to you! I'm really sorry."]], ["Nadia", [["p", "It", "Tina’s shouting"], " was only ", ["t", "natural", "natural", "طبيعيًّا"], ", so don't ", ["t", "worry", "worried", "تقلقي"], ". Really."]], ["Tina", ["You see, I sometimes say the wrong thing when I get upset. And when I think about ", ["p", "it", "what I said"], " later, I always feel bad – and ", ["t", "embarrassed", "embarrassed", "محرَجة"], ", too."]], ["Nadia", ["It's fine. I understood completely, and I wasn't angry."]], ["Tina", ["Thanks, Nadia."]], ["Nadia", ["You see, when people are friends, ", ["p", "they", "people who are friends"], " don't have to hide their feelings. ", ["t", "In fact", "in fact", "في الحقيقة / بل"], ", ", ["p", "they", "friends"], " shouldn't hide ", ["p", "them", "their feelings"], "."]], ["Tina", ["You really are a good friend, Nadia!"]]];
+var TARGETS=[];
+
+function segHtml(seg, tokenise){
+  return seg.map(function(s){
+    if(typeof s!=='string') return s[0]==='h'?hw(s[1],s[2]):pr(s[1],s[2]);
+    if(!tokenise) return s;
+    return s.split(/(\s+)/).map(function(t){ if(/^\s+$/.test(t)||!t) return t;
+      var core=t.replace(/[^A-Za-z']/g,'').toLowerCase();
+      return '<span class="tk'+(TARGETS.indexOf(core)>-1?' tgt':'')+'">'+t+'</span>'; }).join('');
+  }).join('');
+}
+function segText(seg){ return seg.map(function(s){ return typeof s==='string'?s:s[1]; }).join(''); }
+
+function renderConvo(id, tok, role){
+  var box=document.getElementById(id); if(!box) return;
+  box.innerHTML=CONVO.map(function(l,i){ var cls=role?(l[0]===role?' me':' dim'):'';
+    return '<div class="cline c'+l[0].replace(/\W/g,'')+cls+'"><span class="who">'+l[0]+'</span><span class="tx">'+segHtml(l[1],tok)+'</span><button class="say-btn" type="button" data-i="'+i+'">🔊</button></div>'; }).join('');
+  box.querySelectorAll('.say-btn[data-i]').forEach(function(b){ b.addEventListener('click',function(e){ e.stopPropagation(); speak(segText(CONVO[+b.dataset.i][1]),b); }); });
+}
+function wireRoles(boxId){
+  document.querySelectorAll('.role').forEach(function(r){ r.addEventListener('click',function(){
+    var on=r.classList.contains('on'); document.querySelectorAll('.role').forEach(function(x){x.classList.remove('on')});
+    if(!on){ r.classList.add('on'); sparkleAt(r); } renderConvo(boxId,false,on?null:r.dataset.r); }); });
+}
+
+(function(){
+  var base=segHtml; segHtml=function(seg,tok){ return seg.map(function(s){ if(typeof s!=='string' && s[0]==='t') return tok?'<span class="tkx hover-word" data-k="'+s[2]+'">'+s[1]+'<span class="tooltip">'+s[3]+'</span></span>':hw(s[1],s[3]); return base([s],tok); }).join(''); };
+})();
+function wireFind(boxId,listId,resId,doneMsg){
+  var found={}, total=document.querySelectorAll('#'+listId+' span').length, line=document.getElementById(resId), box=document.getElementById(boxId);
+  box.addEventListener('click',function(e){ var t=e.target.closest('.tkx'); if(!t) return; var k=t.dataset.k;
+    box.querySelectorAll('.tkx[data-k="'+k+'"]').forEach(function(x){ x.classList.add('u'); }); if(found[k]) return; found[k]=1; sparkleAt(t);
+    var w=document.querySelector('#'+listId+' span[data-k="'+k+'"]'); if(w) w.classList.add('on');
+    var n=Object.keys(found).length; line.className='res-line show good'; line.textContent='✏️ '+n+' / '+total;
+    if(n===total){ line.textContent=doneMsg; confetti(); } });
+}
+document.querySelectorAll('[data-t]').forEach(function(b){ b.addEventListener('click',function(e){ e.stopPropagation(); speak(b.dataset.t,b); }); });
+
+renderConvo('convoR',true); wireRoles('convoR');
+makeBank('bankMid','✅ الأجزاءُ الوسطى صحيحة.'); makeBank('bankEnd','🏆 أحسنت! وصفتَ الصورَ الثلاث.');
+makeQA('.qa.l3','l3Res','🏆 ممتاز! فهمتَ الحوارَ من الاستماع.');
+wireFind('convoR','wl','uRes','🏆 رائع! وجدتَ الكلماتِ الثماني في الحوار.');
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Feelings expert!'; msg='رائع! تعرفُ كلماتِ المشاعرِ وتفهمُ حوارَ الصديقتين 💜🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ أنشطةَ الدرسِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='💜 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
