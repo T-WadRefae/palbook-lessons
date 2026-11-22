@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revision: The cats and the monkey - Grade 5 Unit 9 Period 3 | T. Wad Refae</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Cairo:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  /* ===== Unit 9 palette : storybook night — royal blue, cheese yellow & monkey brown ===== */
+  :root{
+    --sunset:#1D4ED8; --sunset-d:#1E40AF;
+    --rose:#B45309;   --rose-d:#92400E;
+    --lilac:#1E3A8A;  --lilac-d:#172554;
+    --cream:#EFF6FF;  --cream-d:#DBEAFE;
+    --aub:#1E3A8A;    --aub-d:#172554;
+    --mint:#FACC15;   --mint-d:#CA8A04;
+    --ink:#0f172a; --muted:#475569; --paper:#ffffff;
+    --ok-bg:#dcfce7; --ok-bd:#16a34a; --ok-tx:#14532d;
+    --no-bg:#fee2e2; --no-bd:#dc2626; --no-tx:#7f1d1d;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cairo',sans-serif; color:var(--ink); min-height:100vh; overflow-x:hidden; position:relative;
+    background-color:var(--cream);
+    /* the whole page is a storybook night: tiny cheese-yellow stars and soft blue moons on pale paper */
+    background-image:
+      radial-gradient(circle, rgba(250,204,21,.28) 2px, transparent 3px),
+      radial-gradient(circle, rgba(29,78,216,.10) 6px, transparent 7px);
+    background-size:64px 64px, 128px 128px; background-position:0 0, 32px 32px;
+  }
+  .floaties{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .floaty{ position:absolute; font-size:22px; opacity:.16; animation:float-down linear infinite; }
+  @keyframes float-down{ from{ transform:translateY(-80px) rotate(0deg);} to{ transform:translateY(108vh) rotate(360deg);} }
+
+
+  /* ===== HEADER frame: a STORYBOOK AT NIGHT — a starry blue sky with a cheese-yellow moon, the scene sits on the open pages of a big book ===== */
+  .lesson-header{ position:relative; overflow:hidden; padding:34px 12px 70px;
+    background:radial-gradient(circle at 88% 16%,#fde047 0 26px,rgba(253,224,71,.25) 27px 40px,transparent 41px),
+      radial-gradient(circle,#fff 0 1.5px,transparent 2px) 0 0/46px 46px, radial-gradient(circle,rgba(255,255,255,.6) 0 1px,transparent 1.5px) 23px 17px/60px 60px,
+      linear-gradient(180deg,#172554 0%,#1E3A8A 55%,#1D4ED8 100%); }
+  .lesson-header::before{ content:''; position:absolute; left:50%; bottom:0; width:min(760px,104%); height:40px; transform:translateX(-50%); z-index:2;
+    background:linear-gradient(90deg,#fffdf5 0 49.6%,#cbd5e1 49.6% 50.4%,#fffdf5 50.4%); border-radius:50% 50% 0 0 / 100% 100% 0 0; box-shadow:0 -4px 0 #e2e8f0, 0 -8px 0 #fde68a; }
+  .lesson-header::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:12px; z-index:2; background:#B45309; }
+  .header-inner{ max-width:960px; margin:0 auto; position:relative; z-index:3; text-align:center; padding:0 12px; }
+  .unit-badge{ position:relative; z-index:6; display:inline-flex; align-items:center; gap:9px; background:#FACC15; color:#172554; padding:6px 18px; border-radius:8px; border:3px solid #fff;
+    font-weight:700; font-size:13px; margin-bottom:12px; direction:ltr; font-family:'Fredoka',sans-serif; box-shadow:0 4px 0 rgba(0,0,0,.3); }
+  .title-plate{ position:relative; display:inline-block; margin:14px auto 8px; padding:10px 26px 12px; background:#fffdf5; border:4px solid #FACC15; border-radius:6px 22px 6px 22px; direction:ltr; box-shadow:0 10px 20px rgba(0,0,0,.35); }
+  .title-plate::after{ content:'🧀'; position:absolute; right:-16px; top:-18px; font-size:30px; transform:rotate(14deg); }
+  .title-plate small{ display:block; color:#B45309; font-size:11px; letter-spacing:.2em; font-family:'Fredoka',sans-serif; }
+  .title-plate h1{ font-family:'Fredoka',sans-serif; font-size:clamp(22px,5vw,36px); color:#1E3A8A; line-height:1.15; }
+  .lesson-subtitle{ color:#fde68a; font-weight:800; font-size:clamp(14px,2.8vw,18px); margin-top:4px; }
+  .header-hint{ color:#e0e7ff; font-size:13px; margin-top:6px; font-weight:600; }
+  @keyframes popin{ from{ opacity:0; transform:scale(.3);} to{ opacity:1; transform:none;} }
+  @keyframes fadeup{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none;} }
+  @keyframes sway{ 0%,100%{ transform:rotate(-2deg);} 50%{ transform:rotate(2deg);} }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  /* P3 scene: WHO IS THE CLEVEREST? — the monkey sits on a tree branch under the moon wearing a golden crown, licking cheese; the cats look up */
+  .sc3{ position:relative; width:min(320px,90vw); height:160px; margin:0 auto; direction:ltr; }
+  .sc3 .tr{ position:absolute; left:8%; bottom:0; width:18px; height:150px; background:linear-gradient(90deg,#78350f,#92400e); border-radius:6px; }
+  .sc3 .br{ position:absolute; left:8%; top:56px; width:62%; height:12px; background:#92400e; border-radius:6px; transform:rotate(-6deg); transform-origin:left; }
+  .sc3 .lf{ position:absolute; left:-2%; top:4px; font-size:46px; letter-spacing:-12px; }
+  .sc3 .mk{ position:absolute; left:46%; top:8px; font-size:42px; animation:sw3 2.6s ease-in-out infinite; transform-origin:top center; }
+  .sc3 .mk::before{ content:'👑'; position:absolute; left:10px; top:-18px; font-size:20px; animation:sh3 1.3s ease-in-out infinite; }
+  @keyframes sw3{ 0%,100%{ transform:rotate(-6deg); } 50%{ transform:rotate(6deg); } } @keyframes sh3{ 50%{ filter:drop-shadow(0 0 8px #fde047); } }
+  .sc3 .lb{ position:absolute; right:4%; top:10px; background:#FACC15; color:#172554; border-radius:12px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-weight:800; font-size:13px; }
+  .sc3 .cats{ position:absolute; right:10%; bottom:4px; font-size:34px; }
+  @media (prefers-reduced-motion:reduce){ .sc3 .mk,.sc3 .mk::before{ animation:none; } }
+  /* ===== TABS : CHEESE WEDGES with holes on a wooden cheese board; the chosen wedge has a bite taken out of it and glows ===== */
+  .tabs-nav{ max-width:1100px; margin:18px auto 0; padding:0 16px; position:relative; z-index:10; }
+  .tabs-container{ position:relative; border-radius:20px; padding:14px 12px 16px; direction:ltr; display:flex; gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch; align-items:flex-end;
+    background:repeating-linear-gradient(90deg,#b45309 0 6px,#a16207 6px 9px,#b45309 9px 22px), #b45309; border:4px solid #78350f; box-shadow:inset 0 0 0 3px rgba(255,255,255,.18), 0 10px 22px rgba(23,37,84,.25); }
+  @media (min-width:700px){ .tabs-container{ flex-wrap:wrap; overflow-x:visible; justify-content:center; } }
+  .tab-btn{ position:relative; background:transparent; border:none; cursor:pointer; padding:0; flex:1 0 auto; min-width:86px; max-width:122px; transition:transform .2s ease; }
+  .tab-btn:hover{ transform:translateY(-3px) rotate(-2deg); }
+  .sign{ position:relative; width:100%; min-height:62px; padding:16px 8px 7px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:2px; color:#422006;
+    background:radial-gradient(circle at 22% 62%,#eab308 0 5px,transparent 6px), radial-gradient(circle at 74% 38%,#eab308 0 4px,transparent 5px), radial-gradient(circle at 60% 80%,#eab308 0 3px,transparent 4px), linear-gradient(180deg,#fef08a,#fde047);
+    clip-path:polygon(0 38%,100% 0,100% 100%,0 100%); border-radius:0 6px 6px 6px; box-shadow:inset 0 -6px 0 rgba(161,98,7,.25); transition:all .25s ease; }
+  .sign::before,.sign::after{ display:none; }
+  .tab-icon{ font-size:18px; line-height:1; }
+  .tab-lbl{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:12px; line-height:1.1; text-align:center; }
+  .post{ display:none; }
+  .tab-btn.active{ transform:translateY(-6px); }
+  .tab-btn.active .sign{ background:radial-gradient(circle at 22% 62%,#b45309 0 5px,transparent 6px), radial-gradient(circle at 74% 38%,#b45309 0 4px,transparent 5px), linear-gradient(180deg,#facc15,#f59e0b); color:#172554;
+    box-shadow:inset 0 -6px 0 rgba(146,64,14,.35), 0 0 16px rgba(250,204,21,.9); }
+  .tab-btn.active::after{ content:''; position:absolute; right:-8px; top:-6px; width:26px; height:26px; border-radius:50%; background:#b45309; box-shadow:-10px 6px 0 -4px #b45309; }
+  .tab-btn.active::before{ content:'😋'; position:absolute; right:-6px; top:-22px; font-size:16px; z-index:2; }
+
+  /* ===== MAIN ===== */
+  .main-content{ max-width:1100px; margin:28px auto; padding:0 16px 60px; position:relative; z-index:2; }
+  .tab-content{ display:none; animation:fadeIn .5s ease; }
+  .tab-content.active{ display:block; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+  .section-title{
+    font-family:'Fredoka',sans-serif; font-size:clamp(23px,4.5vw,29px); color:var(--aub); text-align:center; direction:ltr;
+    margin-bottom:24px; padding-bottom:14px; position:relative;
+  }
+  .section-title::after{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:120px; height:6px; border-radius:3px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac));
+  }
+  .title-sub{ display:block; font-size:15px; color:var(--muted); font-family:'Cairo',sans-serif; margin-top:4px; direction:rtl; }
+  .activity-banner{
+    background:linear-gradient(135deg, var(--lilac-d), var(--aub)); color:#fff; padding:16px 20px;
+    border-radius:16px; margin-bottom:22px; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .activity-banner .en{ font-family:'Fredoka',sans-serif; font-size:16.5px; direction:ltr; text-align:left; }
+  .activity-banner .ar{ font-size:13.5px; color:#f8e3ec; margin-top:6px; line-height:1.8; }
+  .gplayer{ background:#fff; border:2px dashed var(--lilac); border-radius:14px; padding:12px 15px; margin-bottom:20px; }
+  .gplayer b{ color:var(--lilac-d); font-size:14px; display:flex; align-items:center; gap:7px; font-family:'Fredoka',sans-serif; direction:ltr; }
+
+  /* objectives */
+  .aims-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-bottom:26px; }
+  .aim-card{
+    background:var(--paper); border-radius:18px; padding:22px; position:relative; overflow:hidden;
+    border:3px solid #bfdbfe; box-shadow:0 6px 0 #93c5fd, 0 8px 20px rgba(23,37,84,.08); transition:transform .3s;
+  }
+  .aim-card:hover{ transform:translateY(-5px); }
+  .aim-card::before{ content:''; position:absolute; top:0; left:0; width:100%; height:6px; background:var(--ac,var(--rose)); }
+  .aim-icon-wrap{
+    width:56px; height:56px; border-radius:50%; background:var(--ac,var(--rose));
+    display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,.15); border:3px solid #fff;
+  }
+  .aim-title{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--ink); margin-bottom:9px; direction:ltr; text-align:left; }
+  .aim-desc{ color:#43354a; line-height:1.7; font-size:15px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .aim-desc .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-top:7px; }
+  .key-language-box{
+    background:linear-gradient(135deg, var(--aub), var(--lilac)); color:#fff; border-radius:18px;
+    padding:24px; box-shadow:0 6px 0 var(--aub-d), 0 8px 20px rgba(0,0,0,.15);
+  }
+  .key-language-box h3{ font-size:19px; margin-bottom:14px; }
+  .key-words{ display:flex; flex-wrap:wrap; gap:9px; direction:ltr; }
+  .key-word{ background:rgba(255,255,255,.16); padding:7px 15px; border-radius:20px; font-weight:600; border:1px solid rgba(255,255,255,.3); font-family:'Fredoka',sans-serif; }
+
+  /* word cards */
+  .cards-instruction{
+    background:var(--sunset); color:var(--aub-d); padding:14px 18px; border-radius:14px; text-align:center;
+    font-weight:700; margin-bottom:22px; box-shadow:0 4px 0 var(--sunset-d);
+  }
+  .word-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(172px,1fr)); gap:16px; }
+  .word-card{
+    background:var(--paper); border-radius:16px; padding:20px 12px; text-align:center; cursor:pointer;
+    position:relative; border:3px solid #bfdbfe; box-shadow:0 6px 0 #93c5fd, 0 8px 15px rgba(23,37,84,.1);
+    transition:all .4s cubic-bezier(.4,0,.2,1); overflow:hidden; min-height:176px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .word-card:hover{ transform:translateY(-5px); }
+  .word-card.flipped .card-front{ opacity:0; transform:rotateY(180deg); }
+  .word-card.flipped .card-back{ opacity:1; transform:rotateY(0); }
+  .card-front,.card-back{ width:100%; transition:all .5s; backface-visibility:hidden; }
+  .card-back{
+    position:absolute; inset:0; padding:14px 10px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; opacity:0; transform:rotateY(-180deg);
+    background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; border-radius:12px; overflow:hidden;
+  }
+  .word-emoji{ font-size:36px; margin-bottom:8px; line-height:1; }
+  .word-en{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--ink); font-weight:600; direction:ltr; }
+  .word-tap-hint{ font-size:11px; color:var(--rose-d); font-weight:700; margin-top:6px; }
+  .word-ar{ font-size:17px; font-weight:800; margin-bottom:6px; line-height:1.35; padding:0 4px; }
+  .word-syn{
+    font-size:11.5px; background:rgba(255,255,255,.2); padding:5px 10px; border-radius:10px; margin-top:5px;
+    line-height:1.5; font-weight:600; max-width:100%; direction:ltr; text-align:center;
+  }
+  .word-syn i{ font-style:normal; direction:rtl; unicode-bidi:isolate; font-family:'Cairo',sans-serif; }
+  .speaker-icon{
+    position:absolute; top:9px; left:9px; width:35px; height:35px; background:var(--lilac); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px;
+    box-shadow:0 3px 0 var(--lilac-d); cursor:pointer; border:none; z-index:10; transition:all .2s;
+  }
+  .speaker-icon:hover{ transform:scale(1.12); }
+  .speaker-icon.playing,.ee-speak.playing,.play-scene-btn.playing{ background:var(--rose-d); color:#fff; animation:pulse-speak .8s ease-in-out infinite; }
+  @keyframes pulse-speak{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
+  .flip-icon{
+    position:absolute; top:9px; right:9px; width:29px; height:29px; background:rgba(185,28,28,.14); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--rose-d); font-size:13px; pointer-events:none; z-index:5;
+  }
+  .word-card.flipped .flip-icon{ background:rgba(255,255,255,.22); color:#fff; }
+  .wf-box{
+    margin-top:24px; background:#fff; border:3px solid #bfdbfe; border-radius:18px; padding:18px 20px;
+    box-shadow:0 6px 0 #93c5fd;
+  }
+  .wf-box h3{ font-family:'Fredoka',sans-serif; font-size:19px; color:var(--aub); direction:ltr; text-align:left; margin-bottom:4px; }
+  .wf-box .ar{ font-size:13px; color:var(--muted); margin-bottom:12px; }
+  .wf-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; direction:ltr; margin-bottom:10px;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .wf-chip{ background:var(--cream); border:2px solid var(--cream-d); border-radius:10px; padding:4px 12px; }
+  .wf-chip.new{ background:var(--sunset); border-color:var(--sunset-d); color:var(--aub-d); font-weight:700; }
+  .wf-row .tag{ font-size:12px; color:var(--lilac-d); }
+
+  /* picture */
+  .scene-card{
+    background:linear-gradient(#fff,#fff3ea); border:2px solid var(--cream-d); border-radius:18px;
+    padding:18px; margin-bottom:18px; text-align:center; box-shadow:0 6px 0 #f0d6c3;
+  }
+  .scene-pair{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; direction:ltr; }
+  .scene-box{ background:#fff; border:2px dashed var(--cream-d); border-radius:14px; padding:12px; }
+  .scene-box .no{ display:inline-block; background:var(--lilac); color:#fff; border-radius:8px; padding:2px 10px; font-family:'Fredoka',sans-serif; font-size:13px; }
+  .scene-art{ font-size:38px; letter-spacing:6px; margin:6px 0; }
+  .scene-cap{ font-family:'Fredoka',sans-serif; font-size:14px; color:var(--ink); }
+  .scene-cap .ar{ display:block; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+
+  /* shared word bank + blanks (one bank per column) */
+  .bank{
+    background:linear-gradient(135deg,#f8fafc,#fee2e2); border:3px dashed var(--sunset); border-radius:16px;
+    padding:14px 16px; margin-bottom:16px; text-align:center;
+  }
+  .bank h4{ font-size:14px; color:#9a3412; margin-bottom:10px; }
+  .bank-words{ display:flex; flex-wrap:wrap; gap:9px; justify-content:center; direction:ltr; }
+  .bw{
+    background:#fff; border:2px solid var(--sunset-d); color:var(--ink); border-radius:12px; padding:7px 14px;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; transition:all .2s;
+    box-shadow:0 3px 0 rgba(142,15,66,.4);
+  }
+  .bw:hover{ transform:translateY(-2px); }
+  .bw.sel{ background:var(--sunset); box-shadow:0 0 0 3px rgba(29,78,216,.4); transform:translateY(-2px); }
+  .bw.used{ opacity:.32; text-decoration:line-through; cursor:default; box-shadow:none; transform:none; }
+  .blank{
+    display:inline-block; min-width:120px; border:none; border-bottom:3px dashed var(--lilac);
+    background:rgba(30,58,138,.09); color:var(--lilac-d); font-family:'Fredoka',sans-serif; font-weight:600;
+    font-size:15px; padding:2px 9px; margin:0 3px; border-radius:7px 7px 0 0; cursor:pointer; text-align:center;
+  }
+  .blank:hover{ background:rgba(30,58,138,.18); }
+  .blank.ok{ background:var(--ok-bg); border-bottom:3px solid var(--ok-bd); color:var(--ok-tx); cursor:default; }
+  .blank.no{ background:var(--no-bg); border-bottom:3px solid var(--no-bd); color:var(--no-tx); animation:shake .35s; }
+  @keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .sent-list{ display:flex; flex-direction:column; gap:13px; }
+  .sent{
+    background:var(--paper); border:3px solid #bfdbfe; border-radius:14px; padding:14px 16px;
+    box-shadow:0 5px 0 #93c5fd; direction:ltr; text-align:left;
+    font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.2; color:var(--ink);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .sent .n{
+    background:var(--rose-d); color:#fff; width:29px; height:29px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; margin-top:5px;
+  }
+  .sent .start{ font-weight:700; color:var(--aub); }
+  .res-line{ margin-top:13px; font-weight:800; font-size:15px; display:none; text-align:center; }
+  .res-line.show{ display:block; animation:fadeIn .35s; }
+  .res-line.good{ color:var(--ok-tx); }
+
+  /* listening */
+  .listen-note{
+    background:linear-gradient(135deg,#fff1f2,#fecaca); border-right:5px solid var(--sunset-d);
+    border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#92400E; font-weight:700; margin-bottom:22px;
+  }
+  .drop-q{
+    background:var(--paper); border:3px solid #bfdbfe; border-radius:16px; margin-bottom:14px; overflow:visible;
+    box-shadow:0 5px 0 #93c5fd;
+  }
+  .drop-q > summary{
+    cursor:pointer; padding:14px 17px; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub);
+    direction:ltr; display:flex; align-items:center; gap:10px; list-style:none; font-weight:600;
+  }
+  .drop-q > summary::-webkit-details-marker{ display:none; }
+  .drop-q > summary::before{ content:'▸'; color:var(--rose-d); font-size:18px; transition:transform .2s; }
+  .drop-q[open] > summary::before{ transform:rotate(90deg); }
+  .drop-q > summary .ar{ font-family:'Cairo',sans-serif; font-size:13px; color:var(--muted); margin-left:auto; direction:rtl; }
+  .drop-body{ padding:4px 14px 16px; }
+  .q-card{
+    background:#f8fbff; border-radius:16px; padding:18px; margin-bottom:14px; border:2px solid #f5dbe5;
+  }
+  .q-head{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .q-num{
+    background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; width:38px; height:38px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; flex-shrink:0;
+  }
+  .question-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); direction:ltr; text-align:left; flex:1; line-height:1.5; }
+  .question-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .options-list{ display:flex; flex-direction:column; gap:9px; }
+  .option-btn{
+    background:#fff; border:2px solid #bfdbfe; padding:11px 15px; border-radius:12px; cursor:pointer;
+    font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); transition:all .2s; direction:ltr; text-align:left;
+  }
+  .option-btn:hover:not(:disabled){ border-color:var(--lilac); transform:translateX(3px); }
+  .option-btn.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; }
+  .option-btn.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .option-btn:disabled{ cursor:not-allowed; }
+  .explanation{
+    background:linear-gradient(135deg,#fff1f2,#fee2e2); border-right:4px solid var(--sunset-d);
+    padding:12px 15px; border-radius:10px; font-size:14px; line-height:1.8; margin-top:9px; display:none;
+  }
+  .explanation.show{ display:block; animation:fadeIn .4s; }
+  .explanation strong{ color:var(--lilac-d); unicode-bidi:isolate; }
+
+  /* read & find */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; justify-content:center; }
+  .legend span{ font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:12px; }
+  .lg-g{ background:#fff0e6; border:2px solid var(--sunset); color:#9a3412; }
+  .lg-p{ background:#f1ebf7; border:2px solid var(--lilac); color:var(--lilac-d); }
+  .lg-u{ background:#fde7eb; border:2px solid var(--rose-d); color:#8e2338; }
+  .find-hud{
+    position:sticky; top:8px; z-index:20; background:linear-gradient(135deg,var(--aub-d),var(--aub)); border-radius:16px;
+    padding:12px 15px; margin-bottom:20px; box-shadow:0 6px 18px rgba(23,37,84,.3);
+  }
+  .hud-top{ display:flex; justify-content:space-between; align-items:center; direction:ltr; font-family:'Fredoka',sans-serif; font-size:13px; color:#f3e6f0; }
+  .hud-bar{ height:8px; border-radius:5px; background:rgba(255,255,255,.14); margin:8px 0 10px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0; border-radius:5px; background:linear-gradient(90deg,var(--sunset),var(--rose)); transition:width .4s; }
+  .hud-done{ display:none; margin-top:9px; background:rgba(29,78,216,.22); border:2px dashed var(--sunset); border-radius:12px; padding:9px; text-align:center; font-size:13.5px; font-weight:700; color:#fff; }
+  .hud-done.show{ display:block; }
+  .target-list{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; }
+  .target-chip{ background:rgba(255,255,255,.1); color:#eadbe6; border:1px solid rgba(255,255,255,.2); border-radius:50px; padding:3px 11px; font-family:'Fredoka',sans-serif; font-size:12px; transition:all .25s; }
+  .target-chip.got{ background:var(--sunset); color:var(--aub-d); border-color:var(--sunset-d); text-decoration:line-through; }
+  .talk-card{ background:var(--paper); border-radius:22px; margin-bottom:24px; border:3px solid #bfdbfe; box-shadow:0 8px 0 #93c5fd, 0 12px 28px rgba(23,37,84,.1); }
+  .talk-head{
+    background:linear-gradient(135deg, var(--lilac), var(--rose-d)); padding:13px 18px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-radius:18px 18px 0 0; direction:ltr;
+  }
+  .talk-title{ display:flex; align-items:center; gap:10px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; }
+  .talk-badge{ background:var(--cream); width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; }
+  .play-scene-btn{
+    background:var(--cream); color:var(--aub); border:none; padding:8px 16px; border-radius:20px; cursor:pointer;
+    font-weight:700; font-family:'Cairo',sans-serif; font-size:13.5px; box-shadow:0 3px 0 var(--cream-d); transition:transform .2s;
+  }
+  .play-scene-btn:hover{ transform:translateY(-2px); }
+  .dialogue-box{ padding:20px; }
+  .scene-break{ text-align:center; color:var(--rose); letter-spacing:.5em; margin:4px 0 12px; }
+  .dialogue-line{
+    margin-bottom:12px; padding:11px 16px; border-radius:13px; background:#fff;
+    border-left:5px solid var(--accent,var(--lilac)); box-shadow:0 2px 8px rgba(23,37,84,.07);
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:2.05; color:var(--ink);
+  }
+  .dialogue-line[data-speaker="Narrator"]{ --accent:#9a8aa6; background:#faf6fb; font-style:italic; }
+  .dialogue-line[data-speaker="Hadeel"]{ --accent:var(--rose-d); }
+  .dialogue-line[data-speaker="Nidal"]{ --accent:var(--sunset-d); }
+  .dialogue-line[data-speaker="Rami"]{ --accent:var(--lilac-d); }
+  .dialogue-line[data-speaker="Man"]{ --accent:var(--aub); }
+  .dialogue-line[data-speaker="All"]{ --accent:#2f8f5b; }
+  .speaker-name{ font-weight:700; color:var(--accent); margin-right:6px; font-style:normal; }
+  .hover-word{ background:linear-gradient(transparent 60%, rgba(255,214,0,.55) 60%); cursor:help; position:relative; font-weight:600; }
+  .hover-word:hover{ background:#ffe680; padding:2px 4px; border-radius:4px; }
+  .tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(-8px);
+    background:var(--aub-d); color:#fff; padding:7px 13px; border-radius:10px; font-size:13.5px; font-style:normal;
+    font-family:'Cairo',sans-serif; font-weight:600; white-space:nowrap; opacity:0; pointer-events:none;
+    transition:opacity .2s; z-index:100; direction:rtl; box-shadow:0 4px 12px rgba(0,0,0,.3);
+  }
+  .tooltip::after{ content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--aub-d); }
+  .hover-word:hover .tooltip, .hover-word.tapped .tooltip, .pronoun:hover .tooltip, .pronoun.tapped .tooltip{ opacity:1; }
+  .pronoun{ background:rgba(30,58,138,.14); padding:0 2px; border-radius:4px; cursor:help; position:relative; font-weight:600; color:var(--lilac-d); border-bottom:2px dotted var(--lilac); }
+  .pronoun:hover{ background:var(--lilac); color:#fff; }
+  .pronoun .tooltip{ background:var(--lilac-d); }
+  .pronoun .tooltip::after{ border-top-color:var(--lilac-d); }
+  .find-word{ cursor:pointer; padding:1px 3px; margin:0 -2px; border-radius:5px; transition:all .2s; border-bottom:2px dotted rgba(192,61,87,.55); }
+  .find-word:hover{ background:rgba(185,28,28,.15); }
+  .find-word.found{ background:rgba(185,28,28,.16); color:var(--rose-d); font-weight:700; border-bottom:3px solid var(--rose-d); border-radius:0; }
+
+  /* everyday english */
+  .ee-box{ background:linear-gradient(135deg, var(--sunset), #ffb48f); border-radius:18px; padding:22px; box-shadow:0 6px 0 var(--sunset-d); color:var(--aub-d); }
+  .ee-box h3{ font-family:'Fredoka',sans-serif; font-size:20px; margin-bottom:6px; direction:ltr; text-align:left; }
+  .ee-box .ar{ font-size:13px; font-weight:700; margin-bottom:14px; }
+  .ee-row{ background:rgba(255,255,255,.82); border-radius:13px; padding:12px 16px; margin-bottom:10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; direction:ltr; }
+  .ee-row .phrase{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15.5px; flex:1; min-width:180px; }
+  .ee-row .meaning{ font-size:12.5px; color:#6a2a12; font-weight:700; direction:rtl; unicode-bidi:isolate; }
+  .ee-speak{ background:var(--aub); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:15px; flex-shrink:0; }
+  .route-steps{ margin-top:22px; background:#fff; border:3px solid #bfdbfe; border-radius:18px; padding:18px 20px; box-shadow:0 6px 0 #93c5fd; }
+  .route-steps h3{ font-family:'Fredoka',sans-serif; font-size:18px; color:var(--aub); direction:ltr; text-align:left; }
+  .route-steps .ar{ font-size:13px; color:var(--muted); margin:4px 0 12px; }
+  .step{ display:flex; align-items:center; gap:12px; direction:ltr; padding:9px 4px; border-bottom:1px dashed #bfdbfe; font-family:'Fredoka',sans-serif; font-size:15.5px; }
+  .step:last-child{ border-bottom:none; }
+  .step .arrow{ width:38px; height:38px; flex-shrink:0; border-radius:10px; background:var(--lilac); color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; }
+  .step .ar{ margin:0 0 0 auto; direction:rtl; font-family:'Cairo',sans-serif; font-size:12.5px; }
+  .tipbox{ background:linear-gradient(135deg,#f4eefa,#ebe1f5); border-right:5px solid var(--lilac); border-radius:14px; padding:14px 18px; font-size:13.5px; line-height:1.9; color:#3f2b55; font-weight:700; margin-top:20px; }
+
+  /* quiz */
+  .quiz-intro{
+    background:linear-gradient(135deg, var(--lilac), var(--aub)); color:#fff; padding:27px 23px;
+    border-radius:22px; text-align:center; margin-bottom:26px; position:relative; overflow:hidden; box-shadow:0 6px 0 var(--aub-d);
+  }
+  .quiz-intro::before{ content:'🏅'; position:absolute; top:-14px; right:-8px; font-size:100px; opacity:.16; transform:rotate(14deg); }
+  .quiz-intro h3{ font-family:'Fredoka',sans-serif; font-size:26px; margin-bottom:9px; direction:ltr; }
+  .quiz-intro p{ font-size:14.5px; line-height:1.7; font-weight:700; }
+  .quiz-progress-bar{ background:rgba(255,255,255,.35); height:12px; border-radius:10px; margin-top:18px; overflow:hidden; border:2px solid rgba(255,255,255,.6); }
+  .quiz-progress-fill{ height:100%; width:0%; border-radius:10px; transition:width .5s ease; background:linear-gradient(90deg, var(--sunset), var(--rose)); }
+  .quiz-question{ background:var(--paper); border-radius:18px; padding:22px; margin-bottom:18px; border:3px solid #bfdbfe; box-shadow:0 6px 0 #93c5fd; }
+  .quiz-q-header{ display:flex; align-items:center; gap:11px; margin-bottom:13px; direction:ltr; }
+  .quiz-q-number{ background:linear-gradient(135deg, var(--lilac), var(--lilac-d)); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; flex-shrink:0; }
+  .quiz-q-text{ font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--ink); line-height:1.5; text-align:left; flex:1; }
+  .quiz-q-text .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .quiz-options{ display:grid; gap:9px; }
+  .quiz-option{
+    background:#fff; border:2px solid #bfdbfe; padding:12px 16px; border-radius:12px; cursor:pointer;
+    direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink);
+    transition:all .2s; display:flex; align-items:center; gap:11px;
+  }
+  .quiz-option:hover:not(:disabled){ background:#f8fbff; border-color:var(--lilac); transform:translateX(3px); }
+  .opt-letter{ background:#f1e4dc; color:var(--lilac-d); width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+  .quiz-option.correct{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); }
+  .quiz-option.correct .opt-letter{ background:var(--ok-bd); color:#fff; }
+  .quiz-option.wrong{ background:var(--no-bg); border-color:var(--no-bd); color:var(--no-tx); }
+  .quiz-option.wrong .opt-letter{ background:var(--no-bd); color:#fff; }
+  .quiz-option:disabled{ cursor:not-allowed; }
+  .quiz-feedback{ margin-top:11px; padding:12px 15px; border-radius:10px; font-size:13.5px; line-height:1.7; display:none; }
+  .quiz-feedback.show{ display:block; animation:fadeIn .3s; }
+  .quiz-feedback.correct{ background:var(--ok-bg); border-right:4px solid var(--ok-bd); color:var(--ok-tx); }
+  .quiz-feedback.wrong{ background:var(--no-bg); border-right:4px solid var(--no-bd); color:var(--no-tx); }
+  .quiz-result{ background:var(--paper); border-radius:22px; padding:38px 23px; text-align:center; border:3px solid #bfdbfe; box-shadow:0 8px 0 #93c5fd; display:none; }
+  .quiz-result.show{ display:block; animation:fadeIn .5s; }
+  .result-emoji{ font-size:70px; margin-bottom:12px; line-height:1; }
+  .result-title{ font-family:'Fredoka',sans-serif; font-size:30px; color:var(--aub); margin-bottom:9px; direction:ltr; }
+  .result-score{ font-family:'Fredoka',sans-serif; font-size:52px; color:var(--rose-d); margin:16px 0; text-shadow:3px 3px 0 #fde68a; direction:ltr; }
+  .result-score span{ font-size:30px; color:var(--muted); }
+  .result-message{ font-size:17px; line-height:1.7; margin-bottom:23px; font-weight:600; }
+  .reward-badge{
+    display:none; margin:0 auto 18px; width:104px; height:104px; border-radius:50%;
+    background:radial-gradient(circle at 38% 30%, #ffe1cf, var(--sunset) 70%);
+    border:4px dashed #fff; box-shadow:0 0 0 5px rgba(185,28,28,.45), 0 8px 20px rgba(0,0,0,.25);
+    align-items:center; justify-content:center; flex-direction:column; font-size:40px; color:var(--aub-d);
+  }
+  .reward-badge small{ font-family:'Fredoka',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; }
+  .reward-badge.show{ display:flex; animation:bounce-badge .9s ease infinite alternate; }
+  @keyframes bounce-badge{ from{ transform:translateY(0) rotate(-6deg);} to{ transform:translateY(-13px) rotate(4deg);} }
+  .retry-btn{ background:linear-gradient(135deg, var(--rose), var(--rose-d)); color:#fff; border:none; padding:13px 28px; border-radius:14px; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:700; font-size:15px; box-shadow:0 4px 0 var(--aub); }
+  .earned-note{ margin-top:.8rem; background:rgba(255,255,255,.16); border:2px dashed var(--cream); border-radius:14px; padding:.55rem .8rem; font-size:.92rem; font-weight:700; color:#fff; }
+
+  .sparkle{ position:fixed; pointer-events:none; z-index:999; font-size:20px; animation:spark .8s ease-out forwards; }
+  @keyframes spark{ 0%{ opacity:1; transform:translate(0,0) scale(.6);} 100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(1.4);} }
+  .confetti-bit{ position:fixed; top:-16px; width:11px; height:16px; z-index:998; pointer-events:none; animation:conf-fall linear forwards; }
+  @keyframes conf-fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.7; } }
+
+  .lesson-footer{ background:linear-gradient(135deg, var(--aub-d), var(--lilac-d)); color:#fff; padding:26px 20px; text-align:center; margin-top:46px; position:relative; }
+  .lesson-footer::before{ content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg, var(--sunset), var(--rose) 50%, var(--lilac)); }
+  .footer-content{ font-family:'Caveat',cursive; font-size:22px; }
+
+  .activity-banner .ar b, .explanation strong, .listen-note b{ unicode-bidi:isolate; }
+  @media (max-width:768px){
+    .dialogue-line{ font-size:14.5px; line-height:1.95; }
+    .word-cards-grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .dialogue-box{ padding:14px; }
+    .tooltip{ white-space:normal; width:max-content; max-width:200px; text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floaty,.reward-badge.show,.tab-btn.active::before{ animation:none !important; } .tab-btn.active .sign{ transform:none; }
+  }
+
+  /* ===== Unit 6 shared widgets ===== */
+  [hidden]{ display:none !important; }
+  .part-h{ font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); direction:ltr; text-align:left; margin:18px 0 8px; }
+  .part-h .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; font-size:12.5px; color:var(--muted); }
+  .convo-tools{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+  .check-btn{ direction:ltr; unicode-bidi:isolate; background:linear-gradient(135deg,var(--rose),var(--sunset)); color:#fff; border:none; padding:9px 16px; border-radius:13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; box-shadow:0 4px 0 var(--aub); }
+  .check-btn.ghost{ background:#fff; color:var(--lilac-d); border:2px solid var(--lilac); box-shadow:0 4px 0 var(--cream-d); }
+  .check-btn.playing{ background:var(--aub); color:#fff; }
+  .say-btn{ background:var(--cream); border:2px solid var(--cream-d); color:var(--sunset); border-radius:20px; padding:1px 9px; cursor:pointer; font-size:14px; flex-shrink:0; }
+  .say-btn.playing{ background:var(--sunset); color:#fff; }
+  .pick{ display:inline-flex; gap:5px; flex-wrap:wrap; vertical-align:middle; margin:0 3px; }
+  .pk{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:2px 11px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; }
+  .pk.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .pk.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .pk.off{ opacity:.35; text-decoration:line-through; cursor:default; }
+  .story{ display:grid; gap:12px; }
+  .scene{ background:#fff; border:3px solid #bfdbfe; border-radius:18px; padding:13px 15px; box-shadow:0 5px 0 #93c5fd; direction:ltr; text-align:left; display:flex; gap:12px; align-items:flex-start; }
+  .scene .pic{ font-size:34px; line-height:1; flex-shrink:0; }
+  .scene .lines{ flex:1; display:grid; gap:6px; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.75; }
+  .scene .who{ display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--lilac); border-radius:8px; padding:0 8px; margin-right:6px; }
+  .scene .who.n{ background:var(--mint-d); }
+  .everyday{ background:linear-gradient(135deg,#fef9c3,#fef08a); border:3px dashed var(--mint-d); border-radius:16px; padding:12px 16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; margin-top:14px; }
+  .everyday h4{ color:var(--mint-d); font-size:15px; } .everyday p{ font-size:16px; color:var(--aub); }
+  .nb-area{ width:100%; border:2px solid #bfdbfe; border-radius:12px; resize:vertical; outline:none; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--ink); line-height:1.7; padding:8px 11px; background:#fff; direction:ltr; }
+  .nb-area:focus, .tinput:focus{ border-color:var(--lilac); box-shadow:0 0 0 3px rgba(30,58,138,.18); }
+  .tinput{ border:2px solid #bfdbfe; border-radius:10px; padding:5px 10px; font-family:'Fredoka',sans-serif; font-size:15.5px; color:var(--ink); background:#fff; outline:none; direction:ltr; }
+  .tinput.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); } .tinput.no{ background:var(--no-bg); border-color:var(--no-bd); }
+  .model{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.8; color:var(--ok-tx); background:var(--ok-bg); border-radius:12px; padding:8px 12px; margin-top:6px; }
+  .q-list{ display:grid; gap:12px; }
+  .qa{ background:#fff; border:3px solid #bfdbfe; border-radius:16px; padding:12px 14px; box-shadow:0 5px 0 #93c5fd; direction:ltr; text-align:left; }
+  .qa .q{ font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); font-weight:600; margin-bottom:8px; display:flex; gap:9px; align-items:baseline; }
+  .qa .q .n{ background:var(--sunset); color:#fff; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .opts{ display:flex; flex-wrap:wrap; gap:7px; }
+  .op{ background:#f8fbff; border:2px solid #bfdbfe; border-radius:12px; padding:6px 13px; cursor:pointer; font-family:'Fredoka',sans-serif; font-size:14.5px; color:var(--ink); }
+  .op.ok{ background:var(--ok-bg); border-color:var(--ok-bd); color:var(--ok-tx); font-weight:700; } .op.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .35s; }
+  .op:disabled{ cursor:default; }
+  .res-line{ unicode-bidi:plaintext; }
+
+  .res-line{ unicode-bidi:plaintext; }
+  .audio-missing{ background:#fff1f2; border:2px dashed var(--rose); color:#9a3412; border-radius:12px; padding:9px 12px; font-weight:700; font-size:13.5px; text-align:center; margin:8px auto 2px; max-width:480px; }
+
+  .story-card{ background:#fff; border:3px solid #bfdbfe; border-radius:18px; padding:14px 16px; box-shadow:0 6px 0 #93c5fd; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16.5px; line-height:2.1; }
+  .story-card p{ margin:0 0 6px; } .story-card b{ color:var(--rose-d); } .story-card .check-btn{ display:block; margin-top:8px; }
+  .tipbox{ margin-top:14px; background:#fff; border-left:5px solid var(--mint-d); border-radius:12px; padding:10px 14px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15px; line-height:1.7; }
+  .tipbox .ar{ display:block; direction:rtl; text-align:right; font-family:'Cairo',sans-serif; color:var(--muted); font-size:13px; }
+  .tarea{ width:100%; box-sizing:border-box; font-family:'Fredoka',sans-serif; font-size:16px; line-height:1.6; border:2px solid #93c5fd; border-radius:12px; padding:9px 12px; direction:ltr; text-align:left; background:repeating-linear-gradient(#fff 0 25px,#dbeafe 25px 26px); background-attachment:local; resize:vertical; }
+  .tarea:focus{ outline:none; border-color:var(--sunset); }
+  .convo-tools{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:12px 0 4px; }
+  .gp{ padding:2px 8px; margin:0 3px; font-weight:600; } .tinput.wide{ width:100%; }
+  .tinput.ok{ border-color:var(--ok-bd); background:var(--ok-bg); } .tinput.no{ border-color:var(--no-bd); background:var(--no-bg); }
+  .say-btn{ cursor:pointer; } .sent .blank{ min-width:76px; } .sent.cp{ line-height:2.4; }
+  .fb{ font-size:13.5px; font-weight:700; direction:rtl; text-align:right; } .fb.no{ color:var(--no-tx); } .fb.ok{ color:var(--ok-tx); } .fb:empty{ display:none; }
+  .wa{ background:#fff; border:2px solid #bfdbfe; border-radius:14px; padding:10px 12px; direction:ltr; text-align:left; display:grid; gap:8px; }
+  .wa .q{ display:flex; gap:8px; align-items:center; font-family:'Fredoka',sans-serif; font-size:16px; color:var(--aub); font-weight:600; }
+  .wa .q .n, .tq .q .n, .num-b{ background:var(--sunset); color:#fff; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+  .wa-row{ display:flex; gap:8px; flex-wrap:wrap; } .wa-row .tinput{ flex:1; min-width:200px; } .wa .model{ font-family:'Fredoka',sans-serif; color:var(--sunset); }
+  .tq{ background:#fff; border:2px solid #bfdbfe; border-radius:14px; padding:10px 12px; direction:ltr; text-align:left; display:grid; gap:6px; font-family:'Fredoka',sans-serif; }
+  .tq .q{ display:flex; gap:8px; align-items:center; font-size:16.5px; color:var(--aub); } .tq .q .say-btn{ margin-left:auto; }
+  .drop-q.mini summary{ padding:8px 12px; font-size:14.5px; } .drop-q.mini p{ padding:4px 12px 10px; margin:0; font-size:15.5px; line-height:1.7; }
+  .stc{ background:#fff; border:2px solid var(--lilac); color:var(--lilac-d); border-radius:18px; padding:4px 12px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; }
+  .stc.on{ background:var(--rose); border-color:var(--rose); color:#fff; }
+  .cklist{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:10px; direction:ltr; }
+  .cklist span{ font-family:'Fredoka',sans-serif; font-size:14px; background:#eff6ff; color:var(--muted); border:2px dashed #93c5fd; border-radius:999px; padding:4px 12px; }
+  .cklist span.on{ background:var(--ok-bg); color:var(--ok-tx); border:2px solid var(--ok-bd); } .cklist span.on::before{ content:'✓ '; }
+  .bw.pic{ display:inline-flex; flex-direction:column; align-items:center; min-width:62px; padding:4px 8px; line-height:1.1; }
+  .bw.pic .pl{ font-size:11px; font-weight:700; color:var(--rose-d); } .bw.pic .pe{ font-size:26px; }
+  .tkx{ cursor:pointer; border-radius:6px; padding:0 1px; } .tkx:hover{ background:#fff1f2; }
+  .tkx.u{ box-shadow:inset 0 -3px 0 var(--rose); background:#fff1f2; font-weight:700; color:var(--rose-d); } .tkx.miss{ background:var(--no-bg); }
+  .bld{ background:#fff; border:2px solid #bfdbfe; border-radius:14px; padding:10px 12px; direction:ltr; display:grid; gap:8px; }
+  .bld.ok{ border-color:var(--ok-bd); background:#f2fbf6; }
+  .bld .out{ display:flex; gap:8px; align-items:center; min-height:34px; font-family:'Fredoka',sans-serif; font-size:17px; color:var(--aub); }
+  .bld .built{ border-bottom:2px dashed #93c5fd; flex:1; min-height:28px; }
+  .pool{ display:flex; flex-wrap:wrap; gap:6px; }
+  .tile{ font-family:'Fredoka',sans-serif; font-size:15.5px; background:#fff; border:2px solid #1D4ED8; border-radius:8px; padding:4px 10px; cursor:pointer; color:var(--aub); box-shadow:0 3px 0 #93c5fd; }
+  .tile.no{ background:var(--no-bg); border-color:var(--no-bd); animation:shake .4s; } .bt{ text-align:right; } .check-btn.ghost{ background:#fff; color:var(--sunset); border:2px solid var(--sunset); }
+
+  .ql-read{ display:grid; gap:6px; margin-bottom:10px; }
+  .rl{ display:flex; gap:10px; align-items:center; background:#fff; border:2px solid #bfdbfe; border-radius:12px; padding:8px 12px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.7; }
+  .rl .n{ background:var(--sunset); color:#fff; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; } .rl .tx{ flex:1; } .rl b{ color:var(--rose-d); }
+  .wordstrip{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; direction:ltr; margin-bottom:12px; }
+  .wordstrip span{ font-family:'Fredoka',sans-serif; font-size:14px; background:#fff; border:2px solid #bfdbfe; border-radius:999px; padding:2px 11px; color:var(--sunset); }
+  .ex-list{ display:grid; gap:8px; direction:ltr; margin-bottom:14px; }
+  .exl{ display:flex; gap:10px; align-items:center; background:#fff; border:2px solid #bfdbfe; border-radius:12px; padding:9px 13px; font-family:'Fredoka',sans-serif; font-size:16.5px; color:var(--aub); }
+  .exl .n{ background:var(--aub); color:#FACC15; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12.5px; flex-shrink:0; }
+  .exl u{ text-decoration-color:var(--rose); text-decoration-thickness:3px; font-weight:700; } .exl .tag{ margin-left:auto; font-size:11.5px; font-weight:700; border-radius:8px; padding:1px 8px; }
+  .exl .tag.act{ background:#dcfce7; color:#14532d; } .exl .tag.pas{ background:#fee2e2; color:#7f1d1d; }
+  .gbox{ margin-top:14px; background:#fff; border:3px solid var(--sunset); border-radius:16px; padding:12px 16px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.7; animation:popin .4s; }
+  .gbox h4{ color:var(--sunset); margin:0 0 6px; } .gbox p{ margin:0 0 6px; } .gbox .ar{ direction:rtl; text-align:right; font-family:'Cairo',sans-serif; color:var(--muted); font-size:13.5px; }
+  .gbox table{ border-collapse:collapse; width:100%; margin:6px 0; font-size:15px; } .gbox td,.gbox th{ border:1px solid #bfdbfe; padding:4px 8px; } .gbox th{ background:#eff6ff; color:var(--sunset-d); }
+  .lead{ direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-weight:600; color:var(--aub); margin:14px 0 8px; } .lead .ar{ display:block; direction:rtl; text-align:right; color:var(--muted); font-family:'Cairo',sans-serif; font-size:13px; font-weight:600; }
+  .model-box{ background:#f8fbff; border:2px dashed var(--mint-d); border-radius:14px; padding:10px 14px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:15.5px; line-height:1.8; }
+  .model-box p{ margin:0 0 4px; } .model-box b{ color:var(--sunset); }
+
+  .dq{ display:flex; gap:10px; background:#fff; border:3px solid #bfdbfe; border-radius:16px; padding:10px 14px; box-shadow:0 5px 0 #93c5fd; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; font-size:16px; line-height:2.2; }
+  .dq .n{ background:var(--sunset); color:#fff; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:8px; }
+  .dls{ flex:1; display:grid; } .dl b{ color:var(--rose-d); }
+  .dq .say-btn{ align-self:flex-start; margin-top:6px; }
+  .q-list .dq{ margin:0; }
+
+  .comic{ display:grid; gap:12px; grid-template-columns:1fr; direction:ltr; }
+  @media (min-width:760px){ .comic{ grid-template-columns:1fr 1fr; } }
+  .panel{ background:#fff; border:3px solid #0F172A; border-radius:14px; padding:10px 12px; box-shadow:5px 5px 0 #1D4ED8; text-align:left; font-family:'Fredoka',sans-serif; display:grid; gap:7px; align-content:start; }
+  .pscene{ position:relative; background:linear-gradient(180deg,#dbeafe 0 60%,#fde68a 60%); border-radius:10px; text-align:center; font-size:34px; padding:6px 0; letter-spacing:4px; }
+  .pscene .pn{ position:absolute; left:6px; top:6px; width:22px; height:22px; border-radius:50%; background:#FACC15; color:#0F172A; border:2px solid #0F172A; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; letter-spacing:0; }
+  .narr{ margin:0; background:#FEF9C3; border:2px solid #CA8A04; border-radius:6px; padding:5px 8px; font-size:15px; line-height:1.8; color:#422006; }
+  .bub{ position:relative; background:#eff6ff; border:2px solid #93c5fd; border-radius:16px; padding:5px 10px; font-size:15.5px; line-height:1.85; display:flex; gap:6px; align-items:baseline; flex-wrap:wrap; }
+  .bub b{ font-size:12px; color:#fff; background:var(--sunset); border-radius:8px; padding:0 7px; flex-shrink:0; } .bub span{ flex:1; min-width:60%; }
+  .bub[data-w^="Ben"] b{ background:#0369a1; } .bub[data-w="Omar"] b{ background:#15803d; } .bub[data-w^="Rania"] b{ background:#be185d; } .bub[data-w^="Amy"] b{ background:#7c3aed; }
+  .bub[data-w$="mum"] b{ filter:brightness(.8); } .bub[data-w="Orange cat"] b{ background:#ea580c; } .bub[data-w="White cat"] b{ background:#64748b; } .bub[data-w="Monkey"] b{ background:#92400e; } .bub[data-w="Both cats"] b{ background:linear-gradient(90deg,#ea580c,#64748b); }
+  .narr.me{ box-shadow:0 0 0 3px var(--rose); } .narr.dim{ opacity:.45; }
+  .bub.me{ box-shadow:0 0 0 3px var(--rose); background:#fffbeb; font-weight:600; } .bub.dim{ opacity:.45; }
+  .narr .say-btn,.bub .say-btn{ font-size:11.5px; padding:0 6px; margin-left:4px; }
+
+  .px9{ font-size:24px; margin-right:6px; letter-spacing:2px; } .hint9{ font-size:13px; color:var(--muted); }
+  .pr9{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; background:#fff; border:3px solid #bfdbfe; border-radius:14px; padding:8px 12px; box-shadow:0 4px 0 #93c5fd; direction:ltr; font-family:'Fredoka',sans-serif; }
+  .pr9 .n{ background:#1D4ED8; color:#fff; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; } .pr9 .tx{ flex:1 1 200px; } .pr9 .mine{ color:#B45309; }
+  .pr9 .pw{ flex:1 1 140px; min-width:0; } .pr9.on{ background:#f0fdf4; border-color:#86efac; }
+  .drop-q .comic{ padding:10px; }
+  .think9{ margin-top:14px; background:#fff; border:3px dashed #B45309; border-radius:16px; padding:12px 14px; direction:ltr; text-align:left; font-family:'Fredoka',sans-serif; }
+  .think9 .n{ background:#B45309; color:#fff; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; margin-right:6px; } .think9 .ar{ display:block; direction:rtl; text-align:right; font-family:'Baloo Bhaijaan 2','Cairo',sans-serif; color:var(--muted); font-size:14px; }
+  .think9 .chips{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; } .stc.wd.on{ background:#1D4ED8; color:#fff; border-color:#1D4ED8; } .fb9{ min-height:1.3em; color:#15803d; font-weight:600; margin:0; }
+</style>
+</head>
+<body>
+
+<div class="floaties" id="floaties"></div>
+
+<header class="lesson-header">
+  <div class="header-inner">
+    <div class="unit-badge"><span>👑</span> UNIT 9 · REVISION · PERIOD 3 · PB PAGE 66</div>
+    <div class="sc3" role="img" aria-label="The monkey sits on a tree branch with a golden crown and a piece of cheese; the two sad cats look up. Who is the cleverest?"><span class="tr"></span><span class="br"></span><span class="lf">🌿🌿</span><span class="mk">🐒</span><span class="lb">the cleverest? 🧀</span><span class="cats">😿😿</span></div>
+    <div class="title-plate"><small>REVISION · WRITING · PERIOD 3</small><h1>The cats and the monkey</h1></div>
+    <div class="lesson-subtitle">مراجعة — مَن الأذكى؟ نصفُ الصورَ بالمقارنةِ والتفضيل 👑</div>
+    <p class="header-hint">نكملُ جملًا عن الصورِ بطرقٍ مختلفة، ونقارنُ إجاباتِنا معَ زميل، ونختارُ الكلماتِ الصحيحة، ونجيبُ عن أسئلةِ القصّة.</p>
+  </div>
+</header>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs-nav">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="aims"><span class="sign"><span class="tab-icon">🎯</span><span class="tab-lbl">Aims</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="pics"><span class="sign"><span class="tab-icon">🖼️</span><span class="tab-lbl">Complete</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="check"><span class="sign"><span class="tab-icon">👥</span><span class="tab-lbl">Check in Pairs</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="circle"><span class="sign"><span class="tab-icon">⭕</span><span class="tab-lbl">Circle</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="answer"><span class="sign"><span class="tab-icon">💬</span><span class="tab-lbl">Answer</span></span><span class="post"></span></button>
+    <button class="tab-btn" data-tab="quiz"><span class="sign"><span class="tab-icon">🏆</span><span class="tab-lbl">Final Quiz</span></span><span class="post"></span></button>
+  </div>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-aims">
+    <h2 class="section-title">🎯 Lesson Objectives<span class="title-sub">أهداف الدرس</span></h2>
+    <div class="aims-grid">
+      <div class="aim-card" style="--ac:#1D4ED8;"><div class="aim-icon-wrap">🖼️</div>
+        <h3 class="aim-title">Write</h3><p class="aim-desc">Complete sentences about pictures – there is more than one right answer!
+          <span class="ar">إكمالُ جملٍ عن الصور؛ فهناك أكثرُ من إجابةٍ صحيحة.</span></p></div>
+      <div class="aim-card" style="--ac:#B45309;"><div class="aim-icon-wrap">👥</div>
+        <h3 class="aim-title">Check</h3><p class="aim-desc">Read your sentences to a partner and compare.
+          <span class="ar">قراءةُ الجملِ للزميلِ والمقارنةُ بينَها.</span></p></div>
+      <div class="aim-card" style="--ac:#1E3A8A;"><div class="aim-icon-wrap">💬</div>
+        <h3 class="aim-title">Think</h3><p class="aim-desc">Answer questions about the story and give your opinion.
+          <span class="ar">الإجابةُ عن أسئلةِ القصّةِ وإبداءُ الرأي.</span></p></div>
+      <div class="aim-card" style="--ac:#CA8A04;"><div class="aim-icon-wrap">💛</div>
+        <h3 class="aim-title">Value</h3><p class="aim-desc">Work hard to find a way to make everyone happy.
+          <span class="ar">نجتهدُ لنجدَ حلًّا يُسعدُ الجميع.</span></p></div>
+    </div>
+  </section>
+  <section class="tab-content" id="tab-pics">
+    <h2 class="section-title">🖼️ Look at the pictures and complete the sentences<span class="title-sub">انظرْ إلى الصورِ وأكملِ الجمل</span></h2>
+    <div class="activity-banner">
+      <div class="en">🖼️ Activity 1: Look at the pictures and complete the sentences.</div>
+      <div class="ar">انظرْ إلى كلِّ صورةٍ واكتبْ صفةً مناسبة. انتبهْ: <span dir="ltr" style="unicode-bidi:isolate">than</span> ← مقارنةٌ بينَ اثنين، و<span dir="ltr" style="unicode-bidi:isolate">the</span> ← الأكثرُ بينَ الجميع. هناك أكثرُ من إجابةٍ صحيحة، وكلُّ إجابةٍ مناسبةٍ مقبولة!</div>
+    </div>
+    <div class="q-list" id="pxBox"><div class="dq"><span class="n">1</span><div class="dls"><div class="dl"><span class="px9">🐒</span> The monkey is the <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="fattest|cleverest|happiest|biggest|strongest|funniest|fastest|best|most clever|most exciting|most beautiful|heaviest" size="14">.</div><div class="hint9">💡 fattest · cleverest · happiest …</div></div></div><div class="dq"><span class="n">2</span><div class="dls"><div class="dl"><span class="px9">👶 👧🏽</span> The baby is <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="younger|smaller|shorter|lighter|thinner|weaker" size="14"> than Rania.</div><div class="hint9">💡 younger · smaller · lighter …</div></div></div><div class="dq"><span class="n">3</span><div class="dls"><div class="dl"><span class="px9">🐭 🐈 🐘</span> The mouse is <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="the smallest|the lightest|the shortest|the youngest|the thinnest|the weakest|the slowest" size="14">.</div><div class="hint9">💡 the smallest · the lightest …</div></div></div><div class="dq"><span class="n">4</span><div class="dls"><div class="dl"><span class="px9">💍 🧢</span> The ring is <input class="tinput gp" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" data-a="more expensive|more beautiful|smaller|lighter|cheaper" size="14"> than the cap.</div><div class="hint9">💡 more expensive · smaller …</div></div></div></div>
+    <div class="convo-tools"><button class="check-btn" type="button" id="pxCheck">✅ Check</button></div>
+    <div class="res-line" id="pxRes"></div>
+  </section>
+  <section class="tab-content" id="tab-check">
+    <h2 class="section-title">👥 Work in pairs and check your answers to Activity 1<span class="title-sub">معَ زميلِك: تحقّقا من إجاباتِ النشاطِ الأوّل</span></h2>
+    <div class="activity-banner">
+      <div class="en">👥 Activity 2: Work in pairs and check your answers to Activity 1.</div>
+      <div class="ar">اقرأْ جملَك لزميلِك بالتناوب. لاحظا: هل كتبتما الكلمةَ نفسَها؟ ليسَ من الضروريّ أن تتطابقَ الإجابات! اكتبْ كلمةَ زميلِك إن كانت مختلفةً واضغطْ ✔.</div>
+    </div>
+    <div class="q-list" id="pairBox"><div class="pr9" data-i="0"><span class="n">1</span><span class="px9">🐒</span><span class="tx">The monkey is the <b class="mine">…</b>.</span><input class="tinput pw" type="text" placeholder="My partner’s word…"><button class="check-btn" type="button">✔</button></div><div class="pr9" data-i="1"><span class="n">2</span><span class="px9">👶 👧🏽</span><span class="tx">The baby is <b class="mine">…</b> than Rania.</span><input class="tinput pw" type="text" placeholder="My partner’s word…"><button class="check-btn" type="button">✔</button></div><div class="pr9" data-i="2"><span class="n">3</span><span class="px9">🐭 🐈 🐘</span><span class="tx">The mouse is <b class="mine">…</b>.</span><input class="tinput pw" type="text" placeholder="My partner’s word…"><button class="check-btn" type="button">✔</button></div><div class="pr9" data-i="3"><span class="n">4</span><span class="px9">💍 🧢</span><span class="tx">The ring is <b class="mine">…</b> than the cap.</span><input class="tinput pw" type="text" placeholder="My partner’s word…"><button class="check-btn" type="button">✔</button></div></div>
+    <div class="res-line" id="prRes"></div>
+  </section>
+  <section class="tab-content" id="tab-circle">
+    <h2 class="section-title">⭕ Read and circle the correct words<span class="title-sub">اقرأْ واخترِ الكلماتِ الصحيحة</span></h2>
+    <div class="activity-banner">
+      <div class="en">⭕ Activity 3: Read and circle the correct words.</div>
+      <div class="ar">فكّرْ قبلَ أن تختار: الإجابةُ في الصورة! لماذا تكونُ رانيا أثقلَ من الطفل؟</div>
+    </div>
+    <div class="sent-list"><div class="sent"><span class="n">1</span><div>🐍 The snake is the <span class="pick" data-a="thinnest"><button class="pk" type="button">thinnest</button><button class="pk" type="button">fattest</button></span> animal.</div></div>
+<div class="sent"><span class="n">2</span><div>👧🏽👶 Rania is <span class="pick" data-a="heavier"><button class="pk" type="button">heavier</button><button class="pk" type="button">lighter</button></span> than the baby.</div></div>
+<div class="sent"><span class="n">3</span><div>🌼🌷🌹 Flower C is the <span class="pick" data-a="most beautiful"><button class="pk" type="button">most beautiful</button><button class="pk" type="button">more beautiful</button></span>.</div></div>
+<div class="sent"><span class="n">4</span><div>🥛🧃🍟 The packet of chips is the <span class="pick" data-a="cheapest"><button class="pk" type="button">cheapest</button><button class="pk" type="button">most cheap</button></span>.</div></div>
+</div>
+    <div class="res-line" id="cRes"></div>
+  </section>
+  <section class="tab-content" id="tab-answer">
+    <h2 class="section-title">💬 Read aloud. Then answer questions.<span class="title-sub">اقرأْ بصوتٍ عالٍ، ثمَّ أجِبْ</span></h2>
+    <div class="activity-banner">
+      <div class="en">💬 Activity 4: Read quietly. Read aloud. Then answer questions.</div>
+      <div class="ar">اقرأِ القصّةَ بصمتٍ ثمَّ بصوتٍ عالٍ، وانظرْ إلى الصور، ثمَّ أجِبْ.</div>
+    </div>
+    <details class="drop-q"><summary>📖 The story <span class="ar">القصّة</span></summary><div class="comic" id="comic3"></div></details>
+    <div class="q-list"><div class="qa rq" data-a="a"><div class="q"><span class="n">1</span><span>Who is the cleverest? The monkey or the cats?</span></div><div class="opts"><button class="op" type="button" data-v="a">The monkey – he gets all the cheese.</button><button class="op" type="button" data-v="b">The cats – they find the cheese.</button></div></div>
+<div class="qa rq" data-a="a"><div class="q"><span class="n">2</span><span>Why do the cats watch the monkey eat the cheese?</span></div><div class="opts"><button class="op" type="button" data-v="a">They want him to help them, but he eats it all.</button><button class="op" type="button" data-v="b">They don’t like cheese.</button><button class="op" type="button" data-v="c">They are full.</button></div></div>
+</div>
+    <div class="think9"><p><span class="n">3</span> What would you do? <span class="ar">لو كنتَ إحدى القطّتين، ماذا كنتَ ستفعل؟</span></p><div class="chips"><button class="stc wd" type="button" data-m="✔ Great idea! Sharing makes everyone happy.">🤝 Share the cheese with my friend.</button><button class="stc wd" type="button" data-m="✔ Clever! Then nobody is sad.">🔪 Cut the cheese into two equal pieces.</button><button class="stc wd" type="button" data-m="✔ Kind! A good friend is better than cheese.">💛 Give the bigger piece to my friend.</button></div><p class="fb9" id="wdfb"></p></div>
+    <div class="res-line" id="rqQ" hidden></div><div class="res-line" id="rqRes"></div>
+  </section>
+  <section class="tab-content" id="tab-quiz">
+    <h2 class="section-title">🏆 Final Quiz<span class="title-sub">الاختبارُ الختاميّ — خمسةُ أسئلة</span></h2>
+    <div class="quiz-intro">
+      <h3>👑 Five questions</h3>
+      <p>أجِبْ عن الأسئلةِ الخمسةِ لتربحَ ختمَ «الأذكى».</p>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgress"></div></div>
+    </div>
+    <div id="quizQuestions">
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">1</span><div class="quiz-q-text">The baby is ______ than Rania.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>younger</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>youngest</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>the youngest</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">2</span><div class="quiz-q-text">The snake is the ______ animal.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>thinnest</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>thiner</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>most thin</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">3</span><div class="quiz-q-text">Flower C is the ______ beautiful.</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>most</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>more</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>very</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">4</span><div class="quiz-q-text">cheap → the ______</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>cheapest</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>most cheap</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>cheaper</button>
+        </div><div class="quiz-feedback"></div></div>
+      <div class="quiz-question"><div class="quiz-q-header"><span class="quiz-q-number">5</span><div class="quiz-q-text">Who is the cleverest in the story?</div></div>
+        <div class="quiz-options">
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,true)"><span class="opt-letter">A</span>the monkey</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">B</span>the orange cat</button>
+          <button class="quiz-option" type="button" onclick="quizAnswer(this,false)"><span class="opt-letter">C</span>the white cat</button>
+        </div><div class="quiz-feedback"></div></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="reward-badge" id="rewardBadge">👑<small>CLEVER WRITER</small></div>
+      <div class="result-emoji" id="resultEmoji">🏆</div>
+      <h3 class="result-title" id="resultTitle">Well done!</h3>
+      <div class="result-score" id="resultScore">0 <span>/ 5</span></div>
+      <p class="result-message" id="resultMessage"></p>
+      <button class="retry-btn" type="button" onclick="resetQuiz()">🔄 أعِدِ المحاولة</button>
+    </div>
+  </section>
+</main>
+
+<footer class="lesson-footer">
+  <div class="footer-content">Designed with love 💗 by T. Wad Refae</div>
+  <div class="cc-license" style="direction:ltr;unicode-bidi:isolate;text-align:center;font-size:max(11px,.8em);margin:.45em auto 0;color:#f8fafc">© 2026 T. Wad Refae · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener noreferrer" style="color:inherit;text-decoration:underline">CC BY-NC-ND 4.0</a></div>
+</footer>
+
+<script>
+
+var BKEY = 'g5u9p3_badge';
+(function(){
+  var box=document.getElementById('floaties'), ems=['🧀','🐱','🐒','⭐','🌙','📖','✨','🐈'];
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span'); s.className='floaty'; s.textContent=ems[i%ems.length];
+    s.style.left=(4+Math.random()*92)+'%'; s.style.animationDuration=(12+Math.random()*13)+'s';
+    s.style.animationDelay=(-Math.random()*14)+'s'; s.style.fontSize=(15+Math.random()*14)+'px'; box.appendChild(s);
+  }
+})();
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+    btn.classList.add('active'); document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('audio').forEach(function(a){ a.pause(); });
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(function(b){b.classList.remove('playing')});
+  });
+});
+function speak(text,btn){
+  if(!window.speechSynthesis) return;
+  if(btn && btn.classList.contains('playing')){ speechSynthesis.cancel(); btn.classList.remove('playing'); return; }
+  speechSynthesis.cancel();
+  document.querySelectorAll('.playing').forEach(function(b){ if(b!==btn) b.classList.remove('playing'); });
+  var u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=.85;
+  if(btn){ btn.classList.add('playing'); u.onend=u.onerror=function(){ btn.classList.remove('playing'); }; }
+  speechSynthesis.speak(u);
+}
+document.addEventListener('click',function(e){
+  var hw=e.target.closest('.hover-word,.pronoun');
+  document.querySelectorAll('.tapped').forEach(function(t){ if(t!==hw) t.classList.remove('tapped'); });
+  if(hw) hw.classList.toggle('tapped');
+});
+function sparkleAt(el){
+  var r=el.getBoundingClientRect();
+  for(var i=0;i<7;i++){
+    var s=document.createElement('span'); s.className='sparkle'; s.textContent=['✨','⭐','🧀','🌟'][i%4];
+    s.style.left=(r.left+r.width/2)+'px'; s.style.top=(r.top+r.height/2)+'px';
+    s.style.setProperty('--dx',(Math.random()*140-70)+'px'); s.style.setProperty('--dy',(Math.random()*-110-15)+'px');
+    document.body.appendChild(s); setTimeout(function(x){return function(){x.remove()}}(s),850);
+  }
+}
+function confetti(){
+  var colors=['#1D4ED8','#FACC15','#B45309','#93C5FD','#ffffff'];
+  for(var i=0;i<55;i++){
+    var c=document.createElement('div'); c.className='confetti-bit';
+    c.style.left=Math.random()*100+'vw'; c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(2+Math.random()*2.4)+'s'; c.style.animationDelay=(Math.random()*.7)+'s';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(c); setTimeout(function(x){return function(){x.remove()}}(c),5200);
+  }
+}
+function hw(w,ar){ return '<span class="hover-word">'+w+'<span class="tooltip">'+ar+'</span></span>'; }
+function pr(w,ar){ return '<span class="pronoun">'+w+'<span class="tooltip">تعودُ على: '+ar+'</span></span>'; }
+function txt(h){ var d=document.createElement('div'); d.innerHTML=h; d.querySelectorAll('.tooltip').forEach(function(t){t.remove()}); return d.textContent; }
+/* reusable: one shared word bank → blanks (.blank[data-bank][data-a]) */
+function makeBank(id, doneMsg){
+  var box=document.getElementById(id), sel=null;
+  box.querySelectorAll('.bw').forEach(function(w){ w.addEventListener('click',function(){
+    if(w.classList.contains('used')) return; if(sel===w){ w.classList.remove('sel'); sel=null; return; }
+    box.querySelectorAll('.bw.sel').forEach(function(x){x.classList.remove('sel')}); w.classList.add('sel'); sel=w; }); });
+  var blanks=document.querySelectorAll('.blank[data-bank="'+id+'"]'), line=document.getElementById(id+'Res');
+  blanks.forEach(function(bl){ bl.addEventListener('click',function(){
+    if(bl.classList.contains('ok')) return;
+    if(!sel || bl.dataset.a.split('|').indexOf(sel.dataset.w)<0){ bl.classList.add('no'); setTimeout(function(){bl.classList.remove('no')},450); return; }
+    bl.textContent=sel.dataset.w; bl.classList.add('ok');
+    if(!box.dataset.reuse){ sel.classList.add('used'); } sel.classList.remove('sel'); sel=null; sparkleAt(bl);
+    var ok=document.querySelectorAll('.blank[data-bank="'+id+'"].ok').length;
+    line.className='res-line show good'; line.textContent='✅ '+ok+' / '+blanks.length;
+    if(ok===blanks.length){ line.textContent=doneMsg; confetti(); var cb=window['onBankDone_'+id]; if(cb) cb(); }
+  }); });
+}
+/* reusable: choose-the-right-word items (.pick[data-a] with .pk buttons) */
+function makePicks(sel, resId, doneMsg){
+  var picks=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  picks.forEach(function(p){ p.querySelectorAll('.pk').forEach(function(b){ b.addEventListener('click',function(){
+    if(p.dataset.done) return;
+    if(b.textContent.trim()!==p.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    p.dataset.done='1'; b.classList.add('ok'); p.querySelectorAll('.pk').forEach(function(x){ if(x!==b) x.classList.add('off'); }); sparkleAt(b); done++;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+picks.length;
+    if(done===picks.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+/* reusable: one-answer questions (.qa[data-a] with .op buttons) */
+function makeQA(sel, resId, doneMsg){
+  var qs=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  qs.forEach(function(q){ q.querySelectorAll('.op').forEach(function(b){ b.addEventListener('click',function(){
+    if(q.dataset.done) return;
+    if(b.dataset.v!==q.dataset.a){ b.classList.add('no'); setTimeout(function(){b.classList.remove('no')},450); return; }
+    q.dataset.done='1'; b.classList.add('ok'); q.querySelectorAll('.op').forEach(function(x){x.disabled=true;}); sparkleAt(b); done++;
+    var m=q.querySelector('.model'); if(m) m.hidden=false;
+    line.className='res-line show good'; line.textContent='✅ '+done+' / '+qs.length;
+    if(done===qs.length){ line.textContent=doneMsg; confetti(); }
+  }); }); });
+}
+
+/* audio files that are not uploaded yet: replace the player with a short note */
+(function(){
+  function miss(a){ if(a.dataset.gone) return; a.dataset.gone=1; var n=document.createElement('div'); n.className='audio-missing';
+    n.textContent='🎧 تسجيلُ '+(a.title||'')+' غيرُ متوفّرٍ بعد — استعملْ أزرارَ 🔊 لتسمعَ النصّ.'; a.replaceWith(n); }
+  document.querySelectorAll('audio').forEach(function(a){ a.addEventListener('error',function(){ miss(a); }); if(a.error || a.networkState===3) miss(a); });
+})();
+
+function wireBuilders(sel,resId,doneMsg){
+  var all=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  all.forEach(function(b){ var target=b.dataset.m.split(' '), pos=0, pool=b.querySelector('.pool'), out=b.querySelector('.built');
+    function reset(){ pos=0; out.innerHTML=''; var w=target.slice(); do{ shuffle(w); }while(w.length>1 && w.join(' ')===b.dataset.m);
+      pool.innerHTML=w.map(function(x){ return '<button class="tile" type="button">'+x+'</button>'; }).join('');
+      pool.querySelectorAll('.tile').forEach(function(t){ t.addEventListener('click',function(){ if(b.dataset.done) return;
+        if(t.textContent!==target[pos]){ t.classList.add('no'); setTimeout(function(){ t.classList.remove('no'); },400); return; }
+        pos++; out.insertAdjacentHTML('beforeend','<span>'+t.textContent+'</span> '); t.remove(); sparkleAt(out);
+        if(pos===target.length){ b.dataset.done=1; b.classList.add('ok'); done++; line.className='res-line show good'; line.textContent='🧩 '+done+' / '+all.length; speak(b.dataset.m);
+          if(done===all.length){ line.textContent=doneMsg; confetti(); } } }); }); }
+    var r=b.querySelector('.bt button'); if(r) r.addEventListener('click',function(){ if(!b.dataset.done) reset(); }); reset(); });
+}
+function wireWA(sel,resId,doneMsg){
+  var all=document.querySelectorAll(sel), done=0, line=document.getElementById(resId);
+  all.forEach(function(w){ var i=w.querySelector('input'), fb=w.querySelector('.fb');
+    w.querySelector('.check-btn').addEventListener('click',function(){ var v=i.value.toLowerCase().replace(/[’]/g,"'"); if(!v.trim()){ i.focus(); return; }
+      var hit=w.dataset.k.split('|').some(function(k){ return v.indexOf(k)>-1; });
+      if(hit){ if(!w.dataset.done){ w.dataset.done=1; done++; } i.classList.add('ok'); i.classList.remove('no'); fb.className='fb ok'; fb.textContent='✔️ إجابةٌ صحيحة!'; var m=w.querySelector('.model'); if(m) m.hidden=false; sparkleAt(this);
+        line.className='res-line show good'; line.textContent='📝 '+done+' / '+all.length; if(done===all.length){ line.textContent=doneMsg; confetti(); } }
+      else { i.classList.add('no'); fb.className='fb no'; fb.textContent='🤔 ارجعْ إلى النصِّ وحاولْ مرّةً أخرى.'; }
+    }); });
+}
+
+function nz(s){ return s.toLowerCase().replace(/[’]/g,"'").replace(/\s+/g,' ').trim(); }
+function wireTyped(btnId, scopeSel, resId, doneMsg, onDone){
+  document.getElementById(btnId).addEventListener('click',function(){
+    var ins=document.querySelectorAll(scopeSel+' .gp'), ok=0;
+    ins.forEach(function(i){ i.classList.remove('ok','no'); var v=nz(i.value); if(!v) return;
+      if(i.dataset.a.split('|').indexOf(v)>-1){ i.classList.add('ok'); i.readOnly=true; ok++; } else { i.classList.add('no'); i.placeholder=i.dataset.a.charAt(0)+'…'; } });
+    var l=document.getElementById(resId); l.className='res-line show good'; l.textContent='✏️ '+ok+' / '+ins.length;
+    if(ok===ins.length){ l.textContent=doneMsg; confetti(); if(onDone) onDone(); } else if(ok) sparkleAt(this);
+  });
+}
+
+function segHtml(seg, tokenise){
+  return seg.map(function(s){
+    if(typeof s!=='string') return s[0]==='h'?hw(s[1],s[2]):pr(s[1],s[2]);
+    if(!tokenise) return s;
+    return s.split(/(\s+)/).map(function(t){ if(/^\s+$/.test(t)||!t) return t;
+      var core=t.replace(/[^A-Za-z']/g,'').toLowerCase();
+      return '<span class="tk'+(TARGETS.indexOf(core)>-1?' tgt':'')+'">'+t+'</span>'; }).join('');
+  }).join('');
+}
+function segText(seg){ return seg.map(function(s){ return typeof s==='string'?s:s[1]; }).join(''); }
+var COMIC=[["🐱🐈🧀🧀", "find", ["Two cats are friends. They find some cheese."], [["Orange cat", ["Oh look, cheese!"]], ["White cat", ["You have ", ["p", "this", "this piece of cheese"], " and I can have ", ["p", "that", "that piece of cheese"], "."]], ["Orange cat", [["p", "Your", "the white cat’s"], " cheese is the biggest!"]]]], ["🐱😾 😾🐈 🐒", "monkey", ["They are not friends now. Here is a monkey. The cats want the monkey to ", ["h", "help", "يساعد"], " them."], [["Monkey", ["Can I help you?"]]]], ["🐒⚖️🧀🧀", "scales", ["The monkey looks at the cheese. The monkey says that cheese A is ", ["h", "bigger", "أكبر"], " than cheese B. The monkey eats from cheese A. Cheese B is bigger than cheese A now. The monkey thinks. ", ["p", "He", "the monkey"], " eats from cheese B."], []], ["🐒😋 🐱😿🐈", "end", ["And now cheese A is bigger than cheese B. The monkey eats ", ["h", "more and more", "أكثرَ فأكثر"], " cheese. There is no more cheese."], [["Both cats", ["Now ", ["p", "we", "the two cats"], " have no cheese!"]]]]];
+var TARGETS=[];
+
+function renderComic(id, role){
+  var box=document.getElementById(id); if(!box) return; var k=0, lines=[];
+  box.innerHTML=COMIC.map(function(pn,i){
+    return '<div class="panel"><div class="pscene"><span class="pn">'+(i+1)+'</span>'+pn[0]+'</div>'+(pn[2].length?'<p class="narr'+(role?(role==="Narrator"?' me':' dim'):'')+'" data-w="Narrator">'+segHtml(pn[2],false)+'<button class="say-btn" type="button" data-k="'+(lines.push(segText(pn[2]))-1)+'">🔊</button></p>':'')+
+      pn[3].map(function(l){ var cls=role?((l[0]===role||(l[0]==='Both cats'&&/cat/.test(role)))?' me':' dim'):''; return '<div class="bub'+cls+'" data-w="'+l[0]+'"><b>'+l[0]+'</b><span>'+segHtml(l[1],false)+'</span><button class="say-btn" type="button" data-k="'+(lines.push(segText(l[1]))-1)+'">🔊</button></div>'; }).join('')+'</div>'; }).join('');
+  box.querySelectorAll('.say-btn[data-k]').forEach(function(b){ b.addEventListener('click',function(e){ e.stopPropagation(); speak(lines[+b.dataset.k],b); }); });
+}
+function wireComicRoles(id){
+  document.querySelectorAll('[data-comic="'+id+'"] .role').forEach(function(r){ r.addEventListener('click',function(){
+    var on=r.classList.contains('on'); document.querySelectorAll('[data-comic="'+id+'"] .role').forEach(function(x){ x.classList.remove('on'); });
+    if(!on){ r.classList.add('on'); sparkleAt(r); } renderComic(id,on?null:r.dataset.r); }); });
+}
+document.querySelectorAll('[data-t]').forEach(function(b){ b.addEventListener('click',function(e){ e.stopPropagation(); speak(b.dataset.t,b); }); });
+
+renderComic('comic3');
+wireTyped('pxCheck','#pxBox','pxRes','🏆 ممتاز! كتبتَ جملًا مناسبة. قارنْها بجملِ زميلِك في النشاطِ الثاني.');
+document.getElementById('pxCheck').addEventListener('click',function(){ document.querySelectorAll('#pxBox .gp').forEach(function(g,k){ var m=document.querySelectorAll('#pairBox .mine')[k]; if(m&&g.classList.contains('ok')) m.textContent=g.value.trim(); }); });
+(function(){ var done={}, l=document.getElementById('prRes'), rows=document.querySelectorAll('.pr9');
+  rows.forEach(function(r,k){ r.querySelector('.check-btn').addEventListener('click',function(){ r.classList.add('on'); sparkleAt(this); done[k]=1; var c=Object.keys(done).length; l.className='res-line show good'; l.textContent='👥 '+c+' / '+rows.length;
+    if(c===rows.length){ l.textContent='🏆 أحسنتما! لاحظتما أنَّ الجملَ قد تختلفُ وتبقى صحيحة.'; confetti(); } }); }); })();
+makePicks('#tab-circle .pick','cRes','🏆 رائع! thinnest · heavier · most beautiful · cheapest');
+(function(){ var wd=false, fired=false, l=document.getElementById('rqRes');
+  makeQA('.qa.rq','rqQ','🏆');
+  function fin(){ var n=[].filter.call(document.querySelectorAll('.qa.rq'),function(q){ return q.dataset.done==='1'; }).length;
+    l.className='res-line show good'; l.textContent='💬 '+(n+(wd?1:0))+' / 3'; if(n===2&&wd){ l.textContent='🏆 ممتاز! أجبتَ وفكّرتَ في حلٍّ يُسعدُ الجميع.'; if(!fired){ fired=true; confetti(); } } }
+  document.querySelectorAll('.wd').forEach(function(b){ b.addEventListener('click',function(){ document.querySelectorAll('.wd').forEach(function(x){ x.classList.toggle('on',x===b); }); document.getElementById('wdfb').textContent=b.dataset.m; sparkleAt(b); wd=true; fin(); }); });
+  document.querySelectorAll('.qa.rq .op').forEach(function(o){ o.addEventListener('click',function(){ setTimeout(fin,30); }); });
+})();
+
+/* final quiz */
+var quizDone=0, quizScore=0, QUIZ_TOTAL=5;
+function quizAnswer(btn,correct){
+  var q=btn.closest('.quiz-question'); if(q.dataset.done) return;
+  q.dataset.done='1'; quizDone++;
+  q.querySelectorAll('.quiz-option').forEach(function(b){
+    b.disabled=true;
+    if(b===btn) b.classList.add(correct?'correct':'wrong');
+    if(!correct && b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+  });
+  var fb=q.querySelector('.quiz-feedback');
+  if(correct){ quizScore++; sparkleAt(btn); fb.className='quiz-feedback show correct'; fb.textContent='🎉 أحسنت! إجابةٌ صحيحة.'; }
+  else{ fb.className='quiz-feedback show wrong'; fb.textContent='❌ ليست الإجابةَ الصحيحة — الإجابةُ الصحيحةُ مظلَّلةٌ بالأخضر.'; }
+  document.getElementById('quizProgress').style.width=(quizDone/QUIZ_TOTAL*100)+'%';
+  if(quizDone===QUIZ_TOTAL) setTimeout(showQuizResult,700);
+}
+function showQuizResult(){
+  var res=document.getElementById('quizResult');
+  var pct=quizScore/QUIZ_TOTAL*100, emoji,title,msg, badge=document.getElementById('rewardBadge');
+  if(pct===100){ emoji='🏆'; title='Clever writer!'; msg='رائع! تكتبُ وتقارنُ وتفكّرُ مثلَ الأذكياء 👑🌟'; }
+  else if(pct>=60){ emoji='🌟'; title='Well done!'; msg='عملٌ جميل! 💪 راجعْ أنشطةَ الدرسِ ثمَّ أعِدِ المحاولة.'; }
+  else { emoji='💪'; title='Keep going!'; msg='لا تستسلمْ! 🌱 عُدْ إلى أنشطةِ الدرسِ ثمَّ جرِّبْ من جديد.'; }
+  if(pct>=60){ confetti(); badge.classList.add('show'); try{ localStorage.setItem(BKEY,'1'); }catch(e){} }
+  else badge.classList.remove('show');
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultScore').innerHTML=quizScore+' <span>/ '+QUIZ_TOTAL+'</span>';
+  document.getElementById('resultMessage').textContent=msg;
+  res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  quizDone=0; quizScore=0;
+  document.getElementById('quizResult').classList.remove('show');
+  document.getElementById('quizProgress').style.width='0%';
+  document.querySelectorAll('#quizQuestions .quiz-question').forEach(function(q){
+    delete q.dataset.done;
+    q.querySelectorAll('.quiz-option').forEach(function(b){ b.disabled=false; b.classList.remove('correct','wrong'); });
+    var fb=q.querySelector('.quiz-feedback'); fb.className='quiz-feedback'; fb.textContent='';
+  });
+}
+(function(){
+  try{
+    if(!localStorage.getItem(BKEY)) return;
+    var n=document.createElement('div'); n.className='earned-note';
+    n.textContent='👑 لقد ربحتَ ختمَ هذا الدرسِ من قبل — أعِدِ المحاولةَ متى شئت.';
+    document.querySelector('.quiz-intro').appendChild(n);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
