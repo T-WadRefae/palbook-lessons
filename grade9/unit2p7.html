@@ -465,15 +465,17 @@ const ROOMS=[
   a2:[['shoe cupboard'],[' and wipe your feet on the ',null],['rug'],['.',null]]},
 ];
 const RDLG=[
- {a:[['When you come in, you are in the ','hall'],['.',null]],
-  b:[['Yes — I’ll put my shoes in the ','shoe cupboard'],[' and wipe my feet on the ','rug'],['.',null]]},
- {a:[['Shall we sit down in the ','living room'],['?',null]],
-  b:[['Good idea. I’ll sit on the ','sofa'],[' and we can watch the ','TV'],['.',null]]},
- {a:[['This is my ','bedroom'],['. I sleep here.',null]],
-  b:[['It’s lovely. Your ','bed'],[' is by the window, and your clothes are in the ','wardrobe'],['.',null]]},
- {a:[['We eat together in the ','dining room'],['.',null]],
-  b:[['So the ','dining table'],[' is here, with six ','dining chairs'],[' round it.',null]]}
+ {a:[['Well, here we are in the ','hall'],[' of our new home.',null]],
+  b:[['Yes, let’s put the ','shoe cupboard'],[' and the long, thin ','rug'],[' here.',null]]},
+ {a:[['And this room is going to be our ','living room'],[', isn’t it?',null]],
+  b:[['That’s right, so we’ll put the ',['sofa','TV']],[' and the ',['sofa','TV']],[' in here.',null]]},
+ {a:[['And we’ll have this room as the ','bedroom'],[', won’t we?',null]],
+  b:[['Yes, and so this is the room for the ',['bed','wardrobe']],[' and the ',['bed','wardrobe']],['.',null]]},
+ {a:[['And you’re happy to use this room as the ','dining room'],[', aren’t you?',null]],
+  b:[['That’s right, so this is the room for the ',['dining table','dining chairs']],[' and the ',['dining table','dining chairs']],['.',null]]}
 ];
+/* Pairs such as "the sofa and the TV" can go in either order, so those blanks
+   accept either word; each word card can still only be used once. */
 (function(){
   const chips=['hall','shoe cupboard','rug','living room','sofa','TV',
                'bedroom','bed','wardrobe','dining room','dining table','dining chairs'];
@@ -502,14 +504,14 @@ const RDLG=[
 
 /* ═══════════ 3 · PRACTISE ═══════════ */
 const FULL=[
- ['When you come in, you are in the hall.',
-  'Yes — I’ll put my shoes in the shoe cupboard and wipe my feet on the rug.'],
- ['Shall we sit down in the living room?',
-  'Good idea. I’ll sit on the sofa and we can watch the TV.'],
- ['This is my bedroom. I sleep here.',
-  'It’s lovely. Your bed is by the window, and your clothes are in the wardrobe.'],
- ['We eat together in the dining room.',
-  'So the dining table is here, with six dining chairs round it.']
+ ['Well, here we are in the hall of our new home.',
+  'Yes, let’s put the shoe cupboard and the long, thin rug here.'],
+ ['And this room is going to be our living room, isn’t it?',
+  'That’s right, so we’ll put the sofa and the TV in here.'],
+ ['And we’ll have this room as the bedroom, won’t we?',
+  'Yes, and so this is the room for the bed and the wardrobe.'],
+ ['And you’re happy to use this room as the dining room, aren’t you?',
+  'That’s right, so this is the room for the dining table and the dining chairs.']
 ];
 (function(){
   const box=document.getElementById('full'); let opened=0;
@@ -552,13 +554,13 @@ const PAIRS=[
 
 /* ═══════════ 5 · USE THEM ═══════════ */
 const USE=[
- ['In summer the sun is very ', 'hot', ', and the ', 'heat', ' fills the whole house.'],
- ['When it starts to ', 'rain', ', the streets get wet on a ', 'rainy', ' day.'],
- ['Climbing that old wall is ', 'dangerous', ' — there is a real ', 'danger', ' of falling.'],
- ['It was a very ', 'windy', ' night, and the ', 'wind', ' shook all the windows.'],
- ['', 'Safety', ' comes first: we must keep the paths ', 'safe', ' for everyone.'],
- ['We sat in the ', 'sun', ' all morning because it was such a ', 'sunny', ' day.'],
- ['People once used ', 'natural', ' ways to keep cool, learning from ', 'nature', ' itself.']
+ ['The sun is very ', 'hot', ' today. You’d better wear a hat to protect yourself from the ', 'heat', '.'],
+ ['The weather forecast says there may be ', 'rain', ' today, and the weather looks quite ', 'rainy', ' at the moment, so I think you should take an umbrella.'],
+ ['It’s ', 'dangerous', ' to go swimming from some beaches. There’s a ', 'danger', ' that the sea will carry you away.'],
+ ['It’s been very ', 'windy', ' today, and the ', 'wind', ' has damaged a lot of the flowers in our garden.'],
+ ['', 'Safety', ' is very important when you go climbing. Everything you do must be ', 'safe', ' because just one mistake can kill you.'],
+ ['The ', 'sun', ' is warm today, so let’s go out. I love going to the park on a nice, ', 'sunny', ' day like this.'],
+ ['In ', 'nature', ', there are many dangers, so it is ', 'natural', ' for animals to try to keep their young ones safe.']
 ];
 (function(){
   const chips=[];
@@ -589,7 +591,7 @@ const QUIZ=[
   ar:'ما صفةُ الاسمِ danger؟',
   o:['dangering','dangerous','dangerly'], a:1,
   fb:'danger (اسم) → dangerous (صفة).'},
- {t:'&ldquo;It was a very ____ night, and the ____ shook the windows.&rdquo;',
+ {t:'&ldquo;It’s been very ____ today, and the ____ has damaged a lot of the flowers in our garden.&rdquo;',
   ar:'أكملِ الجملةَ بالزوجِ الصحيح.',
   o:['wind / windy','windy / wind','windy / windy'], a:1,
   fb:'الصفةُ windy تصفُ الليلة، والاسمُ wind هو الريحُ نفسُها.'},
@@ -711,8 +713,9 @@ function makeBlank(bank,answer,onRight,minw){
   sp.onclick=function(e){
     if(sp.classList.contains('right')) return;
     const pick=bank.sel; if(!pick) return;
-    if(pick.textContent===answer){
-      sp.textContent=answer; sp.classList.add('right');
+    const ok=Array.isArray(answer)?answer.indexOf(pick.textContent)>-1:pick.textContent===answer;
+    if(ok){
+      sp.textContent=pick.textContent; sp.classList.add('right');
       pick.classList.add('used'); pick.classList.remove('sel'); bank.sel=null;
       note(e.clientX,e.clientY,'✔');
       onRight&&onRight(e);
